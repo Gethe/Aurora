@@ -9,4 +9,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <Script file="texture.lua"/>
     <Script file="skin.lua"/>
     <Script file="deprecated.lua"/>
+    <Include file="Retail\FrameXML\FrameXML.xml"/>
+    <Include file="Retail\AddOns\AddOns.xml"/>
 </Ui>
