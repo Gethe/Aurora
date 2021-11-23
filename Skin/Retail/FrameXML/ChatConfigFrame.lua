@@ -176,18 +176,14 @@ function private.FrameXML.ChatConfigFrame()
     ChatConfigFrame.DefaultButton:SetPoint("BOTTOMLEFT", 10, 10)
     Skin.UIPanelButtonTemplate(ChatConfigFrame.RedockButton)
     ChatConfigFrame.RedockButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.DefaultButton, "BOTTOMRIGHT", 5, 0)
-    if private.isPatch then
-        Skin.UIPanelButtonTemplate(ChatConfigFrame.ToggleChatButton)
-        ChatConfigFrame.ToggleChatButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.RedockButton, "BOTTOMRIGHT", 5, 0)
-    end
+    Skin.UIPanelButtonTemplate(ChatConfigFrame.ToggleChatButton)
+    ChatConfigFrame.ToggleChatButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.RedockButton, "BOTTOMRIGHT", 5, 0)
 
     Skin.UIPanelButtonTemplate(_G.CombatLogDefaultButton)
 
     Skin.UIPanelButtonTemplate(_G.TextToSpeechDefaultButton)
-    if private.isPatch then
-        Skin.UICheckButtonTemplate(_G.TextToSpeechCharacterSpecificButton)
-        _G.TextToSpeechCharacterSpecificButton:SetPoint("BOTTOMLEFT", _G.TextToSpeechDefaultButton, "BOTTOMRIGHT", 5, 0)
-    end
+    Skin.UICheckButtonTemplate(_G.TextToSpeechCharacterSpecificButton)
+    _G.TextToSpeechCharacterSpecificButton:SetPoint("BOTTOMLEFT", _G.TextToSpeechDefaultButton, "BOTTOMRIGHT", 5, 0)
 
     --Skin.UIPanelButtonTemplate(_G.ChatConfigFrameCancelButton) -- BlizzWTF: Not used?
     Skin.UIPanelButtonTemplate(_G.ChatConfigFrameOkayButton)

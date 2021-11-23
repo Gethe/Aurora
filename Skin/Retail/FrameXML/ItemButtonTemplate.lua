@@ -131,7 +131,7 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
             end
 
             local color
-            if quality and quality > private.Enum.ItemQuality.Poor then
+            if quality and quality > _G.Enum.ItemQuality.Poor then
                 color = _G.BAG_ITEM_QUALITY_COLORS[quality]
             end
 

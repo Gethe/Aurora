@@ -69,11 +69,7 @@ function private.FrameXML.LootHistory()
     _G.hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", Hook.LootHistoryFrame_UpdatePlayerFrame)
 
     local LootHistoryFrame = _G.LootHistoryFrame
-    if private.isPatch then
-        Skin.TooltipBackdropTemplate(LootHistoryFrame)
-    else
-        Skin.TooltipBorderedFrameTemplate(LootHistoryFrame)
-    end
+    Skin.TooltipBackdropTemplate(LootHistoryFrame)
 
     LootHistoryFrame.LootIcon:Hide()
     LootHistoryFrame.Label:ClearAllPoints()

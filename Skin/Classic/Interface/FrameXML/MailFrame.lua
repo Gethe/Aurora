@@ -30,7 +30,7 @@ do --[[ FrameXML\MailFrame.lua ]]
 
                 if wasRead then
                     -- We need to call this in case the item is a relic, to ensure that the relic border color is updated.
-                    Hook.SetItemButtonQuality(item.Button, private.Enum.ItemQuality.Standard, firstItemLink)
+                    Hook.SetItemButtonQuality(item.Button, private.Enum.ItemQuality.Common, firstItemLink)
                 end
             else
                 item.Button._auroraIconBorder:SetBackdropBorderColor(Color.frame, 1)

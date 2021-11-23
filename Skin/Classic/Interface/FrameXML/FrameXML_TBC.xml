@@ -245,7 +245,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     <!--Script file="BattlefieldFrame.lua"/-->
     <!--Script file="ArenaFrame.lua"/-->
     <!--Script file="ArenaRegistrarFrame.lua"/-->
-    <!--Script file="..\..\Interface_TBC\FrameXML\LFGFrame.lua"/-->
+    <Script file="..\..\Interface_TBC\FrameXML\LFGFrame.lua"/>
     <Script file="PVPFrame.lua"/>
 
 

@@ -1286,6 +1286,16 @@ function commands.test()
             end
 
             if private.isRetail then -- PvP
+                local isRated = false
+                local queueType = "ARENA"
+                local queueTypes = {
+                    "ARENA",
+                    "ARENASKIRMISH",
+                    "BATTLEGROUND",
+                    "WARGAME",
+                }
+                local role = "DAMAGER"
+
                 function _G.GetNumBattlefieldScores()
                     return 20
                 end
@@ -1328,10 +1338,10 @@ function commands.test()
                 end
 
                 function _G.C_PvP.IsRatedBattleground()
-                    return true
+                    return isRated
                 end
                 function _G.C_PvP.IsRatedMap()
-                    return true
+                    return isRated
                 end
 
                 local PVPScoreInfo = {
@@ -1387,9 +1397,53 @@ function commands.test()
                 end
 
                 test.args.pvp = {
-                    name = "PvP Score",
+                    name = "PvP",
                     type = "group",
                     args = {
+                        header1 = {
+                            name = "PvP Ready",
+                            type = "header",
+                            order = 0,
+                        },
+                        isRated = {
+                            name = "isRated",
+                            type = "toggle",
+                            get = function() return isRated end,
+                            set = function(info, value)
+                                isRated = value
+                            end,
+                            order = 1,
+                        },
+                        queueType = {
+                            name = "Queue type",
+                            type = "select",
+                            values = queueTypes,
+                            get = function()
+                                for i, qType in _G.ipairs(queueTypes) do
+                                    if qType == queueType then
+                                        return i
+                                    end
+                                end
+                            end,
+                            set = function(info, value)
+                                queueType = queueTypes[value]
+                            end,
+                            order = 2,
+                        },
+                        pvpDialog = {
+                            name = "Show dialog",
+                            desc = "PVPReadyDialog_Display",
+                            type = "execute",
+                            func = function()
+                                _G.PVPReadyDialog_Display(_G.PVPReadyDialog, 1, "displayName", isRated, queueType, "gameType", role)
+                            end,
+                            order = 3,
+                        },
+                        header2 = {
+                            name = "PvP Score",
+                            type = "header",
+                            order = 10,
+                        },
                         pvpScore = {
                             name = "PvP scoreboard",
                             desc = "PVPMatchScoreboard",
@@ -1397,6 +1451,7 @@ function commands.test()
                             func = function()
                                 _G.PVPMatchScoreboard:BeginShow()
                             end,
+                            order = 11,
                         },
                         pvpResults = {
                             name = "PvP results",
@@ -1405,6 +1460,7 @@ function commands.test()
                             func = function()
                                 _G.PVPMatchResults:BeginShow()
                             end,
+                            order = 11,
                         },
                         pvpTimer = {
                             name = "PvP Start Timer",
@@ -1413,6 +1469,7 @@ function commands.test()
                             func = function()
                                 _G.TimerTracker_OnEvent(_G.TimerTracker, "START_TIMER", 1, 80, 80)
                             end,
+                            order = 11,
                         },
                     },
                 }

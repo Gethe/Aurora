@@ -115,11 +115,12 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
 
         function Hook.UIDropDownMenu_SetWidth(frame, width, padding)
             if frame.SetBackdropOption then
+                local offsets = frame:GetBackdropOption("offsets")
                 frame:SetBackdropOption("offsets", {
-                    left = 21,
+                    left = offsets.left,
                     right = 20,
-                    top = 5,
-                    bottom = 9,
+                    top = offsets.top,
+                    bottom = offsets.bottom,
                 })
             end
         end

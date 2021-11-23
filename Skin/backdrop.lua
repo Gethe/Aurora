@@ -127,6 +127,13 @@ if not private.isClassic then
         if offsets then
             left, right, top, bottom = (offsets.left or left), (offsets.right or right), (offsets.top or top), (offsets.bottom or bottom)
         end
+        if frame.debug then
+            _G.print("GetNineSliceLayout", frame:GetDebugName(), frame.debug)
+            _G.print("  offsets:", left, right, top, bottom)
+            if Aurora.debug then
+                _G.error("Found usage")
+            end
+        end
 
         return {
             TopLeftCorner = {
@@ -178,31 +185,48 @@ if not private.isClassic then
     function BackdropMixin:OnBackdropLoaded()
         return _G.BackdropTemplateMixin.OnBackdropLoaded(self)
     end
-    function BackdropMixin:SetupPieceVisuals(piece, setupInfo, pieceLayout)
+    function BackdropMixin:SetupPieceVisuals(piece, setupInfo, pieceLayout, textureKit, userLayout)
         if self.debug then
-            _G.print("SetupPieceVisuals", piece:GetDebugName(), piece:GetSize())
+            _G.print("SetupPieceVisuals", piece:GetDebugName(),self.debug)
+            _G.print("  ", setupInfo.pieceName, ":")
+            _G.print("      size:", piece:GetSize())
+            if pieceLayout.x then
+                _G.print("      x, y:", pieceLayout.x, pieceLayout.y)
+            end
+            if pieceLayout.x1 then
+                _G.print("      x1, y1:", pieceLayout.x1, pieceLayout.y1)
+            end
             --_G.error("Found usage")
         end
-        _G.BackdropTemplateMixin.SetupPieceVisuals(self, piece, setupInfo, pieceLayout)
-
+        _G.BackdropTemplateMixin.SetupPieceVisuals(self, piece, setupInfo, pieceLayout, textureKit, userLayout)
     end
     function BackdropMixin:ApplyBackdrop()
         local userLayout = GetNineSliceLayout(self)
         _G.NineSliceUtil.ApplyLayout(self, userLayout)
+        if self.debug then
+            _G.print("ApplyBackdrop", self:GetDebugName(), self.debug)
+        end
         for old, pieceName in next, bgTextures do
             local pieceLayout = userLayout[pieceName]
             local piece = Util.GetNineSlicePiece(self, pieceName)
             if piece then
                 if self.debug then
-                    _G.print("ApplyBackdrop", piece:GetDebugName(), piece:GetSize())
+                    _G.print("  ", pieceName, ":")
+                    _G.print("      size:", piece:GetSize())
+                    if pieceLayout.x then
+                        _G.print("      x, y:", pieceLayout.x, pieceLayout.y)
+                    end
+                    if pieceLayout.x1 then
+                        _G.print("      x1, y1:", pieceLayout.x1, pieceLayout.y1)
+                    end
                     --_G.error("Found usage")
                 end
 
                 if pieceLayout.layer then
                     piece:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
                 end
-                piece:SetTexelSnappingBias(0.0)
-                piece:SetSnapToPixelGrid(false)
+
+                _G.NineSliceUtil.DisableSharpening(self)
                 piece:Show()
             end
         end

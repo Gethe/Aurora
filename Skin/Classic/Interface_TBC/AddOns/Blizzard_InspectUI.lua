@@ -87,12 +87,13 @@ function private.AddOns.Blizzard_InspectUI()
     --         InspectPVPFrame         --
     ----====####$$$$%%%%%$$$$####====----
     -- /run InspectPVPFramePvPIcon:SetTexture("Interface\\PvPRankBadges\\PvPRank05"); InspectPVPFramePvPIcon:Show()
-    tl, tr, bl, br, bg = _G.InspectPVPFrame:GetRegions()
+    local bd
+    tl, tr, bl, br, bd = _G.InspectPVPFrame:GetRegions()
     tl:Hide()
     tr:Hide()
     bl:Hide()
     br:Hide()
-    bg:Hide()
+    bd:Hide()
 
     ----====####$$$$%%%%%%%%$$$$####====----
     --         InspectTalentFrame         --
@@ -142,7 +143,10 @@ function private.AddOns.Blizzard_InspectUI()
     Skin.TabButtonTemplate(_G.InspectTalentFrameTab2)
     Skin.TabButtonTemplate(_G.InspectTalentFrameTab3)
 
+    _G.InspectTalentFrameCloseButton:Hide()
+    Skin.UIPanelButtonTemplate(_G.InspectTalentFrameCancelButton)
+
     for i = 1, _G.MAX_NUM_TALENTS do
-        Skin.TalentButtonTemplate(_G["PlayerTalentFrameTalent"..i])
+        Skin.TalentButtonTemplate(_G["InspectTalentFrameTalent"..i])
     end
 end

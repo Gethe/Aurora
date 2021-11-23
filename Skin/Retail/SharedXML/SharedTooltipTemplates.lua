@@ -7,23 +7,19 @@ if not private.isRetail then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 do --[[ FrameXML\SharedTooltipTemplates.lua ]]
-    function Hook.SharedTooltip_SetBackdropStyle(self, style)
-        if private.isPatch then return end
-        if not self.IsEmbedded then
-            Skin.FrameTypeFrame(self)
+    function Hook.SharedTooltip_SetBackdropStyle(self, style, embedded)
+        if not (embedded or self.IsEmbedded) then
+            self.NineSlice:SetCenterColor(Color.frame:GetRGB());
         end
     end
 end
 
 do --[[ FrameXML\SharedTooltipTemplates.xml ]]
     function Skin.SharedTooltipTemplate(GameTooltip)
-        if private.isPatch then
-            Skin.NineSlicePanelTemplate(GameTooltip.NineSlice)
-        else
-            Skin.FrameTypeFrame(GameTooltip)
-        end
+        Skin.NineSlicePanelTemplate(GameTooltip.NineSlice)
     end
     function Skin.SharedNoHeaderTooltipTemplate(GameTooltip)
         Skin.SharedTooltipTemplate(GameTooltip)

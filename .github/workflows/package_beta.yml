@@ -33,7 +33,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create Mainline Package
-      uses: BigWigsMods/packager@master
+      uses: BigWigsMods/packager@v1.0.3
       with:
         args: -o
 
@@ -45,7 +45,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create BCC Package
-      uses: BigWigsMods/packager@master
+      uses: BigWigsMods/packager@v1.0.3
       with:
         args: -o -g bcc -m .pkgmeta-bcc
 
@@ -57,6 +57,6 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create Classic Package
-      uses: BigWigsMods/packager@master
+      uses: BigWigsMods/packager@v1.0.3
       with:
         args: -o -g classic -m .pkgmeta-classic

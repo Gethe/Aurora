@@ -341,23 +341,14 @@ function private.FrameXML.LFGList()
     end
 
     Skin.LFGListEditBoxTemplate(EntryCreation.Name)
-    if not private.isPatch then
-        Skin.UIDropDownMenuTemplate(EntryCreation.CategoryDropDown)
-    end
     Skin.UIDropDownMenuTemplate(EntryCreation.GroupDropDown)
     Skin.UIDropDownMenuTemplate(EntryCreation.ActivityDropDown)
     Skin.InputScrollFrameTemplate(EntryCreation.Description)
-    if private.isPatch then
-        Skin.UIDropDownMenuTemplate(EntryCreation.PlayStyleDropdown)
-    end
+    Skin.UIDropDownMenuTemplate(EntryCreation.PlayStyleDropdown)
     Skin.LFGListRequirementTemplate(EntryCreation.ItemLevel)
-    if private.isPatch then
-        Skin.LFGListRequirementTemplate(EntryCreation.PvpItemLevel)
-        Skin.LFGListRequirementTemplate(EntryCreation.PVPRating)
-        Skin.LFGListRequirementTemplate(EntryCreation.MythicPlusRating)
-    else
-        Skin.LFGListRequirementTemplate(EntryCreation.HonorLevel)
-    end
+    Skin.LFGListRequirementTemplate(EntryCreation.PvpItemLevel)
+    Skin.LFGListRequirementTemplate(EntryCreation.PVPRating)
+    Skin.LFGListRequirementTemplate(EntryCreation.MythicPlusRating)
     Skin.LFGListRequirementTemplate(EntryCreation.VoiceChat)
     Skin.LFGListOptionCheckButtonTemplate(EntryCreation.PrivateGroup)
     Skin.LFGListMagicButtonTemplate(EntryCreation.ListGroupButton)

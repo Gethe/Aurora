@@ -66,28 +66,4 @@ function private.AddOns.Blizzard_ItemUpgradeUI()
     glow:SetToAlpha(0.2)
 
     Skin.ThinGoldEdgeTemplate(ItemUpgradeFrame.PlayerCurrenciesBorder)
-    --[[
-    local TextFrame = ItemUpgradeFrame.TextFrame
-    TextFrame:GetRegions():Hide() -- BG
-    TextFrame.Right:Hide()
-    TextFrame.TopRight:Hide()
-    TextFrame.BottomRight:Hide()
-    TextFrame.Top:Hide()
-    TextFrame.Bottom:Hide()
-
-    local ItemButton = ItemUpgradeFrame.UpgradeItemButton
-    Base.CropIcon(ItemButton.IconTexture, ItemButton)
-    ItemButton.Frame:Hide()
-    Base.CropIcon(ItemButton:GetPushedTexture())
-    ItemButton:GetHighlightTexture():SetTexCoord(0.05, 0.95, 0.05, 0.95)
-
-    local ButtonFrame = ItemUpgradeFrame.ButtonFrame
-    ButtonFrame:GetRegions():Hide()
-    ButtonFrame.ButtonBorder:Hide()
-    ButtonFrame.ButtonBottomBorder:Hide()
-
-    Skin.ThinGoldEdgeTemplate(_G.ItemUpgradeFrameMoneyFrame)
-    Skin.BackpackTokenTemplate(_G.ItemUpgradeFrameMoneyFrame.Currency)
-    Skin.MagicButtonTemplate(_G.ItemUpgradeFrameUpgradeButton)
-    ]]
 end

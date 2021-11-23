@@ -6,7 +6,8 @@ if not private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\PVPHelper.lua ]]
     function Hook.PVPReadyDialog_Display(self, index, displayName, isRated, queueType, gameType, role)
@@ -27,11 +28,12 @@ function private.FrameXML.PVPHelper()
     --[[ PVPReadyDialog ]]--
     local PVPReadyDialog = _G.PVPReadyDialog
     Skin.DialogBorderTemplate(PVPReadyDialog.Border)
+    local bg = PVPReadyDialog.Border:GetBackdropTexture("bg")
 
     PVPReadyDialog.background:SetAlpha(0.75)
     PVPReadyDialog.background:ClearAllPoints()
-    PVPReadyDialog.background:SetPoint("TOPLEFT")
-    PVPReadyDialog.background:SetPoint("BOTTOMRIGHT", 0, 68)
+    PVPReadyDialog.background:SetPoint("TOPLEFT", bg, 1, -1)
+    PVPReadyDialog.background:SetPoint("BOTTOMRIGHT", bg, -1, 68)
 
     PVPReadyDialog.filigree:Hide()
     PVPReadyDialog.bottomArt:Hide()

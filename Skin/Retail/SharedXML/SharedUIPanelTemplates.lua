@@ -492,40 +492,15 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.TooltipBackdropTemplate(Frame)
-        if private.isPatch then
-            Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        else
-            Skin.FrameTypeFrame(Frame)
-        end
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
     end
 
     function Skin.TooltipBorderBackdropTemplate(Frame)
-        if private.isPatch then
-            Skin.TooltipBackdropTemplate(Frame)
-        else
-            Skin.FrameTypeFrame(Frame)
-            Frame:SetBackdropColor(Color.frame, 0)
-        end
+        Skin.TooltipBackdropTemplate(Frame)
     end
 
     function Skin.TooltipBorderedFrameTemplate(Frame)
-        if private.isPatch then
-            Skin.TooltipBackdropTemplate(Frame)
-        else
-            Frame.BorderTopLeft:Hide()
-            Frame.BorderTopRight:Hide()
-
-            Frame.BorderBottomLeft:Hide()
-            Frame.BorderBottomRight:Hide()
-
-            Frame.BorderTop:Hide()
-            Frame.BorderBottom:Hide()
-            Frame.BorderLeft:Hide()
-            Frame.BorderRight:Hide()
-
-            Frame.Background:Hide()
-            Skin.FrameTypeFrame(Frame)
-        end
+        Skin.TooltipBackdropTemplate(Frame)
     end
 
     function Skin.UIMenuButtonStretchTemplate(Button)
@@ -586,11 +561,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Skin.UIPanelScrollUpButtonTemplate(_G[name.."ScrollUpButton"])
         Skin.UIPanelScrollDownButtonTemplate(_G[name.."ScrollDownButton"])
-        if private.isPatch then
-            _G[name.."Border"].NineSlice:Hide()
-        else
-            Util.HideNineSlice(_G[name.."Border"])
-        end
+        _G[name.."Border"].NineSlice:Hide()
 
         Skin.ScrollBarThumb(Slider:GetThumbTexture())
     end
