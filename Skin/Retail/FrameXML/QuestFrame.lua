@@ -66,7 +66,7 @@ do --[[ FrameXML\QuestFrame.lua ]]
             end
         end
     end
-    function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portraitDisplayID, mountPortraitDisplayID, text, name, x, y)
+    function Hook.QuestFrame_ShowQuestPortrait(parentFrame, portraitDisplayID, mountPortraitDisplayID, modelSceneID, text, name, x, y)
         if parentFrame == _G.WorldMapFrame then
             x = x + 2
         else
