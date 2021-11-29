@@ -21,7 +21,7 @@ function private.SharedXML.ModelPreviewFrame()
     local closeButton = ModelPreviewFrame.CloseButton
     ModelPreviewFrame.CloseButton = select(2, ModelPreviewFrame:GetChildren())
     Skin.ButtonFrameTemplate(ModelPreviewFrame)
-    -- Skin.MagicButtonTemplate(closeButton)
+    Skin.MagicButtonTemplate(closeButton)
     closeButton:SetPoint("BOTTOMRIGHT", -5, 5)
 
     ModelPreviewFrame.Display.YesMountsTex:Hide()
