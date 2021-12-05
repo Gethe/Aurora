@@ -11,11 +11,6 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\GameTooltip.lua ]]
-    function Hook.GameTooltip_SetBackdropStyle(self, style)
-        if not self.IsEmbedded then
-            Skin.FrameTypeFrame(self)
-        end
-    end
     function Hook.EmbeddedItemTooltip_Clear(self)
         if not self._auroraIconBorder then
             Skin.InternalEmbeddedItemTooltipTemplate(self)
@@ -34,7 +29,7 @@ end
 do --[[ FrameXML\GameTooltip.xml ]]
     do --[[ GameTooltipTemplate ]]
         function Skin.GameTooltipTemplate(GameTooltip)
-            Skin.FrameTypeFrame(GameTooltip)
+            Skin.TooltipBackdropTemplate(GameTooltip)
 
             local statusBar = _G[GameTooltip:GetName().."StatusBar"]
             Skin.FrameTypeStatusBar(statusBar)
@@ -87,7 +82,6 @@ end
 function private.FrameXML.GameTooltip()
     if private.disabled.tooltips then return end
 
-    _G.hooksecurefunc("GameTooltip_SetBackdropStyle", Hook.GameTooltip_SetBackdropStyle)
     _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)

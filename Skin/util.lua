@@ -163,6 +163,13 @@ function Util.Mixin(table, ...)
     end
 end
 
+local frameAlpha = 0.2
+function Util.SetFrameAlpha(alpha)
+    frameAlpha = alpha
+end
+function Util.GetFrameAlpha()
+    return frameAlpha
+end
 
 --[[ Debug and Testing ]]--
 

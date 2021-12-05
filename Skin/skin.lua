@@ -7,12 +7,12 @@ local _, private = ...
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 
 do -- Frame
     function Skin.FrameTypeFrame(Frame)
-        Base.SetBackdrop(Frame, Color.frame)
+        Base.SetBackdrop(Frame, Color.frame, Util.GetFrameAlpha())
     end
 end
 

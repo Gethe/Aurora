@@ -9,6 +9,7 @@ private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
 private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 private.isBCC = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 
+private.hasAPI = (not private.isRetail) and _G.GameTooltip.NineSlice
 private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90105
 
 private.uiScale = 1
@@ -236,6 +237,9 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
             if _G.AuroraConfig then
                 Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient
             end
+
+            -- Trigger class colors update
+            _G.CUSTOM_CLASS_COLORS:NotifyChanges()
 
             -- Skin FrameXML
             for i = 1, #private.fileOrder do

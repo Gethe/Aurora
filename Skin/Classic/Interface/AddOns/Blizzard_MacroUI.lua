@@ -93,7 +93,7 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroCancelButton:SetPoint("BOTTOMRIGHT", _G.MacroFrameScrollFrame, "TOPRIGHT", 23, 10)
     Skin.UIPanelButtonTemplate(_G.MacroSaveButton)
 
-    Skin.FrameTypeEditBox(_G.MacroFrameTextBackground)
+    Skin.TooltipBackdropTemplate(_G.MacroFrameTextBackground)
     _G.MacroFrameTextBackground:SetPoint("TOPLEFT", _G.MacroFrameScrollFrame, -2, 2)
     _G.MacroFrameTextBackground:SetPoint("BOTTOMRIGHT", _G.MacroFrameScrollFrame, 20, -2)
 

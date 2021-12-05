@@ -48,7 +48,6 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableFloatingCombatText)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelCombatTextFloatModeDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextLowManaHealth)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelAutoSelfCast)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextAuras)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextAuraFade)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextState)
@@ -144,6 +143,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesFriends)
     Skin.InterfaceOptionsSmallCheckButtonTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesFriendlyMinions)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesMotionDropDown)
+    Skin.OptionsSliderTemplate(_G.InterfaceOptionsNamesPanelUnitNameplatesNameplateMaxDistanceSlider)
 
     ------------
     -- Camera --

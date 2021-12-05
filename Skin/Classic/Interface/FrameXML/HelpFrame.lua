@@ -42,81 +42,11 @@ function private.FrameXML.HelpFrame()
     -- HelpFrame --
     ---------------
     local HelpFrame = _G.HelpFrame
-    if private.isBCC then
-        Skin.ButtonFrameTemplate(HelpFrame)
+    Skin.ButtonFrameTemplate(HelpFrame)
 
-        Skin.BrowserTemplate(HelpFrame.Browser)
-        HelpFrame.Browser:SetPoint("TOPLEFT", 1, -private.FRAME_TITLE_HEIGHT)
-        HelpFrame.Browser:SetPoint("BOTTOMRIGHT", -1, 1)
-    else
-        _G.hooksecurefunc("HelpFrame_SetSelectedButton", Hook.HelpFrame_SetSelectedButton)
-        Skin.TranslucentFrameTemplate(HelpFrame)
-
-        local streaks, buttonDiv, vertDivTop, vertDivBottom, vertDivMiddle = select(10, HelpFrame:GetRegions())
-        streaks:Hide()
-
-        local header = HelpFrame.header
-        header:SetAlpha(0)
-
-        local text = select(10, header:GetRegions())
-        text:SetParent(HelpFrame)
-        text:ClearAllPoints()
-        text:SetPoint("TOPLEFT")
-        text:SetPoint("BOTTOMRIGHT", HelpFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-        Skin.UIPanelCloseButton(_G.HelpFrameCloseButton)
-
-        Skin.InsetFrameTemplate(HelpFrame.leftInset)
-        local LeftShadow, RightShadow, TopShadow, BottomShadow
-        LeftShadow, RightShadow, TopShadow, BottomShadow = select(10, HelpFrame.leftInset:GetRegions())
-        LeftShadow:Hide()
-        RightShadow:Hide()
-        TopShadow:Hide()
-        BottomShadow:Hide()
-
-        Skin.InsetFrameTemplate(HelpFrame.mainInset)
-
-        Skin.HelpFrameButtonTemplate(HelpFrame.button1)
-        Hook.HelpFrame_SetSelectedButton(HelpFrame.button1)
-        Skin.HelpFrameButtonTemplate(HelpFrame.button2)
-        Skin.HelpFrameButtonTemplate(HelpFrame.button5)
-        Skin.HelpFrameButtonTemplate(HelpFrame.button3)
-        Skin.HelpFrameButtonTemplate(HelpFrame.button4)
-        Skin.HelpFrameButtonTemplate(HelpFrame.button16)
-        Skin.HelpFrameButtonTemplate(HelpFrame.button6)
-
-        Skin.HelpFrameButtonTemplate(HelpFrame.asec.ticketButton)
-        Skin.UIPanelButtonTemplate(_G.HelpFrameCharacterStuckStuck)
-        Base.CropIcon(_G.HelpFrameCharacterStuckHearthstone.IconTexture, HelpFrame.stuck)
-        Base.CropIcon(_G.HelpFrameCharacterStuckHearthstone:GetPushedTexture())
-        Base.CropIcon(_G.HelpFrameCharacterStuckHearthstone:GetHighlightTexture())
-
-        Skin.GameMenuButtonTemplate(HelpFrame.bug.submitButton)
-        _G.HelpFrameReportBugScrollFrame:ClearAllPoints()
-        _G.HelpFrameReportBugScrollFrame:SetPoint("BOTTOMLEFT", 154, 70)
-        Skin.UIPanelScrollBarTemplate(_G.HelpFrameReportBugScrollFrame.ScrollBar)
-        local bugEditBorder = select(3, HelpFrame.bug:GetChildren())
-        Base.SetBackdrop(bugEditBorder, Color.frame)
-        bugEditBorder:SetBackdropBorderColor(Color.button)
-
-        Skin.GameMenuButtonTemplate(HelpFrame.suggestion.submitButton)
-        _G.HelpFrameSubmitSuggestionScrollFrame:ClearAllPoints()
-        _G.HelpFrameSubmitSuggestionScrollFrame:SetPoint("BOTTOMLEFT", 154, 130)
-        Skin.UIPanelScrollBarTemplate(_G.HelpFrameSubmitSuggestionScrollFrame.ScrollBar)
-        local suggestionEditBorder = select(3, HelpFrame.suggestion:GetChildren())
-        Base.SetBackdrop(suggestionEditBorder, Color.frame)
-        suggestionEditBorder:SetBackdropBorderColor(Color.button)
-
-        Skin.BrowserTemplate(_G.HelpBrowser)
-
-        buttonDiv:SetColorTexture(1, 1, 1, 0.5)
-        buttonDiv:SetSize(150, 1)
-        buttonDiv:SetPoint("TOP", HelpFrame.button5, "BOTTOM", -1, -14)
-
-        vertDivTop:Hide()
-        vertDivBottom:Hide()
-        vertDivMiddle:Hide()
-    end
+    Skin.BrowserTemplate(HelpFrame.Browser)
+    HelpFrame.Browser:SetPoint("TOPLEFT", 1, -private.FRAME_TITLE_HEIGHT)
+    HelpFrame.Browser:SetPoint("BOTTOMRIGHT", -1, 1)
 
 
     ----------------------------
@@ -137,11 +67,7 @@ function private.FrameXML.HelpFrame()
     -- ReportCheatingDialog --
     --------------------------
     local ReportCheatingDialog = _G.ReportCheatingDialog
-    if private.isBCC then
-        Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
-    else
-        Skin.DialogBorderTemplate(ReportCheatingDialog)
-    end
+    Skin.DialogBorderTemplate(ReportCheatingDialog.Border)
     Base.CreateBackdrop(ReportCheatingDialog.CommentFrame, private.backdrop, {
         bg = _G.ReportCheatingDialogCommentFrameMiddle,
 

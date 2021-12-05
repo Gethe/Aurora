@@ -6,7 +6,6 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local F, C = _G.unpack(Aurora)
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
@@ -234,6 +233,7 @@ function private.FrameXML.LootFrame()
     -----------------------
     -- MasterLooterFrame --
     -----------------------
+    --[[ TODO
     local MasterLooterFrame = _G.MasterLooterFrame
     for i = 1, 9 do
         select(i, MasterLooterFrame:GetRegions()):Hide()
@@ -279,4 +279,5 @@ function private.FrameXML.LootFrame()
             end
         end
     end)
+    ]]
 end

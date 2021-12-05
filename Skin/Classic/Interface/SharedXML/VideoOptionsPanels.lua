@@ -6,9 +6,7 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
 
 --do --[[ FrameXML\VideoOptionsPanels.lua ]]
 --end
@@ -42,7 +40,7 @@ function private.SharedXML.VideoOptionsPanels()
     -------------
     -- Display --
     -------------
-    Base.SetBackdrop(_G.Display_, Color.frame)
+    Skin.TooltipBorderBackdropTemplate(_G.Display_)
 
     -- Column A
     Skin.VideoOptionsDropDownMenuTemplate(_G.Display_DisplayModeDropDown)
@@ -60,15 +58,12 @@ function private.SharedXML.VideoOptionsPanels()
     --------------
     -- Graphics --
     --------------
-    Base.SetBackdrop(_G.Graphics_, Color.frame)
+    Skin.TooltipBorderBackdropTemplate(_G.Graphics_)
 
     Skin.VideoOptionsSliderTemplate(_G.Graphics_Quality)
 
     -- Textures
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_TextureResolutionDropDown)
-    if not private.isBCC then
-        Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_FilteringDropDown)
-    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.Graphics_ProjectedTexturesDropDown)
 
     -- Environment
@@ -85,15 +80,12 @@ function private.SharedXML.VideoOptionsPanels()
     ----------------
     -- Raid Panel --
     ----------------
-    Base.SetBackdrop(_G.RaidGraphics_, Color.frame)
+    Skin.TooltipBorderBackdropTemplate(_G.RaidGraphics_)
 
     Skin.VideoOptionsSliderTemplate(_G.RaidGraphics_Quality)
 
     -- General
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_TextureResolutionDropDown)
-    if not private.isBCC then
-        Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_FilteringDropDown)
-    end
     Skin.VideoOptionsDropDownMenuTemplate(_G.RaidGraphics_ProjectedTexturesDropDown)
 
     -- Environment
@@ -116,17 +108,13 @@ function private.SharedXML.VideoOptionsPanels()
     --------------------
     -- Column A
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_BufferingDropDown)
-    if private.isBCC then
-        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_FilteringDropDown)
-        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_RTShadowQualityDropDown)
-    end
+    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_FilteringDropDown)
+    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_RTShadowQualityDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_MultisampleAlphaTest)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_PostProcessAntiAliasingDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_ResampleQualityDropDown)
-    if private.isBCC then
-        Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
-    end
+    Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_GraphicsAPIDropDown)
     Skin.AdvancedVideoOptionsDropDownMenuTemplate(_G.Advanced_AdapterDropDown)
 
     Skin.VideoOptionsSliderTemplate(_G.Advanced_UIScaleSlider)

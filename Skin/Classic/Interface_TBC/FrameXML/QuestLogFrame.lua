@@ -53,6 +53,9 @@ do --[[ FrameXML\QuestLogFrame.xml ]]
             bottom = 3,
         })
     end
+    function Skin.QuestLogRewardItemTemplate(Button)
+        Skin.QuestItemTemplate(Button)
+    end
 end
 
 function private.FrameXML.QuestLogFrame()
@@ -130,4 +133,8 @@ function private.FrameXML.QuestLogFrame()
     Skin.FauxScrollFrameTemplate(_G.QuestLogListScrollFrame)
     Skin.UIPanelScrollFrameTemplate(_G.QuestLogDetailScrollFrame)
     _G.QuestLogDetailScrollFrame:SetPoint("BOTTOMRIGHT", bg, -30, 30)
+
+    for i=1, 10 do
+        Skin.QuestLogRewardItemTemplate(_G["QuestLogItem"..i])
+    end
 end

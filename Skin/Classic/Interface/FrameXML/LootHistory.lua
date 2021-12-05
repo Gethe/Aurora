@@ -5,60 +5,12 @@ if private.isRetail then return end
 -- luacheck: globals
 
 --[[ Core ]]
-local F, C = _G.unpack(private.Aurora)
+local Aurora = private.Aurora
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
-function private.FrameXML.LootHistory()
-    local r, g, b = C.r, C.g, C.b
-
-    local LootHistoryFrame = _G.LootHistoryFrame
-
-    for i = 1, 9 do
-        _G.select(i, LootHistoryFrame:GetRegions()):Hide()
-    end
-    LootHistoryFrame.LootIcon:Hide()
-    LootHistoryFrame.Divider:SetAlpha(0)
-    _G.LootHistoryFrameScrollFrame:GetRegions():Hide()
-
-    LootHistoryFrame.Label:ClearAllPoints()
-    LootHistoryFrame.Label:SetPoint("TOP", LootHistoryFrame, "TOP", 0, -8)
-
-    F.CreateBD(LootHistoryFrame)
-
-    F.ReskinClose(LootHistoryFrame.CloseButton)
-    F.ReskinScroll(_G.LootHistoryFrameScrollFrameScrollBar)
-
-    -- [[ Resize button ]]
-
-    LootHistoryFrame.ResizeButton:SetNormalTexture("")
-    LootHistoryFrame.ResizeButton:SetHeight(8)
-
-    do
-        local line1 = LootHistoryFrame.ResizeButton:CreateTexture()
-        line1:SetTexture(C.media.backdrop)
-        line1:SetVertexColor(.7, .7, .7)
-        line1:SetSize(30, 1)
-        line1:SetPoint("TOP")
-
-        local line2 = LootHistoryFrame.ResizeButton:CreateTexture()
-        line2:SetTexture(C.media.backdrop)
-        line2:SetVertexColor(.7, .7, .7)
-        line2:SetSize(30, 1)
-        line2:SetPoint("TOP", 0, -3)
-
-        LootHistoryFrame.ResizeButton:HookScript("OnEnter", function(self)
-            line1:SetVertexColor(r, g, b)
-            line2:SetVertexColor(r, g, b)
-        end)
-
-        LootHistoryFrame.ResizeButton:HookScript("OnLeave", function(self)
-            line1:SetVertexColor(.7, .7, .7)
-            line2:SetVertexColor(.7, .7, .7)
-        end)
-    end
-
-    -- [[ Item frame ]]
-
-    _G.hooksecurefunc("LootHistoryFrame_UpdateItemFrame", function(self, frame)
+do --[[ FrameXML\LootHistory.lua ]]
+    function Hook.LootHistoryFrame_UpdateItemFrame(self, frame)
         local rollID, _, _, isDone, winnerIdx = _G.C_LootHistory.GetItem(frame.itemIdx)
         local expanded = self.expandedRolls[rollID]
 
@@ -70,13 +22,9 @@ function private.FrameXML.LootHistory()
             frame.IconBorder:Hide()
 
             frame.WinnerRoll:SetTextColor(.9, .9, .9)
+            frame.bg = Skin.CropIcon(frame.Icon, frame)
 
-            frame.Icon:SetTexCoord(.08, .92, .08, .92)
-            frame.Icon:SetDrawLayer("ARTWORK")
-            frame.bg = F.CreateBG(frame.Icon)
-            frame.bg:SetVertexColor(frame.IconBorder:GetVertexColor())
-
-            F.ReskinExpandOrCollapse(frame.ToggleButton)
+            Skin.ExpandOrCollapse(frame.ToggleButton)
             frame.styled = true
         end
 
@@ -89,11 +37,8 @@ function private.FrameXML.LootHistory()
         end
 
         frame.bg:SetVertexColor(frame.IconBorder:GetVertexColor())
-    end)
-
-    -- [[ Player frame ]]
-
-    _G.hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", function(_, playerFrame)
+    end
+    function Hook.LootHistoryFrame_UpdatePlayerFrame(self, playerFrame)
         if not playerFrame.styled then
             playerFrame.RollText:SetTextColor(.9, .9, .9)
             playerFrame.WinMark:SetDesaturated(true)
@@ -113,10 +58,53 @@ function private.FrameXML.LootHistory()
                 end
             end
         end
-    end)
+    end
+end
+
+--do --[[ FrameXML\LootHistory.xml ]]
+--end
+
+function private.FrameXML.LootHistory()
+    _G.hooksecurefunc("LootHistoryFrame_UpdateItemFrame", Hook.LootHistoryFrame_UpdateItemFrame)
+    _G.hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", Hook.LootHistoryFrame_UpdatePlayerFrame)
+
+    local LootHistoryFrame = _G.LootHistoryFrame
+    Skin.TooltipBorderedFrameTemplate(LootHistoryFrame)
+
+    LootHistoryFrame.LootIcon:Hide()
+    LootHistoryFrame.Label:ClearAllPoints()
+    LootHistoryFrame.Label:SetPoint("TOP", LootHistoryFrame, "TOP", 0, -8)
+    LootHistoryFrame.Divider:SetAlpha(0)
+
+    Skin.MinimizeButton(LootHistoryFrame.CloseButton)
+    do -- [[ Resize button ]]
+        LootHistoryFrame.ResizeButton:SetNormalTexture("")
+        LootHistoryFrame.ResizeButton:SetHeight(8)
+
+        local line1 = LootHistoryFrame.ResizeButton:CreateTexture()
+        line1:SetColorTexture(1, 1, 1)
+        line1:SetSize(30, 1)
+        line1:SetPoint("TOP")
+
+        local line2 = LootHistoryFrame.ResizeButton:CreateTexture()
+        line2:SetColorTexture(1, 1, 1)
+        line2:SetSize(30, 1)
+        line2:SetPoint("TOP", 0, -3)
+
+        LootHistoryFrame.ResizeButton:HookScript("OnEnter", function(self)
+            line1:SetVertexColor(Color.highlight:GetRGB())
+            line2:SetVertexColor(Color.highlight:GetRGB())
+        end)
+
+        LootHistoryFrame.ResizeButton:HookScript("OnLeave", function(self)
+            line1:SetVertexColor(1, 1, 1)
+            line2:SetVertexColor(1, 1, 1)
+        end)
+    end
+    Skin.UIPanelScrollFrameTemplate(LootHistoryFrame.ScrollFrame)
+    LootHistoryFrame.ScrollFrame.ScrollBarBackground:Hide()
 
     -- [[ Dropdown ]]
-
     _G.LootHistoryDropDown.initialize = function(self)
         local info = _G.UIDropDownMenu_CreateInfo()
         info.isTitle = 1

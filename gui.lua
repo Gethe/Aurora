@@ -9,6 +9,7 @@ local CreateFrame = _G.CreateFrame
 -- [[ Core ]]
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
+local Util = Aurora.Util
 local _, C = _G.unpack(Aurora)
 
 -- [[ Splash screen ]]
@@ -65,8 +66,11 @@ local checkboxes = {}
 
 local function updateFrames()
     local r, g, b = Aurora.Color.frame:GetRGB()
+    local a = _G.AuroraConfig.alpha
+
+    Util.SetFrameAlpha(a)
     for i = 1, #C.frames do
-        C.frames[i]:SetBackdropColor(r, g, b, _G.AuroraConfig.alpha)
+        C.frames[i]:SetBackdropColor(r, g, b, a)
     end
 end
 

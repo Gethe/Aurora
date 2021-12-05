@@ -1,4 +1,6 @@
 ## Interface: 90105
+## Interface-Classic: 11401
+## Interface-BCC: 20502
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
@@ -12,8 +14,14 @@
 ## X-Wago-ID: JZKbRK19
 
 Skin\skin.xml
-Skin\Retail\FrameXML\FrameXML.xml
-Skin\Retail\AddOns\AddOns.xml
+#@non-debug@
+# Skin\Interface\FrameXML\FrameXML.xml
+# Skin\Interface\AddOns\AddOns.xml
+#@end-non-debug@
+#@debug@
+Skin\Retail\Interface\FrameXML\FrameXML.xml
+Skin\Retail\Interface\AddOns\AddOns.xml
+#@end-debug@
 
 aurora.lua
 gui.lua

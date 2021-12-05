@@ -6,21 +6,21 @@
 ### Changed ###
 
   * Updates for recent patch compatibility
-  * [classic] Tweak chat frame skin
   * Tweak class and spec backdrops
-  * [tbc] Update inspect frame
   * [retail] Update item upgrade frame
   * [retail] Tweak create channel popup
   * [retail] Update dress up frame
+  * [classic] Tweak chat frame skin
+  * [tbc] Update inspect frame
 
 ### Fixed ###
 
-  * [classic] Bag frame background would not update after opening the keyring
-  * [tbc] Errors when opening the talent frame
+  * Various tooltip issues
   * [retail] Browse groups button was not skinned in LFG list
-  * [retail] Tooltips would revert to old skin
   * [retail] Channel headers in the chat channels frame were not skinned
   * [retail] PvP ready popup background was not aligned
+  * [classic] Bag frame background would not update after opening the keyring
+  * [classic] Errors when opening the talent frame
 
 
 ## [9.0.5.0] ##

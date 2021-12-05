@@ -25,25 +25,7 @@ do --[[ FrameXML\Backdrop.lua ]]
         local chatbubble
         local chatbubbles = _G.C_ChatBubbles.GetAllChatBubbles()
         for index = 1, #chatbubbles do
-            if private.isBCC then
-                chatbubble = chatbubbles[index]:GetChildren()
-            else
-                chatbubble = chatbubbles[index]
-                if not chatbubble.String then
-                    for i = 1, chatbubble:GetNumRegions() do
-                        local region = _G.select(i, chatbubble:GetRegions())
-                        if region:GetObjectType() == "Texture" then
-                            if region:GetTexture():find("Tail") then
-                                chatbubble.Tail = region
-                            else
-                                region:SetTexture(nil)
-                            end
-                        elseif region:GetObjectType() == "FontString" then
-                            chatbubble.String = region
-                        end
-                    end
-                end
-            end
+            chatbubble = chatbubbles[index]:GetChildren()
 
             if not chatbubble._auroraName then
                 Skin.ChatBubbleTemplate(chatbubble)
@@ -91,7 +73,7 @@ do --[[ FrameXML\ChatBubbleTemplates.xml ]]
         Skin.FrameTypeFrame(Frame)
         Frame:SetScale(_G.UIParent:GetScale())
 
-        local yOfs = private.isBCC and -5 or -3
+        local yOfs = -5
         local tail = Frame.Tail
         tail:SetColorTexture(0, 0, 0)
         tail:SetVertexOffset(1, 0, yOfs)

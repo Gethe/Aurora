@@ -48,6 +48,8 @@ function private.AddOns.Blizzard_WorldMap()
 
     Skin.UIDropDownMenuTemplate(WorldMapFrame.ContinentDropDown)
     Skin.UIDropDownMenuTemplate(WorldMapFrame.ZoneDropDown)
+    Skin.UIDropDownMenuTemplate(_G.WorldMapZoneMinimapDropDown)
+
     Skin.UIPanelButtonTemplate(_G.WorldMapZoomOutButton)
     Skin.UIPanelCloseButton(_G.WorldMapFrameCloseButton)
 end

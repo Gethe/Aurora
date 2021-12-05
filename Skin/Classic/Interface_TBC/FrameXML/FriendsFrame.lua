@@ -367,7 +367,7 @@ function private.FrameXML.FriendsFrame()
     patch:SetAlpha(0)
     corner:SetAlpha(0)
 
-    _G.GuildInfoTextBackground:SetBackdrop(nil)
+    Util.HideNineSlice(_G.GuildInfoTextBackground)
 
     Skin.UIPanelScrollFrameTemplate(_G.GuildInfoFrameScrollFrame)
     Skin.UIPanelCloseButton(_G.GuildInfoCloseButton)
@@ -448,7 +448,7 @@ function private.FrameXML.FriendsFrame()
     Skin.DialogBorderTemplate(_G.FriendsFriendsFrame)
     Skin.UIDropDownMenuTemplate(_G.FriendsFriendsFrameDropDown)
 
-    _G.FriendsFriendsList:SetBackdrop(nil)
+    Util.HideNineSlice(_G.FriendsFriendsList)
     Skin.FauxScrollFrameTemplate(_G.FriendsFriendsScrollFrame)
     Skin.UIPanelButtonTemplate(_G.FriendsFriendsSendRequestButton)
     Skin.UIPanelButtonTemplate(_G.FriendsFriendsCloseButton)

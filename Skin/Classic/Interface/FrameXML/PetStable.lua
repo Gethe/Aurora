@@ -21,6 +21,7 @@ do --[[ FrameXML\PetStable.lua ]]
                 button:SetBackdropColor(Color.red, 0.75)
                 button:SetBackdropBorderColor(Color.red, 1)
             end
+            Base.CropIcon(button:GetBackdropTexture("bg"))
         end
     end
 end
@@ -37,8 +38,8 @@ do --[[ FrameXML\PetStable.xml ]]
                 bottom = -1,
             }
         })
-        Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
         Base.SetBackdrop(CheckButton, Color.black, Color.frame.a)
+        Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
         CheckButton._auroraIconBorder = CheckButton
 
         CheckButton:SetBackdropColor(1, 1, 1, 0.75)
@@ -88,6 +89,7 @@ function private.FrameXML.PetStable()
     --_G.PetStablePetInfo:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, "TOPRIGHT", 0, -52)
 
     Skin.PetStableSlotTemplate(_G.PetStableCurrentPet)
+    _G.PetStableCurrentPet:SetBackdropBorderColor(Color.yellow, 1)
     Skin.PetStableSlotTemplate(_G.PetStableStabledPet1)
     Skin.PetStableSlotTemplate(_G.PetStableStabledPet2)
 

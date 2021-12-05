@@ -29,6 +29,5 @@ do --[[ SharedXML\SharedColorConstants.lua ]]
     }
 end
 
-function private.SharedXML.SharedColorConstants()
-    _G.CUSTOM_CLASS_COLORS:NotifyChanges()
-end
+--function private.SharedXML.SharedColorConstants()
+--end

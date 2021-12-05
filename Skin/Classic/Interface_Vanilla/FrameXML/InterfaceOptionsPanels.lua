@@ -40,10 +40,10 @@ function private.FrameXML.InterfaceOptionsPanels()
     ------------
     -- Combat --
     ------------
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelTargetOfTarget)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelFlashLowHealthWarning)
-    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelSelfCastKeyDropDown)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelAutoSelfCast)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableCombatDamage)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePeriodicDamage)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePetDamage)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableCombatHealing)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableFloatingCombatText)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelCombatTextFloatModeDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextLowManaHealth)
@@ -58,9 +58,10 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextComboPoints)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextEnergyGains)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelCombatTextHonorGains)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableCombatDamageText)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePeriodicDamage)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnablePetDamage)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelTargetOfTarget)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelFlashLowHealthWarning)
+    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelSelfCastKeyDropDown)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelAutoSelfCast)
 
     -------------
     -- Display --
@@ -119,6 +120,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     -----------
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelMyName)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelNPCNames)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelGuildNames)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelTitles)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsNamesPanelNonCombatCreature)
 

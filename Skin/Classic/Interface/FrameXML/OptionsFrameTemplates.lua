@@ -26,22 +26,13 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
         _G[name.."Right"]:SetAlpha(0)
     end
     function Skin.OptionsFrameListTemplate(Frame)
-        local name = Frame:GetName()
-        if not private.isBCC then
-            Base.CreateBackdrop(Frame, private.backdrop, {
-                tl = _G[name.."TopLeft"],
-                bl = _G[name.."BottomLeft"],
-                br = _G[name.."BottomRight"],
-                tr = _G[name.."TopRight"],
-
-                l = _G[name.."Left"],
-                r = _G[name.."Right"],
-                b = _G[name.."Bottom"],
-            })
-            _G[name.."Top"]:Hide()
+        if private.hasAPI then
+            Skin.TooltipBorderBackdropTemplate(Frame)
+        else
+            local name = Frame:GetName()
+            Base.SetBackdrop(Frame, Color.frame)
+            Skin.UIPanelScrollBarTemplate(_G[name.."ListScrollBar"])
         end
-        Base.SetBackdrop(Frame, Color.frame)
-        Skin.UIPanelScrollBarTemplate(_G[name.."ListScrollBar"])
     end
     function Skin.OptionsListButtonTemplate(Button)
         Skin.ExpandOrCollapse(Button.toggle)
@@ -58,7 +49,7 @@ do --[[ FrameXML\OptionsFrameTemplates.xml ]]
         text:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
         Skin.OptionsFrameListTemplate(_G[name.."CategoryFrame"])
-        Base.SetBackdrop(_G[name.."PanelContainer"], Color.frame)
+        Skin.TooltipBorderBackdropTemplate(_G[name.."PanelContainer"])
     end
 end
 

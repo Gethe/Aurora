@@ -7,12 +7,12 @@ if not private.isRetail then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\CharacterFrameTemplates.xml ]]
     function Skin.CharacterFrameTabButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
-        Button:SetButtonColor(Color.frame, nil, false)
+        Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
 
         local name = Button:GetName()
         Button:SetHeight(28)

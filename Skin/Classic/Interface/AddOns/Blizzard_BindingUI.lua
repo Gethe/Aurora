@@ -6,9 +6,8 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Util = Aurora.Util
 
 --[[ do AddOns\Blizzard_BindingUI.lua
 end ]]
@@ -48,8 +47,8 @@ function private.AddOns.Blizzard_BindingUI()
     Skin.UIPanelButtonTemplate(KeyBindingFrame.defaultsButton)
     KeyBindingFrame.defaultsButton:SetPoint("BOTTOMLEFT", 15, 15)
 
-    Base.SetBackdrop(KeyBindingFrame.bindingsContainer, Color.frame)
     Skin.OptionsFrameListTemplate(KeyBindingFrame.categoryList)
+    Skin.TooltipBorderBackdropTemplate(KeyBindingFrame.bindingsContainer)
     Skin.FauxScrollFrameTemplate(KeyBindingFrame.scrollFrame)
     KeyBindingFrame.scrollFrame.scrollBorderTop:Hide()
     KeyBindingFrame.scrollFrame.scrollBorderBottom:Hide()

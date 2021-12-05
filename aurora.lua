@@ -75,7 +75,7 @@ function private.OnLoad()
     end
 
     -- Setup colors
-    local Color = Aurora.Color
+    local Color, Util = Aurora.Color, Aurora.Util
     local customClassColors = AuroraConfig.customClassColors
     if not customClassColors[private.charClass.token] then
         private.classColorsReset(customClassColors, _G.RAID_CLASS_COLORS)
@@ -108,21 +108,17 @@ function private.OnLoad()
         _G.AuroraSplashScreen:Show()
     end
 
+    -- Store frame alpha from saved vars
+    Util.SetFrameAlpha(AuroraConfig.alpha)
+
     -- Create API hooks
-    local Base = Aurora.Base
     local Hook = Aurora.Hook
     local Skin = Aurora.Skin
 
-    function Skin.FrameTypeFrame(Frame)
-        Base.SetBackdrop(Frame, Color.frame, AuroraConfig.alpha)
-    end
     _G.hooksecurefunc(Skin, "FrameTypeButton", function(Button)
         if AuroraConfig.buttonsHaveGradient then
             Button:SetBackdropGradient()
         end
-    end)
-    _G.hooksecurefunc(Skin, "CharacterFrameTabButtonTemplate", function(Button)
-        Button:SetButtonColor(Color.frame, AuroraConfig.alpha, false)
     end)
 
     _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()

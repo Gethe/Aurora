@@ -12,8 +12,14 @@
 ## X-Wago-ID: JZKbRK19
 
 Skin\skin.xml
+#@non-debug@
+# Skin\Interface\FrameXML\FrameXML_Vanilla.xml
+# Skin\Interface\AddOns\AddOns_Vanilla.xml
+#@end-non-debug@
+#@debug@
 Skin\Classic\Interface\FrameXML\FrameXML_Vanilla.xml
 Skin\Classic\Interface\AddOns\AddOns_Vanilla.xml
+#@end-debug@
 
 aurora.lua
 gui.lua

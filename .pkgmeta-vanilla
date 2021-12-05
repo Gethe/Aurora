@@ -1,0 +1,16 @@
+package-as: Aurora
+
+ignore:
+    - *.sublime*
+    - *.bat
+    - dev
+    - Skin/Retail
+    - Skin/Classic/Interface_TBC
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+move-folders:
+    Aurora/Skin/Classic/Interface: Aurora/Skin/Interface
+    Aurora/Skin/Classic/Interface_Vanilla: Aurora/Skin/Interface_Vanilla

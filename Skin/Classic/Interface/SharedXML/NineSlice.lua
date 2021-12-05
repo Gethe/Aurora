@@ -6,9 +6,8 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Util = Aurora.Util
 
 do --[[ SharedXML\NineSlice.lua ]]
     local nineSliceSetup = {
@@ -27,25 +26,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         Skin.FrameTypeFrame(Frame)
     end
 
-    local function InsetFrame(Frame)
-        Base.SetBackdrop(Frame, Color.frame)
-    end
-
-    local function HideFrame(Frame)
-        Base.SetBackdrop(Frame, Color.frame, 0)
-        Frame:SetBackdropBorderColor(Color.frame, 0)
-    end
-
     local layouts = {
-        SimplePanelTemplate = BasicFrame,
-        PortraitFrameTemplate = BasicFrame,
-        PortraitFrameTemplateMinimizable = BasicFrame,
-        ButtonFrameTemplateNoPortrait = BasicFrame,
-        ButtonFrameTemplateNoPortraitMinimizable = BasicFrame,
-        InsetFrameTemplate = HideFrame,
-        BFAMissionHorde = BasicFrame,
-        BFAMissionAlliance = BasicFrame,
-        GenericMetal = BasicFrame,
         Dialog = function(Frame)
             BasicFrame(Frame)
             Frame:SetBackdropOption("offsets", {
@@ -55,20 +36,13 @@ do --[[ SharedXML\NineSlice.lua ]]
                 bottom = 5,
             })
         end,
-        WoodenNeutralFrameTemplate = BasicFrame,
-        Runeforge = BasicFrame,
-        AdventuresMissionComplete = InsetFrame,
-        CharacterCreateDropdown = BasicFrame,
+        ChatBubble = BasicFrame,
+        GMChatRequest = BasicFrame,
+        TooltipDefaultLayout = BasicFrame,
+        TooltipGluesLayout = BasicFrame,
+        TooltipMixedLayout = BasicFrame,
         UniqueCornersLayout = BasicFrame,
         IdenticalCornersLayout = BasicFrame,
-
-        -- Blizzard_OrderHallTalents
-        BFAOrderTalentHorde = BasicFrame,
-        BFAOrderTalentAlliance = BasicFrame,
-
-        -- Blizzard_PartyPoseUI
-        PartyPoseFrameTemplate = BasicFrame,
-        PartyPoseKit = BasicFrame,
     }
 
     local layoutMap = {}

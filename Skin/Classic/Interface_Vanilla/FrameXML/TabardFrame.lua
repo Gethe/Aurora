@@ -53,7 +53,7 @@ function private.FrameXML.TabardFrame()
     Skin.NavButtonPrevious(_G.TabardCharacterModelRotateLeftButton)
     Skin.NavButtonNext(_G.TabardCharacterModelRotateRightButton)
 
-    _G.TabardFrameCostFrame:SetBackdrop(nil)
+    Util.HideNineSlice(_G.TabardFrameCostFrame)
     Skin.SmallMoneyFrameTemplate(_G.TabardFrameCostMoneyFrame)
 
     _G.TabardFrameCustomizationBorder:Hide()

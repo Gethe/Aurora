@@ -7,6 +7,7 @@ local ADDON_NAME, private = ...
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
+local Util = Aurora.Util
 
 --[[ ALPHA 0.7 ]]--
 local origBase_SetHighlight = Base.SetHighlight
@@ -269,7 +270,7 @@ F.ReskinRadio = function(f)
 end
 
 F.ReskinSlider = function(f, isVert)
-    f:SetBackdrop(nil)
+    Util.HideNineSlice(f)
     f.SetBackdrop = F.dummy
 
     local bd = _G.CreateFrame("Frame", nil, f)
@@ -420,7 +421,7 @@ F.ReskinIcon = function(icon)
 end
 
 F.ReskinTooltip = function(f)
-    f:SetBackdrop(nil)
+    Util.HideNineSlice(f)
 
     local bg
     if f.BackdropFrame then

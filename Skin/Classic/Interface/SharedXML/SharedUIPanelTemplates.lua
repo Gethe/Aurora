@@ -306,65 +306,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         disabled:SetAllPoints(check)
     end
 
-    function Skin.InsetFrameTemplate(Frame)
-        Frame.Bg:Hide()
-
-        Frame.InsetBorderTopLeft:Hide()
-        Frame.InsetBorderTopRight:Hide()
-        Frame.InsetBorderBottomLeft:Hide()
-        Frame.InsetBorderBottomRight:Hide()
-
-        Frame.InsetBorderTop:Hide()
-        Frame.InsetBorderBottom:Hide()
-        Frame.InsetBorderLeft:Hide()
-        Frame.InsetBorderRight:Hide()
-    end
-    function Skin.DialogBorderTemplate(Frame)
-        Skin.FrameTypeFrame(Frame)
-        Frame:SetBackdropOption("offsets", {
-            left = 5,
-            right = 5,
-            top = 5,
-            bottom = 5,
-        })
-    end
-    function Skin.DialogBorderDarkTemplate(Frame)
-        Base.SetBackdrop(Frame, Color.frame, 0.87)
-        Frame:SetBackdropOption("offsets", {
-            left = 5,
-            right = 5,
-            top = 5,
-            bottom = 5,
-        })
-    end
-    function Skin.DialogBorderTranslucentTemplate(Frame)
-        Base.SetBackdrop(Frame, Color.frame, 0.8)
-        Frame:SetBackdropOption("offsets", {
-            left = 5,
-            right = 5,
-            top = 5,
-            bottom = 5,
-        })
-    end
-    function Skin.DialogBorderOpaqueTemplate(Frame)
-        Base.SetBackdrop(Frame, Color.frame, 1)
-        Frame:SetBackdropOption("offsets", {
-            left = 5,
-            right = 5,
-            top = 5,
-            bottom = 5,
-        })
-    end
-
-    function Skin.DialogHeaderTemplate(Frame)
-        Frame.LeftBG:Hide()
-        Frame.RightBG:Hide()
-        Frame.CenterBG:Hide()
-
-        Frame.Text:SetPoint("TOP", 0, -17)
-        Frame.Text:SetPoint("BOTTOM", Frame, "TOP", 0, -(private.FRAME_TITLE_HEIGHT + 17))
-    end
-
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Skin.FrameTypeFrame(Frame)
         local bg = Frame:GetBackdropTexture("bg")
@@ -398,6 +339,21 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local bg = Frame:GetBackdropTexture("bg")
         Frame.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
     end
+
+    function Skin.InsetFrameTemplate(Frame)
+        Frame.Bg:Hide()
+
+        Frame.InsetBorderTopLeft:Hide()
+        Frame.InsetBorderTopRight:Hide()
+        Frame.InsetBorderBottomLeft:Hide()
+        Frame.InsetBorderBottomRight:Hide()
+
+        Frame.InsetBorderTop:Hide()
+        Frame.InsetBorderBottom:Hide()
+        Frame.InsetBorderLeft:Hide()
+        Frame.InsetBorderRight:Hide()
+    end
+
     function Skin.ButtonFrameTemplate(Frame)
         Skin.PortraitFrameTemplate(Frame)
 
@@ -418,22 +374,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         if Button.RightSeparator then
             Button.RightSeparator:Hide()
         end
-    end
-
-    function Skin.TooltipBorderedFrameTemplate(Frame)
-        Frame.BorderTopLeft:Hide()
-        Frame.BorderTopRight:Hide()
-
-        Frame.BorderBottomLeft:Hide()
-        Frame.BorderBottomRight:Hide()
-
-        Frame.BorderTop:Hide()
-        Frame.BorderBottom:Hide()
-        Frame.BorderLeft:Hide()
-        Frame.BorderRight:Hide()
-
-        Frame.Background:Hide()
-        Skin.FrameTypeFrame(Frame)
     end
 
     function Skin.UIMenuButtonStretchTemplate(Button)
@@ -494,7 +434,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         Skin.UIPanelScrollUpButtonTemplate(_G[name.."ScrollUpButton"])
         Skin.UIPanelScrollDownButtonTemplate(_G[name.."ScrollDownButton"])
-        _G[name.."Border"]:SetBackdrop(nil)
+        Util.HideNineSlice(_G[name.."Border"])
 
         Skin.ScrollBarThumb(Slider:GetThumbTexture())
     end
@@ -619,6 +559,99 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             }
         end
     end
+
+    function Skin.NineSlicePanelTemplate(Frame)
+        Frame._auroraNineSlice = true
+        local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
+        if Frame.debug then
+            _G.print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
+        end
+        if layout then
+            Hook.NineSliceUtil.ApplyLayout(Frame, layout)
+        end
+    end
+    function Skin.DialogBorderNoCenterTemplate(Frame)
+        Skin.NineSlicePanelTemplate(Frame)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 0)
+    end
+    function Skin.DialogBorderTemplate(Frame)
+        if Frame.Bg then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+            Skin.FrameTypeFrame(Frame)
+        else
+            Skin.FrameTypeFrame(Frame)
+            Frame:SetBackdropOption("offsets", {
+                left = 5,
+                right = 5,
+                top = 5,
+                bottom = 5,
+            })
+        end
+    end
+    function Skin.DialogBorderDarkTemplate(Frame)
+        if Frame.Bg then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+
+            local r, g, b = Frame:GetBackdropColor()
+            Frame:SetBackdropColor(r, g, b, 0.87)
+        else
+            Base.SetBackdrop(Frame, Color.frame, 0.87)
+            Frame:SetBackdropOption("offsets", {
+                left = 5,
+                right = 5,
+                top = 5,
+                bottom = 5,
+            })
+        end
+    end
+    function Skin.DialogBorderTranslucentTemplate(Frame)
+        if Frame.Bg then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+
+            local r, g, b = Frame:GetBackdropColor()
+            Frame:SetBackdropColor(r, g, b, 0.8)
+        else
+            Base.SetBackdrop(Frame, Color.frame, 0.8)
+            Frame:SetBackdropOption("offsets", {
+                left = 5,
+                right = 5,
+                top = 5,
+                bottom = 5,
+            })
+        end
+    end
+    function Skin.DialogBorderOpaqueTemplate(Frame)
+        if Frame.Bg then
+            Frame.Center = Frame.Bg
+            Skin.DialogBorderNoCenterTemplate(Frame)
+
+            local r, g, b = Frame:GetBackdropColor()
+            Frame:SetBackdropColor(r, g, b, 1)
+        else
+            Base.SetBackdrop(Frame, Color.frame, 1)
+            Frame:SetBackdropOption("offsets", {
+                left = 5,
+                right = 5,
+                top = 5,
+                bottom = 5,
+            })
+        end
+    end
+
+    function Skin.DialogHeaderTemplate(Frame)
+        Frame.LeftBG:Hide()
+        Frame.RightBG:Hide()
+        Frame.CenterBG:Hide()
+
+        Frame.Text:SetPoint("TOP", 0, -17)
+        Frame.Text:SetPoint("BOTTOM", Frame, "TOP", 0, -(private.FRAME_TITLE_HEIGHT + 17))
+    end
+
     function Skin.ColumnDisplayTemplate(Frame)
         Frame.Background:Hide()
         Frame.TopTileStreaks:Hide()

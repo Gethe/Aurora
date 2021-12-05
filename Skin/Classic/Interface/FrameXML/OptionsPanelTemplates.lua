@@ -6,8 +6,7 @@ if private.isRetail then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Skin = Aurora.Base, Aurora.Skin
-local Color = Aurora.Color
+local Skin = Aurora.Skin
 
 --do --[[ FrameXML\OptionsPanelTemplates.lua ]]
 --end
@@ -37,7 +36,7 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         Skin.UIDropDownMenuTemplate(Frame)
     end
     function Skin.OptionsBoxTemplate(Frame)
-        Base.SetBackdrop(Frame, Color.frame)
+        Skin.TooltipBorderBackdropTemplate(Frame)
     end
 end
 

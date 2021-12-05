@@ -32,28 +32,28 @@ jobs:
     - name: Create Mainline Package
       uses: BigWigsMods/packager@v1.0.3
       with:
-        args: -o
+        args:
 
-  bcc:
+  tbc:
     needs: is_release
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
 
-    - name: Create BCC Package
+    - name: Create TBC Package
       uses: BigWigsMods/packager@v1.0.3
       with:
-        args: -o -g bcc -m .pkgmeta-bcc
+        args: -g bcc -m .pkgmeta-tbc
 
-  classic:
+  vanilla:
     needs: is_release
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
 
-    - name: Create Classic Package
+    - name: Create Vanilla Package
       uses: BigWigsMods/packager@v1.0.3
       with:
-        args: -o -g classic -m .pkgmeta-classic
+        args: -g classic -m .pkgmeta-vanilla
