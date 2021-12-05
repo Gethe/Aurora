@@ -1,4 +1,6 @@
 ## Interface: 90105
+## Interface-Classic: 11401
+## Interface-BCC: 20502
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe

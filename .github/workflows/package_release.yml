@@ -30,7 +30,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create Mainline Package
-      uses: BigWigsMods/packager@multitoc
+      uses: BigWigsMods/packager@v1.0.3
       with:
         args: -m .pkgmeta
 
@@ -42,7 +42,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create TBC Package
-      uses: BigWigsMods/packager@multitoc
+      uses: BigWigsMods/packager@v1.0.3
       with:
         args: -m .pkgmeta-tbc
 
@@ -54,6 +54,6 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create Vanilla Package
-      uses: BigWigsMods/packager@multitoc
+      uses: BigWigsMods/packager@v1.0.3
       with:
         args: -m .pkgmeta-vanilla
