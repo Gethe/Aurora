@@ -123,6 +123,11 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         middle:Hide()
     end
     function Skin.UIPanelButtonNoTooltipTemplate(Button)
+        if not Button.Left then
+            -- To debug
+            -- print("UIPanelButtonNoTooltipTemplate on invalid button: ", Button:GetName())
+            return
+        end
         Skin.FrameTypeButton(Button)
         Button.Left:SetAlpha(0)
         Button.Right:SetAlpha(0)
