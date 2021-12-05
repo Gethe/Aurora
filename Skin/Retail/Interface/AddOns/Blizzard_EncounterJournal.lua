@@ -277,19 +277,17 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
             Frame.reward.iconRingHighlight:SetAlpha(0)
         end
         function Skin.EncounterItemTemplate(Button)
-            Base.CropIcon(Button.icon)
+            Base.CropIcon(Button.lootFrame.icon)
             local bg = _G.CreateFrame("Frame", nil, Button)
-            bg:SetPoint("TOPLEFT", Button.icon, -1, 1)
-            bg:SetPoint("BOTTOMRIGHT", Button.icon, 1, -1)
+            bg:SetPoint("TOPLEFT", Button.lootFrame.icon, -1, 1)
+            bg:SetPoint("BOTTOMRIGHT", Button.lootFrame.icon, 1, -1)
             Base.SetBackdrop(bg, Color.black, 0)
             Button._auroraIconBorder = bg
-
-            Button.armorType:SetTextColor(Color.gray:GetRGB())
-            Button.slot:SetTextColor(Color.gray:GetRGB())
-            Button.boss:SetTextColor(Color.gray:GetRGB())
-
-            Button.bossTexture:SetTexture("")
-            Button.bosslessTexture:SetTexture("")
+            Button.lootFrame.armorType:SetTextColor(Color.gray:GetRGB())
+            Button.lootFrame.slot:SetTextColor(Color.gray:GetRGB())
+            Button.lootFrame.boss:SetTextColor(Color.gray:GetRGB())
+            Button.lootFrame.bossTexture:SetTexture("")
+            Button.lootFrame.bosslessTexture:SetTexture("")
         end
         function Skin.EncounterTierTabTemplate(Button)
             Button.mid:Hide()
