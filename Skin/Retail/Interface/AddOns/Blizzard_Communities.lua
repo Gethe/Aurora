@@ -381,6 +381,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             --     Base.SetTexture(Frame.Icon, roleIcons[atlas])
             --     Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
             -- end
+            Base.SetTexture(Frame.Icon, roleIcons[atlas])
+            Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
         end
         function Skin.ClubFinderCommunitiesCardTemplate(Button)
             Base.SetBackdrop(Button, Color.button, Color.frame.a)
