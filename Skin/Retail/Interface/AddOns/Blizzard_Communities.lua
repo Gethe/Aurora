@@ -376,10 +376,11 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         }
         function Skin.ClubFinderRoleTemplate(Frame)
             local atlas = Frame.Icon:GetAtlas()
-            if not (atlas == nil) then -- really dont know why the return nil on one for this one..
-                Base.SetTexture(Frame.Icon, roleIcons[atlas])
-                Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
-            end
+            -- For some reason the list no longer returns a nil line in the end.
+            -- if not (atlas == nil) then -- really dont know why the return nil on one for this one..
+            --     Base.SetTexture(Frame.Icon, roleIcons[atlas])
+            --     Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
+            -- end
         end
         function Skin.ClubFinderCommunitiesCardTemplate(Button)
             Base.SetBackdrop(Button, Color.button, Color.frame.a)
