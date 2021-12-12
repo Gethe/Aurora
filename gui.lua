@@ -1,10 +1,7 @@
 local _, private = ...
 
 -- [[ Lua Globals ]]
-local next, ipairs = _G.next, _G.ipairs
-
--- [[ WoW API ]]
-local CreateFrame = _G.CreateFrame
+-- luacheck: globals next ipairs
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -14,7 +11,7 @@ local _, C = _G.unpack(Aurora)
 
 -- [[ Splash screen ]]
 
-local splash = CreateFrame("Frame", "AuroraSplashScreen", _G.UIParent)
+local splash = _G.CreateFrame("Frame", "AuroraSplashScreen", _G.UIParent)
 splash:SetPoint("CENTER")
 splash:SetSize(400, 300)
 splash:Hide()
@@ -45,7 +42,7 @@ Enjoy!
     body:SetJustifyH("CENTER")
     body:SetText(text)
 
-    local okayButton = CreateFrame("Button", nil, splash, "UIPanelButtonTemplate")
+    local okayButton = _G.CreateFrame("Button", nil, splash, "UIPanelButtonTemplate")
     okayButton:SetSize(128, 25)
     okayButton:SetPoint("BOTTOM", 0, 10)
     okayButton:SetText("Got it")
@@ -55,7 +52,7 @@ Enjoy!
     end)
 
     splash.okayButton = okayButton
-    splash.closeButton = CreateFrame("Button", nil, splash, "UIPanelCloseButton")
+    splash.closeButton = _G.CreateFrame("Button", nil, splash, "UIPanelCloseButton")
 end
 
 -- [[ Options UI ]]
@@ -106,7 +103,7 @@ local createToggleBox do
     end
 
     function createToggleBox(parent, value, text)
-        local checkbutton = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
+        local checkbutton = _G.CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
         checkbutton.Text:SetText(text)
         checkbutton.value = value
 
@@ -162,7 +159,7 @@ local createColorSwatch do
 
     local frameColor = Aurora.Color.frame
     function createColorSwatch(parent, value, text)
-        local button = CreateFrame("Button", nil, parent)
+        local button = _G.CreateFrame("Button", nil, parent)
         button:SetScript("OnClick", OnClick)
         button:SetSize(16, 16)
         Base.SetBackdrop(button, frameColor, 1)
@@ -189,7 +186,7 @@ local createSlider do
 
     function createSlider(parent, value, text)
         numSliders = numSliders + 1
-        local slider = CreateFrame("Slider", "AuroraOptionsSlider"..numSliders, parent, "OptionsSliderTemplate")
+        local slider = _G.CreateFrame("Slider", "AuroraOptionsSlider"..numSliders, parent, "OptionsSliderTemplate")
         slider:SetMinMaxValues(0, 1)
         slider:SetValueStep(0.1)
         slider.value = value
@@ -207,7 +204,7 @@ end
 
 local createButton do
     function createButton(parent, func, text)
-        local button = CreateFrame("Button", nil, parent, "OptionsButtonTemplate")
+        local button = _G.CreateFrame("Button", nil, parent, "OptionsButtonTemplate")
         button:SetText(text)
 
         button:SetScript("OnClick", function(self)
@@ -218,7 +215,7 @@ local createButton do
 end
 
 -- create frames/widgets
-local gui = CreateFrame("Frame", "AuroraOptions", _G.UIParent)
+local gui = _G.CreateFrame("Frame", "AuroraOptions", _G.UIParent)
 gui.name = "Aurora"
 _G.InterfaceOptions_AddCategory(gui)
 
