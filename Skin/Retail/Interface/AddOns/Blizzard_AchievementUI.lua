@@ -29,7 +29,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         end
     end
     function Hook.AchievementFrame_ToggleView()
-        IN_GUILD_VIEW = not (_G.AchievementFrameHeaderTitle:GetText() == _G.ACHIEVEMENT_TITLE)
+        IN_GUILD_VIEW = _G.AchievementFrameHeaderTitle:GetText() ~= _G.ACHIEVEMENT_TITLE
 
         if IN_GUILD_VIEW then
             _G.AchievementFrameGuildEmblemLeft:SetVertexColor(1, 1, 1, 0.25)

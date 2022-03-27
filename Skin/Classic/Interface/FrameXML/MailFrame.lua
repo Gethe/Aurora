@@ -38,7 +38,7 @@ do --[[ FrameXML\MailFrame.lua ]]
             index = index + 1
         end
 
-        _G.InboxTitleText:SetShown(not (totalItems > numItems))
+        _G.InboxTitleText:SetShown(totalItems <= numItems)
         --MailFrame_UpdateTrialState(_G.MailFrame)
     end
     function Hook.SendMailFrame_Update()
