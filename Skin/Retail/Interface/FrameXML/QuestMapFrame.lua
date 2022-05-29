@@ -33,21 +33,19 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         end
 
         local covenantData = _G.C_Covenants.GetCovenantData(_G.C_Covenants.GetActiveCovenantID())
-        if covenantData then
-            kit = Util.GetTextureKit(covenantData.textureKit, true)
-            for callingHeader in _G.QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do
-                callingHeader.Background:SetTexture("")
-                callingHeader._auroraBG:SetColorTexture(Util.uiTextureKits.alt.color:GetRGB())
+        kit = Util.GetTextureKit(covenantData and covenantData.textureKit, true)
+        for callingHeader in _G.QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do
+            callingHeader.Background:SetTexture("")
+            callingHeader._auroraBG:SetColorTexture(Util.uiTextureKits.alt.color:GetRGB())
 
-                overlay = callingHeader._auroraOverlay
-                overlay:SetPoint("CENTER", callingHeader._auroraBG, "RIGHT", -25, 0)
-                overlay:SetAtlas(kit.emblem)
-                overlay:SetSize(66.33, 76.56)
+            overlay = callingHeader._auroraOverlay
+            overlay:SetPoint("CENTER", callingHeader._auroraBG, "RIGHT", -25, 0)
+            overlay:SetAtlas(kit.emblem)
+            overlay:SetSize(66.33, 76.56)
 
-                overlay:SetBlendMode("BLEND")
-                overlay:SetVertexColor(0, 0, 0)
-                callingHeader.HighlightBackground:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
-            end
+            overlay:SetBlendMode("BLEND")
+            overlay:SetVertexColor(0, 0, 0)
+            callingHeader.HighlightBackground:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
         end
 
         local separator = _G.QuestScrollFrame.Contents.Separator
