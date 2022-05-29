@@ -11,18 +11,21 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
-    local defaultCoords = {0.11627906976744, 0.88372093023256, 0.11627906976744, 0.88372093023256}
+    local default = {
+        coords = {0.11627906976744, 0.88372093023256, 0.11627906976744, 0.88372093023256},
+        color = Color.grayLight,
+    }
     local GEM_TYPE_INFO = {
         Yellow = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.yellow,
         },
         Red = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.red,
         },
         Blue = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.blue,
         },
         Meta = {
@@ -30,38 +33,38 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
             color = Color.grayLight,
         },
         Hydraulic = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.grayDark,
         },
         Cogwheel = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.yellow,
         },
         Prismatic = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.white,
         },
         PunchcardRed = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.red,
         },
         PunchcardYellow = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.yellow,
         },
         PunchcardBlue = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.blue,
         },
         Domination = {
-            coords = defaultCoords,
+            coords = default.coords,
             color = Color.white,
         },
     }
 
     function Hook.ItemSocketingFrame_Update()
         for i, socket in ipairs(_G.ItemSocketingFrame.Sockets) do
-            local gemInfo = GEM_TYPE_INFO[_G.GetSocketTypes(i)]
+            local gemInfo = GEM_TYPE_INFO[_G.GetSocketTypes(i)] or default
             socket.Background:SetTexCoord(gemInfo.coords[1], gemInfo.coords[2], gemInfo.coords[3], gemInfo.coords[4])
             socket:SetBackdropBorderColor(gemInfo.color, 1)
         end
