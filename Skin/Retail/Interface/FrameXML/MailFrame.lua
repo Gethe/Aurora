@@ -46,7 +46,7 @@ do --[[ FrameXML\MailFrame.lua ]]
         for i = 1, _G.ATTACHMENTS_MAX_SEND do
             local button = _G.SendMailFrame.SendMailAttachments[i]
             if i == 1 then
-                button:SetPoint("TOPLEFT", _G.SendMailScrollFrame, "BOTTOMLEFT", 3, -10)
+                button:SetPoint("TOPLEFT", _G.SendMailScrollFrame, "BOTTOMLEFT", 3, -12)
             else
                 if (i % _G.ATTACHMENTS_PER_ROW_SEND) == 1 then
                     button:SetPoint("TOPLEFT", _G.SendMailFrame.SendMailAttachments[i - _G.ATTACHMENTS_PER_ROW_SEND], "BOTTOMLEFT", 23, -9)
@@ -70,7 +70,7 @@ do --[[ FrameXML\MailFrame.lua ]]
             scrollHeight = 173
         end
 
-        _G.SendMailScrollFrame:SetHeight(scrollHeight)
+        _G.SendMailScrollFrame:SetHeight(scrollHeight + 20)
         _G.SendMailScrollChildFrame:SetHeight(scrollHeight)
     end
     function Hook.OpenMail_Update()

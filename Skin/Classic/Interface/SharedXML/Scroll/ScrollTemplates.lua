@@ -16,6 +16,9 @@ do --[[ FrameXML\ScrollTemplates.xml ]]
     function Skin.WowScrollBoxList(Frame)
         Skin.ScrollBoxBaseTemplate(Frame)
     end
+    function Skin.WowScrollBox(Frame)
+        Skin.ScrollBoxBaseTemplate(Frame)
+    end
     function Skin.VerticalScrollBarTemplate(Frame)
         Skin.ScrollBarBaseTemplate(Frame)
     end
@@ -61,6 +64,14 @@ do --[[ FrameXML\ScrollTemplates.xml ]]
         Frame.Back:SetPoint("TOPLEFT", 4, 1)
         Skin.WowScrollBarStepperButtonScripts(Frame.Forward)
         Frame.Forward:SetPoint("BOTTOMLEFT", 4, 2)
+    end
+
+    function Skin.ScrollingEditBoxTemplate(Frame)
+        Skin.WowScrollBox(Frame.ScrollBox)
+    end
+
+    function Skin.WowClassicScrollBar(Frame)
+        Skin.WowTrimScrollBar(Frame)
     end
 end
 
