@@ -34,18 +34,18 @@ do --[[ FrameXML\LFGList.lua ]]
         end
 
         local atlasName
-        if bit.band(allFilters, _G.LE_LFG_LIST_FILTER_RECOMMENDED) ~= 0 then
+        if bit.band(allFilters, private.Enum.LFGListFilter.Recommended) ~= 0 then
             atlasName = "groupfinder-background-"..(_G.LFG_LIST_CATEGORY_TEXTURES[categoryID] or "raids").."-".._G.LFG_LIST_PER_EXPANSION_TEXTURES[_G.LFGListUtil_GetCurrentExpansion()]
-        elseif bit.band(allFilters, _G.LE_LFG_LIST_FILTER_NOT_RECOMMENDED) ~= 0 then
+        elseif bit.band(allFilters, private.Enum.LFGListFilter.NotRecommended) ~= 0 then
             atlasName = "groupfinder-background-"..(_G.LFG_LIST_CATEGORY_TEXTURES[categoryID] or "raids").."-".._G.LFG_LIST_PER_EXPANSION_TEXTURES[math.max(0,_G.LFGListUtil_GetCurrentExpansion() - 1)]
         else
             atlasName = "groupfinder-background-"..(_G.LFG_LIST_CATEGORY_TEXTURES[categoryID] or "questing")
         end
 
         local suffix = ""
-        if bit.band(allFilters, _G.LE_LFG_LIST_FILTER_PVE) ~= 0 then
+        if bit.band(allFilters, private.Enum.LFGListFilter.PvE) ~= 0 then
             suffix = "-pve"
-        elseif bit.band(allFilters, _G.LE_LFG_LIST_FILTER_PVP) ~= 0 then
+        elseif bit.band(allFilters, private.Enum.LFGListFilter.PvP) ~= 0 then
             suffix = "-pvp"
         end
 

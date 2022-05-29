@@ -13,8 +13,14 @@ private.IGNORED_QUEST_DISPLAY = _G.IGNORED_QUEST_DISPLAY:gsub("ff000000", Color.
 
 private.FRAME_TITLE_HEIGHT = 27
 
---local Enum = {}
---private.Enum = Enum
+local Enum = {}
+Enum.LFGListFilter = {
+	Recommended = _G.LE_LFG_LIST_FILTER_RECOMMENDED or _G.Enum.LFGListFilter.Recommended,
+	NotRecommended = _G.LE_LFG_LIST_FILTER_NOT_RECOMMENDED or _G.Enum.LFGListFilter.NotRecommended,
+	PvE = _G.LE_LFG_LIST_FILTER_PVE or _G.Enum.LFGListFilter.PvE,
+	PvP = _G.LE_LFG_LIST_FILTER_PVP or _G.Enum.LFGListFilter.PvP,
+}
+private.Enum = Enum
 
 private.atlasColors = {
     ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
