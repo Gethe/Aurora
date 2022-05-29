@@ -41,11 +41,15 @@ function private.FrameXML.InterfaceOptionsPanels()
     ------------
     -- Combat --
     ------------
+    local CombatPanel = InterfaceOptionsCombatPanel
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelTargetOfTarget)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelFlashLowHealthWarning)
+    Skin.InterfaceOptionsCheckButtonTemplate(CombatPanel.EnableMouseoverCastCheckbox)
+    Skin.UIDropDownMenuTemplate(CombatPanel.MouseoverCastKeyDropDown)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelFocusCastKeyDropDown)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsCombatPanelSelfCastKeyDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelAutoSelfCast)
+    Skin.UIPanelButtonTemplate(CombatPanel.clickCastingButton)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelLossOfControl)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelEnableFloatingCombatText)
     Skin.OptionsSliderTemplate(_G.InterfaceOptionsCombatPanelSpellAlertOpacitySlider)

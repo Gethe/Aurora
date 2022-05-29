@@ -169,9 +169,30 @@ function private.FrameXML.InterfaceOptionsPanels()
     local Accessibility = _G.InterfaceOptionsAccessibilityPanel
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.MovePad)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelCinematicSubtitles)
-    Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
+    if private.hasAPI then
+        --Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
+        --Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelQuestTextContrast)
+        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.SpeechToTextCheckbox)
+        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelTextToSpeech)
+        Skin.UIPanelButtonTemplate(_G.InterfaceOptionsAccessibilityPanelConfigureTextToSpeech)
+        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelRemoteTextToSpeech)
 
-    local FilterExamples = Accessibility.ColorblindFilterExamples
+        Skin.UIDropDownMenuTemplate(Accessibility.RemoteTextToSpeechVoiceDropdown)
+        Skin.UIPanelButtonTemplate(Accessibility.RemoteTextToSpeechVoicePlaySample)
+        Skin.UIDropDownMenuTemplate(Accessibility.MotionSicknessDropdown)
+        Skin.UIDropDownMenuTemplate(Accessibility.ShakeIntensityDropdown)
+        Skin.UIDropDownMenuTemplate(Accessibility.CursorSizeDropdown)
+    else
+        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
+    end
+
+    ----------------
+    -- Colorblind --
+    ----------------
+    local Colorblind = _G.InterfaceOptionsColorblindPanel
+    --Skin.InterfaceOptionsCheckButtonTemplate(Colorblind.ColorblindMode)
+
+    local FilterExamples = private.hasAPI and Colorblind.ColorblindFilterExamples or Accessibility.ColorblindFilterExamples
     FilterExamples.Hostile:SetTexCoord(0.2, 0.8, 0.4, 0.6)
     FilterExamples.Hostile:SetPoint("BOTTOMLEFT", 9, 158)
     FilterExamples.Hostile:SetSize(103, 10)
@@ -187,8 +208,13 @@ function private.FrameXML.InterfaceOptionsPanels()
     FilterExamples.Friendly:SetSize(103, 10)
     FilterExamples.FriendlyLabel:SetPoint("BOTTOMLEFT", FilterExamples.Friendly, "TOPLEFT", 1, 7)
 
-    Skin.UIDropDownMenuTemplate(Accessibility.ColorblindFilterDropDown)
-    Skin.OptionsSliderTemplate(_G.InterfaceOptionsAccessibilityPanelColorblindStrengthSlider)
+    if private.hasAPI then
+        Skin.UIDropDownMenuTemplate(Colorblind.ColorblindFilterDropDown)
+        Skin.OptionsSliderTemplate(_G.InterfaceOptionsColorblindPanelColorblindStrengthSlider)
+    else
+        Skin.UIDropDownMenuTemplate(Accessibility.ColorblindFilterDropDown)
+        Skin.OptionsSliderTemplate(_G.InterfaceOptionsAccessibilityPanelColorblindStrengthSlider)
+    end
 
     -------------
     -- Section --

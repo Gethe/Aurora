@@ -15,10 +15,14 @@ do --[[ FrameXML\ChatConfigFrame.lua ]]
         local checkBoxNameString = frame:GetName().."CheckBox"
 
         for index, value in ipairs(checkBoxTable) do
-            local checkBoxName = checkBoxNameString..index
-            if not _G[checkBoxName]._auroraSkinned then
-                Skin[checkBoxTemplate](_G[checkBoxName])
-                _G[checkBoxName]._auroraSkinned = true
+            if Skin[checkBoxTemplate] then
+                local checkBoxName = checkBoxNameString..index
+                if not _G[checkBoxName]._auroraSkinned then
+                    Skin[checkBoxTemplate](_G[checkBoxName])
+                    _G[checkBoxName]._auroraSkinned = true
+                end
+            else
+                private.debug("Missing template for ChatConfig", checkBoxTemplate)
             end
         end
     end
@@ -82,6 +86,9 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
         })
 
         Skin.ChatConfigCheckButtonTemplate(Frame.CheckButton)
+    end
+    function Skin.ChatConfigCheckBoxSmallTemplate(Frame)
+        Skin.ChatConfigCheckBoxTemplate(Frame)
     end
     function Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
         Skin.ChatConfigCheckBoxTemplate(Frame)

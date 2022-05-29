@@ -41,6 +41,7 @@ function private.AddOns.Blizzard_BindingUI()
     Skin.UIPanelButtonTemplate(KeyBindingFrame.cancelButton)
     Skin.UIPanelButtonTemplate(KeyBindingFrame.okayButton)
     Skin.UIPanelButtonTemplate(KeyBindingFrame.unbindButton)
+    Skin.UIPanelButtonTemplate(KeyBindingFrame.clickCastingButton)
     Skin.UIPanelButtonTemplate(KeyBindingFrame.quickKeybindButton)
     Util.PositionRelative("BOTTOMRIGHT", KeyBindingFrame, "BOTTOMRIGHT", -15, 15, 5, "Left", {
         KeyBindingFrame.cancelButton,
