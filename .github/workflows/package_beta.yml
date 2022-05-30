@@ -32,9 +32,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create Mainline Package
-      uses: BigWigsMods/packager@v1.0.3
-      with:
-        args:
+      uses: BigWigsMods/packager@v2
 
   tbc:
     needs: is_beta
@@ -44,7 +42,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create TBC Package
-      uses: BigWigsMods/packager@v1.0.3
+      uses: BigWigsMods/packager@v2
       with:
         args: -g bcc -m .pkgmeta-tbc
 
@@ -56,6 +54,6 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Create Vanilla Package
-      uses: BigWigsMods/packager@v1.0.3
+      uses: BigWigsMods/packager@v2
       with:
         args: -g classic -m .pkgmeta-vanilla
