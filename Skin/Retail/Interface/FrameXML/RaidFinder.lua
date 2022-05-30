@@ -1,5 +1,5 @@
 local _, private = ...
-if not private.isRetail then return end
+if private.shouldSkip() then return end
 
 -- [[ Core ]]
 local Aurora = private.Aurora

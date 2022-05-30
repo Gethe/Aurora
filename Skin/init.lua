@@ -12,6 +12,10 @@ private.isBCC = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 private.hasAPI = (not private.isRetail) and _G.InClickBindingMode
 private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90200
 
+function private.shouldSkip()
+    return _G.AURORA_DEBUG_PROJECT ~= _G.WOW_PROJECT_ID
+end
+
 private.uiScale = 1
 private.disabled = {
     bags = false,

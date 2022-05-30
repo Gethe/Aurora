@@ -1,8 +1,6 @@
 --[==[ AddOn Files
 local _, private = ...
-if not private.isRetail then return end
-if not private.isClassic then return end
-if not private.isBCC then return end
+if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals
@@ -32,9 +30,7 @@ end
 
 --[==[ FrameXML Files
 local _, private = ...
-if not private.isRetail then return end
-if not private.isClassic then return end
-if not private.isBCC then return end
+if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals
@@ -64,9 +60,7 @@ end
 
 --[==[ SharedXML Files
 local _, private = ...
-if not private.isRetail then return end
-if not private.isClassic then return end
-if not private.isBCC then return end
+if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals

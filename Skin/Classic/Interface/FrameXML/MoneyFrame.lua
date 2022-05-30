@@ -1,5 +1,5 @@
 local _, private = ...
-if private.isRetail then return end
+if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals type floor mod
