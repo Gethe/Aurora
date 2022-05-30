@@ -169,22 +169,18 @@ function private.FrameXML.InterfaceOptionsPanels()
     local Accessibility = _G.InterfaceOptionsAccessibilityPanel
     Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.MovePad)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelCinematicSubtitles)
-    if private.hasAPI then
-        --Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
-        --Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelQuestTextContrast)
-        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.SpeechToTextCheckbox)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelTextToSpeech)
-        Skin.UIPanelButtonTemplate(_G.InterfaceOptionsAccessibilityPanelConfigureTextToSpeech)
-        Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelRemoteTextToSpeech)
+    --Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.OverrideFadeOut)
+    --Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelQuestTextContrast)
+    Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.SpeechToTextCheckbox)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelTextToSpeech)
+    Skin.UIPanelButtonTemplate(_G.InterfaceOptionsAccessibilityPanelConfigureTextToSpeech)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsAccessibilityPanelRemoteTextToSpeech)
 
-        Skin.UIDropDownMenuTemplate(Accessibility.RemoteTextToSpeechVoiceDropdown)
-        Skin.UIPanelButtonTemplate(Accessibility.RemoteTextToSpeechVoicePlaySample)
-        Skin.UIDropDownMenuTemplate(Accessibility.MotionSicknessDropdown)
-        Skin.UIDropDownMenuTemplate(Accessibility.ShakeIntensityDropdown)
-        Skin.UIDropDownMenuTemplate(Accessibility.CursorSizeDropdown)
-    else
-        Skin.InterfaceOptionsCheckButtonTemplate(Accessibility.ColorblindMode)
-    end
+    Skin.UIDropDownMenuTemplate(Accessibility.RemoteTextToSpeechVoiceDropdown)
+    Skin.UIPanelButtonTemplate(Accessibility.RemoteTextToSpeechVoicePlaySample)
+    Skin.UIDropDownMenuTemplate(Accessibility.MotionSicknessDropdown)
+    Skin.UIDropDownMenuTemplate(Accessibility.ShakeIntensityDropdown)
+    Skin.UIDropDownMenuTemplate(Accessibility.CursorSizeDropdown)
 
     ----------------
     -- Colorblind --
@@ -208,13 +204,8 @@ function private.FrameXML.InterfaceOptionsPanels()
     FilterExamples.Friendly:SetSize(103, 10)
     FilterExamples.FriendlyLabel:SetPoint("BOTTOMLEFT", FilterExamples.Friendly, "TOPLEFT", 1, 7)
 
-    if private.hasAPI then
-        Skin.UIDropDownMenuTemplate(Colorblind.ColorblindFilterDropDown)
-        Skin.OptionsSliderTemplate(_G.InterfaceOptionsColorblindPanelColorblindStrengthSlider)
-    else
-        Skin.UIDropDownMenuTemplate(Accessibility.ColorblindFilterDropDown)
-        Skin.OptionsSliderTemplate(_G.InterfaceOptionsAccessibilityPanelColorblindStrengthSlider)
-    end
+    Skin.UIDropDownMenuTemplate(Colorblind.ColorblindFilterDropDown)
+    Skin.OptionsSliderTemplate(_G.InterfaceOptionsColorblindPanelColorblindStrengthSlider)
 
     -------------
     -- Section --
