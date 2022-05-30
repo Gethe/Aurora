@@ -8,6 +8,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
 
 
 
+    <!--Script file="..\SharedXML\SharedConstants.lua"/-->
 
     <!--## add C namespace augmentations here-->
     <!--Script file="..\SharedXML\C_TimerAugment.lua"/-->
@@ -17,8 +18,19 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="..\..\Interface_TBC\FrameXML\Localization.lua"/-->
     <Script file="Fonts.lua"/>
     <!--Script file="FontStyles.lua"/-->
+    <!--Script file="..\SharedXML\ErrorUtil.lua"/-->
     <!--Script file="..\SharedXML\Mixin.lua"/-->
     <!--Script file="..\SharedXML\FunctionUtil.lua"/-->
+    <!--Script file="..\SharedXML\Rectangle.lua"/-->
+    <!--Script file="..\SharedXML\Flags.lua"/-->
+    <!--Script file="..\SharedXML\LinkUtil.lua"/-->
+    <!--Script file="..\SharedXML\InterfaceUtil.lua"/-->
+    <!--Script file="..\SharedXML\AccountUtil.lua"/-->
+    <!--Script file="..\SharedXML\FormattingUtil.lua"/-->
+    <!--Script file="..\SharedXML\TabGroup.lua"/-->
+    <!--Script file="..\SharedXML\SmoothStatusBar.lua"/-->
+    <!--Script file="..\SharedXML\PredictedSetting.lua"/-->
+    <!--Script file="..\SharedXML\SecureUtil.lua"/-->
     <!--Script file="..\SharedXML\AnchorUtil.lua"/-->
     <!--Script file="..\SharedXML\NineSliceLayouts.lua"/-->
     <Script file="..\SharedXML\NineSlice.lua"/>
@@ -26,7 +38,6 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="..\SharedXML\TextureUtil.lua"/-->
     <!--Script file="..\SharedXML\Color.lua"/-->
     <!--Script file="..\..\Interface_TBC\SharedXML\ColorUtil.lua"/-->
-    <!--Script file="..\SharedXML\Util.lua"/-->
     <Script file="..\SharedXML\Constants.lua"/>
     <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
@@ -66,14 +77,15 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="..\SharedXML\Frame\EventFrame.lua"/-->
     <!--Script file="..\SharedXML\Frame\EventButton.lua"/-->
     <!--Script file="..\SharedXML\Frame\EventEditBox.lua"/-->
-    <!--Script file="..\SharedXML\DataProvider.lua"/-->
+    <!--Script file="..\SharedXML\DataProviders.lua"/-->
     <!--Script file="..\SharedXML\Interpolator.lua"/-->
     <!--Script file="..\SharedXML\Scroll\ScrollUtil.lua"/-->
     <!--Script file="..\SharedXML\Scroll\ScrollController.lua"/-->
     <Script file="..\SharedXML\Scroll\ScrollBox.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
-
+    <!--Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/-->
+    <!--Script file="..\SharedXML\Scroll\ClassicTrimScrollBar.lua"/-->
     <!--## intrinsics-->
     <!--Script file="..\SharedXML\ScrollingMessageFrame.lua"/-->
     <!--Script file="..\SharedXML\DropDownToggleButton.lua"/-->
@@ -116,7 +128,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="AuraUtil.lua"/-->
     <!--Script file="CalendarUtil.lua"/-->
     <!--Script file="CommunitiesUtil.lua"/-->
-    <!--## IME.lua needs to be loaded after UIParent.lua-->
+    <!--## IME.xml needs to be loaded after UIParent-->
     <!--Script file="..\SharedXML\IME.lua"/-->
     <Script file="MoneyFrame.lua"/>
 
@@ -235,6 +247,12 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="..\..\Interface_TBC\FrameXML\TalentFrameBase.lua"/-->
     <!--Script file="Blizzard_TalentUITemplates.lua"/-->
     <!--Script file="EasyMenu.lua"/-->
+    <!--Script file="TextToSpeechFrameConstants.lua"/-->
+    <!--Script file="VoiceChatTranscriptionButton.lua"/-->
+    <!--Script file="VoiceChatTranscriptionFrame.lua"/-->
+    <!--Script file="TextToSpeechCommands.lua"/-->
+    <!--Script file="TextToSpeechFrame.lua"/-->
+    <!--Script file="TextToSpeech.lua"/-->
     <Script file="ChatConfigFrame.lua"/>
     <Script file="MovieFrame.lua"/>
     <!--Script file="AnimationSystem.lua"/-->
@@ -254,7 +272,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="PVPFrame.lua"/>
 
 
-    <!--#Save off whatever we need available unmodified.-->
+    <!--#Save off whatever we need available unmodified-->
     <!--Script file="SecureCapsule.lua"/-->
 
     <!--## add new modules above here-->
