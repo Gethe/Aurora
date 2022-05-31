@@ -1,10 +1,10 @@
-## Interface: 90200
+## Interface: 90205
 ## Interface-Classic: 11403
 ## Interface-BCC: 20504
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
-## Version: 9.2.0.0
+## Version: 9.2.5.0
 ## LoadWith: Blizzard_CompactRaidFrames
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack
 ## SavedVariables: AuroraConfig

@@ -1,4 +1,17 @@
-﻿## [9.2.0.0] ##
+﻿## [9.2.5.0] ##
+### Changed ###
+
+  * [retail] Updated mail skin
+  * [classic] Updated interface options
+
+### Fixed ###
+
+  * [retail] Various fixes for 9.2.5
+  * [retail] Error when using the map before choosing a Covenant
+  * [retail] Error when using Cypher gear
+
+
+## [9.2.0.0] ##
 ### Changed ###
 
   * [retail] Updated guild bank skin
@@ -356,6 +369,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[9.2.5.0]: https://github.com/Haleth/Aurora/compare/9.2.0.0...9.2.5.0
 [9.2.0.0]: https://github.com/Haleth/Aurora/compare/9.1.5.0...9.2.0.0
 [9.1.5.0]: https://github.com/Haleth/Aurora/compare/9.0.5.0...9.1.5.0
 [9.0.5.0]: https://github.com/Haleth/Aurora/compare/9.0.2.1...9.0.5.0
