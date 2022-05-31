@@ -28,4 +28,3 @@ function private.FrameXML.UIParent()
     _G.hooksecurefunc("SetPortraitToTexture", Hook.SetPortraitToTexture)
     _G.hooksecurefunc("BuildIconArray", Hook.BuildIconArray)
 end
-print("UIParent", private.FrameXML.UIParent)

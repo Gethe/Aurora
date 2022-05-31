@@ -41,7 +41,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     ------------
     -- Combat --
     ------------
-    local CombatPanel = InterfaceOptionsCombatPanel
+    local CombatPanel = _G.InterfaceOptionsCombatPanel
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelTargetOfTarget)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsCombatPanelFlashLowHealthWarning)
     Skin.InterfaceOptionsCheckButtonTemplate(CombatPanel.EnableMouseoverCastCheckbox)

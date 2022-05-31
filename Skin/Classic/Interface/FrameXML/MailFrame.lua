@@ -276,26 +276,6 @@ function private.FrameXML.MailFrame()
 
 
     --Skin.WowClassicScrollBar(_G.MailEditBoxScrollBar)
-    if not private.hasAPI then
-        Skin.UIPanelScrollFrameTemplate(_G.SendMailScrollFrame)
-        _G.SendMailScrollFrame:SetPoint("TOPLEFT", 10, -83)
-        _G.SendMailScrollFrame:SetWidth(298)
-
-        _G.SendStationeryBackgroundLeft:Hide()
-        _G.SendStationeryBackgroundRight:Hide()
-        _G.SendScrollBarBackgroundTop:Hide()
-        select(4, _G.SendMailScrollFrame:GetRegions()):Hide() -- SendScrollBarBackgroundBottom
-
-        local sendScrollBG = _G.CreateFrame("Frame", nil, _G.SendMailScrollFrame)
-        sendScrollBG:SetFrameLevel(_G.SendMailScrollFrame:GetFrameLevel() - 1)
-        sendScrollBG:SetPoint("TOPLEFT", 0, 2)
-        sendScrollBG:SetPoint("BOTTOMRIGHT", 20, -2)
-        Base.SetBackdrop(sendScrollBG, Color.frame)
-
-        _G.SendMailScrollChildFrame:SetSize(298, 257)
-        _G.SendMailBodyEditBox:SetPoint("TOPLEFT", 2, -2)
-        _G.SendMailBodyEditBox:SetWidth(298)
-    end
 
     -- BlizzWTF: these should use InputBoxTemplate
     Skin.SendMailInputBox(_G.SendMailNameEditBox)
