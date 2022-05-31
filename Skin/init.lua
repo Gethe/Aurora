@@ -23,7 +23,6 @@ private.disabled = {
     fonts = false,
     tooltips = false,
     mainmenubar = false,
-    uiScale = true,
     pixelScale = true
 }
 private.textures = {
