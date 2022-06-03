@@ -594,8 +594,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.InsetFrameTemplate(MountJournal.RightInset)
     Skin.SearchBoxTemplate(MountJournal.searchBox)
-    Skin.UIMenuButtonStretchTemplate(_G.MountJournalFilterButton)
-    --Skin.UIDropDownMenuTemplate(_G.MountJournalFilterDropDown)
+    Skin.UIResettableDropdownButtonTemplate(_G.MountJournalFilterButton)
     Skin.InsetFrameTemplate3(MountJournal.MountCount)
 
     local MountDisplay = MountJournal.MountDisplay
@@ -638,7 +637,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(PetJournal.PetCardInset)
     Skin.InsetFrameTemplate(PetJournal.RightInset)
     Skin.SearchBoxTemplate(PetJournal.searchBox)
-    Skin.UIMenuButtonStretchTemplate(_G.PetJournalFilterButton)
+    Skin.UIResettableDropdownButtonTemplate(_G.PetJournalFilterButton)
     Skin.HybridScrollBarTrimTemplate(PetJournal.listScroll.scrollBar)
 
     PetJournal.loadoutBorder:DisableDrawLayer("ARTWORK")
@@ -722,7 +721,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.CollectionsProgressBarTemplate(ToyBox.progressBar)
     Skin.SearchBoxTemplate(ToyBox.searchBox)
-    Skin.UIMenuButtonStretchTemplate(_G.ToyBoxFilterButton)
+    Skin.UIResettableDropdownButtonTemplate(_G.ToyBoxFilterButton)
 
     local iconsFrame = ToyBox.iconsFrame
     Skin.CollectionsBackgroundTemplate(iconsFrame)
@@ -744,7 +743,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.CollectionsProgressBarTemplate(HeirloomsJournal.progressBar)
     Skin.SearchBoxTemplate(HeirloomsJournal.SearchBox)
-    Skin.UIMenuButtonStretchTemplate(_G.HeirloomsJournalFilterButton)
+    Skin.UIResettableDropdownButtonTemplate(HeirloomsJournal.FilterButton)
     Skin.UIDropDownMenuTemplate(HeirloomsJournal.classDropDown)
 
     Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
@@ -767,7 +766,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
-    Skin.UIMenuButtonStretchTemplate(WardrobeCollectionFrame.FilterButton)
+    Skin.UIResettableDropdownButtonTemplate(WardrobeCollectionFrame.FilterButton)
 
     -- Items
     local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame

@@ -537,6 +537,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local bg = Button:GetBackdropTexture("bg")
         Button.Text:SetPoint("CENTER", bg, 0, 0)
     end
+    function Skin.UIResettableDropdownButtonTemplate(Button)
+        Skin.UIMenuButtonStretchTemplate(Button)
+    end
 
     function Skin.HorizontalSliderTemplate(Slider)
         Base.SetBackdrop(Slider, Color.frame)
