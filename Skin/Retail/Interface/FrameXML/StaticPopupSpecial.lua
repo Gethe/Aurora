@@ -53,7 +53,4 @@ function private.FrameXML.StaticPopupSpecial()
     Skin.DialogBorderTemplate(PetBattleQueueReadyFrame.Border)
     Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.AcceptButton)
     Skin.UIPanelButtonTemplate(PetBattleQueueReadyFrame.DeclineButton)
-
-    Skin.PlayerReportFrameTemplate(_G.ClubFinderReportFrame)
-    Skin.PlayerReportFrameTemplate(_G.PlayerReportFrame)
 end
