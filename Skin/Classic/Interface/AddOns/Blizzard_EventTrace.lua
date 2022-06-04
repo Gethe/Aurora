@@ -90,9 +90,11 @@ function private.AddOns.Blizzard_EventTrace()
     Skin.SearchBoxTemplate(Log.Bar.SearchBox)
 
     Skin.WowScrollBoxList(Log.Events.ScrollBox)
+    Log.Events.ScrollBox:GetRegions():Hide()
     Skin.WowTrimScrollBar(Log.Events.ScrollBar)
 
     Skin.WowScrollBoxList(Log.Search.ScrollBox)
+    Log.Search.ScrollBox:GetRegions():Hide()
     Skin.WowTrimScrollBar(Log.Search.ScrollBar)
 
 
@@ -102,5 +104,6 @@ function private.AddOns.Blizzard_EventTrace()
     Skin.EventTraceMenuButtonTemplate(Filter.Bar.DiscardAllButton)
 
     Skin.WowScrollBoxList(Filter.ScrollBox)
+    Filter.ScrollBox:GetRegions():Hide()
     Skin.WowTrimScrollBar(Filter.ScrollBar)
 end

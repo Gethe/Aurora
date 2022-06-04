@@ -503,6 +503,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.SearchBoxTemplate(EditBox)
         Skin.InputBoxInstructionsTemplate(EditBox)
+        EditBox.Instructions:SetTextColor(Color.gray:GetRGB())
         EditBox.searchIcon:SetPoint("LEFT", 3, -1)
     end
     function Skin.TabButtonTemplate(Button)

@@ -6,13 +6,16 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Skin = Aurora.Skin
+local Color = Aurora.Color
 
 --do --[[ FrameXML\ScrollBox.lua ]]
 --end
 
 do --[[ FrameXML\ScrollBox.xml ]]
     function Skin.ScrollBoxBaseTemplate(Frame)
+        Base.SetBackdrop(Frame, Color.frame)
     end
 end
 
