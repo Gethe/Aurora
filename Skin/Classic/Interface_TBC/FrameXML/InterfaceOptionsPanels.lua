@@ -192,7 +192,7 @@ function private.FrameXML.InterfaceOptionsPanels()
     local Colorblind = _G.InterfaceOptionsColorblindPanel
     --Skin.InterfaceOptionsCheckButtonTemplate(Colorblind.ColorblindMode)
 
-    local FilterExamples = private.hasAPI and Colorblind.ColorblindFilterExamples or Accessibility.ColorblindFilterExamples
+    local FilterExamples = Colorblind.ColorblindFilterExamples
     FilterExamples.Hostile:SetTexCoord(0.2, 0.8, 0.4, 0.6)
     FilterExamples.Hostile:SetPoint("BOTTOMLEFT", 9, 158)
     FilterExamples.Hostile:SetSize(103, 10)
