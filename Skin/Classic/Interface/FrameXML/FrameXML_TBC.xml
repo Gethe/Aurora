@@ -85,7 +85,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
     <Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/>
-    <!--Script file="..\SharedXML\Scroll\ClassicTrimScrollBar.lua"/-->
+    <Script file="..\SharedXML\Scroll\ClassicTrimScrollBar.lua"/>
     <!--## intrinsics-->
     <!--Script file="..\SharedXML\ScrollingMessageFrame.lua"/-->
     <!--Script file="..\SharedXML\DropDownToggleButton.lua"/-->

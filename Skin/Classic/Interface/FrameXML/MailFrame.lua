@@ -261,21 +261,24 @@ function private.FrameXML.MailFrame()
         select(i, _G.SendMailFrame:GetRegions()):Hide()
     end
 
-    Skin.ScrollingEditBoxTemplate(_G.MailEditBox)
-    _G.MailEditBox:SetPoint("TOPLEFT", 10, -83)
-    _G.MailEditBox:SetWidth(298)
+    local MailEditBox = _G.MailEditBox
+    Skin.ScrollingEditBoxTemplate(MailEditBox)
+    MailEditBox:SetPoint("TOPLEFT", 10, -83)
+    MailEditBox:SetWidth(298)
 
-        _G.SendStationeryBackgroundLeft:Hide()
+    _G.SendStationeryBackgroundLeft:Hide()
     _G.SendStationeryBackgroundRight:Hide()
 
-    local sendScrollBG = _G.CreateFrame("Frame", nil, _G.MailEditBox)
-    sendScrollBG:SetFrameLevel(_G.MailEditBox:GetFrameLevel() - 1)
-    sendScrollBG:SetPoint("TOPLEFT", 0, 2)
-    sendScrollBG:SetPoint("BOTTOMRIGHT", 20, -2)
-    Base.SetBackdrop(sendScrollBG, Color.frame)
+    --local sendScrollBG = _G.CreateFrame("Frame", nil, MailEditBox)
+    --sendScrollBG:SetFrameLevel(MailEditBox:GetFrameLevel() - 1)
+    --sendScrollBG:SetPoint("TOPLEFT", 0, 2)
+    --sendScrollBG:SetPoint("BOTTOMRIGHT", 20, -2)
+    --Base.SetBackdrop(sendScrollBG, Color.frame)
 
-
-    --Skin.WowClassicScrollBar(_G.MailEditBoxScrollBar)
+    local MailEditBoxScrollBar = _G.MailEditBoxScrollBar
+    Skin.WowClassicScrollBar(MailEditBoxScrollBar)
+    MailEditBoxScrollBar:SetPoint("TOPLEFT", MailEditBox, "TOPRIGHT", 0, -3)
+    MailEditBoxScrollBar:SetPoint("BOTTOMLEFT", MailEditBox, "BOTTOMRIGHT", 0, 0)
 
     -- BlizzWTF: these should use InputBoxTemplate
     Skin.SendMailInputBox(_G.SendMailNameEditBox)

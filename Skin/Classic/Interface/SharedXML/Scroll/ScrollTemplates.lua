@@ -6,7 +6,6 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 --do --[[ FrameXML\ScrollTemplates.lua ]]
@@ -24,10 +23,6 @@ do --[[ FrameXML\ScrollTemplates.xml ]]
     end
     function Skin.ScrollingEditBoxTemplate(Frame)
         Skin.WowScrollBox(Frame.ScrollBox)
-    end
-
-    function Skin.WowClassicScrollBar(Frame)
-        Skin.WowTrimScrollBar(Frame)
     end
 end
 
