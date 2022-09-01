@@ -32,17 +32,17 @@ jobs:
     - name: Create Mainline Package
       uses: BigWigsMods/packager@v2
 
-  tbc:
+  wrath:
     needs: is_release
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
 
-    - name: Create TBC Package
+    - name: Create Wrath Package
       uses: BigWigsMods/packager@v2
       with:
-        args: -g bcc -m .pkgmeta-tbc
+        args: -g wrath -m .pkgmeta-wrath
 
   vanilla:
     needs: is_release

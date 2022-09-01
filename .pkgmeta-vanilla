@@ -6,6 +6,7 @@ ignore:
     - dev
     - Skin/Retail
     - Skin/Classic/Interface_TBC
+    - Skin/Classic/Interface_Wrath
 
 manual-changelog:
   filename: CHANGELOG.md

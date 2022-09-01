@@ -1,6 +1,6 @@
 ## Interface: 90205
 ## Interface-Classic: 11403
-## Interface-BCC: 20504
+## Interface-Wrath: 30400
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
@@ -24,8 +24,8 @@ Skin\skin.xml
 # Skin\Interface\AddOns\AddOns_Vanilla.xml
 # #@end-version-classic@
 # #@version-bcc@
-# Skin\Interface\FrameXML\FrameXML_TBC.xml
-# Skin\Interface\AddOns\AddOns_TBC.xml
+# Skin\Interface\FrameXML\FrameXML_Wrath.xml
+# Skin\Interface\AddOns\AddOns_Wrath.xml
 # #@end-version-bcc@
 #@end-non-debug@
 #@debug@
@@ -35,8 +35,8 @@ Skin\Retail\Interface\AddOns\AddOns.xml
 Skin\Classic\Interface\FrameXML\FrameXML_Vanilla.xml
 Skin\Classic\Interface\AddOns\AddOns_Vanilla.xml
 
-Skin\Classic\Interface\FrameXML\FrameXML_TBC.xml
-Skin\Classic\Interface\AddOns\AddOns_TBC.xml
+Skin\Classic\Interface\FrameXML\FrameXML_Wrath.xml
+Skin\Classic\Interface\AddOns\AddOns_Wrath.xml
 #@end-debug@
 
 aurora.lua
