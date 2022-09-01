@@ -14,22 +14,23 @@ FrameXML='../wow-ui-source/Interface/FrameXML/*.toc'
 for TOC in $FrameXML
 do
 	echo "Processing $TOC"
-	tocFile="${TOC##*/}"
-	tocFile="$skin${tocFile/toc/xml}"
+	tocName="${TOC##*/}"
+	tocName="${tocName%.*}"
+	tocFile="$skin$tocName.xml"
 
 	echo "Create $tocFile"
 	# shellcheck disable=SC2059
 	printf "$header" >"$tocFile"
 
-	case $tocFile in
-		Vanilla)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.WOW_PROJECT_CLASSIC\n    </Script>" >>"$tocFile"
+	case $tocName in
+		FrameXML_Vanilla)
+			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.LE_EXPANSION_CLASSIC\n    </Script>" >>"$tocFile"
 			;;
-		TBC)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC\n    </Script>" >>"$tocFile"
+		FrameXML_TBC)
+			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.LE_EXPANSION_BURNING_CRUSADE\n    </Script>" >>"$tocFile"
 			;;
-		Wrath)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.WOW_PROJECT_WRATH\n    </Script>" >>"$tocFile"
+		FrameXML_Wrath)
+			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.LE_EXPANSION_WRATH_OF_THE_LICH_KING\n    </Script>" >>"$tocFile"
 			;;
 		*)
 			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.WOW_PROJECT_MAINLINE\n    </Script>" >>"$tocFile"

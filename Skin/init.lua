@@ -6,14 +6,21 @@ local ADDON_NAME, private = ...
 private.API_MAJOR, private.API_MINOR = 0, 8
 
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
-private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
-private.isBCC = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+private.isClassic = _G.LE_EXPANSION_LEVEL_CURRENT == _G.LE_EXPANSION_CLASSIC
+private.isBCC = _G.LE_EXPANSION_LEVEL_CURRENT == _G.LE_EXPANSION_BURNING_CRUSADE
+private.isWrath = _G.LE_EXPANSION_LEVEL_CURRENT == _G.LE_EXPANSION_WRATH_OF_THE_LICH_KING
 
-private.hasAPI = (not private.isRetail) and _G.InClickBindingMode
+--private.hasAPI = (not private.isRetail) and _G.InClickBindingMode
 private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90200
 
+local debugProjectID = {
+    [_G.WOW_PROJECT_MAINLINE] = private.isRetail,
+    [_G.LE_EXPANSION_CLASSIC] = private.isClassic,
+    [_G.LE_EXPANSION_BURNING_CRUSADE] = private.isBCC,
+    [_G.LE_EXPANSION_WRATH_OF_THE_LICH_KING] = private.isWrath,
+}
 function private.shouldSkip()
-    return _G.AURORA_DEBUG_PROJECT ~= _G.WOW_PROJECT_ID
+    return debugProjectID[_G.AURORA_DEBUG_PROJECT]
 end
 
 private.uiScale = 1
