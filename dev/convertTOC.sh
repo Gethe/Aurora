@@ -24,16 +24,16 @@ do
 
 	case $tocName in
 		FrameXML_Vanilla)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.LE_EXPANSION_CLASSIC\n    </Script>" >>"$tocFile"
+			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 1\n    </Script>" >>"$tocFile"
 			;;
 		FrameXML_TBC)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.LE_EXPANSION_BURNING_CRUSADE\n    </Script>" >>"$tocFile"
+			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 2\n    </Script>" >>"$tocFile"
 			;;
 		FrameXML_Wrath)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.LE_EXPANSION_WRATH_OF_THE_LICH_KING\n    </Script>" >>"$tocFile"
+			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 3\n    </Script>" >>"$tocFile"
 			;;
 		*)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = _G.WOW_PROJECT_MAINLINE\n    </Script>" >>"$tocFile"
+			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 0\n    </Script>" >>"$tocFile"
 			;;
 	esac
 	# shellcheck disable=SC2059

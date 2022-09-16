@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script>
-        _G.AURORA_DEBUG_PROJECT = _G.LE_EXPANSION_BURNING_CRUSADE
+        _G.AURORA_DEBUG_PROJECT = 2
     </Script>
 
 
@@ -118,7 +118,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--## add new modules below here-->
     <Script file="ChatBubbleTemplates.lua"/>
     <!--Script file="WorldFrame.lua"/-->
-    <Script file="..\..\Interface_TBC\FrameXML\UIParent.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\UIParent.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptedAnimationEffects.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
@@ -168,7 +168,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="AudioOptionsFrame.lua"/-->
     <Script file="AudioOptionsPanels.lua"/>
     <Script file="InterfaceOptionsFrame.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\InterfaceOptionsPanels.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\InterfaceOptionsPanels.lua"/-->
     <Script file="..\SharedXML\AddonList.lua"/>
     <!--Script file="AlertFrameIntrinsic.lua"/-->
     <!--Script file="AlertFrames.lua"/-->
@@ -191,7 +191,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="BuffFrame.lua"/-->
     <!--Script file="LowHealthFrame.lua"/-->
     <!--Script file="CombatFeedback.lua"/-->
-    <Script file="..\..\Interface_TBC\FrameXML\CastingBarFrame.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\CastingBarFrame.lua"/-->
     <!--Script file="VoiceChatHeadsetButton.lua"/-->
     <Script file="VoiceToggleButton.lua"/>
     <!--Script file="ReportFrame.lua"/-->
@@ -219,15 +219,15 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="PetFrame.lua"/-->
     <!--Script file="StatsFrame.lua"/-->
     <Script file="SpellBookFrame.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\CharacterFrame.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\PaperDollFrame.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\PetPaperDollFrame.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\CharacterFrame.lua"/-->
+    <!--Script file="..\..\Interface_TBC\FrameXML\PaperDollFrame.lua"/-->
+    <!--Script file="..\..\Interface_TBC\FrameXML\PetPaperDollFrame.lua"/-->
     <Script file="SkillFrame.lua"/>
     <Script file="ReputationFrame.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\QuestFrame.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\QuestLogFrame.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\QuestFrame.lua"/-->
+    <!--Script file="..\..\Interface_TBC\FrameXML\QuestLogFrame.lua"/-->
     <Script file="QuestTimerFrame.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\QuestInfo.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\QuestInfo.lua"/-->
     <Script file="..\..\Interface_TBC\FrameXML\MerchantFrame.lua"/>
     <Script file="TradeFrame.lua"/>
     <!--Script file="..\..\Interface_Vanilla\FrameXML\ContainerFrame_Vanilla.lua"/-->
@@ -237,7 +237,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="TaxiFrame.lua"/>
     <Script file="..\..\Interface_TBC\FrameXML\BankFrame.lua"/>
     <Script file="ItemRef.lua"/>
-    <Script file="..\..\Interface_TBC\FrameXML\FriendsFrame.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\FriendsFrame.lua"/-->
     <Script file="RaidFrame.lua"/>
     <Script file="PetActionBarFrame.lua"/>
     <Script file="MainMenuBarBagButtons.lua"/>
@@ -284,7 +284,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <!--Script file="..\SharedXML\ArenaUtil.lua"/-->
     <!--Script file="ArenaFrame.lua"/-->
     <!--Script file="ArenaRegistrarFrame.lua"/-->
-    <Script file="PVPFrame.lua"/>
+    <!--Script file="PVPFrame.lua"/-->
 
 
     <!--#Save off whatever we need available unmodified-->
