@@ -20,7 +20,7 @@ local debugProjectID = {
     [_G.LE_EXPANSION_WRATH_OF_THE_LICH_KING] = private.isWrath,
 }
 function private.shouldSkip()
-    return debugProjectID[_G.AURORA_DEBUG_PROJECT]
+    return not debugProjectID[_G.AURORA_DEBUG_PROJECT]
 end
 
 private.uiScale = 1
