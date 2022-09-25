@@ -5,7 +5,6 @@ ignore:
     - *.bat
     - dev
     - Skin/Retail
-    - Skin/Classic/Interface_TBC
     - Skin/Classic/Interface_Vanilla
 
 manual-changelog:
