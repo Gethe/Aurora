@@ -18,9 +18,9 @@ do --[[ AddOns\Blizzard_CraftUI.lua ]]
 
         for i = 1, _G.CRAFTS_DISPLAYED do
             local skillButton = _G["Craft"..i]
-            local _, _, skillType = _G.GetCraftInfo(skillButton:GetID())
+            local _, _, craftType = _G.GetCraftInfo(skillButton:GetID())
 
-            if skillType == "header" then
+            if craftType == "header" then
                 skillButton._minus:Show()
                 skillButton:GetHighlightTexture():SetTexture("")
             else
@@ -51,25 +51,22 @@ do --[[ AddOns\Blizzard_CraftUI.lua ]]
     function Hook.CraftFrame_SetSelection(id)
         if not id then return end
 
-        local _, _, skillType = _G.GetCraftInfo(id)
-        if skillType == "header" then return end
+        local _, _, craftType = _G.GetCraftInfo(id)
+        if not craftType or craftType == "header" then return end
 
-        if not skillType then
-            return Hook.SetItemButtonQuality(_G.CraftIcon, 0)
+        local quality, link = 0, _G.GetCraftItemLink(id)
+        if link then
+            _, _, quality = _G.GetItemInfo(link)
         end
 
-        local link = _G.GetCraftItemLink(id)
-        if link then
-            local _, _, quality = _G.GetItemInfo(link)
-            Hook.SetItemButtonQuality(_G.CraftIcon, quality, link)
-            Base.CropIcon(_G.CraftIcon:GetNormalTexture())
+        Hook.SetItemButtonQuality(_G.CraftIcon, quality, link)
+        Base.CropIcon(_G.CraftIcon:GetNormalTexture())
 
-            local numReagents = _G.GetCraftNumReagents(id)
-            for i = 1, numReagents do
-                link = _G.GetCraftReagentItemLink(id, i)
-                _, _, quality = _G.GetItemInfo(link)
-                Hook.SetItemButtonQuality(_G["CraftReagent"..i], quality, link)
-            end
+        local numReagents = _G.GetCraftNumReagents(id)
+        for i = 1, numReagents do
+            link = _G.GetCraftReagentItemLink(id, i)
+            _, _, quality = _G.GetItemInfo(link)
+            Hook.SetItemButtonQuality(_G["CraftReagent"..i], quality, link)
         end
     end
 end

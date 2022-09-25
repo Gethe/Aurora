@@ -50,14 +50,14 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
     end
     function Hook.TradeSkillFrame_SetSelection(id)
         local _, skillType = _G.GetTradeSkillInfo(id)
-        if skillType == "header" then return end
+        if not skillType or skillType == "header" then return end
+        _G.TradeSkillRankFrame:SetStatusBarColor(Color.blue:GetRGB())
 
-        if not skillType then
-            return Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, 0)
+        local quality, link = 0, _G.GetTradeSkillItemLink(id)
+        if link then
+            _, _, quality = _G.GetItemInfo(link)
         end
 
-        local link = _G.GetTradeSkillItemLink(id)
-        local _, _, quality = _G.GetItemInfo(link)
         Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, quality, link)
         Base.CropIcon(_G.TradeSkillSkillIcon:GetNormalTexture())
 

@@ -19,11 +19,6 @@ do --[[ FrameXML\ActionBarController.lua ]]
                 frame.StatusBar:SetHeight(9)
             end
         end
-        function Hook.UpdateMicroButtons()
-            if _G.UnitLevel("player") >= _G.SHOW_SPEC_LEVEL then
-                _G.QuestLogMicroButton:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0);
-            end
-        end
     end
 end
 
@@ -194,32 +189,34 @@ function private.FrameXML.ActionBarController()
         ------------------------------------
         -- MainMenuBarPerformanceBarFrame --
         ------------------------------------
-        local PerformanceBarFrame = _G.MainMenuBarPerformanceBarFrame
-        Base.SetBackdrop(PerformanceBarFrame, Color.button, Color.frame.a)
-        PerformanceBarFrame:SetBackdropOption("offsets", {
-            left = 1,
-            right = 6,
-            top = 13,
-            bottom = 11,
-        })
+        if not private.isWrath then
+            local PerformanceBarFrame = _G.MainMenuBarPerformanceBarFrame
+            Base.SetBackdrop(PerformanceBarFrame, Color.button, Color.frame.a)
+            PerformanceBarFrame:SetBackdropOption("offsets", {
+                left = 1,
+                right = 6,
+                top = 13,
+                bottom = 11,
+            })
 
-        local bg = PerformanceBarFrame:GetBackdropTexture("bg")
-        local PerformanceBar = _G.MainMenuBarPerformanceBar
-        Base.SetTexture(PerformanceBar, "gradientRight")
-        PerformanceBar:ClearAllPoints()
-        PerformanceBar:SetPoint("TOPLEFT", bg, 1, -1)
-        PerformanceBar:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-        do -- Vertical status bar
-            local divHeight = PerformanceBar:GetHeight() / 3
-            local ypos = divHeight
-            for i = 1, 2 do
-                local texture = PerformanceBarFrame:CreateTexture(nil, "ARTWORK")
-                texture:SetColorTexture(Color.button:GetRGB())
-                texture:SetSize(1, 1)
+            local bg = PerformanceBarFrame:GetBackdropTexture("bg")
+            local PerformanceBar = _G.MainMenuBarPerformanceBar
+            Base.SetTexture(PerformanceBar, "gradientRight")
+            PerformanceBar:ClearAllPoints()
+            PerformanceBar:SetPoint("TOPLEFT", bg, 1, -1)
+            PerformanceBar:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+            do -- Vertical status bar
+                local divHeight = PerformanceBar:GetHeight() / 3
+                local ypos = divHeight
+                for i = 1, 2 do
+                    local texture = PerformanceBarFrame:CreateTexture(nil, "ARTWORK")
+                    texture:SetColorTexture(Color.button:GetRGB())
+                    texture:SetSize(1, 1)
 
-                texture:SetPoint("BOTTOMLEFT", bg, 0, floor(ypos))
-                texture:SetPoint("BOTTOMRIGHT", bg, 0, floor(ypos))
-                ypos = ypos + divHeight
+                    texture:SetPoint("BOTTOMLEFT", bg, 0, floor(ypos))
+                    texture:SetPoint("BOTTOMRIGHT", bg, 0, floor(ypos))
+                    ypos = ypos + divHeight
+                end
             end
         end
     end

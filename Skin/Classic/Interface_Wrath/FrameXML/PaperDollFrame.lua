@@ -143,4 +143,10 @@ function private.FrameXML.PaperDollFrame()
     _G.CharacterAmmoSlot:SetNormalTexture("")
     Base.CropIcon(_G.CharacterAmmoSlot:GetPushedTexture())
     Base.CropIcon(_G.CharacterAmmoSlot:GetHighlightTexture())
+
+    _G.GearManagerToggleButton:ClearAllPoints()
+    _G.GearManagerToggleButton:SetPoint("BOTTOMRIGHT", bg, -5, 5)
+
+    _G.GearManagerDialog:ClearAllPoints()
+    _G.GearManagerDialog:SetPoint("BOTTOMLEFT", bg, "BOTTOMRIGHT", 0, 0)
 end

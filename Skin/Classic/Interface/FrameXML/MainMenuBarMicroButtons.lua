@@ -58,8 +58,13 @@ local function SetMicroButton(button, file, left, right, top, bottom)
     end
 end
 
---do --[[ MainMenuBarMicroButtons.lua ]]
---end
+do --[[ MainMenuBarMicroButtons.lua ]]
+    function Hook.UpdateMicroButtons()
+        if _G.UnitLevel("player") >= _G.SHOW_SPEC_LEVEL then
+            _G.QuestLogMicroButton:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0);
+        end
+    end
+end
 
 do --[[ MainMenuBarMicroButtons.xml ]]
     function Skin.MainMenuBarMicroButton(Button)

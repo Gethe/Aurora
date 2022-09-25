@@ -13,19 +13,12 @@ local Util = Aurora.Util
 --end
 
 do --[[ AddOns\Blizzard_TalentUI.xml ]]
-    function Skin.TalentTabTemplate(Button)
+    function Skin.PlayerTalentTabTemplate(Button)
         Skin.CharacterFrameTabButtonTemplate(Button)
         Button._auroraTabResize = true
     end
-    function Skin.TalentBranchTemplate(Texture)
-    end
-    function Skin.TalentArrowTemplate(Texture)
-    end
-    function Skin.TalentButtonTemplate(Button)
-        Skin.FrameTypeItemButton(Button)
-
-        local name = Button:GetName()
-        _G[name.."Slot"]:Hide()
+    function Skin.PlayerTalentButtonTemplate(Button)
+        Skin.TalentButtonTemplate(Button)
     end
 end
 
@@ -40,7 +33,7 @@ function private.AddOns.Blizzard_TalentUI()
     })
 
     local bg = PlayerTalentFrame:GetBackdropTexture("bg")
-    local portrait, tl, tr, bl, br = PlayerTalentFrame:GetRegions()
+    local portrait, _, tl, tr, bl, br = PlayerTalentFrame:GetRegions()
     portrait:Hide()
     tl:Hide()
     tr:Hide()
@@ -55,14 +48,17 @@ function private.AddOns.Blizzard_TalentUI()
             y = 327,
         },
         TopRight = {
+            point = "TOPRIGHT",
             x = 72,
             y = 327,
         },
         BottomLeft = {
+            point = "BOTTOMLEFT",
             x = 286,
             y = 163,
         },
         BottomRight = {
+            point = "BOTTOMRIGHT",
             x = 72,
             y = 163,
         },
@@ -82,37 +78,43 @@ function private.AddOns.Blizzard_TalentUI()
     _G.PlayerTalentFrameTitleText:SetPoint("TOPLEFT", bg)
     _G.PlayerTalentFrameTitleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    _G.PlayerTalentFramePointsLeft:Hide()
-    _G.PlayerTalentFramePointsMiddle:Hide()
-    _G.PlayerTalentFramePointsRight:Hide()
-
-    _G.PlayerTalentFrameSpentPoints:SetPoint("TOP", _G.PlayerTalentFrameTitleText, "BOTTOM", 0, 5)
-
     Skin.UIPanelCloseButton(_G.PlayerTalentFrameCloseButton)
-    Skin.UIPanelButtonTemplate(_G.PlayerTalentFrameCancelButton)
+    _G.PlayerTalentFrameRoleButton:SetPoint("TOPRIGHT", bg, -30, -8)
 
-    Skin.TalentTabTemplate(_G.PlayerTalentFrameTab1)
-    Skin.TalentTabTemplate(_G.PlayerTalentFrameTab2)
-    Skin.TalentTabTemplate(_G.PlayerTalentFrameTab3)
-    Skin.TalentTabTemplate(_G.PlayerTalentFrameTab4)
-    Skin.TalentTabTemplate(_G.PlayerTalentFrameTab5)
+    _G.PlayerTalentFramePointsBar:SetPoint("LEFT", bg, 0, 0)
+    _G.PlayerTalentFramePointsBar:SetPoint("RIGHT", bg, 0, 0)
+    _G.PlayerTalentFramePointsBarBackground:Hide()
+    _G.PlayerTalentFramePointsBarBorderLeft:Hide()
+    _G.PlayerTalentFramePointsBarBorderMiddle:Hide()
+    _G.PlayerTalentFramePointsBarBorderRight:Hide()
+
+    _G.PlayerTalentFramePreviewBar:SetPoint("LEFT", bg, 0, 0)
+    _G.PlayerTalentFramePreviewBar:SetPoint("RIGHT", bg, 0, 0)
+    _G.PlayerTalentFramePreviewBarButtonBorder:Hide()
+    Skin.UIPanelButtonTemplate(_G.PlayerTalentFrameResetButton)
+    Skin.UIPanelButtonTemplate(_G.PlayerTalentFrameLearnButton)
+    _G.PlayerTalentFramePreviewBarFiller:Hide()
+
+    Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab1)
+    Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab2)
+    Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab3)
+    Skin.PlayerTalentTabTemplate(_G.PlayerTalentFrameTab4)
     Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.PlayerTalentFrameTab1,
         _G.PlayerTalentFrameTab2,
         _G.PlayerTalentFrameTab3,
         _G.PlayerTalentFrameTab4,
-        _G.PlayerTalentFrameTab5,
     })
 
     _G.PlayerTalentFrameScrollFrame:ClearAllPoints()
     _G.PlayerTalentFrameScrollFrame:SetPoint("TOPLEFT", bg, 5, -45)
-    _G.PlayerTalentFrameScrollFrame:SetPoint("BOTTOMRIGHT", bg, -25, 30)
+    _G.PlayerTalentFrameScrollFrame:SetPoint("BOTTOMRIGHT", PlayerTalentFramePointsBar, "TOPRIGHT", -25, 5)
+
     Skin.UIPanelScrollFrameTemplate(_G.PlayerTalentFrameScrollFrame)
-    local top, bottom = _G.PlayerTalentFrameScrollFrame:GetRegions()
-    top:Hide()
-    bottom:Hide()
+    _G.PlayerTalentFrameScrollFrameBackgroundTop:Hide()
+    _G.PlayerTalentFrameScrollFrameBackgroundBottom:Hide()
 
     for i = 1, _G.MAX_NUM_TALENTS do
-        Skin.TalentButtonTemplate(_G["PlayerTalentFrameTalent"..i])
+        Skin.PlayerTalentButtonTemplate(_G["PlayerTalentFrameTalent"..i])
     end
 end

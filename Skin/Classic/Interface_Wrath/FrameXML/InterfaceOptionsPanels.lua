@@ -73,6 +73,9 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowCloak)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelInstantQuestText)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelAutoQuestWatch)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowFreeBagSpace)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelConsolidateBuffs)
+    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelDisplayDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelHideOutdoorWorldState)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelRotateMinimap)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowMinimapClock)
@@ -80,8 +83,8 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowLoadingScreenTip)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowTutorials)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsDisplayPanelResetTutorials)
-    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelDisplayDropDown)
-    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelChatBubblesDropDown)
+    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsDisplayPanelAggroWarningDropdown)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsDisplayPanelShowAggroPercentages)
 
     ------------
     -- Social --
@@ -93,17 +96,18 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockTrades)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockGuildInvites)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBlockChatChannelInvites)
+    Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsSocialPanelChatBubblesDropDown)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelOnlineFriends)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelOfflineFriends)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelBroadcasts)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelFriendRequests)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelShowToastWindow)
-    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelEnableTwitter)
-    Skin.UIPanelButtonTemplate(_G.InterfaceOptionsSocialPanelTwitterLoginButton)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsSocialPanelChatStyle)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsSocialPanelTimestamps)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsSocialPanelWhisperMode)
     Skin.UIPanelButtonTemplate(_G.InterfaceOptionsSocialPanelRedockChat)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsSocialPanelEnableTwitter)
+    Skin.UIPanelButtonTemplate(_G.InterfaceOptionsSocialPanelTwitterLoginButton)
 
     ----------------
     -- ActionBars --
@@ -166,6 +170,13 @@ function private.FrameXML.InterfaceOptionsPanels()
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsMousePanelLockCursorToScreen)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsMousePanelClickToMove)
     Skin.UIDropDownMenuTemplate(_G.InterfaceOptionsMousePanelClickMoveStyleDropDown)
+
+    --------------
+    -- Features --
+    --------------
+    local Features = _G.InterfaceOptionsFeaturesPanel
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsFeaturesPanelEquipmentManager)
+    Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsFeaturesPanelPreviewTalentChanges)
 
     -------------------
     -- Accessibility --

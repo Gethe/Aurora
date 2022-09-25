@@ -50,14 +50,14 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
     end
     function Hook.TradeSkillFrame_SetSelection(id)
         local _, skillType = _G.GetTradeSkillInfo(id)
-        if skillType == "header" then return end
+        if not skillType or skillType == "header" then return end
+        _G.TradeSkillRankFrame:SetStatusBarColor(Color.blue:GetRGB())
 
-        if not skillType then
-            return Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, 0)
+        local quality, link = 0, _G.GetTradeSkillItemLink(id)
+        if link then
+            _, _, quality = _G.GetItemInfo(link)
         end
 
-        local link = _G.GetTradeSkillItemLink(id)
-        local _, _, quality = _G.GetItemInfo(link)
         Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, quality, link)
         Base.CropIcon(_G.TradeSkillSkillIcon:GetNormalTexture())
 
@@ -89,34 +89,33 @@ function private.AddOns.Blizzard_TradeSkillUI()
     })
 
     local tradeSkillBG = TradeSkillFrame:GetBackdropTexture("bg")
-    local portrait, tl, tr, bl, br = TradeSkillFrame:GetRegions()
+    local portrait, _, topLeft, topRight, bottomLeft, bottomRight = TradeSkillFrame:GetRegions()
     portrait:Hide()
-    tl:Hide()
-    tr:Hide()
-    bl:Hide()
-    br:Hide()
+    topLeft:Hide()
+    topRight:Hide()
+    bottomLeft:Hide()
+    bottomRight:Hide()
 
     local titleText = _G.TradeSkillFrameTitleText
     titleText:ClearAllPoints()
     titleText:SetPoint("TOPLEFT", tradeSkillBG)
     titleText:SetPoint("BOTTOMRIGHT", tradeSkillBG, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    local borderLeft, borderRight = select(7, TradeSkillFrame:GetRegions())
-    borderLeft:Hide()
-    borderRight:Hide()
-
-    local barLeft, barRight = select(9, TradeSkillFrame:GetRegions())
+    local barLeft, barRight = select(8, TradeSkillFrame:GetRegions())
     barLeft:SetColorTexture(Color.gray:GetRGB())
     barLeft:SetPoint("TOPLEFT", tradeSkillBG, 10, -210)
     barLeft:SetPoint("BOTTOMRIGHT", tradeSkillBG, "TOPRIGHT", -10, -211)
     barRight:Hide()
 
+    Skin.UICheckButtonTemplate(_G.TradeSkillFrameAvailableFilterCheckButton)
+    _G.TradeSkillFrameAvailableFilterCheckButton:SetPoint("TOPLEFT", tradeSkillBG, 2, -2)
+
     Skin.FrameTypeStatusBar(_G.TradeSkillRankFrame)
     _G.TradeSkillRankFrame:SetPoint("TOPLEFT", tradeSkillBG, 20, -30)
     _G.TradeSkillRankFrame:SetPoint("TOPRIGHT", tradeSkillBG, -20, -30)
-    _G.TradeSkillRankFrameSkillName:SetPoint("LEFT", 6, 0)
-    _G.TradeSkillRankFrameBackground:Hide()
+    _G.TradeSkillRankFrameSkillRank:SetPoint("TOP", 0, -1)
     _G.TradeSkillRankFrameBorder:Hide()
+    _G.TradeSkillRankFrameBackground:Hide()
 
     local left, middle, right = _G.TradeSkillExpandButtonFrame:GetRegions()
     left:Hide()

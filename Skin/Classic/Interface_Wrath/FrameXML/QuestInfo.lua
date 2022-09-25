@@ -32,7 +32,6 @@ do --[[ FrameXML\QuestInfo.lua ]]
         local rewardsFrame = _G.QuestInfoFrame.rewardsFrame
         rewardsFrame.ItemChooseText:SetTextColor(textR, textG, textB)
         rewardsFrame.ItemReceiveText:SetTextColor(textR, textG, textB)
-        rewardsFrame.PlayerTitleText:SetTextColor(textR, textG, textB)
         if not mapView then
             rewardsFrame.XPFrame.ReceiveText:SetTextColor(textR, textG, textB)
         end
@@ -101,7 +100,7 @@ do --[[ FrameXML\QuestInfo.xml ]]
         Skin.LargeItemButtonTemplate(Button)
     end
     function Skin.QuestInfoSpellHeaderTemplate(FontString)
-        FontString:SetTextColor(0.8, 0.8, 0.8)
+        FontString:SetVertexColor(0.8, 0.8, 0.8)
     end
 end
 
@@ -131,17 +130,7 @@ function private.FrameXML.QuestInfo()
     -- QuestInfoRewardsFrame --
     ---------------------------
     local QuestInfoRewardsFrame = _G.QuestInfoRewardsFrame
-
-    local TitleFrame = QuestInfoRewardsFrame.TitleFrame
-    Base.CropIcon(TitleFrame.Icon)
-    TitleFrame.FrameLeft:Hide()
-    TitleFrame.FrameCenter:Hide()
-    TitleFrame.FrameRight:Hide()
-
-    local titleBG = _G.CreateFrame("Frame", nil, TitleFrame)
-    titleBG:SetPoint("TOPLEFT", TitleFrame.FrameLeft, -2, 0)
-    titleBG:SetPoint("BOTTOMRIGHT", TitleFrame.FrameRight, 0, -1)
-    Base.SetBackdrop(titleBG, Color.frame)
+    Skin.QuestPlayerTitleFrameTemplate(QuestInfoRewardsFrame.TitleFrame)
 
     local ItemHighlight = QuestInfoRewardsFrame.ItemHighlight
     ItemHighlight:GetRegions():Hide()

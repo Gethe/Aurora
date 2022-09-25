@@ -100,10 +100,10 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
     function Skin.QuestSpellTemplate(Button)
         Base.SetBackdrop(Button, Color.black, Color.frame.a)
         Button:SetBackdropOption("offsets", {
-            left = 9,
+            left = -1,
             right = 107,
-            top = 1,
-            bottom = 14,
+            top = -1,
+            bottom = 1,
         })
         Button._auroraIconBorder = Button
         Base.CropIcon(Button.Icon)
@@ -118,11 +118,6 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
         nameBG:SetPoint("BOTTOM", bg)
         Base.SetBackdrop(nameBG, Color.frame)
         Button._auroraNameBG = nameBG
-
-        local _, _, spellBorder = Button:GetRegions()
-        spellBorder:Hide()
-    end
-    function Skin.QuestTitleButtonTemplate(Button)
     end
     function Skin.QuestScrollFrameTemplate(ScrollFrame)
         Skin.UIPanelScrollFrameTemplate(ScrollFrame)
@@ -133,6 +128,18 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
         _G[name.."Top"]:Hide()
         _G[name.."Bottom"]:Hide()
         _G[name.."Middle"]:Hide()
+    end
+    function Skin.QuestPlayerTitleFrameTemplate(Button)
+        local icon, left, center, right = Button:GetRegions()
+        Base.CropIcon(icon)
+        left:Hide()
+        center:Hide()
+        right:Hide()
+
+        local titleBG = _G.CreateFrame("Frame", nil, TitleFrame)
+        titleBG:SetPoint("TOPLEFT", left, -2, 0)
+        titleBG:SetPoint("BOTTOMRIGHT", right, 0, -1)
+        Base.SetBackdrop(titleBG, Color.frame)
     end
 end
 

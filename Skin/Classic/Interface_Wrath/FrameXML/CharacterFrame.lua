@@ -6,16 +6,30 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
---do --[[ FrameXML\CharacterFrame.lua ]]
---end
+do --[[ FrameXML\CharacterFrame.lua ]]
+    local CharTabtable = {}
+    function Hook.CharacterFrame_TabBoundsCheck(self)
+        wipe(CharTabtable)
+		for i=1, 5 do
+            if _G["CharacterFrameTab"..i]:IsShown() then
+                tinsert(CharTabtable, _G["CharacterFrameTab"..i])
+            end
+		end
+
+        local bg = CharacterFrame:GetBackdropTexture("bg")
+        Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", CharTabtable)
+    end
+end
 
 --do --[[ FrameXML\CharacterFrame.xml ]]
 --end
 
 function private.FrameXML.CharacterFrame()
+    _G.hooksecurefunc("CharacterFrame_TabBoundsCheck", Hook.CharacterFrame_TabBoundsCheck)
+
     local CharacterFrame = _G.CharacterFrame
     Skin.FrameTypeFrame(CharacterFrame)
     CharacterFrame:SetBackdropOption("offsets", {

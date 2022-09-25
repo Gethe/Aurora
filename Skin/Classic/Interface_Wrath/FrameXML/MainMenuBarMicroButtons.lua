@@ -21,6 +21,7 @@ end
 
 local microButtonPrefix = [[Interface\Buttons\UI-MicroButton-]]
 local microButtonNames = {
+    Achievement = true,
     Quest = true,
     Socials = true,
     LFG = true,
@@ -58,8 +59,13 @@ local function SetMicroButton(button, file, left, right, top, bottom)
     end
 end
 
---do --[[ MainMenuBarMicroButtons.lua ]]
---end
+do --[[ MainMenuBarMicroButtons.lua ]]
+    function Hook.UpdateMicroButtons()
+        if _G.UnitLevel("player") >= _G.SHOW_SPEC_LEVEL then
+            _G.AchievementMicroButton:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0);
+        end
+    end
+end
 
 do --[[ MainMenuBarMicroButtons.xml ]]
     function Skin.MainMenuBarMicroButton(Button)
@@ -115,13 +121,12 @@ function private.FrameXML.MainMenuBarMicroButtons()
         SetTexture(_G.MicroButtonPortrait, _G.CharacterMicroButton:GetBackdropTexture("bg"))
         SetMicroButton(_G.SpellbookMicroButton, [[Interface\Icons\INV_Misc_Book_09]])
         SetMicroButton(_G.TalentMicroButton, [[Interface\Icons\Ability_Marksmanship]])
+        SetMicroButton(_G.AchievementMicroButton, "Achievement")
         SetMicroButton(_G.QuestLogMicroButton, "Quest")
         SetMicroButton(_G.SocialsMicroButton, "Socials")
-        if private.isBCC then
-            SetMicroButton(_G.LFGMicroButton, "LFG")
-        else
-            SetMicroButton(_G.WorldMapMicroButton, [[Interface\WorldMap\WorldMap-Icon]], 0.21875, 0.6875, 0.109375, 0.8125)
-        end
+        --SetMicroButton(_G.PVPMicroButton, "")
+        PVPMicroButton.texture:SetPoint("TOP", 3, -30)
+        SetMicroButton(_G.LFGMicroButton, "LFG")
         SetMicroButton(_G.MainMenuMicroButton, "MainMenu")
         SetMicroButton(_G.HelpMicroButton, [[Interface\Icons\INV_Misc_QuestionMark]])
 
@@ -129,9 +134,11 @@ function private.FrameXML.MainMenuBarMicroButtons()
             _G.CharacterMicroButton,
             _G.SpellbookMicroButton,
             _G.TalentMicroButton,
+            _G.AchievementMicroButton,
             _G.QuestLogMicroButton,
             _G.SocialsMicroButton,
-            private.isBCC and _G.LFGMicroButton or _G.WorldMapMicroButton,
+            _G.PVPMicroButton,
+            _G.LFGMicroButton,
             _G.MainMenuMicroButton,
             _G.HelpMicroButton,
         })

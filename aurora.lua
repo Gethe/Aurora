@@ -121,20 +121,21 @@ function private.OnLoad()
         end
     end)
 
-    _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
-        if not private.isRetail then return end
+    if private.isRetail then
+        _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
 
-        _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
-        _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
-        _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
+            _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
+            _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
+            _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
 
-        _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
-            if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
-                _G.CharacterStatsPane.ItemLevelCategory:Hide()
-                _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
-            end
+            _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
+                if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
+                    _G.CharacterStatsPane.ItemLevelCategory:Hide()
+                    _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
+                end
+            end)
         end)
-    end)
+    end
     _G.hooksecurefunc(private.FrameXML, "FriendsFrame", function()
         local BNetFrame = _G.FriendsFrameBattlenetFrame
         BNetFrame.Tag:SetParent(_G.FriendsFrame)

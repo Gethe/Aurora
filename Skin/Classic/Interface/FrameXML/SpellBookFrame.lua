@@ -142,6 +142,9 @@ function private.FrameXML.SpellBookFrame()
     Skin.NavButtonNext(_G.SpellBookNextPageButton)
 
     Skin.UIPanelCloseButton(_G.SpellBookCloseButton)
+    if private.isWrath then
+        Skin.OptionsSmallCheckButtonTemplate(_G.ShowAllSpellRanksCheckBox)
+    end
 
     ----------------
     -- SpellIcons --

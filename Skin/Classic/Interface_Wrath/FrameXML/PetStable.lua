@@ -92,6 +92,8 @@ function private.FrameXML.PetStable()
     _G.PetStableCurrentPet:SetBackdropBorderColor(Color.yellow, 1)
     Skin.PetStableSlotTemplate(_G.PetStableStabledPet1)
     Skin.PetStableSlotTemplate(_G.PetStableStabledPet2)
+    Skin.PetStableSlotTemplate(_G.PetStableStabledPet3)
+    Skin.PetStableSlotTemplate(_G.PetStableStabledPet4)
 
     Skin.UIPanelButtonTemplate(_G.PetStablePurchaseButton)
 

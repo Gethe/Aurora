@@ -24,7 +24,7 @@ end
 --end
 
 function private.FrameXML.PetPaperDollFrame()
-    _G.hooksecurefunc("PetTab_Update", Hook.PetTab_Update)
+    --_G.hooksecurefunc("PetTab_Update", Hook.PetTab_Update)
 
     local PetPaperDollFrame = _G.PetPaperDollFrame
     local TopLeft, TopRight, BotLeft, BotRight = PetPaperDollFrame:GetRegions()

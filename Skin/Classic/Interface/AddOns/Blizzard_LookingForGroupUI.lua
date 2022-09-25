@@ -27,10 +27,10 @@ end
 
 function private.AddOns.Blizzard_LookingForGroupUI()
     ----====####$$$$%%%%$$$$####====----
-    --              LFGFrame              --
+    --         LFGParentFrame         --
     ----====####$$$$%%%%$$$$####====----
-    local LFGParentFrame = _G.LFGParentFrame
 
+    local LFGParentFrame = _G.LFGParentFrame
     Skin.FrameTypeFrame(LFGParentFrame)
     LFGParentFrame:SetBackdropOption("offsets", {
         left = 14,
@@ -39,55 +39,53 @@ function private.AddOns.Blizzard_LookingForGroupUI()
         bottom = 75,
     })
 
-    _G.LFGParentFrameIcon:Hide()
-    _G.LFGParentFrameBackground:Hide()
+    local closeButton = LFGParentFrame:GetChildren()
+    Skin.UIPanelCloseButton(closeButton)
 
     local bg = LFGParentFrame:GetBackdropTexture("bg")
-    _G.LFGParentFrameTitle:ClearAllPoints()
-    _G.LFGParentFrameTitle:SetPoint("TOPLEFT", bg)
-    _G.LFGParentFrameTitle:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-    --------------
-    -- LFMFrame --
-    --------------
-
-    --------------
-    -- LFGFrame --
-    --------------
-    local LFGFrame = _G.LFGFrame
-    Util.Mixin(LFGFrame, Hook.LFGFrameMixin)
-
-    _G.LFGSearchBg1:Hide()
-    _G.LFGSearchBg2:Hide()
-    _G.LFGSearchBg3:Hide()
-
-    for i = 1, 3 do
-        local tex = LFGFrame:CreateTexture(nil, "BACKGROUND")
-        tex:SetPoint("TOPLEFT", LFGFrame.ActivityIcon[i], -1, 1)
-        tex:SetPoint("BOTTOMRIGHT", LFGFrame.ActivityIcon[i], 1, -1)
-        tex:SetColorTexture(0, 0, 0)
-
-        LFGFrame.ActivityIcon[i]:SetSize(48, 43)
-        LFGFrame.ActivityIcon[i]:SetPoint("TOPLEFT", LFGFrame.TypeDropDown[i], "TOPRIGHT", 0, -6)
-        Skin.UIDropDownMenuTemplate(LFGFrame.TypeDropDown[i])
-        Skin.UIDropDownMenuTemplate(LFGFrame.ActivityDropDown[i])
-    end
-
-    Skin.InputBoxInstructionsTemplate(LFGFrame.Comment)
-    Skin.UIPanelButtonTemplate(_G.LFGFrameClearAllButton)
-    _G.LFGFrameClearAllButton:SetPoint("BOTTOMLEFT", bg, 5, 5)
-    Skin.UIPanelButtonTemplate(LFGFrame.PostButton)
-    LFGFrame.PostButton:SetPoint("BOTTOMRIGHT", bg, -5, 5)
-
-    ----------
-    -- Misc --
-    ----------
-    local closeButton = select(3, LFGParentFrame:GetChildren())
-    Skin.UIPanelCloseButton(closeButton)
     Skin.CharacterFrameTabButtonTemplate(_G.LFGParentFrameTab1)
     Skin.CharacterFrameTabButtonTemplate(_G.LFGParentFrameTab2)
     Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.LFGParentFrameTab1,
         _G.LFGParentFrameTab2,
     })
+
+    _G.LFGParentFramePortrait:Hide()
+
+    
+    ----====####$$$$%%%%$$$$####====----
+    --           LFGListing           --
+    ----====####$$$$%%%%$$$$####====----
+    _G.LFGListingFrameFrameBackgroundTop:Hide()
+    _G.LFGListingFrame.BackgroundArt:Hide()
+    _G.LFGListingFrameFrameBackgroundBottom:Hide()
+
+    _G.LFGListingFrameFrameTitle:ClearAllPoints()
+    _G.LFGListingFrameFrameTitle:SetPoint("TOPLEFT", bg)
+    _G.LFGListingFrameFrameTitle:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    Skin.UIPanelButtonTemplate(_G.LFGListingFrame.BackButton)
+    Skin.UIPanelButtonTemplate(_G.LFGListingFrame.PostButton)
+
+
+    ----====####$$$$%%%%%$$$$####====----
+    --            LFGBrowse            --
+    ----====####$$$$%%%%%$$$$####====----
+
+    _G.LFGBrowseFrameFrameBackgroundTop:Hide()
+    _G.LFGBrowseFrameFrameBackgroundMiddle:Hide()
+    _G.LFGBrowseFrame.BackgroundArt:Hide()
+    _G.LFGBrowseFrameFrameBackgroundBottom:Hide()
+
+    _G.LFGBrowseFrameFrameTitle:ClearAllPoints()
+    _G.LFGBrowseFrameFrameTitle:SetPoint("TOPLEFT", bg)
+    _G.LFGBrowseFrameFrameTitle:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    Skin.UIDropDownMenuTemplate(_G.LFGBrowseFrame.CategoryDropDown)
+    Skin.UIDropDownMenuTemplate(_G.LFGBrowseFrame.ActivityDropDown)
+    Skin.WowScrollBoxList(_G.LFGBrowseFrame.ScrollBox)
+    Skin.WowClassicScrollBar(_G.LFGBrowseFrame.ScrollBar)
+    Skin.RefreshButtonTemplate(_G.LFGBrowseFrame.RefreshButton)
+    Skin.UIPanelButtonTemplate(_G.LFGBrowseFrame.SendMessageButton)
+    Skin.UIPanelButtonTemplate(_G.LFGBrowseFrame.GroupInviteButton)
 end
