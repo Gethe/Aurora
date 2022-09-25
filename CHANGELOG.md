@@ -1,4 +1,10 @@
-﻿## [9.2.5.0] ##
+﻿## [9.2.7.0] ##
+### Fixed ###
+
+  * [wrath] Various fixes for Wrath Classic
+
+
+## [9.2.5.0] ##
 ### Changed ###
 
   * [retail] Updated mail skin
@@ -369,6 +375,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[9.2.7.0]: https://github.com/Haleth/Aurora/compare/9.2.5.0...9.2.7.0
 [9.2.5.0]: https://github.com/Haleth/Aurora/compare/9.2.0.0...9.2.5.0
 [9.2.0.0]: https://github.com/Haleth/Aurora/compare/9.1.5.0...9.2.0.0
 [9.1.5.0]: https://github.com/Haleth/Aurora/compare/9.0.5.0...9.1.5.0
