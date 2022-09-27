@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals wipe tinsert
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -19,7 +19,7 @@ do --[[ FrameXML\CharacterFrame.lua ]]
             end
 		end
 
-        local bg = CharacterFrame:GetBackdropTexture("bg")
+        local bg = _G.CharacterFrame:GetBackdropTexture("bg")
         Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", CharTabtable)
     end
 end

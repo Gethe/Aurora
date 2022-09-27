@@ -136,7 +136,7 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
         center:Hide()
         right:Hide()
 
-        local titleBG = _G.CreateFrame("Frame", nil, TitleFrame)
+        local titleBG = _G.CreateFrame("Frame", nil, Button)
         titleBG:SetPoint("TOPLEFT", left, -2, 0)
         titleBG:SetPoint("BOTTOMRIGHT", right, 0, -1)
         Base.SetBackdrop(titleBG, Color.frame)

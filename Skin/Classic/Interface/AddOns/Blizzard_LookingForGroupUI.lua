@@ -52,7 +52,7 @@ function private.AddOns.Blizzard_LookingForGroupUI()
 
     _G.LFGParentFramePortrait:Hide()
 
-    
+
     ----====####$$$$%%%%$$$$####====----
     --           LFGListing           --
     ----====####$$$$%%%%$$$$####====----

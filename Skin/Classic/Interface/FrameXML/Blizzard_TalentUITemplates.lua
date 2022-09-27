@@ -6,9 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Skin = Aurora.Skin
 
 do --[[ FrameXML\Blizzard_TalentUITemplates.lua ]]
     function Skin.TalentButtonTemplate(Button)
@@ -24,7 +22,7 @@ end
 
 function private.FrameXML.Blizzard_TalentUITemplates()
     ----====####$$$$%%%%$$$$####====----
-    --              Blizzard_TalentUITemplates              --
+    --   Blizzard_TalentUITemplates   --
     ----====####$$$$%%%%$$$$####====----
 
     -------------

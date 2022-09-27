@@ -19,6 +19,8 @@ do --[[ SharedXML\HybridScrollFrame.lua ]]
                 Skin[buttonTemplate](self.buttons[i])
             end
             self._auroraNumSkinned = numButtons
+        else
+            private.debug("Missing template for HybridScrollFrame:", buttonTemplate)
         end
     end
 end

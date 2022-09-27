@@ -174,7 +174,6 @@ function private.FrameXML.InterfaceOptionsPanels()
     --------------
     -- Features --
     --------------
-    local Features = _G.InterfaceOptionsFeaturesPanel
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsFeaturesPanelEquipmentManager)
     Skin.InterfaceOptionsCheckButtonTemplate(_G.InterfaceOptionsFeaturesPanelPreviewTalentChanges)
 

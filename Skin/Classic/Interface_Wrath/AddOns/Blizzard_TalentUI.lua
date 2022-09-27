@@ -108,7 +108,7 @@ function private.AddOns.Blizzard_TalentUI()
 
     _G.PlayerTalentFrameScrollFrame:ClearAllPoints()
     _G.PlayerTalentFrameScrollFrame:SetPoint("TOPLEFT", bg, 5, -45)
-    _G.PlayerTalentFrameScrollFrame:SetPoint("BOTTOMRIGHT", PlayerTalentFramePointsBar, "TOPRIGHT", -25, 5)
+    _G.PlayerTalentFrameScrollFrame:SetPoint("BOTTOMRIGHT", _G.PlayerTalentFramePointsBar, "TOPRIGHT", -25, 5)
 
     Skin.UIPanelScrollFrameTemplate(_G.PlayerTalentFrameScrollFrame)
     _G.PlayerTalentFrameScrollFrameBackgroundTop:Hide()

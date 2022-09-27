@@ -7,14 +7,27 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
 
 do --[[ FrameXML\QuestLogFrame.lua ]]
     function Hook.QuestLog_Update(Button)
         local numEntries = _G.GetNumQuestLogEntries()
         local questIndex, questLogTitle, isHeader, _
 
+        local scrollOffset = _G.HybridScrollFrame_GetOffset(_G.QuestLogListScrollFrame)
+        local buttons = _G.QuestLogListScrollFrame.buttons
         for i = 1, _G.QUESTS_DISPLAYED do
+            questIndex = i + scrollOffset
+            questLogTitle = buttons[i]
+            if questIndex <= numEntries then
+                _, _, _, isHeader = _G.GetQuestLogTitle(questIndex)
+                if isHeader then
+                    questLogTitle._minus:Show()
+                    questLogTitle:GetHighlightTexture():SetTexture("")
+                else
+                    questLogTitle._minus:Hide()
+                    questLogTitle._plus:Hide()
+                end
+            end
         end
     end
     function Hook.QuestLog_UpdateQuestDetails(doNotScroll)
@@ -64,16 +77,16 @@ function private.FrameXML.QuestLogFrame()
         bottom = 4,
     })
 
-    local portrait, topLeft, topRight, bottomLeft, bottomRight, topLeftBG, topRightBG, bottomLeftBG, bottomRightBG = QuestLogDetailFrame:GetRegions()
+    local portrait, topLeft, topRight, botLeft, botRight, topLeftBG, topRightBG, botLeftBG, botRightBG = QuestLogDetailFrame:GetRegions()
     portrait:Hide()
     topLeft:Hide()
     topRight:Hide()
-    bottomLeft:Hide()
-    bottomRight:Hide()
+    botLeft:Hide()
+    botRight:Hide()
     topLeftBG:Hide()
     topRightBG:Hide()
-    bottomLeftBG:Hide()
-    bottomRightBG:Hide()
+    botLeftBG:Hide()
+    botRightBG:Hide()
 
     local bg = QuestLogDetailFrame:GetBackdropTexture("bg")
     _G.QuestLogDetailTitle:ClearAllPoints()
@@ -99,12 +112,13 @@ function private.FrameXML.QuestLogFrame()
         bottom = 11,
     })
 
-    local portrait, paneLeft, paneRight = QuestLogFrame:GetRegions()
+    local paneLeft, paneRight
+    portrait, paneLeft, paneRight = QuestLogFrame:GetRegions()
     portrait:Hide()
     paneLeft:Hide()
     paneRight:Hide()
 
-    local bg = QuestLogFrame:GetBackdropTexture("bg")
+    bg = QuestLogFrame:GetBackdropTexture("bg")
     _G.QuestLogTitleText:ClearAllPoints()
     _G.QuestLogTitleText:SetPoint("TOPLEFT", bg)
     _G.QuestLogTitleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
@@ -112,12 +126,12 @@ function private.FrameXML.QuestLogFrame()
     Skin.UIPanelCloseButton(_G.QuestLogFrameCloseButton)
     Skin.UIPanelButtonTemplate(_G.QuestLogFrameCancelButton)
 
-    TopLeft, TopRight, BotLeft, BotRight = _G.EmptyQuestLogFrame:GetRegions()
+    topLeft, topRight, botLeft, botRight = _G.EmptyQuestLogFrame:GetRegions()
     portrait:Hide()
-    TopLeft:Hide()
-    TopRight:Hide()
-    BotLeft:Hide()
-    BotRight:Hide()
+    topLeft:Hide()
+    topRight:Hide()
+    botLeft:Hide()
+    botRight:Hide()
 
     _G.QuestLogCountTopRight:Hide()
     _G.QuestLogCountBottomRight:Hide()
@@ -132,4 +146,5 @@ function private.FrameXML.QuestLogFrame()
     _G.QuestLogSkillHighlight:SetColorTexture(1, 1, 1, 0.5)
 
     Skin.HybridScrollBarTemplate(_G.QuestLogListScrollFrameScrollBar)
+    Hook.HybridScrollFrame_CreateButtons(_G.QuestLogListScrollFrame, "QuestLogTitleButtonTemplate") -- Called here since the original is called OnLoad
 end
