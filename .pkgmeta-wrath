@@ -13,4 +13,5 @@ manual-changelog:
 
 move-folders:
     Aurora/Skin/Classic/Interface: Aurora/Skin/Interface
+    Aurora/Skin/Classic/Interface_TBC: Aurora/Skin/Interface_TBC
     Aurora/Skin/Classic/Interface_Wrath: Aurora/Skin/Interface_Wrath

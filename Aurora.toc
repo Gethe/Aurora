@@ -23,10 +23,10 @@ Skin\skin.xml
 # Skin\Interface\FrameXML\FrameXML_Vanilla.xml
 # Skin\Interface\AddOns\AddOns_Vanilla.xml
 # #@end-version-classic@
-# #@version-bcc@
+# #@version-wrath@
 # Skin\Interface\FrameXML\FrameXML_Wrath.xml
 # Skin\Interface\AddOns\AddOns_Wrath.xml
-# #@end-version-bcc@
+# #@end-version-wrath@
 #@end-non-debug@
 #@debug@
 Skin\Retail\Interface\FrameXML\FrameXML.xml
