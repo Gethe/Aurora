@@ -5,7 +5,7 @@
 # as a parameter and it will locate any TOC files to update the FrameXML*.xml
 # files used in this addon.
 
-header="<Ui xmlns=\"http://www.blizzard.com/wow/ui/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\nxsi:schemaLocation=\"http://www.blizzard.com/wow/ui/..\\\FrameXML\\\UI.xsd\">\n"
+header="<Ui xmlns=\"http://www.blizzard.com/wow/ui/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.blizzard.com/wow/ui/\nhttps://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd\">\n"
 space="\n\n\n\n\n\n"
 footer="</Ui>"
 
