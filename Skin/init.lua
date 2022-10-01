@@ -90,9 +90,9 @@ end
 function private.nop() end
 local debug do
     if not private.debug then
-        if _G.LibStub then
+        local LTD = _G.LibStub("LibTextDump-1.0", true)
+        if LTD then
             local debugger
-            local LTD = _G.LibStub("LibTextDump-1.0", true)
             function debug(...)
                 if not debugger then
                     if LTD then

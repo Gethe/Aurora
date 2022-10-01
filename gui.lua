@@ -2,6 +2,7 @@ local _, private = ...
 
 -- [[ Lua Globals ]]
 -- luacheck: globals next ipairs
+local wago = private.wago
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -100,6 +101,7 @@ end
 local createToggleBox do
     local function toggle(self)
         _G.AuroraConfig[self.value] = self:GetChecked()
+        wago:Switch(self.value, self:GetChecked())
     end
 
     function createToggleBox(parent, value, text)
@@ -179,6 +181,7 @@ local createSlider do
     local numSliders = 0
     local function OnValueChanged(self, value)
         _G.AuroraConfig[self.value] = value
+        wago:SetCounter(self.value, value)
         if self.update then
             self.update()
         end
@@ -273,12 +276,14 @@ local highlightButton = createColorSwatch(gui, "customHighlight")
 highlightButton:SetPoint("LEFT", highlightBox.Text, "RIGHT", 10, 0)
 
 highlightBox:SetScript("OnClick", function(self)
-    if self:GetChecked() then
-        _G.AuroraConfig.customHighlight.enabled = true
+    local isChecked = self:GetChecked()
+    _G.AuroraConfig.customHighlight.enabled = isChecked
+    wago:Switch(self.value, isChecked)
+
+    if isChecked then
         highlightButton:Enable()
         highlightButton:SetAlpha(1)
     else
-        _G.AuroraConfig.customHighlight.enabled = false
         highlightButton:Disable()
         highlightButton:SetAlpha(.7)
     end

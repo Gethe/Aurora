@@ -2,6 +2,8 @@ local _, private = ...
 
 -- [[ Lua Globals ]]
 -- luacheck: globals next type
+local wago = _G.LibStub("WagoAnalytics"):Register("JZKbRK19")
+private.wago = wago
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -26,7 +28,7 @@ C.defaults = {
     buttonsHaveGradient = true,
     customHighlight = {enabled = false, r = 0.243, g = 0.570, b = 1},
     alpha = 0.5,
-
+    hasAnalytics = true,
     --[[
         TODO: colorize - generate a monochrome color palette using the highlight
             color which overrides the default frame, button, and font colors
@@ -54,15 +56,29 @@ function private.OnLoad()
     end
 
     -- Remove deprecated or corrupt variables
-    for key in next, AuroraConfig do
+    for key, value in next, AuroraConfig do
         if C.defaults[key] == nil then
             AuroraConfig[key] = nil
+        end
+
+        if AuroraConfig.hasAnalytics == nil then
+            if key ~= "acknowledgedSplashScreen" then
+                if key == "customHighlight" then
+                    wago:Switch(key, value.enabled)
+                elseif key == "alpha" then
+                    wago:SetCounter(key, value)
+                else
+                    wago:Switch(key, value)
+                end
+            end
         end
     end
 
     -- Load or init variables
     for key, value in next, C.defaults do
         if AuroraConfig[key] == nil then
+
+
             if _G.type(value) == "table" then
                 AuroraConfig[key] = {}
                 for k in next, value do

@@ -4,7 +4,8 @@ self = false
 unused_args = false
 std = "none"
 exclude_files = {
-    ".release"
+    ".release",
+    "libs"
 }
 globals = {
     "_G"

@@ -6,7 +6,7 @@
 ## Author: Haleth/Lightsword, Gethe
 ## Version: 9.2.7.0
 ## LoadWith: Blizzard_CompactRaidFrames
-## OptionalDeps: Ace3, LibTextDump-1.0, BugSack
+## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
 ## X-Curse-Project-ID: 278735
@@ -39,6 +39,7 @@ Skin\Classic\Interface\FrameXML\FrameXML_Wrath.xml
 Skin\Classic\Interface\AddOns\AddOns_Wrath.xml
 #@end-debug@
 
+libs\Shim.lua
 aurora.lua
 gui.lua
 
