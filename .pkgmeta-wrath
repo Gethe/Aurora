@@ -5,6 +5,9 @@ ignore:
     - *.bat
     - dev
     - Skin/Retail
+    - Skin/Classic/Interface_TBC/AddOns
+    - Skin/Classic/Interface_TBC/FrameXML/!(BankFrame|MerchantFrame)
+    - Skin/Classic/Interface_TBC/SharedXML
     - Skin/Classic/Interface_Vanilla
 
 manual-changelog:
