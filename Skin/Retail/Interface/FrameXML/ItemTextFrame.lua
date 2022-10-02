@@ -28,12 +28,13 @@ do --[[ FrameXML\ItemTextFrame.lua ]]
             local page = _G.ItemTextGetPage()
             local hasNext = _G.ItemTextHasNextPage()
 
+            _G.ItemTextPageText:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, 10, -10)
             _G.ItemTextScrollFrame:ClearAllPoints()
             if (page > 1) or hasNext then
-                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.FRAME_TITLE_HEIGHT * 2 + 4))
+                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 16, -(private.FRAME_TITLE_HEIGHT * 2 + 5))
                 _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", _G.ItemTextFrame, -23, 4)
             else
-                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
+                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 16, -(private.FRAME_TITLE_HEIGHT + 5))
                 _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", _G.ItemTextFrame, -23, 4)
             end
         end
@@ -58,11 +59,13 @@ function private.FrameXML.ItemTextFrame()
     _G.ItemTextMaterialBotLeft:SetAlpha(0)
     _G.ItemTextMaterialBotRight:SetAlpha(0)
 
-    _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.FRAME_TITLE_HEIGHT * 1.25))
+    _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.FRAME_TITLE_HEIGHT + 10))
 
     Skin.UIPanelStretchableArtScrollBarTemplate(_G.ItemTextScrollFrame.ScrollBar)
     _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
     _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
+    _G.ItemTextPageText:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, 10, -10)
+    _G.ItemTextPageText:SetPoint("BOTTOMRIGHT", _G.ItemTextScrollFrame, -10, 10)
 
     Skin.FrameTypeStatusBar(_G.ItemTextStatusBar)
     _G.ItemTextStatusBar:SetHeight(17)
@@ -73,11 +76,11 @@ function private.FrameXML.ItemTextFrame()
         button:ClearAllPoints()
         if i == 1 then
             Skin.NavButtonPrevious(button)
-            button:SetPoint("TOPLEFT", 32, -(private.FRAME_TITLE_HEIGHT * 1.2))
+            button:SetPoint("TOPLEFT", 32, -private.FRAME_TITLE_HEIGHT)
             button:GetRegions():SetPoint("LEFT", button, "RIGHT", 3, 0)
         else
             Skin.NavButtonNext(button)
-            button:SetPoint("TOPRIGHT", -32, -(private.FRAME_TITLE_HEIGHT * 1.2))
+            button:SetPoint("TOPRIGHT", -32, -private.FRAME_TITLE_HEIGHT)
             button:GetRegions():SetPoint("RIGHT", button, "LEFT", -3, 0)
         end
     end

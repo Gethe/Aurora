@@ -28,13 +28,14 @@ do --[[ FrameXML\ItemTextFrame.lua ]]
             local page = _G.ItemTextGetPage()
             local hasNext = _G.ItemTextHasNextPage()
 
+            local bg = _G.ItemTextFrame:GetBackdropTexture("bg")
             _G.ItemTextScrollFrame:ClearAllPoints()
             if (page > 1) or hasNext then
-                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.FRAME_TITLE_HEIGHT * 2 + 4))
-                _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", _G.ItemTextFrame, -23, 4)
+                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", bg, 16, -(private.FRAME_TITLE_HEIGHT * 2 + 5))
+                _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 4)
             else
-                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", _G.ItemTextFrame, 4, -(private.FRAME_TITLE_HEIGHT + 4))
-                _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", _G.ItemTextFrame, -23, 4)
+                _G.ItemTextScrollFrame:SetPoint("TOPLEFT", bg, 23, -(private.FRAME_TITLE_HEIGHT + 5))
+                _G.ItemTextScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 4)
             end
         end
     end
@@ -71,14 +72,17 @@ function private.FrameXML.ItemTextFrame()
     _G.ItemTextTitleText:ClearAllPoints()
     _G.ItemTextTitleText:SetPoint("TOPLEFT", bg)
     _G.ItemTextTitleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-    _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.FRAME_TITLE_HEIGHT * 1.25))
+    _G.ItemTextCurrentPage:SetPoint("TOP", bg, 0, -(private.FRAME_TITLE_HEIGHT + 10))
 
     Skin.UIPanelScrollFrameTemplate(_G.ItemTextScrollFrame)
-    _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
-    _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
     _G.ItemTextScrollFrameTop:Hide()
     _G.ItemTextScrollFrameBottom:Hide()
     _G.ItemTextScrollFrameMiddle:Hide()
+
+    _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, -17)
+    _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", bg, "BOTTOMRIGHT", 1, 17)
+    _G.ItemTextPageText:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, 10, -10)
+    _G.ItemTextPageText:SetPoint("BOTTOMRIGHT", _G.ItemTextScrollFrame, -10, 10)
 
     Skin.FrameTypeStatusBar(_G.ItemTextStatusBar)
     _G.ItemTextStatusBar:SetHeight(17)
@@ -89,11 +93,11 @@ function private.FrameXML.ItemTextFrame()
         button:ClearAllPoints()
         if i == 1 then
             Skin.NavButtonPrevious(button)
-            button:SetPoint("TOPLEFT", 32, -(private.FRAME_TITLE_HEIGHT * 1.2))
+            button:SetPoint("TOPLEFT", bg, 32, -private.FRAME_TITLE_HEIGHT)
             button:GetRegions():SetPoint("LEFT", button, "RIGHT", 3, 0)
         else
             Skin.NavButtonNext(button)
-            button:SetPoint("TOPRIGHT", -32, -(private.FRAME_TITLE_HEIGHT * 1.2))
+            button:SetPoint("TOPRIGHT", bg, -32, -private.FRAME_TITLE_HEIGHT)
             button:GetRegions():SetPoint("RIGHT", button, "LEFT", -3, 0)
         end
     end

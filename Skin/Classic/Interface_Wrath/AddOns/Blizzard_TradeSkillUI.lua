@@ -12,7 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
     local hadScroll = false
-    function Hook.TradeSkillFrame_Update(id)
+    function Hook.TradeSkillFrame_Update()
         local hasScroll = _G.TradeSkillListScrollFrame:IsVisible()
         local updateBackdrops = hadScroll ~= hasScroll
 
