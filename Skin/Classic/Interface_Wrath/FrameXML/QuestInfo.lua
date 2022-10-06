@@ -32,9 +32,8 @@ do --[[ FrameXML\QuestInfo.lua ]]
         local rewardsFrame = _G.QuestInfoFrame.rewardsFrame
         rewardsFrame.ItemChooseText:SetTextColor(textR, textG, textB)
         rewardsFrame.ItemReceiveText:SetTextColor(textR, textG, textB)
-        if not mapView then
-            rewardsFrame.XPFrame.ReceiveText:SetTextColor(textR, textG, textB)
-        end
+        rewardsFrame.XPFrame.ReceiveText:SetTextColor(textR, textG, textB)
+        rewardsFrame.TalentFrame.ReceiveText:SetTextColor(textR, textG, textB)
 
         local templateElements = templates[template]
         for i = 1, #templateElements do
