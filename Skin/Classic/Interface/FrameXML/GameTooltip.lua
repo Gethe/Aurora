@@ -39,7 +39,9 @@ do --[[ FrameXML\GameTooltip.xml ]]
             statusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
             statusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
         end
-        Skin.ShoppingTooltipTemplate = Base.SetBackdrop
+        function Skin.ShoppingTooltipTemplate(GameTooltip)
+            Skin.TooltipBackdropTemplate(GameTooltip)
+        end
         function Skin.TooltipStatusBarTemplate(StatusBar)
             Skin.FrameTypeStatusBar(StatusBar)
             local _, border = StatusBar:GetRegions()
