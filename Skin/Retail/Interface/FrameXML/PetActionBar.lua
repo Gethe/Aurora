@@ -10,10 +10,10 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---do --[[ FrameXML\PetActionBarFrame.lua ]]
+--do --[[ FrameXML\PetActionBar.lua ]]
 --end
 
-do --[[ FrameXML\PetActionBarFrame.xml ]]
+do --[[ FrameXML\PetActionBar.xml ]]
     function Skin.PetActionButtonTemplate(CheckButton)
         Skin.ActionButtonTemplate(CheckButton)
 
@@ -37,7 +37,7 @@ do --[[ FrameXML\PetActionBarFrame.xml ]]
     end
 end
 
-function private.FrameXML.PetActionBarFrame()
+function private.FrameXML.PetActionBar()
     if private.disabled.mainmenubar then return end
     _G.SlidingActionBarTexture0:SetAlpha(0)
     _G.SlidingActionBarTexture1:SetAlpha(0)

@@ -82,8 +82,10 @@ do
 				echo "" >>"$tocFile"
 			fi
 		fi
-
 	done < "$TOC"
+
+	printf "$space" >>"$tocFile"
+	printf "    <Include file=\"DeprecatedSkins.xml\"/>\n" >>"$tocFile"
 
 	echo $footer >>"$tocFile"
 done

@@ -1,5 +1,6 @@
 local _, private = ...
 if private.shouldSkip() then return end
+if private.isPatch then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals
@@ -12,13 +13,6 @@ local Skin = Aurora.Skin
 --end
 
 do --[[ FrameXML\InterfaceOptionsPanels.xml ]]
-    function Skin.InterfaceOptionsBaseCheckButtonTemplate(CheckButton)
-        Skin.OptionsBaseCheckButtonTemplate(CheckButton)
-    end
-    function Skin.InterfaceOptionsCheckButtonTemplate(CheckButton)
-        Skin.InterfaceOptionsBaseCheckButtonTemplate(CheckButton)
-        CheckButton.Text:SetPoint(CheckButton.Text:GetPoint())
-    end
     function Skin.InterfaceOptionsSmallCheckButtonTemplate(CheckButton)
         Skin.InterfaceOptionsBaseCheckButtonTemplate(CheckButton)
         local name = CheckButton:GetName()

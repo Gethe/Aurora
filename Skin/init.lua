@@ -11,7 +11,7 @@ private.isBCC = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 private.isWrath = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_WRATH_CLASSIC or 11)
 
 --private.hasAPI = (not private.isRetail) and _G.InClickBindingMode
-private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 90200
+private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 100000
 
 local debugProjectID = {
     [0] = private.isRetail,

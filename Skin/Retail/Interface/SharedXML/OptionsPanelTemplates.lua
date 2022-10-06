@@ -1,5 +1,6 @@
 local _, private = ...
 if private.shouldSkip() then return end
+if private.isPatch then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals
@@ -16,9 +17,6 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
     function Skin.OptionsButtonTemplate(Button)
         Skin.UIPanelButtonTemplate(Button)
     end
-    function Skin.OptionsBaseCheckButtonTemplate(CheckButton)
-        Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
-    end
 
     function Skin.OptionsCheckButtonTemplate(CheckButton)
         Skin.OptionsBaseCheckButtonTemplate(CheckButton)
@@ -29,17 +27,6 @@ do --[[ FrameXML\OptionsPanelTemplates.xml ]]
         Skin.OptionsBaseCheckButtonTemplate(CheckButton)
         CheckButton.Text = _G[CheckButton:GetName().."Text"]
         CheckButton.Text:SetPoint("LEFT", CheckButton, "RIGHT", 3, 0)
-    end
-    function Skin.OptionsSliderTemplate(Slider)
-        Skin.HorizontalSliderTemplate(Slider)
-
-        --[[
-            Blizz resets the backdrop for these in BlizzardOptionsPanel_OnEvent, so
-            we set these vars to ensure our skin remains.
-        ]]
-        Slider.backdropColor = Color.frame
-        Slider.backdropColorAlpha = Color.frame.a
-        Slider.backdropBorderColor = Color.button
     end
     function Skin.OptionsDropdownTemplate(Frame)
         Skin.UIDropDownMenuTemplate(Frame)
