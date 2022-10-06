@@ -17,7 +17,7 @@ Helpful functions for layout, widget info, and debugging.
 
 local anchors = {}
 local tickPool = _G.CreateObjectPool(function(pool)
-    local tick = _G.UIParent:CreateTexture(nil, "ARTWORK")
+    local tick = _G.UIParent:CreateTexture(nil, "ARTWORK", nil, 5)
     tick:SetSize(1, 1)
     return tick
 end, function(pool, tick)
