@@ -1,6 +1,8 @@
 ﻿## [9.2.7.0] ##
 ### Fixed ###
 
+  * Money test for trade targets was misplaced
+  * [retail] Achievement borders wer not skinned
   * [wrath] Various fixes for Wrath Classic
 
 
