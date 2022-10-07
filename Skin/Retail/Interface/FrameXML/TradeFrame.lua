@@ -83,10 +83,10 @@ function private.FrameXML.TradeFrame()
     Skin.ButtonFrameTemplate(_G.TradeFrame)
 
     _G.TradeFrameTradeButton:SetPoint("BOTTOMRIGHT", -84, 4)
-    F.Reskin(_G.TradeFrameTradeButton)
-    F.Reskin(_G.TradeFrameCancelButton)
+    Skin.UIPanelButtonTemplate(_G.TradeFrameTradeButton)
+    Skin.UIPanelButtonTemplate(_G.TradeFrameCancelButton)
 
-    --[[ PLayer ]]--
+    --[[ Player ]]--
     _G.TradeFramePlayerNameText:SetPoint("TOPLEFT")
     _G.TradeFramePlayerNameText:SetPoint("BOTTOMRIGHT", _G.TradeFrame, "TOPLEFT", 172, -29)
 
@@ -113,6 +113,7 @@ function private.FrameXML.TradeFrame()
     _G.TradeRecipientMoneyBg:ClearAllPoints()
     _G.TradeRecipientMoneyBg:SetPoint("TOPRIGHT", -5, -(private.FRAME_TITLE_HEIGHT + 13))
     _G.TradeRecipientMoneyBg:SetSize(160, 22)
+    _G.TradeRecipientMoneyFrame:SetPoint("TOPRIGHT", 0, -(private.FRAME_TITLE_HEIGHT + 18))
 
     SkinHighlightFrames("Recipient")
     SkinTradeItems("Recipient")
