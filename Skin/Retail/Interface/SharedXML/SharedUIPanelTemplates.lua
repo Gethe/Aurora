@@ -500,21 +500,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         end
     end
 
-    function Skin.TooltipBackdropTemplate(Frame)
-        Skin.NineSlicePanelTemplate(Frame.NineSlice)
-
-        local r, g, b = Color.frame:GetRGB()
-        Frame:SetBackdropColor(r, g, b, Frame.backdropColorAlpha or 1)
-    end
-
-    function Skin.TooltipBorderBackdropTemplate(Frame)
-        Skin.TooltipBackdropTemplate(Frame)
-    end
-
-    function Skin.TooltipBorderedFrameTemplate(Frame)
-        Skin.TooltipBackdropTemplate(Frame)
-    end
-
     function Skin.UIMenuButtonStretchTemplate(Button)
         Skin.FrameTypeButton(Button)
         Button:SetBackdropOption("offsets", {

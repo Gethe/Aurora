@@ -50,7 +50,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         end
     end
     function Hook.AchievementButton_Saturate(self)
-        Base.SetBackdropColor(self, Color.button, 1)
+        Base.SetBackdropColor(self.NineSlice, Color.button, 1)
 
         if IN_GUILD_VIEW then
             self.titleBar:SetColorTexture(green:GetRGB())
@@ -68,7 +68,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         end
     end
     function Hook.AchievementButton_Desaturate(self)
-        Base.SetBackdropColor(self, Color.button, 1)
+        Base.SetBackdropColor(self.NineSlice, Color.button, 1)
 
         if IN_GUILD_VIEW then
             self.titleBar:SetColorTexture(greenDesat:GetRGB())
@@ -137,6 +137,13 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         for i = numAchievements + 1, _G.ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
             local button = _G["AchievementFrameSummaryAchievement"..i]
             if button then
+                Skin.SummaryAchievementTemplate(button)
+                if button.saturatedStyle then
+                    Hook.AchievementButton_Saturate(button)
+                else
+                    Hook.AchievementButton_Desaturate(button)
+                end
+
                 if i > 1 then
                     local anchorTo = _G["AchievementFrameSummaryAchievement"..i-1]
                     button:SetPoint("TOPLEFT", anchorTo, "BOTTOMLEFT", 0, -1 )
@@ -285,11 +292,10 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G.hooksecurefunc(Button, "Saturate", Hook.AchievementButton_Saturate)
         _G.hooksecurefunc(Button, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(Button, Color.button, 1)
+        Skin.TooltipBorderBackdropTemplate(Button)
         Button.background:Hide()
 
         local name = Button:GetName()
-
         _G[name.."BottomLeftTsunami"]:Hide()
         _G[name.."BottomRightTsunami"]:Hide()
         _G[name.."TopLeftTsunami"]:Hide()
@@ -340,7 +346,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G.hooksecurefunc(Frame, "Saturate", Hook.AchievementButton_Saturate)
         _G.hooksecurefunc(Frame, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(Frame, Color.frame)
+        Skin.TooltipBorderBackdropTemplate(Frame)
         Frame.background:Hide()
 
         local titleMask = Frame:CreateMaskTexture()
@@ -359,11 +365,12 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Skin.AchievementIconFrameTemplate(Frame.icon)
     end
     function Skin.SummaryAchievementTemplate(Frame)
+        Frame.debug = Frame:GetDebugName()
+        Skin.ComparisonPlayerTemplate(Frame)
+
         Frame:SetHeight(44)
         Frame.icon:SetPoint("TOPLEFT", -1, -1)
         Frame.shield:SetPoint("TOPRIGHT", -5, -2)
-
-        Skin.ComparisonPlayerTemplate(Frame)
 
         Base.SetBackdrop(Frame.highlight, Color.highlight, Color.frame.a)
         Frame.highlight:DisableDrawLayer("OVERLAY")
@@ -377,7 +384,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         _G.hooksecurefunc(Frame.friend, "Saturate", Hook.AchievementButton_Saturate)
         _G.hooksecurefunc(Frame.friend, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Base.SetBackdrop(Frame.friend, Color.frame)
+        Skin.TooltipBorderBackdropTemplate(Frame.friend)
         Frame.friend.background:Hide()
         Frame.friend.titleBar:Hide()
         Frame.friend.glow:Hide()
@@ -416,21 +423,6 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
     _G.hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
     _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
-
-    _G.hooksecurefunc("AchievementComparisonPlayerButton_Saturate", function(self)
-        if not self._auroraSkinned then
-            Skin.SummaryAchievementTemplate(self)
-            self._auroraSkinned = true
-        end
-        Hook.AchievementButton_Saturate(self)
-    end)
-    _G.hooksecurefunc("AchievementComparisonPlayerButton_Desaturate", function(self)
-        if not self._auroraSkinned then
-            Skin.SummaryAchievementTemplate(self)
-            self._auroraSkinned = true
-        end
-        Hook.AchievementButton_Desaturate(self)
-    end)
 
     ----------------------
     -- AchievementFrame --
