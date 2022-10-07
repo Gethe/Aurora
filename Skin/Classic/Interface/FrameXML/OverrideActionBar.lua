@@ -13,24 +13,22 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\OverrideActionBar.lua ]]
     -- 534043 - Default
     function Hook.OverrideActionBar_SetSkin(skin)
-        print("OverrideActionBar_SetSkin", skin)
         local OverrideActionBar = _G.OverrideActionBar
         OverrideActionBar.Divider2:SetColorTexture(1, 1, 1)
         OverrideActionBar.Divider3:SetColorTexture(1, 1, 1)
     end
     function Hook.OverrideActionBar_CalcSize()
-        print("OverrideActionBar_CalcSize", OverrideActionBar.HasExit, OverrideActionBar.HasPitch)
         local OverrideActionBar = _G.OverrideActionBar
-        local width, xpWidth, anchor, buttonAnchor;
+        local anchor
 
         if OverrideActionBar.HasExit and OverrideActionBar.HasPitch then
-            width, xpWidth, anchor, buttonAnchor = 1020, 580, 103, -234;
+            anchor = 103
         elseif OverrideActionBar.HasPitch then
-            width, xpWidth, anchor, buttonAnchor = 945, 500, 145, -192;
+            anchor = 145
         elseif OverrideActionBar.HasExit then
-            width, xpWidth, anchor, buttonAnchor = 930, 490, 60, -277;
+            anchor = 60
         else
-            width, xpWidth, anchor, buttonAnchor = 860, 460, 100, -237;
+           anchor = 100
         end
 
         OverrideActionBar.Divider2:SetPoint("BOTTOM", anchor, 13)
@@ -50,7 +48,7 @@ function private.FrameXML.OverrideActionBar()
     OverrideActionBar.EndCapR:Hide()
 
     OverrideActionBar.Divider2:SetSize(1, 59)
- 
+
     OverrideActionBar._BG:Hide()
     OverrideActionBar.MicroBGL:Hide()
     OverrideActionBar._MicroBGMid:Hide()

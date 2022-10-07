@@ -1538,15 +1538,16 @@ function commands.test()
                 }
             end
 
-            if C_ProfSpecs then -- Trade Skills
-                function C_ProfSpecs.GetSpecTabInfo() return {enabled=true, errorReason=""} end
-                function C_ProfSpecs.ShouldShowSpecTab() return true end
-                function C_ProfSpecs.SkillLineHasSpecialization() return true end
-                function C_ProfSpecs.GetConfigIDForSkillLine() return -1 end
-                LoadAddOn('Blizzard_Professions')
-                local s=ProfessionsFrame.SpecPage
-                function s:GetConfigID() return C_ClassTalents.GetActiveConfigID() end
-                function s:GetProfessionID() 
+            if _G.C_ProfSpecs then -- Trade Skills
+                function _G.C_ProfSpecs.GetSpecTabInfo() return {enabled=true, errorReason=""} end
+                function _G.C_ProfSpecs.ShouldShowSpecTab() return true end
+                function _G.C_ProfSpecs.SkillLineHasSpecialization() return true end
+                function _G.C_ProfSpecs.GetConfigIDForSkillLine() return -1 end
+                _G.LoadAddOn('Blizzard_Professions')
+
+                local s=_G.ProfessionsFrame.SpecPage
+                function s:GetConfigID() return _G.C_ClassTalents.GetActiveConfigID() end
+                function s:GetProfessionID()
                 -- return 2822 -- Blacksmithing
                 return 2823 -- Alchemy
                 -- return 2824 -- Cooking
@@ -1577,7 +1578,7 @@ function commands.test()
                     true
                 }
                 local skillInfo, lastHeader = {}, 1
-                function GetTradeSkillInfo(skillIndex)
+                function _G.GetTradeSkillInfo(skillIndex)
                     if not skillInfo[skillIndex] then
                         local skillTypeIndex = random(1, MAX_SKILL_TYPES)
                         if skillIndex == 1 then
@@ -1610,19 +1611,19 @@ function commands.test()
                     end
                     return unpack(skillInfo[skillIndex])
                 end
-                function ExpandTradeSkillSubClass(id)
+                function _G.ExpandTradeSkillSubClass(id)
                     skillInfo[id][4] = true
                     for k, v in skillInfo[id].items do
                         skillInfo[id][k] = false
                     end
                 end
-                function CollapseTradeSkillSubClass(id)
+                function _G.CollapseTradeSkillSubClass(id)
                     skillInfo[id][4] = false
                     for k, v in skillInfo[id].items do
                         skillInfo[id][k] = false
                     end
                 end
-                function GetNumTradeSkills()
+                function _G.GetNumTradeSkills()
                     return 16
                 end
             end
@@ -1643,7 +1644,7 @@ function commands.test()
                     end
                 end
 
-                function GetTargetTradeMoney()
+                function _G.GetTargetTradeMoney()
                     return 123456
                 end
 
@@ -1696,7 +1697,7 @@ function commands.test()
                             desc = "TradeFrame",
                             type = "execute",
                             func = function()
-                                TradeFrame_OnEvent(TradeFrame, "TRADE_SHOW")
+                                _G.TradeFrame_OnEvent(_G.TradeFrame, "TRADE_SHOW")
                             end,
                         },
                     },
