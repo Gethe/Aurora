@@ -92,7 +92,7 @@ function Base.SetFont(fontObj, fontPath, fontSize, fontStyle, fontColor, shadowC
     if not fontObj then return end
 
     if fontPath and not private.disabled.fonts then
-        fontObj:SetFont(fontPath, fontSize, fontStyle)
+        fontObj:SetFont(fontPath, fontSize, fontStyle or "")
     end
 
     if fontColor then

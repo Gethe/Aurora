@@ -89,17 +89,31 @@ do -- gradients
         texture:SetGradientAlpha(hookedTexture[texture], r * min, g * min, b * min, a, r * max, g * max, b * max, a)
 
     end
-    local function SetGradientMinMax(frame, texture, direction)
+    local function SetGradientMinMax(frame, texture, orientation)
         local r, g, b, a = texture:GetVertexColor()
-        if r and g and b then
-            texture:SetGradientAlpha(direction, r * min, g * min, b * min, a, r * max, g * max, b * max, a)
+        local minColor, maxColor
+
+        if texture.SetGradientAlpha then
+            if r and g and b then
+                texture:SetGradientAlpha(orientation, r * min, g * min, b * min, a, r * max, g * max, b * max, a)
+            else
+                texture:SetGradient(orientation, min, min, min, max, max, max)
+            end
         else
-            texture:SetGradient(direction, min, min, min, max, max, max)
+            if r and g and b then
+                minColor = Color.Create(r * min, g * min, b * min, a)
+                maxColor = Color.Create(r * max, g * max, b * max, a)
+            else
+                minColor = Color.Create(min, min, min)
+                maxColor = Color.Create(max, max, max)
+            end
+
+            texture:SetGradient(orientation, minColor, maxColor)
         end
 
         if not hookedTexture[texture] then
             _G.hooksecurefunc(texture, "SetVertexColor", SetVertexColorMinMax)
-            hookedTexture[texture] = direction
+            hookedTexture[texture] = orientation
         end
     end
 

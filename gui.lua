@@ -198,7 +198,10 @@ local createSlider do
             _G[slider:GetName().."Text"]:SetText(text)
         end
 
-        _G.BlizzardOptionsPanel_Slider_Enable(slider)
+        if not private.isPatch then
+            _G.BlizzardOptionsPanel_Slider_Enable(slider)
+        end
+
 
         slider:SetScript("OnValueChanged", OnValueChanged)
         return slider
@@ -207,7 +210,7 @@ end
 
 local createButton do
     function createButton(parent, func, text)
-        local button = _G.CreateFrame("Button", nil, parent, "OptionsButtonTemplate")
+        local button = _G.CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
         button:SetText(text)
 
         button:SetScript("OnClick", function(self)
@@ -273,7 +276,7 @@ local highlightBox = createToggleBox(gui, "customHighlight", "Custom highlight c
 highlightBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
 
 local highlightButton = createColorSwatch(gui, "customHighlight")
-highlightButton:SetPoint("LEFT", highlightBox.Text, "RIGHT", 10, 0)
+highlightButton:SetPoint("LEFT", highlightBox, "RIGHT", 150, 0)
 
 highlightBox:SetScript("OnClick", function(self)
     local isChecked = self:GetChecked()
@@ -317,6 +320,7 @@ reloadText:SetText("* Does not require a Reload UI.")
 
 local reloadButton = createButton(gui, _G.C_UI.Reload, _G.RELOADUI)
 reloadButton:SetPoint("BOTTOMRIGHT", -20, 20)
+reloadButton:SetWidth(100)
 
 
 local classColors = {}

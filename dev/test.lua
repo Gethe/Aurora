@@ -1538,6 +1538,95 @@ function commands.test()
                 }
             end
 
+            if C_ProfSpecs then -- Trade Skills
+                function C_ProfSpecs.GetSpecTabInfo() return {enabled=true, errorReason=""} end
+                function C_ProfSpecs.ShouldShowSpecTab() return true end
+                function C_ProfSpecs.SkillLineHasSpecialization() return true end
+                function C_ProfSpecs.GetConfigIDForSkillLine() return -1 end
+                LoadAddOn('Blizzard_Professions')
+                local s=ProfessionsFrame.SpecPage
+                function s:GetConfigID() return C_ClassTalents.GetActiveConfigID() end
+                function s:GetProfessionID() 
+                -- return 2822 -- Blacksmithing
+                return 2823 -- Alchemy
+                -- return 2824 -- Cooking
+                -- return 2825 -- Enchanting
+                -- return 2826 -- Fishing
+                -- return 2827 -- Engineering
+                -- return 2828 -- Inscription
+                -- return 2829 -- Jewelcrafting
+                -- return 2830 -- Leatherworking
+                -- return 2831 -- Tailoring
+                -- return 2832 -- Herbalism
+                -- return 2833 -- Mining
+                -- return 2834 -- Skinning
+                end
+            else
+                local skillTypes = {
+                    "optimal",
+                    "medium",
+                    "easy",
+                    "trivial",
+                    "header",
+                }
+                local MAX_SKILL_TYPES = #skillTypes
+                local header = {
+                    "header",
+                    "header",
+                    1,
+                    true
+                }
+                local skillInfo, lastHeader = {}, 1
+                function GetTradeSkillInfo(skillIndex)
+                    if not skillInfo[skillIndex] then
+                        local skillTypeIndex = random(1, MAX_SKILL_TYPES)
+                        if skillIndex == 1 then
+                            skillTypeIndex = MAX_SKILL_TYPES
+                        elseif skillIndex == 2 then
+                            skillTypeIndex = random(1, MAX_SKILL_TYPES - 1)
+                        end
+
+                        if skillTypeIndex == MAX_SKILL_TYPES then
+                            skillInfo[skillIndex] = {
+                                header[1] .. skillIndex,
+                                header[2],
+                                header[3],
+                                header[4],
+                                nil,
+                                items = {}
+                            }
+                        else
+                            local item = {
+                                "test" .. skillIndex,
+                                skillTypes[skillTypeIndex],
+                                random(1, 10),
+                                false,
+                                nil,
+                                header = lastHeader
+                            }
+                            skillInfo[skillIndex] = item
+                            skillInfo[lastHeader].items[item] = true
+                        end
+                    end
+                    return unpack(skillInfo[skillIndex])
+                end
+                function ExpandTradeSkillSubClass(id)
+                    skillInfo[id][4] = true
+                    for k, v in skillInfo[id].items do
+                        skillInfo[id][k] = false
+                    end
+                end
+                function CollapseTradeSkillSubClass(id)
+                    skillInfo[id][4] = false
+                    for k, v in skillInfo[id].items do
+                        skillInfo[id][k] = false
+                    end
+                end
+                function GetNumTradeSkills()
+                    return 16
+                end
+            end
+
             do -- Misc
                 if private.isRetail then
                     local PartyPoseInfo = {
@@ -1552,6 +1641,10 @@ function commands.test()
                     function _G.C_PartyPose.GetPartyPoseInfoByMapID(mapID)
                         return CopyTable(PartyPoseInfo)
                     end
+                end
+
+                function GetTargetTradeMoney()
+                    return 123456
                 end
 
                 test.args.misc = {
@@ -1596,6 +1689,14 @@ function commands.test()
                             type = "execute",
                             func = function()
                                 _G.CompactRaidFrameManager:Show()
+                            end,
+                        },
+                        tradeFrame = {
+                            name = "Trade Frame",
+                            desc = "TradeFrame",
+                            type = "execute",
+                            func = function()
+                                TradeFrame_OnEvent(TradeFrame, "TRADE_SHOW")
                             end,
                         },
                     },
