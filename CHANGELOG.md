@@ -1,4 +1,8 @@
 ﻿## [9.2.7.0] ##
+### Added ###
+
+  * [retail] Basic support for Dragonflight (WIP)
+
 ### Fixed ###
 
   * Money test for trade targets was misplaced
