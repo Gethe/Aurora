@@ -1,7 +1,7 @@
 local _, private = ...
 
 --[[ Lua Globals ]]
--- luacheck: globals type assert next pcall
+-- luacheck: globals type assert next pcall tonumber
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -34,6 +34,11 @@ function colorMeta:SetRGBA(r, g, b, a)
     self.colorStr = self:GenerateHexColor()
 
     self.isAchromatic = (r == g) and (g == b)
+end
+
+function colorMeta:GenerateHexColor()
+    local r, g, b, a = self:GetRGBAAsBytes()
+    return ("%.2x%.2x%.2x%.2x"):format(a, r, g, b)
 end
 
 --[[ ColorMixin:IsEqualTo(_otherColor_ or _r, g, b, a_)
@@ -82,9 +87,13 @@ or modify colors.
 Aurora also provides an implementation of [[CUSTOM_CLASS_COLORS]].
 --]=]
 
+local function ExtractColorValueFromHex(str, index)
+	return tonumber(str:sub(index, index + 1), 16) / 255;
+end
+
 --[[ Color.Create(_r, g, b[, a]_)
-Create a new color with the given color values. If `a` is not provided,
-it defaults to `1`.
+Create a new color object with the given color values. If an alpha value is not
+provided, it defaults to `1` or `FF`.
 
 **Args:**
 * `r` - red value between 0 and 1 _(number)_
@@ -92,12 +101,28 @@ it defaults to `1`.
 * `b` - blue value between 0 and 1 _(number)_
 * `a` - _optional_ alpha value between 0 and 1 _(number)_
 
+OR
+
+* `hexColor` - hexadecimal digets in the format RRGGBB or AARRGGBB _(string)_
+
 **Returns:**
 * `color` - a new color object _(ColorMixin)_
 --]]
 function Color.Create(r, g, b, a)
     local color = _G.CreateFromMixins(colorMeta)
-    color:OnLoad(r, g, b, a)
+
+    if type(r) == "string" then
+        local hexColor = r
+        if #hexColor == 8 then
+            a, r, g, b = ExtractColorValueFromHex(hexColor, 1), ExtractColorValueFromHex(hexColor, 3), ExtractColorValueFromHex(hexColor, 5), ExtractColorValueFromHex(hexColor, 7)
+        elseif #hexColor == 6 then
+            r, g, b = ExtractColorValueFromHex(hexColor, 1), ExtractColorValueFromHex(hexColor, 3), ExtractColorValueFromHex(hexColor, 5)
+        else
+            private.debug("Color.Create input must be hexadecimal digits in format RRGGBB or AARRGGBB.");
+        end
+    end
+
+    color:OnLoad(r, g, b, a or 1)
     return color
 end
 
@@ -202,7 +227,7 @@ These colors are used extensively in the UI skins.
 * `Color.button` - defaults to `Color.grayDark`
 * `Color.frame` - defaults to `Color.black`
 --]]
-Color.red     = Color.Create(0.8, 0.2, 0.2) -- CC3333
+Color.red     = Color.Create("FFCC3333") -- CC3333
 Color.orange  = Color.Create(0.8, 0.5, 0.2) -- CC8033
 Color.yellow  = Color.Create(0.8, 0.8, 0.2) -- CCCC33
 Color.lime    = Color.Create(0.5, 0.8, 0.2) -- 80CC33
@@ -309,7 +334,7 @@ function meta:UnregisterCallback(method, handler)
 end
 local function DispatchCallbacks()
     if numCallbacks < 1 then return end
-    --print("CUSTOM_CLASS_COLORS:DispatchCallbacks")
+    --print("CUSTOM_CLASS_COLORS:DispatchCallbacks", numCallbacks)
     for method, handler in next, callbacks do
         local ok, err = pcall(method, handler ~= true and handler or nil)
         if not ok then
@@ -332,7 +357,7 @@ function meta:NotifyChanges()
             local color = self[classToken]
             local cache = colorCache[classToken]
 
-            if not color:IsEqualTo(cache) then
+            if cache and not color:IsEqualTo(cache) then
                 --print("Change found in", classToken)
                 cache.r = color.r
                 cache.g = color.g
@@ -376,29 +401,19 @@ end
 function private.classColorsReset(oldColors, newColors)
     local classToken, oldColor, newColor
 
-    local isCCC
-    if oldColors == _G.CUSTOM_CLASS_COLORS then
-        isCCC = true
-    end
-
-    --print("classColorsReset", oldColors, newColors, isCCC)
+    --print("classColorsReset", oldColors, newColors)
     for i = 1, #_G.CLASS_SORT_ORDER do
         classToken = _G.CLASS_SORT_ORDER[i]
         newColor = newColors[classToken]
         oldColor = oldColors[classToken]
+        --print("Class", i, classToken, newColor, oldColor)
 
-        if oldColor then
-            if isCCC then
-                oldColor:SetRGB(newColor.r, newColor.g, newColor.b)
-            else
+        if newColor then
+            if oldColor then
                 oldColor.r = newColor.r
                 oldColor.g = newColor.g
                 oldColor.b = newColor.b
                 oldColor.colorStr = newColor.colorStr
-            end
-        else
-            if isCCC then
-                oldColors[classToken] = Color.Create(newColor.r, newColor.g, newColor.b)
             else
                 oldColors[classToken] = {
                     r = newColor.r,
@@ -410,11 +425,7 @@ function private.classColorsReset(oldColors, newColors)
         end
     end
 
-    if isCCC then
-        DispatchCallbacks()
-    else
-        _G.CUSTOM_CLASS_COLORS:NotifyChanges()
-    end
+    _G.CUSTOM_CLASS_COLORS:NotifyChanges()
 end
 function private.updateHighlightColor()
     --print("updateHighlightColor")
@@ -423,9 +434,13 @@ end
 
 
 _G.CUSTOM_CLASS_COLORS = {}
-private.classColorsReset(_G.CUSTOM_CLASS_COLORS, _G.RAID_CLASS_COLORS)
-_G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = meta})
+_G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = meta}) do
+	for className, classColor in next, _G.RAID_CLASS_COLORS do
+		_G.CUSTOM_CLASS_COLORS[className] = Color.Create(classColor.r, classColor.g, classColor.b)
+	end
+end
 
 _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
+    --print("color CCC:RegisterCallback")
     private.updateHighlightColor()
 end)

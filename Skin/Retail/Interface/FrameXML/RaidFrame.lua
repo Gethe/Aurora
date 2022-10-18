@@ -24,8 +24,13 @@ function private.FrameXML.RaidFrame()
     Skin.UIPanelButtonTemplate(_G.RaidFrameRaidInfoButton)
 
 
-    Skin.DialogBorderDarkTemplate(_G.RaidInfoFrame.Border)
-    Skin.DialogHeaderTemplate(_G.RaidInfoFrame.Header)
+    -------------------
+    -- RaidInfoFrame --
+    -------------------
+    local RaidInfoFrame = _G.RaidInfoFrame
+    RaidInfoFrame:SetPoint("TOPLEFT", _G.RaidFrame, "TOPRIGHT", 1, -28)
+    Skin.DialogBorderDarkTemplate(RaidInfoFrame.Border)
+    Skin.DialogHeaderTemplate(RaidInfoFrame.Header)
 
     _G.RaidInfoDetailHeader:Hide()
     _G.RaidInfoDetailFooter:Hide()
@@ -33,10 +38,14 @@ function private.FrameXML.RaidFrame()
 
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoInstanceLabel)
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoIDLabel)
-    _G.RaidInfoFrame:SetPoint("TOPLEFT", _G.RaidFrame, "TOPRIGHT", 1, -28)
 
     Skin.UIPanelCloseButton(_G.RaidInfoCloseButton)
-    Skin.HybridScrollBarTemplate(_G.RaidInfoScrollFrame.scrollBar)
+    if private.isPatch then
+        Skin.WowScrollBoxList(RaidInfoFrame.ScrollBox)
+        Skin.WowTrimScrollBar(RaidInfoFrame.ScrollBar)
+    else
+        Skin.HybridScrollBarTemplate(_G.RaidInfoScrollFrame.scrollBar)
+    end
     Skin.UIPanelButtonTemplate(_G.RaidInfoExtendButton)
     Skin.UIPanelButtonTemplate(_G.RaidInfoCancelButton)
 end

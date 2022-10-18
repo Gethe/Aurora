@@ -29,6 +29,7 @@ do --[[ AddOns\Blizzard_CompactUnitFrameProfiles.xml ]]
 end
 
 function private.AddOns.Blizzard_CUFProfiles()
+    if private.isPatch then return end
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_CompactUnitFrameProfiles --
     ----====####$$$$%%%%%%%$$$$####====----

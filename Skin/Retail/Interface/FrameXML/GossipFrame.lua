@@ -53,11 +53,11 @@ do --[[ FrameXML\GossipFrame.xml ]]
     function Skin.GossipFramePanelTemplate(Frame)
         Frame:SetPoint("BOTTOMRIGHT")
 
-        local name = Frame:GetName()
-        _G[name.."MaterialTopLeft"]:SetAlpha(0)
-        _G[name.."MaterialTopRight"]:SetAlpha(0)
-        _G[name.."MaterialBotLeft"]:SetAlpha(0)
-        _G[name.."MaterialBotRight"]:SetAlpha(0)
+        local topLeft, topRight, botLeft, botRight = Frame:GetRegions()
+        topLeft:SetAlpha(0)
+        topRight:SetAlpha(0)
+        botLeft:SetAlpha(0)
+        botRight:SetAlpha(0)
     end
     function Skin.GossipTitleButtonTemplate(Button)
         Util.Mixin(Button, Hook.GossipTitleButtonMixin)
@@ -69,46 +69,60 @@ do --[[ FrameXML\GossipFrame.xml ]]
 end
 
 function private.FrameXML.GossipFrame()
-    _G.hooksecurefunc("GossipFrameOptionsUpdate", Hook.GossipFrameOptionsUpdate)
-    _G.hooksecurefunc("NPCFriendshipStatusBar_Update", Hook.NPCFriendshipStatusBar_Update)
+    if not private.isPatch then
+        _G.hooksecurefunc("GossipFrameOptionsUpdate", Hook.GossipFrameOptionsUpdate)
+        _G.hooksecurefunc("NPCFriendshipStatusBar_Update", Hook.NPCFriendshipStatusBar_Update)
+    end
 
     -----------------
     -- GossipFrame --
     -----------------
     local GossipFrame = _G.GossipFrame
     Skin.ButtonFrameTemplate(GossipFrame)
-    Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
+    if not private.isPatch then
+        Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
+        -- BlizzWTF: This should use the title text included in the template
+        _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
+    end
 
     GossipFrame.Background:Hide()
     local bg = GossipFrame.NineSlice:GetBackdropTexture("bg")
-    -- BlizzWTF: This should use the title text included in the template
-    _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
 
-    Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
-    Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
-    _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
+    if private.isPatch then
+        local GreetingPanel = GossipFrame.GreetingPanel
+        Skin.GossipFramePanelTemplate(GreetingPanel)
 
-    Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
-    _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
-    _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 30)
+        Skin.UIPanelButtonTemplate(GreetingPanel.GoodbyeButton)
+        Skin.WowScrollBoxList(GreetingPanel.ScrollBox)
+        Skin.WowTrimScrollBar(GreetingPanel.ScrollBar)
+    else
+        Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
 
-    _G.GossipGreetingScrollFrameTop:Hide()
-    _G.GossipGreetingScrollFrameBottom:Hide()
-    _G.GossipGreetingScrollFrameMiddle:Hide()
+        Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
+        _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
 
-    ----------------------------
-    -- NPCFriendshipStatusBar --
-    ----------------------------
-    local NPCFriendshipStatusBar = _G.NPCFriendshipStatusBar
-    Skin.FrameTypeStatusBar(NPCFriendshipStatusBar)
-    NPCFriendshipStatusBar:GetRegions():Hide()
-    NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
-    for i = 1, 4 do
-        local notch = _G.NPCFriendshipStatusBar["Notch"..i]
-        notch:SetColorTexture(Color.button:GetRGB())
-        notch:SetSize(1, 16)
+        Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
+        _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
+        _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 30)
+
+        _G.GossipGreetingScrollFrameTop:Hide()
+        _G.GossipGreetingScrollFrameBottom:Hide()
+        _G.GossipGreetingScrollFrameMiddle:Hide()
+
+        ----------------------------
+        -- NPCFriendshipStatusBar --
+        ----------------------------
+        local NPCFriendshipStatusBar = _G.NPCFriendshipStatusBar
+        Skin.FrameTypeStatusBar(NPCFriendshipStatusBar)
+        NPCFriendshipStatusBar:GetRegions():Hide()
+        NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
+        for i = 1, 4 do
+            local notch = _G.NPCFriendshipStatusBar["Notch"..i]
+            notch:SetColorTexture(Color.button:GetRGB())
+            notch:SetSize(1, 16)
+        end
+
+        local barFillBG = _G.select(7, NPCFriendshipStatusBar:GetRegions())
+        barFillBG:Hide()
     end
-
-    local barFillBG = _G.select(7, NPCFriendshipStatusBar:GetRegions())
-    barFillBG:Hide()
 end

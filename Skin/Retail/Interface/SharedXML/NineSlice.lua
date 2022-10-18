@@ -49,6 +49,10 @@ do --[[ SharedXML\NineSlice.lua ]]
         --CovenantMissionFrame = BasicFrame,
         GenericMetal = BasicFrame,
         Dialog = function(Frame, kit)
+            if Frame.debug then
+                _G.print("Layout Dialog", Frame.debug, kit)
+            end
+
             BasicFrame(Frame, kit)
             Frame:SetBackdropOption("offsets", {
                 left = 5,
@@ -69,8 +73,12 @@ do --[[ SharedXML\NineSlice.lua ]]
         TooltipCorruptedLayout = BasicFrame,
         TooltipMawLayout = BasicFrame,
         --TooltipGluesLayout = BasicFrame,
+        --TooltipMixedLayout = BasicFrame,
+        HeldBagLayout = BasicFrame,
         --IdenticalCornersLayoutNoCenter = BasicFrame,
         IdenticalCornersLayout = BasicFrame,
+        --ThreeSliceVerticalLayout = BasicFrame,
+        --ThreeSliceHorizontalLayout = BasicFrame,
 
         -- Blizzard_OrderHallTalents
         BFAOrderTalentHorde = BasicFrame,
@@ -89,28 +97,43 @@ do --[[ SharedXML\NineSlice.lua ]]
         end
     end
 
+    local function GetNameforLayout(userLayout)
+        for layoutName, layout in next, _G.NineSliceLayouts do
+            if layout == userLayout then
+                return layoutName
+            end
+        end
+    end
+
     Hook.NineSliceUtil = {}
     function Hook.NineSliceUtil.ApplyLayout(container, userLayout, textureKit)
         if not container._auroraNineSlice then return end
         if container._applyLayout then return end
 
         container._applyLayout = true
-        local userLayoutName = layoutMap[userLayout]
+        local userLayoutName = layoutMap[userLayout] or GetNameforLayout(userLayout)
         if container.debug then
-            _G.print("ApplyLayout", container.debug, userLayoutName, textureKit)
+            _G.print("ApplyLayout", container.debug, userLayout, userLayoutName, textureKit)
+            if not userLayoutName and not textureKit then
+                _G.error("Found usage")
+            end
         end
 
         if layouts[userLayoutName] then
-            if private.isDev then
+            if container.debug then
                 private.debug("Apply layout with textureKit", userLayoutName)
             end
             layouts[userLayoutName](container, Util.GetTextureKit(textureKit))
         else
             if userLayoutName then
                 private.debug("Missing skin for nineslice layout", userLayoutName)
+            elseif private.isDev then
+                _G.print("Missing name for nineslice layout:", container:GetDebugName())
+                --print("userLayout", userLayout, _G.NineSliceLayouts.Dialog)
+                --_G.error("Found usage")
             end
 
-            if not container._auroraBackdrop then return end
+            if not container.SetBackdropOption then return end
             container:SetBackdrop(private.backdrop)
             for i = 1, #nineSliceSetup do
                 local piece = Util.GetNineSlicePiece(container, nineSliceSetup[i])

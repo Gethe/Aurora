@@ -170,7 +170,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
     do --[[ PortraitFrame ]]
         Hook.PortraitFrameMixin = {}
         function Hook.PortraitFrameMixin:SetBorder(layoutName)
-            if not self.NineSlice._auroraBackdrop then return end
+            if not self.NineSlice.SetBackdropOption then return end
             self.NineSlice:SetBackdrop(private.backdrop)
         end
     end

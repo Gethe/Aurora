@@ -10,8 +10,13 @@ local Skin = Aurora.Skin
 
 function private.FrameXML.QuickJoin()
     local QuickJoinFrame = _G.QuickJoinFrame
-    Skin.FriendsFrameScrollFrame(QuickJoinFrame.ScrollFrame)
-    QuickJoinFrame.ScrollFrame:SetPoint("TOPLEFT", 8, -(private.FRAME_TITLE_HEIGHT + 5))
-    QuickJoinFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", -28, 30)
+    if private.isPatch then
+        Skin.WowScrollBoxList(QuickJoinFrame.ScrollBox)
+        Skin.WowTrimScrollBar(QuickJoinFrame.ScrollBar)
+    else
+        Skin.FriendsFrameScrollFrame(QuickJoinFrame.ScrollFrame)
+        QuickJoinFrame.ScrollFrame:SetPoint("TOPLEFT", 8, -(private.FRAME_TITLE_HEIGHT + 5))
+        QuickJoinFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", -28, 30)
+    end
     Skin.MagicButtonTemplate(QuickJoinFrame.JoinQueueButton)
 end

@@ -337,6 +337,7 @@ for i, classToken in ipairs(_G.CLASS_SORT_ORDER) do
 end
 
 local resetButton = createButton(gui, function()
+    --print("reset button press")
     private.classColorsReset(_G.CUSTOM_CLASS_COLORS, _G.RAID_CLASS_COLORS)
 end, _G.RESET)
 resetButton:SetPoint("RIGHT", classColors[1], "LEFT", -10, 0)
@@ -344,6 +345,7 @@ resetButton:SetWidth(50)
 
 
 gui.refresh = function()
+    --print("gui refresh")
     alphaSlider:SetValue(_G.AuroraConfig.alpha)
 
     for i = 1, #checkboxes do
@@ -397,8 +399,8 @@ function private.SetupGUI()
         Skin.InterfaceOptionsCheckButtonTemplate(checkboxes[i])
     end
 
-    Skin.OptionsButtonTemplate(reloadButton)
-    Skin.OptionsButtonTemplate(resetButton)
+    Skin.UIPanelButtonTemplate(reloadButton)
+    Skin.UIPanelButtonTemplate(resetButton)
 end
 
 -- easy slash command

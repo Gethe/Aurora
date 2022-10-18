@@ -31,19 +31,28 @@ do --[[ FrameXML\CharacterFrame.xml ]]
         bg:SetPoint("BOTTOMRIGHT")
         bg:SetColorTexture(1, 1, 1, 0.2)
     end
+    function Skin.CharacterFrameTabTemplate(Button)
+        if private.isPatch then
+            Skin.PanelTabButtonTemplate(Button)
+        else
+            Skin.CharacterFrameTabButtonTemplate(Button)
+        end
+    end
 end
 
 function private.FrameXML.CharacterFrame()
     local CharacterFrame = _G.CharacterFrame
     Skin.ButtonFrameTemplate(CharacterFrame)
 
-    CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
+    if not private.isPatch then
+        CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
+    end
     CharacterFrame.Inset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
     CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
 
-    Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab1)
-    Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab2)
-    Skin.CharacterFrameTabButtonTemplate(_G.CharacterFrameTab3)
+    Skin.CharacterFrameTabTemplate(_G.CharacterFrameTab1)
+    Skin.CharacterFrameTabTemplate(_G.CharacterFrameTab2)
+    Skin.CharacterFrameTabTemplate(_G.CharacterFrameTab3)
     Util.PositionRelative("TOPLEFT", CharacterFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.CharacterFrameTab1,
         _G.CharacterFrameTab2,
@@ -59,12 +68,15 @@ function private.FrameXML.CharacterFrame()
     local ClassBackground = CharacterStatsPane.ClassBackground
     local atlas = "legionmission-landingpage-background-"..private.charClass.token
     local info = _G.C_Texture.GetAtlasInfo(atlas)
-    ClassBackground:ClearAllPoints()
-    ClassBackground:SetPoint("CENTER")
-    ClassBackground:SetSize(_G.Round(info.width * 0.7), _G.Round(info.height * 0.7))
-    ClassBackground:SetAtlas(atlas)
-    ClassBackground:SetDesaturated(true)
-    ClassBackground:SetAlpha(0.4)
+    if info then
+        -- C_Texture.GetAtlasInfo("legionmission-landingpage-background-EVOKER")
+        ClassBackground:ClearAllPoints()
+        ClassBackground:SetPoint("CENTER")
+        ClassBackground:SetSize(_G.Round(info.width * 0.7), _G.Round(info.height * 0.7))
+        ClassBackground:SetAtlas(atlas)
+        ClassBackground:SetDesaturated(true)
+        ClassBackground:SetAlpha(0.4)
+    end
 
 
     CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Shadow_Huge2")

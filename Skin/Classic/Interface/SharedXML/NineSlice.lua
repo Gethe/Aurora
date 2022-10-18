@@ -76,7 +76,7 @@ do --[[ SharedXML\NineSlice.lua ]]
                 private.debug("Missing skin for nineslice layout", userLayoutName)
             end
 
-            if not container._auroraBackdrop then return end
+            if not container.SetBackdropOption then return end
             container:SetBackdrop(private.backdrop)
             for i = 1, #nineSliceSetup do
                 local piece = Util.GetNineSlicePiece(container, nineSliceSetup[i])

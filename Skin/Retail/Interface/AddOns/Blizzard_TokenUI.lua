@@ -10,6 +10,30 @@ local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
+    function Hook.TokenFrame_InitTokenButton(self, button, elementData)
+        if button.isHeader then
+            Base.SetBackdrop(button, Color.button)
+            button.Highlight:SetAlpha(0)
+
+            button._auroraMinus:Show()
+            button._auroraPlus:SetShown(not button.isExpanded)
+            button.Stripe:Hide()
+            button.Icon.bg:Hide()
+        else
+            button:SetBackdrop(false)
+
+            local r, g, b = Color.highlight:GetRGB()
+            button.Highlight:SetColorTexture(r, g, b)
+            button.Highlight:SetAlpha(0.2)
+            button.Highlight:SetPoint("TOPLEFT", 1, 0)
+            button.Highlight:SetPoint("BOTTOMRIGHT", -1, 0)
+
+            button._auroraMinus:Hide()
+            button._auroraPlus:Hide()
+            button.Stripe:SetShown(button.index % 2 == 1)
+            button.Icon.bg:Show()
+        end
+    end
     function Hook.TokenFrame_Update()
         local buttons = _G.TokenFrameContainer.buttons
         if not buttons then return end
@@ -47,18 +71,33 @@ end
 
 do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
     function Skin.TokenButtonTemplate(Button)
-        local stripe = Button.stripe
-        stripe:SetPoint("TOPLEFT", 1, 1)
-        stripe:SetPoint("BOTTOMRIGHT", -1, -1)
+        if private.isPatch then
+            local stripe = Button.Stripe
+            stripe:SetPoint("TOPLEFT", 1, 1)
+            stripe:SetPoint("BOTTOMRIGHT", -1, -1)
 
-        Button.icon.bg = Base.CropIcon(Button.icon, Button)
+            Button.Icon.bg = Base.CropIcon(Button.Icon, Button)
 
-        Button.categoryMiddle:SetAlpha(0)
-        Button.categoryLeft:SetAlpha(0)
-        Button.categoryRight:SetAlpha(0)
-        Skin.FrameTypeButton(Button)
+            Button.CategoryLeft:SetAlpha(0)
+            Button.CategoryRight:SetAlpha(0)
+            Button.CategoryMiddle:SetAlpha(0)
+            Skin.FrameTypeButton(Button)
 
-        Button.expandIcon:SetTexture("")
+            Button.ExpandIcon:SetTexture("")
+        else
+            local stripe = Button.stripe
+            stripe:SetPoint("TOPLEFT", 1, 1)
+            stripe:SetPoint("BOTTOMRIGHT", -1, -1)
+
+            Button.icon.bg = Base.CropIcon(Button.icon, Button)
+
+            Button.categoryMiddle:SetAlpha(0)
+            Button.categoryLeft:SetAlpha(0)
+            Button.categoryRight:SetAlpha(0)
+            Skin.FrameTypeButton(Button)
+
+            Button.expandIcon:SetTexture("")
+        end
         local minus = Button:CreateTexture(nil, "ARTWORK")
         minus:SetSize(7, 1)
         minus:SetPoint("LEFT", 8, 0)
@@ -74,36 +113,59 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
         Button._auroraPlus = plus
     end
     function Skin.BackpackTokenTemplate(Button)
-        Base.CropIcon(Button.icon, Button)
-        Button.count:SetPoint("RIGHT", Button.icon, "LEFT", -2, 0)
+        if private.isPatch then
+            Base.CropIcon(Button.Icon, Button)
+            Button.Count:SetPoint("RIGHT", Button.Icon, "LEFT", -2, 0)
+        else
+            Base.CropIcon(Button.icon, Button)
+            Button.count:SetPoint("RIGHT", Button.icon, "LEFT", -2, 0)
+        end
     end
 end
 
 function private.AddOns.Blizzard_TokenUI()
-    _G.hooksecurefunc("TokenFrame_Update", Hook.TokenFrame_Update)
-    _G.hooksecurefunc(_G.TokenFrameContainer, "update", Hook.TokenFrame_Update)
 
-    Skin.HybridScrollBarTemplate(_G.TokenFrame.Container.scrollBar)
+    local TokenFrame = _G.TokenFrame
+    if private.isPatch then
+        _G.hooksecurefunc("TokenFrame_InitTokenButton", Hook.TokenFrame_InitTokenButton)
+        Skin.WowScrollBoxList(TokenFrame.ScrollBox)
+        Skin.WowTrimScrollBar(TokenFrame.ScrollBar)
+    else
+        _G.hooksecurefunc("TokenFrame_Update", Hook.TokenFrame_Update)
+        _G.hooksecurefunc(TokenFrame.Container, "update", Hook.TokenFrame_Update)
+        Skin.HybridScrollBarTemplate(TokenFrame.Container.scrollBar)
+    end
 
     local TokenFramePopup = _G.TokenFramePopup
     Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)
     TokenFramePopup:SetSize(175, 90)
 
-    local titleText = _G.TokenFramePopupTitle
+    local titleText = private.isPatch and TokenFramePopup.Title or _G.TokenFramePopupTitle
     titleText:ClearAllPoints()
     titleText:SetPoint("TOPLEFT")
     titleText:SetPoint("BOTTOMRIGHT", TokenFramePopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    _G.TokenFramePopupCorner:Hide()
+    if private.isPatch then
+        TokenFramePopup.Corner:Hide()
 
-    Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupInactiveCheckBox)
-    _G.TokenFramePopupInactiveCheckBox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
-    Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupBackpackCheckBox)
-    _G.TokenFramePopupBackpackCheckBox:SetPoint("TOPLEFT", _G.TokenFramePopupInactiveCheckBox, "BOTTOMLEFT", 0, -8)
+        Skin.UICheckButtonTemplate(TokenFramePopup.InactiveCheckBox)
+        TokenFramePopup.InactiveCheckBox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
+        Skin.UICheckButtonTemplate(TokenFramePopup.BackpackCheckBox)
+        TokenFramePopup.BackpackCheckBox:SetPoint("TOPLEFT", TokenFramePopup.InactiveCheckBox, "BOTTOMLEFT", 0, -8)
 
-    Skin.UIPanelCloseButton(_G.TokenFramePopupCloseButton)
+        Skin.UIPanelCloseButton(TokenFramePopup["$parent.CloseButton"])
+    else
+        _G.TokenFramePopupCorner:Hide()
 
-    if not private.disabled.bags then
+        Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupInactiveCheckBox)
+        _G.TokenFramePopupInactiveCheckBox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
+        Skin.OptionsSmallCheckButtonTemplate(_G.TokenFramePopupBackpackCheckBox)
+        _G.TokenFramePopupBackpackCheckBox:SetPoint("TOPLEFT", _G.TokenFramePopupInactiveCheckBox, "BOTTOMLEFT", 0, -8)
+
+        Skin.UIPanelCloseButton(_G.TokenFramePopupCloseButton)
+    end
+
+    if not private.isPatch and not private.disabled.bags then
         local BackpackTokenFrame = _G.BackpackTokenFrame
         BackpackTokenFrame:GetRegions():Hide()
 

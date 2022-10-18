@@ -95,12 +95,17 @@ function private.FrameXML.LFDFrame()
     _G.LFDQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()
     Skin.LFGRewardFrameTemplate(_G.LFDQueueFrameRandomScrollFrameChildFrame)
 
-    for i = 1, _G.NUM_LFD_CHOICE_BUTTONS do
-        Skin.LFDFrameDungeonChoiceTemplate(_G["LFDQueueFrameSpecificListButton"..i])
+    if private.isPatch then
+        Skin.WowScrollBoxList(LFDQueueFrame.Specific.ScrollBox)
+        Skin.WowTrimScrollBar(LFDQueueFrame.Specific.ScrollBar)
+    else
+        for i = 1, _G.NUM_LFD_CHOICE_BUTTONS do
+            Skin.LFDFrameDungeonChoiceTemplate(_G["LFDQueueFrameSpecificListButton"..i])
+        end
+        Skin.FauxScrollFrameTemplate(_G.LFDQueueFrameSpecificListScrollFrame)
+        _G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
+        _G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundBottomRight:Hide()
     end
-    Skin.FauxScrollFrameTemplate(_G.LFDQueueFrameSpecificListScrollFrame)
-    _G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundTopLeft:Hide()
-    _G.LFDQueueFrameSpecificListScrollFrameScrollBackgroundBottomRight:Hide()
 
     Skin.MagicButtonTemplate(_G.LFDQueueFrameFindGroupButton)
     Skin.LFGBackfillCoverTemplate(LFDQueueFrame.PartyBackfill)

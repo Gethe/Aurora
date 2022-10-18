@@ -18,5 +18,5 @@ function private.FrameXML.RatingMenuFrame()
     local RatingMenuFrame = _G.RatingMenuFrame
     Skin.DialogBorderTemplate(RatingMenuFrame.Border)
     Skin.DialogHeaderTemplate(RatingMenuFrame.Header)
-    Skin.OptionsButtonTemplate(_G.RatingMenuButtonOkay)
+    Skin.UIPanelButtonTemplate(_G.RatingMenuButtonOkay)
 end

@@ -98,7 +98,12 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     end
     do --[[ ChannelRoster.xml ]]
         function Skin.ChannelRosterTemplate(Frame)
-            Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
+            if private.isPatch then
+                Skin.WowScrollBoxList(Frame.ScrollBox)
+                Skin.WowTrimScrollBar(Frame.ScrollBar)
+            else
+                Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
+            end
         end
     end
 end

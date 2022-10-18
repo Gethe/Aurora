@@ -117,8 +117,8 @@ local BackdropMixin do
             left, right, top, bottom = (offsets.left or left), (offsets.right or right), (offsets.top or top), (offsets.bottom or bottom)
         end
         if frame.debug then
-            _G.print("GetNineSliceLayout", frame:GetDebugName(), frame.debug)
-            _G.print("  offsets:", left, right, top, bottom)
+            private.debug("GetNineSliceLayout", frame:GetDebugName(), frame.debug)
+            private.debug("  offsets:", left, right, top, bottom)
             if Aurora.debug then
                 _G.error("Found usage")
             end
@@ -176,14 +176,14 @@ local BackdropMixin do
     end
     function BackdropMixin:SetupPieceVisuals(piece, setupInfo, pieceLayout, textureKit, userLayout)
         if self.debug then
-            _G.print("SetupPieceVisuals", piece:GetDebugName(),self.debug)
-            _G.print("  ", setupInfo.pieceName, ":")
-            _G.print("      size:", piece:GetSize())
+            private.debug("SetupPieceVisuals", piece:GetDebugName(),self.debug)
+            private.debug("  ", setupInfo.pieceName, ":")
+            private.debug("      size:", piece:GetSize())
             if pieceLayout.x then
-                _G.print("      x, y:", pieceLayout.x, pieceLayout.y)
+                private.debug("      x, y:", pieceLayout.x, pieceLayout.y)
             end
             if pieceLayout.x1 then
-                _G.print("      x1, y1:", pieceLayout.x1, pieceLayout.y1)
+                private.debug("      x1, y1:", pieceLayout.x1, pieceLayout.y1)
             end
             --_G.error("Found usage")
         end
@@ -200,13 +200,13 @@ local BackdropMixin do
             local piece = Util.GetNineSlicePiece(self, pieceName)
             if piece then
                 if self.debug then
-                    _G.print("  ", pieceName, ":")
-                    _G.print("      size:", piece:GetSize())
+                    private.debug("  ", pieceName, ":")
+                    private.debug("      size:", piece:GetSize())
                     if pieceLayout.x then
-                        _G.print("      x, y:", pieceLayout.x, pieceLayout.y)
+                        private.debug("      x, y:", pieceLayout.x, pieceLayout.y)
                     end
                     if pieceLayout.x1 then
-                        _G.print("      x1, y1:", pieceLayout.x1, pieceLayout.y1)
+                        private.debug("      x1, y1:", pieceLayout.x1, pieceLayout.y1)
                     end
                     --_G.error("Found usage")
                 end
@@ -401,7 +401,7 @@ function Base.SetBackdropColor(frame, color, alpha)
     if not color then color = Color.frame end
     if type(color) ~= "table" and color.r then error("`color` must be a Color object. See Color.Create") end
     if frame.debug then
-        _G.print("Base.SetBackdropColor", frame.debug)
+        private.debug("Base.SetBackdropColor", frame.debug)
     end
 
     frame:SetBackdropColor(Color.Lightness(color, -0.3), alpha or color.a)

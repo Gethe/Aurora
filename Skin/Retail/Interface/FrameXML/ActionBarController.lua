@@ -113,31 +113,37 @@ do --[[ FrameXML\ActionBarController.lua ]]
         end
         function Hook.StatusTrackingManagerMixin:HideStatusBars()
             for i, bar in ipairs(self.bars) do
-                Util.ReleaseBarTicks(bar)
+                Util.ReleaseBarTicks(bar.StatusBar)
             end
         end
-        function Hook.StatusTrackingManagerMixin:SetDoubleBarSize(bar, width)
-            local barHeight = 8
-            bar.StatusBar:SetHeight(barHeight)
-            bar:SetHeight(barHeight)
-        end
-        function Hook.StatusTrackingManagerMixin:SetSingleBarSize(bar, width)
-            local barHeight = 10
-            bar.StatusBar:SetHeight(barHeight)
-            bar:SetHeight(barHeight)
-        end
-        function Hook.StatusTrackingManagerMixin:LayoutBar(bar, barWidth, isTopBar, isDouble)
-            if isDouble then
-                if isTopBar then
-                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -7)
+        if private.isPatch then
+            function Hook.StatusTrackingManagerMixin:LayoutBar(bar, isTopBar)
+                Util.PositionBarTicks(bar.StatusBar, 10, Color.frame)
+            end
+        else
+            function Hook.StatusTrackingManagerMixin:SetDoubleBarSize(bar, width)
+                local barHeight = 8
+                bar.StatusBar:SetHeight(barHeight)
+                bar:SetHeight(barHeight)
+            end
+            function Hook.StatusTrackingManagerMixin:SetSingleBarSize(bar, width)
+                local barHeight = 10
+                bar.StatusBar:SetHeight(barHeight)
+                bar:SetHeight(barHeight)
+            end
+            function Hook.StatusTrackingManagerMixin:LayoutBar(bar, barWidth, isTopBar, isDouble)
+                if isDouble then
+                    if isTopBar then
+                        bar:SetPoint("BOTTOM", self:GetParent(), 0, -7)
+                    else
+                        bar:SetPoint("BOTTOM", self:GetParent(), 0, -18)
+                    end
                 else
-                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -18)
+                    bar:SetPoint("BOTTOM", self:GetParent(), 0, -11)
                 end
-            else
-                bar:SetPoint("BOTTOM", self:GetParent(), 0, -11)
-            end
 
-            Util.PositionBarTicks(bar, self.largeSize and 20 or 10, Color.frame)
+                Util.PositionBarTicks(bar, self.largeSize and 20 or 10, Color.frame)
+            end
         end
     end
     do --[[ ExpBar.xml ]]
@@ -310,8 +316,6 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Base.CropIcon(CheckButton:GetHighlightTexture())
             Base.CropIcon(CheckButton:GetCheckedTexture())
         end
-    end
-    do --[[ ActionBarFrame.xml ]]
         function Skin.ActionBarButtonTemplate(CheckButton)
             Skin.ActionButtonTemplate(CheckButton)
 
@@ -328,6 +332,13 @@ do --[[ FrameXML\ActionBarController.xml ]]
             CheckButton:SetBackdropColor(1, 1, 1, 0.75)
             CheckButton:SetBackdropBorderColor(Color.frame:GetRGB())
             Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
+        end
+    end
+    do --[[ ActionBarTemplate.xml ]]
+        function Skin.ActionBarTemplate(Frame)
+        end
+        function Skin.EditModeActionBarTemplate(Frame)
+            Skin.ActionBarTemplate(Frame)
         end
     end
     do --[[ MultiActionBars.xml ]]
@@ -438,10 +449,9 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --     MainMenuBarMicroButtons     --
     ----====####$$$$%%%%%$$$$####====----
-    if not private.disabled.mainmenubar then
+    if not private.isPatch and not private.disabled.mainmenubar then
         _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
-        Util.Mixin(_G.GuildMicroButton, Hook.GuildMicroButtonMixin)
-        _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButtonMixin.OnUpdate)
+        _G.MicroButtonAndBagsBar.MicroBagBar:Hide()
 
         for i, name in _G.ipairs(_G.MICRO_BUTTONS) do
             local button = _G[name]
@@ -456,11 +466,13 @@ function private.FrameXML.ActionBarController()
         SetTexture(_G.GuildMicroButtonTabard.background, _G.GuildMicroButton:GetBackdropTexture("bg"), 0.1428, 0.8571, 0.222, 0.889)
         _G.GuildMicroButtonTabard.emblem:SetPoint("CENTER", _G.GuildMicroButtonTabard.background)
         _G.GuildMicroButton.NotificationOverlay:SetAllPoints(_G.GuildMicroButton:GetBackdropTexture("bg"))
+        Util.Mixin(_G.GuildMicroButton, Hook.GuildMicroButtonMixin)
         SetMicroButton(_G.LFDMicroButton, "LFG")
         SetMicroButton(_G.CollectionsMicroButton, [[Interface\Icons\MountJournalPortrait]], 0.3, 0.92, 0.08, 0.92)
         SetMicroButton(_G.EJMicroButton, [[Interface\EncounterJournal\UI-EJ-PortraitIcon]])
         SetMicroButton(_G.StoreMicroButton, [[Interface\Icons\WoW_Store]])
         SetMicroButton(_G.MainMenuMicroButton, [[Interface\Icons\INV_Misc_QuestionMark]])
+        _G.MainMenuMicroButton:HookScript("OnUpdate", Hook.MainMenuMicroButtonMixin.OnUpdate)
         SetTexture(_G.MainMenuBarPerformanceBar, _G.MainMenuMicroButton, 0.09375, 0.90625, 0.140625, 0.953125)
         _G.MainMenuBarDownload:SetPoint("BOTTOM", 0, 0)
 
@@ -491,6 +503,10 @@ function private.FrameXML.ActionBarController()
     --          ReputationBar          --
     ----====####$$$$%%%%%$$$$####====----
 
+    ----====####$$$$%%%%$$$$####====----
+    --           AzeriteBar           --
+    ----====####$$$$%%%%$$$$####====----
+
     ----====####$$$$%%%%%$$$$####====----
     --           ArtifactBar           --
     ----====####$$$$%%%%%$$$$####====----
@@ -499,33 +515,14 @@ function private.FrameXML.ActionBarController()
     --            HonorBar            --
     ----====####$$$$%%%%$$$$####====----
 
-    ----====####$$$$%%%%%$$$$####====----
-    --        StatusTrackingBar        --
-    ----====####$$$$%%%%%$$$$####====----
-    if not private.disabled.mainmenubar then
-        Skin.StatusTrackingBarManagerTemplate(_G.StatusTrackingBarManager)
-    end
-
-    ----====####$$$$%%%%%$$$$####====----
-    --           MainMenuBar           --
-    ----====####$$$$%%%%%$$$$####====----
-    if not private.disabled.mainmenubar then
-        _G.MicroButtonAndBagsBar.MicroBagBar:Hide()
-        _G.MainMenuBarArtFrameBackground.BackgroundLarge:SetAlpha(0)
-        _G.MainMenuBarArtFrameBackground.BackgroundSmall:SetAlpha(0)
-
-        _G.MainMenuBarArtFrame.LeftEndCap:Hide()
-        _G.MainMenuBarArtFrame.RightEndCap:Hide()
-    end
-
     ----====####$$$$%%%%$$$$####====----
     --      ActionButtonTemplate      --
     ----====####$$$$%%%%$$$$####====----
 
-    ----====####$$$$%%%%$$$$####====----
-    --         ActionBarFrame         --
-    ----====####$$$$%%%%$$$$####====----
-    if not private.disabled.mainmenubar then
+    ----====####$$$$%%%%%$$$$####====----
+    --        ActionBarTemplate        --
+    ----====####$$$$%%%%%$$$$####====----
+    if not private.isPatch and not private.disabled.mainmenubar then
         for i = 1, 12 do
             Skin.ActionBarButtonTemplate(_G["ActionButton"..i])
         end
@@ -572,9 +569,40 @@ function private.FrameXML.ActionBarController()
     end
 
     ----====####$$$$%%%%%$$$$####====----
-    --         MultiActionBars         --
+    --           MainMenuBar           --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
+        if private.isPatch then
+            local MainMenuBar = _G.MainMenuBar
+            MainMenuBar.BorderArt:SetAlpha(0)
+            MainMenuBar.Background:SetAlpha(0)
+            MainMenuBar.EndCaps:SetAlpha(0)
+        else
+            _G.MainMenuBarArtFrameBackground.BackgroundLarge:SetAlpha(0)
+            _G.MainMenuBarArtFrameBackground.BackgroundSmall:SetAlpha(0)
+
+            _G.MainMenuBarArtFrame.LeftEndCap:Hide()
+            _G.MainMenuBarArtFrame.RightEndCap:Hide()
+        end
+    end
+
+    ----====####$$$$%%%%%$$$$####====----
+    --        StatusTrackingBar        --
+    ----====####$$$$%%%%%$$$$####====----
+    if not private.disabled.mainmenubar then
+        if private.isPatch then
+            Util.Mixin(_G.StatusTrackingBarManager, Hook.StatusTrackingManagerMixin)
+            _G.StatusTrackingBarManager.BottomBarFrameTexture:SetAlpha(0)
+            _G.StatusTrackingBarManager.TopBarFrameTexture:SetAlpha(0)
+        else
+            Skin.StatusTrackingBarManagerTemplate(_G.StatusTrackingBarManager)
+        end
+    end
+
+    ----====####$$$$%%%%%$$$$####====----
+    --         MultiActionBars         --
+    ----====####$$$$%%%%%$$$$####====----
+    if not private.isPatch and not private.disabled.mainmenubar then
         Skin.HorizontalMultiBar1(_G.MultiBarBottomLeft)
         Skin.HorizontalMultiBar2(_G.MultiBarBottomRight)
         Skin.VerticalMultiBar3(_G.MultiBarRight)
@@ -588,7 +616,7 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --            StanceBar            --
     ----====####$$$$%%%%%$$$$####====----
-    if not private.disabled.mainmenubar then
+    if not private.isPatch and not private.disabled.mainmenubar then
         _G.StanceBarLeft:SetAlpha(0)
         _G.StanceBarMiddle:SetAlpha(0)
         _G.StanceBarRight:SetAlpha(0)

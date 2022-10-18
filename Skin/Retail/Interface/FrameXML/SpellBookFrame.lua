@@ -104,9 +104,17 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         Skin.SideTabTemplate(CheckButton)
     end
     function Skin.SpellBookFrameTabButtonTemplate(Button)
-        Skin.CharacterFrameTabButtonTemplate(Button)
+        if private.isPatch then
+            Skin.PanelTabButtonTemplate(Button)
+        else
+            Skin.CharacterFrameTabButtonTemplate(Button)
+        end
     end
     function Skin.SpellButtonTemplate(CheckButton)
+        if private.isPatch then
+            _G.hooksecurefunc(CheckButton, "UpdateButton", Hook.SpellButton_UpdateButton)
+        end
+
         local name = CheckButton:GetName()
 
         CheckButton.EmptySlot:Hide()
@@ -148,7 +156,11 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         Base.CropIcon(CheckButton:GetCheckedTexture())
     end
     function Skin.ProfessionButtonTemplate(CheckButton)
-        Base.CropIcon(CheckButton.iconTexture, CheckButton)
+        if private.isPatch then
+            Base.CropIcon(CheckButton.IconTexture, CheckButton)
+        else
+            Base.CropIcon(CheckButton.iconTexture, CheckButton)
+        end
 
         local nameFrame = _G[CheckButton:GetName().."NameFrame"]
         nameFrame:SetTexture([[Interface\Spellbook\Spellbook-Parts]])
@@ -177,33 +189,50 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         _G[name.."BGMiddle"]:Hide()
         _G[name.."BGRight"]:Hide()
     end
-    function Skin.PrimaryProfessionTemplate(Button)
-        local name = Button:GetName()
+    function Skin.PrimaryProfessionTemplate(Frame)
+        local name = Frame:GetName()
 
-        Button.professionName:SetPoint("TOPLEFT", Button.icon, "TOPRIGHT", 12, 0)
-        Button.missingHeader:SetTextColor(Color.white:GetRGB())
-        Button.missingText:SetTextColor(Color.grayLight:GetRGB())
+        Frame.professionName:SetPoint("TOPLEFT", Frame.icon, "TOPRIGHT", 12, 0)
+        Frame.missingHeader:SetTextColor(Color.white:GetRGB())
+        Frame.missingText:SetTextColor(Color.grayLight:GetRGB())
         _G[name.."IconBorder"]:Hide()
 
-        Button.icon:ClearAllPoints()
-        Button.icon:SetPoint("TOPLEFT", 6, -6)
-        Button.icon:SetSize(81, 81)
-        Base.CropIcon(Button.icon, Button)
+        Frame.icon:ClearAllPoints()
+        Frame.icon:SetPoint("TOPLEFT", 6, -6)
+        Frame.icon:SetSize(81, 81)
+        Base.CropIcon(Frame.icon, Frame)
 
-        Skin.ProfessionButtonTemplate(Button.button2)
-        Button.button2:SetPoint("TOPRIGHT", -109, 0)
-        Skin.ProfessionButtonTemplate(Button.button1)
-        Button.button1:SetPoint("TOPLEFT", Button.button2, "BOTTOMLEFT", 0, -3)
-        Skin.ProfessionStatusBarTemplate(Button.statusBar)
-        Button.statusBar:ClearAllPoints()
-        Button.statusBar:SetPoint("BOTTOMLEFT", Button.icon, "BOTTOMRIGHT", 9, 5)
+        if private.isPatch then
+            Skin.ProfessionButtonTemplate(Frame.SpellButton2)
+            Frame.SpellButton2:SetPoint("TOPRIGHT", -109, 0)
+            Skin.ProfessionButtonTemplate(Frame.SpellButton1)
+            Frame.SpellButton1:SetPoint("TOPLEFT", Frame.SpellButton2, "BOTTOMLEFT", 0, -3)
+        else
+            Skin.ProfessionButtonTemplate(Frame.button2)
+            Frame.button2:SetPoint("TOPRIGHT", -109, 0)
+            Skin.ProfessionButtonTemplate(Frame.button1)
+            Frame.button1:SetPoint("TOPLEFT", Frame.button2, "BOTTOMLEFT", 0, -3)
+        end
+        Skin.ProfessionStatusBarTemplate(Frame.statusBar)
+        Frame.statusBar:ClearAllPoints()
+        Frame.statusBar:SetPoint("BOTTOMLEFT", Frame.icon, "BOTTOMRIGHT", 9, 5)
 
-        Button.unlearn:ClearAllPoints()
-        Button.unlearn:SetPoint("BOTTOMRIGHT", Button.icon)
+        if private.isPatch then
+            Frame.UnlearnButton:ClearAllPoints()
+            Frame.UnlearnButton:SetPoint("BOTTOMRIGHT", Frame.icon)
+        else
+            Frame.unlearn:ClearAllPoints()
+            Frame.unlearn:SetPoint("BOTTOMRIGHT", Frame.icon)
+        end
     end
     function Skin.SecondaryProfessionTemplate(Button)
-        Skin.ProfessionButtonTemplate(Button.button2)
-        Skin.ProfessionButtonTemplate(Button.button1)
+        if private.isPatch then
+            Skin.ProfessionButtonTemplate(Button.SpellButton1)
+            Skin.ProfessionButtonTemplate(Button.SpellButton2)
+        else
+            Skin.ProfessionButtonTemplate(Button.button2)
+            Skin.ProfessionButtonTemplate(Button.button1)
+        end
         Skin.ProfessionStatusBarTemplate(Button.statusBar)
         Button.statusBar:SetPoint("BOTTOMLEFT", -10, 5)
 
@@ -214,7 +243,9 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
 end
 
 function private.FrameXML.SpellBookFrame()
-    _G.hooksecurefunc("SpellButton_UpdateButton", Hook.SpellButton_UpdateButton)
+    if not private.isPatch then
+        _G.hooksecurefunc("SpellButton_UpdateButton", Hook.SpellButton_UpdateButton)
+    end
     _G.hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", Hook.SpellBookFrame_UpdateSkillLineTabs)
     _G.hooksecurefunc("FormatProfession", Hook.FormatProfession)
 

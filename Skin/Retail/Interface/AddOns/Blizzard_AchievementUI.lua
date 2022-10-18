@@ -365,7 +365,6 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Skin.AchievementIconFrameTemplate(Frame.icon)
     end
     function Skin.SummaryAchievementTemplate(Frame)
-        Frame.debug = Frame:GetDebugName()
         Skin.ComparisonPlayerTemplate(Frame)
 
         Frame:SetHeight(44)

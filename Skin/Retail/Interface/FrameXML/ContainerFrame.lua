@@ -88,38 +88,49 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         ItemButton.BattlepayItemTexture:SetAllPoints()
     end
     function Skin.ContainerFrameTemplate(Frame)
-        _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
+        local bg
+        if private.isPatch then
+            Skin.PortraitFrameFlatTemplate(Frame)
+            bg = Frame.NineSlice:GetBackdropTexture("bg")
+        else
 
-        Skin.FrameTypeFrame(Frame)
-        Frame:SetBackdropOption("offsets", {
-            left = 11,
-            right = 6,
-            top = 0,
-            bottom = 3,
-        })
+            Skin.FrameTypeFrame(Frame)
+            Frame:SetBackdropOption("offsets", {
+                left = 11,
+                right = 6,
+                top = 0,
+                bottom = 3,
+            })
 
-        local name = Frame:GetName()
-        Frame.Portrait:Hide()
-        _G[name.."BackgroundTop"]:SetAlpha(0)
-        _G[name.."BackgroundMiddle1"]:SetAlpha(0)
-        _G[name.."BackgroundMiddle2"]:SetAlpha(0)
-        _G[name.."BackgroundBottom"]:SetAlpha(0)
-        _G[name.."Background1Slot"]:SetAlpha(0)
+            _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
 
-        local nameText = _G[name.."Name"]
-        nameText:ClearAllPoints()
-        nameText:SetPoint("TOPLEFT", Frame.ClickableTitleFrame, 19, 0)
-        nameText:SetPoint("BOTTOMRIGHT", Frame.ClickableTitleFrame, -19, 0)
+            local name = Frame:GetName()
+            Frame.Portrait:Hide()
+            _G[name.."BackgroundTop"]:SetAlpha(0)
+            _G[name.."BackgroundMiddle1"]:SetAlpha(0)
+            _G[name.."BackgroundMiddle2"]:SetAlpha(0)
+            _G[name.."BackgroundBottom"]:SetAlpha(0)
+            _G[name.."Background1Slot"]:SetAlpha(0)
 
-        local bg = Frame:GetBackdropTexture("bg")
-        local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
-        Base.SetBackdrop(moneyBG, Color.frame)
-        moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
-        local moneyFrame = _G[name.."MoneyFrame"]
-        moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
-        moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)
-        moneyBG:SetPoint("LEFT", bg, 3, 0)
-        moneyBG:SetPoint("RIGHT", bg, -3, 0)
+            local nameText = _G[name.."Name"]
+            nameText:ClearAllPoints()
+            nameText:SetPoint("TOPLEFT", Frame.ClickableTitleFrame, 19, 0)
+            nameText:SetPoint("BOTTOMRIGHT", Frame.ClickableTitleFrame, -19, 0)
+
+            bg = Frame:GetBackdropTexture("bg")
+            local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
+            Base.SetBackdrop(moneyBG, Color.frame)
+            moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
+            local moneyFrame = _G[name.."MoneyFrame"]
+            moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
+            moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)
+            moneyBG:SetPoint("LEFT", bg, 3, 0)
+            moneyBG:SetPoint("RIGHT", bg, -3, 0)
+
+            Skin.UIPanelCloseButton(_G[name.."CloseButton"])
+            _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
+        end
+
 
         Frame.PortraitButton:Hide()
         Frame.FilterIcon:ClearAllPoints()
@@ -128,21 +139,26 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Frame.FilterIcon.Icon:SetAllPoints()
 
         Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
-        Skin.UIPanelCloseButton(_G[name.."CloseButton"])
-        _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
 
         Frame.ClickableTitleFrame:ClearAllPoints()
         Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bg)
         Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    end
+    function Skin.ContainerFrameBackpackTemplate(Frame)
+        Skin.ContainerFrameTemplate(Frame)
     end
 end
 
 function private.FrameXML.ContainerFrame()
     if private.disabled.bags then return end
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
-    _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
+    if not private.isPatch then
+        _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
+    end
 
-    for i = 1, 12 do
+
+    Skin.ContainerFrameBackpackTemplate(_G.ContainerFrame1)
+    for i = 2, 13 do
         Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])
     end
 

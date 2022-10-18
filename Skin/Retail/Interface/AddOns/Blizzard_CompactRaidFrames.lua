@@ -83,7 +83,9 @@ function private.AddOns.Blizzard_CompactRaidFrames()
 
     displayFrame.optionsFlowContainer:SetPoint("TOPLEFT", headerDelineator, "BOTTOMLEFT", -10, -1)
 
-    Skin.UIDropDownMenuTemplate(displayFrame.profileSelector)
+    if not private.isPatch then
+        Skin.UIDropDownMenuTemplate(displayFrame.profileSelector)
+    end
 
     local filterOptions = displayFrame.filterOptions
     local footerDelineator = _G[filterOptions:GetName().."FooterDelineator"]
@@ -99,7 +101,11 @@ function private.AddOns.Blizzard_CompactRaidFrames()
         Skin.CRFManagerFilterGroupButtonTemplate(filterOptions["filterGroup"..i])
     end
 
-    Skin.UIMenuButtonStretchTemplate(displayFrame.lockedModeToggle)
+    if private.isPatch then
+        Skin.UIMenuButtonStretchTemplate(displayFrame.editMode)
+    else
+        Skin.UIMenuButtonStretchTemplate(displayFrame.lockedModeToggle)
+    end
     Skin.UIMenuButtonStretchTemplate(displayFrame.hiddenModeToggle)
     Skin.UIMenuButtonStretchTemplate(displayFrame.convertToRaid)
 

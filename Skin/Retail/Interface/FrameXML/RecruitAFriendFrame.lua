@@ -112,7 +112,12 @@ function private.FrameXML.RecruitAFriendFrame()
     local RecruitList = RecruitAFriendFrame.RecruitList
     RecruitList.Header.Background:Hide()
     Skin.InsetFrameTemplate(RecruitList.ScrollFrameInset)
-    Skin.FriendsFrameScrollFrame(RecruitList.ScrollFrame)
+    if private.isPatch then
+        Skin.WowScrollBoxList(RecruitList.ScrollBox)
+        Skin.WowTrimScrollBar(RecruitList.ScrollBar)
+    else
+        Skin.FriendsFrameScrollFrame(RecruitList.ScrollFrame)
+    end
 
     -- /run RecruitAFriendFrame:ShowSplashScreen()
     local SplashFrame = RecruitAFriendFrame.SplashFrame

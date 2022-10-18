@@ -62,9 +62,15 @@ function private.FrameXML.PVEFrame()
     _G.PVEFrameBottomFiligree:SetAlpha(0)
 
     Skin.InsetFrameTemplate(PVEFrame.Inset)
-    Skin.CharacterFrameTabButtonTemplate(PVEFrame.tab1)
-    Skin.CharacterFrameTabButtonTemplate(PVEFrame.tab2)
-    Skin.CharacterFrameTabButtonTemplate(PVEFrame.tab3)
+    if private.isPatch then
+        Skin.PanelTabButtonTemplate(PVEFrame.tab1)
+        Skin.PanelTabButtonTemplate(PVEFrame.tab2)
+        Skin.PanelTabButtonTemplate(PVEFrame.tab3)
+    else
+        Skin.CharacterFrameTabButtonTemplate(PVEFrame.tab1)
+        Skin.CharacterFrameTabButtonTemplate(PVEFrame.tab2)
+        Skin.CharacterFrameTabButtonTemplate(PVEFrame.tab3)
+    end
     Util.PositionRelative("TOPLEFT", PVEFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         PVEFrame.tab1,
         PVEFrame.tab2,

@@ -66,13 +66,21 @@ end
 
 do --[[ SharedXML\AddonList.xml ]]
     function Skin.AddonListEntryTemplate(Button)
-        Skin.UICheckButtonTemplate(_G[Button:GetName().."Enabled"]) -- BlizzWTF: Doesn't use a template, but it should
+        if private.isPatch then
+            Skin.UICheckButtonTemplate(Button.Enabled) -- BlizzWTF: Doesn't use a template, but it should
+        else
+            Skin.UICheckButtonTemplate(_G[Button:GetName().."Enabled"]) -- BlizzWTF: Doesn't use a template, but it should
+        end
         Skin.UIPanelButtonTemplate(Button.LoadAddonButton)
     end
 end
 
 function private.SharedXML.AddonList()
-    _G.hooksecurefunc("AddonList_Update", Hook.AddonList_Update)
+    if private.isPatch then
+        _G.hooksecurefunc("TriStateCheckbox_SetState", Hook.TriStateCheckbox_SetState)
+    else
+        _G.hooksecurefunc("AddonList_Update", Hook.AddonList_Update)
+    end
 
     local AddonList = _G.AddonList
     Skin.ButtonFrameTemplate(AddonList)
@@ -94,17 +102,27 @@ function private.SharedXML.AddonList()
         AddonList.DisableAllButton,
     })
 
-    for i = 1, _G.MAX_ADDONS_DISPLAYED do
-        Skin.AddonListEntryTemplate(_G["AddonListEntry"..i])
+    if not private.isPatch then
+        for i = 1, _G.MAX_ADDONS_DISPLAYED do
+            Skin.AddonListEntryTemplate(_G["AddonListEntry"..i])
+        end
+        _G.AddonListEntry1:SetPoint("TOPLEFT", _G.AddonListScrollFrame, 5, -5)
     end
-    _G.AddonListEntry1:SetPoint("TOPLEFT", _G.AddonListScrollFrame, 5, -5)
 
-    Skin.FauxScrollFrameTemplate(_G.AddonListScrollFrame)
-    _G.AddonListScrollFrame:SetPoint("TOPLEFT", 5, -60)
-    _G.AddonListScrollFrame:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -18, 5)
-    _G.AddonListScrollFrameScrollBarTop:Hide()
-    _G.AddonListScrollFrameScrollBarBottom:Hide()
-    _G.AddonListScrollFrameScrollBarMiddle:Hide()
+    if private.isPatch then
+        Skin.WowScrollBoxList(AddonList.ScrollBox)
+        AddonList.ScrollBox:SetPoint("TOPLEFT", 5, -60)
+        AddonList.ScrollBox:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -21, 5)
+
+        Skin.WowTrimScrollBar(AddonList.ScrollBar)
+    else
+        Skin.FauxScrollFrameTemplate(_G.AddonListScrollFrame)
+        _G.AddonListScrollFrame:SetPoint("TOPLEFT", 5, -60)
+        _G.AddonListScrollFrame:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -18, 5)
+        _G.AddonListScrollFrameScrollBarTop:Hide()
+        _G.AddonListScrollFrameScrollBarBottom:Hide()
+        _G.AddonListScrollFrameScrollBarMiddle:Hide()
+    end
 
     Skin.UIDropDownMenuTemplate(_G.AddonCharacterDropDown)
     _G.AddonCharacterDropDown:SetPoint("TOPLEFT", 10, -27)

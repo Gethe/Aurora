@@ -19,10 +19,16 @@ do --[[ FrameXML\FriendsFrame.lua ]]
         self.BroadcastButton:UnlockHighlight()
     end
 
-    function Hook.FriendsFrame_UpdateFriendButton(button)
+    function Hook.FriendsFrame_UpdateFriendButton(button, elementData)
         local gameIcon = button.gameIcon
         if gameIcon._bg then
             gameIcon._bg:SetShown(gameIcon:IsShown())
+        end
+    end
+    function Hook.WhoList_InitButton(button, elementData)
+        local info = elementData.info
+        if info.filename then
+            button.Class:SetTextColor(_G.CUSTOM_CLASS_COLORS[info.filename]:GetRGB())
         end
     end
     function Hook.WhoList_Update()
@@ -43,7 +49,11 @@ end
 
 do --[[ FrameXML\FriendsFrame.xml ]]
     function Skin.FriendsTabTemplate(Button)
-        Skin.TabButtonTemplate(Button)
+        if private.isPatch then
+            Skin.PanelTopTabButtonTemplate(Button)
+        else
+            Skin.TabButtonTemplate(Button)
+        end
     end
     function Skin.FriendsFrameSlider(Slider)
         Skin.HybridScrollBarTrimTemplate(Slider)
@@ -93,7 +103,11 @@ do --[[ FrameXML\FriendsFrame.xml ]]
         _G[name.."Right"]:Hide()
     end
     function Skin.FriendsFrameTabTemplate(Button)
-        Skin.CharacterFrameTabButtonTemplate(Button)
+        if private.isPatch then
+            Skin.PanelTabButtonTemplate(Button)
+        else
+            Skin.CharacterFrameTabButtonTemplate(Button)
+        end
         Button._auroraTabResize = true
     end
     function Skin.GuildControlPopupFrameCheckboxTemplate(CheckButton)
@@ -103,7 +117,11 @@ end
 
 function private.FrameXML.FriendsFrame()
     _G.hooksecurefunc("FriendsFrame_UpdateFriendButton", Hook.FriendsFrame_UpdateFriendButton)
-    _G.hooksecurefunc("WhoList_Update", Hook.WhoList_Update)
+    if private.isPatch then
+        _G.hooksecurefunc("WhoList_InitButton", Hook.WhoList_InitButton)
+    else
+        _G.hooksecurefunc("WhoList_Update", Hook.WhoList_Update)
+    end
 
     local FriendsFrame = _G.FriendsFrame
     Skin.ButtonFrameTemplate(FriendsFrame)
@@ -190,23 +208,35 @@ function private.FrameXML.FriendsFrame()
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameSendMessageButton)
     Skin.UIDropDownMenuTemplate(FriendsListFrame.FilterDropDown)
     Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
-    Skin.FriendsFrameScrollFrame(_G.FriendsListFrameScrollFrame)
-    Hook.HybridScrollFrame_CreateButtons(_G.FriendsListFrameScrollFrame, "FriendsListButtonTemplate") -- Called here since the original is called OnLoad
+    if private.isPatch then
+        Skin.WowScrollBoxList(FriendsListFrame.ScrollBox)
+        Skin.WowTrimScrollBar(FriendsListFrame.ScrollBar)
+    else
+        Skin.FriendsFrameScrollFrame(_G.FriendsListFrameScrollFrame)
+        Hook.HybridScrollFrame_CreateButtons(_G.FriendsListFrameScrollFrame, "FriendsListButtonTemplate") -- Called here since the original is called OnLoad
+    end
 
 
     ----------------------
     -- IgnoreListFrame --
     ----------------------
+    local IgnoreListFrame = _G.IgnoreListFrame
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameIgnorePlayerButton)
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameUnsquelchButton)
-    Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameIgnoredHeader)
-    Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameBlockedInviteHeader)
-    Skin.FriendsFrameScrollFrame(_G.IgnoreListFrameScrollFrame)
+    if private.isPatch then
+        Skin.WowScrollBoxList(IgnoreListFrame.ScrollBox)
+        Skin.WowTrimScrollBar(IgnoreListFrame.ScrollBar)
+    else
+        Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameIgnoredHeader)
+        Skin.FriendsFrameHeaderTemplate(_G.FriendsFrameBlockedInviteHeader)
+        Skin.FriendsFrameScrollFrame(_G.IgnoreListFrameScrollFrame)
+    end
 
 
     --------------
     -- WhoFrame --
     --------------
+    local WhoFrame = _G.WhoFrame
     Skin.InsetFrameTemplate(_G.WhoFrameListInset)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader1)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader2)
@@ -238,7 +268,12 @@ function private.FrameXML.FriendsFrame()
         bottom = 7,
     })
 
-    Skin.FriendsFrameScrollFrame(_G.WhoListScrollFrame)
+    if private.isPatch then
+        Skin.WowScrollBoxList(WhoFrame.ScrollBox)
+        Skin.WowTrimScrollBar(WhoFrame.ScrollBar)
+    else
+        Skin.FriendsFrameScrollFrame(_G.WhoListScrollFrame)
+    end
 
 
 
@@ -297,7 +332,12 @@ function private.FrameXML.FriendsFrame()
 
     Skin.UIDropDownMenuTemplate(_G.FriendsFriendsFrameDropDown)
     Util.HideNineSlice(FriendsFriendsFrame.ScrollFrameBorder)
-    Skin.FriendsFrameScrollFrame(_G.FriendsFriendsScrollFrame)
+    if private.isPatch then
+        Skin.WowScrollBoxList(FriendsFriendsFrame.ScrollBox)
+        Skin.WowTrimScrollBar(FriendsFriendsFrame.ScrollBar)
+    else
+        Skin.FriendsFrameScrollFrame(_G.FriendsFriendsScrollFrame)
+    end
     Skin.UIPanelButtonTemplate(FriendsFriendsFrame.SendRequestButton)
     Skin.UIPanelButtonTemplate(FriendsFriendsFrame.CloseButton)
 

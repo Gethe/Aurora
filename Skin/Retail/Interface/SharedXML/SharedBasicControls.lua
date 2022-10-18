@@ -43,11 +43,20 @@ end
 function private.SharedXML.SharedBasicControls()
     local ScriptErrorsFrame = _G.ScriptErrorsFrame
 
-    ScriptErrorsFrame:SetScale(_G.UIParent:GetScale())
     Skin.UIPanelDialogTemplate(ScriptErrorsFrame)
+    ScriptErrorsFrame:SetSize(600, 400)
+    ScriptErrorsFrame:SetScale(_G.UIParent:GetScale())
+
     Skin.UIPanelScrollFrameTemplate(ScriptErrorsFrame.ScrollFrame)
+    ScriptErrorsFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", -26, 34)
+    ScriptErrorsFrame.ScrollFrame.Text:SetPoint("BOTTOMRIGHT", -26, 34)
+
     Skin.UIPanelButtonTemplate(ScriptErrorsFrame.Reload)
+    ScriptErrorsFrame.Reload:SetPoint("BOTTOMLEFT", 5, 5)
+
     Skin.NavButtonPrevious(ScriptErrorsFrame.PreviousError)
     Skin.NavButtonNext(ScriptErrorsFrame.NextError)
+
     Skin.UIPanelButtonTemplate(ScriptErrorsFrame.Close)
+    ScriptErrorsFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", -5, 5)
 end

@@ -23,7 +23,7 @@ Enum.ItemQuality = {
 }
 private.Enum = Enum
 
-private.atlasColors = {
+private.assetColors = {
     ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
     ["_pvpqueue-conquestbar-fill-yellow"] = Color.Create(.9529, 0.7569, 0.1804),
     ["ChallengeMode-TimerFill"] = Color.Create(0.1490, 0.6196, 1.0),

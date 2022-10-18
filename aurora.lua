@@ -93,12 +93,9 @@ function private.OnLoad()
     -- Setup colors
     local Color, Util = Aurora.Color, Aurora.Util
     local customClassColors = AuroraConfig.customClassColors
-    if not customClassColors[private.charClass.token] then
-        private.classColorsReset(customClassColors, _G.RAID_CLASS_COLORS)
-    end
 
-    private.setColorCache(customClassColors)
     function private.updateHighlightColor()
+        --print("updateHighlightColor override")
         local r, g, b
         if AuroraConfig.customHighlight.enabled then
             r, g, b = AuroraConfig.customHighlight.r, AuroraConfig.customHighlight.g, AuroraConfig.customHighlight.b
@@ -109,11 +106,11 @@ function private.OnLoad()
         C.r, C.g, C.b = r, g, b -- deprecated
         Color.highlight:SetRGB(r, g, b)
     end
-    private.updateHighlightColor()
-
     _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
+        --print("aurora CCC:RegisterCallback")
         _G.AuroraOptions.refresh()
     end)
+    private.setColorCache(customClassColors)
 
     if AuroraConfig.buttonsHaveGradient then
         Color.button:SetRGB(.4, .4, .4)
@@ -153,15 +150,18 @@ function private.OnLoad()
         end)
     end
     _G.hooksecurefunc(private.FrameXML, "FriendsFrame", function()
+        local FriendsFrame = _G.FriendsFrame
+        local titleText = FriendsFrame.TitleText or FriendsFrame:GetTitleText()
+
         local BNetFrame = _G.FriendsFrameBattlenetFrame
-        BNetFrame.Tag:SetParent(_G.FriendsFrame)
-        BNetFrame.Tag:SetAllPoints(_G.FriendsFrame.TitleText)
+        BNetFrame.Tag:SetParent(FriendsFrame)
+        BNetFrame.Tag:SetAllPoints(titleText)
 
         local BroadcastFrame = BNetFrame.BroadcastFrame
         local EditBox
         if private.isRetail then
             EditBox = BroadcastFrame.EditBox
-            EditBox:SetParent(_G.FriendsFrame)
+            EditBox:SetParent(FriendsFrame)
             EditBox:ClearAllPoints()
             EditBox:SetSize(239, 25)
             EditBox:SetPoint("TOPLEFT", 57, -28)
@@ -192,10 +192,10 @@ function private.OnLoad()
         end
 
         _G.hooksecurefunc("FriendsFrame_Update", function()
-            local selectedTab = _G.PanelTemplates_GetSelectedTab(_G.FriendsFrame) or _G.FRIEND_TAB_FRIENDS
+            local selectedTab = _G.PanelTemplates_GetSelectedTab(FriendsFrame) or _G.FRIEND_TAB_FRIENDS
             local isFriendsTab = selectedTab == _G.FRIEND_TAB_FRIENDS
 
-            _G.FriendsFrame.TitleText:SetShown(not isFriendsTab)
+            titleText:SetShown(not isFriendsTab)
             BNetFrame.Tag:SetShown(isFriendsTab)
             EditBox:SetShown(_G.BNConnected() and isFriendsTab)
         end)

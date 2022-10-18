@@ -105,14 +105,24 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
         Skin.ColorSwatchTemplate(_G[Frame:GetName().."ColorSwatch"])
     end
     function Skin.ChatConfigTabTemplate(Button)
-        local name = Button:GetName()
-        _G[name.."Left"]:Hide()
-        _G[name.."Middle"]:Hide()
-        _G[name.."Right"]:Hide()
+        if private.isPatch then
+            Button.Left:Hide()
+            Button.Right:Hide()
+            Button.Middle:Hide()
 
-        _G[name.."Text"]:SetHeight(0)
-        _G[name.."Text"]:SetPoint("LEFT", 0, -5)
-        _G[name.."Text"]:SetPoint("RIGHT", 0, -5)
+            Button.Text:SetHeight(0)
+            Button.Text:SetPoint("LEFT", 0, -5)
+            Button.Text:SetPoint("RIGHT", 0, -5)
+        else
+            local name = Button:GetName()
+            _G[name.."Left"]:Hide()
+            _G[name.."Middle"]:Hide()
+            _G[name.."Right"]:Hide()
+
+            _G[name.."Text"]:SetHeight(0)
+            _G[name.."Text"]:SetPoint("LEFT", 0, -5)
+            _G[name.."Text"]:SetPoint("RIGHT", 0, -5)
+        end
         Button:GetHighlightTexture():Hide()
     end
     function Skin.ChatWindowTab(Button)
@@ -193,14 +203,20 @@ function private.FrameXML.ChatConfigFrame()
     -------------------------
     -- Combat Log Settings --
     -------------------------
+    local Filters = _G.ChatConfigCombatSettings.Filters
     Skin.ChatConfigBoxTemplate(_G.ChatConfigCombatSettingsFilters)
-    Skin.FauxScrollFrameTemplateLight(_G.ChatConfigCombatSettingsFiltersScrollFrame)
-    _G.ChatConfigCombatSettingsFiltersScrollFrame:SetPoint("TOPLEFT", 5, -5)
-    _G.ChatConfigCombatSettingsFiltersScrollFrame:SetPoint("BOTTOMRIGHT", -19, 5)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton1)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton2)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton3)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton4)
+    if private.isPatch then
+        Skin.WowScrollBoxList(Filters.ScrollBox)
+        Skin.WowTrimScrollBar(Filters.ScrollBar)
+    else
+        Skin.FauxScrollFrameTemplateLight(_G.ChatConfigCombatSettingsFiltersScrollFrame)
+        _G.ChatConfigCombatSettingsFiltersScrollFrame:SetPoint("TOPLEFT", 5, -5)
+        _G.ChatConfigCombatSettingsFiltersScrollFrame:SetPoint("BOTTOMRIGHT", -19, 5)
+        Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton1)
+        Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton2)
+        Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton3)
+        Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton4)
+    end
     Skin.UIPanelButtonTemplate(_G.ChatConfigCombatSettingsFiltersDeleteButton)
     Skin.UIPanelButtonTemplate(_G.ChatConfigCombatSettingsFiltersAddFilterButton)
     _G.ChatConfigCombatSettingsFiltersAddFilterButton:SetPoint("RIGHT", _G.ChatConfigCombatSettingsFiltersDeleteButton, "LEFT", -5, 0)

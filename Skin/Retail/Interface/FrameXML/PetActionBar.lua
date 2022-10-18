@@ -38,7 +38,7 @@ do --[[ FrameXML\PetActionBar.xml ]]
 end
 
 function private.FrameXML.PetActionBar()
-    if private.disabled.mainmenubar then return end
+    if private.isPatch or private.disabled.mainmenubar then return end
     _G.SlidingActionBarTexture0:SetAlpha(0)
     _G.SlidingActionBarTexture1:SetAlpha(0)
 

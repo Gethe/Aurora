@@ -22,7 +22,7 @@ Enum.LFGListFilter = {
 }
 private.Enum = Enum
 
-private.atlasColors = {
+private.assetColors = {
     ["_honorsystem-bar-fill"] = Color.Create(1.0, 0.24, 0),
     ["_islands-queue-progressbar-fill"] = private.AZERITE_COLORS[2],
     ["_islands-queue-progressbar-fill_2"] = private.AZERITE_COLORS[1],
@@ -35,6 +35,10 @@ private.atlasColors = {
     ["UI-Frame-Bar-Fill-Red"] = Color.Create(0.7725, 0.0, 0.0),
     ["UI-Frame-Bar-Fill-Yellow"] = Color.Create(0.9608, 0.6314, 0.0),
     ["UI-Frame-Bar-Fill-Blue"] = Color.Create(0.0667, 0.4470, 0.8745),
+    ["UI-HUD-ExperienceBar-Fill-Reputation-Faction-Red"] = _G.FACTION_RED_COLOR,
+    ["UI-HUD-ExperienceBar-Fill-Reputation-Faction-Orange"] = _G.FACTION_ORANGE_COLOR,
+    ["UI-HUD-ExperienceBar-Fill-Reputation-Faction-Yellow"] = _G.FACTION_YELLOW_COLOR,
+    ["UI-HUD-ExperienceBar-Fill-Reputation-Faction-Green"] = _G.FACTION_GREEN_COLOR,
 }
 
 private.CLASS_BACKGROUND_SETTINGS = {

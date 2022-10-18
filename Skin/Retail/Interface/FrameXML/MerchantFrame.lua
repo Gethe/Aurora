@@ -118,8 +118,13 @@ function private.FrameXML.MerchantFrame()
         end
     end
 
-    Skin.CharacterFrameTabButtonTemplate(_G.MerchantFrameTab1)
-    Skin.CharacterFrameTabButtonTemplate(_G.MerchantFrameTab2)
+    if private.isPatch then
+        Skin.PanelTabButtonTemplate(_G.MerchantFrameTab1)
+        Skin.PanelTabButtonTemplate(_G.MerchantFrameTab2)
+    else
+        Skin.CharacterFrameTabButtonTemplate(_G.MerchantFrameTab1)
+        Skin.CharacterFrameTabButtonTemplate(_G.MerchantFrameTab2)
+    end
     Util.PositionRelative("TOPLEFT", _G.MerchantFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.MerchantFrameTab1,
         _G.MerchantFrameTab2,

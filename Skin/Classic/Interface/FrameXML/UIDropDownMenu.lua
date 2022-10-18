@@ -132,7 +132,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
         end
         function Hook.UIDropDownMenu_EnableDropDown(dropDown)
             if dropDown.Button.GetButtonColor then
-                Base.SetBackdropColor(dropDown, dropDown.Button:GetButtonColor())
+                Base.SetBackdropColor(dropDown, (dropDown.Button:GetButtonColor()))
             end
         end
     end

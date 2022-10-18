@@ -210,7 +210,11 @@ function private.FrameXML.MailFrame()
     Skin.ButtonFrameTemplate(_G.MailFrame)
 
     -- BlizzWTF: The portrait in the template is not being used.
-    _G.select(6, _G.MailFrame:GetRegions()):Hide()
+    if private.isPatch then
+        _G.select(3, _G.MailFrame:GetRegions()):Hide()
+    else
+        _G.select(6, _G.MailFrame:GetRegions()):Hide()
+    end
     _G.MailFrame.trialError:ClearAllPoints()
     _G.MailFrame.trialError:SetPoint("TOPLEFT", _G.MailFrame.TitleText, 50, -5)
     _G.MailFrame.trialError:SetPoint("BOTTOMRIGHT", _G.MailFrame.TitleText, -50, -6)
@@ -221,8 +225,10 @@ function private.FrameXML.MailFrame()
     _G.InboxFrame:SetPoint("BOTTOMRIGHT")
 
     _G.InboxFrameBg:Hide()
-    _G.InboxTitleText:ClearAllPoints()
-    _G.InboxTitleText:SetAllPoints(_G.MailFrame.TitleText)
+    if not private.isPatch then
+        _G.InboxTitleText:ClearAllPoints()
+        _G.InboxTitleText:SetAllPoints(_G.MailFrame.TitleText)
+    end
 
     _G.InboxTooMuchMail:ClearAllPoints()
     _G.InboxTooMuchMail:SetAllPoints(_G.MailFrame.trialError)
@@ -256,10 +262,16 @@ function private.FrameXML.MailFrame()
     -------------------
     _G.SendMailFrame:SetPoint("BOTTOMRIGHT")
 
-    _G.SendMailTitleText:ClearAllPoints()
-    _G.SendMailTitleText:SetAllPoints(_G.MailFrame.TitleText)
-    for i = 4, 7 do
-        select(i, _G.SendMailFrame:GetRegions()):Hide()
+    if private.isPatch then
+        for i = 3, 6 do
+            select(i, _G.SendMailFrame:GetRegions()):Hide()
+        end
+    else
+        _G.SendMailTitleText:ClearAllPoints()
+        _G.SendMailTitleText:SetAllPoints(_G.MailFrame.TitleText)
+        for i = 4, 7 do
+            select(i, _G.SendMailFrame:GetRegions()):Hide()
+        end
     end
 
     Skin.UIPanelScrollFrameTemplate(_G.SendMailScrollFrame)
@@ -317,6 +329,13 @@ function private.FrameXML.MailFrame()
     _G.SendMailFrameLockSendMail:SetPoint("TOPLEFT", "SendMailAttachment1", -12, 12)
     _G.SendMailFrameLockSendMail:SetPoint("BOTTOMRIGHT", "SendMailCancelButton", 5, -5)
 
+    Skin.FriendsFrameTabTemplate(_G.MailFrameTab1)
+    Skin.FriendsFrameTabTemplate(_G.MailFrameTab2)
+    Util.PositionRelative("TOPLEFT", _G.MailFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.MailFrameTab1,
+        _G.MailFrameTab2,
+    })
+
     -------------------
     -- OpenMailFrame --
     -------------------
@@ -324,10 +343,15 @@ function private.FrameXML.MailFrame()
     _G.OpenMailFrame:SetPoint("TOPLEFT", _G.InboxFrame, "TOPRIGHT", 5, 0)
 
     _G.OpenMailFrameIcon:Hide()
-    _G.OpenMailTitleText:ClearAllPoints()
-    _G.OpenMailTitleText:SetAllPoints(_G.OpenMailFrame.TitleText)
-    _G.OpenMailHorizontalBarLeft:Hide()
-    select(13, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    if private.isPatch then
+        _G.OpenMailHorizontalBarLeft:Hide()
+        select(9, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    else
+        _G.OpenMailTitleText:ClearAllPoints()
+        _G.OpenMailTitleText:SetAllPoints(_G.OpenMailFrame.TitleText)
+        _G.OpenMailHorizontalBarLeft:Hide()
+        select(13, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    end
 
     Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
 
@@ -369,10 +393,4 @@ function private.FrameXML.MailFrame()
         _G.OpenMailReplyButton,
     })
 
-    Skin.FriendsFrameTabTemplate(_G.MailFrameTab1)
-    Skin.FriendsFrameTabTemplate(_G.MailFrameTab2)
-    Util.PositionRelative("TOPLEFT", _G.MailFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
-        _G.MailFrameTab1,
-        _G.MailFrameTab2,
-    })
 end
