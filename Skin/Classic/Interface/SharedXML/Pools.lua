@@ -6,7 +6,7 @@ if private.shouldSkip() then return end
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Hook = Aurora.Hook
 local Util = Aurora.Util
 
 do --[[ SharedXML\Pools.lua ]]

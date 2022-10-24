@@ -604,7 +604,7 @@ end
 
 function private.AddOns.Blizzard_AchievementUI()
     if private.isPatch then
-        --_G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
+        _G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
     else
         _G.hooksecurefunc("AchievementFrame_UpdateTabs", Hook.AchievementFrame_UpdateTabs)
         _G.hooksecurefunc("AchievementFrame_ToggleView", Hook.AchievementFrame_RefreshView)
