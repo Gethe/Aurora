@@ -123,14 +123,12 @@ local createColorSwatch do
         local value = _G.AuroraConfig[swatch.value]
         if swatch.class then
             value = _G.CUSTOM_CLASS_COLORS[swatch.class]
-        end
-        value.r, value.g, value.b = r, g, b
-        swatch:SetBackdropColor(r, g, b)
-
-        if swatch.class then
+            value:SetRGB(r, g, b)
             _G.CUSTOM_CLASS_COLORS:NotifyChanges()
         else
+            value.r, value.g, value.b = r, g, b
             private.updateHighlightColor()
+            swatch:SetBackdropColor(r, g, b)
         end
     end
 
@@ -401,6 +399,8 @@ function private.SetupGUI()
 
     Skin.UIPanelButtonTemplate(reloadButton)
     Skin.UIPanelButtonTemplate(resetButton)
+
+    gui.refresh()
 end
 
 -- easy slash command

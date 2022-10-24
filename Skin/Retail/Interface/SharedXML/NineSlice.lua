@@ -89,14 +89,6 @@ do --[[ SharedXML\NineSlice.lua ]]
         PartyPoseKit = BasicFrame,
     }
 
-    local layoutMap = {}
-    for userLayoutName in next, layouts do
-        local layout = _G.NineSliceUtil.GetLayout(userLayoutName)
-        if layout then
-            layoutMap[layout] = userLayoutName
-        end
-    end
-
     local function GetNameforLayout(userLayout)
         for layoutName, layout in next, _G.NineSliceLayouts do
             if layout == userLayout then
@@ -111,7 +103,11 @@ do --[[ SharedXML\NineSlice.lua ]]
         if container._applyLayout then return end
 
         container._applyLayout = true
-        local userLayoutName = layoutMap[userLayout] or GetNameforLayout(userLayout)
+        local userLayoutName = container:GetFrameLayoutType()
+        if not userLayoutName then
+            userLayoutName = GetNameforLayout(userLayout)
+        end
+
         if container.debug then
             _G.print("ApplyLayout", container.debug, userLayout, userLayoutName, textureKit)
             if not userLayoutName and not textureKit then
@@ -129,8 +125,6 @@ do --[[ SharedXML\NineSlice.lua ]]
                 private.debug("Missing skin for nineslice layout", userLayoutName)
             elseif private.isDev then
                 _G.print("Missing name for nineslice layout:", container:GetDebugName())
-                --print("userLayout", userLayout, _G.NineSliceLayouts.Dialog)
-                --_G.error("Found usage")
             end
 
             if not container.SetBackdropOption then return end
@@ -143,9 +137,6 @@ do --[[ SharedXML\NineSlice.lua ]]
             end
         end
         container._applyLayout = false
-    end
-    function Hook.NineSliceUtil.AddLayout(userLayoutName, layout)
-        layoutMap[layout] = userLayoutName
     end
 end
 

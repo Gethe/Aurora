@@ -10,20 +10,9 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
 do --[[ SharedXML\Pools.lua ]]
-    local function CheckTemplate(pool, ...)
-        for i = 1, select("#", ...) do
-            local template = select(i, ...)
-            --print("CheckTemplate", i, template)
-            if Skin[template] then
-                for obj in pool:EnumerateActive() do
-                    if not obj._auroraSkinned then
-                        Skin[template](obj)
-                        obj._auroraSkinned = true
-                    end
-                end
-            elseif private.isDev then
-                private.debug("Missing template for ObjectPoolMixin:", template)
-            end
+    local function EnumerateActive(pool)
+        return function()
+            return pool:EnumerateActive()
         end
     end
 
@@ -34,7 +23,7 @@ do --[[ SharedXML\Pools.lua ]]
 
         --local templates = {(", "):split(template)}
         --print("Acquire", template)
-        CheckTemplate(self, (", "):split(template))
+        Util.CheckTemplate(EnumerateActive(self), "ObjectPoolMixin", (", "):split(template))
     end
 end
 

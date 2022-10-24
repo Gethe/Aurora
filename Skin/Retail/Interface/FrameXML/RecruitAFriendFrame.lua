@@ -63,7 +63,7 @@ function private.FrameXML.RecruitAFriendFrame()
     Util.Mixin(RecruitAFriendRewardsFrame.rewardPool, Hook.ObjectPoolMixin)
     Hook.ObjectPoolMixin.Acquire(RecruitAFriendRewardsFrame.rewardPool)
 
-    Skin.DialogBorderTranslucentTemplate(RecruitAFriendRewardsFrame.Border)
+    Skin.DialogBorderNoCenterTemplate(RecruitAFriendRewardsFrame.Border)
     RecruitAFriendRewardsFrame.Border:SetBackdropOption("offsets", {
         left = 10,
         right = 10,

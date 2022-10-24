@@ -28,6 +28,9 @@ do --[[ SharedXML\AddonList.lua ]]
             end
         end
     end
+    function Hook.AddonList_InitButton(entry, addonIndex)
+        Hook.TriStateCheckbox_SetState(entry.Enabled.state, entry.Enabled)
+    end
     function Hook.AddonList_Update()
         local entry, checkbox
         for i = 1, _G.MAX_ADDONS_DISPLAYED do
@@ -77,7 +80,7 @@ end
 
 function private.SharedXML.AddonList()
     if private.isPatch then
-        _G.hooksecurefunc("TriStateCheckbox_SetState", Hook.TriStateCheckbox_SetState)
+        _G.hooksecurefunc("AddonList_InitButton", Hook.AddonList_InitButton)
     else
         _G.hooksecurefunc("AddonList_Update", Hook.AddonList_Update)
     end

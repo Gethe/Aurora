@@ -17,8 +17,13 @@ do --[[ AddOns\Blizzard_BindingUI.xml ]]
         Skin.UIMenuButtonStretchTemplate(Button)
     end
     function Skin.KeyBindingFrameBindingTemplate(Frame)
-        Skin.KeyBindingFrameBindingButtonTemplate(Frame.key1Button)
-        Skin.KeyBindingFrameBindingButtonTemplate(Frame.key2Button)
+        if private.isPatch then
+            Skin.KeyBindingFrameBindingButtonTemplate(Frame.Button1)
+            Skin.KeyBindingFrameBindingButtonTemplate(Frame.Button2)
+        else
+            Skin.KeyBindingFrameBindingButtonTemplate(Frame.key1Button)
+            Skin.KeyBindingFrameBindingButtonTemplate(Frame.key2Button)
+        end
     end
 end
 

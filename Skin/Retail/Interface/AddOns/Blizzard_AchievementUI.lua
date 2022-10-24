@@ -28,8 +28,12 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
             _G["AchievementFrameTab"..i].text:SetPoint("CENTER")
         end
     end
-    function Hook.AchievementFrame_ToggleView()
-        IN_GUILD_VIEW = _G.AchievementFrameHeaderTitle:GetText() ~= _G.ACHIEVEMENT_TITLE
+    function Hook.AchievementFrame_RefreshView()
+        if private.isPatch then
+            IN_GUILD_VIEW = _G.AchievementFrame.Header.Title:GetText() == _G.GUILD_ACHIEVEMENTS_TITLE
+        else
+            IN_GUILD_VIEW = _G.AchievementFrameHeaderTitle:GetText() == _G.GUILD_ACHIEVEMENTS_TITLE
+        end
 
         if IN_GUILD_VIEW then
             _G.AchievementFrameGuildEmblemLeft:SetVertexColor(1, 1, 1, 0.25)
@@ -52,31 +56,60 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
     function Hook.AchievementButton_Saturate(self)
         Base.SetBackdropColor(self.NineSlice, Color.button, 1)
 
-        if IN_GUILD_VIEW then
-            self.titleBar:SetColorTexture(green:GetRGB())
-        else
-            if self.accountWide then
-                self.titleBar:SetColorTexture(blue:GetRGB())
+        if private.isPatch then
+            if IN_GUILD_VIEW then
+                self.TitleBar:SetColorTexture(green:GetRGB())
             else
-                self.titleBar:SetColorTexture(red:GetRGB())
+                if self.accountWide then
+                    self.TitleBar:SetColorTexture(blue:GetRGB())
+                else
+                    self.TitleBar:SetColorTexture(red:GetRGB())
+                end
             end
-        end
 
-        if self.description then
-            self.description:SetTextColor(.9, .9, .9)
-            self.description:SetShadowOffset(1, -1)
+            if self.Description then
+                self.Description:SetTextColor(.9, .9, .9)
+                self.Description:SetShadowOffset(1, -1)
+            end
+        else
+            if IN_GUILD_VIEW then
+                self.titleBar:SetColorTexture(green:GetRGB())
+            else
+                if self.accountWide then
+                    self.titleBar:SetColorTexture(blue:GetRGB())
+                else
+                    self.titleBar:SetColorTexture(red:GetRGB())
+                end
+            end
+
+            if self.description then
+                self.description:SetTextColor(.9, .9, .9)
+                self.description:SetShadowOffset(1, -1)
+            end
         end
     end
     function Hook.AchievementButton_Desaturate(self)
         Base.SetBackdropColor(self.NineSlice, Color.button, 1)
 
-        if IN_GUILD_VIEW then
-            self.titleBar:SetColorTexture(greenDesat:GetRGB())
-        else
-            if self.accountWide then
-                self.titleBar:SetColorTexture(blueDesat:GetRGB())
+        if private.isPatch then
+            if IN_GUILD_VIEW then
+                self.TitleBar:SetColorTexture(greenDesat:GetRGB())
             else
-                self.titleBar:SetColorTexture(redDesat:GetRGB())
+                if self.accountWide then
+                    self.TitleBar:SetColorTexture(blueDesat:GetRGB())
+                else
+                    self.TitleBar:SetColorTexture(redDesat:GetRGB())
+                end
+            end
+        else
+            if IN_GUILD_VIEW then
+                self.titleBar:SetColorTexture(greenDesat:GetRGB())
+            else
+                if self.accountWide then
+                    self.titleBar:SetColorTexture(blueDesat:GetRGB())
+                else
+                    self.titleBar:SetColorTexture(redDesat:GetRGB())
+                end
             end
         end
     end
@@ -170,28 +203,58 @@ end
 
 do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     function Skin.AchievementSearchPreviewButton(Button)
-        SkinSearchButton(Button)
-        Button.selectedTexture:SetPoint("TOPLEFT", 1, -1)
-        Button.selectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
+        if private.isPatch then
+            Button.SelectedTexture:SetPoint("TOPLEFT", 1, -1)
+            Button.SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
 
-        Button.iconFrame:SetAlpha(0)
-        Base.CropIcon(Button.icon, Button)
+            Button.IconFrame:SetAlpha(0)
+            Base.CropIcon(Button.Icon, Button)
+
+            Button:SetNormalTexture("")
+            Button:SetPushedTexture("")
+        else
+            SkinSearchButton(Button)
+            Button.selectedTexture:SetPoint("TOPLEFT", 1, -1)
+            Button.selectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
+
+            Button.iconFrame:SetAlpha(0)
+            Base.CropIcon(Button.icon, Button)
+        end
     end
     function Skin.AchievementFullSearchResultsButton(Button)
-        SkinSearchButton(Button)
+        if private.isPatch then
+            Button.IconFrame:SetAlpha(0)
+            Base.CropIcon(Button.Icon, Button)
 
-        Button.iconFrame:SetAlpha(0)
-        Base.CropIcon(Button.icon, Button)
+            Button.Path:SetTextColor(Color.grayLight:GetRGB())
+            Button.ResultType:SetTextColor(Color.grayLight:GetRGB())
 
-        Button.path:SetTextColor(Color.grayLight:GetRGB())
-        Button.resultType:SetTextColor(Color.grayLight:GetRGB())
+            Button:SetNormalTexture("")
+            Button:SetPushedTexture("")
+
+            local r, g, b = Color.highlight:GetRGB()
+            Button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
+        else
+            SkinSearchButton(Button)
+
+            Button.iconFrame:SetAlpha(0)
+            Base.CropIcon(Button.icon, Button)
+
+            Button.path:SetTextColor(Color.grayLight:GetRGB())
+            Button.resultType:SetTextColor(Color.grayLight:GetRGB())
+        end
     end
     function Skin.AchievementFrameSummaryCategoryTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
 
         local name = StatusBar:GetName()
-        StatusBar.label:SetPoint("LEFT", 6, 0)
-        StatusBar.text:SetPoint("RIGHT", -6, 0)
+        if private.isPatch then
+            StatusBar.Label:SetPoint("LEFT", 6, 0)
+            StatusBar.Text:SetPoint("RIGHT", -6, 0)
+        else
+            StatusBar.label:SetPoint("LEFT", 6, 0)
+            StatusBar.text:SetPoint("RIGHT", -6, 0)
+        end
 
         _G[name.."Left"]:Hide()
         _G[name.."Right"]:Hide()
@@ -215,8 +278,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
             bottom = 2,
         })
 
-        _G[CheckButton:GetName().."Text"]:SetPoint("LEFT", CheckButton, "RIGHT", 2, 0)
-
+        CheckButton:GetRegions():SetPoint("LEFT", CheckButton, "RIGHT", 2, 0)
 
         local bg = CheckButton:GetBackdropTexture("bg")
         local check = CheckButton:GetCheckedTexture()
@@ -227,26 +289,48 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         check:SetVertexColor(Color.highlight:GetRGB())
     end
     function Skin.AchievementFrameTabButtonTemplate(Button)
-        local name = Button:GetName()
+        Skin.FrameTypeButton(Button)
+        Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
         Button:SetHeight(28)
 
-        _G[name.."LeftDisabled"]:SetTexture("")
-        _G[name.."MiddleDisabled"]:SetTexture("")
-        _G[name.."RightDisabled"]:SetTexture("")
-        _G[name.."Left"]:SetTexture("")
-        _G[name.."Middle"]:SetTexture("")
-        _G[name.."Right"]:SetTexture("")
-        _G[name.."LeftHighlight"]:SetTexture("")
-        _G[name.."MiddleHighlight"]:SetTexture("")
-        _G[name.."RightHighlight"]:SetTexture("")
+        if private.isPatch then
+            Button.LeftActive:SetAlpha(0)
+            Button.RightActive:SetAlpha(0)
+            Button.MiddleActive:SetAlpha(0)
+            Button.Left:SetAlpha(0)
+            Button.Right:SetAlpha(0)
+            Button.Middle:SetAlpha(0)
 
-        Skin.FrameTypeFrame(Button)
-        Base.SetHighlight(Button)
+            Button.LeftHighlight:SetAlpha(0)
+            Button.RightHighlight:SetAlpha(0)
+            Button.MiddleHighlight:SetAlpha(0)
+        else
+            local name = Button:GetName()
+            _G[name.."LeftDisabled"]:SetTexture("")
+            _G[name.."MiddleDisabled"]:SetTexture("")
+            _G[name.."RightDisabled"]:SetTexture("")
+            _G[name.."Left"]:SetTexture("")
+            _G[name.."Middle"]:SetTexture("")
+            _G[name.."Right"]:SetTexture("")
+            _G[name.."LeftHighlight"]:SetTexture("")
+            _G[name.."MiddleHighlight"]:SetTexture("")
+            _G[name.."RightHighlight"]:SetTexture("")
+        end
+
+        local bg = Button:GetBackdropTexture("bg")
+        Button.Text:ClearAllPoints()
+        Button.Text:SetAllPoints(bg)
+
         Button._auroraTabResize = true
     end
     function Skin.MiniAchievementTemplate(Frame)
-        Base.CropIcon(Frame.icon, Frame)
-        Frame.border:Hide()
+        if private.isPatch then
+            Base.CropIcon(Frame.Icon, Frame)
+            Frame.Border:Hide()
+        else
+            Base.CropIcon(Frame.icon, Frame)
+            Frame.border:Hide()
+        end
     end
     function Skin.MetaCriteriaTemplate(Button)
         Base.CropIcon(Button.icon, Button)
@@ -255,127 +339,236 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     function Skin.AchievementProgressBarTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
 
-        local name = StatusBar:GetName()
-        _G[name.."BG"]:Hide()
-        _G[name.."BorderLeft"]:Hide()
-        _G[name.."BorderRight"]:Hide()
-        _G[name.."BorderCenter"]:Hide()
+        if private.isPatch then
+            local bg, _, left, right, center = StatusBar:GetRegions()
+            bg:Hide()
+            left:Hide()
+            right:Hide()
+            center:Hide()
+        else
+            local name = StatusBar:GetName()
+            _G[name.."BG"]:Hide()
+            _G[name.."BorderLeft"]:Hide()
+            _G[name.."BorderRight"]:Hide()
+            _G[name.."BorderCenter"]:Hide()
+        end
     end
     function Skin.AchievementHeaderStatusBarTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
 
-        local name = StatusBar:GetName()
-        _G[name.."Left"]:Hide()
-        _G[name.."Right"]:Hide()
-        _G[name.."Middle"]:Hide()
-        _G[name.."FillBar"]:Hide()
+        if private.isPatch then
+            StatusBar.Left:Hide()
+            StatusBar.Right:Hide()
+            StatusBar.Middle:Hide()
+            select(4, StatusBar:GetRegions()):Hide() -- FillBar
+        else
+            local name = StatusBar:GetName()
+            _G[name.."Left"]:Hide()
+            _G[name.."Right"]:Hide()
+            _G[name.."Middle"]:Hide()
+            _G[name.."FillBar"]:Hide()
+        end
     end
-    function Skin.AchievementCategoryTemplate(Button)
-        Base.SetBackdrop(Button, Color.button)
-        Button.background:Hide()
+    function Skin.AchievementCategoryTemplate(Frame)
+        if private.isPatch then
+            local Button = Frame.Button
+            Base.SetBackdrop(Button, Color.button)
+            Button.Background:Hide()
 
-        Button.label:SetPoint("BOTTOMLEFT", 6, 0)
-        Button.label:SetPoint("TOPRIGHT")
-        Button.label:SetJustifyV("MIDDLE")
+            Button.Label:SetPoint("BOTTOMLEFT", 6, 0)
+            Button.Label:SetPoint("TOPRIGHT")
+            Button.Label:SetJustifyV("MIDDLE")
 
-        local r, g, b = Color.highlight:GetRGB()
-        local highlight = Button:GetHighlightTexture()
-        highlight:SetColorTexture(r, g, b, 0.5)
-        highlight:SetPoint("BOTTOMRIGHT")
+            local r, g, b = Color.highlight:GetRGB()
+            local highlight = Button:GetHighlightTexture()
+            highlight:SetColorTexture(r, g, b, 0.5)
+            highlight:SetPoint("BOTTOMRIGHT")
+        else
+            Base.SetBackdrop(Frame, Color.button)
+            Frame.background:Hide()
+
+            Frame.label:SetPoint("BOTTOMLEFT", 6, 0)
+            Frame.label:SetPoint("TOPRIGHT")
+            Frame.label:SetJustifyV("MIDDLE")
+
+            local r, g, b = Color.highlight:GetRGB()
+            local highlight = Frame:GetHighlightTexture()
+            highlight:SetColorTexture(r, g, b, 0.5)
+            highlight:SetPoint("BOTTOMRIGHT")
+        end
     end
     function Skin.AchievementIconFrameTemplate(Frame)
         Frame.bling:Hide()
         Base.CropIcon(Frame.texture, Frame)
         Frame.frame:Hide()
     end
-    function Skin.AchievementTemplate(Button)
-        _G.hooksecurefunc(Button, "Saturate", Hook.AchievementButton_Saturate)
-        _G.hooksecurefunc(Button, "Desaturate", Hook.AchievementButton_Desaturate)
+    function Skin.AchievementTemplate(EventButton)
+        Skin.TooltipBorderBackdropTemplate(EventButton)
+        if private.isPatch then
+            _G.hooksecurefunc(EventButton, "Saturate", Hook.AchievementButton_Saturate)
+            _G.hooksecurefunc(EventButton, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Skin.TooltipBorderBackdropTemplate(Button)
-        Button.background:Hide()
+            EventButton.Background:Hide()
+            EventButton.BottomLeftTsunami:Hide()
+            EventButton.BottomRightTsunami:Hide()
+            EventButton.TopLeftTsunami:Hide()
+            EventButton.TopRightTsunami:Hide()
+            EventButton.BottomTsunami1:Hide()
+            EventButton.TopTsunami1:Hide()
 
-        local name = Button:GetName()
-        _G[name.."BottomLeftTsunami"]:Hide()
-        _G[name.."BottomRightTsunami"]:Hide()
-        _G[name.."TopLeftTsunami"]:Hide()
-        _G[name.."TopRightTsunami"]:Hide()
-        _G[name.."BottomTsunami1"]:Hide()
-        _G[name.."TopTsunami1"]:Hide()
+            local titleMask = EventButton:CreateMaskTexture()
+            titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+            titleMask:SetAllPoints(EventButton.TitleBar)
+            EventButton.TitleBar:AddMaskTexture(titleMask)
+            EventButton.TitleBar:SetHeight(68)
+            EventButton.TitleBar:SetPoint("TOPLEFT", 10, 8)
+            EventButton.TitleBar:SetPoint("TOPRIGHT", -10, 8)
 
-        local titleMask = Button:CreateMaskTexture()
-        titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-        titleMask:SetAllPoints(Button.titleBar)
-        Button.titleBar:AddMaskTexture(titleMask)
-        Button.titleBar:SetHeight(68)
-        Button.titleBar:SetPoint("TOPLEFT", 10, 8)
-        Button.titleBar:SetPoint("TOPRIGHT", -10, 8)
+            EventButton.Glow:Hide()
+            EventButton.RewardBackground:SetAlpha(0)
+            EventButton.GuildCornerL:Hide()
+            EventButton.GuildCornerR:Hide()
 
-        Button.glow:Hide()
-        Button.rewardBackground:SetAlpha(0)
-        Button.guildCornerL:Hide()
-        Button.guildCornerR:Hide()
-        Button.label:SetPoint("TOP", 0, -4)
+            EventButton.Label:SetPoint("TOP", 0, -4)
+            EventButton.PlusMinus:SetAlpha(0)
+            local plusMinus = _G.CreateFrame("Frame", nil, EventButton)
+            Base.SetBackdrop(plusMinus, Color.button)
+            plusMinus:SetAllPoints(EventButton.PlusMinus)
 
-        Button.plusMinus:SetAlpha(0)
-        local plusMinus = _G.CreateFrame("Frame", nil, Button)
-        Base.SetBackdrop(plusMinus, Color.button)
-        plusMinus:SetAllPoints(Button.plusMinus)
+            plusMinus.plus = plusMinus:CreateTexture(nil, "ARTWORK")
+            plusMinus.plus:SetSize(1, 7)
+            plusMinus.plus:SetPoint("CENTER")
+            plusMinus.plus:SetColorTexture(1, 1, 1)
 
-        plusMinus.plus = plusMinus:CreateTexture(nil, "ARTWORK")
-        plusMinus.plus:SetSize(1, 7)
-        plusMinus.plus:SetPoint("CENTER")
-        plusMinus.plus:SetColorTexture(1, 1, 1)
+            plusMinus.minus = plusMinus:CreateTexture(nil, "ARTWORK")
+            plusMinus.minus:SetSize(7, 1)
+            plusMinus.minus:SetPoint("CENTER")
+            plusMinus.minus:SetColorTexture(1, 1, 1)
+            EventButton._auroraPlusMinus = plusMinus
 
-        plusMinus.minus = plusMinus:CreateTexture(nil, "ARTWORK")
-        plusMinus.minus:SetSize(7, 1)
-        plusMinus.minus:SetPoint("CENTER")
-        plusMinus.minus:SetColorTexture(1, 1, 1)
-        Button._auroraPlusMinus = plusMinus
+            Base.SetBackdrop(EventButton.Highlight, Color.highlight, Color.frame.a)
+            EventButton.Highlight:DisableDrawLayer("OVERLAY")
+            EventButton.Highlight:ClearAllPoints()
+            EventButton.Highlight:SetPoint("TOPLEFT", 1, -1)
+            EventButton.Highlight:SetPoint("BOTTOMRIGHT", -1, 1)
 
-        Base.SetBackdrop(Button.highlight, Color.highlight, Color.frame.a)
-        Button.highlight:DisableDrawLayer("OVERLAY")
-        Button.highlight:ClearAllPoints()
-        Button.highlight:SetPoint("TOPLEFT", 1, -1)
-        Button.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+            Skin.AchievementIconFrameTemplate(EventButton.Icon)
+            Skin.AchievementCheckButtonTemplate(EventButton.Tracked)
+        else
+            _G.hooksecurefunc(EventButton, "Saturate", Hook.AchievementButton_Saturate)
+            _G.hooksecurefunc(EventButton, "Desaturate", Hook.AchievementButton_Desaturate)
 
-        Skin.AchievementIconFrameTemplate(Button.icon)
-        Skin.AchievementCheckButtonTemplate(Button.tracked)
+            EventButton.background:Hide()
+
+            local name = EventButton:GetName()
+            _G[name.."BottomLeftTsunami"]:Hide()
+            _G[name.."BottomRightTsunami"]:Hide()
+            _G[name.."TopLeftTsunami"]:Hide()
+            _G[name.."TopRightTsunami"]:Hide()
+            _G[name.."BottomTsunami1"]:Hide()
+            _G[name.."TopTsunami1"]:Hide()
+
+            local titleMask = EventButton:CreateMaskTexture()
+            titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+            titleMask:SetAllPoints(EventButton.titleBar)
+            EventButton.titleBar:AddMaskTexture(titleMask)
+            EventButton.titleBar:SetHeight(68)
+            EventButton.titleBar:SetPoint("TOPLEFT", 10, 8)
+            EventButton.titleBar:SetPoint("TOPRIGHT", -10, 8)
+
+            EventButton.glow:Hide()
+            EventButton.rewardBackground:SetAlpha(0)
+            EventButton.guildCornerL:Hide()
+            EventButton.guildCornerR:Hide()
+            EventButton.label:SetPoint("TOP", 0, -4)
+
+            EventButton.plusMinus:SetAlpha(0)
+            local plusMinus = _G.CreateFrame("Frame", nil, EventButton)
+            Base.SetBackdrop(plusMinus, Color.button)
+            plusMinus:SetAllPoints(EventButton.plusMinus)
+
+            plusMinus.plus = plusMinus:CreateTexture(nil, "ARTWORK")
+            plusMinus.plus:SetSize(1, 7)
+            plusMinus.plus:SetPoint("CENTER")
+            plusMinus.plus:SetColorTexture(1, 1, 1)
+
+            plusMinus.minus = plusMinus:CreateTexture(nil, "ARTWORK")
+            plusMinus.minus:SetSize(7, 1)
+            plusMinus.minus:SetPoint("CENTER")
+            plusMinus.minus:SetColorTexture(1, 1, 1)
+            EventButton._auroraPlusMinus = plusMinus
+
+            Base.SetBackdrop(EventButton.highlight, Color.highlight, Color.frame.a)
+            EventButton.highlight:DisableDrawLayer("OVERLAY")
+            EventButton.highlight:ClearAllPoints()
+            EventButton.highlight:SetPoint("TOPLEFT", 1, -1)
+            EventButton.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+
+            Skin.AchievementIconFrameTemplate(EventButton.icon)
+            Skin.AchievementCheckButtonTemplate(EventButton.tracked)
+        end
     end
     function Skin.ComparisonPlayerTemplate(Frame)
         _G.hooksecurefunc(Frame, "Saturate", Hook.AchievementButton_Saturate)
         _G.hooksecurefunc(Frame, "Desaturate", Hook.AchievementButton_Desaturate)
 
         Skin.TooltipBorderBackdropTemplate(Frame)
-        Frame.background:Hide()
+        if private.isPatch then
+            Frame.Background:Hide()
 
-        local titleMask = Frame:CreateMaskTexture()
-        titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-        titleMask:SetPoint("TOPLEFT", Frame.titleBar, 0, 8)
-        titleMask:SetPoint("BOTTOMRIGHT", Frame.titleBar, 0, -15)
+            local titleMask = Frame:CreateMaskTexture()
+            titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+            titleMask:SetPoint("TOPLEFT", Frame.TitleBar, 0, 8)
+            titleMask:SetPoint("BOTTOMRIGHT", Frame.TitleBar, 0, -15)
 
-        Frame.titleBar:AddMaskTexture(titleMask)
-        Frame.titleBar:ClearAllPoints()
-        Frame.titleBar:SetPoint("TOPLEFT", 10, -1)
-        Frame.titleBar:SetPoint("BOTTOMRIGHT", -10, 1)
+            Frame.TitleBar:AddMaskTexture(titleMask)
+            Frame.TitleBar:ClearAllPoints()
+            Frame.TitleBar:SetPoint("TOPLEFT", 10, -1)
+            Frame.TitleBar:SetPoint("BOTTOMRIGHT", -10, 1)
 
-        Frame.glow:Hide()
-        Frame.label:SetPoint("TOP", 0, -4)
+            Frame.Glow:Hide()
+            Frame.Label:SetPoint("TOP", 0, -4)
 
-        Skin.AchievementIconFrameTemplate(Frame.icon)
+            Skin.AchievementIconFrameTemplate(Frame.Icon)
+        else
+            Frame.background:Hide()
+
+            local titleMask = Frame:CreateMaskTexture()
+            titleMask:SetTexture([[Interface\FriendsFrame\PendingFriendNameBG-New]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+            titleMask:SetPoint("TOPLEFT", Frame.titleBar, 0, 8)
+            titleMask:SetPoint("BOTTOMRIGHT", Frame.titleBar, 0, -15)
+
+            Frame.titleBar:AddMaskTexture(titleMask)
+            Frame.titleBar:ClearAllPoints()
+            Frame.titleBar:SetPoint("TOPLEFT", 10, -1)
+            Frame.titleBar:SetPoint("BOTTOMRIGHT", -10, 1)
+
+            Frame.glow:Hide()
+            Frame.label:SetPoint("TOP", 0, -4)
+
+            Skin.AchievementIconFrameTemplate(Frame.icon)
+        end
     end
     function Skin.SummaryAchievementTemplate(Frame)
         Skin.ComparisonPlayerTemplate(Frame)
-
         Frame:SetHeight(44)
-        Frame.icon:SetPoint("TOPLEFT", -1, -1)
-        Frame.shield:SetPoint("TOPRIGHT", -5, -2)
 
-        Base.SetBackdrop(Frame.highlight, Color.highlight, Color.frame.a)
-        Frame.highlight:DisableDrawLayer("OVERLAY")
-        Frame.highlight:ClearAllPoints()
-        Frame.highlight:SetPoint("TOPLEFT", 1, -1)
-        Frame.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+        if private.isPatch then
+            Base.SetBackdrop(Frame.Highlight, Color.highlight, Color.frame.a)
+            Frame.Highlight:DisableDrawLayer("OVERLAY")
+            Frame.Highlight:ClearAllPoints()
+            Frame.Highlight:SetPoint("TOPLEFT", 1, -1)
+            Frame.Highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+        else
+            Frame.icon:SetPoint("TOPLEFT", -1, -1)
+            Frame.shield:SetPoint("TOPRIGHT", -5, -2)
+
+            Base.SetBackdrop(Frame.highlight, Color.highlight, Color.frame.a)
+            Frame.highlight:DisableDrawLayer("OVERLAY")
+            Frame.highlight:ClearAllPoints()
+            Frame.highlight:SetPoint("TOPLEFT", 1, -1)
+            Frame.highlight:SetPoint("BOTTOMRIGHT", -1, 1)
+        end
     end
     function Skin.ComparisonTemplate(Frame)
         Skin.ComparisonPlayerTemplate(Frame.player)
@@ -410,33 +603,42 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 end
 
 function private.AddOns.Blizzard_AchievementUI()
-    _G.hooksecurefunc("AchievementFrame_UpdateTabs", Hook.AchievementFrame_UpdateTabs)
-    _G.hooksecurefunc("AchievementFrame_ToggleView", Hook.AchievementFrame_ToggleView)
-    _G.hooksecurefunc("AchievementButton_UpdatePlusMinusTexture", Hook.AchievementButton_UpdatePlusMinusTexture)
-    _G.hooksecurefunc("AchievementButton_GetMiniAchievement", Hook.AchievementButton_GetMiniAchievement)
-    _G.hooksecurefunc("AchievementButton_GetProgressBar", Hook.AchievementButton_GetProgressBar)
-    _G.hooksecurefunc("AchievementButton_GetMeta", Hook.AchievementButton_GetMeta)
-    _G.hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)
-    _G.hooksecurefunc("AchievementFrameStats_SetStat", Hook.AchievementFrameStats_SetStat)
-    _G.hooksecurefunc("AchievementFrameStats_SetHeader", Hook.AchievementFrameStats_SetHeader)
-    _G.hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
-    _G.hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
-    _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
+    if private.isPatch then
+        --_G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
+    else
+        _G.hooksecurefunc("AchievementFrame_UpdateTabs", Hook.AchievementFrame_UpdateTabs)
+        _G.hooksecurefunc("AchievementFrame_ToggleView", Hook.AchievementFrame_RefreshView)
+        _G.hooksecurefunc("AchievementButton_UpdatePlusMinusTexture", Hook.AchievementButton_UpdatePlusMinusTexture)
+        _G.hooksecurefunc("AchievementButton_GetMiniAchievement", Hook.AchievementButton_GetMiniAchievement)
+        _G.hooksecurefunc("AchievementButton_GetProgressBar", Hook.AchievementButton_GetProgressBar)
+        _G.hooksecurefunc("AchievementButton_GetMeta", Hook.AchievementButton_GetMeta)
+        _G.hooksecurefunc("AchievementFrameStats_SetStat", Hook.AchievementFrameStats_SetStat)
+        _G.hooksecurefunc("AchievementFrameStats_SetHeader", Hook.AchievementFrameStats_SetHeader)
+        _G.hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
+        _G.hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
+        _G.hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)
+        _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
+    end
 
     ----------------------
     -- AchievementFrame --
     ----------------------
     local AchievementFrame = _G.AchievementFrame
-    Skin.FrameTypeFrame(AchievementFrame)
-    local bg = AchievementFrame:GetBackdropTexture("bg")
-    AchievementFrame:SetBackdropOption("offsets", {
-        left = 0,
-        right = 0,
-        top = -10,
-        bottom = 0,
-    })
+    if private.isPatch then
+        Skin.FrameTypeFrame(AchievementFrame)
+        AchievementFrame.Background:Hide()
+    else
+        Skin.FrameTypeFrame(AchievementFrame)
+        AchievementFrame:SetBackdropOption("offsets", {
+            left = 0,
+            right = 0,
+            top = -10,
+            bottom = 0,
+        })
 
-    _G.AchievementFrameBackground:Hide()
+        _G.AchievementFrameBackground:Hide()
+    end
+    local bg = AchievementFrame:GetBackdropTexture("bg")
 
     _G.AchievementFrameMetalBorderLeft:Hide()
     _G.AchievementFrameMetalBorderRight:Hide()
@@ -464,60 +666,104 @@ function private.AddOns.Blizzard_AchievementUI()
     ------------
     -- Header --
     ------------
-    _G.AchievementFrameHeader:Hide()
-    _G.AchievementFrameHeaderLeft:Hide()
-    _G.AchievementFrameHeaderRight:Hide()
+    if private.isPatch then
+        local Header = AchievementFrame.Header
+        Header:Hide()
+        Header.Left:Hide()
+        Header.Right:Hide()
 
-    _G.AchievementFrameHeaderPointBorder:Hide()
-    _G.AchievementFrameHeaderTitle:Hide()
-    _G.AchievementFrameHeaderLeftDDLInset:SetAlpha(0)
-    _G.AchievementFrameHeaderRightDDLInset:SetAlpha(0)
+        Header.PointBorder:Hide()
+        Header.Title:Hide()
+        Header.LeftDDLInset:SetAlpha(0)
+        Header.RightDDLInset:SetAlpha(0)
 
-    _G.AchievementFrameHeaderPoints:SetParent(AchievementFrame)
-    _G.AchievementFrameHeaderPoints:SetPoint("TOP", bg)
-    _G.AchievementFrameHeaderPoints:SetPoint("BOTTOM", bg, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
-    _G.AchievementFrameHeaderShield:SetParent(AchievementFrame)
+        Header.Points:SetParent(AchievementFrame)
+        Header.Points:SetPoint("TOP", bg)
+        Header.Points:SetPoint("BOTTOM", bg, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
+        Header.Shield:SetParent(AchievementFrame)
+    else
+        _G.AchievementFrameHeader:Hide()
+        _G.AchievementFrameHeaderLeft:Hide()
+        _G.AchievementFrameHeaderRight:Hide()
+
+        _G.AchievementFrameHeaderPointBorder:Hide()
+        _G.AchievementFrameHeaderTitle:Hide()
+        _G.AchievementFrameHeaderLeftDDLInset:SetAlpha(0)
+        _G.AchievementFrameHeaderRightDDLInset:SetAlpha(0)
+
+        _G.AchievementFrameHeaderPoints:SetParent(AchievementFrame)
+        _G.AchievementFrameHeaderPoints:SetPoint("TOP", bg)
+        _G.AchievementFrameHeaderPoints:SetPoint("BOTTOM", bg, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
+        _G.AchievementFrameHeaderShield:SetParent(AchievementFrame)
+    end
 
 
 
     ----------------
     -- Categories --
     ----------------
-    Util.HideNineSlice(_G.AchievementFrameCategories)
-    Skin.HybridScrollBarTemplate(_G.AchievementFrameCategoriesContainerScrollBar)
+    if private.isPatch then
+        local Categories = AchievementFrame.Categories
+        Util.HideNineSlice(Categories)
+        Skin.WowScrollBoxList(Categories.ScrollBox)
+        Skin.WowTrimScrollBar(Categories.ScrollBar)
+    else
+        Util.HideNineSlice(_G.AchievementFrameCategories)
+        Skin.HybridScrollBarTemplate(_G.AchievementFrameCategoriesContainerScrollBar)
+    end
 
 
 
     ------------------
     -- Achievements --
     ------------------
-    _G.AchievementFrameAchievementsBackground:Hide()
-    select(3, _G.AchievementFrameAchievements:GetRegions()):Hide()
-
-    Skin.HybridScrollBarTemplate(_G.AchievementFrameAchievementsContainerScrollBar)
-    select(2, _G.AchievementFrameAchievements:GetChildren()):Hide()
+    local Achievements = _G.AchievementFrameAchievements
+    if private.isPatch then
+        Achievements.Background:Hide()
+        select(3, Achievements:GetRegions()):Hide()
+        Skin.WowScrollBoxList(Achievements.ScrollBox)
+        Skin.WowTrimScrollBar(Achievements.ScrollBar)
+        select(3, Achievements:GetChildren()):Hide()
+    else
+        _G.AchievementFrameAchievementsBackground:Hide()
+        select(3, Achievements:GetRegions()):Hide()
+        Skin.HybridScrollBarTemplate(_G.AchievementFrameAchievementsContainerScrollBar)
+        select(2, Achievements:GetChildren()):Hide()
+    end
 
 
 
     -----------
     -- Stats --
     -----------
-    _G.AchievementFrameStatsBG:Hide()
-    Skin.HybridScrollBarTemplate(_G.AchievementFrameStatsContainerScrollBar)
-    _G.AchievementFrameStatsContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameStatsContainer, "TOPRIGHT", 0, -12)
-    _G.AchievementFrameStatsContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameStatsContainer, "BOTTOMRIGHT", 0, 12)
-    select(3, _G.AchievementFrameStats:GetChildren()):Hide()
+    local Stats = _G.AchievementFrameStats
+    if private.isPatch then
+        _G.AchievementFrameStatsBG:Hide()
+        Skin.WowScrollBoxList(Stats.ScrollBox)
+        Skin.WowTrimScrollBar(Stats.ScrollBar)
+        select(3, _G.AchievementFrameStats:GetChildren()):Hide()
+    else
+        _G.AchievementFrameStatsBG:Hide()
+        Skin.HybridScrollBarTemplate(_G.AchievementFrameStatsContainerScrollBar)
+        _G.AchievementFrameStatsContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameStatsContainer, "TOPRIGHT", 0, -12)
+        _G.AchievementFrameStatsContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameStatsContainer, "BOTTOMRIGHT", 0, 12)
+        select(3, _G.AchievementFrameStats:GetChildren()):Hide()
+    end
 
 
 
     -------------
     -- Summary --
     -------------
-    _G.AchievementFrameSummaryBackground:Hide()
-    _G.AchievementFrameSummary:GetChildren():Hide()
+    local Summary = _G.AchievementFrameSummary
+    if private.isPatch then
+        Summary.Background:Hide()
+    else
+        _G.AchievementFrameSummaryBackground:Hide()
+    end
+    Summary:GetChildren():Hide()
 
     _G.AchievementFrameSummaryAchievementsHeaderHeader:Hide()
-
     _G.AchievementFrameSummaryCategoriesHeaderTexture:Hide()
 
     Skin.FrameTypeStatusBar(_G.AchievementFrameSummaryCategoriesStatusBar)
@@ -536,8 +782,9 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------
     -- Comparison --
     ----------------
-    _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonSummaryFriend, "TOPLEFT")
-    _G.AchievementFrameComparisonHeader:SetPoint("BOTTOMRIGHT", _G.AchievementFrameComparisonSummaryFriend, "TOPRIGHT")
+    local AchievementFrameComparison = _G.AchievementFrameComparison
+    --_G.AchievementFrameComparisonHeader:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonSummaryFriend, "TOPLEFT")
+    --_G.AchievementFrameComparisonHeader:SetPoint("BOTTOMRIGHT", _G.AchievementFrameComparisonSummaryFriend, "TOPRIGHT")
     _G.AchievementFrameComparisonHeader:SetHeight(private.FRAME_TITLE_HEIGHT * 2)
     _G.AchievementFrameComparisonHeaderBG:Hide()
     _G.AchievementFrameComparisonHeaderPortrait:Hide()
@@ -545,41 +792,71 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.AchievementFrameComparisonHeaderName:ClearAllPoints()
     _G.AchievementFrameComparisonHeaderName:SetPoint("TOP")
     _G.AchievementFrameComparisonHeaderName:SetHeight(private.FRAME_TITLE_HEIGHT)
-    _G.AchievementFrameComparisonHeaderPoints:ClearAllPoints()
-    _G.AchievementFrameComparisonHeaderPoints:SetPoint("TOP", "$parentName", "BOTTOM", 0, 0)
-    _G.AchievementFrameComparisonHeaderPoints:SetHeight(private.FRAME_TITLE_HEIGHT)
-
-    _G.AchievementFrameComparisonSummary:SetHeight(24)
-
-    for _, unit in next, {"Player", "Friend"} do
-        local summery = _G["AchievementFrameComparisonSummary"..unit]
-        summery:SetHeight(24)
-        Util.HideNineSlice(summery)
-        _G["AchievementFrameComparisonSummary"..unit.."Background"]:Hide()
-        Skin.AchievementHeaderStatusBarTemplate(summery.statusBar)
-        summery.statusBar:ClearAllPoints()
-        summery.statusBar:SetPoint("TOPLEFT")
-        summery.statusBar:SetPoint("BOTTOMRIGHT")
+    if private.isPatch then
+        _G.AchievementFrameComparisonHeader.Points:ClearAllPoints()
+        _G.AchievementFrameComparisonHeader.Points:SetPoint("TOP", "$parentName", "BOTTOM", 0, 0)
+        _G.AchievementFrameComparisonHeader.Points:SetHeight(private.FRAME_TITLE_HEIGHT)
+    else
+        _G.AchievementFrameComparisonHeaderPoints:ClearAllPoints()
+        _G.AchievementFrameComparisonHeaderPoints:SetPoint("TOP", "$parentName", "BOTTOM", 0, 0)
+        _G.AchievementFrameComparisonHeaderPoints:SetHeight(private.FRAME_TITLE_HEIGHT)
     end
 
-    Skin.HybridScrollBarTemplate(_G.AchievementFrameComparisonContainerScrollBar)
-    _G.AchievementFrameComparisonContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameComparisonContainer, "TOPRIGHT", 0, -12)
-    _G.AchievementFrameComparisonContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonContainer, "BOTTOMRIGHT", 0, 12)
+    if private.isPatch then
+        AchievementFrameComparison.Summary:SetHeight(24)
+        for _, unit in next, {"Player", "Friend"} do
+            local summary = AchievementFrameComparison.Summary[unit]
+            summary:SetHeight(24)
+            Util.HideNineSlice(summary)
+            summary:GetRegions():Hide() -- Background
+            Skin.AchievementHeaderStatusBarTemplate(summary.StatusBar)
+            summary.StatusBar:ClearAllPoints()
+            summary.StatusBar:SetPoint("TOPLEFT")
+            summary.StatusBar:SetPoint("BOTTOMRIGHT")
+        end
 
-    Skin.HybridScrollBarTemplate(_G.AchievementFrameComparisonStatsContainerScrollBar)
-    _G.AchievementFrameComparisonStatsContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameComparisonStatsContainer, "TOPRIGHT", 0, -12)
-    _G.AchievementFrameComparisonStatsContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonStatsContainer, "BOTTOMRIGHT", 0, 12)
+        Skin.WowScrollBoxList(AchievementFrameComparison.AchievementContainer.ScrollBox)
+        Skin.WowTrimScrollBar(AchievementFrameComparison.AchievementContainer.ScrollBar)
 
-    select(5, _G.AchievementFrameComparison:GetChildren()):Hide()
+        Skin.WowScrollBoxList(AchievementFrameComparison.StatContainer.ScrollBox)
+        Skin.WowTrimScrollBar(AchievementFrameComparison.StatContainer.ScrollBar)
+    else
+        _G.AchievementFrameComparisonSummary:SetHeight(24)
+        for _, unit in next, {"Player", "Friend"} do
+            local summary = _G["AchievementFrameComparisonSummary"..unit]
+            summary:SetHeight(24)
+            Util.HideNineSlice(summary)
+            _G["AchievementFrameComparisonSummary"..unit.."Background"]:Hide()
+            Skin.AchievementHeaderStatusBarTemplate(summary.statusBar)
+            summary.statusBar:ClearAllPoints()
+            summary.statusBar:SetPoint("TOPLEFT")
+            summary.statusBar:SetPoint("BOTTOMRIGHT")
+        end
+
+        Skin.HybridScrollBarTemplate(_G.AchievementFrameComparisonContainerScrollBar)
+        _G.AchievementFrameComparisonContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameComparisonContainer, "TOPRIGHT", 0, -12)
+        _G.AchievementFrameComparisonContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonContainer, "BOTTOMRIGHT", 0, 12)
+
+        Skin.HybridScrollBarTemplate(_G.AchievementFrameComparisonStatsContainerScrollBar)
+        _G.AchievementFrameComparisonStatsContainerScrollBar:SetPoint("TOPLEFT", _G.AchievementFrameComparisonStatsContainer, "TOPRIGHT", 0, -12)
+        _G.AchievementFrameComparisonStatsContainerScrollBar:SetPoint("BOTTOMLEFT", _G.AchievementFrameComparisonStatsContainer, "BOTTOMRIGHT", 0, 12)
+    end
+
+    select(5, AchievementFrameComparison:GetChildren()):Hide()
 
     _G.AchievementFrameComparisonBackground:Hide()
-    _G.AchievementFrameComparisonDark:SetAlpha(0)
-    _G.AchievementFrameComparisonWatermark:SetAlpha(0)
+    if private.isPatch then
+        _G.AchievementFrameComparison.Dark:SetAlpha(0)
+        _G.AchievementFrameComparison.Watermark:SetAlpha(0)
+    else
+        _G.AchievementFrameComparisonDark:SetAlpha(0)
+        _G.AchievementFrameComparisonWatermark:SetAlpha(0)
+        _G.AchievementFrameCloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
+    end
 
 
 
     Skin.UIPanelCloseButton(_G.AchievementFrameCloseButton)
-    _G.AchievementFrameCloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab1)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab2)
     Skin.AchievementFrameTabButtonTemplate(_G.AchievementFrameTab3)
@@ -604,51 +881,95 @@ function private.AddOns.Blizzard_AchievementUI()
     filterArrow:SetPoint("TOPLEFT", 4, -6)
     filterArrow:SetPoint("BOTTOMRIGHT", -4, 6)
     Base.SetTexture(filterArrow, "arrowDown")
+    Base.SetTexture(filterArrow, "arrowDown")
 
-    local searchBox = AchievementFrame.searchBox
-    Skin.SearchBoxTemplate(searchBox)
-    searchBox:ClearAllPoints()
-    searchBox:SetPoint("TOPRIGHT", bg, -148, 0)
 
-    local searchPreview = AchievementFrame.searchPreviewContainer
-    searchPreview.background:Hide()
-    searchPreview.borderAnchor:Hide()
-    searchPreview.botRightCorner:Hide()
-    searchPreview.bottomBorder:Hide()
-    searchPreview.leftBorder:Hide()
-    searchPreview.rightBorder:Hide()
-    searchPreview.topBorder:Hide()
-    Skin.FrameTypeFrame(searchPreview)
+    local SearchBox = private.isPatch and AchievementFrame.SearchBox or AchievementFrame.searchBox
+    Skin.SearchBoxTemplate(SearchBox)
+    SearchBox:ClearAllPoints()
+    SearchBox:SetPoint("TOPRIGHT", bg, -148, 0)
 
-    for i = 1, #searchPreview.searchPreviews do
-        Skin.AchievementSearchPreviewButton(searchPreview.searchPreviews[i])
+
+    local SearchPreview = private.isPatch and AchievementFrame.SearchPreviewContainer or AchievementFrame.searchPreviewContainer
+    Skin.FrameTypeFrame(SearchPreview)
+    if private.isPatch then
+        SearchPreview.Background:Hide()
+        SearchPreview.BorderAnchor:Hide()
+        SearchPreview.BotRightCorner:Hide()
+        SearchPreview.BottomBorder:Hide()
+        SearchPreview.LeftBorder:Hide()
+        SearchPreview.RightBorder:Hide()
+        SearchPreview.TopBorder:Hide()
+        for i = 1, #SearchPreview.searchPreviews do
+            Skin.AchievementSearchPreviewButton(SearchPreview.searchPreviews[i])
+        end
+
+        local ShowAllSearchResults = SearchPreview.ShowAllSearchResults
+        ShowAllSearchResults.SelectedTexture:SetPoint("TOPLEFT", 1, -1)
+        ShowAllSearchResults.SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
+
+        ShowAllSearchResults:SetNormalTexture("")
+        ShowAllSearchResults:SetPushedTexture("")
+    else
+        SearchPreview.background:Hide()
+        SearchPreview.borderAnchor:Hide()
+        SearchPreview.botRightCorner:Hide()
+        SearchPreview.bottomBorder:Hide()
+        SearchPreview.leftBorder:Hide()
+        SearchPreview.rightBorder:Hide()
+        SearchPreview.topBorder:Hide()
+        for i = 1, #SearchPreview.searchPreviews do
+            Skin.AchievementSearchPreviewButton(SearchPreview.searchPreviews[i])
+        end
+        SkinSearchButton(SearchPreview.showAllSearchResults)
     end
-    SkinSearchButton(searchPreview.showAllSearchResults)
 
-    local searchResults = AchievementFrame.searchResults
-    Skin.FrameTypeFrame(searchResults)
-    searchResults:GetRegions():Hide() -- background
 
-    local titleText = searchResults.titleText
-    titleText:ClearAllPoints()
-    titleText:SetPoint("TOPLEFT")
-    titleText:SetPoint("BOTTOMRIGHT", searchResults, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-    searchResults.topLeftCorner:Hide()
-    searchResults.topRightCorner:Hide()
-    searchResults.topBorder:Hide()
-    searchResults.bottomLeftCorner:Hide()
-    searchResults.bottomRightCorner:Hide()
-    searchResults.bottomBorder:Hide()
-    searchResults.leftBorder:Hide()
-    searchResults.rightBorder:Hide()
-    searchResults.topTileStreaks:Hide()
-    searchResults.topLeftCorner2:Hide()
-    searchResults.topRightCorner2:Hide()
-    searchResults.topBorder2:Hide()
 
-    searchResults.scrollFrame:ClearAllPoints()
-    searchResults.scrollFrame:SetPoint("TOPLEFT", 3, -(private.FRAME_TITLE_HEIGHT + 3))
-    searchResults.scrollFrame:SetPoint("BOTTOMRIGHT", -23, 3)
-    Skin.UIPanelCloseButton(searchResults.closeButton)
-    Skin.HybridScrollBarTrimTemplate(searchResults.scrollFrame.scrollBar)
+    local SearchResults = private.isPatch and AchievementFrame.SearchResults or AchievementFrame.searchResults
+    Skin.FrameTypeFrame(SearchResults)
+    SearchResults:GetRegions():Hide() -- background
+
+    local TitleText = private.isPatch and SearchResults.TitleText or SearchResults.titleText
+    TitleText:ClearAllPoints()
+    TitleText:SetPoint("TOPLEFT")
+    TitleText:SetPoint("BOTTOMRIGHT", SearchResults, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    if private.isPatch then
+        SearchResults.TopLeftCorner:Hide()
+        SearchResults.TopRightCorner:Hide()
+        SearchResults.TopBorder:Hide()
+        SearchResults.BottomLeftCorner:Hide()
+        SearchResults.BottomRightCorner:Hide()
+        SearchResults.BottomBorder:Hide()
+        SearchResults.LeftBorder:Hide()
+        SearchResults.RightBorder:Hide()
+        SearchResults.TopTileStreaks:Hide()
+        SearchResults.TopLeftCorner2:Hide()
+        SearchResults.TopRightCorner2:Hide()
+        SearchResults.TopBorder2:Hide()
+
+        Skin.UIPanelCloseButton(SearchResults.CloseButton)
+        Skin.WowScrollBoxList(SearchResults.ScrollBox)
+        Skin.WowTrimScrollBar(SearchResults.ScrollBar)
+    else
+        SearchResults.topLeftCorner:Hide()
+        SearchResults.topRightCorner:Hide()
+        SearchResults.topBorder:Hide()
+        SearchResults.bottomLeftCorner:Hide()
+        SearchResults.bottomRightCorner:Hide()
+        SearchResults.bottomBorder:Hide()
+        SearchResults.leftBorder:Hide()
+        SearchResults.rightBorder:Hide()
+        SearchResults.topTileStreaks:Hide()
+        SearchResults.topLeftCorner2:Hide()
+        SearchResults.topRightCorner2:Hide()
+        SearchResults.topBorder2:Hide()
+
+        SearchResults.scrollFrame:ClearAllPoints()
+        SearchResults.scrollFrame:SetPoint("TOPLEFT", 3, -(private.FRAME_TITLE_HEIGHT + 3))
+        SearchResults.scrollFrame:SetPoint("BOTTOMRIGHT", -23, 3)
+        Skin.UIPanelCloseButton(SearchResults.closeButton)
+        Skin.HybridScrollBarTrimTemplate(SearchResults.scrollFrame.scrollBar)
+    end
 end

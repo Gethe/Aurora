@@ -141,7 +141,7 @@ do -- StatusBar
                 texture:SetVertexColor(color:GetRGB())
             end
         else
-            private.debug("Missing color for status bar asset:", asset)
+            private.debug("Missing color for status bar asset:", asset, self:GetDebugName())
         end
 
         self.__SetStatusBarTexture = nil
@@ -175,11 +175,12 @@ do -- StatusBar
                 asset = tex:GetTexture()
             end
         else
-            tex:SetTexture(private.textures.plain)
+            StatusBar:SetStatusBarTexture(private.textures.plain)
+            tex = StatusBar:GetStatusBarTexture()
         end
 
         Base.SetTexture(tex, "gradientUp")
-        if asset then
+        if asset and private.assetColors[asset] then
             Hook_SetStatusBarTexture(StatusBar, asset)
         else
             Hook_SetStatusBarColor(StatusBar, red, green, blue)

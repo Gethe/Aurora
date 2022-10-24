@@ -5,8 +5,8 @@ local _, private = ...
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Color = Aurora.Color
-local Util = Aurora.Util
+local Skin = Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
 
 --[[ Util:header
 Helpful functions for layout, widget info, and debugging.
@@ -111,6 +111,49 @@ function Util.GetName(widget)
     end
 
     return name
+end
+
+local ignoreTemplate = {
+    TAV_AtlasFrameTemplate = true,
+
+    AreaPOIPinTemplate = true,
+    ContributionCollectorPinTemplate = true,
+    DigSitePinTemplate = true,
+    DungeonEntrancePinTemplate = true,
+    FlightPointPinTemplate = true,
+    FogOfWarPinTemplate = true,
+    GroupMembersPinTemplate = true,
+    MapExplorationPinTemplate = true,
+    MapHighlightPinTemplate = true,
+    PetTamerPinTemplate = true,
+    QuestBlobPinTemplate = true,
+    QuestPinTemplate = true,
+    ScenarioBlobPinTemplate = true,
+    StorylineQuestPinTemplate = true,
+    WorldQuestSpellEffectPinTemplate = true,
+
+    MapCanvasDetailLayerTemplate = true,
+    MapCanvasDetailTileTemplate = true,
+    WorldMapBountyBoardTabTemplate = true,
+    WorldMapBountyBoardObjectiveTemplate = true,
+
+    ModelSceneActorTemplate = true,
+}
+function Util.CheckTemplate(getNext, mixinName, ...)
+    for i = 1, select("#", ...) do
+        local template = select(i, ...)
+        --print("CheckTemplate", i, template)
+        if Skin[template] then
+            for obj in getNext() do
+                if not obj._auroraSkinned then
+                    Skin[template](obj)
+                end
+                obj._auroraSkinned = true
+            end
+        elseif private.isDev and not ignoreTemplate[template] then
+            private.debug("Missing template for", mixinName, template)
+        end
+    end
 end
 
 Util.NineSliceTextures = {

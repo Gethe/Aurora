@@ -302,22 +302,36 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Skin.GarrisonLandingPageReportMissionRewardTemplate(Button.Reward3)
         end
         function Skin.GarrisonLandingPageTabTemplate(Button)
+            Skin.FrameTypeButton(Button)
+            Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
             Button:SetHeight(28)
 
-            Button.LeftDisabled:SetAlpha(0)
-            Button.MiddleDisabled:SetAlpha(0)
-            Button.RightDisabled:SetAlpha(0)
-            Button.Left:SetAlpha(0)
-            Button.Middle:SetAlpha(0)
-            Button.Right:SetAlpha(0)
-            Button.LeftHighlight:SetAlpha(0)
-            Button.RightHighlight:SetAlpha(0)
-            Button.MiddleHighlight:SetAlpha(0)
+            if private.isPatch then
+                Button.LeftActive:SetAlpha(0)
+                Button.RightActive:SetAlpha(0)
+                Button.MiddleActive:SetAlpha(0)
+                Button.Left:SetAlpha(0)
+                Button.Right:SetAlpha(0)
+                Button.Middle:SetAlpha(0)
 
-            Skin.FrameTypeFrame(Button)
+                Button.LeftHighlight:SetAlpha(0)
+                Button.RightHighlight:SetAlpha(0)
+                Button.MiddleHighlight:SetAlpha(0)
+            else
+                Button.LeftDisabled:SetTexture("")
+                Button.MiddleDisabled:SetTexture("")
+                Button.RightDisabled:SetTexture("")
+                Button.Left:SetTexture("")
+                Button.Middle:SetTexture("")
+                Button.Right:SetTexture("")
+                Button.LeftHighlight:SetTexture("")
+                Button.RightHighlight:SetTexture("")
+                Button.MiddleHighlight:SetTexture("")
+            end
 
+            local bg = Button:GetBackdropTexture("bg")
             Button.Text:ClearAllPoints()
-            Button.Text:SetPoint("CENTER")
+            Button.Text:SetAllPoints(bg)
 
             Button._auroraTabResize = true
         end
@@ -325,7 +339,12 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame.FollowerHeaderBar:Hide()
             Frame.FollowerScrollFrame:Hide()
             Skin.SearchBoxTemplate(Frame.SearchBox)
-            Skin.MinimalHybridScrollBarTemplate(Frame.listScroll.scrollBar)
+            if private.isPatch then
+                Skin.WowScrollBoxList(Frame.ScrollBox)
+                Skin.WowTrimScrollBar(Frame.ScrollBar)
+            else
+                Skin.MinimalHybridScrollBarTemplate(Frame.listScroll.scrollBar)
+            end
         end
     end
     do --[[ Blizzard_GarrisonCapacitiveDisplay.xml ]]
@@ -406,7 +425,11 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Skin.GarrisonMissionPageFollowerTemplate(Frame.Follower3)
         end
         function Skin.OrderHallFrameTabButtonTemplate(Button)
-            Skin.CharacterFrameTabButtonTemplate(Button)
+            if private.isPatch then
+                Skin.PanelTabButtonTemplate(Button)
+            else
+                Skin.CharacterFrameTabButtonTemplate(Button)
+            end
             Button._auroraTabResize = true
         end
     end
@@ -587,14 +610,20 @@ function private.AddOns.Blizzard_GarrisonUI()
         GarrisonLandingPage.FleetTab,
     })
 
-    GarrisonLandingPage.Report.Background:SetDesaturated(true)
-    GarrisonLandingPage.Report.Background:SetAlpha(0.5)
-    GarrisonLandingPage.Report.List:GetRegions():SetDesaturated(true)
-    Skin.MinimalHybridScrollBarTemplate(GarrisonLandingPage.Report.List.listScroll.scrollBar)
-    GarrisonLandingPage.Report.InProgress:GetNormalTexture():SetAlpha(0)
-    GarrisonLandingPage.Report.InProgress:SetHighlightTexture("")
-    GarrisonLandingPage.Report.Available:GetNormalTexture():SetAlpha(0)
-    GarrisonLandingPage.Report.Available:SetHighlightTexture("")
+    local LandingReport = GarrisonLandingPage.Report
+    LandingReport.Background:SetDesaturated(true)
+    LandingReport.Background:SetAlpha(0.5)
+    LandingReport.List:GetRegions():SetDesaturated(true)
+    if private.isPatch then
+        Skin.WowScrollBoxList(LandingReport.List.ScrollBox)
+        Skin.WowTrimScrollBar(LandingReport.List.ScrollBar)
+    else
+        Skin.MinimalHybridScrollBarTemplate(LandingReport.List.listScroll.scrollBar)
+    end
+    LandingReport.InProgress:GetNormalTexture():SetAlpha(0)
+    LandingReport.InProgress:SetHighlightTexture("")
+    LandingReport.Available:GetNormalTexture():SetAlpha(0)
+    LandingReport.Available:SetHighlightTexture("")
 
     Skin.BaseLandingPageFollowerListTemplate(GarrisonLandingPage.FollowerList)
     local LandingFollowerTab = GarrisonLandingPage.FollowerTab

@@ -356,8 +356,12 @@ function meta:NotifyChanges()
             local classToken = _G.CLASS_SORT_ORDER[i]
             local color = self[classToken]
             local cache = colorCache[classToken]
+            if not cache then
+                colorCache[classToken] = {}
+                cache = colorCache[classToken]
+            end
 
-            if cache and not color:IsEqualTo(cache) then
+            if not color:IsEqualTo(cache) then
                 --print("Change found in", classToken)
                 cache.r = color.r
                 cache.g = color.g

@@ -47,11 +47,11 @@ do --[[ SharedXML\NineSlice.lua ]]
         IdenticalCornersLayout = BasicFrame,
     }
 
-    local layoutMap = {}
-    for userLayoutName in next, layouts do
-        local layout = _G.NineSliceUtil.GetLayout(userLayoutName)
-        if layout then
-            layoutMap[layout] = userLayoutName
+    local function GetNameforLayout(userLayout)
+        for layoutName, layout in next, _G.NineSliceLayouts do
+            if layout == userLayout then
+                return layoutName
+            end
         end
     end
 
@@ -61,19 +61,28 @@ do --[[ SharedXML\NineSlice.lua ]]
         if container._applyLayout then return end
 
         container._applyLayout = true
-        local userLayoutName = layoutMap[userLayout]
+        local userLayoutName = container:GetFrameLayoutType()
+        if not userLayoutName then
+            userLayoutName = GetNameforLayout(userLayout)
+        end
+
         if container.debug then
-            _G.print("ApplyLayout", container.debug, userLayoutName, textureKit)
+            _G.print("ApplyLayout", container.debug, userLayout, userLayoutName, textureKit)
+            if not userLayoutName and not textureKit then
+                _G.error("Found usage")
+            end
         end
 
         if layouts[userLayoutName] then
-            if private.isDev then
+            if container.debug then
                 private.debug("Apply layout with textureKit", userLayoutName)
             end
             layouts[userLayoutName](container, Util.GetTextureKit(textureKit))
         else
             if userLayoutName then
                 private.debug("Missing skin for nineslice layout", userLayoutName)
+            elseif private.isDev then
+                _G.print("Missing name for nineslice layout:", container:GetDebugName())
             end
 
             if not container.SetBackdropOption then return end
@@ -86,9 +95,6 @@ do --[[ SharedXML\NineSlice.lua ]]
             end
         end
         container._applyLayout = false
-    end
-    function Hook.NineSliceUtil.AddLayout(userLayoutName, layout)
-        layoutMap[layout] = userLayoutName
     end
 end
 
