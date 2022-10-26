@@ -494,8 +494,15 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         if Frame.debug then
             Frame.NineSlice.debug = Frame.debug
         end
+        Frame.NineSlice:SetFrameLevel(Frame:GetFrameLevel() + 1)
         Skin.NineSlicePanelTemplate(Frame.NineSlice)
         Frame.PortraitContainer:Hide()
+
+        Frame.TitleContainer:SetHeight(private.FRAME_TITLE_HEIGHT)
+        local titleText = Frame.TitleContainer.TitleText
+        titleText:ClearAllPoints()
+        titleText:SetPoint("TOPLEFT", Frame.TitleContainer)
+        titleText:SetPoint("BOTTOMRIGHT", Frame.TitleContainer)
     end
     function Skin.PortraitFrameTexturedBaseTemplate(Frame)
         Frame.NineSlice.Center = Frame.Bg

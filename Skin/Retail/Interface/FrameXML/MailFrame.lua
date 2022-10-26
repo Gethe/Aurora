@@ -38,7 +38,9 @@ do --[[ FrameXML\MailFrame.lua ]]
             index = index + 1
         end
 
-        _G.InboxTitleText:SetShown(totalItems <= numItems)
+        if not private.isPatch then
+            _G.InboxTitleText:SetShown(totalItems <= numItems)
+        end
         --MailFrame_UpdateTrialState(_G.MailFrame)
     end
     function Hook.SendMailFrame_Update()
@@ -46,7 +48,7 @@ do --[[ FrameXML\MailFrame.lua ]]
         for i = 1, _G.ATTACHMENTS_MAX_SEND do
             local button = _G.SendMailFrame.SendMailAttachments[i]
             if i == 1 then
-                button:SetPoint("TOPLEFT", _G.SendMailScrollFrame, "BOTTOMLEFT", 3, -12)
+                button:SetPoint("TOPLEFT", _G.SendMailScrollFrame, "BOTTOMLEFT", 1, -12)
             else
                 if (i % _G.ATTACHMENTS_PER_ROW_SEND) == 1 then
                     button:SetPoint("TOPLEFT", _G.SendMailFrame.SendMailAttachments[i - _G.ATTACHMENTS_PER_ROW_SEND], "BOTTOMLEFT", 23, -9)
@@ -65,9 +67,9 @@ do --[[ FrameXML\MailFrame.lua ]]
             end
         end
 
-        local scrollHeight = 218
+        local scrollHeight = 194
         if numAttachments >= _G.ATTACHMENTS_PER_ROW_SEND then
-            scrollHeight = 173
+            scrollHeight = 148
         end
 
         _G.SendMailScrollFrame:SetHeight(scrollHeight + 20)

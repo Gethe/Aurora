@@ -123,19 +123,40 @@ do -- gradients
     end
 
     local function SetVertexColorMaxMin(texture, r, g, b, a)
-        texture:SetGradientAlpha(hookedTexture[texture], r * max, g * max, b * max, a, r * min, g * min, b * min, a)
-    end
-    local function SetGradientMaxMin(frame, texture, direction)
-        local r, g, b, a = texture:GetVertexColor()
-        if r and g and b then
-            texture:SetGradientAlpha(direction, r * max, g * max, b * max, a, r * min, g * min, b * min, a)
+        local minColor = Color.Create(r * max, g * max, b * max, a)
+        local maxColor = Color.Create(r * min, g * min, b * min, a)
+
+        if texture.SetGradientAlpha then
+            texture:SetGradientAlpha(hookedTexture[texture], minColor.r, minColor.g, minColor.b, minColor.a, maxColor.r, maxColor.g, maxColor.b, maxColor.a)
         else
-            texture:SetGradient(direction, max, max, max, min, min, min)
+            texture:SetGradient(hookedTexture[texture], minColor, maxColor)
+        end
+    end
+    local function SetGradientMaxMin(frame, texture, orientation)
+        local r, g, b, a = texture:GetVertexColor()
+
+        if texture.SetGradientAlpha then
+            if r and g and b then
+                texture:SetGradientAlpha(orientation, r * max, g * max, b * max, a, r * min, g * min, b * min, a)
+            else
+                texture:SetGradient(orientation, max, max, max, min, min, min)
+            end
+        else
+            local minColor, maxColor
+            if r and a then
+                minColor = Color.Create(r * max, g * max, b * max, a)
+                maxColor = Color.Create(r * min, g * min, b * min, a)
+            else
+                minColor = Color.Create(max, max, max)
+                maxColor = Color.Create(min, min, min)
+            end
+
+            texture:SetGradient(orientation, minColor, maxColor)
         end
 
         if not hookedTexture[texture] then
             _G.hooksecurefunc(texture, "SetVertexColor", SetVertexColorMaxMin)
-            hookedTexture[texture] = direction
+            hookedTexture[texture] = orientation
         end
     end
 

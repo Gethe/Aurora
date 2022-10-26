@@ -44,7 +44,9 @@ function private.FrameXML.CharacterFrame()
     local CharacterFrame = _G.CharacterFrame
     Skin.ButtonFrameTemplate(CharacterFrame)
 
-    if not private.isPatch then
+    if private.isPatch then
+        CharacterFrame.TitleContainer:SetPoint("TOPRIGHT", CharacterFrame.Inset, "RIGHT")
+    else
         CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
     end
     CharacterFrame.Inset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)

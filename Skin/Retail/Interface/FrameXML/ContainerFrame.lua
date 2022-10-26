@@ -72,13 +72,8 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     function Skin.ContainerFrameItemButtonTemplate(ItemButton)
         Skin.FrameTypeItemButton(ItemButton)
         ItemButton:SetBackdropColor(1, 1, 1, 0.75)
-        ItemButton:SetBackdropOptions({
-            bgFile = ItemButton._isKey and [[Interface\ContainerFrame\KeyRing-Bag-Icon]] or [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-            tile = false
-        })
-        local bg = ItemButton:GetBackdropTexture("bg")
-        bg:SetDesaturated(ItemButton._isKey)
-        Base.CropIcon(bg)
+
+        Base.CropIcon(ItemButton.icon)
 
         local name = ItemButton:GetName()
         ItemButton._questTexture = _G[name.."IconQuestTexture"]
@@ -87,13 +82,23 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         ItemButton.BattlepayItemTexture:SetTexCoord(0.203125, 0.78125, 0.203125, 0.78125)
         ItemButton.BattlepayItemTexture:SetAllPoints()
     end
+    function Skin.ContainerFrameCurrencyBorderTemplate(Frame)
+    end
+    function Skin.ContainerMoneyFrameTemplate(Frame)
+        Skin.ContainerFrameCurrencyBorderTemplate(Frame.Border)
+    end
     function Skin.ContainerFrameTemplate(Frame)
         local bg
         if private.isPatch then
             Skin.PortraitFrameFlatTemplate(Frame)
             bg = Frame.NineSlice:GetBackdropTexture("bg")
-        else
 
+            for i = 1, 36 do
+                Skin.ContainerFrameItemButtonTemplate(Frame.Items[i])
+            end
+
+            _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
+        else
             Skin.FrameTypeFrame(Frame)
             Frame:SetBackdropOption("offsets", {
                 left = 11,
@@ -131,7 +136,6 @@ do --[[ FrameXML\ContainerFrame.xml ]]
             _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
         end
 
-
         Frame.PortraitButton:Hide()
         Frame.FilterIcon:ClearAllPoints()
         Frame.FilterIcon:SetPoint("TOPLEFT", bg, 5, -5)
@@ -146,6 +150,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     end
     function Skin.ContainerFrameBackpackTemplate(Frame)
         Skin.ContainerFrameTemplate(Frame)
+        Skin.ContainerMoneyFrameTemplate(Frame.MoneyFrame)
     end
 end
 
