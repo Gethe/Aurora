@@ -1,10 +1,10 @@
-## Interface: 90205
+## Interface: 100000
 ## Interface-Classic: 11403
 ## Interface-Wrath: 30400
 ## Title: Aurora
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
-## Version: 9.2.7.0
+## Version: 10.0.0.0
 ## LoadWith: Blizzard_CompactRaidFrames
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## SavedVariables: AuroraConfig

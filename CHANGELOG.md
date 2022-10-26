@@ -1,4 +1,10 @@
-﻿## [9.2.7.0] ##
+﻿## [10.0.0.0] ##
+### Fixed ###
+
+  * Updated for Dragonflight
+
+
+## [9.2.7.0] ##
 ### Added ###
 
   * [retail] Basic support for Dragonflight (WIP)
@@ -381,6 +387,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
+[10.0.0.0]: https://github.com/Haleth/Aurora/compare/9.2.7.0...10.0.0.0
 [9.2.7.0]: https://github.com/Haleth/Aurora/compare/9.2.5.0...9.2.7.0
 [9.2.5.0]: https://github.com/Haleth/Aurora/compare/9.2.0.0...9.2.5.0
 [9.2.0.0]: https://github.com/Haleth/Aurora/compare/9.1.5.0...9.2.0.0
