@@ -13,6 +13,7 @@
 ## X-WoWI-ID: 18589
 ## X-Wago-ID: JZKbRK19
 
+libs\Libs.xml
 Skin\skin.xml
 #@non-debug@
 # #@version-retail@
@@ -39,7 +40,6 @@ Skin\Classic\Interface\FrameXML\FrameXML_Wrath.xml
 Skin\Classic\Interface\AddOns\AddOns_Wrath.xml
 #@end-debug@
 
-libs\Libs.xml
 aurora.lua
 gui.lua
 
