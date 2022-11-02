@@ -196,7 +196,7 @@ local createSlider do
             _G[slider:GetName().."Text"]:SetText(text)
         end
 
-        if not private.isPatch then
+        if not private.isRetail then
             _G.BlizzardOptionsPanel_Slider_Enable(slider)
         end
 

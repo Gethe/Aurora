@@ -148,13 +148,6 @@ function private.FrameXML.QuestFrame()
     ----------------
     -- QuestFrame --
     ----------------
-    if not private.isPatch then
-        Skin.ButtonFrameTemplate(_G.QuestFrame)
-        -- BlizzWTF: This should use the title text included in the template
-        _G.QuestFrameNpcNameText:SetAllPoints(_G.QuestFrame.TitleText)
-    end
-
-
     Skin.QuestFramePanelTemplate(_G.QuestFrameRewardPanel)
     Skin.UIPanelButtonTemplate(_G.QuestFrameCompleteQuestButton)
     _G.QuestFrameCompleteQuestButton:SetPoint("BOTTOMLEFT", 5, 5)

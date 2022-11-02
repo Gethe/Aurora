@@ -149,49 +149,21 @@ function private.FrameXML.PaperDollFrame()
     end
 
 
-    if private.isPatch then
-        local TitleManagerPane = _G.PaperDollFrame.TitleManagerPane
-        Skin.WowScrollBoxList(TitleManagerPane.ScrollBox)
-        Skin.WowTrimScrollBar(TitleManagerPane.ScrollBar)
-    else
-        Hook.HybridScrollFrame_CreateButtons(_G.PaperDollTitlesPane, "PlayerTitleButtonTemplate") -- Called here since the original is called OnLoad
-        _G.PaperDollTitlesPane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, -4, 4)
-        Skin.HybridScrollBarTemplate(_G.PaperDollTitlesPane.scrollBar)
-        _G.PaperDollTitlesPane.scrollBar:ClearAllPoints()
-        _G.PaperDollTitlesPane.scrollBar:SetPoint("TOPRIGHT", 2, -19)
-        _G.PaperDollTitlesPane.scrollBar:SetPoint("BOTTOMRIGHT", 2, 15)
-    end
+    local TitleManagerPane = _G.PaperDollFrame.TitleManagerPane
+    Skin.WowScrollBoxList(TitleManagerPane.ScrollBox)
+    Skin.WowTrimScrollBar(TitleManagerPane.ScrollBar)
 
 
-    if private.isPatch then
-        local EquipmentManagerPane = _G.PaperDollFrame.EquipmentManagerPane
-        Skin.WowScrollBoxList(EquipmentManagerPane.ScrollBox)
-        Skin.WowTrimScrollBar(EquipmentManagerPane.ScrollBar)
+    local EquipmentManagerPane = _G.PaperDollFrame.EquipmentManagerPane
+    Skin.WowScrollBoxList(EquipmentManagerPane.ScrollBox)
+    Skin.WowTrimScrollBar(EquipmentManagerPane.ScrollBar)
 
-        Skin.UIPanelButtonTemplate(EquipmentManagerPane.EquipSet)
-        Skin.UIPanelButtonTemplate(EquipmentManagerPane.SaveSet)
-    else
-        local PaperDollEquipmentManagerPane = _G.PaperDollEquipmentManagerPane
-        Hook.HybridScrollFrame_CreateButtons(PaperDollEquipmentManagerPane, "GearSetButtonTemplate") -- Called here since the original is called OnLoad
-        PaperDollEquipmentManagerPane:SetPoint("BOTTOMRIGHT", CharacterFrame.InsetRight, -4, 4)
-
-        Skin.UIPanelButtonTemplate(PaperDollEquipmentManagerPane.EquipSet)
-        Skin.UIPanelButtonTemplate(PaperDollEquipmentManagerPane.SaveSet)
-
-        Skin.HybridScrollBarTemplate(PaperDollEquipmentManagerPane.scrollBar)
-        PaperDollEquipmentManagerPane.scrollBar:ClearAllPoints()
-        PaperDollEquipmentManagerPane.scrollBar:SetPoint("TOPRIGHT", 2, -19)
-        PaperDollEquipmentManagerPane.scrollBar:SetPoint("BOTTOMRIGHT", 2, 15)
-    end
+    Skin.UIPanelButtonTemplate(EquipmentManagerPane.EquipSet)
+    Skin.UIPanelButtonTemplate(EquipmentManagerPane.SaveSet)
 
 
-    if private.isPatch then
-        _G.CharacterModelScene:SetPoint("TOPLEFT", CharacterFrame.Inset, 45, -10)
-        _G.CharacterModelScene:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, -45, 30)
-    else
-        _G.CharacterModelFrame:SetPoint("TOPLEFT", CharacterFrame.Inset, 45, -10)
-        _G.CharacterModelFrame:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, -45, 30)
-    end
+    _G.CharacterModelScene:SetPoint("TOPLEFT", CharacterFrame.Inset, 45, -10)
+    _G.CharacterModelScene:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, -45, 30)
 
     _G.CharacterModelFrameBackgroundTopLeft:Hide()
     _G.CharacterModelFrameBackgroundTopRight:Hide()
@@ -254,31 +226,5 @@ function private.FrameXML.PaperDollFrame()
 
         _G.select(button:GetNumRegions(), button:GetRegions()):Hide()
         Skin.PaperDollItemSlotButtonBottomTemplate(button)
-    end
-
-    if not private.isPatch then
-        local GearManagerDialogPopup = _G.GearManagerDialogPopup
-        Skin.FrameTypeFrame(GearManagerDialogPopup)
-        GearManagerDialogPopup:SetSize(510, 520)
-        GearManagerDialogPopup.BG:Hide()
-        Hook.BuildIconArray(GearManagerDialogPopup, "GearManagerDialogPopupButton", "GearSetPopupButtonTemplate", _G.NUM_GEARSET_ICONS_PER_ROW, _G.NUM_GEARSET_ICON_ROWS)
-
-        local BorderBox = GearManagerDialogPopup.BorderBox
-        for i = 1, 8 do
-            select(i, BorderBox:GetRegions()):Hide()
-        end
-
-        _G.GearManagerDialogPopupEditBoxLeft:Hide()
-        _G.GearManagerDialogPopupEditBoxMiddle:Hide()
-        _G.GearManagerDialogPopupEditBoxRight:Hide()
-        Skin.FrameTypeFrame(_G.GearManagerDialogPopupEditBox)
-
-        Skin.UIPanelButtonTemplate(_G.GearManagerDialogPopupCancel)
-        Skin.UIPanelButtonTemplate(_G.GearManagerDialogPopupOkay)
-
-        Skin.ListScrollFrameTemplate(_G.GearManagerDialogPopupScrollFrame)
-        _G.GearManagerDialogPopupScrollFrame:ClearAllPoints()
-        _G.GearManagerDialogPopupScrollFrame:SetPoint("TOPLEFT", 22, -81)
-        _G.GearManagerDialogPopupScrollFrame:SetPoint("BOTTOMRIGHT", -29, 42)
     end
 end

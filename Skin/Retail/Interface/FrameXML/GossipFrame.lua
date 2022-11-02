@@ -20,33 +20,6 @@ do --[[ FrameXML\GossipFrame.lua ]]
             self:SetFormattedText(private.NORMAL_QUEST_DISPLAY, titleText)
         end
     end
-
-    function Hook.NPCFriendshipStatusBar_Update(frame, factionID)
-        local statusBar = _G.NPCFriendshipStatusBar
-        local id = statusBar.friendshipFactionID
-        if id and id > 0 then
-            statusBar:SetPoint("TOPLEFT", 60, -41)
-            _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 45))
-        else
-            _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", _G.GossipFrame, 4, -(private.FRAME_TITLE_HEIGHT + 5))
-        end
-    end
-
-    function Hook.GossipFrameOptionsUpdate()
-        local gossipOptions = _G.C_GossipInfo.GetOptions()
-        if #gossipOptions == 0 then return end
-        private.debug("GossipFrameOptionsUpdate", #gossipOptions)
-
-        for button in _G.GossipFrame.titleButtonPool:EnumerateActive() do
-            if button.type == "Gossip" then
-                local gossipText = gossipOptions[button:GetID()].name
-                local color = gossipText:match("|c(%x+)%(")
-                if color then
-                    button:SetText(gossipText:gsub("|c(%x+)", "|cFF8888FF"))
-                end
-            end
-        end
-    end
 end
 
 do --[[ FrameXML\GossipFrame.xml ]]
@@ -69,60 +42,17 @@ do --[[ FrameXML\GossipFrame.xml ]]
 end
 
 function private.FrameXML.GossipFrame()
-    if not private.isPatch then
-        _G.hooksecurefunc("GossipFrameOptionsUpdate", Hook.GossipFrameOptionsUpdate)
-        _G.hooksecurefunc("NPCFriendshipStatusBar_Update", Hook.NPCFriendshipStatusBar_Update)
-    end
-
     -----------------
     -- GossipFrame --
     -----------------
     local GossipFrame = _G.GossipFrame
     Skin.ButtonFrameTemplate(GossipFrame)
-    if not private.isPatch then
-        Util.Mixin(GossipFrame.titleButtonPool, Hook.ObjectPoolMixin)
-        -- BlizzWTF: This should use the title text included in the template
-        _G.GossipFrameNpcNameText:SetAllPoints(GossipFrame.TitleText)
-    end
-
     GossipFrame.Background:Hide()
-    local bg = GossipFrame.NineSlice:GetBackdropTexture("bg")
 
-    if private.isPatch then
-        local GreetingPanel = GossipFrame.GreetingPanel
-        Skin.GossipFramePanelTemplate(GreetingPanel)
+    local GreetingPanel = GossipFrame.GreetingPanel
+    Skin.GossipFramePanelTemplate(GreetingPanel)
 
-        Skin.UIPanelButtonTemplate(GreetingPanel.GoodbyeButton)
-        Skin.WowScrollBoxList(GreetingPanel.ScrollBox)
-        Skin.WowTrimScrollBar(GreetingPanel.ScrollBar)
-    else
-        Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
-
-        Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
-        _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
-
-        Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
-        _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
-        _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 30)
-
-        _G.GossipGreetingScrollFrameTop:Hide()
-        _G.GossipGreetingScrollFrameBottom:Hide()
-        _G.GossipGreetingScrollFrameMiddle:Hide()
-
-        ----------------------------
-        -- NPCFriendshipStatusBar --
-        ----------------------------
-        local NPCFriendshipStatusBar = _G.NPCFriendshipStatusBar
-        Skin.FrameTypeStatusBar(NPCFriendshipStatusBar)
-        NPCFriendshipStatusBar:GetRegions():Hide()
-        NPCFriendshipStatusBar.icon:SetPoint("TOPLEFT", -20, 7)
-        for i = 1, 4 do
-            local notch = _G.NPCFriendshipStatusBar["Notch"..i]
-            notch:SetColorTexture(Color.button:GetRGB())
-            notch:SetSize(1, 16)
-        end
-
-        local barFillBG = _G.select(7, NPCFriendshipStatusBar:GetRegions())
-        barFillBG:Hide()
-    end
+    Skin.UIPanelButtonTemplate(GreetingPanel.GoodbyeButton)
+    Skin.WowScrollBoxList(GreetingPanel.ScrollBox)
+    Skin.WowTrimScrollBar(GreetingPanel.ScrollBar)
 end

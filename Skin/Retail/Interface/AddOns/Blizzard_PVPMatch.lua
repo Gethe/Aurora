@@ -53,25 +53,15 @@ function private.AddOns.Blizzard_PVPMatch()
     resultsContent.InsetBorderLeft:Hide()
     resultsContent.InsetBorderRight:Hide()
 
-    if private.isPatch then
-        Skin.WowScrollBoxList(resultsContent.scrollBox)
-        Skin.WowTrimScrollBar(resultsContent.scrollBar)
-    else
-        Skin.HybridScrollBarTemplate(resultsContent.scrollFrame.scrollBar)
-    end
+    Skin.WowScrollBoxList(resultsContent.scrollBox)
+    Skin.WowTrimScrollBar(resultsContent.scrollBar)
 
     local tabContainer = resultsContent.tabContainer
     tabContainer.InsetBorderTop:Hide()
     tabContainer.InsetBorderBottom:Hide()
-    if private.isPatch then
-        Skin.PanelTabButtonTemplate(tabContainer.tabGroup.tab1)
-        Skin.PanelTabButtonTemplate(tabContainer.tabGroup.tab2)
-        Skin.PanelTabButtonTemplate(tabContainer.tabGroup.tab3)
-    else
-        Skin.CharacterFrameTabButtonTemplate(tabContainer.tabGroup.tab1)
-        Skin.CharacterFrameTabButtonTemplate(tabContainer.tabGroup.tab2)
-        Skin.CharacterFrameTabButtonTemplate(tabContainer.tabGroup.tab3)
-    end
+    Skin.PanelTabButtonTemplate(tabContainer.tabGroup.tab1)
+    Skin.PanelTabButtonTemplate(tabContainer.tabGroup.tab2)
+    Skin.PanelTabButtonTemplate(tabContainer.tabGroup.tab3)
     Util.PositionRelative("TOPLEFT", tabContainer.tabGroup, "BOTTOMLEFT", 20, 49, 1, "Right", {
         tabContainer.tabGroup.tab1,
         tabContainer.tabGroup.tab2,
@@ -101,24 +91,14 @@ function private.AddOns.Blizzard_PVPMatch()
     scoreContent.InsetBorderLeft:Hide()
     scoreContent.InsetBorderRight:Hide()
 
-    if private.isPatch then
-        Skin.WowScrollBoxList(scoreContent.ScrollBox)
-        Skin.WowTrimScrollBar(scoreContent.ScrollBar)
-    else
-        Skin.HybridScrollBarTemplate(scoreContent.ScrollFrame.ScrollBar)
-    end
+    Skin.WowScrollBoxList(scoreContent.ScrollBox)
+    Skin.WowTrimScrollBar(scoreContent.ScrollBar)
 
     local scoreTabContainer = scoreContent.TabContainer
     scoreTabContainer.InsetBorderTop:Hide()
-    if private.isPatch then
-        Skin.PanelTabButtonTemplate(scoreTabContainer.TabGroup.Tab1)
-        Skin.PanelTabButtonTemplate(scoreTabContainer.TabGroup.Tab2)
-        Skin.PanelTabButtonTemplate(scoreTabContainer.TabGroup.Tab3)
-    else
-        Skin.CharacterFrameTabButtonTemplate(scoreTabContainer.TabGroup.Tab1)
-        Skin.CharacterFrameTabButtonTemplate(scoreTabContainer.TabGroup.Tab2)
-        Skin.CharacterFrameTabButtonTemplate(scoreTabContainer.TabGroup.Tab3)
-    end
+    Skin.PanelTabButtonTemplate(scoreTabContainer.TabGroup.Tab1)
+    Skin.PanelTabButtonTemplate(scoreTabContainer.TabGroup.Tab2)
+    Skin.PanelTabButtonTemplate(scoreTabContainer.TabGroup.Tab3)
     Util.PositionRelative("TOPLEFT", scoreTabContainer.TabGroup, "BOTTOMLEFT", 20, 49, 1, "Right", {
         scoreTabContainer.TabGroup.Tab1,
         scoreTabContainer.TabGroup.Tab2,

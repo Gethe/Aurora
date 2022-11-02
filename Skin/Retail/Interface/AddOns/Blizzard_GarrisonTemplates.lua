@@ -90,14 +90,8 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         function Skin.GarrisonListTemplate(Frame)
             Skin.GarrisonMissionBaseFrameTemplate(Frame)
 
-            if private.isPatch then
-                Skin.WowScrollBoxList(Frame.ScrollBox)
-                Skin.WowTrimScrollBar(Frame.ScrollBar)
-            else
-                Frame.listScroll:SetPoint("TOPLEFT", 2, -2)
-                Frame.listScroll:SetPoint("BOTTOMRIGHT", -20, 2)
-                Skin.HybridScrollBarTrimTemplate(Frame.listScroll.scrollBar)
-            end
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
         end
         function Skin.GarrisonListTemplateHeader(Frame)
             Skin.GarrisonListTemplate(Frame)
@@ -181,28 +175,16 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
             Button:SetHeight(28)
 
-            if private.isPatch then
-                Button.LeftActive:SetAlpha(0)
-                Button.RightActive:SetAlpha(0)
-                Button.MiddleActive:SetAlpha(0)
-                Button.Left:SetAlpha(0)
-                Button.Right:SetAlpha(0)
-                Button.Middle:SetAlpha(0)
+            Button.LeftActive:SetAlpha(0)
+            Button.RightActive:SetAlpha(0)
+            Button.MiddleActive:SetAlpha(0)
+            Button.Left:SetAlpha(0)
+            Button.Right:SetAlpha(0)
+            Button.Middle:SetAlpha(0)
 
-                Button.LeftHighlight:SetAlpha(0)
-                Button.RightHighlight:SetAlpha(0)
-                Button.MiddleHighlight:SetAlpha(0)
-            else
-                Button.LeftDisabled:SetTexture("")
-                Button.MiddleDisabled:SetTexture("")
-                Button.RightDisabled:SetTexture("")
-                Button.Left:SetTexture("")
-                Button.Middle:SetTexture("")
-                Button.Right:SetTexture("")
-                Button.LeftHighlight:SetTexture("")
-                Button.RightHighlight:SetTexture("")
-                Button.MiddleHighlight:SetTexture("")
-            end
+            Button.LeftHighlight:SetAlpha(0)
+            Button.RightHighlight:SetAlpha(0)
+            Button.MiddleHighlight:SetAlpha(0)
 
             local bg = Button:GetBackdropTexture("bg")
             Button.Text:ClearAllPoints()
@@ -396,20 +378,12 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
         end
         function Skin.CovenantListWideFrameTemplate(Frame)
             Skin.CovenantMissionBaseFrameTemplate(Frame)
-            if private.isPatch then
-                Skin.WowScrollBoxList(Frame.ScrollBox)
-                Skin.OribosScrollBar(Frame.ScrollBar)
-            else
-                Skin.OribosScrollBarTemplate(Frame.listScroll.scrollBar)
-            end
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.OribosScrollBar(Frame.ScrollBar)
         end
         function Skin.CovenantFollowerListTemplate(Frame)
-            if private.isPatch then
-                Skin.WowScrollBoxList(Frame.ScrollBox)
-                Skin.OribosScrollBar(Frame.ScrollBar)
-            else
-                Skin.OribosScrollBarTemplate(Frame.listScroll.scrollBar)
-            end
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.OribosScrollBar(Frame.ScrollBar)
             Frame.ElevatedFrame:Hide()
         end
         function Skin.CovenantMissionListTemplate(Frame)

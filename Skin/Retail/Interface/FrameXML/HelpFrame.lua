@@ -38,12 +38,7 @@ function private.FrameXML.HelpFrame()
     -- HelpFrame --
     ---------------
     local HelpFrame = _G.HelpFrame
-    if private.isPatch then
-        Skin.DefaultPanelTemplate(HelpFrame)
-    else
-        Skin.ButtonFrameTemplate(HelpFrame)
-    end
-
+    Skin.DefaultPanelTemplate(HelpFrame)
     Skin.BrowserTemplate(HelpFrame.Browser)
     HelpFrame.Browser:SetPoint("TOPLEFT", 1, -private.FRAME_TITLE_HEIGHT)
     HelpFrame.Browser:SetPoint("BOTTOMRIGHT", -1, 1)

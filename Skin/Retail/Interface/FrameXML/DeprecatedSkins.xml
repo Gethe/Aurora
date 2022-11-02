@@ -1,13 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
-    <Script file="CharacterFrameTemplates.lua" />
-
-    <Script file="..\SharedXML\OptionsFrameTemplates.lua" />
-    <Script file="..\SharedXML\OptionsPanelTemplates.lua" />
-    <Script file="..\SharedXML\VideoOptionsFrame.lua" />
-    <Script file="..\SharedXML\VideoOptionsPanels.lua" />
-    <Script file="..\SharedXML\AudioOptionsPanels.lua" />
-    <Script file="..\SharedXML\AudioOptionsPanelsVoice.lua" />
-    <Script file="InterfaceOptionsFrame.lua" />
-    <Script file="InterfaceOptionsPanels.lua" />
+    <!--Script file="CharacterFrameTemplates.lua"/-->
 </Ui>

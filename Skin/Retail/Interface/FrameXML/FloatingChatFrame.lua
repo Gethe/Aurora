@@ -74,31 +74,17 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         Base.SetBackdrop(Frame, Color.frame, 0.3)
     end
     function Skin.ChatTabArtTemplate(Button)
-        if private.isPatch then
-            Button.Left:SetAlpha(0)
-            Button.Right:SetAlpha(0)
-            Button.Middle:SetAlpha(0)
+        Button.Left:SetAlpha(0)
+        Button.Right:SetAlpha(0)
+        Button.Middle:SetAlpha(0)
 
-            Button.ActiveLeft:SetAlpha(0)
-            Button.ActiveMiddle:SetAlpha(0)
-            Button.ActiveRight:SetAlpha(0)
+        Button.ActiveLeft:SetAlpha(0)
+        Button.ActiveMiddle:SetAlpha(0)
+        Button.ActiveRight:SetAlpha(0)
 
-            Button.HighlightLeft:SetAlpha(0)
-            Button.HighlightMiddle:SetAlpha(0)
-            Button.HighlightRight:SetAlpha(0)
-        else
-            Button.leftTexture:SetAlpha(0)
-            Button.middleTexture:SetAlpha(0)
-            Button.rightTexture:SetAlpha(0)
-
-            Button.leftSelectedTexture:SetAlpha(0)
-            Button.middleSelectedTexture:SetAlpha(0)
-            Button.rightSelectedTexture:SetAlpha(0)
-
-            Button.leftHighlightTexture:SetAlpha(0)
-            Button.middleHighlightTexture:SetAlpha(0)
-            Button.rightHighlightTexture:SetAlpha(0)
-        end
+        Button.HighlightLeft:SetAlpha(0)
+        Button.HighlightMiddle:SetAlpha(0)
+        Button.HighlightRight:SetAlpha(0)
     end
     function Skin.ChatTabTemplate(Button)
         Skin.ChatTabArtTemplate(Button)

@@ -32,11 +32,7 @@ do --[[ FrameXML\CharacterFrame.xml ]]
         bg:SetColorTexture(1, 1, 1, 0.2)
     end
     function Skin.CharacterFrameTabTemplate(Button)
-        if private.isPatch then
-            Skin.PanelTabButtonTemplate(Button)
-        else
-            Skin.CharacterFrameTabButtonTemplate(Button)
-        end
+        Skin.PanelTabButtonTemplate(Button)
     end
 end
 
@@ -44,11 +40,7 @@ function private.FrameXML.CharacterFrame()
     local CharacterFrame = _G.CharacterFrame
     Skin.ButtonFrameTemplate(CharacterFrame)
 
-    if private.isPatch then
-        CharacterFrame.TitleContainer:SetPoint("TOPRIGHT", CharacterFrame.Inset, "RIGHT")
-    else
-        CharacterFrame.TitleText:SetPoint("BOTTOMRIGHT", CharacterFrame.Inset, "TOPRIGHT", 0, 0)
-    end
+    CharacterFrame.TitleContainer:SetPoint("TOPRIGHT", CharacterFrame.Inset, "RIGHT")
     CharacterFrame.Inset:SetPoint("TOPLEFT", 4, -private.FRAME_TITLE_HEIGHT)
     CharacterFrame.Inset:SetPoint("BOTTOMRIGHT", CharacterFrame, "BOTTOMLEFT", _G.PANEL_DEFAULT_WIDTH + _G.PANEL_INSET_RIGHT_OFFSET, 4)
 

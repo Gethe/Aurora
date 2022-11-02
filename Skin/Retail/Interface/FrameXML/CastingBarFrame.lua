@@ -42,10 +42,6 @@ do --[[ FrameXML\CastingBarFrame.xml ]]
 end
 
 function private.FrameXML.CastingBarFrame()
-    if private.isPatch then
-        Skin.CastingBarFrameTemplate(_G.PlayerCastingBarFrame)
-        Skin.CastingBarFrameTemplate(_G.OverlayPlayerCastingBarFrame)
-    else
-        Skin.CastingBarFrameTemplate(_G.CastingBarFrame)
-    end
+    Skin.CastingBarFrameTemplate(_G.PlayerCastingBarFrame)
+    Skin.CastingBarFrameTemplate(_G.OverlayPlayerCastingBarFrame)
 end

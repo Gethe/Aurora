@@ -306,28 +306,16 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
             Button:SetHeight(28)
 
-            if private.isPatch then
-                Button.LeftActive:SetAlpha(0)
-                Button.RightActive:SetAlpha(0)
-                Button.MiddleActive:SetAlpha(0)
-                Button.Left:SetAlpha(0)
-                Button.Right:SetAlpha(0)
-                Button.Middle:SetAlpha(0)
+            Button.LeftActive:SetAlpha(0)
+            Button.RightActive:SetAlpha(0)
+            Button.MiddleActive:SetAlpha(0)
+            Button.Left:SetAlpha(0)
+            Button.Right:SetAlpha(0)
+            Button.Middle:SetAlpha(0)
 
-                Button.LeftHighlight:SetAlpha(0)
-                Button.RightHighlight:SetAlpha(0)
-                Button.MiddleHighlight:SetAlpha(0)
-            else
-                Button.LeftDisabled:SetTexture("")
-                Button.MiddleDisabled:SetTexture("")
-                Button.RightDisabled:SetTexture("")
-                Button.Left:SetTexture("")
-                Button.Middle:SetTexture("")
-                Button.Right:SetTexture("")
-                Button.LeftHighlight:SetTexture("")
-                Button.RightHighlight:SetTexture("")
-                Button.MiddleHighlight:SetTexture("")
-            end
+            Button.LeftHighlight:SetAlpha(0)
+            Button.RightHighlight:SetAlpha(0)
+            Button.MiddleHighlight:SetAlpha(0)
 
             local bg = Button:GetBackdropTexture("bg")
             Button.Text:ClearAllPoints()
@@ -339,12 +327,8 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame.FollowerHeaderBar:Hide()
             Frame.FollowerScrollFrame:Hide()
             Skin.SearchBoxTemplate(Frame.SearchBox)
-            if private.isPatch then
-                Skin.WowScrollBoxList(Frame.ScrollBox)
-                Skin.WowTrimScrollBar(Frame.ScrollBar)
-            else
-                Skin.MinimalHybridScrollBarTemplate(Frame.listScroll.scrollBar)
-            end
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
         end
     end
     do --[[ Blizzard_GarrisonCapacitiveDisplay.xml ]]
@@ -425,11 +409,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Skin.GarrisonMissionPageFollowerTemplate(Frame.Follower3)
         end
         function Skin.OrderHallFrameTabButtonTemplate(Button)
-            if private.isPatch then
-                Skin.PanelTabButtonTemplate(Button)
-            else
-                Skin.CharacterFrameTabButtonTemplate(Button)
-            end
+            Skin.PanelTabButtonTemplate(Button)
             Button._auroraTabResize = true
         end
     end
@@ -614,12 +594,8 @@ function private.AddOns.Blizzard_GarrisonUI()
     LandingReport.Background:SetDesaturated(true)
     LandingReport.Background:SetAlpha(0.5)
     LandingReport.List:GetRegions():SetDesaturated(true)
-    if private.isPatch then
-        Skin.WowScrollBoxList(LandingReport.List.ScrollBox)
-        Skin.WowTrimScrollBar(LandingReport.List.ScrollBar)
-    else
-        Skin.MinimalHybridScrollBarTemplate(LandingReport.List.listScroll.scrollBar)
-    end
+    Skin.WowScrollBoxList(LandingReport.List.ScrollBox)
+    Skin.WowTrimScrollBar(LandingReport.List.ScrollBar)
     LandingReport.InProgress:GetNormalTexture():SetAlpha(0)
     LandingReport.InProgress:SetHighlightTexture("")
     LandingReport.Available:GetNormalTexture():SetAlpha(0)

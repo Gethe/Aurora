@@ -16,7 +16,7 @@ do --[[ FrameXML\MailFrame.lua ]]
         _G.InboxTitleText:SetShown(not isTrialOrVeteran)
     end
     function Hook.InboxFrame_Update()
-        local numItems, totalItems = _G.GetInboxNumItems()
+        local numItems = _G.GetInboxNumItems()
         local index = ((_G.InboxFrame.pageNum - 1) * _G.INBOXITEMS_TO_DISPLAY) + 1
         for i = 1, _G.INBOXITEMS_TO_DISPLAY do
             local name = "MailItem"..i
@@ -37,11 +37,6 @@ do --[[ FrameXML\MailFrame.lua ]]
             end
             index = index + 1
         end
-
-        if not private.isPatch then
-            _G.InboxTitleText:SetShown(totalItems <= numItems)
-        end
-        --MailFrame_UpdateTrialState(_G.MailFrame)
     end
     function Hook.SendMailFrame_Update()
         local numAttachments = 0
@@ -212,11 +207,7 @@ function private.FrameXML.MailFrame()
     Skin.ButtonFrameTemplate(_G.MailFrame)
 
     -- BlizzWTF: The portrait in the template is not being used.
-    if private.isPatch then
-        _G.select(3, _G.MailFrame:GetRegions()):Hide()
-    else
-        _G.select(6, _G.MailFrame:GetRegions()):Hide()
-    end
+    _G.select(3, _G.MailFrame:GetRegions()):Hide()
     _G.MailFrame.trialError:ClearAllPoints()
     _G.MailFrame.trialError:SetPoint("TOPLEFT", _G.MailFrame.TitleText, 50, -5)
     _G.MailFrame.trialError:SetPoint("BOTTOMRIGHT", _G.MailFrame.TitleText, -50, -6)
@@ -225,12 +216,7 @@ function private.FrameXML.MailFrame()
     -- InboxFrame --
     ----------------
     _G.InboxFrame:SetPoint("BOTTOMRIGHT")
-
     _G.InboxFrameBg:Hide()
-    if not private.isPatch then
-        _G.InboxTitleText:ClearAllPoints()
-        _G.InboxTitleText:SetAllPoints(_G.MailFrame.TitleText)
-    end
 
     _G.InboxTooMuchMail:ClearAllPoints()
     _G.InboxTooMuchMail:SetAllPoints(_G.MailFrame.trialError)
@@ -263,17 +249,8 @@ function private.FrameXML.MailFrame()
     -- SendMailFrame --
     -------------------
     _G.SendMailFrame:SetPoint("BOTTOMRIGHT")
-
-    if private.isPatch then
-        for i = 3, 6 do
-            select(i, _G.SendMailFrame:GetRegions()):Hide()
-        end
-    else
-        _G.SendMailTitleText:ClearAllPoints()
-        _G.SendMailTitleText:SetAllPoints(_G.MailFrame.TitleText)
-        for i = 4, 7 do
-            select(i, _G.SendMailFrame:GetRegions()):Hide()
-        end
+    for i = 3, 6 do
+        select(i, _G.SendMailFrame:GetRegions()):Hide()
     end
 
     Skin.UIPanelScrollFrameTemplate(_G.SendMailScrollFrame)
@@ -345,15 +322,8 @@ function private.FrameXML.MailFrame()
     _G.OpenMailFrame:SetPoint("TOPLEFT", _G.InboxFrame, "TOPRIGHT", 5, 0)
 
     _G.OpenMailFrameIcon:Hide()
-    if private.isPatch then
-        _G.OpenMailHorizontalBarLeft:Hide()
-        select(9, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
-    else
-        _G.OpenMailTitleText:ClearAllPoints()
-        _G.OpenMailTitleText:SetAllPoints(_G.OpenMailFrame.TitleText)
-        _G.OpenMailHorizontalBarLeft:Hide()
-        select(13, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
-    end
+    _G.OpenMailHorizontalBarLeft:Hide()
+    select(9, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
 
     Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
 

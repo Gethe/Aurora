@@ -106,11 +106,7 @@ function private.AddOns.Blizzard_ChallengesUI()
     -- ChallengesFrame --
     ---------------------
     local ChallengesFrame = _G.ChallengesFrame
-    if private.isPatch then
-        _G.hooksecurefunc(ChallengesFrame, "Update", Hook.ChallengesFrame_Update)
-    else
-        _G.hooksecurefunc("ChallengesFrame_Update", Hook.ChallengesFrame_Update)
-    end
+    _G.hooksecurefunc(ChallengesFrame, "Update", Hook.ChallengesFrame_Update)
     Skin.InsetFrameTemplate(_G.ChallengesFrameInset)
 
     ChallengesFrame.WeeklyInfo:SetPoint("TOPLEFT")

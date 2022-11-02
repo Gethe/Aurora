@@ -10,8 +10,11 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
---do --[[ FrameXML\GroupLootFrame.lua ]]
---end
+do --[[ FrameXML\GroupLootFrame.lua ]]
+    function Hook.BonusRollFrame_OnShow(self)
+        self.PromptFrame.Timer:SetFrameLevel(self:GetFrameLevel())
+    end
+end
 
 do --[[ FrameXML\GroupLootFrame.xml ]]
     function Skin.BonusRollFrameTemplate(Frame)

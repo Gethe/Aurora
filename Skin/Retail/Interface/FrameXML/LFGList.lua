@@ -256,10 +256,6 @@ function private.FrameXML.LFGList()
 
     -- SearchPanel --
     local SearchPanel = LFGListFrame.SearchPanel
-    if not private.isPatch then
-        Hook.HybridScrollFrame_CreateButtons(SearchPanel.ScrollFrame, "LFGListSearchEntryTemplate") -- Called here since the original is called OnLoad
-    end
-
     Skin.SearchBoxTemplate(SearchPanel.SearchBox)
     Skin.UIMenuButtonStretchTemplate(SearchPanel.FilterButton)
     Skin.UIDropDownMenuTemplate(_G.LFGListLanguageFilterDropDownFrame)
@@ -288,24 +284,15 @@ function private.FrameXML.LFGList()
     end
 
     Skin.InsetFrameTemplate(SearchPanel.ResultsInset)
-    if private.isPatch then
-        Skin.WowScrollBoxList(SearchPanel.ScrollBox)
-        Skin.UIPanelButtonTemplate(SearchPanel.ScrollBox.StartGroupButton)
-        Skin.WowTrimScrollBar(SearchPanel.ScrollBar)
-    else
-        Skin.UIPanelButtonTemplate(SearchPanel.ScrollFrame.ScrollChild.StartGroupButton)
-        Skin.HybridScrollBarTrimTemplate(SearchPanel.ScrollFrame.scrollBar)
-    end
+    Skin.WowScrollBoxList(SearchPanel.ScrollBox)
+    Skin.UIPanelButtonTemplate(SearchPanel.ScrollBox.StartGroupButton)
+    Skin.WowTrimScrollBar(SearchPanel.ScrollBar)
 
     Skin.LFGListMagicButtonTemplate(SearchPanel.BackButton)
     Skin.LFGListMagicButtonTemplate(SearchPanel.SignUpButton)
 
     -- ApplicationViewer --
     local ApplicationViewer = LFGListFrame.ApplicationViewer
-    if not private.isPatch then
-        Hook.HybridScrollFrame_CreateButtons(ApplicationViewer.ScrollFrame, "LFGListApplicantTemplate") -- Called here since the original is called OnLoad
-    end
-
     ApplicationViewer.InfoBackground:Hide()
     Skin.LFGListGroupDataDisplayTemplate(ApplicationViewer.DataDisplay)
     Skin.UICheckButtonTemplate(ApplicationViewer.AutoAcceptButton) -- BlizzWTF: This doesn't use the template, but it should
@@ -325,12 +312,8 @@ function private.FrameXML.LFGList()
         })
     end
 
-    if private.isPatch then
-        Skin.WowScrollBoxList(ApplicationViewer.ScrollBox)
-        Skin.WowTrimScrollBar(ApplicationViewer.ScrollBar)
-    else
-        Skin.HybridScrollBarTemplate(ApplicationViewer.ScrollFrame.scrollBar)
-    end
+    Skin.WowScrollBoxList(ApplicationViewer.ScrollBox)
+    Skin.WowTrimScrollBar(ApplicationViewer.ScrollBar)
     Skin.LFGListMagicButtonTemplate(ApplicationViewer.RemoveEntryButton)
     Skin.LFGListMagicButtonTemplate(ApplicationViewer.EditButton)
     Skin.LFGListMagicButtonTemplate(ApplicationViewer.BrowseGroupsButton)
@@ -349,14 +332,9 @@ function private.FrameXML.LFGList()
         Dialog.Bg:Hide()
         Skin.DialogBorderTemplate(Dialog.Border)
         Skin.LFGListEditBoxTemplate(Dialog.EntryBox)
-        if private.isPatch then
-            Skin.WowScrollBoxList(Dialog.ScrollBox)
-            Skin.WowTrimScrollBar(Dialog.ScrollBar)
-            Skin.TooltipBackdropTemplate(Dialog.BorderFrame)
-        else
-            Skin.MinimalHybridScrollBarTemplate(Dialog.ScrollFrame.scrollBar)
-            Skin.TooltipBorderedFrameTemplate(Dialog.BorderFrame)
-        end
+        Skin.WowScrollBoxList(Dialog.ScrollBox)
+        Skin.WowTrimScrollBar(Dialog.ScrollBar)
+        Skin.TooltipBackdropTemplate(Dialog.BorderFrame)
         Skin.UIPanelButtonTemplate(Dialog.SelectButton)
         Skin.UIPanelButtonTemplate(Dialog.CancelButton)
     end

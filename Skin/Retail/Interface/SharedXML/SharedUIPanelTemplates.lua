@@ -230,21 +230,12 @@ end
 do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.UIPanelCloseButton(Button)
         Skin.FrameTypeButton(Button)
-        if private.isPatch then
-            Button:SetBackdropOption("offsets", {
-                left = 3,
-                right = 4,
-                top = 3,
-                bottom = 4,
-            })
-        else
-            Button:SetBackdropOption("offsets", {
-                left = 4,
-                right = 11,
-                top = 10,
-                bottom = 5,
-            })
-        end
+        Button:SetBackdropOption("offsets", {
+            left = 3,
+            right = 4,
+            top = 3,
+            bottom = 4,
+        })
 
         local bg = Button:GetBackdropTexture("bg")
         local cross = {}
@@ -514,27 +505,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Skin.FlatPanelBackgroundTemplate(Frame.Bg)
     end
     function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        if private.isPatch then
-            Skin.PortraitFrameTexturedBaseTemplate(Frame)
-        else
-            Util.Mixin(Frame, Hook.PortraitFrameMixin)
-
-            Frame.TitleBg:SetAlpha(0)
-            Frame.portrait:SetAlpha(0)
-
-            local titleText = Frame.TitleText
-            titleText:ClearAllPoints()
-            titleText:SetPoint("TOPLEFT", Frame.Bg)
-            titleText:SetPoint("BOTTOMRIGHT", Frame.Bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-            Frame.TopTileStreaks:SetTexture("")
-
-            if Frame.debug then
-                Frame.NineSlice.debug = Frame.debug
-            end
-            Frame.NineSlice.Center = Frame.Bg
-            Skin.NineSlicePanelTemplate(Frame.NineSlice)
-        end
+        Skin.PortraitFrameTexturedBaseTemplate(Frame)
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
@@ -548,14 +519,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.ButtonFrameTemplate(Frame)
-        if private.isPatch then
-            Frame.NineSlice.Center = Frame.Bg
-            Frame.TopTileStreaks:SetTexture("")
-            Skin.PortraitFrameBaseTemplate(Frame)
-            Skin.UIPanelCloseButtonDefaultAnchors(Frame.CloseButton)
-        else
-            Skin.PortraitFrameTemplate(Frame)
-        end
+        Frame.NineSlice.Center = Frame.Bg
+        Frame.TopTileStreaks:SetTexture("")
+        Skin.PortraitFrameBaseTemplate(Frame)
+        Skin.UIPanelCloseButtonDefaultAnchors(Frame.CloseButton)
         Skin.InsetFrameTemplate(Frame.Inset)
     end
     function Skin.ButtonFrameTemplateMinimizable(Frame)

@@ -163,12 +163,8 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(HonorFrame.HealerIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.DPSIcon)
     Skin.UIDropDownMenuTemplate(_G.HonorFrameTypeDropDown)
-    if private.isPatch then
-        Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
-        Skin.WowTrimScrollBar(HonorFrame.SpecificScrollBar)
-    else
-        Skin.HybridScrollBarTemplate(_G.HonorFrameSpecificFrameScrollBar)
-    end
+    Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
+    Skin.WowTrimScrollBar(HonorFrame.SpecificScrollBar)
 
     local BonusFrame = HonorFrame.BonusFrame
     BonusFrame.WorldBattlesTexture:Hide()

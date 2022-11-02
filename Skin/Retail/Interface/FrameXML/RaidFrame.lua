@@ -40,12 +40,8 @@ function private.FrameXML.RaidFrame()
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoIDLabel)
 
     Skin.UIPanelCloseButton(_G.RaidInfoCloseButton)
-    if private.isPatch then
-        Skin.WowScrollBoxList(RaidInfoFrame.ScrollBox)
-        Skin.WowTrimScrollBar(RaidInfoFrame.ScrollBar)
-    else
-        Skin.HybridScrollBarTemplate(_G.RaidInfoScrollFrame.scrollBar)
-    end
+    Skin.WowScrollBoxList(RaidInfoFrame.ScrollBox)
+    Skin.WowTrimScrollBar(RaidInfoFrame.ScrollBar)
     Skin.UIPanelButtonTemplate(_G.RaidInfoExtendButton)
     Skin.UIPanelButtonTemplate(_G.RaidInfoCancelButton)
 end

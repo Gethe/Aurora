@@ -37,12 +37,5 @@ do --[[ FrameXML\PetActionBar.xml ]]
     end
 end
 
-function private.FrameXML.PetActionBar()
-    if private.isPatch or private.disabled.mainmenubar then return end
-    _G.SlidingActionBarTexture0:SetAlpha(0)
-    _G.SlidingActionBarTexture1:SetAlpha(0)
-
-    for i = 1, _G.NUM_PET_ACTION_SLOTS do
-        Skin.PetActionButtonTemplate(_G["PetActionButton"..i])
-    end
-end
+--function private.FrameXML.PetActionBar()
+--end

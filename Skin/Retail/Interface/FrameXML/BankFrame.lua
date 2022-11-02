@@ -78,15 +78,9 @@ function private.FrameXML.BankFrame()
     local BankFrame = _G.BankFrame
     Skin.PortraitFrameTemplate(BankFrame)
     _G.BankPortraitTexture:Hide()
-    if private.isPatch then
-        select(4, BankFrame:GetRegions()):Hide() -- Bank-Background
-        Skin.PanelTabButtonTemplate(_G.BankFrameTab1)
-        Skin.PanelTabButtonTemplate(_G.BankFrameTab2)
-    else
-        select(7, BankFrame:GetRegions()):Hide() -- Bank-Background
-        Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab1)
-        Skin.CharacterFrameTabButtonTemplate(_G.BankFrameTab2)
-    end
+    select(4, BankFrame:GetRegions()):Hide() -- Bank-Background
+    Skin.PanelTabButtonTemplate(_G.BankFrameTab1)
+    Skin.PanelTabButtonTemplate(_G.BankFrameTab2)
 
     Util.PositionRelative("TOPLEFT", BankFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.BankFrameTab1,

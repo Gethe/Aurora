@@ -13,6 +13,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--## add C namespace augmentations here-->
 
     <!--## add snippets independent of modules here-->
+    <!--Script file="..\SharedXML\middleclass.lua"/-->
     <!--Script file="..\SharedXML\ErrorUtil.lua"/-->
     <!--Script file="..\SharedXML\Mixin.lua"/-->
     <!--Script file="..\SharedXML\TableUtil.lua"/-->
@@ -93,11 +94,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\Dump.lua"/-->
     <!--Script file="MixinUtil.lua"/-->
     <!--Script file="IconDataProvider.lua"/-->
-
-    <!--Script file="..\SharedXML\Tooltip\TooltipUtil.lua"/-->
-    <!--Script file="..\SharedXML\Tooltip\TooltipDataHandler.lua"/-->
-    <!--Script file="..\SharedXML\Tooltip\TooltipDataRules.lua"/-->
-    <!--Script file="..\SharedXML\Tooltip\TooltipComparisonManager.lua"/-->
 
     <!--## intrinsics-->
     <!--Script file="..\SharedXML\ScrollingMessageFrame.lua"/-->
@@ -270,6 +266,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="PVPUITemplates.lua"/>
     <Script file="PVPHonorSystem.lua"/>
     <Script file="ActionBarController.lua"/>
+    <!--Script file="InstanceDifficulty.lua"/-->
     <!--Script file="Minimap.lua"/-->
     <!--Script file="GameTime.lua"/-->
     <!--Script file="AddonCompartment.lua"/-->

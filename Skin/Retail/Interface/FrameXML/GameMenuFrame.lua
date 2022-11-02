@@ -17,14 +17,8 @@ function private.FrameXML.GameMenuFrame()
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonStore)
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonWhatsNew)
 
-    if private.isPatch then
-        Skin.GameMenuButtonTemplate(_G.GameMenuButtonSettings)
-        Skin.GameMenuButtonTemplate(_G.GameMenuButtonEditMode)
-    else
-        Skin.GameMenuButtonTemplate(_G.GameMenuButtonOptions)
-        Skin.GameMenuButtonTemplate(_G.GameMenuButtonUIOptions)
-        Skin.GameMenuButtonTemplate(_G.GameMenuButtonKeybindings)
-    end
+    Skin.GameMenuButtonTemplate(_G.GameMenuButtonSettings)
+    Skin.GameMenuButtonTemplate(_G.GameMenuButtonEditMode)
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonMacros)
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonAddons)
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonRatings) -- Used in Korean locale
