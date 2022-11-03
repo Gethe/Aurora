@@ -35,10 +35,10 @@ do --[[ FrameXML\PaperDollFrame.lua ]]
                 end
             end
             if showTrialCap then
-                _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "TOP", 0, -36)
+                _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleContainer, "TOP", 0, -36)
             else
                 --_G.CharacterTrialLevelErrorText:Show()
-                _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleText, "BOTTOM", 0, -4)
+                _G.CharacterLevelText:SetPoint("CENTER", _G.CharacterFrame.TitleContainer, "BOTTOM", 0, -4)
             end
         end
     end
