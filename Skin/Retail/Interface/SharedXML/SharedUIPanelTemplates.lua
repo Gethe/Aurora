@@ -822,6 +822,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.SharedButtonSmallTemplate(Button)
         Skin.BigRedThreeSliceButtonTemplate(Button)
     end
+
+    function Skin.IconSelectorPopupFrameTemplate(Frame)
+        Skin.SelectionFrameTemplate(Frame.BorderBox)
+        Skin.ScrollBoxSelectorTemplate(Frame.IconSelector)
+    end
 end
 
 function private.SharedXML.SharedUIPanelTemplates()

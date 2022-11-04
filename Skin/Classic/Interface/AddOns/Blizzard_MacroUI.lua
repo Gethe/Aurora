@@ -27,19 +27,6 @@ do --[[ AddOns\Blizzard_MacroUI.xml ]]
     function Skin.MacroButtonTemplate(CheckButton)
         Skin.PopupButtonTemplate(CheckButton)
     end
-    function Skin.MacroPopupButtonTemplate(CheckButton)
-        Skin.SimplePopupButtonTemplate(CheckButton)
-
-        local bg = CheckButton:GetBackdropTexture("bg")
-        local icon = _G[CheckButton:GetName().."Icon"]
-        icon:SetAllPoints()
-        icon:SetPoint("TOPLEFT", bg, 1, -1)
-        icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-        Base.CropIcon(icon)
-
-        Base.CropIcon(CheckButton:GetHighlightTexture())
-        Base.CropIcon(CheckButton:GetCheckedTexture())
-    end
 end
 
 function private.AddOns.Blizzard_MacroUI()

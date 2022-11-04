@@ -66,6 +66,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         AdventuresMissionComplete = InsetFrame,
         CharacterCreateDropdown = BasicFrame,
         --ChatBubble = BasicFrame,
+        SelectionFrameTemplate = BasicFrame,
         UniqueCornersLayout = BasicFrame,
         --GMChatRequest = BasicFrame,
         TooltipDefaultLayout = BasicFrame,

@@ -149,9 +149,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelScene.lua"/-->
-    <!--Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/-->
+    <Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/>
     <!--Script file="..\SharedXML\Selector\Blizzard_GridSelectorUI.lua"/-->
-    <!--Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/-->
+    <Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/>
     <!--Script file="..\SharedXML\GlobalFXModelScenes.lua"/-->
     <!--Script file="PartyUtil.lua"/-->
     <!--Script file="QuestUtils.lua"/-->
