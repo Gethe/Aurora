@@ -245,11 +245,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             line:SetThickness(1.2)
             line:Show()
             if i == 1 then
-                line:SetStartPoint("TOPLEFT", bg, 3.6, -3)
+                line:SetStartPoint("TOPLEFT", bg, 3, -3)
                 line:SetEndPoint("BOTTOMRIGHT", bg, -3, 3)
             else
                 line:SetStartPoint("TOPRIGHT", bg, -3, -3)
-                line:SetEndPoint("BOTTOMLEFT", bg, 3.6, 3)
+                line:SetEndPoint("BOTTOMLEFT", bg, 3, 3)
             end
             tinsert(cross, line)
         end
@@ -736,10 +736,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             local Button = Frame[name]
             Skin.FrameTypeButton(Button)
             Button:SetBackdropOption("offsets", {
-                left = 4,
-                right = 11,
-                top = 10,
-                bottom = 5,
+                left = 3,
+                right = 4,
+                top = 3,
+                bottom = 4,
             })
 
 
@@ -748,7 +748,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             line:SetColorTexture(1, 1, 1)
             line:SetThickness(1.2)
             line:SetStartPoint("TOPRIGHT", bg, -3, -3)
-            line:SetEndPoint("BOTTOMLEFT", bg, 3.6, 3)
+            line:SetEndPoint("BOTTOMLEFT", bg, 3, 3)
 
             local hline = Button:CreateTexture()
             hline:SetColorTexture(1, 1, 1)

@@ -13,7 +13,10 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ AddOns\Blizzard_Communities.lua ]]
     do --[[ CommunitiesList ]]
         Hook.CommunitiesListEntryMixin = {}
-        function Hook.CommunitiesListEntryMixin:SetClubInfo(clubInfo, isInvitation, isTicket, isInviteFromFinder)
+        function Hook.CommunitiesListEntryMixin:Init(elementData)
+            local clubInfo = elementData.clubInfo
+            self._iconBG:SetWidth(self._iconBG:GetHeight())
+
             if clubInfo and self._iconBG then
                 local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
                 if isGuild then
@@ -121,23 +124,24 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             local bg = Button:GetBackdropTexture("bg")
             Button.Background:Hide()
-            Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            Button.Selection:SetAllPoints(bg)
 
             Button.GuildTabardBackground:SetSize(60, 60)
             Button.GuildTabardBackground:SetPoint("TOPLEFT", bg, -1, 1)
-            Button.GuildTabardEmblem:SetSize(36 * 1.3, 42 * 1.3)
-            Button.GuildTabardEmblem:SetPoint("CENTER", Button.GuildTabardBackground, 0, 6)
-            Button.GuildTabardBorder:SetAllPoints(Button.GuildTabardBackground)
+
+            Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+            Button.Selection:SetAllPoints(bg)
 
             Button._iconBG = Button:CreateTexture(nil, "BACKGROUND", nil, 5)
             Button._iconBG:SetPoint("TOPLEFT", bg, 1, -1)
             Button._iconBG:SetPoint("BOTTOM", bg, 0, 1)
-            Button._iconBG:SetWidth(Button._iconBG:GetHeight())
 
             Button.CircleMask:Hide()
-            Button.IconRing:SetAlpha(0)
 
+            Button.GuildTabardEmblem:SetSize(36 * 1.3, 42 * 1.3)
+            Button.GuildTabardEmblem:SetPoint("CENTER", Button.GuildTabardBackground, 0, 6)
+            Button.GuildTabardBorder:SetAllPoints(Button.GuildTabardBackground)
+
+            Button.IconRing:SetAlpha(0)
             Button.NewCommunityFlash:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         end
         function Skin.CommunitiesListFrameTemplate(Frame)
@@ -145,8 +149,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.TopFiligree:Hide()
             Frame.BottomFiligree:Hide()
 
-            Skin.HybridScrollBarTemplate(Frame.ListScrollFrame.ScrollBar)
-            Frame.ListScrollFrame.ScrollBar.Background:Hide()
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
             Frame.FilligreeOverlay:Hide()
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
@@ -167,8 +172,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ColumnDisplay.InsetBorderTop:Hide()
             Frame.ColumnDisplay.InsetBorderLeft:Hide()
 
-            Skin.HybridScrollBarTemplate(Frame.ListScrollFrame.scrollBar)
-            Frame.ListScrollFrame.scrollBar.Background:Hide()
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.CommunitiesFrameMemberListDropDownMenuTemplate(Frame)
@@ -391,9 +397,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Base.SetHighlight(Button)
         end
         function Skin.ClubFinderCommunitiesCardFrameTemplate(Frame)
-            Skin.HybridScrollBarTemplate(Frame.ListScrollFrame.scrollBar)
-            Frame.ListScrollFrame.scrollBar:SetPoint("TOPLEFT", Frame.ListScrollFrame, "TOPRIGHT", -15, -15)
-            Frame.ListScrollFrame.scrollBar:SetPoint("BOTTOMLEFT", Frame.ListScrollFrame, "BOTTOMRIGHT", 15, 15)
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
         end
         function Skin.ClubFinderOptionsTemplate(Frame)
             Skin.ClubFinderFilterDropdownTemplate(Frame.ClubFilterDropdown)
@@ -440,9 +445,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ArtOverlay.TopLeft:ClearAllPoints()
             Frame.ArtOverlay.TopRight:ClearAllPoints()
 
-            Frame.ListScrollFrame.Background:Hide()
-            Skin.HybridScrollBarTemplate(Frame.ListScrollFrame.scrollBar)
-            Frame.ListScrollFrame.scrollBar.Background:Hide()
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
             Frame.ColumnDisplay.InsetBorderTopLeft:ClearAllPoints()
             Frame.ColumnDisplay.InsetBorderTopRight:ClearAllPoints()
@@ -484,8 +489,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunitiesGuildRewardsFrameTemplate(Frame)
             Frame.Bg:Hide()
-            local _, scrollBar = Frame.RewardsContainer:GetChildren()
-            Skin.HybridScrollBarTemplate(scrollBar)
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
         end
     end
     do --[[ GuildPerks ]]
@@ -499,7 +504,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunitiesGuildPerksFrameTemplate(Frame)
             Frame:GetRegions():Hide()
-            Skin.MinimalHybridScrollFrameTemplate(Frame.Container)
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
         end
     end
     do --[[ GuildInfo ]]
@@ -588,7 +595,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame:GetRegions():Hide()
             Frame.Header:Hide()
 
-            Skin.HybridScrollBarTemplate(Frame.Container.ScrollBar)
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
             Skin.CommunitiesGuildNewsBossModelTemplate(Frame.BossModel)
         end
     end
@@ -708,10 +717,14 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     local CommunitiesAvatarPickerDialog = _G.CommunitiesAvatarPickerDialog
     Base.CreateBackdrop(CommunitiesAvatarPickerDialog, private.backdrop, {
-        bg = select(9, CommunitiesAvatarPickerDialog:GetRegions())
+        bg = CommunitiesAvatarPickerDialog:GetRegions()
     })
     Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog)
-    Skin.ListScrollFrameTemplate(CommunitiesAvatarPickerDialog.ScrollFrame)
+    CommunitiesAvatarPickerDialog:ClearAllPoints()
+    CommunitiesAvatarPickerDialog:SetPoint("TOP", 0, -140)
+
+    Skin.WowScrollBoxList(CommunitiesAvatarPickerDialog.ScrollBox)
+    Skin.WowTrimScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
 
     ----====####$$$$%%%%$$$$####====----
     --  CommunitiesAddDialogInsecure  --
