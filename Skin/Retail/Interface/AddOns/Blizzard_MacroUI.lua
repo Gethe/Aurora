@@ -6,9 +6,8 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_MacroUI.lua ]]
     function Hook.MacroFrame_OnShow(self)
@@ -16,12 +15,6 @@ do --[[ AddOns\Blizzard_MacroUI.lua ]]
         --_G.MacroPopupButton1:SetPoint("TOPLEFT", _G.MacroPopupScrollFrame, 0, -1)
     end
 end
-
---[[
-Your addon Aurora if i have the opacity to high the macro icons when making a new
-one are gone you cant see them unless i make it more transparent only happens on
-that screen as far i can tell any help would be greatly appreciated
-]]
 
 do --[[ AddOns\Blizzard_MacroUI.xml ]]
     function Skin.MacroButtonTemplate(Button)
