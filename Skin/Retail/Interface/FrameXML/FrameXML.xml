@@ -85,7 +85,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
     <Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/>
-    <!--Script file="..\SharedXML\Scroll\OribosScrollBar.lua"/-->
+    <Script file="..\SharedXML\Scroll\OribosScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\MinimalScrollBar.lua"/>
     <!--Script file="..\SharedXML\ButtonTray\ButtonTrayUtil.lua"/-->
     <!--Script file="..\SharedXML\ButtonTray\ButtonTray.lua"/-->

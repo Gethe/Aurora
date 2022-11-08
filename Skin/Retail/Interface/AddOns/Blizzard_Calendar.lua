@@ -96,8 +96,10 @@ do --[[ AddOns\Blizzard_Calendar.xml ]]
     end
     function Skin.CalendarEventInviteListTemplate(Frame)
         Util.HideNineSlice(Frame)
+        Skin.WowScrollBoxList(Frame.ScrollBox)
+        Skin.WowTrimScrollBar(Frame.ScrollBar)
+
         local name = Frame:GetName()
-        Skin.HybridScrollBarTemplate(_G[name.."ScrollFrameScrollBar"])
         Skin.CalendarEventInviteSortButtonTemplate(_G[name.."NameSortButton"])
         Skin.CalendarEventInviteSortButtonTemplate(_G[name.."ClassSortButton"])
         Skin.CalendarEventInviteSortButtonTemplate(_G[name.."StatusSortButton"])
@@ -201,8 +203,7 @@ function private.AddOns.Blizzard_Calendar()
     end
 
     Skin.UIPanelCloseButton(_G.CalendarCloseButton)
-    _G.CalendarCloseButton:SetSize(32, 32)
-    _G.CalendarCloseButton:SetPoint("TOPRIGHT", calenderBG, 5, 5)
+    _G.CalendarCloseButton:SetPoint("TOPRIGHT", calenderBG, -5, -5)
 
     Skin.UIMenuTemplate(_G.CalendarContextMenu)
     Skin.UIMenuTemplate(_G.CalendarInviteStatusContextMenu)
@@ -222,10 +223,11 @@ function private.AddOns.Blizzard_Calendar()
     ------------------
     -- View Holiday --
     ------------------
-    _G.CalendarViewHolidayInfoTexture:SetAlpha(0)
-    Skin.DialogBorderDarkTemplate(_G.CalendarViewHolidayFrame.Border)
-    Skin.DialogHeaderTemplate(_G.CalendarViewHolidayFrame.Header)
-    Skin.UIPanelScrollFrameTemplate(_G.CalendarViewHolidayScrollFrame)
+    local CalendarViewHolidayFrame = _G.CalendarViewHolidayFrame
+    CalendarViewHolidayFrame.Texture:SetAlpha(0)
+    Skin.DialogBorderDarkTemplate(CalendarViewHolidayFrame.Border)
+    Skin.DialogHeaderTemplate(CalendarViewHolidayFrame.Header)
+    Skin.ScrollingFontTemplate(CalendarViewHolidayFrame.ScrollingFont)
     Skin.CalendarEventCloseButtonTemplate(_G.CalendarViewHolidayCloseButton)
     Skin.CalendarModalEventOverlayTemplate(_G.CalendarViewHolidayFrameModalOverlay)
 
@@ -233,9 +235,10 @@ function private.AddOns.Blizzard_Calendar()
     ---------------
     -- View Raid --
     ---------------
-    Skin.DialogBorderDarkTemplate(_G.CalendarViewRaidFrame.Border)
-    Skin.DialogHeaderTemplate(_G.CalendarViewRaidFrame.Header)
-    Skin.UIPanelScrollFrameTemplate(_G.CalendarViewRaidScrollFrame)
+    local CalendarViewRaidFrame = _G.CalendarViewRaidFrame
+    Skin.DialogBorderDarkTemplate(CalendarViewRaidFrame.Border)
+    Skin.DialogHeaderTemplate(CalendarViewRaidFrame.Header)
+    Skin.ScrollingFontTemplate(CalendarViewRaidFrame.ScrollingFont)
     Skin.CalendarEventCloseButtonTemplate(_G.CalendarViewRaidCloseButton)
     Skin.CalendarModalEventOverlayTemplate(_G.CalendarViewRaidFrameModalOverlay)
 
@@ -243,10 +246,12 @@ function private.AddOns.Blizzard_Calendar()
     ----------------
     -- View Event --
     ----------------
-    Skin.DialogBorderDarkTemplate(_G.CalendarViewEventFrame.Border)
-    Skin.DialogHeaderTemplate(_G.CalendarViewEventFrame.Header)
+    local CalendarViewEventFrame = _G.CalendarViewEventFrame
+    Skin.DialogBorderDarkTemplate(CalendarViewEventFrame.Border)
+    Skin.DialogHeaderTemplate(CalendarViewEventFrame.Header)
     Util.HideNineSlice(_G.CalendarViewEventDescriptionContainer)
-    Skin.CalendarEventDescriptionScrollFrame(_G.CalendarViewEventDescriptionScrollFrame)
+    Skin.ScrollingFontTemplate(_G.CalendarViewEventDescriptionContainer.ScrollingFont)
+    Skin.WowTrimScrollBar(_G.CalendarViewEventDescriptionContainer.ScrollBar)
     _G.CalendarViewEventDivider:Hide()
     Skin.CalendarViewEventRSVPButtonTemplate(_G.CalendarViewEventAcceptButton)
     Skin.CalendarViewEventRSVPButtonTemplate(_G.CalendarViewEventTentativeButton)
@@ -270,14 +275,15 @@ function private.AddOns.Blizzard_Calendar()
     Skin.UIDropDownMenuTemplate(_G.CalendarCreateEventAMPMDropDown)
     Skin.UIDropDownMenuTemplate(_G.CalendarCreateEventDifficultyOptionDropDown)
     Skin.UIDropDownMenuTemplate(_G.CalendarCreateEventCommunityDropDown)
-    Util.HideNineSlice(_G.CalendarCreateEventDescriptionContainer)
-    Skin.CalendarEventDescriptionScrollFrame(_G.CalendarCreateEventDescriptionScrollFrame)
     _G.CalendarCreateEventDivider:Hide()
     Skin.UICheckButtonTemplate(_G.CalendarCreateEventAutoApproveCheck)
     Skin.UICheckButtonTemplate(_G.CalendarCreateEventLockEventCheck)
     Skin.CalendarEventInviteListTemplate(_G.CalendarCreateEventInviteList)
     Skin.InputBoxTemplate(_G.CalendarCreateEventInviteEdit)
     Skin.UIPanelButtonTemplate(_G.CalendarCreateEventInviteButton)
+    Util.HideNineSlice(_G.CalendarCreateEventDescriptionContainer)
+    Skin.ScrollingEditBoxTemplate(_G.CalendarCreateEventDescriptionContainer.ScrollingEditBox)
+    Skin.WowTrimScrollBar(_G.CalendarCreateEventDescriptionContainer.ScrollBar)
     Skin.UIPanelButtonTemplate(_G.CalendarCreateEventMassInviteButton)
     _G.CalendarCreateEventMassInviteButtonBorder:Hide()
     Skin.UIPanelButtonTemplate(_G.CalendarCreateEventRaidInviteButton)
@@ -307,10 +313,12 @@ function private.AddOns.Blizzard_Calendar()
     ------------------
     -- Event Picker --
     ------------------
-    Skin.DialogBorderDarkTemplate(_G.CalendarEventPickerFrame.Border)
+    local CalendarEventPickerFrame = _G.CalendarEventPickerFrame
+    Skin.DialogBorderDarkTemplate(CalendarEventPickerFrame.Border)
     _G.CalendarEventPickerFrameButtonBackground:Hide()
-    Skin.DialogHeaderTemplate(_G.CalendarEventPickerFrame.Header)
-    Skin.HybridScrollBarTemplate(_G.CalendarEventPickerScrollBar)
+    Skin.DialogHeaderTemplate(CalendarEventPickerFrame.Header)
+    Skin.WowScrollBoxList(CalendarEventPickerFrame.ScrollBox)
+    Skin.WowTrimScrollBar(CalendarEventPickerFrame.ScrollBar)
     Skin.CalendarEventButtonTemplate(_G.CalendarEventPickerCloseButton)
     _G.CalendarEventPickerCloseButtonBorder:Hide()
 
@@ -318,12 +326,14 @@ function private.AddOns.Blizzard_Calendar()
     --------------------
     -- Texture Picker --
     --------------------
-    _G.CalendarTexturePickerFrame:ClearAllPoints()
-    _G.CalendarTexturePickerFrame:SetPoint("TOPRIGHT", _G.CalendarCreateEventTypeDropDown, "BOTTOMRIGHT", -4, 0)
-    Skin.DialogBorderDarkTemplate(_G.CalendarTexturePickerFrame.Border)
+    local CalendarTexturePickerFrame = _G.CalendarTexturePickerFrame
+    CalendarTexturePickerFrame:ClearAllPoints()
+    CalendarTexturePickerFrame:SetPoint("TOPRIGHT", _G.CalendarCreateEventTypeDropDown, "BOTTOMRIGHT", -4, 0)
+    Skin.DialogBorderDarkTemplate(CalendarTexturePickerFrame.Border)
     _G.CalendarTexturePickerFrameButtonBackground:Hide()
-    Skin.DialogHeaderTemplate(_G.CalendarTexturePickerFrame.Header)
-    Skin.HybridScrollBarTemplate(_G.CalendarTexturePickerScrollBar)
+    Skin.DialogHeaderTemplate(CalendarTexturePickerFrame.Header)
+    Skin.WowScrollBoxList(CalendarEventPickerFrame.ScrollBox)
+    Skin.WowTrimScrollBar(CalendarEventPickerFrame.ScrollBar)
     Skin.CalendarEventButtonTemplate(_G.CalendarTexturePickerCancelButton)
     _G.CalendarTexturePickerCancelButtonBorder:Hide()
     Skin.CalendarEventButtonTemplate(_G.CalendarTexturePickerAcceptButton)

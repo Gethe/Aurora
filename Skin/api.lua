@@ -8,20 +8,22 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Color = Aurora.Color
 
-Aurora.classIcons = { -- adjusted for borderless icons
-    ["WARRIOR"]     = {0.01953125, 0.234375, 0.01953125, 0.234375},
-    ["MAGE"]        = {0.26953125, 0.48046875, 0.01953125, 0.234375},
-    ["ROGUE"]       = {0.515625, 0.7265625, 0.01953125, 0.234375},
-    ["DRUID"]       = {0.76171875, 0.97265625, 0.01953125, 0.234375},
-    ["HUNTER"]      = {0.01953125, 0.234375, 0.26953125, 0.484375},
-    ["SHAMAN"]      = {0.26953125, 0.48046875, 0.26953125, 0.484375},
-    ["PRIEST"]      = {0.515625, 0.7265625, 0.26953125, 0.484375},
-    ["WARLOCK"]     = {0.76171875, 0.97265625, 0.26953125, 0.484375},
-    ["PALADIN"]     = {0.01953125, 0.234375, 0.51953125, 0.734375},
-    ["DEATHKNIGHT"] = {0.26953125, 0.48046875, 0.51953125, 0.734375},
-    ["MONK"]        = {0.515625, 0.7265625, 0.51953125, 0.734375},
-    ["DEMONHUNTER"] = {0.76171875, 0.97265625, 0.51953125, 0.734375},
-}
+Aurora.classIcons = {}
+if not private.isRetail then
+     -- adjusted for borderless icons
+    Aurora.classIcons.WARRIOR     = {0.01953125, 0.234375, 0.01953125, 0.234375}
+    Aurora.classIcons.MAGE        = {0.26953125, 0.48046875, 0.01953125, 0.234375}
+    Aurora.classIcons.ROGUE       = {0.515625, 0.7265625, 0.01953125, 0.234375}
+    Aurora.classIcons.DRUID       = {0.76171875, 0.97265625, 0.01953125, 0.234375}
+    Aurora.classIcons.HUNTER      = {0.01953125, 0.234375, 0.26953125, 0.484375}
+    Aurora.classIcons.SHAMAN      = {0.26953125, 0.48046875, 0.26953125, 0.484375}
+    Aurora.classIcons.PRIEST      = {0.515625, 0.7265625, 0.26953125, 0.484375}
+    Aurora.classIcons.WARLOCK     = {0.76171875, 0.97265625, 0.26953125, 0.484375}
+    Aurora.classIcons.PALADIN     = {0.01953125, 0.234375, 0.51953125, 0.734375}
+    Aurora.classIcons.DEATHKNIGHT = {0.26953125, 0.48046875, 0.51953125, 0.734375}
+    Aurora.classIcons.MONK        = {0.515625, 0.7265625, 0.51953125, 0.734375}
+    Aurora.classIcons.DEMONHUNTER = {0.76171875, 0.97265625, 0.51953125, 0.734375}
+end
 
 --[[ Base:header
 These are most basic skinning functions and are the foundation of every skin in Aurora.

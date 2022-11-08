@@ -237,9 +237,13 @@ do -- Icons
                 CreateIcon(frame, texture)
             end
 
-            local coords = Aurora.classIcons[name]
-            texture:SetTexture([[Interface\Glues\CharacterCreate\UI-CharacterCreate-Classes]])
-            texture:SetTexCoord(coords[1], coords[2], coords[3], coords[4])
+            if private.isRetail then
+                texture:SetAtlas("classicon-"..name:lower(), false, nil, true)
+            else
+                local coords = Aurora.classIcons[name]
+                texture:SetTexture([[Interface\Glues\CharacterCreate\UI-CharacterCreate-Classes]])
+                texture:SetTexCoord(coords[1], coords[2], coords[3], coords[4])
+            end
             texture:SetAlpha(1)
             texture:SetBlendMode("DISABLE")
 
@@ -323,6 +327,7 @@ snapshot:SetSize(256, 256)
 Base.SetTexture(snapshot, "test")
 --Base.SetTexture(snapshot, "shapeStar")
 --Base.SetTexture(snapshot, "iconDAMAGER")
+--Base.SetTexture(snapshot, "iconWARRIOR")
 --Base.SetTexture(snapshot, "gradientUp")
 --Base.SetTexture(snapshot, "arrowLeft")
 --Base.SetTexture(snapshot, "gradientLeft")

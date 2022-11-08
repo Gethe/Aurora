@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals select
+-- luacheck: globals select tostring
 
 -- [[ Core ]]
 local Aurora = private.Aurora
