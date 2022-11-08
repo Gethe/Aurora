@@ -282,7 +282,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         bar.BarFrame:Hide()
         bar.IconBG:SetAlpha(0)
         bar.BarBG:Hide()
-        bar.Icon:SetMask(nil)
+        bar.Icon:SetMask("")
         bar.Icon:SetSize(26, 26)
         bar.Icon:SetPoint("RIGHT", 33, 0)
         Base.CropIcon(bar.Icon, bar)
