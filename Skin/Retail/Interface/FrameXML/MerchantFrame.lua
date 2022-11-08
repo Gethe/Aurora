@@ -50,7 +50,7 @@ function private.FrameXML.MerchantFrame()
     _G.BuybackBG:SetPoint("BOTTOMRIGHT")
 
     -- BlizzWTF: This should use the title text included in the template
-    _G.MerchantNameText:SetAllPoints(_G.MerchantFrame.TitleText)
+    _G.MerchantNameText:SetAllPoints(_G.MerchantFrame.TitleContainer)
 
     _G.MerchantFrameBottomLeftBorder:SetAlpha(0)
     _G.MerchantFrameBottomRightBorder:SetAlpha(0)

@@ -24,16 +24,16 @@ end
 
 do --[[ FrameXML\GossipFrame.xml ]]
     function Skin.GossipTitleButtonTemplate(Button)
-        Util.Mixin(Button, Hook.GossipSharedQuestButtonMixin)
-
         local highlight = Button:GetHighlightTexture()
         local r, g, b = Color.highlight:GetRGB()
         highlight:SetColorTexture(r, g, b, 0.2)
     end
     function Skin.GossipTitleActiveQuestButtonTemplate(Button)
+        Util.Mixin(Button, Hook.GossipSharedQuestButtonMixin)
         Skin.GossipTitleButtonTemplate(Button)
     end
     function Skin.GossipTitleAvailableQuestButtonTemplate(Button)
+        Util.Mixin(Button, Hook.GossipSharedQuestButtonMixin)
         Skin.GossipTitleButtonTemplate(Button)
     end
     function Skin.GossipTitleOptionButtonTemplate(Button)
