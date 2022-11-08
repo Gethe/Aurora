@@ -104,15 +104,13 @@ function private.AddOns.Blizzard_InspectUI()
     --       Blizzard_InspectUI       --
     ----====####$$$$%%%%$$$$####====----
     Skin.ButtonFrameTemplate(InspectFrame)
-    Skin.CharacterFrameTabButtonTemplate(_G.InspectFrameTab1)
-    Skin.CharacterFrameTabButtonTemplate(_G.InspectFrameTab2)
-    Skin.CharacterFrameTabButtonTemplate(_G.InspectFrameTab3)
-    Skin.CharacterFrameTabButtonTemplate(_G.InspectFrameTab4)
+    Skin.PanelTabButtonTemplate(_G.InspectFrameTab1)
+    Skin.PanelTabButtonTemplate(_G.InspectFrameTab2)
+    Skin.PanelTabButtonTemplate(_G.InspectFrameTab3)
     Util.PositionRelative("TOPLEFT", InspectFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.InspectFrameTab1,
         _G.InspectFrameTab2,
         _G.InspectFrameTab3,
-        _G.InspectFrameTab4,
     })
 
     ----====####$$$$%%%%%$$$$####====----

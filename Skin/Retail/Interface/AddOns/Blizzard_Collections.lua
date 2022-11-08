@@ -308,7 +308,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
     end
     do --[[ Blizzard_Collections ]]
         function Skin.CollectionsJournalTab(Button)
-            Skin.CharacterFrameTabButtonTemplate(Button)
+            Skin.PanelTabButtonTemplate(Button)
         end
     end
     do --[[ Blizzard_MountCollection ]]

@@ -225,11 +225,11 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
     end
     do --[[ Blizzard_AuctionHouseTab ]]
         function Skin.AuctionHouseFrameTabTemplate(Button)
-            Skin.CharacterFrameTabButtonTemplate(Button)
+            Skin.PanelTabButtonTemplate(Button)
             Button._auroraTabResize = true
         end
         function Skin.AuctionHouseFrameTopTabTemplate(Button)
-            Skin.TabButtonTemplate(Button)
+            Skin.PanelTabButtonTemplate(Button)
         end
         function Skin.AuctionHouseFrameDisplayModeTabTemplate(Button)
             Skin.AuctionHouseFrameTabTemplate(Button)

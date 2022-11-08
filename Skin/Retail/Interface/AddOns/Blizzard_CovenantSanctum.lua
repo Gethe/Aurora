@@ -28,11 +28,8 @@ do --[[ AddOns\Blizzard_CovenantSanctum.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_CovenantSanctum.xml ]]
-    do --[[ Blizzard_CovenantSanctum ]]
-        Skin.CovenantSanctumFrameTabButtonTemplate = Skin.CharacterFrameTabButtonTemplate
-    end
-end
+--do --[[ AddOns\Blizzard_CovenantSanctum.xml ]]
+--end
 
 function private.AddOns.Blizzard_CovenantSanctum()
     ----====####$$$$%%%%$$$$####====----

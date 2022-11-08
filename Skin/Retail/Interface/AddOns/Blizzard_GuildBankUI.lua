@@ -49,7 +49,7 @@ do --[[ AddOns\Blizzard_GuildBankUI.xml ]]
         Skin.SideTabTemplate(Frame)
     end
     function Skin.GuildBankFrameTabTemplate(Frame)
-        Skin.CharacterFrameTabButtonTemplate(Frame)
+        Skin.PanelTabButtonTemplate(Frame)
     end
     function Skin.GuildBankPopupButtonTemplate(CheckButton)
         Skin.PopupButtonTemplate(CheckButton)
