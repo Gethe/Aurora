@@ -202,15 +202,6 @@ do --[[ FrameXML\ActionBarController.xml ]]
             Frame.OverlayFrame.Text:SetPoint("CENTER")
         end
     end
-    do --[[ StatusTrackingBar.xml ]]
-        function Skin.StatusTrackingBarManagerTemplate(Frame)
-            Util.Mixin(Frame, Hook.StatusTrackingManagerMixin)
-            Frame.SingleBarLarge:SetAlpha(0)
-            Frame.SingleBarLargeUpper:SetAlpha(0)
-            Frame.SingleBarSmall:SetAlpha(0)
-            Frame.SingleBarSmallUpper:SetAlpha(0)
-        end
-    end
     do --[[ StatusTrackingBarTemplate.xml ]]
         function Skin.StatusTrackingBarTemplate(Frame)
             local StatusBar = Frame.StatusBar
