@@ -2,21 +2,24 @@
 
 # This script assumes that the wow-ui-source repo exists in a directory at the 
 # same level as the Aurora directory. Run this file using "Classic" or "Retail"
-# as a parameter and it will locate any TOC files to update the FrameXML*.xml
-# files used in this addon.
+# as a parameter and it will 1) locate any FrameXML_*.toc files to update the 
+# corrisponding FrameXML_*.xml file, and 2) run through the AddOns folder and
+# update the AddOns.xml file
 
 header="<Ui xmlns=\"http://www.blizzard.com/wow/ui/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.blizzard.com/wow/ui/\nhttps://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd\">\n"
 space="\n\n\n\n\n\n"
 footer="</Ui>"
 
-skin="./Skin/$1/Interface/FrameXML/"
-FrameXML='../wow-ui-source/Interface/FrameXML/*.toc'
-for TOC in $FrameXML
+skin="./Skin/$1/Interface/"
+
+FrameXML="${skin}FrameXML/"
+FrameXMLList='../wow-ui-source/Interface/FrameXML/*.toc'
+for TOC in $FrameXMLList
 do
 	echo "Processing $TOC"
 	tocName="${TOC##*/}"
 	tocName="${tocName%.*}"
-	tocFile="$skin$tocName.xml"
+	tocFile="$FrameXML$tocName.xml"
 
 	echo "Create $tocFile"
 	# shellcheck disable=SC2059
@@ -71,7 +74,7 @@ do
 			fileName="${filePath##*/}"
 
 			if [[ -n "$line" ]]; then
-				if [ -e "$skin$filePath.lua" ]; then
+				if [ -e "$FrameXML$filePath.lua" ]; then
 					#echo "File exists ${#filePath} $filePath"
 					echo "    <Script file=\"$line.lua\"/>" >>"$tocFile"
 				else
@@ -84,8 +87,34 @@ do
 		fi
 	done < "$TOC"
 
-	printf "$space" >>"$tocFile"
-	printf "    <Include file=\"DeprecatedSkins.xml\"/>\n" >>"$tocFile"
+	{
+		# shellcheck disable=SC2059
+		printf "$space"
+		printf "    <Include file=\"DeprecatedSkins.xml\"/>\n"
 
-	echo $footer >>"$tocFile"
+		echo $footer
+	} >>"$tocFile"
 done
+
+
+AddOns="${skin}AddOns/"
+AddOnsList='../wow-ui-source/Interface/AddOns/*'
+
+tocFile="${AddOns}AddOns.xml"
+# shellcheck disable=SC2059
+printf "$header" >"$tocFile"
+for AddOn in $AddOnsList
+do
+	echo "Processing $AddOn"
+	fileName="${AddOn##*/}"
+
+	if [ -e "$AddOns$fileName.lua" ]; then
+		#echo "File exists ${#filePath} $filePath"
+		echo "    <Script file=\"$fileName.lua\"/>" >>"$tocFile"
+	else
+		#echo "No file $fileName"
+		echo "    <!--Script file=\"$fileName.lua\"/-->" >>"$tocFile"
+	fi
+done
+echo $footer >>"$tocFile"
+
