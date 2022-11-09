@@ -60,9 +60,10 @@ function private.FrameXML.CharacterFrame()
     Util.Mixin(CharacterStatsPane.statsFramePool, Hook.ObjectPoolMixin)
 
     local ClassBackground = CharacterStatsPane.ClassBackground
-    local atlas = "legionmission-landingpage-background-"..private.charClass.token
+    local atlas = "talents-animations-class-"..private.charClass.token
     local info = _G.C_Texture.GetAtlasInfo(atlas)
     if info then
+        -- C_Texture.GetAtlasInfo("talents-animations-class-warrior")
         -- C_Texture.GetAtlasInfo("legionmission-landingpage-background-EVOKER")
         ClassBackground:ClearAllPoints()
         ClassBackground:SetPoint("CENTER")
