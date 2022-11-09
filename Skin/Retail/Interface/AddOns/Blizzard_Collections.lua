@@ -11,24 +11,6 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_Collections.lua ]]
-    do --[[ Blizzard_MountCollection ]]
-        function Hook.MountJournal_UpdateMountList()
-            local scrollFrame = _G.MountJournal.ListScrollFrame
-            local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
-            local buttons = scrollFrame.buttons
-
-            local showMounts = _G.C_MountJournal.GetNumMounts() > 0
-
-            local numDisplayedMounts = _G.C_MountJournal.GetNumDisplayedMounts()
-            for i=1, #buttons do
-                local button = buttons[i]
-                local displayIndex = i + offset
-                if not (displayIndex <= numDisplayedMounts and showMounts) then
-                    button.icon:SetTexture([[Interface\Icons\MountJournalPortrait]])
-                end
-            end
-        end
-    end
     do --[[ Blizzard_PetCollection ]]
         local MAX_ACTIVE_PETS = 3
 
@@ -43,26 +25,6 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
                     loadoutPlate._auroraIconBorder:SetColorTexture(color.r, color.g, color.b)
                 else
                     loadoutPlate._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
-                end
-            end
-        end
-        function Hook.PetJournal_UpdatePetList()
-            local scrollFrame = _G.PetJournal.listScroll
-            local offset = _G.HybridScrollFrame_GetOffset(scrollFrame)
-            local petButtons = scrollFrame.buttons
-
-            local numPets = _G.C_PetJournal.GetNumPets()
-            for i = 1, #petButtons do
-                local pet = petButtons[i]
-                local index = i + offset
-                if index <= numPets then
-                    if pet.iconBorder:IsShown() then
-                        local _, _, _, _, rarity = _G.C_PetJournal.GetPetStats(pet.petID)
-                        local color = _G.ITEM_QUALITY_COLORS[rarity-1]
-                        pet._auroraIconBorder:SetColorTexture(color.r, color.g, color.b)
-                    else
-                        pet._auroraIconBorder:SetColorTexture(Color.black:GetRGB())
-                    end
                 end
             end
         end
@@ -131,19 +93,30 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
         end
     end
     do --[[ Blizzard_Wardrobe ]]
-        local lightValues = {
-            enabled=true, omni=false,
-            dirX=-1, dirY=1, dirZ=-1,
-            ambIntensity=1.05, ambR=1, ambG=1, ambB=1,
-            dirIntensity=0, dirR=1, dirG=1, dirB=1
+        local lightVector = _G.CreateVector3D(-1, 1, -1)
+        local default = {
+            omnidirectional = false,
+            point = lightVector,
+            ambientIntensity = 1.05,
+            ambientColor = Color.Create(1, 1, 1),
+            diffuseIntensity=0.5,
+            diffuseColor = Color.Create(1, 1, 1),
         }
         local notCollected = {
-            ambIntensity=1, ambR=0.4, ambG=0.4, ambB=0.4,
-            dirIntensity=0.5, dirR=0.5, dirG=0.5, dirB=0.5
+            omnidirectional = false,
+            point = lightVector,
+            ambientIntensity = 1,
+            ambientColor = Color.Create(0.4, 0.4, 0.4),
+            diffuseIntensity=0.5,
+            diffuseColor = Color.Create(0.5, 0.5, 0.5),
         }
         local notUsable = {
-            ambIntensity=1, ambR=0.8, ambG=0.4, ambB=0.4,
-            dirIntensity=0.5, dirR=1, dirG=0, dirB=0
+            omnidirectional = false,
+            point = lightVector,
+            ambientIntensity = 1,
+            ambientColor = Color.Create(0.8, 0.4, 0.4),
+            diffuseIntensity=0.5,
+            diffuseColor = Color.Create(1, 0, 0),
         }
         Hook.WardrobeItemsCollectionMixin = {}
         function Hook.WardrobeItemsCollectionMixin:UpdateItems()
@@ -170,22 +143,13 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
 
                     if not visualInfo.isCollected then
                         Base.SetBackdropColor(model._auroraBD, Color.frame, 0.3)
-                        model:SetLight(lightValues.enabled, lightValues.omni,
-                            lightValues.dirX, lightValues.dirY, lightValues.dirZ,
-                            notCollected.ambIntensity, notCollected.ambR, notCollected.ambG, notCollected.ambB,
-                            notCollected.dirIntensity, notCollected.dirR, notCollected.dirG, notCollected.dirB)
+                        model:SetLight(true, notCollected)
                     elseif not visualInfo.isUsable then
                         Base.SetBackdropColor(model._auroraBD, Color.red, 0.3)
-                        model:SetLight(lightValues.enabled, lightValues.omni,
-                            lightValues.dirX, lightValues.dirY, lightValues.dirZ,
-                            notUsable.ambIntensity, notUsable.ambR, notUsable.ambG, notUsable.ambB,
-                            notUsable.dirIntensity, notUsable.dirR, notUsable.dirG, notUsable.dirB)
+                        model:SetLight(true, notUsable)
                     else
                         Base.SetBackdropColor(model._auroraBD, Color.button, 0.3)
-                        model:SetLight(lightValues.enabled, lightValues.omni,
-                            lightValues.dirX, lightValues.dirY, lightValues.dirZ,
-                            lightValues.ambIntensity, lightValues.ambR, lightValues.ambG, lightValues.ambB,
-                            lightValues.dirIntensity, lightValues.dirR, lightValues.dirG, lightValues.dirB)
+                        model:SetLight(true, default)
                     end
 
                     if borderColor then
@@ -575,8 +539,6 @@ function private.AddOns.Blizzard_Collections()
     --    Blizzard_MountCollection    --
     ----====####$$$$%%%%$$$$####====----
     local MountJournal = _G.MountJournal
-    _G.hooksecurefunc("MountJournal_UpdateMountList", Hook.MountJournal_UpdateMountList)
-
     Base.CropIcon(MountJournal.SummonRandomFavoriteButton.texture, MountJournal.SummonRandomFavoriteButton)
     Base.CropIcon(MountJournal.SummonRandomFavoriteButton:GetPushedTexture())
     Base.CropIcon(MountJournal.SummonRandomFavoriteButton:GetHighlightTexture())
@@ -606,7 +568,8 @@ function private.AddOns.Blizzard_Collections()
     Skin.RotateOrbitCameraRightButtonTemplate(MountDisplay.ModelScene.RotateRightButton)
     Skin.UICheckButtonTemplate(MountDisplay.ModelScene.TogglePlayer)
 
-    Skin.HybridScrollBarTrimTemplate(MountJournal.ListScrollFrame.scrollBar)
+    Skin.WowScrollBoxList(MountJournal.ScrollBox)
+    Skin.WowTrimScrollBar(MountJournal.ScrollBar)
     Skin.MagicButtonTemplate(MountJournal.MountButton)
 
 
@@ -615,8 +578,6 @@ function private.AddOns.Blizzard_Collections()
     ----====####$$$$%%%%$$$$####====----
     local PetJournal = _G.PetJournal
     _G.hooksecurefunc("PetJournal_UpdatePetLoadOut", Hook.PetJournal_UpdatePetLoadOut)
-    _G.hooksecurefunc("PetJournal_UpdatePetList", Hook.PetJournal_UpdatePetList)
-    _G.hooksecurefunc(PetJournal.listScroll, "update", Hook.PetJournal_UpdatePetList)
     _G.hooksecurefunc("PetJournal_UpdatePetCard", Hook.PetJournal_UpdatePetCard)
 
     Skin.InsetFrameTemplate3(PetJournal.PetCount)
@@ -638,7 +599,8 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(PetJournal.RightInset)
     Skin.SearchBoxTemplate(PetJournal.searchBox)
     Skin.UIResettableDropdownButtonTemplate(_G.PetJournalFilterButton)
-    Skin.HybridScrollBarTrimTemplate(PetJournal.listScroll.scrollBar)
+    Skin.WowScrollBoxList(PetJournal.ScrollBox)
+    Skin.WowTrimScrollBar(PetJournal.ScrollBar)
 
     PetJournal.loadoutBorder:DisableDrawLayer("ARTWORK")
     _G.PetJournalLoadoutBorderSlotHeaderBG:Hide()
@@ -761,8 +723,8 @@ function private.AddOns.Blizzard_Collections()
     -- WardrobeCollectionFrame --
     -----------------------------
     local WardrobeCollectionFrame = _G.WardrobeCollectionFrame
-    Skin.TabButtonTemplate(WardrobeCollectionFrame.ItemsTab)
-    Skin.TabButtonTemplate(WardrobeCollectionFrame.SetsTab)
+    Skin.PanelTopTabButtonTemplate(WardrobeCollectionFrame.ItemsTab)
+    Skin.PanelTopTabButtonTemplate(WardrobeCollectionFrame.SetsTab)
 
     Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
@@ -786,7 +748,8 @@ function private.AddOns.Blizzard_Collections()
     Util.Mixin(SetsCollectionFrame, Hook.WardrobeSetsCollectionMixin)
     Skin.InsetFrameTemplate(SetsCollectionFrame.LeftInset)
     Skin.CollectionsBackgroundTemplate(SetsCollectionFrame.RightInset)
-    Skin.HybridScrollBarTrimTemplate(SetsCollectionFrame.ScrollFrame.scrollBar)
+    Skin.WowScrollBoxList(SetsCollectionFrame.ListContainer.ScrollBox)
+    Skin.WowTrimScrollBar(SetsCollectionFrame.ListContainer.ScrollBar)
 
     local DetailsFrame = SetsCollectionFrame.DetailsFrame
     DetailsFrame.ModelFadeTexture:Hide()
