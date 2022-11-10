@@ -468,6 +468,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.DefaultPanelBaseTemplate(Frame)
+        Frame.NineSlice:SetFrameLevel(Frame:GetFrameLevel())
         Skin.NineSlicePanelTemplate(Frame.NineSlice)
     end
     function Skin.DefaultPanelTemplate(Frame)

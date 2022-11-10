@@ -148,6 +148,7 @@ function private.FrameXML.QuestFrame()
     ----------------
     -- QuestFrame --
     ----------------
+    Skin.ButtonFrameTemplate(_G.QuestFrame)
     Skin.QuestFramePanelTemplate(_G.QuestFrameRewardPanel)
     Skin.UIPanelButtonTemplate(_G.QuestFrameCompleteQuestButton)
     _G.QuestFrameCompleteQuestButton:SetPoint("BOTTOMLEFT", 5, 5)
