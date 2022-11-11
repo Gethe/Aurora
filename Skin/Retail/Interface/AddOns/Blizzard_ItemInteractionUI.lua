@@ -42,7 +42,7 @@ function private.AddOns.Blizzard_ItemInteractionUI()
     })
 
     local bg = ItemInteractionFrame.NineSlice:GetBackdropTexture("bg")
-    local titleText = ItemInteractionFrame.TitleText
+    local titleText = ItemInteractionFrame.TitleContainer
     titleText:ClearAllPoints()
     titleText:SetPoint("TOPLEFT", bg)
     titleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
