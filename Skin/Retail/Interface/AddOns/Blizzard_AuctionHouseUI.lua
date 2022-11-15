@@ -56,61 +56,30 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     end
     do --[[ Blizzard_AuctionHouseItemList ]]
         Hook.AuctionHouseItemListMixin = {}
-        function Hook.AuctionHouseItemListMixin:Init()
-            for i, button in ipairs(self.ScrollFrame.buttons) do
-                if not self.hideStripes then
-                    local oddRow = (i % 2) == 1
+        function Hook.AuctionHouseItemListMixin:OnScrollBoxRangeChanged(sortPending)
+            if not self.hideStripes then
+                local index = self.ScrollBox:GetDataIndexBegin()
+                self.ScrollBox:ForEachFrame(function(button)
+                    local oddRow = (index % 2) == 1
                     button.NormalTexture:SetColorTexture(Color.white:GetRGB())
                     button.NormalTexture:SetAlpha(oddRow and 0.05 or 0.0)
-                end
+                end)
             end
         end
-        function Hook.AuctionHouseItemListMixin:RefreshScrollFrame()
-            if not self.isInitialized or not self:IsShown() then
-                return
-            end
+        function Hook.AuctionHouseItemListMixin:UpdateSelectionHighlights()
+            self.ScrollBox:ForEachFrame(function(button)
+                if self.highlightCallback then
+                    local currentRowData = button.rowData
+                    local quantity = min(self.quantitySelected or 0, currentRowData.quantity)
+                    local highlightAlpha = _G.Lerp(0.2, 0.8, quantity / currentRowData.quantity)
 
-            if self.searchStartedFunc and not self.searchStartedFunc() then
-                return
-            end
-
-            local numResults = self.getNumEntries()
-            if numResults == 0 then return end
-
-            local buttons = _G.HybridScrollFrame_GetButtons(self.ScrollFrame)
-            local buttonCount = #buttons
-
-            local offset = self:GetScrollOffset()
-            for i = 1, buttonCount do
-                local visible = i + offset <= numResults
-                local button = buttons[i]
-
-                if visible then
-                    --button.NormalTexture:SetAlpha(0.3)
-
-                    if self.highlightCallback then
-                        local currentRowData = button.rowData
-                        local quantity = min(currentRowData.maximumToHighlight or 0, currentRowData.quantity)
-                        local highlightAlpha = _G.Lerp(0.2, 0.8, quantity / currentRowData.quantity)
-
-                        button.SelectedHighlight:SetAlpha(highlightAlpha)
-                    end
+                    button.SelectedHighlight:SetAlpha(highlightAlpha)
                 end
-            end
+            end)
         end
     end
     do --[[ Blizzard_AuctionHouseCategoriesList ]]
-        function Hook.AuctionFrameFilters_UpdateCategories(categoriesList, forceSelectionIntoView)
-            for i = 1, _G.NUM_FILTERS_TO_DISPLAY do
-                local button = categoriesList.FilterButtons[i]
-                if button.SelectedTexture:IsShown() then
-                    button:LockHighlight()
-                else
-                    button:UnlockHighlight()
-                end
-            end
-        end
-        function Hook.FilterButton_SetUp(button, info)
+        function Hook.AuctionHouseFilterButton_SetUp(button, info)
             if info.type == "subSubCategory" then
                 button:SetBackdrop(false)
 
@@ -162,7 +131,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     end
     do --[[ Blizzard_AuctionHouseAuctionsFrame ]]
         Hook.AuctionHouseAuctionsSummaryLineMixin = {}
-        function Hook.AuctionHouseAuctionsSummaryLineMixin:UpdateDisplay()
+        function Hook.AuctionHouseAuctionsSummaryLineMixin:Init(listIndex)
             self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
             self.IconBorder:Hide()
         end
@@ -250,11 +219,10 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Util.Mixin(Frame, Hook.AuctionHouseItemListMixin)
 
             Skin.AuctionHouseBackgroundTemplate(Frame)
-
             Skin.AuctionHouseRefreshFrameTemplate(Frame.RefreshFrame)
             --Skin.AuctionHouseItemListHeadersTemplate(Frame.HeaderContainer)
-            Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
-            Frame.ScrollFrame.scrollBar.Background:Hide()
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
         end
     end
     do --[[ Blizzard_AuctionHouseCategoriesList ]]
@@ -267,17 +235,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         end
         function Skin.AuctionHouseCategoriesListTemplate(Frame)
             Skin.NineSlicePanelTemplate(Frame.NineSlice)
-
-            for i = 1, _G.NUM_FILTERS_TO_DISPLAY do
-                Skin.AuctionCategoryButtonTemplate(Frame.FilterButtons[i])
-            end
-
-            Skin.FauxScrollFrameTemplate(Frame.ScrollFrame)
-            Frame.ScrollFrame.scrollBorderTop:Hide()
-            Frame.ScrollFrame.scrollBorderBottom:Hide()
-            Frame.ScrollFrame.scrollBorderMiddle:Hide()
-            Frame.ScrollFrame.scrollFrameScrollBarBackground:Hide()
-
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
             Frame.Background:Hide()
         end
     end
@@ -443,8 +402,9 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseBidFrameTemplate(Frame.BidFrame)
             Skin.AuctionHouseBidFrameTemplate(Frame.BidFrame)
 
-            Skin.ScrollListTemplate(Frame.SummaryList)
             Skin.AuctionHouseBackgroundTemplate(Frame.SummaryList)
+            Skin.WowScrollBoxList(Frame.SummaryList.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.SummaryList.ScrollBar)
 
             Skin.AuctionHouseItemDisplayTemplate(Frame.ItemDisplay)
             Skin.AuctionHouseItemListTemplate(Frame.AllAuctionsList)
@@ -454,9 +414,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         end
     end
     do --[[ Blizzard_AuctionHouseWoWTokenFrame ]]
-        function Skin.DummyScrollBarTemplate(Slider)
-            Skin.HybridScrollBarTemplate(Slider)
-            Slider.Background:Hide()
+        function Skin.DummyAuctionHouseScrollBarTemplate(Slider)
+            Skin.WowTrimScrollBar(Slider)
         end
         function Skin.BrowseWowTokenResultsTemplate(Frame)
             Skin.AuctionHouseBackgroundTemplate(Frame)
@@ -479,7 +438,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Base.SetBackdrop(nameBG, Color.frame)
 
             Skin.UIPanelButtonTemplate(Frame.Buyout)
-            Skin.DummyScrollBarTemplate(Frame.DummyScrollBar)
+            Skin.DummyAuctionHouseScrollBarTemplate(Frame.DummyScrollBar)
         end
         function Skin.WoWTokenSellFrameTemplate(Frame)
             Skin.AuctionHouseBackgroundTemplate(Frame)
@@ -499,7 +458,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
 
             Skin.UIPanelButtonTemplate(Frame.PostButton)
             Skin.AuctionHouseBackgroundTemplate(Frame.DummyItemList)
-            Skin.DummyScrollBarTemplate(Frame.DummyItemList.DummyScrollBar)
+            Skin.DummyAuctionHouseScrollBarTemplate(Frame.DummyItemList.DummyScrollBar)
             Skin.RefreshButtonTemplate(Frame.DummyRefreshButton)
         end
     end
@@ -557,8 +516,7 @@ function private.AddOns.Blizzard_AuctionHouseUI()
     ----====####$$$$%%%%%%%%%$$$$####====----
     -- Blizzard_AuctionHouseCategoriesList --
     ----====####$$$$%%%%%%%%%$$$$####====----
-    _G.hooksecurefunc("AuctionFrameFilters_UpdateCategories", Hook.AuctionFrameFilters_UpdateCategories)
-    _G.hooksecurefunc("FilterButton_SetUp", Hook.FilterButton_SetUp)
+    _G.hooksecurefunc("AuctionHouseFilterButton_SetUp", Hook.AuctionHouseFilterButton_SetUp)
 
 
     ----====####$$$$%%%%$$$$####====----
