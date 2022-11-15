@@ -405,7 +405,9 @@ do --[[ FrameXML\ActionBarController.xml ]]
 
             CheckButton:SetNormalTexture("")
             Base.CropIcon(CheckButton:GetHighlightTexture())
-            Base.CropIcon(CheckButton:GetCheckedTexture())
+            if not private.isPatch then
+                Base.CropIcon(CheckButton:GetCheckedTexture())
+            end
         end
     end
 end

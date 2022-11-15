@@ -251,11 +251,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelButtonTemplate(Frame.Cancel)
         end
         function Skin.CommunitiesNotificationSettingsDialogTemplate(Frame)
-            Base.CreateBackdrop(Frame, private.backdrop, {
-                bg = Frame.BG
-            })
-            Skin.SelectionFrameTemplate(Frame)
-
+            Frame.Selector.Center = Frame.BG
+            Skin.SelectionFrameTemplate(Frame.Selector)
             Skin.CommunitiesListDropDownMenuTemplate(Frame.CommunitiesListDropDownMenu)
             Skin.UIPanelStretchableArtScrollBarTemplate(Frame.ScrollFrame.ScrollBar)
             Skin.UICheckButtonTemplate(Frame.ScrollFrame.Child.QuickJoinButton)
@@ -716,13 +713,11 @@ function private.AddOns.Blizzard_Communities()
     --  CommunitiesAvatarPickerDialog  --
     ----====####$$$$%%%%%$$$$####====----
     local CommunitiesAvatarPickerDialog = _G.CommunitiesAvatarPickerDialog
-    Base.CreateBackdrop(CommunitiesAvatarPickerDialog, private.backdrop, {
-        bg = CommunitiesAvatarPickerDialog:GetRegions()
-    })
-    Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog)
     CommunitiesAvatarPickerDialog:ClearAllPoints()
     CommunitiesAvatarPickerDialog:SetPoint("TOP", 0, -140)
 
+    CommunitiesAvatarPickerDialog.Selector.Center = CommunitiesAvatarPickerDialog:GetRegions()
+    Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog.Selector)
     Skin.WowScrollBoxList(CommunitiesAvatarPickerDialog.ScrollBox)
     Skin.WowTrimScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
 

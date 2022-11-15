@@ -137,8 +137,8 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     function Skin.SelectionFrameTemplate(Frame)
         Skin.NineSlicePanelTemplate(Frame)
 
-        Skin.UIPanelButtonTemplate(Frame.CancelButton)
-        Skin.UIPanelButtonTemplate(Frame.OkayButton)
+        Skin.UIPanelButtonNoTooltipTemplate(Frame.CancelButton)
+        Skin.UIPanelButtonNoTooltipTemplate(Frame.OkayButton)
 
         local bg = Frame:GetBackdropTexture("bg")
         Util.PositionRelative("BOTTOMRIGHT", bg, "BOTTOMRIGHT", -5, 5, 5, "Left", {
