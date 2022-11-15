@@ -18,7 +18,7 @@ body:
     description: |
       examples:
         - Retail
-        - TBC Classic
+        - Wrath Classic
         - Classic Era
   validations:
     required: true
