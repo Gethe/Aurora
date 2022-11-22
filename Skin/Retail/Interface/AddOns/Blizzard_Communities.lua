@@ -278,7 +278,12 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
     end
     do --[[ ClubFinderApplicantList ]]
-        function Skin.ClubFinderApplicantListFrameTemplate(CheckButton)
+        function Skin.ClubFinderApplicantListFrameTemplate(Frame)
+            Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
+            Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
     end
     do --[[ ClubFinder ]]
