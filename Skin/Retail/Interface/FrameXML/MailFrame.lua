@@ -88,27 +88,6 @@ do --[[ FrameXML\MailFrame.lua ]]
                 end
             end
         end
-
-        _G.OpenMailAttachmentText:SetPoint("TOPLEFT", _G.OpenMailScrollFrame, "BOTTOMLEFT", 5, -10)
-        for i, button in ipairs(_G.OpenMailFrame.activeAttachmentButtons) do
-            if i == 1 then
-                button:SetPoint("TOPLEFT", _G.OpenMailAttachmentText, "BOTTOMLEFT", -5, -5)
-            else
-                if (i % _G.ATTACHMENTS_PER_ROW_RECEIVE) == 1 then
-                    button:SetPoint("TOPLEFT", _G.OpenMailFrame.activeAttachmentButtons[i - _G.ATTACHMENTS_PER_ROW_RECEIVE], "BOTTOMLEFT", 23, -9)
-                else
-                    button:SetPoint("TOPLEFT", _G.OpenMailFrame.activeAttachmentButtons[i - 1], "TOPRIGHT", 9, 0)
-                end
-            end
-        end
-
-        local scrollHeight = 238
-        if #_G.OpenMailFrame.activeAttachmentButtons >= _G.ATTACHMENTS_PER_ROW_RECEIVE then
-            scrollHeight = 192
-        end
-
-        _G.OpenMailScrollFrame:SetHeight(scrollHeight)
-        _G.OpenMailScrollChildFrame:SetHeight(scrollHeight)
     end
 end
 
