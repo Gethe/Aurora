@@ -46,6 +46,7 @@ function private.AddOns.Blizzard_TrainerUI()
     _G.ClassTrainerFrameMoneyFrame:SetPoint("RIGHT", moneyBG, 11, 0)
 
     Skin.ClassTrainerSkillButtonTemplate(ClassTrainerFrame.skillStepButton)
-    Skin.HybridScrollBarTemplate(_G.ClassTrainerScrollFrameScrollBar)
+    Skin.WowScrollBoxList(ClassTrainerFrame.ScrollBox)
+    Skin.WowTrimScrollBar(ClassTrainerFrame.ScrollBar)
     Skin.InsetFrameTemplate(ClassTrainerFrame.bottomInset)
 end
