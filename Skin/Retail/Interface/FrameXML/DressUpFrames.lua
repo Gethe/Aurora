@@ -57,7 +57,7 @@ function private.FrameXML.DressUpFrames()
     Skin.UIPanelButtonTemplate(_G.DressUpFrameCancelButton)
 
     local ModelScene = DressUpFrame.ModelScene
-    ModelScene:SetPoint("TOPLEFT")
+    ModelScene:SetPoint("TOPLEFT", 0, -private.FRAME_TITLE_HEIGHT)
     ModelScene:SetPoint("BOTTOMRIGHT")
 
     local detailsButton = DressUpFrame.ToggleOutfitDetailsButton
