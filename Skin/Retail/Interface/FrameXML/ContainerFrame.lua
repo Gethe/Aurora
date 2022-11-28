@@ -44,7 +44,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         for i = 1, self.size do
             local itemButton = _G[name.."Item"..i]
             local slotID = itemButton:GetID()
-            local _, _, _, quality, _, _, link = _G.GetContainerItemInfo(bagID, slotID)
+            local _, _, _, quality, _, _, link = _G.C_Container.GetContainerItemInfo(bagID, slotID)
 
             if not itemButton._auroraIconBorder then
                 itemButton._isKey = bagID == _G.KEYRING_CONTAINER

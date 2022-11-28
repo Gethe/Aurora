@@ -15,7 +15,7 @@ do --[[ FrameXML\BankFrame.lua ]]
         local bagID = button.isBag and -4 or button:GetParent():GetID()
         local slotID = button:GetID()
 
-        local _, _, _, quality, _, _, link = _G.GetContainerItemInfo(bagID, slotID)
+        local _, _, _, quality, _, _, link = _G.C_Container.GetContainerItemInfo(bagID, slotID)
         if not button._auroraIconBorder then
             if bagID == _G.REAGENTBANK_CONTAINER then
                 Skin.ReagentBankItemButtonGenericTemplate(button)
