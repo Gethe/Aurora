@@ -20,7 +20,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
         self:SetTexture(BAG_FILTER_ICONS[atlas])
     end
     function Hook.ContainerFrame_GenerateFrame(frame, size, id)
-        if id > _G.NUM_BAG_FRAMES then
+        if id > _G.NUM_TOTAL_EQUIPPED_BAG_SLOTS then
             -- bank bags
             local _, _, _, a = frame:GetBackdropColor()
             Base.SetBackdropColor(frame, Color.grayLight, a)
