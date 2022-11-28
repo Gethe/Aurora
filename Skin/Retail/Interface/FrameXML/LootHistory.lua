@@ -6,6 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
@@ -22,7 +23,7 @@ do --[[ FrameXML\LootHistory.lua ]]
             frame.IconBorder:Hide()
 
             frame.WinnerRoll:SetTextColor(.9, .9, .9)
-            frame.bg = Skin.CropIcon(frame.Icon, frame)
+            frame.bg = Base.CropIcon(frame.Icon, frame)
 
             Skin.ExpandOrCollapse(frame.ToggleButton)
             frame.styled = true
