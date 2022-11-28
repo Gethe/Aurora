@@ -79,7 +79,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
             if classID > 0 then
                 local classInfo = _G.C_CreatureInfo.GetClassInfo(classID)
                 if classInfo then
-                    local filterBG = _G.EncounterJournal.encounter.info.lootScroll.classClearFilter.bg
+                    local filterBG = _G.EncounterJournal.encounter.info.LootContainer.classClearFilter.bg
                     filterBG:SetVertexColor(_G.CUSTOM_CLASS_COLORS[classInfo.classFile]:GetRGB())
                 end
             end
