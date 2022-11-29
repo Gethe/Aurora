@@ -1,4 +1,11 @@
-﻿## [10.0.2.0] ##
+﻿## [10.0.2.1] ##
+### Fixed ###
+
+  * Error with loot history
+  * [retail] Various small fixes for Dragonflight
+
+
+## [10.0.2.0] ##
 ### Fixed ###
 
   * More fixes for Dragonflight
@@ -392,30 +399,31 @@
   * The conquest progress bar was not colored
   * Error when opening azerite respec UI
 
-[Unreleased]: https://github.com/Haleth/Aurora/compare/master...develop
-[10.0.2.0]: https://github.com/Haleth/Aurora/compare/10.0.0.0...10.0.2.0
-[10.0.0.0]: https://github.com/Haleth/Aurora/compare/9.2.7.0...10.0.0.0
-[9.2.7.0]: https://github.com/Haleth/Aurora/compare/9.2.5.0...9.2.7.0
-[9.2.5.0]: https://github.com/Haleth/Aurora/compare/9.2.0.0...9.2.5.0
-[9.2.0.0]: https://github.com/Haleth/Aurora/compare/9.1.5.0...9.2.0.0
-[9.1.5.0]: https://github.com/Haleth/Aurora/compare/9.0.5.0...9.1.5.0
-[9.0.5.0]: https://github.com/Haleth/Aurora/compare/9.0.2.1...9.0.5.0
-[9.0.2.1]: https://github.com/Haleth/Aurora/compare/9.0.2.0...9.0.2.1
-[9.0.2.0]: https://github.com/Haleth/Aurora/compare/9.0.1.7...9.0.2.0
-[9.0.1.7]: https://github.com/Haleth/Aurora/compare/9.0.1.6...9.0.1.7
-[9.0.1.6]: https://github.com/Haleth/Aurora/compare/9.0.1.5...9.0.1.6
-[9.0.1.5]: https://github.com/Haleth/Aurora/compare/9.0.1.4...9.0.1.5
-[9.0.1.4]: https://github.com/Haleth/Aurora/compare/9.0.1.3...9.0.1.4
-[9.0.1.3]: https://github.com/Haleth/Aurora/compare/9.0.1.2...9.0.1.3
-[9.0.1.2]: https://github.com/Haleth/Aurora/compare/9.0.1.1...9.0.1.2
-[9.0.1.1]: https://github.com/Haleth/Aurora/compare/9.0.1.0...9.0.1.1
-[9.0.1.0]: https://github.com/Haleth/Aurora/compare/8.3.0.8...9.0.1.0
-[8.3.0.8]: https://github.com/Haleth/Aurora/compare/8.3.0.7...8.3.0.8
-[8.3.0.7]: https://github.com/Haleth/Aurora/compare/8.3.0.6...8.3.0.7
-[8.3.0.6]: https://github.com/Haleth/Aurora/compare/8.3.0.5...8.3.0.6
-[8.3.0.5]: https://github.com/Haleth/Aurora/compare/8.3.0.4...8.3.0.5
-[8.3.0.4]: https://github.com/Haleth/Aurora/compare/8.3.0.3...8.3.0.4
-[8.3.0.3]: https://github.com/Haleth/Aurora/compare/8.3.0.2...8.3.0.3
-[8.3.0.2]: https://github.com/Haleth/Aurora/compare/8.3.0.1...8.3.0.2
-[8.3.0.1]: https://github.com/Haleth/Aurora/compare/8.3.0.0...8.3.0.1
-[8.3.0.0]: https://github.com/Haleth/Aurora/compare/8.2.5.3...8.3.0.0
+[Unreleased]: https://github.com/Gethe/Aurora/compare/master...develop
+[10.0.2.1]: https://github.com/Gethe/Aurora/compare/10.0.2.0...10.0.2.1
+[10.0.2.0]: https://github.com/Gethe/Aurora/compare/10.0.0.0...10.0.2.0
+[10.0.0.0]: https://github.com/Gethe/Aurora/compare/9.2.7.0...10.0.0.0
+[9.2.7.0]: https://github.com/Gethe/Aurora/compare/9.2.5.0...9.2.7.0
+[9.2.5.0]: https://github.com/Gethe/Aurora/compare/9.2.0.0...9.2.5.0
+[9.2.0.0]: https://github.com/Gethe/Aurora/compare/9.1.5.0...9.2.0.0
+[9.1.5.0]: https://github.com/Gethe/Aurora/compare/9.0.5.0...9.1.5.0
+[9.0.5.0]: https://github.com/Gethe/Aurora/compare/9.0.2.1...9.0.5.0
+[9.0.2.1]: https://github.com/Gethe/Aurora/compare/9.0.2.0...9.0.2.1
+[9.0.2.0]: https://github.com/Gethe/Aurora/compare/9.0.1.7...9.0.2.0
+[9.0.1.7]: https://github.com/Gethe/Aurora/compare/9.0.1.6...9.0.1.7
+[9.0.1.6]: https://github.com/Gethe/Aurora/compare/9.0.1.5...9.0.1.6
+[9.0.1.5]: https://github.com/Gethe/Aurora/compare/9.0.1.4...9.0.1.5
+[9.0.1.4]: https://github.com/Gethe/Aurora/compare/9.0.1.3...9.0.1.4
+[9.0.1.3]: https://github.com/Gethe/Aurora/compare/9.0.1.2...9.0.1.3
+[9.0.1.2]: https://github.com/Gethe/Aurora/compare/9.0.1.1...9.0.1.2
+[9.0.1.1]: https://github.com/Gethe/Aurora/compare/9.0.1.0...9.0.1.1
+[9.0.1.0]: https://github.com/Gethe/Aurora/compare/8.3.0.8...9.0.1.0
+[8.3.0.8]: https://github.com/Gethe/Aurora/compare/8.3.0.7...8.3.0.8
+[8.3.0.7]: https://github.com/Gethe/Aurora/compare/8.3.0.6...8.3.0.7
+[8.3.0.6]: https://github.com/Gethe/Aurora/compare/8.3.0.5...8.3.0.6
+[8.3.0.5]: https://github.com/Gethe/Aurora/compare/8.3.0.4...8.3.0.5
+[8.3.0.4]: https://github.com/Gethe/Aurora/compare/8.3.0.3...8.3.0.4
+[8.3.0.3]: https://github.com/Gethe/Aurora/compare/8.3.0.2...8.3.0.3
+[8.3.0.2]: https://github.com/Gethe/Aurora/compare/8.3.0.1...8.3.0.2
+[8.3.0.1]: https://github.com/Gethe/Aurora/compare/8.3.0.0...8.3.0.1
+[8.3.0.0]: https://github.com/Gethe/Aurora/compare/8.2.5.3...8.3.0.0
