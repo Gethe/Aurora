@@ -127,7 +127,7 @@ local function LoadLFGFunctions()
         return info
     end
     function _G.C_LFGList.GetApplicationInfo(searchResultID)
-        return dungeonId, "invited", nil, nil, "TANK"
+        return dungeonId, "invited", nil, 1000, "TANK"
     end
 
     if _G.C_Scenario then

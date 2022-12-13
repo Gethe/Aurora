@@ -129,8 +129,8 @@ do --[[ FrameXML\LFGList.lua ]]
     end
     function Hook.LFGListUtil_SetSearchEntryTooltip(tooltip, resultID, autoAcceptOption)
         local searchResultInfo = _G.C_LFGList.GetSearchResultInfo(resultID)
-        local _, _, _, _, _, _, _, _, displayType = _G.C_LFGList.GetActivityInfo(searchResultInfo.activityID)
-        if displayType ~= _G.LE_LFG_LIST_DISPLAY_TYPE_CLASS_ENUMERATE then return end
+        local activityInfo = _G.C_LFGList.GetActivityInfoTable(searchResultInfo.activityID)
+        if activityInfo.displayType ~= _G.Enum.LFGListDisplayType.ClassEnumerate then return end
 
         local name = tooltip:GetName() .. "TextLeft"
         local start
