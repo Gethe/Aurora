@@ -59,7 +59,10 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
         end
 
         Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, quality, link)
-        Base.CropIcon(_G.TradeSkillSkillIcon:GetNormalTexture())
+        local iconTex = _G.TradeSkillSkillIcon:GetNormalTexture()
+        if iconTex then
+            Base.CropIcon(iconTex)
+        end
 
         local numReagents = _G.GetTradeSkillNumReagents(id)
         for i = 1, numReagents do
