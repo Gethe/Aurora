@@ -144,7 +144,6 @@ function private.AddOns.Blizzard_InspectUI()
     Skin.TabButtonTemplate(_G.InspectTalentFrameTab3)
 
     _G.InspectTalentFrameCloseButton:Hide()
-    Skin.UIPanelButtonTemplate(_G.InspectTalentFrameCancelButton)
 
     for i = 1, _G.MAX_NUM_TALENTS do
         Skin.TalentButtonTemplate(_G["InspectTalentFrameTalent"..i])
