@@ -167,6 +167,7 @@ local BackdropMixin do
                 x = x, y = y,
                 x1 = x1, y1 = y1,
             },
+            disableSharpening = true,
             setupPieceVisualsFunction = BackdropMixin.SetupPieceVisuals,
         }
     end
@@ -191,7 +192,7 @@ local BackdropMixin do
     end
     function BackdropMixin:ApplyBackdrop()
         local userLayout = GetNineSliceLayout(self)
-        _G.NineSliceUtil.ApplyLayout(self, userLayout)
+        _G.NineSliceUtil.ApplyLayout(self, userLayout, "AuroraSkin")
         if self.debug then
             _G.print("ApplyBackdrop", self:GetDebugName(), self.debug)
         end
@@ -215,7 +216,6 @@ local BackdropMixin do
                     piece:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
                 end
 
-                _G.NineSliceUtil.DisableSharpening(self)
                 piece:Show()
             end
         end

@@ -101,7 +101,7 @@ do --[[ SharedXML\NineSlice.lua ]]
     Hook.NineSliceUtil = {}
     function Hook.NineSliceUtil.ApplyLayout(container, userLayout, textureKit)
         if not container._auroraNineSlice then return end
-        if container._applyLayout then return end
+        if textureKit == "AuroraSkin" or container._applyLayout then return end
 
         container._applyLayout = true
         local userLayoutName = container:GetFrameLayoutType()
