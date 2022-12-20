@@ -18,9 +18,9 @@ do --[[ FrameXML\VoiceToggleButton.xml ]]
         Skin.PropertyButtonTemplate(Button)
 
         Button:SetSize(23, 23)
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetHighlightTexture("")
+        Button:ClearNormalTexture()
+        Button:ClearPushedTexture()
+        Button:ClearHighlightTexture()
         local disabled = Button:GetDisabledTexture()
         if disabled then
             disabled:SetColorTexture(0, 0, 0, .4)

@@ -79,7 +79,7 @@ function private.FrameXML.LootHistory()
 
     Skin.MinimizeButton(LootHistoryFrame.CloseButton)
     do -- [[ Resize button ]]
-        LootHistoryFrame.ResizeButton:SetNormalTexture("")
+        LootHistoryFrame.ResizeButton:ClearNormalTexture()
         LootHistoryFrame.ResizeButton:SetHeight(8)
 
         local line1 = LootHistoryFrame.ResizeButton:CreateTexture()

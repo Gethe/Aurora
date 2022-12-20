@@ -15,7 +15,7 @@ do -- BlizzWTF: These are not templates, but they should be
         local function Hook_SetHighlightTexture(self, texture)
             if self.settingHighlight then return end
             self.settingHighlight = true
-            self:SetHighlightTexture("")
+            self:ClearHighlightTexture()
             self.settingHighlight = nil
         end
         local function Hook_SetPushedTexture(self, texture)
@@ -121,7 +121,7 @@ do -- BlizzWTF: These are not templates, but they should be
 
             local icon = CheckButton.IconTexture
             if icon then
-                CheckButton:SetNormalTexture("")
+                CheckButton:ClearNormalTexture()
                 Base.CropIcon(CheckButton:GetPushedTexture())
             else
                 icon = CheckButton.Icon or CheckButton:GetNormalTexture()

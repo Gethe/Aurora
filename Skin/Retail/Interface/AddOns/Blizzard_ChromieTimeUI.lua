@@ -12,11 +12,11 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ AddOns\Blizzard_ChromieTimeUI.lua ]]
     Hook.ChromieTimeExpansionButtonMixin = {}
     function Hook.ChromieTimeExpansionButtonMixin:ClearSelection()
-        self:SetNormalTexture("")
+        self:ClearNormalTexture()
         self:UnlockHighlight()
     end
     function Hook.ChromieTimeExpansionButtonMixin:OnClick()
-        self:SetNormalTexture("")
+        self:ClearNormalTexture()
         self:LockHighlight()
     end
 end

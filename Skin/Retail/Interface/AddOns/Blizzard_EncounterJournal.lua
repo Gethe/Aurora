@@ -12,8 +12,8 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 
 local function SkinSearchButton(button)
-    button:SetNormalTexture("")
-    button:SetPushedTexture("")
+    button:ClearNormalTexture()
+    button:ClearPushedTexture()
 
     local r, g, b = Color.highlight:GetRGB()
     local highlight = button.selectedTexture or button:GetHighlightTexture()
@@ -162,8 +162,8 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
             Button.resultType:SetTextColor(Color.grayLight:GetRGB())
         end
         function Skin.EncounterCreatureButtonTemplate(Button)
-            Button:SetNormalTexture("")
-            Button:SetHighlightTexture("")
+            Button:ClearNormalTexture()
+            Button:ClearHighlightTexture()
         end
         function Skin.EncounterBossButtonTemplate(Button)
             Skin.FrameTypeButton(Button)
@@ -445,9 +445,9 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     Base.SetBackdrop(info.reset, Color.button)
     Base.SetHighlight(info.reset)
-    info.reset:SetNormalTexture("")
-    info.reset:SetPushedTexture("")
-    info.reset:SetHighlightTexture("")
+    info.reset:ClearNormalTexture()
+    info.reset:ClearPushedTexture()
+    info.reset:ClearHighlightTexture()
 
     Skin.EncounterJournalScrollBarTemplateOld(info.detailsScroll.ScrollBar)
     info.detailsScroll.child.description:SetTextColor(Color.grayLight:GetRGB())

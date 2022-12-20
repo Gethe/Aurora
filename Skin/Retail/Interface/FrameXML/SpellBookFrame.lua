@@ -143,7 +143,7 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         spellHighlight:SetPoint("BOTTOMRIGHT")
         spellHighlight:SetTexCoord(0.15, 0.85, 0.15, 0.85)
 
-        CheckButton:SetNormalTexture("")
+        CheckButton:ClearNormalTexture()
         Base.CropIcon(CheckButton:GetPushedTexture())
         Base.CropIcon(CheckButton:GetHighlightTexture())
         Base.CropIcon(CheckButton:GetCheckedTexture())

@@ -36,7 +36,7 @@ do --[[ SharedXML\DeprecatedTemplates.lua ]]
 
     function Skin.OptionsFrameTabButtonTemplate(Button)
         local name = Button:GetName()
-        Button:SetHighlightTexture("")
+        Button:ClearHighlightTexture()
 
         _G[name.."LeftDisabled"]:SetAlpha(0)
         _G[name.."MiddleDisabled"]:SetAlpha(0)

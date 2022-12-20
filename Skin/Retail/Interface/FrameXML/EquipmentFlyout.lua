@@ -41,7 +41,7 @@ do --[[ FrameXML\EquipmentFlyout.xml ]]
         tex:SetVertexColor(Color.highlight:GetRGB())
         Button._auroraArrow = tex
 
-        Button:SetHighlightTexture("")
+        Button:ClearHighlightTexture()
     end
 end
 

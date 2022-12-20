@@ -116,9 +116,9 @@ function private.FrameXML.TutorialFrame()
     Skin.UIPanelCloseButton(_G.TutorialFrameCloseButton)
 
     -- BlizzWTF: This should use the UIPanelButtonTemplate
-    _G.TutorialFrameOkayButton:SetNormalTexture("")
-    _G.TutorialFrameOkayButton:SetPushedTexture("")
-    _G.TutorialFrameOkayButton:SetHighlightTexture("")
+    _G.TutorialFrameOkayButton:ClearNormalTexture()
+    _G.TutorialFrameOkayButton:ClearPushedTexture()
+    _G.TutorialFrameOkayButton:ClearHighlightTexture()
     Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button)
     Base.SetHighlight(_G.TutorialFrameOkayButton)
 

@@ -78,9 +78,9 @@ do --[[ FrameXML\ActionBarController.lua ]]
         function Hook.GuildMicroButtonMixin:UpdateTabard(forceUpdate)
             local emblemFilename = select(10, _G.GetGuildLogoInfo())
             if emblemFilename then
-                self:SetNormalTexture("")
-                self:SetPushedTexture("")
-                self:SetDisabledTexture("")
+                self:ClearNormalTexture()
+                self:ClearPushedTexture()
+                self:ClearDisabledTexture()
             else
                 SetMicroButton(self, "Socials")
             end
@@ -99,9 +99,9 @@ do --[[ FrameXML\ActionBarController.lua ]]
                 if status == 0 then
                     SetMicroButton(self, [[Interface\Icons\INV_Misc_QuestionMark]])
                 else
-                    self:SetNormalTexture("")
-                    self:SetPushedTexture("")
-                    self:SetDisabledTexture("")
+                    self:ClearNormalTexture()
+                    self:ClearPushedTexture()
+                    self:ClearDisabledTexture()
                 end
             end
         end
@@ -276,7 +276,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
             CheckButton.AutoCastShine:SetPoint("TOPLEFT", 2, -2)
             CheckButton.AutoCastShine:SetPoint("BOTTOMRIGHT", -2, 2)
 
-            CheckButton:SetNormalTexture("")
+            CheckButton:ClearNormalTexture()
             Base.CropIcon(CheckButton:GetPushedTexture())
             Base.CropIcon(CheckButton:GetHighlightTexture())
             Base.CropIcon(CheckButton:GetCheckedTexture())
@@ -403,7 +403,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
             CheckButton.cooldown:SetPoint("TOPLEFT")
             CheckButton.cooldown:SetPoint("BOTTOMRIGHT")
 
-            CheckButton:SetNormalTexture("")
+            CheckButton:ClearNormalTexture()
             Base.CropIcon(CheckButton:GetHighlightTexture())
             if not private.isPatch then
                 Base.CropIcon(CheckButton:GetCheckedTexture())

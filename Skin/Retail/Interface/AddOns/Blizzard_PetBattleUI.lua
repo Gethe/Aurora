@@ -155,7 +155,7 @@ do --[[ AddOns\Blizzard_PetBattleUI.xml ]]
         --Button.cooldown:SetPoint("TOPLEFT")
         --Button.cooldown:SetPoint("BOTTOMRIGHT")
 
-        Button:SetNormalTexture("")
+        Button:ClearNormalTexture()
         Base.CropIcon(Button:GetHighlightTexture())
         Base.CropIcon(Button:GetPushedTexture())
     end

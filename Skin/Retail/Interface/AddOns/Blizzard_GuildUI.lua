@@ -165,7 +165,7 @@ function private.AddOns.Blizzard_GuildUI()
         button.level:ClearAllPoints()
         button.level:SetPoint("CENTER", lvlBG)
 
-        button:SetHighlightTexture("")
+        button:ClearHighlightTexture()
     end
     local function GuildInfoFrameApplicants_UpdateHook()
         local scrollFrame = GuildInfoFrameApplicantsContainer
@@ -213,9 +213,9 @@ function private.AddOns.Blizzard_GuildUI()
     _G.GuildPerksContainerButton1:SetPoint("LEFT", -1, 0)
 
     for _, bu in pairs(_G.GuildRewardsContainer.buttons) do
-        bu:SetNormalTexture("")
+        bu:ClearNormalTexture()
 
-        bu:SetHighlightTexture("")
+        bu:ClearHighlightTexture()
         bu.disabledBG:SetTexture("")
 
         local bg = F.CreateBDFrame(bu, .25)

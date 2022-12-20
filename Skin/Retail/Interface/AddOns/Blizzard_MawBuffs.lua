@@ -12,16 +12,16 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 do --[[ AddOns\Blizzard_MawBuffs.lua ]]
     Hook.MawBuffsListMixin = {}
     function Hook.MawBuffsListMixin:OnShow()
-        self.button:SetPushedTexture("")
-        self.button:SetHighlightTexture("")
+        self.button:ClearPushedTexture()
+        self.button:ClearHighlightTexture()
         self.button:SetWidth(253)
         self.button:SetButtonState("NORMAL");
         self.button:SetPushedTextOffset(1.25, -1)
         self.button:SetButtonState("PUSHED", true);
     end
     function Hook.MawBuffsListMixin:OnHide()
-        self.button:SetPushedTexture("")
-        self.button:SetHighlightTexture("")
+        self.button:ClearPushedTexture()
+        self.button:ClearHighlightTexture()
     end
 end
 

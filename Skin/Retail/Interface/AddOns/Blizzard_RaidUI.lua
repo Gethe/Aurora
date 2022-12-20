@@ -38,7 +38,7 @@ do --[[ AddOns\Blizzard_RaidUI.xml ]]
         end)
     end
     function Skin.RaidGroupSlotTemplate(Button)
-        Button:SetHighlightTexture("")
+        Button:ClearHighlightTexture()
         Base.SetBackdrop(Button, Color.button, 0)
         Button:SetBackdropBorderColor(Color.button, 0)
 

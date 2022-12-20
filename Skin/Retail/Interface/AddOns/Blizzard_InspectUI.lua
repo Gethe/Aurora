@@ -69,7 +69,7 @@ do --[[ AddOns\Blizzard_InspectUI.xml ]]
     do --[[ InspectPaperDollFrame.xml ]]
         function Skin.InspectPaperDollItemSlotButtonTemplate(ItemButton)
             Skin.FrameTypeItemButton(ItemButton)
-            ItemButton:SetNormalTexture("")
+            ItemButton:ClearNormalTexture()
         end
         function Skin.InspectPaperDollItemSlotButtonLeftTemplate(ItemButton)
             Skin.InspectPaperDollItemSlotButtonTemplate(ItemButton)

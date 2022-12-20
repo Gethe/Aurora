@@ -54,7 +54,7 @@ do --[[ AddOns\Blizzard_Calendar.xml ]]
         moreEvents:SetPoint("TOPRIGHT", -6, -9)
         Base.SetTexture(moreEvents:GetNormalTexture(), "arrowDown")
 
-        Button:SetNormalTexture("")
+        Button:ClearNormalTexture()
         local highlight = Button:GetHighlightTexture()
         highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.5)
         highlight:ClearAllPoints()

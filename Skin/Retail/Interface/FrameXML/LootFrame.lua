@@ -36,8 +36,8 @@ do --[[ FrameXML\LootFrame.xml ]]
         Base.SetBackdrop(nameBG, Color.frame)
         Frame._auroraNameBG = nameBG
 
-        Frame:SetNormalTexture("")
-        Frame:SetPushedTexture("")
+        Frame:ClearNormalTexture()
+        Frame:ClearPushedTexture()
     end
 
     function Skin.LootNavButton(Button)

@@ -61,9 +61,9 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
     }
     Hook.QuestSessionManagementMixin = {}
     function Hook.QuestSessionManagementMixin:UpdateExecuteCommandAtlases(command)
-        self.ExecuteSessionCommand:SetNormalTexture("")
-        self.ExecuteSessionCommand:SetPushedTexture("")
-        self.ExecuteSessionCommand:SetDisabledTexture("")
+        self.ExecuteSessionCommand:ClearNormalTexture()
+        self.ExecuteSessionCommand:ClearPushedTexture()
+        self.ExecuteSessionCommand:ClearDisabledTexture()
 
         local atlas = sessionCommandToButtonAtlas[command];
         if atlas then

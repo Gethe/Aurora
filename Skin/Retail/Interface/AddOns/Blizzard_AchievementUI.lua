@@ -76,8 +76,8 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Button.IconFrame:SetAlpha(0)
         Base.CropIcon(Button.Icon, Button)
 
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
+        Button:ClearNormalTexture()
+        Button:ClearPushedTexture()
     end
     function Skin.AchievementFullSearchResultsButton(Button)
         Button.IconFrame:SetAlpha(0)
@@ -86,8 +86,8 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Button.Path:SetTextColor(Color.grayLight:GetRGB())
         Button.ResultType:SetTextColor(Color.grayLight:GetRGB())
 
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
+        Button:ClearNormalTexture()
+        Button:ClearPushedTexture()
 
         local r, g, b = Color.highlight:GetRGB()
         Button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
@@ -515,8 +515,8 @@ function private.AddOns.Blizzard_AchievementUI()
     ShowAllSearchResults.SelectedTexture:SetPoint("TOPLEFT", 1, -1)
     ShowAllSearchResults.SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
 
-    ShowAllSearchResults:SetNormalTexture("")
-    ShowAllSearchResults:SetPushedTexture("")
+    ShowAllSearchResults:ClearNormalTexture()
+    ShowAllSearchResults:ClearPushedTexture()
 
 
 

@@ -165,8 +165,8 @@ do --[[ FrameXML\LFGList.xml ]]
         end
     end
     function Skin.LFGListSearchAutoCompleteButtonTemplate(Button)
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
+        Button:ClearNormalTexture()
+        Button:ClearPushedTexture()
 
         local highlight = Button:GetHighlightTexture()
         highlight:SetColorTexture(Color.highlight:GetRGB())

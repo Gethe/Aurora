@@ -72,8 +72,8 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
                 Base.SetTexture(self._auroraArrow, "arrowUp")
             end
 
-            self:SetNormalTexture("")
-            self:SetPushedTexture("")
+            self:ClearNormalTexture()
+            self:ClearPushedTexture()
         end
     end
 
@@ -135,7 +135,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     ----====####$$$$%%%%%$$$$####====----
     function Skin.QuestObjectiveItemButtonTemplate(Button)
         Base.CropIcon(Button.icon, Button)
-        Button:SetNormalTexture("")
+        Button:ClearNormalTexture()
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())
     end
@@ -149,10 +149,10 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         Button._auroraBDFrame = bdFrame
         Base.SetHighlight(Button)
 
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetDisabledTexture("")
-        Button:SetHighlightTexture("")
+        Button:ClearNormalTexture()
+        Button:ClearPushedTexture()
+        Button:ClearDisabledTexture()
+        Button:ClearHighlightTexture()
     end
 
     ----====####$$$$$$$####====----
@@ -296,7 +296,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         Skin.FrameTypeStatusBar(bar)
 
         bar.BarFrame:Hide()
-        bar.IconBG:SetColorTexture(0, 0, 0)
+        --bar.IconBG:SetColorTexture(0, 0, 0)
         bar.BarBG:Hide()
         bar.Icon:SetMask("")
         bar.Icon:SetSize(26, 26)

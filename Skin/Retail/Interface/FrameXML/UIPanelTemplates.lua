@@ -52,7 +52,7 @@ do --[[ FrameXML\UIPanelTemplates.xml ]]
         Button.selectedTex:SetTexCoord(0.005859375, 0.5703125, 0.853515625, 0.9375)
         Button.disabledBG:SetAllPoints()
 
-        Button:SetNormalTexture("")
+        Button:ClearNormalTexture()
         Button:GetHighlightTexture():SetTexCoord(0.005859375, 0.5703125, 0.7578125, 0.841796875)
     end
     function Skin.UIPanelInfoButton(Button)

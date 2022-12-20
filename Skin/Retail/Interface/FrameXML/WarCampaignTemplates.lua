@@ -18,7 +18,7 @@ do --[[ FrameXML\WarCampaignTemplates.lua ]]
             self:SetNormalTexture("Minus")
         end
 
-        self:SetPushedTexture("")
+        self:ClearPushedTexture()
     end
 end
 

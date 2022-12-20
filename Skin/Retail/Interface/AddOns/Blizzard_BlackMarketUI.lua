@@ -60,8 +60,8 @@ function private.AddOns.Blizzard_BlackMarketUI()
                 bu.Right:Hide()
                 select(3, bu:GetRegions()):Hide()
 
-                bu.Item:SetNormalTexture("")
-                bu.Item:SetPushedTexture("")
+                bu.Item:ClearNormalTexture()
+                bu.Item:ClearPushedTexture()
                 bu.Item._auroraIconBorder = F.ReskinIcon(bu.Item.IconTexture)
 
                 local bg = _G.CreateFrame("Frame", nil, bu)

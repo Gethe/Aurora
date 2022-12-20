@@ -597,9 +597,9 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.WowScrollBoxList(LandingReport.List.ScrollBox)
     Skin.WowTrimScrollBar(LandingReport.List.ScrollBar)
     LandingReport.InProgress:GetNormalTexture():SetAlpha(0)
-    LandingReport.InProgress:SetHighlightTexture("")
+    LandingReport.InProgress:ClearHighlightTexture()
     LandingReport.Available:GetNormalTexture():SetAlpha(0)
-    LandingReport.Available:SetHighlightTexture("")
+    LandingReport.Available:ClearHighlightTexture()
 
     Skin.BaseLandingPageFollowerListTemplate(GarrisonLandingPage.FollowerList)
     local LandingFollowerTab = GarrisonLandingPage.FollowerTab

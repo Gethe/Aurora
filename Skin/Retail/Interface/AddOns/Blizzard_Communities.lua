@@ -486,8 +486,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.SmallMoneyFrameTemplate(Button.Money)
             Base.CropIcon(Button.Icon, Button)
 
-            Button:SetNormalTexture("")
-            Button:SetHighlightTexture("")
+            Button:ClearNormalTexture()
+            Button:ClearHighlightTexture()
         end
         function Skin.CommunitiesGuildRewardsFrameTemplate(Frame)
             Frame.Bg:Hide()

@@ -56,16 +56,16 @@ function private.FrameXML.MerchantFrame()
         Skin.MerchantItemTemplate(_G["MerchantItem"..i])
     end
 
-    _G.MerchantRepairAllButton:SetPushedTexture("")
+    _G.MerchantRepairAllButton:ClearPushedTexture()
     _G.MerchantRepairAllIcon:SetTexture([[Interface\Icons\Trade_BlackSmithing]])
     Base.CropIcon(_G.MerchantRepairAllIcon, _G.MerchantRepairAllButton)
 
     local repairItem = _G.MerchantRepairItemButton:GetRegions()
-    _G.MerchantRepairItemButton:SetPushedTexture("")
+    _G.MerchantRepairItemButton:ClearPushedTexture()
     repairItem:SetTexture([[Interface\Icons\INV_Hammer_20]])
     Base.CropIcon(repairItem, _G.MerchantRepairItemButton)
 
-    _G.MerchantGuildBankRepairButton:SetPushedTexture("")
+    _G.MerchantGuildBankRepairButton:ClearPushedTexture()
     _G.MerchantGuildBankRepairButtonIcon:SetTexture([[Interface\Icons\Trade_BlackSmithing]])
     _G.MerchantGuildBankRepairButtonIcon:SetVertexColor(0.9, 0.8, 0)
     Base.CropIcon(_G.MerchantGuildBankRepairButtonIcon, _G.MerchantGuildBankRepairButton)
