@@ -66,6 +66,16 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
             end
         end
     end
+
+    local SearchPreviewButtonHieght = 27
+    function Hook.AchievementFrame_ShowSearchPreviewResults()
+        local numResults = _G.GetNumFilteredAchievements()
+        if numResults > 5 then
+            numResults = 6
+        end
+
+        _G.AchievementFrame.SearchPreviewContainer:SetPoint("BOTTOM", _G.AchievementFrame.SearchBox, 0, -(numResults * SearchPreviewButtonHieght))
+    end
 end
 
 do --[[ AddOns\Blizzard_AchievementUI.xml ]]
@@ -315,6 +325,7 @@ end
 
 function private.AddOns.Blizzard_AchievementUI()
     _G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
+    _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
 
     ----------------------
     -- AchievementFrame --
