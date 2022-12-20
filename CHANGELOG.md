@@ -1,4 +1,14 @@
-﻿## [10.0.2.1] ##
+﻿## [10.0.2.2] ##
+### Fixed ###
+
+  * [retail] Error when scenario stage has a progress bar
+  * [retail] Covenant sanctum was missing background
+  * [retail] Error when searching LFG
+  * [wrath] Error when inspecting other players
+  * [wrath] Error for scribes with Northrend Inscription
+
+
+## [10.0.2.1] ##
 ### Fixed ###
 
   * Error with loot history
@@ -400,6 +410,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/master...develop
+[10.0.2.2]: https://github.com/Haleth/Aurora/compare/10.0.2.1...10.0.2.2
 [10.0.2.1]: https://github.com/Gethe/Aurora/compare/10.0.2.0...10.0.2.1
 [10.0.2.0]: https://github.com/Gethe/Aurora/compare/10.0.0.0...10.0.2.0
 [10.0.0.0]: https://github.com/Gethe/Aurora/compare/9.2.7.0...10.0.0.0
