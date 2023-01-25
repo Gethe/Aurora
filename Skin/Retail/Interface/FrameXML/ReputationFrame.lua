@@ -141,7 +141,6 @@ function private.FrameXML.ReputationFrame()
     detailBG:SetPoint("TOPLEFT", repDetailBG, 1, -1)
     detailBG:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -1, -142)
     detailBG:SetColorTexture(Color.button:GetRGB())
-    _G.ReputationDetailCorner:Hide()
 
     _G.ReputationDetailDivider:SetColorTexture(Color.frame:GetRGB())
     _G.ReputationDetailDivider:ClearAllPoints()
