@@ -118,8 +118,6 @@ function private.AddOns.Blizzard_TokenUI()
     titleText:SetPoint("TOPLEFT")
     titleText:SetPoint("BOTTOMRIGHT", TokenFramePopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    TokenFramePopup.Corner:Hide()
-
     Skin.UICheckButtonTemplate(TokenFramePopup.InactiveCheckBox)
     TokenFramePopup.InactiveCheckBox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
     Skin.UICheckButtonTemplate(TokenFramePopup.BackpackCheckBox)
