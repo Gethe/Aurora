@@ -34,7 +34,6 @@ function private.FrameXML.RaidFrame()
 
     _G.RaidInfoDetailHeader:Hide()
     _G.RaidInfoDetailFooter:Hide()
-    _G.RaidInfoDetailCorner:Hide()
 
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoInstanceLabel)
     Skin.RaidInfoHeaderTemplate(_G.RaidInfoIDLabel)
