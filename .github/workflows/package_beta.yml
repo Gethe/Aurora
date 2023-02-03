@@ -21,15 +21,15 @@ jobs:
         echo ${{ github.event_path }}
         echo ${{ github.ref }}
 
-    - name: Remove Changelog
-      run: rm -f CHANGELOG.md
-
   mainline:
     needs: is_beta
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Remove Changelog
+      run: rm -f CHANGELOG.md
 
     - name: Create Mainline Package
       uses: BigWigsMods/packager@v2
@@ -40,6 +40,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Remove Changelog
+      run: rm -f CHANGELOG.md
 
     - name: Create Wrath Package
       uses: BigWigsMods/packager@v2
@@ -52,6 +55,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Remove Changelog
+      run: rm -f CHANGELOG.md
 
     - name: Create Vanilla Package
       uses: BigWigsMods/packager@v2
