@@ -77,7 +77,6 @@ function private.FrameXML.BankFrame()
     --[[ BankFrame ]]--
     local BankFrame = _G.BankFrame
     Skin.PortraitFrameTemplate(BankFrame)
-    _G.BankPortraitTexture:Hide()
     select(4, BankFrame:GetRegions()):Hide() -- Bank-Background
     Skin.PanelTabButtonTemplate(_G.BankFrameTab1)
     Skin.PanelTabButtonTemplate(_G.BankFrameTab2)

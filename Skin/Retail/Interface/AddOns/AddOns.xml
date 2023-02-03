@@ -82,10 +82,10 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_ObliterumUI.lua"/-->
     <Script file="Blizzard_OrderHallUI.lua"/>
     <Script file="Blizzard_PartyPoseUI.lua"/>
+    <!--Script file="Blizzard_PerksProgram.lua"/-->
     <Script file="Blizzard_PetBattleUI.lua"/>
     <Script file="Blizzard_PlayerChoice.lua"/>
     <!--Script file="Blizzard_Professions.lua"/-->
-    <!--Script file="Blizzard_ProfessionsCrafterOrders.lua"/-->
     <!--Script file="Blizzard_ProfessionsCustomerOrders.lua"/-->
     <!--Script file="Blizzard_ProfessionsTemplates.lua"/-->
     <!--Script file="Blizzard_PTRFeedback.lua"/-->
@@ -101,6 +101,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_Settings.lua"/-->
     <Script file="Blizzard_SharedMapDataProviders.lua"/>
     <!--Script file="Blizzard_SharedTalentUI.lua"/-->
+    <!--Script file="Blizzard_SharedWidgetFrames.lua"/-->
     <!--Script file="Blizzard_SocialUI.lua"/-->
     <Script file="Blizzard_Soulbinds.lua"/>
     <!--Script file="Blizzard_StoreUI.lua"/-->

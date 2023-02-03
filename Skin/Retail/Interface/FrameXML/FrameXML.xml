@@ -20,6 +20,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\EnumUtil.lua"/-->
     <!--Script file="..\SharedXML\LocaleUtil.lua"/-->
     <!--Script file="..\SharedXML\FunctionUtil.lua"/-->
+    <!--Script file="..\SharedXML\ObjectUpdater.lua"/-->
     <!--Script file="..\SharedXML\MathUtil.lua"/-->
     <!--Script file="..\SharedXML\ExportUtil.lua"/-->
     <!--Script file="..\SharedXML\Rectangle.lua"/-->
@@ -94,6 +95,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\Dump.lua"/-->
     <!--Script file="MixinUtil.lua"/-->
     <!--Script file="IconDataProvider.lua"/-->
+
+    <!--Script file="..\SharedXML\Tooltip\TooltipUtil.lua"/-->
+    <!--Script file="..\SharedXML\Tooltip\TooltipDataHandler.lua"/-->
+    <!--Script file="..\SharedXML\Tooltip\TooltipDataRules.lua"/-->
+    <!--Script file="..\SharedXML\Tooltip\TooltipComparisonManager.lua"/-->
 
     <!--## intrinsics-->
     <!--Script file="..\SharedXML\ScrollingMessageFrame.lua"/-->
@@ -425,6 +431,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="PlayerInteractionFrameManager.lua"/-->
     <!--Script file="TalkingHeadUI.lua"/-->
     <!--Script file="ArenaUI.lua"/-->
+    <!--Script file="FramerateFrame.lua"/-->
+    <!--Script file="ClassTalentHelper.lua"/-->
+    <!--Script file="MotionSickness.lua"/-->
 
     <!--#Save off whatever we need available unmodified-->
     <!--Script file="SecureCapsule.lua"/-->

@@ -128,16 +128,8 @@ function private.AddOns.Blizzard_Channels()
     --       CreateChannelPopup       --
     ----====####$$$$%%%%$$$$####====----
     local CreateChannelPopup = _G.CreateChannelPopup
+    Skin.DialogHeaderTemplate(CreateChannelPopup.Header)
     Skin.DialogBorderTemplate(CreateChannelPopup.BG)
-    local bg = CreateChannelPopup.BG:GetBackdropTexture("bg")
-
-    CreateChannelPopup.Header:ClearAllPoints()
-    CreateChannelPopup.Header:SetPoint("TOPLEFT", bg)
-    CreateChannelPopup.Header:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-    CreateChannelPopup.Titlebar:Hide()
-    CreateChannelPopup.Corner:Hide()
-
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Name)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Password)
     Skin.UICheckButtonTemplate(CreateChannelPopup.UseVoiceChat)

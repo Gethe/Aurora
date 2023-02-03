@@ -464,8 +464,8 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
         Util.Mixin(_G.StatusTrackingBarManager, Hook.StatusTrackingManagerMixin)
-        _G.StatusTrackingBarManager.BottomBarFrameTexture:SetAlpha(0)
-        _G.StatusTrackingBarManager.TopBarFrameTexture:SetAlpha(0)
+        _G.MainStatusTrackingBarContainer.BarFrameTexture:SetAlpha(0)
+        _G.SecondaryStatusTrackingBarContainer.BarFrameTexture:SetAlpha(0)
     end
 
     ----====####$$$$%%%%%$$$$####====----
