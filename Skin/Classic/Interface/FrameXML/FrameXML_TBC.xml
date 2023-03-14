@@ -11,9 +11,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\SharedConstants.lua"/-->
 
     <!--## add C namespace augmentations here-->
-    <!--Script file="..\SharedXML\C_TimerAugment.lua"/-->
 
     <!--## add snippets independent of modules here-->
+    <!--Script file="..\SharedXML\middleclass.lua"/-->
     <!--Script file="GlueCheck.lua"/-->
     <!--Script file="..\..\Interface_TBC\FrameXML\Localization.lua"/-->
     <Script file="Fonts.lua"/>
@@ -36,23 +36,25 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\SharedXML\NineSlice.lua"/>
     <!--Script file="..\SharedXML\Backdrop.lua"/-->
     <!--Script file="..\SharedXML\TextureUtil.lua"/-->
+    <!--Script file="..\SharedXML\MathUtil.lua"/-->
     <!--Script file="..\SharedXML\Color.lua"/-->
     <!--Script file="..\..\Interface_TBC\SharedXML\ColorUtil.lua"/-->
     <Script file="..\SharedXML\Constants.lua"/>
     <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
+    <!--Script file="..\SharedXML\TableUtil.lua"/-->
+    <!--Script file="..\SharedXML\EnumUtil.lua"/-->
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
 
-    <!--Script file="..\SharedXML\TableUtil.lua"/-->
-    <!--Script file="..\SharedXML\EnumUtil.lua"/-->
-    <!--Script file="..\SharedXML\MathUtil.lua"/-->
     <!--Script file="..\SharedXML\CallbackRegistry.lua"/-->
     <!--Script file="..\SharedXML\CvarUtil.lua"/-->
+    <!--Script file="..\SharedXML\ClassicCvarUtil.lua"/-->
     <!--Script file="..\SharedXML\TimeUtil.lua"/-->
     <!--Script file="..\SharedXML\EasingUtil.lua"/-->
     <!--Script file="..\SharedXML\BindingUtil.lua"/-->
     <!--Script file="..\SharedXML\FrameUtil.lua"/-->
+    <!--Script file="..\SharedXML\EventUtil.lua"/-->
     <!--Script file="..\SharedXML\RegionUtil.lua"/-->
     <Script file="..\SharedXML\Pools.lua"/>
     <!--Script file="..\SharedXML\LoopingSoundEffect.lua"/-->
@@ -123,11 +125,16 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelScene.lua"/-->
+    <!--Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/-->
+    <!--Script file="..\SharedXML\Selector\Blizzard_GridSelectorUI.lua"/-->
+    <!--Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/-->
+
     <!--Script file="QuestUtils.lua"/-->
     <!--Script file="MapUtil.lua"/-->
     <!--Script file="AuraUtil.lua"/-->
     <!--Script file="CalendarUtil.lua"/-->
     <!--Script file="CommunitiesUtil.lua"/-->
+    <!--Script file="IconDataProvider.lua"/-->
     <!--## IME.xml needs to be loaded after UIParent-->
     <!--Script file="..\SharedXML\IME.lua"/-->
     <Script file="MoneyFrame.lua"/>
@@ -249,6 +256,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="GuildRegistrarFrame.lua"/>
     <Script file="PetitionFrame.lua"/>
     <Script file="HelpFrame.lua"/>
+    <!--Script file="GossipFrameShared.lua"/-->
     <Script file="ColorPickerFrame.lua"/>
     <Script file="GossipFrame.lua"/>
     <Script file="MailFrame.lua"/>
@@ -285,6 +293,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="ArenaFrame.lua"/-->
     <!--Script file="ArenaRegistrarFrame.lua"/-->
     <!--Script file="PVPFrame.lua"/-->
+    <!--Script file="PlayerInteractionFrameManager.lua"/-->
+    <!--Script file="SocialQueue.lua"/-->
+    <!--Script file="InviteConfirmationDialog.lua"/-->
 
 
     <!--#Save off whatever we need available unmodified-->
@@ -292,4 +303,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
     <!--## add new modules above here-->
     <!--Script file="LocalizationPost.lua"/-->
+
+
+
+
+
+
+    <Include file="DeprecatedSkins.xml"/>
 </Ui>

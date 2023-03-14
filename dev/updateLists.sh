@@ -6,16 +6,17 @@
 # corrisponding FrameXML_*.xml file, and 2) run through the AddOns folder and
 # update the AddOns.xml file
 
+branch=$1
+
 header="<Ui xmlns=\"http://www.blizzard.com/wow/ui/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.blizzard.com/wow/ui/\nhttps://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd\">\n"
 space="\n\n\n\n\n\n"
 footer="</Ui>"
 
-skin="./Skin/$1/Interface/"
+skin="./Skin/$branch/Interface"
 
-FrameXML="${skin}FrameXML/"
+FrameXML="${skin}/FrameXML/"
 FrameXMLList='../wow-ui-source/Interface/FrameXML/*.toc'
-for TOC in $FrameXMLList
-do
+for TOC in $FrameXMLList; do
 	echo "Processing $TOC"
 	tocName="${TOC##*/}"
 	tocName="${tocName%.*}"
@@ -43,8 +44,7 @@ do
 	printf "$space" >>"$tocFile"
 
 	fileName=
-	while IFS= read -r line
-	do
+	while IFS= read -r line; do
 		line="${line%[$'\n\r']}"
 		line=${line%.*}
 		filePath="${line//\\/\/}"
@@ -96,25 +96,143 @@ do
 	} >>"$tocFile"
 done
 
+if [[ ${branch,,} == "classic" ]]; then
+	declare -a addonsIndex
+	declare -A addons
 
-AddOns="${skin}AddOns/"
-AddOnsList='../wow-ui-source/Interface/AddOns/*'
+	AddOns="${skin}/AddOns/"
+	AddOnsFolder="../wow-ui-source/Interface/AddOns"
+	AddOnsList="${AddOnsFolder}/*"
 
-tocFile="${AddOns}AddOns.xml"
-# shellcheck disable=SC2059
-printf "$header" >"$tocFile"
-for AddOn in $AddOnsList
-do
-	echo "Processing $AddOn"
-	fileName="${AddOn##*/}"
+	for AddOn in $AddOnsList; do
+		echo "Processing $AddOn"
+		addonName="${AddOn##*/}"
+		addonsIndex+=("$addonName")
 
-	if [ -e "$AddOns$fileName.lua" ]; then
-		#echo "File exists ${#filePath} $filePath"
-		echo "    <Script file=\"$fileName.lua\"/>" >>"$tocFile"
-	else
-		#echo "No file $fileName"
-		echo "    <!--Script file=\"$fileName.lua\"/-->" >>"$tocFile"
-	fi
-done
-echo $footer >>"$tocFile"
+		addons["$addonName"]=""
+		addonPath="${AddOn}/${addonName}"
+		if [ -e "${addonPath}_Vanilla.toc" ]; then
+			echo "  Vanila addon"
+			addons["$addonName"]+="v"
+		fi
 
+		if [ -e "${addonPath}_TBC.toc" ]; then
+			echo "  TBC addon"
+			addons["$addonName"]+="b"
+		fi
+
+		if [ -e "${addonPath}_Wrath.toc" ]; then
+			echo "  Wrath addon"
+			addons["$addonName"]+="w"
+		fi
+
+		if [ -e "${addonPath}.toc" ]; then
+			flag=""
+			while read -r line; do
+				if [[ "${line}" == *"Interface: 1"* ]]; then
+					echo "  Vanila Interface"
+					flag="v"
+					break
+				elif [[ "${line}" == *"Interface: 2"* ]]; then
+					echo "  TBC Interface"
+					flag="b"
+					break
+				elif [[ "${line}" == *"Interface: 3"* ]]; then
+					echo "  Wrath Interface"
+					flag="w"
+					break
+				fi
+			done < "$addonPath.toc"
+
+			if [ -z $flag ]; then
+				if [[ -n "${addons[$addonName]}" ]]; then
+					addons["$addonName"]="vbw"
+				fi
+			else
+				addons["$addonName"]+=$flag
+			fi
+		fi
+
+	done
+
+
+	addonList="${AddOns}AddOns"
+	# shellcheck disable=SC2059
+	printf "$header" >"${addonList}_Vanilla.xml" 
+	# shellcheck disable=SC2059
+	printf "$header" >"${addonList}_TBC.xml"
+	# shellcheck disable=SC2059
+	printf "$header" >"${addonList}_Wrath.xml"
+
+	for addonName in "${addonsIndex[@]}"; do
+		echo "Checking flags ${addonName} ${addons[$addonName]}"
+		if [[ -z "${addons[$addonName]}" ]]; then
+			# Shared addons
+			if [ -e "$AddOns$addonName.lua" ]; then
+				#echo "File exists ${#filePath} $filePath"
+				echo "    <Script file=\"$addonName.lua\"/>" >>"${addonList}_Vanilla.xml"
+				echo "    <Script file=\"$addonName.lua\"/>" >>"${addonList}_TBC.xml"
+				echo "    <Script file=\"$addonName.lua\"/>" >>"${addonList}_Wrath.xml"
+			else
+				#echo "No file $addonName"
+				echo "    <!--Script file=\"$addonName.lua\"/-->" >>"${addonList}_Vanilla.xml"
+				echo "    <!--Script file=\"$addonName.lua\"/-->" >>"${addonList}_TBC.xml"
+				echo "    <!--Script file=\"$addonName.lua\"/-->" >>"${addonList}_Wrath.xml"
+			fi
+		fi
+
+		if [[ "${addons[$addonName]}" == *"v"* ]]; then
+			if [ -e "${skin}_Vanilla/AddOns/$addonName.lua" ]; then
+				#echo "File exists ${#filePath} $filePath"
+				echo "    <Script file=\"..\..\Interface_Vanilla\AddOns\\${addonName}.lua\"/>" >>"${addonList}_Vanilla.xml"
+			else
+				#echo "No file $addonName"
+				echo "    <!--Script file=\"..\..\Interface_Vanilla\AddOns\\${addonName}.lua\"/-->" >>"${addonList}_Vanilla.xml"
+			fi
+		fi
+
+		if [[ "${addons[$addonName]}" == *"b"* ]]; then
+			if [ -e "${skin}_TBC/AddOns/$addonName.lua" ]; then
+				#echo "File exists ${#filePath} $filePath"
+				echo "    <Script file=\"..\..\Interface_TBC\AddOns\\${addonName}.lua\"/>" >>"${addonList}_TBC.xml"
+			else
+				#echo "No file $addonName"
+				echo "    <!--Script file=\"..\..\Interface_TBC\AddOns\\${addonName}.lua\"/-->" >>"${addonList}_TBC.xml"
+			fi
+		fi
+
+		if [[ "${addons[$addonName]}" == *"w"* ]]; then
+			if [ -e "${skin}_Wrath/AddOns/$addonName.lua" ]; then
+				#echo "File exists ${#filePath} $filePath"
+				echo "    <Script file=\"..\..\Interface_Wrath\AddOns\\${addonName}.lua\"/>" >>"${addonList}_Wrath.xml"
+			else
+				#echo "No file $addonName"
+				echo "    <!--Script file=\"..\..\Interface_Wrath\AddOns\\${addonName}.lua\"/-->" >>"${addonList}_Wrath.xml"
+			fi
+		fi
+	done
+
+	echo $footer >>"${addonList}_Vanilla.xml"
+	echo $footer >>"${addonList}_TBC.xml"
+	echo $footer >>"${addonList}_Wrath.xml"
+else
+	AddOns="${skin}/AddOns/"
+	AddOnsList='../wow-ui-source/Interface/AddOns/*'
+
+	tocFile="${AddOns}AddOns.xml"
+	# shellcheck disable=SC2059
+	printf "$header" >"$tocFile"
+	for AddOn in $AddOnsList; do
+		echo "Processing $AddOn"
+		fileName="${AddOn##*/}"
+
+		if [ -e "$AddOns$fileName.lua" ]; then
+			#echo "File exists ${#filePath} $filePath"
+			echo "    <Script file=\"$fileName.lua\"/>" >>"$tocFile"
+		else
+			#echo "No file $fileName"
+			echo "    <!--Script file=\"$fileName.lua\"/-->" >>"$tocFile"
+		fi
+	done
+	echo $footer >>"$tocFile"
+fi
