@@ -42,7 +42,11 @@ function private.FrameXML.HelpFrame()
     -- HelpFrame --
     ---------------
     local HelpFrame = _G.HelpFrame
-    Skin.ButtonFrameTemplate(HelpFrame)
+    if private.isClassic then
+        Skin.ButtonFrameTemplate(HelpFrame)
+    else
+        Skin.DefaultPanelTemplate(HelpFrame)
+    end
 
     Skin.BrowserTemplate(HelpFrame.Browser)
     HelpFrame.Browser:SetPoint("TOPLEFT", 1, -private.FRAME_TITLE_HEIGHT)

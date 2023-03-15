@@ -653,6 +653,19 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.Text:SetPoint("BOTTOM", Frame, "TOP", 0, -(private.FRAME_TITLE_HEIGHT + 17))
     end
 
+    function Skin.DefaultPanelBaseTemplate(Frame)
+        Frame.NineSlice:SetFrameLevel(Frame:GetFrameLevel())
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+    end
+    function Skin.DefaultPanelTemplate(Frame)
+        Frame.NineSlice.Center = Frame.Bg
+        Skin.DefaultPanelBaseTemplate(Frame)
+    end
+    function Skin.DefaultPanelFlatTemplate(Frame)
+        Skin.DefaultPanelBaseTemplate(Frame)
+        Skin.FlatPanelBackgroundTemplate(Frame.Bg)
+    end
+
     function Skin.ColumnDisplayTemplate(Frame)
         Frame.Background:Hide()
         Frame.TopTileStreaks:Hide()
