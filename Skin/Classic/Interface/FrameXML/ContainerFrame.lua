@@ -6,7 +6,8 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 local keyColor = Color.Create(0.7254, 0.5490, 0.2235, 0.75)
@@ -37,8 +38,15 @@ do --[[ FrameXML\ContainerFrame.lua ]]
 
         for i = 1, self.size do
             local itemButton = _G[name.."Item"..i]
-            local slotID = itemButton:GetID()
-            local _, _, _, quality, _, _, link = _G.GetContainerItemInfo(bagID, slotID)
+            local slotID, _ = itemButton:GetID()
+            local quality, link
+            if private.isClassic then
+                _, _, _, quality, _, _, link = _G.C_Container.GetContainerItemInfo(bagID, slotID)
+            else
+                local info = _G.C_Container.GetContainerItemInfo(bagID, slotID);
+                quality = info and info.quality;
+                link = info and info.itemLink;
+            end
 
             if not itemButton._auroraIconBorder then
                 itemButton._isKey = bagID == _G.KEYRING_CONTAINER
