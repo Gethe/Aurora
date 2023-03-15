@@ -7,7 +7,7 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GossipFrame.lua ]]
     local availDataPerQuest, activeDataPerQuest = 7, 6
@@ -69,11 +69,11 @@ do --[[ FrameXML\GossipFrame.xml ]]
         left:Hide()
         right:Hide()
 
-        local name = Frame:GetName()
-        _G[name.."MaterialTopLeft"]:SetAlpha(0)
-        _G[name.."MaterialTopRight"]:SetAlpha(0)
-        _G[name.."MaterialBotLeft"]:SetAlpha(0)
-        _G[name.."MaterialBotRight"]:SetAlpha(0)
+        top, bottom, left, right = select(5, Frame:GetRegions())
+        top:SetAlpha(0)
+        bottom:SetAlpha(0)
+        left:SetAlpha(0)
+        right:SetAlpha(0)
     end
     function Skin.GossipTitleButtonTemplate(Button)
         local highlight = Button:GetHighlightTexture()
@@ -83,44 +83,73 @@ do --[[ FrameXML\GossipFrame.xml ]]
 end
 
 function private.FrameXML.GossipFrame()
-    _G.hooksecurefunc("GossipFrameOptionsUpdate", Hook.GossipFrameOptionsUpdate)
-    _G.hooksecurefunc("GossipFrameAvailableQuestsUpdate", Hook.GossipFrameAvailableQuestsUpdate)
-    _G.hooksecurefunc("GossipFrameActiveQuestsUpdate", Hook.GossipFrameActiveQuestsUpdate)
-
     -----------------
     -- GossipFrame --
     -----------------
     local GossipFrame = _G.GossipFrame
     Skin.FrameTypeFrame(GossipFrame)
     GossipFrame:SetBackdropOption("offsets", {
-        left = 14,
-        right = 34,
-        top = 14,
-        bottom = 75,
+        left = 16,
+        right = 30,
+        top = 12,
+        bottom = 5,
     })
 
     local bg = GossipFrame:GetBackdropTexture("bg")
-    _G.GossipFramePortrait:Hide()
-    _G.GossipFrameNpcNameText:ClearAllPoints()
-    _G.GossipFrameNpcNameText:SetPoint("TOPLEFT", bg)
-    _G.GossipFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    if private.isClassic then
+        _G.hooksecurefunc("GossipFrameOptionsUpdate", Hook.GossipFrameOptionsUpdate)
+        _G.hooksecurefunc("GossipFrameAvailableQuestsUpdate", Hook.GossipFrameAvailableQuestsUpdate)
+        _G.hooksecurefunc("GossipFrameActiveQuestsUpdate", Hook.GossipFrameActiveQuestsUpdate)
 
-    Skin.UIPanelCloseButton(_G.GossipFrameCloseButton)
+        _G.GossipFramePortrait:Hide()
+        _G.GossipFrameNpcNameText:ClearAllPoints()
+        _G.GossipFrameNpcNameText:SetPoint("TOPLEFT", bg)
+        _G.GossipFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
-    select(9, _G.GossipFrameGreetingPanel:GetRegions()):Hide() -- patch
-    Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
-    _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
+        Skin.UIPanelCloseButton(_G.GossipFrameCloseButton)
+        _G.GossipFrameCloseButton:ClearAllPoints()
+        _G.GossipFrameCloseButton:SetPoint("TOPRIGHT", bg, 7, 6)
 
-    Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
-    _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
-    _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -23, 30)
 
-    _G.GossipGreetingScrollFrameTop:Hide()
-    _G.GossipGreetingScrollFrameBottom:Hide()
-    _G.GossipGreetingScrollFrameMiddle:Hide()
+        Skin.GossipFramePanelTemplate(_G.GossipFrameGreetingPanel)
+        select(9, _G.GossipFrameGreetingPanel:GetRegions()):Hide() -- BotLeftPatch
 
-    for i = 1, _G.NUMGOSSIPBUTTONS do
-        Skin.GossipTitleButtonTemplate(_G["GossipTitleButton"..i])
+        Skin.UIPanelButtonTemplate(_G.GossipFrameGreetingGoodbyeButton)
+        _G.GossipFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -4, 4)
+        Skin.UIPanelScrollFrameTemplate(_G.GossipGreetingScrollFrame)
+        _G.GossipGreetingScrollFrame:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
+        _G.GossipGreetingScrollFrame:SetPoint("BOTTOMRIGHT", bg, -24, 29)
+
+        _G.GossipGreetingScrollFrameTop:Hide()
+        _G.GossipGreetingScrollFrameBottom:Hide()
+        _G.GossipGreetingScrollFrameMiddle:Hide()
+
+        for i = 1, _G.NUMGOSSIPBUTTONS do
+            Skin.GossipTitleButtonTemplate(_G["GossipTitleButton"..i])
+        end
+    else
+        GossipFrame.PortraitContainer.portrait:Hide()
+        GossipFrame.TitleContainer.TitleText:ClearAllPoints()
+        GossipFrame.TitleContainer.TitleText:SetPoint("TOPLEFT", bg)
+        GossipFrame.TitleContainer.TitleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        Skin.UIPanelCloseButton(GossipFrame.CloseButton)
+        GossipFrame.CloseButton:ClearAllPoints()
+        GossipFrame.CloseButton:SetPoint("TOPRIGHT", bg, 8, 7)
+
+        local GreetingPanel = GossipFrame.GreetingPanel
+        Skin.GossipFramePanelTemplate(GreetingPanel)
+        select(9, GreetingPanel:GetRegions()):Hide() -- BotLeftPatch
+
+        Skin.UIPanelButtonTemplate(GreetingPanel.GoodbyeButton)
+        GreetingPanel.GoodbyeButton:SetPoint("BOTTOMRIGHT", bg, -4, 4)
+        Skin.WowScrollBoxList(GreetingPanel.ScrollBox)
+        GreetingPanel.ScrollBox:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
+        GreetingPanel.ScrollBox:SetPoint("BOTTOMRIGHT", bg, -23, 30)
+        Util.Mixin(GreetingPanel.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
+
+        Skin.WowTrimScrollBar(GreetingPanel.ScrollBar)
+        GreetingPanel.ScrollBar:SetPoint("TOPLEFT", GreetingPanel.ScrollBox, "TOPRIGHT", -2, 2)
+        GreetingPanel.ScrollBar:SetPoint("BOTTOMLEFT", GreetingPanel.ScrollBox, "BOTTOMRIGHT", -2, -2)
     end
 end

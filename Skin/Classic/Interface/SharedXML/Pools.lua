@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals select
+-- luacheck: globals select tostring
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -25,6 +25,17 @@ do --[[ SharedXML\Pools.lua ]]
         --print("Acquire", template)
         Util.CheckTemplate(EnumerateActive(self), "ObjectPoolMixin", (", "):split(template))
     end
+
+
+    local function FramePoolCollection_GetPoolKey(template, specialization)
+        return template..tostring(specialization);
+    end
+
+    Hook.FramePoolCollectionMixin = {}
+    function Hook.FramePoolCollectionMixin:CreatePool(frameType, parent, template, resetterFunc, forbidden, specialization)
+        local poolKey = FramePoolCollection_GetPoolKey(template, specialization)
+        Util.Mixin(self.pools[poolKey], Hook.ObjectPoolMixin)
+    end
 end
 
 
@@ -36,4 +47,8 @@ function private.SharedXML.Pools()
     Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)
     Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)
     Util.Mixin(_G.ActorPoolMixin, Hook.ObjectPoolMixin)
+
+    if private.isWrath then
+        Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin)
+    end
 end

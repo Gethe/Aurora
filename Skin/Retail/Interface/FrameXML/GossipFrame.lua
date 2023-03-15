@@ -66,9 +66,10 @@ function private.FrameXML.GossipFrame()
     Skin.GossipFramePanelTemplate(GreetingPanel)
 
     Skin.UIPanelButtonTemplate(GreetingPanel.GoodbyeButton)
+    GreetingPanel.GoodbyeButton:SetPoint("BOTTOMRIGHT", bg, -4, 4)
     Skin.WowScrollBoxList(GreetingPanel.ScrollBox)
     GreetingPanel.ScrollBox:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
-    GreetingPanel.ScrollBox:SetPoint("BOTTOMRIGHT", bg, -23, 30)
+    GreetingPanel.ScrollBox:SetPoint("BOTTOMRIGHT", bg, -23, 29)
     Util.Mixin(GreetingPanel.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
 
     Skin.WowTrimScrollBar(GreetingPanel.ScrollBar)

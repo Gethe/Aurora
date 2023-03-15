@@ -15,6 +15,7 @@ local Skin = Aurora.Skin
 do --[[ FrameXML\TrimScrollBar.xml ]]
     function Skin.WowTrimScrollBarStepperScripts(Frame)
         Skin.FrameTypeButton(Frame)
+        Frame:SetWidth(17)
         Frame.Texture:Hide()
         Frame.Overlay:SetAlpha(0)
 
@@ -41,7 +42,7 @@ do --[[ FrameXML\TrimScrollBar.xml ]]
 
         local tex = EventFrame:GetRegions()
         tex:SetPoint("TOPLEFT", 4, -20)
-        tex:SetPoint("BOTTOMRIGHT", -3, 21)
+        tex:SetPoint("BOTTOMRIGHT", -4, 20)
 
         EventFrame.Background:Hide()
         EventFrame.Track:SetAllPoints(tex)
@@ -50,7 +51,7 @@ do --[[ FrameXML\TrimScrollBar.xml ]]
         Skin.WowTrimScrollBarStepperScripts(EventFrame.Back)
         EventFrame.Back:SetPoint("TOPLEFT", 4, -2)
         Skin.WowTrimScrollBarStepperScripts(EventFrame.Forward)
-        EventFrame.Forward:SetPoint("BOTTOMLEFT", 4, 3)
+        EventFrame.Forward:SetPoint("BOTTOMLEFT", 4, 2)
     end
 end
 

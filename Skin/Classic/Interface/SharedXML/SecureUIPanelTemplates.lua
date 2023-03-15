@@ -59,15 +59,29 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         Base.SetTexture(arrow, "arrowDown")
     end
     function Skin.UIPanelScrollBarTemplate(Slider)
+        Slider:SetWidth(17)
+
+        local tex = Slider:CreateTexture(nil, "BACKGROUND")
+        tex:SetColorTexture(0, 0, 0, 0.75)
+        tex:SetPoint("TOPLEFT", 0, -2)
+        tex:SetPoint("BOTTOMRIGHT", 0, 2)
+
         Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
+        Slider.ScrollUpButton:ClearAllPoints()
+        Slider.ScrollUpButton:SetPoint("BOTTOMLEFT", Slider, "TOPLEFT", 0, 0)
+
         Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
+        Slider.ScrollDownButton:ClearAllPoints()
+        Slider.ScrollDownButton:SetPoint("TOPLEFT", Slider, "BOTTOMLEFT", 0, 0)
+
         Skin.ScrollBarThumb(Slider.ThumbTexture)
     end
 
     function Skin.UIPanelScrollFrameTemplate(ScrollFrame)
+        Base.SetBackdrop(ScrollFrame, Color.frame)
         Skin.UIPanelScrollBarTemplate(ScrollFrame.ScrollBar)
-        ScrollFrame.ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
-        ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
+        ScrollFrame.ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 3, -16)
+        ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 3, 16)
     end
     function Skin.InputScrollFrameTemplate(ScrollFrame)
         Skin.UIPanelScrollFrameTemplate(ScrollFrame)

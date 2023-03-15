@@ -39,17 +39,16 @@ do --[[ SharedXML\TrimScrollBar.xml ]]
     function Skin.WowTrimScrollBar(EventFrame)
         Skin.VerticalScrollBarTemplate(EventFrame)
 
-        local tex = EventFrame:GetRegions()
-        tex:SetPoint("TOPLEFT", 0, 3)
-        tex:SetPoint("BOTTOMRIGHT", 0, 0)
+        local tex = EventFrame.Backplate
+        tex:SetPoint("TOPLEFT", 4, -20)
+        tex:SetPoint("BOTTOMRIGHT", -3, 21)
 
         EventFrame.Background:Hide()
-        EventFrame.Track:SetPoint("TOPLEFT", 4, -17)
-        EventFrame.Track:SetPoint("BOTTOMRIGHT", -4, 20)
+        EventFrame.Track:SetAllPoints(tex)
         Skin.WowTrimScrollBarThumbScripts(EventFrame.Track.Thumb)
 
         Skin.WowTrimScrollBarStepperScripts(EventFrame.Back)
-        EventFrame.Back:SetPoint("TOPLEFT", 4, 1)
+        EventFrame.Back:SetPoint("TOPLEFT", 4, -2)
         Skin.WowTrimScrollBarStepperScripts(EventFrame.Forward)
         EventFrame.Forward:SetPoint("BOTTOMLEFT", 4, 2)
     end
