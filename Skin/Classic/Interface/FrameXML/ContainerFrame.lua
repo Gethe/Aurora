@@ -41,7 +41,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
             local slotID, _ = itemButton:GetID()
             local quality, link
             if private.isClassic then
-                _, _, _, quality, _, _, link = _G.C_Container.GetContainerItemInfo(bagID, slotID)
+                _, _, _, quality, _, _, link = _G.GetContainerItemInfo(bagID, slotID)
             else
                 local info = _G.C_Container.GetContainerItemInfo(bagID, slotID);
                 quality = info and info.quality;

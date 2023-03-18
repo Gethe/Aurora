@@ -263,6 +263,9 @@ function private.FrameXML.MailFrame()
 
     local MailEditBox = _G.MailEditBox
     Skin.ScrollingEditBoxTemplate(MailEditBox)
+    if private.isWrath then
+        MailEditBox:SetTextColor(Color.grayLight)
+    end
     MailEditBox:SetPoint("TOPLEFT", 10, -83)
     MailEditBox:SetWidth(298)
 
@@ -338,12 +341,6 @@ function private.FrameXML.MailFrame()
     select(2, _G.OpenMailScrollFrame:GetRegions()):Hide() -- OpenScrollBarBackgroundBottom
     _G.OpenStationeryBackgroundLeft:Hide()
     _G.OpenStationeryBackgroundRight:Hide()
-
-    local openScrollBG = _G.CreateFrame("Frame", nil, _G.OpenMailScrollFrame)
-    openScrollBG:SetFrameLevel(_G.OpenMailScrollFrame:GetFrameLevel() - 1)
-    openScrollBG:SetPoint("TOPLEFT", 0, 2)
-    openScrollBG:SetPoint("BOTTOMRIGHT", 20, -2)
-    Base.SetBackdrop(openScrollBG, Color.frame)
 
     _G.OpenMailScrollChildFrame:SetSize(298, 257)
     _G.OpenMailBodyText:SetPoint("TOPLEFT", 2, -2)

@@ -44,7 +44,11 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button.icon:SetPoint("TOPLEFT", bg, 1, -1)
         Button.icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 
-        Button:SetNormalTexture("")
+        if private.isClassic then
+            Button:SetNormalTexture("")
+        else
+            Button:ClearNormalTexture()
+        end
         Base.CropIcon(Button:GetPushedTexture())
         Base.CropIcon(Button:GetHighlightTexture())
     end
