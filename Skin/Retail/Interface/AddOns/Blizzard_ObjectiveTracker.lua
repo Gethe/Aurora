@@ -295,9 +295,11 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
         local bar = Frame.Bar
         Skin.FrameTypeStatusBar(bar)
 
-        bar.BarFrame:Hide()
-        --bar.IconBG:SetColorTexture(0, 0, 0)
-        bar.BarBG:Hide()
+        bar.BarFrame:SetAlpha(0)
+        bar.BarFrame2:SetAlpha(0)
+        bar.BarFrame3:SetAlpha(0)
+        bar.IconBG:SetAlpha(0)
+        bar.BarBG:SetAlpha(0)
         bar.Icon:SetMask("")
         bar.Icon:SetSize(26, 26)
         bar.Icon:SetPoint("RIGHT", 33, 0)
