@@ -28,7 +28,9 @@ do --[[ FrameXML\PetPaperDollFrame.lua ]]
             tinsert(tabs, _G.PetPaperDollFrameTab3)
         end
 
-        Util.PositionRelative("BOTTOMLEFT", _G.CompanionModelFrame._bg, "TOPLEFT", 20, 1, 1, "Right", tabs)
+        if #tabs > 0 then
+            Util.PositionRelative("BOTTOMLEFT", _G.CompanionModelFrame._bg, "TOPLEFT", 20, 1, 1, "Right", tabs)
+        end
     end
 end
 
