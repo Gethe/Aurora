@@ -85,11 +85,11 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroFrameTextBackground:SetPoint("BOTTOMRIGHT", _G.MacroFrameScrollFrame, 20, -2)
 
     Skin.TabButtonTemplate(_G.MacroFrameTab1)
-    _G.MacroFrameTab1:ClearAllPoints()
-    _G.MacroFrameTab1:SetPoint("BOTTOMLEFT", _G.MacroButtonScrollFrame, "TOPLEFT", 20, 0)
     Skin.TabButtonTemplate(_G.MacroFrameTab2)
-    _G.MacroFrameTab2:ClearAllPoints()
-    _G.MacroFrameTab2:SetPoint("BOTTOMLEFT", _G.MacroFrameTab1, "BOTTOMRIGHT", 10, 0)
+    Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.MacroFrameTab1,
+        _G.MacroFrameTab2,
+    })
 
     Skin.UIPanelButtonTemplate(_G.MacroDeleteButton)
     _G.MacroDeleteButton:SetPoint("BOTTOMLEFT", bg, 5, 5)
