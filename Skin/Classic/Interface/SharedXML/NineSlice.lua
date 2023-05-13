@@ -45,6 +45,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         TooltipMixedLayout = BasicFrame,
         UniqueCornersLayout = BasicFrame,
         IdenticalCornersLayout = BasicFrame,
+        SelectionFrameTemplate = BasicFrame,
     }
 
     local function GetNameforLayout(userLayout)

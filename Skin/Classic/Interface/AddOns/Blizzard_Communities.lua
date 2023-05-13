@@ -293,11 +293,19 @@ function private.AddOns.Blizzard_Communities()
     --  CommunitiesAvatarPickerDialog  --
     ----====####$$$$%%%%%$$$$####====----
     local CommunitiesAvatarPickerDialog = _G.CommunitiesAvatarPickerDialog
-    Base.CreateBackdrop(CommunitiesAvatarPickerDialog, private.backdrop, {
-        bg = select(9, CommunitiesAvatarPickerDialog:GetRegions())
-    })
+    CommunitiesAvatarPickerDialog.debug = "CommunitiesAvatarPickerDialog"
+    if private.isClassic then
+        Base.CreateBackdrop(CommunitiesAvatarPickerDialog, private.backdrop, {
+            bg = select(9, CommunitiesAvatarPickerDialog:GetRegions())
+        })
+    else
+        CommunitiesAvatarPickerDialog.Center = CommunitiesAvatarPickerDialog:GetRegions()
+    end
     Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog)
     Skin.ListScrollFrameTemplate(CommunitiesAvatarPickerDialog.ScrollFrame)
+
+    CommunitiesAvatarPickerDialog:ClearAllPoints()
+    CommunitiesAvatarPickerDialog:SetPoint("TOP", 0, -140)
 
     ----====####$$$$%%%%$$$$####====----
     --  CommunitiesAddDialogInsecure  --
