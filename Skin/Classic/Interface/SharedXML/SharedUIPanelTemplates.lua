@@ -16,7 +16,7 @@ do -- BlizzWTF: These are not templates, but they should be
             if self.settingHighlight then return end
             self.settingHighlight = true
             if private.isClassic then
-            self:SetHighlightTexture("")
+                self:SetHighlightTexture("")
             else
                 self:ClearHighlightTexture()
             end
@@ -571,9 +571,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         if Frame.debug then
             _G.print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
         end
-        if layout then
-            Hook.NineSliceUtil.ApplyLayout(Frame, layout)
-        end
+        Hook.NineSliceUtil.ApplyLayout(Frame, layout)
     end
     function Skin.DialogBorderNoCenterTemplate(Frame)
         Skin.NineSlicePanelTemplate(Frame)

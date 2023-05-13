@@ -258,6 +258,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
     function Skin.UIPanelCloseButtonDefaultAnchors(Button)
         Skin.UIPanelCloseButton(Button)
+        Button:SetPoint("TOPRIGHT", 1.2, 0)
     end
     function Skin.UIPanelGoldButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
@@ -400,9 +401,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         if Frame.debug then
             _G.print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
         end
-        if layout then
-            Hook.NineSliceUtil.ApplyLayout(Frame, layout)
-        end
+        Hook.NineSliceUtil.ApplyLayout(Frame, layout)
     end
     function Skin.InsetFrameTemplate(Frame)
         Frame.NineSlice.Center = Frame.Bg
