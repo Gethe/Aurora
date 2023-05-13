@@ -38,7 +38,11 @@ do --[[ FrameXML\ActionBarController.xml ]]
             CheckButton.AutoCastShine:SetPoint("TOPLEFT", 2, -2)
             CheckButton.AutoCastShine:SetPoint("BOTTOMRIGHT", -2, 2)
 
-            CheckButton:SetNormalTexture("")
+            if private.isClassic then
+                CheckButton:SetNormalTexture("")
+            else
+                CheckButton:ClearNormalTexture()
+            end
             Base.CropIcon(CheckButton:GetPushedTexture())
             Base.CropIcon(CheckButton:GetHighlightTexture())
             Base.CropIcon(CheckButton:GetCheckedTexture())

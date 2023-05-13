@@ -51,5 +51,9 @@ function private.FrameXML.MainMenuBarBagButtons()
     pushed:SetTexCoord(0.625, 0.03125, 0.03125, 0.84375, 0.921875, 0.171875, 0.34375, 0.984375)
     pushed:SetAllPoints(normal)
 
-    KeyRingButton:GetHighlightTexture():SetTexture("")
+    if private.isClassic then
+        KeyRingButton:SetHighlightTexture("")
+    else
+        KeyRingButton:ClearHighlightTexture()
+    end
 end

@@ -111,8 +111,13 @@ do --[[ FrameXML\LootFrame.xml ]]
         Base.SetBackdrop(nameBG, Color.frame)
         Frame._auroraNameBG = nameBG
 
-        Frame:SetNormalTexture("")
-        Frame:SetPushedTexture("")
+        if private.isClassic then
+            Frame:SetNormalTexture("")
+            Frame:SetPushedTexture("")
+        else
+            Frame:ClearNormalTexture()
+            Frame:ClearPushedTexture()
+        end
     end
     function Skin.BonusRollFrameTemplate(Frame)
         Frame:HookScript("OnShow", Hook.BonusRollFrame_OnShow)

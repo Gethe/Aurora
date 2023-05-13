@@ -12,7 +12,11 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_AuctionUI.lua ]]
     function Hook.FilterButton_SetUp(button, info)
-        button:SetNormalTexture("")
+        if private.isClassic then
+            button:SetNormalTexture("")
+        else
+            button:ClearNormalTexture()
+        end
 
         local highlight = button:GetHighlightTexture()
         if info.type == "subSubCategory" then
@@ -124,7 +128,11 @@ do --[[ AddOns\Blizzard_AuctionUITemplates.xml ]]
         })
 
         Button:GetRegions():SetTexture("") -- lines
-        Button:SetNormalTexture("")
+        if private.isClassic then
+            Button:SetNormalTexture("")
+        else
+            Button:ClearNormalTexture()
+        end
 
         local highlight = Button:GetHighlightTexture()
         highlight:ClearAllPoints()

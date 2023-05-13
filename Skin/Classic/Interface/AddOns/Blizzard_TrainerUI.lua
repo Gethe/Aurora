@@ -22,7 +22,11 @@ do --[[ AddOns\Blizzard_TrainerUI.lua ]]
 
             if serviceType == "header" then
                 skillButton._minus:Show()
-                skillButton:GetHighlightTexture():SetTexture("")
+                if private.isClassic then
+                    skillButton:SetHighlightTexture("")
+                else
+                    skillButton:ClearHighlightTexture()
+                end
             else
                 skillButton._minus:Hide()
                 skillButton._plus:Hide()

@@ -21,7 +21,11 @@ do --[[ FrameXML\StaticPopup.xml ]]
     local function CloseButton_SetNormalTexture(Button, texture)
         if Button._setNormal then return end
         Button._setNormal = true
-        Button:SetNormalTexture("")
+        if private.isClassic then
+            Button:SetNormalTexture("")
+        else
+            Button:ClearNormalTexture()
+        end
         if texture:find("Hide") then
             Button._auroraTextures[1]:Hide()
             Button._auroraTextures[2]:Hide()
@@ -36,7 +40,11 @@ do --[[ FrameXML\StaticPopup.xml ]]
     local function CloseButton_SetPushedTexture(Button, texture)
         if Button._setPushed then return end
         Button._setPushed = true
-        Button:SetPushedTexture("")
+        if private.isClassic then
+            Button:SetPushedTexture("")
+        else
+            Button:ClearPushedTexture()
+        end
         Button._setPushed = nil
     end
     function Skin.StaticPopupTemplate(Frame)

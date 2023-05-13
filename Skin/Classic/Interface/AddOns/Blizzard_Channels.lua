@@ -49,8 +49,13 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
             _G.hooksecurefunc(Button, "Update", Hook.ChannelButtonHeaderMixin.Update)
 
             Skin.ChannelButtonBaseTemplate(Button)
-            Button:SetNormalTexture("")
-            Button:SetHighlightTexture("")
+            if private.isClassic then
+                Button:SetNormalTexture("")
+                Button:SetHighlightTexture("")
+            else
+                Button:ClearNormalTexture()
+                Button:ClearHighlightTexture()
+            end
             Base.SetBackdrop(Button, Color.button)
             Base.SetHighlight(Button)
 

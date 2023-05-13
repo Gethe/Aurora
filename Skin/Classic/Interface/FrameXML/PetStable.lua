@@ -49,7 +49,11 @@ do --[[ FrameXML\PetStable.xml ]]
         Base.CropIcon(_G[name.."IconTexture"])
         _G[name.."Background"]:Hide()
 
-        CheckButton:SetNormalTexture("")
+        if private.isClassic then
+            CheckButton:SetNormalTexture("")
+        else
+            CheckButton:ClearNormalTexture()
+        end
         Base.CropIcon(CheckButton:GetPushedTexture())
         Base.CropIcon(CheckButton:GetHighlightTexture())
         Base.CropIcon(CheckButton:GetCheckedTexture())

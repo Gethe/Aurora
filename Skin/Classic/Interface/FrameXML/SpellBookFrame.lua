@@ -64,8 +64,13 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
 
         Button:SetHeight(28)
         Button:SetHitRectInsets(0, 0, 0, 0)
-        Button:SetNormalTexture("")
-        Button:SetHighlightTexture("")
+        if private.isClassic then
+            Button:SetNormalTexture("")
+            Button:SetHighlightTexture("")
+        else
+            Button:ClearNormalTexture()
+            Button:ClearHighlightTexture()
+        end
         Button._auroraTabResize = true
     end
     function Skin.SpellButtonTemplate(CheckButton)
@@ -95,7 +100,11 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
         autoCast:SetPoint("BOTTOMRIGHT")
         autoCast:SetTexCoord(0.2344, 0.75, 0.25, 0.75)
 
-        CheckButton:SetNormalTexture("")
+        if private.isClassic then
+            CheckButton:SetNormalTexture("")
+        else
+            CheckButton:ClearNormalTexture()
+        end
         Base.CropIcon(CheckButton:GetPushedTexture())
         Base.CropIcon(CheckButton:GetHighlightTexture())
         Base.CropIcon(CheckButton:GetCheckedTexture())

@@ -14,7 +14,11 @@ local Skin = Aurora.Skin
 do --[[ FrameXML\OptionsFrameTemplates.xml ]]
     function Skin.OptionsFrameTabButtonTemplate(Button)
         local name = Button:GetName()
-        Button:SetHighlightTexture("")
+        if private.isClassic then
+            Button:SetHighlightTexture("")
+        else
+            Button:ClearHighlightTexture()
+        end
 
         _G[name.."LeftDisabled"]:SetAlpha(0)
         _G[name.."MiddleDisabled"]:SetAlpha(0)

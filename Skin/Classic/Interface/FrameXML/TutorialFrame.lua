@@ -88,9 +88,15 @@ function private.FrameXML.TutorialFrame()
     Skin.UICheckButtonTemplate(_G.TutorialFrameCheckButton)
 
     -- BlizzWTF: This should use the UIPanelButtonTemplate
-    _G.TutorialFrameOkayButton:SetNormalTexture("")
-    _G.TutorialFrameOkayButton:SetPushedTexture("")
-    _G.TutorialFrameOkayButton:SetHighlightTexture("")
+    if private.isClassic then
+        _G.TutorialFrameOkayButton:SetNormalTexture("")
+        _G.TutorialFrameOkayButton:SetHighlightTexture("")
+        _G.TutorialFrameOkayButton:SetPushedTexture("")
+    else
+        _G.TutorialFrameOkayButton:ClearNormalTexture()
+        _G.TutorialFrameOkayButton:ClearHighlightTexture()
+        _G.TutorialFrameOkayButton:ClearPushedTexture()
+    end
     Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button)
     Base.SetHighlight(_G.TutorialFrameOkayButton)
 end

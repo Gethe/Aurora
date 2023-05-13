@@ -132,11 +132,15 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         Skin.UIPanelButtonNoTooltipTemplate(Button)
     end
     function Skin.SelectionFrameTemplate(Frame)
-        Skin.FrameTypeFrame(Frame)
-        Frame.TopLeft:ClearAllPoints()
-        Frame.TopRight:ClearAllPoints()
-        Frame.BottomLeft:ClearAllPoints()
-        Frame.BottomRight:ClearAllPoints()
+        if private.isClassic then
+            Skin.FrameTypeFrame(Frame)
+            Frame.TopLeft:ClearAllPoints()
+            Frame.TopRight:ClearAllPoints()
+            Frame.BottomLeft:ClearAllPoints()
+            Frame.BottomRight:ClearAllPoints()
+        else
+            Skin.NineSlicePanelTemplate(Frame)
+        end
 
         Skin.UIPanelButtonTemplate(Frame.CancelButton)
         Skin.UIPanelButtonTemplate(Frame.OkayButton)

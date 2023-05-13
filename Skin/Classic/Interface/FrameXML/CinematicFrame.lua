@@ -18,13 +18,7 @@ end
 
 do --[[ FrameXML\CinematicFrame.xml ]]
     function Skin.CinematicDialogButtonTemplate(Button)
-        Button:SetNormalTexture("")
-        Button:SetPushedTexture("")
-        Button:SetDisabledTexture("")
-        Button:SetHighlightTexture("")
-
-        Base.SetBackdrop(Button, Color.button)
-        Base.SetHighlight(Button)
+        Skin.FrameTypeButton(Button)
     end
 end
 

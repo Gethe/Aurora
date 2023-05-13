@@ -15,7 +15,11 @@ do -- BlizzWTF: These are not templates, but they should be
         local function Hook_SetHighlightTexture(self, texture)
             if self.settingHighlight then return end
             self.settingHighlight = true
+            if private.isClassic then
             self:SetHighlightTexture("")
+            else
+                self:ClearHighlightTexture()
+            end
             self.settingHighlight = nil
         end
         local function Hook_SetPushedTexture(self, texture)
