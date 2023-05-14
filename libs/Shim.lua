@@ -1,4 +1,5 @@
 local WagoAnalyticsShim = LibStub:NewLibrary("WagoAnalytics", 2)
+local GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
 
 function WagoAnalyticsShim:Register(wagoID)
 	local WagoAnalytics = WagoAnalytics
