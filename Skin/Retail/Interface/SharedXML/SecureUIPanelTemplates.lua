@@ -45,82 +45,19 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
         EditBox.Middle:Hide()
     end
 
-    function Skin.UIPanelScrollBarButton(Button)
-        Skin.FrameTypeButton(Button)
-        Button:SetBackdropOption("offsets", {
-            left = 0,
-            right = 1,
-            top = 0,
-            bottom = 0,
-        })
-
-        local bg = Button:GetBackdropTexture("bg")
-        local arrow = Button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", bg, 3, -5)
-        arrow:SetPoint("BOTTOMRIGHT", bg, -3, 5)
-        Button._auroraTextures = {arrow}
-    end
-    function Skin.UIPanelScrollUpButtonTemplate(Button)
-        Skin.UIPanelScrollBarButton(Button)
-
-        local arrow = Button._auroraTextures[1]
-        Base.SetTexture(arrow, "arrowUp")
-    end
-    function Skin.UIPanelScrollDownButtonTemplate(Button)
-        Skin.UIPanelScrollBarButton(Button)
-
-        local arrow = Button._auroraTextures[1]
-        Base.SetTexture(arrow, "arrowDown")
-    end
-    function Skin.UIPanelScrollBarTemplate(Slider)
-        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
-        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
-        Skin.ScrollBarThumb(Slider.ThumbTexture)
-    end
-
-    function Skin.UIPanelScrollFrameTemplate(ScrollFrame)
-        Skin.UIPanelScrollBarTemplate(ScrollFrame.ScrollBar)
-        ScrollFrame.ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
-        ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
+    function Skin.ScrollFrameTemplate(ScrollFrame)
+        if not ScrollFrame.noScrollBar then
+            if ScrollFrame.scrollBarTemplate then
+                Skin[ScrollFrame.scrollBarTemplate](ScrollFrame.ScrollBar)
+            else
+                Skin[_G.SCROLL_FRAME_SCROLL_BAR_TEMPLATE](ScrollFrame.ScrollBar)
+            end
+        end
+        ---ScrollFrame.ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
+        ---ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
     end
     function Skin.InputScrollFrameTemplate(ScrollFrame)
-        Skin.UIPanelScrollFrameTemplate(ScrollFrame)
-        Base.CreateBackdrop(ScrollFrame, {
-            offsets = {
-                left = -4,
-                right = -4,
-                top = -3,
-                bottom = -4,
-            }
-        }, {
-            bg = ScrollFrame.MiddleTex,
-
-            l = ScrollFrame.LeftTex,
-            r = ScrollFrame.RightTex,
-            t = ScrollFrame.TopTex,
-            b = ScrollFrame.BottomTex,
-
-            tl = ScrollFrame.TopLeftTex,
-            tr = ScrollFrame.TopRightTex,
-            bl = ScrollFrame.BottomLeftTex,
-            br = ScrollFrame.BottomRightTex,
-
-            borderLayer = "BACKGROUND",
-            borderSublevel = -7,
-        })
-        Base.SetBackdrop(ScrollFrame, Color.frame)
-        ScrollFrame:SetBackdropBorderColor(Color.button)
-    end
-    function Skin.FauxScrollFrameTemplate(ScrollFrame)
-        Skin.UIPanelScrollFrameTemplate(ScrollFrame)
-    end
-    function Skin.ListScrollFrameTemplate(ScrollFrame)
-        Skin.FauxScrollFrameTemplate(ScrollFrame)
-        ScrollFrame.ScrollBarTop:Hide()
-        ScrollFrame.ScrollBarBottom:Hide()
-
-        local _, _, middle = ScrollFrame:GetRegions()
-        middle:Hide()
+        Skin.ScrollFrameTemplate(ScrollFrame)
     end
     function Skin.UIPanelButtonNoTooltipTemplate(Button)
         Skin.FrameTypeButton(Button)

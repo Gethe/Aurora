@@ -587,60 +587,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Slider._auroraThumb = thumb
     end
 
-    function Skin.UIPanelStretchableArtScrollBarTemplate(Slider)
-        Skin.UIPanelScrollBarTemplate(Slider)
-
-        Slider.Top:Hide()
-        Slider.Bottom:Hide()
-        Slider.Middle:Hide()
-
-        Slider.Background:Hide()
-    end
-    function Skin.UIPanelScrollBarTemplateLightBorder(Slider)
-        local name = Slider:GetName()
-
-        Skin.UIPanelScrollUpButtonTemplate(_G[name.."ScrollUpButton"])
-        Skin.UIPanelScrollDownButtonTemplate(_G[name.."ScrollDownButton"])
-        _G[name.."Border"].NineSlice:Hide()
-
-        Skin.ScrollBarThumb(Slider:GetThumbTexture())
-    end
-    function Skin.UIPanelScrollFrameTemplate2(Slider)
-        Skin.UIPanelScrollFrameTemplate(Slider)
-
-        Slider.Top:SetAlpha(0)
-        Slider.Bottom:SetAlpha(0)
-        Slider.Middle:SetAlpha(0)
-    end
-    function Skin.MinimalScrollBarTemplate(Slider)
-        Slider.trackBG:Hide()
-        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
-        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
-
-        Skin.ScrollBarThumb(Slider:GetThumbTexture())
-    end
-    function Skin.MinimalScrollBarWithBorderTemplate(Slider)
-        Slider.Track:Hide()
-        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
-        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
-        Slider.ScrollUpBorder:Hide()
-        Slider.ScrollDownBorder:Hide()
-        Slider.Border:Hide()
-
-        Skin.ScrollBarThumb(Slider:GetThumbTexture())
-    end
-    function Skin.MinimalScrollFrameTemplate(ScrollFrame)
-        Skin.MinimalScrollBarTemplate(ScrollFrame.ScrollBar)
-    end
-    function Skin.FauxScrollFrameTemplateLight(ScrollFrame)
-        local name = ScrollFrame:GetName()
-
-        local scrollBar = _G[name.."ScrollBar"]
-        Skin.UIPanelScrollBarTemplateLightBorder(scrollBar)
-        scrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
-        scrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
-    end
-
     function Skin.SpinnerButton(Button)
         Skin.FrameTypeButton(Button)
         Button:SetBackdropOption("offsets", {
