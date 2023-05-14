@@ -12,7 +12,7 @@ local Color = Aurora.Color
 do --[[ FrameXML\ReputationFrame.lua ]]
     function Hook.ReputationFrame_OnShow(self)
         -- The TOPRIGHT anchor for ReputationBar1 is set in C code
-        _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -49)
+        _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -(private.FRAME_TITLE_HEIGHT + 22))
     end
     function Hook.ReputationFrame_SetRowType(factionRow, isChild, isHeader, hasRep)
         if isHeader then
@@ -37,7 +37,16 @@ do --[[ FrameXML\ReputationFrame.lua ]]
             end
         end
     end
+
+    local hasShown = false
     function Hook.ReputationFrame_Update(self)
+        if not hasShown then
+            hasShown = true
+            _G.ReputationFrame:Hide()
+            _G.ReputationFrame:Show()
+            return
+        end
+
         for i = 1, _G.NUM_FACTIONS_DISPLAYED do
             local factionRow = _G["ReputationBar"..i]
             if factionRow.index then
@@ -57,6 +66,8 @@ do --[[ FrameXML\ReputationFrame.lua ]]
                 end
             end
         end
+
+        Hook.ReputationFrame_OnShow(self)
     end
 end
 
