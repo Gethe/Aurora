@@ -161,34 +161,36 @@ do -- Base.SetHighlight
     local function OnEnter(button)
         if ShowHighlight(button) and not button._isHighlighted then
             button._returnColor = GetReturnColor(button)
-            if button._onEnter then
-                button:_onEnter()
-            else
-                local highlight = Color.highlight
-                if button.IsEnabled and not button:IsEnabled() then
-                    highlight = highlight:Lightness(-0.3)
-                end
 
-                local alpha = button._returnColor.a or highlight.a
-                Base.SetBackdropColor(button._auroraBDFrame or button, highlight, alpha)
+            local highlight = Color.highlight
+            if button.IsEnabled and not button:IsEnabled() then
+                highlight = highlight:Lightness(-0.3)
             end
+            local alpha = button._returnColor.a or highlight.a
+
+            button:_onEnter(highlight, alpha)
             button._isHighlighted = true
         end
     end
     local function OnLeave(button)
         if not ShowHighlight(button) and button._isHighlighted then
-            if button._onLeave then
-                button:_onLeave()
-            else
-                Base.SetBackdropColor(button._auroraBDFrame or button, button._returnColor)
-            end
+            button:_onLeave(button._returnColor)
             button._isHighlighted = false
         end
     end
+
+    local function BaseOnEnter(self, highlight, alpha)
+        Base.SetBackdropColor(self._auroraBDFrame or self, highlight, alpha)
+    end
+    local function BaseOnLeave(self, returnColor)
+        Base.SetBackdropColor(self._auroraBDFrame or self, returnColor)
+    end
+
+
     function Base.SetHighlight(button, onEnter, onLeave)
         button._returnColor = GetReturnColor(button)
-        button._onEnter = onEnter
-        button._onLeave = onLeave
+        button._onEnter = onEnter or BaseOnEnter
+        button._onLeave = onLeave or BaseOnLeave
 
         button:HookScript("OnEnter", OnEnter)
         button:HookScript("OnLeave", OnLeave)

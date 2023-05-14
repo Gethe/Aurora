@@ -129,7 +129,7 @@ function private.OnLoad()
     local Skin = Aurora.Skin
 
     _G.hooksecurefunc(Skin, "FrameTypeButton", function(Button)
-        if AuroraConfig.buttonsHaveGradient then
+        if AuroraConfig.buttonsHaveGradient and Button.SetBackdropGradient then
             Button:SetBackdropGradient()
         end
     end)

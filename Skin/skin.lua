@@ -18,21 +18,36 @@ end
 
 
 do -- Button
-    local DISABLED_COLOR = Color.Lightness(Color.button, -0.3)
-    local function Hook_Enable(self)
-        Base.SetBackdropColor(self, self._enabledColor)
+    local function SetTexturesToColor(self, color)
         if self._auroraTextures then
             for _, texture in next, self._auroraTextures do
-                texture:SetVertexColor(Color.white:GetRGB())
+                texture:SetVertexColor(color:GetRGB())
             end
         end
     end
+    local function MinimalOnEnter(self, highlight, alpha)
+        SetTexturesToColor(self, highlight)
+    end
+    local function MinimalOnLeave(self, returnColor)
+        SetTexturesToColor(self, returnColor)
+    end
+
+
+    local DISABLED_COLOR = Color.Lightness(Color.button, -0.3)
+    local function Hook_Enable(self)
+        if self._isMinimal then
+            SetTexturesToColor(self, self._enabledColor)
+        else
+            Base.SetBackdropColor(self, self._enabledColor)
+            SetTexturesToColor(self, Color.white)
+        end
+    end
     local function Hook_Disable(self)
-        Base.SetBackdropColor(self, self._disabledColor)
-        if self._auroraTextures then
-            for _, texture in next, self._auroraTextures do
-                texture:SetVertexColor(Color.gray:GetRGB())
-            end
+        if self._isMinimal then
+            SetTexturesToColor(self, self._disabledColor)
+        else
+            Base.SetBackdropColor(self, self._disabledColor)
+            SetTexturesToColor(self, Color.gray)
         end
     end
     local function Hook_SetEnabled(self, enabledState)
@@ -64,10 +79,15 @@ do -- Button
         end
 
         function Button:SetButtonColor(color, alpha, disabledColor)
-            Base.SetBackdrop(self, color, alpha)
+            local r, g, b, a, _
+            if Button._isMinimal then
+                r, g, b = color:GetRGB()
+            else
+                Base.SetBackdrop(self, color, alpha)
+                _, _, _, a = self:GetBackdropColor()
+                r, g, b = self:GetBackdropBorderColor()
+            end
 
-            local _, _, _, a = self:GetBackdropColor()
-            local r, g, b = self:GetBackdropBorderColor()
 
             self._enabledColor = Color.Create(r, g, b, alpha or a)
 
@@ -87,8 +107,13 @@ do -- Button
             return self._enabledColor, self._disabledColor
         end
 
-        Button:SetButtonColor(Color.button, nil, DISABLED_COLOR)
-        Base.SetHighlight(Button, OnEnter, OnLeave)
+        if Button._isMinimal then
+            Button:SetButtonColor(Color.grayLight, 1, Color.gray)
+            Base.SetHighlight(Button, MinimalOnEnter, MinimalOnLeave)
+        else
+            Button:SetButtonColor(Color.button, nil, DISABLED_COLOR)
+            Base.SetHighlight(Button, OnEnter, OnLeave)
+        end
     end
 end
 
@@ -185,5 +210,75 @@ do -- StatusBar
         else
             Hook_SetStatusBarColor(StatusBar, red, green, blue)
         end
+    end
+end
+
+
+do -- ScrollBar
+    local function UpdateTexture(self)
+        local tex = self._auroraTextures[1]
+        local texAnchor = self
+
+        tex:ClearAllPoints()
+        local length, width = 14, 7
+        if self._isMinimal then
+            length, width = 12, 6
+        end
+
+        local isDecrement = self.direction == _G.ScrollControllerMixin.Directions.Decrease
+        if self.isHorizontal then
+            tex:SetSize(width, length)
+            tex:SetPoint("TOPLEFT", texAnchor, 1, -1)
+            if isDecrement then
+                Base.SetTexture(tex, "arrowLeft")
+            else
+                Base.SetTexture(tex, "arrowRight")
+            end
+        else
+            tex:SetSize(length, width)
+            if isDecrement then
+                tex:SetPoint("BOTTOMLEFT", texAnchor, 3, 1)
+                Base.SetTexture(tex, "arrowUp")
+            else
+                tex:SetPoint("TOPLEFT", texAnchor, 3, 0)
+                Base.SetTexture(tex, "arrowDown")
+            end
+        end
+    end
+    local function ScrollBarButton(Button, notMinimal)
+        Button._isMinimal = not notMinimal
+        Skin.FrameTypeButton(Button)
+
+        if notMinimal then
+            Button:SetBackdropOption("offsets", {
+                left = 2,
+                right = 1,
+                top = 0,
+                bottom = 1,
+            })
+        end
+
+        local tex = Button:GetRegions()
+        if Button.direction then
+            Button._auroraTextures = {tex}
+            if Button.UpdateAtlas then
+                _G.hooksecurefunc(Button, "UpdateAtlas", UpdateTexture)
+                Button:HookScript("OnDisable", UpdateTexture)
+            else
+                Button:HookScript("OnShow", UpdateTexture)
+            end
+
+            UpdateTexture(Button)
+        else
+            tex:Hide()
+        end
+    end
+
+    function Skin.FrameTypeScrollBar(ScrollBar, notMinimal)
+        local back = ScrollBar.Back
+        ScrollBarButton(back, notMinimal)
+
+        local forward = ScrollBar.Forward
+        ScrollBarButton(forward, notMinimal)
     end
 end
