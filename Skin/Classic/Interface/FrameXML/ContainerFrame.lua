@@ -109,13 +109,14 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         nameText:SetPoint("BOTTOMRIGHT", Frame.ClickableTitleFrame, -19, 0)
 
         local bg = Frame:GetBackdropTexture("bg")
-        local moneyBG = _G.CreateFrame("Frame", nil, _G[name.."MoneyFrame"])
+        local moneyFrame = _G[name.."MoneyFrame"]
+        local moneyBG = _G.CreateFrame("Frame", nil, moneyFrame)
         Base.SetBackdrop(moneyBG, Color.frame)
         moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
-        local moneyFrame = _G[name.."MoneyFrame"]
-        moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
-        moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 23)
-        moneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 3)
+        moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
+        moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)
+        moneyBG:SetPoint("LEFT", bg, 3, 0)
+        moneyBG:SetPoint("RIGHT", bg, -3, 0)
 
         Frame.PortraitButton:Hide()
         Skin.UIPanelCloseButton(_G[name.."CloseButton"])

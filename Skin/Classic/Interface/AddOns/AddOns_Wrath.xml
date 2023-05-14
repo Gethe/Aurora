@@ -45,7 +45,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\..\Interface_Wrath\AddOns\Blizzard_StoreUI.lua"/-->
     <Script file="..\..\Interface_Wrath\AddOns\Blizzard_TalentUI.lua"/>
     <Script file="Blizzard_TimeManager.lua"/>
-    <!--Script file="..\..\Interface_Wrath\AddOns\Blizzard_TokenUI.lua"/-->
+    <Script file="..\..\Interface_Wrath\AddOns\Blizzard_TokenUI.lua"/>
     <Script file="..\..\Interface_Wrath\AddOns\Blizzard_TradeSkillUI.lua"/>
     <Script file="Blizzard_TrainerUI.lua"/>
     <Script file="Blizzard_UIWidgets.lua"/>
