@@ -293,7 +293,6 @@ function private.AddOns.Blizzard_Communities()
     --  CommunitiesAvatarPickerDialog  --
     ----====####$$$$%%%%%$$$$####====----
     local CommunitiesAvatarPickerDialog = _G.CommunitiesAvatarPickerDialog
-    CommunitiesAvatarPickerDialog.debug = "CommunitiesAvatarPickerDialog"
     if private.isClassic then
         Base.CreateBackdrop(CommunitiesAvatarPickerDialog, private.backdrop, {
             bg = select(9, CommunitiesAvatarPickerDialog:GetRegions())
