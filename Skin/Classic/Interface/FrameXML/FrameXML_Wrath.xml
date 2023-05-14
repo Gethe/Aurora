@@ -249,7 +249,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\..\Interface_TBC\FrameXML\BankFrame.lua"/>
     <Script file="ItemRef.lua"/>
     <Script file="..\..\Interface_Wrath\FrameXML\FriendsFrame.lua"/>
-    <!--Script file="..\..\Interface_Wrath\FrameXML\RaidFrame.lua"/-->
+    <Script file="..\..\Interface_Wrath\FrameXML\RaidFrame.lua"/>
     <Script file="PetActionBarFrame.lua"/>
     <!--Script file="MultiCastActionBarFrame.lua"/-->
     <Script file="..\..\Interface_Wrath\FrameXML\MainMenuBarBagButtons.lua"/>
