@@ -24,8 +24,6 @@ local F, C = {}, {}
 Aurora[1] = F
 Aurora[2] = C
 
-Aurora.Profile.trackTable(F, "F")
-
 C.classcolours = _G.CUSTOM_CLASS_COLORS
 C.backdrop = private.backdrop
 C.media = {

@@ -124,98 +124,9 @@ local Aurora = {
     Skin = {},
     Color = {},
     Util = {},
-    Profile = {},
 }
 private.Aurora = Aurora
 _G.Aurora = Aurora
-
-if _G.GetCVar("scriptProfile") == "1" then
-    local profile, timeDecay, trackTable = Aurora.Profile, 60
-    local function UpdateUsage(info)
-        if info.isUpdating then return end
-        info.isUpdating = true
-
-        info.prev = info.total
-        info.total = math.max(info.total, _G.GetFunctionCPUUsage(info.func, true))
-
-        local time = info.total - info.prev
-        if time > 0 then
-            info.time = time
-        else
-            info.time = info.time / timeDecay
-            if info.time < 0.000001 then
-                info.time = 0
-            end
-        end
-
-        info.isUpdating = false
-    end
-
-    _G.C_Timer.NewTicker(1, function()
-        for i = 1, #profile do
-            UpdateUsage(profile[i])
-        end
-    end)
-
-    local function trackFunction(func, name)
-        local info = {
-            num = 0,
-            time = 0,
-            total = 0,
-            prev = 0,
-            name = name,
-            isUpdating = false,
-        }
-
-        if profile[name] then
-            profile[name] = profile[name] + 1
-            info.name = info.name..profile[name]
-        else
-            profile[name] = 1
-        end
-        tinsert(profile, info)
-
-        info.func = function(...)
-            local ret = func(...)
-
-            UpdateUsage(info)
-            info.num = info.num + 1
-
-            return ret
-        end
-        return info.func
-    end
-    function trackTable(table, name)
-        local mt = {
-            __newindex = function(t, k, v)
-                local n = name.."."..k
-                if type(v) == "table" then
-                    trackTable(v, n)
-                    rawset(t, k, v)
-                elseif v then
-                    rawset(t, k, trackFunction(v, n))
-                end
-            end
-        }
-        setmetatable(table, mt)
-    end
-
-    trackTable(Aurora.Base, "Base")
-    trackTable(Aurora.Hook, "Hook")
-    trackTable(Aurora.Skin, "Skin")
-    trackTable(Aurora.Util, "Util")
-
-    profile.trackTable = trackTable
-    profile.trackFunction = trackFunction
-    profile.host = ADDON_NAME
-else
-    local profile = Aurora.Profile
-    profile.trackTable = private.nop
-    profile.trackFunction = function(...)
-        return ...
-    end
-    profile.host = ADDON_NAME
-end
 
 do -- set up file order
     private.fileOrder = {}
