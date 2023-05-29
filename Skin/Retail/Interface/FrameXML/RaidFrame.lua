@@ -40,7 +40,7 @@ function private.FrameXML.RaidFrame()
 
     Skin.UIPanelCloseButton(_G.RaidInfoCloseButton)
     Skin.WowScrollBoxList(RaidInfoFrame.ScrollBox)
-    Skin.WowTrimScrollBar(RaidInfoFrame.ScrollBar)
+    Skin.MinimalScrollBar(RaidInfoFrame.ScrollBar)
     Skin.UIPanelButtonTemplate(_G.RaidInfoExtendButton)
     Skin.UIPanelButtonTemplate(_G.RaidInfoCancelButton)
 end

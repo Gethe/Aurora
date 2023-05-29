@@ -28,7 +28,7 @@ function private.AddOns.Blizzard_NewPlayerExperienceGuide()
     GuideFrame.Title:SetTextColor(private.PAPER_FRAME_TITLE_COLOR:GetRGB())
 
     local ScrollFrame = GuideFrame.ScrollFrame
+    Skin.ScrollFrameTemplate(ScrollFrame)
     ScrollFrame.Child.Text:SetTextColor(private.PAPER_FRAME_TITLE_COLOR:GetRGB())
     Skin.UIPanelButtonTemplate(ScrollFrame.ConfirmationButton)
-    Skin.MinimalScrollBarWithBorderTemplate(ScrollFrame.ScrollBar)
 end

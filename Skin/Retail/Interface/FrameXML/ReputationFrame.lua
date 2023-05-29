@@ -130,9 +130,9 @@ function private.FrameXML.ReputationFrame()
     _G.ReputationFrameStandingLabel:SetPoint("TOPRIGHT", -75, -32)
 
     Skin.WowScrollBoxList(ReputationFrame.ScrollBox)
-    ReputationFrame.ScrollBox:SetPoint("TOPLEFT", _G.CharacterFrame.Inset, 4, -16)
+    ReputationFrame.ScrollBox:SetPoint("TOPLEFT", _G.CharacterFrame.Inset, 4, -26)
 
-    Skin.WowTrimScrollBar(ReputationFrame.ScrollBar)
+    Skin.MinimalScrollBar(ReputationFrame.ScrollBar)
 
 
     ---------------------------

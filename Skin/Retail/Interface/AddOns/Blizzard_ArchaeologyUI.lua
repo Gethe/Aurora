@@ -173,7 +173,7 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     _G.ArchaeologyFrameArtifactPageSolveFrameStatusBarBarBG:Hide()
 
     Skin.UIPanelButtonTemplate(artifactPage.backButton)
-    Skin.MinimalScrollFrameTemplate(artifactPage.historyScroll)
+    Skin.ScrollFrameTemplate(artifactPage.historyScroll)
     artifactPage.historyScroll.child.text:SetTextColor(r, g, b)
 
 
@@ -196,7 +196,7 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     _G.ArchaeologyFrameHelpPageDigTex:SetTexCoord(0.056640625, 0.857421875, 0.171875, 0.90234375)
     _G.ArchaeologyFrameHelpPageDigTitle:SetTextColor(r, g, b)
     _G.ArchaeologyFrameHelpPageDigTitle:SetPoint("TOP", _G.ArchaeologyFrameHelpPageDigTex, 0, 19)
-    Skin.MinimalScrollFrameTemplate(_G.ArchaeologyFrameHelpPageHelpScroll)
+    Skin.ScrollFrameTemplate(_G.ArchaeologyFrameHelpPageHelpScroll)
     _G.ArchaeologyFrameHelpPageHelpScrollHelpText:SetTextColor(r, g, b)
 
 

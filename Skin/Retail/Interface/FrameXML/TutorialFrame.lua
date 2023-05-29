@@ -112,7 +112,7 @@ function private.FrameXML.TutorialFrame()
     title:SetJustifyH("CENTER")
     title:SetJustifyV("MIDDLE")
 
-    Skin.UIPanelScrollFrameTemplate(_G.TutorialFrameTextScrollFrame)
+    Skin.ScrollFrameTemplate(_G.TutorialFrameTextScrollFrame)
     Skin.UIPanelCloseButton(_G.TutorialFrameCloseButton)
 
     -- BlizzWTF: This should use the UIPanelButtonTemplate

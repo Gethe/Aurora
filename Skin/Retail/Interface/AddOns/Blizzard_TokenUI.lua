@@ -108,7 +108,7 @@ function private.AddOns.Blizzard_TokenUI()
     local TokenFrame = _G.TokenFrame
     _G.hooksecurefunc("TokenFrame_InitTokenButton", Hook.TokenFrame_InitTokenButton)
     Skin.WowScrollBoxList(TokenFrame.ScrollBox)
-    Skin.WowTrimScrollBar(TokenFrame.ScrollBar)
+    Skin.MinimalScrollBar(TokenFrame.ScrollBar)
 
     local TokenFramePopup = _G.TokenFramePopup
     Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)

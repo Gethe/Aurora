@@ -47,6 +47,6 @@ function private.AddOns.Blizzard_TrainerUI()
 
     Skin.ClassTrainerSkillButtonTemplate(ClassTrainerFrame.skillStepButton)
     Skin.WowScrollBoxList(ClassTrainerFrame.ScrollBox)
-    Skin.WowTrimScrollBar(ClassTrainerFrame.ScrollBar)
+    Skin.MinimalScrollBar(ClassTrainerFrame.ScrollBar)
     Skin.InsetFrameTemplate(ClassTrainerFrame.bottomInset)
 end

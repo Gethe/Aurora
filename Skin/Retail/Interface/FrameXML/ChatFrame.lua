@@ -61,6 +61,9 @@ do --[[ FrameXML\ChatFrame.lua ]]
 end
 
 do --[[ FrameXML\ChatFrame.xml ]]
+    function Skin.ChatFrameTemplate(ScrollingMessageFrame)
+        Skin.MinimalScrollBar(ScrollingMessageFrame.ScrollBar)
+    end
     function Skin.ChatFrameEditBoxTemplate(EditBox)
         Skin.FrameTypeEditBox(EditBox)
 

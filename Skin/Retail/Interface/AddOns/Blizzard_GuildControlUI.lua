@@ -72,7 +72,7 @@ function private.AddOns.Blizzard_GuildControlUI()
     Skin.UIDropDownMenuTemplate(bankTabFrame.dropdown)
     bankTabFrame.dropdown.Button:SetWidth(24)
     Skin.InsetFrameTemplate2(bankTabFrame.inset)
-    Skin.UIPanelScrollFrameTemplate2(bankTabFrame.inset.scrollFrame)
+    Skin.ScrollFrameTemplate(bankTabFrame.inset.scrollFrame)
 
     local rankPermFrame = GuildControlUI.rankPermFrame
     Skin.UIDropDownMenuTemplate(rankPermFrame.dropdown)

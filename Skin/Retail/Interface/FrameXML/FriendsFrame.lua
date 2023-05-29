@@ -197,7 +197,7 @@ function private.FrameXML.FriendsFrame()
     Skin.UIDropDownMenuTemplate(FriendsListFrame.FilterDropDown)
     Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
     Skin.WowScrollBoxList(FriendsListFrame.ScrollBox)
-    Skin.WowTrimScrollBar(FriendsListFrame.ScrollBar)
+    Skin.MinimalScrollBar(FriendsListFrame.ScrollBar)
 
 
     ----------------------
@@ -207,7 +207,7 @@ function private.FrameXML.FriendsFrame()
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameIgnorePlayerButton)
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameUnsquelchButton)
     Skin.WowScrollBoxList(IgnoreListFrame.ScrollBox)
-    Skin.WowTrimScrollBar(IgnoreListFrame.ScrollBar)
+    Skin.MinimalScrollBar(IgnoreListFrame.ScrollBar)
 
 
     --------------
@@ -246,7 +246,7 @@ function private.FrameXML.FriendsFrame()
     })
 
     Skin.WowScrollBoxList(WhoFrame.ScrollBox)
-    Skin.WowTrimScrollBar(WhoFrame.ScrollBar)
+    Skin.MinimalScrollBar(WhoFrame.ScrollBar)
 
 
 
@@ -306,7 +306,7 @@ function private.FrameXML.FriendsFrame()
     Skin.UIDropDownMenuTemplate(_G.FriendsFriendsFrameDropDown)
     Util.HideNineSlice(FriendsFriendsFrame.ScrollFrameBorder)
     Skin.WowScrollBoxList(FriendsFriendsFrame.ScrollBox)
-    Skin.WowTrimScrollBar(FriendsFriendsFrame.ScrollBar)
+    Skin.MinimalScrollBar(FriendsFriendsFrame.ScrollBar)
     Skin.UIPanelButtonTemplate(FriendsFriendsFrame.SendRequestButton)
     Skin.UIPanelButtonTemplate(FriendsFriendsFrame.CloseButton)
 

@@ -14,7 +14,7 @@ local Skin = Aurora.Skin
 do --[[ SharedXML\Selector\Blizzard_ScrollBoxSelector.xml ]]
     function Skin.ScrollBoxSelectorTemplate(Frame)
         Skin.SelectorTemplate(Frame)
-        Skin.WowTrimScrollBar(Frame.ScrollBar)
+        Skin.MinimalScrollBar(Frame.ScrollBar)
         Skin.WowScrollBoxList(Frame.ScrollBox)
     end
 end

@@ -58,7 +58,7 @@ function private.AddOns.Blizzard_MacroUI()
     _G.MacroEditButton:ClearAllPoints()
     _G.MacroEditButton:SetPoint("BOTTOMLEFT", _G.MacroFrameSelectedMacroButton, "BOTTOMRIGHT", 5, -5)
 
-    Skin.UIPanelScrollFrameTemplate(_G.MacroFrameScrollFrame)
+    Skin.ScrollFrameTemplate(_G.MacroFrameScrollFrame)
     _G.MacroFrameScrollFrame:SetPoint("TOPLEFT", MacroFrame.MacroSelector, "BOTTOMLEFT", 0, -80)
     _G.MacroFrameScrollFrame:SetPoint("BOTTOMRIGHT", -28, 42)
     _G.MacroFrameTextButton:SetAllPoints(_G.MacroFrameScrollFrame)

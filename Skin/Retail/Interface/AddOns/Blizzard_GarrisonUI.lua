@@ -328,7 +328,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             Frame.FollowerScrollFrame:Hide()
             Skin.SearchBoxTemplate(Frame.SearchBox)
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
     do --[[ Blizzard_GarrisonCapacitiveDisplay.xml ]]
@@ -595,7 +595,7 @@ function private.AddOns.Blizzard_GarrisonUI()
     LandingReport.Background:SetAlpha(0.5)
     LandingReport.List:GetRegions():SetDesaturated(true)
     Skin.WowScrollBoxList(LandingReport.List.ScrollBox)
-    Skin.WowTrimScrollBar(LandingReport.List.ScrollBar)
+    Skin.MinimalScrollBar(LandingReport.List.ScrollBar)
     LandingReport.InProgress:GetNormalTexture():SetAlpha(0)
     LandingReport.InProgress:ClearHighlightTexture()
     LandingReport.Available:GetNormalTexture():SetAlpha(0)

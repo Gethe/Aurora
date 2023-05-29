@@ -118,9 +118,9 @@ function private.AddOns.Blizzard_GuildBankUI()
     })
 
     for i = 1, 4 do
-        Skin.GuildBankFrameTabTemplate(GuildBankFrame.FrameTabs[i])
+        Skin.GuildBankFrameTabTemplate(GuildBankFrame.Tabs[i])
     end
-    Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", GuildBankFrame.FrameTabs)
+    Util.PositionRelative("TOPLEFT", bg, "BOTTOMLEFT", 20, -1, 1, "Right", GuildBankFrame.Tabs)
 
     for i = 1, 8 do
         Skin.GuildBankTabTemplate(GuildBankFrame.BankTabs[i])
@@ -148,13 +148,7 @@ function private.AddOns.Blizzard_GuildBankUI()
         bottom = -5,
     })
 
-    Skin.FauxScrollFrameTemplate(Log.TransactionsScrollFrame)
-    Log.TransactionsScrollFrame:ClearAllPoints()
-    Log.TransactionsScrollFrame:SetPoint("TOPLEFT", Log.MessageFrame, 0, 0)
-    Log.TransactionsScrollFrame:SetPoint("BOTTOMRIGHT", Log.MessageFrame, -19, 0)
-    local top, bottom = Log.TransactionsScrollFrame:GetRegions()
-    top:Hide()
-    bottom:Hide()
+    Skin.MinimalScrollBar(Log.ScrollBar)
 
     -------------------
     -- GuildBankInfo --
@@ -163,7 +157,7 @@ function private.AddOns.Blizzard_GuildBankUI()
     Skin.UIPanelButtonTemplate(Info.SaveButton)
     Info.SaveButton:SetPoint("BOTTOMLEFT", GuildBankFrame.MoneyFrameBG, "TOPLEFT", 0, 5)
 
-    Skin.UIPanelScrollFrameTemplate(Info.ScrollFrame)
+    Skin.ScrollFrameTemplate(Info.ScrollFrame)
     Base.SetBackdrop(Info.ScrollFrame, Color.gray, 0.5)
     Info.ScrollFrame:SetPoint("TOPLEFT", bg, 25, -42)
     Info.ScrollFrame:SetPoint("BOTTOMRIGHT", bg, -40, 65)
@@ -174,54 +168,12 @@ function private.AddOns.Blizzard_GuildBankUI()
         bottom = -5,
     })
 
-    top, bottom = Info.ScrollFrame:GetRegions()
-    top:Hide()
-    bottom:Hide()
-
     -------------------------
     -- GuildBankPopupFrame --
     -------------------------
     local GuildBankPopupFrame = _G.GuildBankPopupFrame
+    Skin.IconSelectorPopupFrameTemplate(GuildBankPopupFrame)
     GuildBankPopupFrame:HookScript("OnShow", Hook.GuildBankPopupFrameMixin.OnShow)
-
-    local BorderBox = GuildBankPopupFrame.BorderBox
-    Base.CreateBackdrop(BorderBox, private.backdrop, {
-        bg = GuildBankPopupFrame.BG
-    })
-    Skin.FrameTypeFrame(BorderBox)
-    BorderBox:SetBackdropOption("offsets", {
-        left = 5,
-        right = 5,
-        top = 5,
-        bottom = 5,
-    })
-
-    local popupBG = BorderBox:GetBackdropTexture("bg")
-    for i = 1, 9 do
-        select(i, GuildBankPopupFrame.BorderBox:GetRegions()):Hide()
-    end
-
-    local chooseIconLabel = select(10, BorderBox:GetRegions())
-    chooseIconLabel:ClearAllPoints()
-    chooseIconLabel:SetPoint("BOTTOMLEFT", GuildBankPopupFrame.ScrollFrame, "TOPLEFT", -1, 1)
-
-    Skin.FrameTypeEditBox(GuildBankPopupFrame.EditBox)
-    GuildBankPopupFrame.EditBox:SetPoint("TOPLEFT", popupBG, 20, -20)
-    _G.GuildBankPopupNameLeft:Hide()
-    _G.GuildBankPopupNameMiddle:Hide()
-    _G.GuildBankPopupNameRight:Hide()
-
-    Skin.UIPanelButtonTemplate(GuildBankPopupFrame.CancelButton)
-    Skin.UIPanelButtonTemplate(GuildBankPopupFrame.OkayButton)
-    Util.PositionRelative("BOTTOMRIGHT", popupBG, "BOTTOMRIGHT", -5, 5, 5, "Left", {
-        GuildBankPopupFrame.CancelButton,
-        GuildBankPopupFrame.OkayButton,
-    })
-
-    Skin.ListScrollFrameTemplate(GuildBankPopupFrame.ScrollFrame)
-    GuildBankPopupFrame.ScrollFrame:ClearAllPoints()
-    GuildBankPopupFrame.ScrollFrame:SetPoint("TOPLEFT", popupBG, 25, -60)
-    GuildBankPopupFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", popupBG, -23, 33)
 
     ------------------------
     -- GuildItemSearchBox --

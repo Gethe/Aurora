@@ -27,7 +27,7 @@ function private.FrameXML.TabardFrame()
     local TabardFrame = _G.TabardFrame
     Skin.ButtonFrameTemplate(TabardFrame)
 
-    for i = 7, 16 do -- OuterFrame textures
+    for i = 4, 13 do -- OuterFrame textures
         _G.select(i, TabardFrame:GetRegions()):Hide()
     end
 

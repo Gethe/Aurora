@@ -27,7 +27,7 @@ function private.FrameXML.RaidFrame()
     -------------------
     Skin.DialogBorderDarkTemplate(_G.RaidInfoFrame)
     _G.RaidInfoFrame:SetPoint("TOPLEFT", _G.RaidFrame, "TOPRIGHT", 1, -28)
-    local bg = RaidInfoFrame:GetBackdropTexture("bg")
+    local bg = _G.RaidInfoFrame:GetBackdropTexture("bg")
 
     _G.RaidInfoDetailHeader:Hide()
     _G.RaidInfoDetailFooter:Hide()

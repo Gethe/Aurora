@@ -91,7 +91,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             Skin.GarrisonMissionBaseFrameTemplate(Frame)
 
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
         function Skin.GarrisonListTemplateHeader(Frame)
             Skin.GarrisonListTemplate(Frame)

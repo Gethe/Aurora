@@ -108,16 +108,13 @@ do --[[ FrameXML\ActionBarController.lua ]]
     end
     do --[[ StatusTrackingManager.lua ]]
         Hook.StatusTrackingManagerMixin = {}
-        function Hook.StatusTrackingManagerMixin:AddBarFromTemplate(frameType, template)
-            Skin[template](self.bars[#self.bars])
-        end
-        function Hook.StatusTrackingManagerMixin:HideStatusBars()
-            for i, bar in ipairs(self.bars) do
-                Util.ReleaseBarTicks(bar.StatusBar)
+        function Hook.StatusTrackingManagerMixin:UpdateBarTicks()
+            for i, barContainer in ipairs(self.barContainers) do
+                local shownBar = barContainer.bars[barContainer.shownBarIndex];
+                if shownBar then
+                    Util.PositionBarTicks(shownBar.StatusBar, 10, Color.frame)
+                end
             end
-        end
-        function Hook.StatusTrackingManagerMixin:LayoutBar(bar, isTopBar)
-            Util.PositionBarTicks(bar.StatusBar, 10, Color.frame)
         end
     end
     do --[[ ExpBar.xml ]]
@@ -203,7 +200,18 @@ do --[[ FrameXML\ActionBarController.xml ]]
         end
     end
     do --[[ StatusTrackingBarTemplate.xml ]]
+        local statusBarMap = {
+            "ReputationStatusBarTemplate",
+            "HonorStatusBarTemplate",
+            "ArtifactStatusBarTemplate",
+            "ExpStatusBarTemplate",
+            "AzeriteBarTemplate",
+        }
         function Skin.StatusTrackingBarTemplate(Frame)
+            _G.hooksecurefunc(Frame, "Hide", function(self)
+                Util.ReleaseBarTicks(self.StatusBar)
+            end)
+
             local StatusBar = Frame.StatusBar
             Skin.FrameTypeStatusBar(StatusBar)
             Base.SetBackdropColor(StatusBar, Color.frame)
@@ -211,6 +219,12 @@ do --[[ FrameXML\ActionBarController.xml ]]
             StatusBar.Background:Hide()
             StatusBar.Underlay:Hide()
             StatusBar.Overlay:Hide()
+        end
+        function Skin.StatusTrackingBarContainerTemplate(Frame)
+            Frame.BarFrameTexture:Hide()
+            for i, bar in ipairs(Frame.bars) do
+                Skin[statusBarMap[i]](bar)
+            end
         end
     end
     do --[[ ExpBar.xml ]]
@@ -442,11 +456,27 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%$$$$####====----
 
     ----====####$$$$%%%%$$$$####====----
+    --       ActionBarConstants       --
+    ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%$$$$####====----
+    --          ActionButton          --
+    ----====####$$$$%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
+    --      ActionButtonOverrides      --
+    ----====####$$$$%%%%%$$$$####====----
+
+    ----====####$$$$%%%%$$$$####====----
     --      ActionButtonTemplate      --
     ----====####$$$$%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
     --        ActionBarTemplate        --
+    ----====####$$$$%%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
+    --         MultiActionBars         --
     ----====####$$$$%%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
@@ -460,17 +490,17 @@ function private.FrameXML.ActionBarController()
     end
 
     ----====####$$$$%%%%%$$$$####====----
+    --     CustomActionBarOverlays     --
+    ----====####$$$$%%%%%$$$$####====----
+
+    ----====####$$$$%%%%%$$$$####====----
     --        StatusTrackingBar        --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
         Util.Mixin(_G.StatusTrackingBarManager, Hook.StatusTrackingManagerMixin)
-        _G.MainStatusTrackingBarContainer.BarFrameTexture:SetAlpha(0)
-        _G.SecondaryStatusTrackingBarContainer.BarFrameTexture:SetAlpha(0)
+        Skin.StatusTrackingBarContainerTemplate(_G.MainStatusTrackingBarContainer)
+        Skin.StatusTrackingBarContainerTemplate(_G.SecondaryStatusTrackingBarContainer)
     end
-
-    ----====####$$$$%%%%%$$$$####====----
-    --         MultiActionBars         --
-    ----====####$$$$%%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
     --        OverrideActionBar        --

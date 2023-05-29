@@ -11,6 +11,6 @@ local Skin = Aurora.Skin
 function private.FrameXML.QuickJoin()
     local QuickJoinFrame = _G.QuickJoinFrame
     Skin.WowScrollBoxList(QuickJoinFrame.ScrollBox)
-    Skin.WowTrimScrollBar(QuickJoinFrame.ScrollBar)
+    Skin.MinimalScrollBar(QuickJoinFrame.ScrollBar)
     Skin.MagicButtonTemplate(QuickJoinFrame.JoinQueueButton)
 end

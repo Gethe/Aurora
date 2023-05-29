@@ -164,7 +164,7 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(HonorFrame.DPSIcon)
     Skin.UIDropDownMenuTemplate(_G.HonorFrameTypeDropDown)
     Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
-    Skin.WowTrimScrollBar(HonorFrame.SpecificScrollBar)
+    Skin.MinimalScrollBar(HonorFrame.SpecificScrollBar)
 
     local BonusFrame = HonorFrame.BonusFrame
     BonusFrame.WorldBattlesTexture:Hide()

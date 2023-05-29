@@ -113,7 +113,7 @@ function private.FrameXML.RecruitAFriendFrame()
     RecruitList.Header.Background:Hide()
     Skin.InsetFrameTemplate(RecruitList.ScrollFrameInset)
     Skin.WowScrollBoxList(RecruitList.ScrollBox)
-    Skin.WowTrimScrollBar(RecruitList.ScrollBar)
+    Skin.MinimalScrollBar(RecruitList.ScrollBar)
 
     -- /run RecruitAFriendFrame:ShowSplashScreen()
     local SplashFrame = RecruitAFriendFrame.SplashFrame

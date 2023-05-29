@@ -72,5 +72,5 @@ function private.FrameXML.GossipFrame()
     GreetingPanel.ScrollBox:SetPoint("BOTTOMRIGHT", bg, -23, 29)
     Util.Mixin(GreetingPanel.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
 
-    Skin.WowTrimScrollBar(GreetingPanel.ScrollBar)
+    Skin.MinimalScrollBar(GreetingPanel.ScrollBar)
 end

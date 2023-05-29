@@ -116,19 +116,17 @@ function private.FrameXML.QuestMapFrame()
     -- QuestLogPopupDetailFrame --
     ------------------------------
     local QuestLogPopupDetailFrame = _G.QuestLogPopupDetailFrame
-    QuestLogPopupDetailFrame.Bg = QuestLogPopupDetailFrame:GetRegions() -- Bg from ButtonFrameTemplate
+    local frameBG, _, artBG, _, _, _, _, _, portrait = QuestLogPopupDetailFrame:GetRegions()
+    portrait:Hide()
+
+    QuestLogPopupDetailFrame.Bg = frameBG -- Bg from ButtonFrameTemplate
     Skin.ButtonFrameTemplate(QuestLogPopupDetailFrame)
-    QuestLogPopupDetailFrame.Bg = select(6, QuestLogPopupDetailFrame:GetRegions()) -- Bg from QuestFramePanelTemplate
+    QuestLogPopupDetailFrame.Bg = artBG -- Bg from QuestFramePanelTemplate
     Skin.QuestFramePanelTemplate(QuestLogPopupDetailFrame)
 
-    Skin.UIPanelScrollFrameTemplate(QuestLogPopupDetailFrame.ScrollFrame)
-    QuestLogPopupDetailFrame.ScrollFrame:SetPoint("TOPLEFT", 5, -(private.FRAME_TITLE_HEIGHT + 2))
+    Skin.ScrollFrameTemplate(QuestLogPopupDetailFrame.ScrollFrame)
+    QuestLogPopupDetailFrame.ScrollFrame:SetPoint("TOPLEFT", 5, -(private.FRAME_TITLE_HEIGHT + 5))
     QuestLogPopupDetailFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", -23, 32)
-
-    local scrollName = QuestLogPopupDetailFrame.ScrollFrame:GetName()
-    _G[scrollName.."Top"]:Hide()
-    _G[scrollName.."Bottom"]:Hide()
-    _G[scrollName.."Middle"]:Hide()
 
     local ShowMapButton = QuestLogPopupDetailFrame.ShowMapButton
     ShowMapButton.Texture:Hide()
@@ -167,6 +165,7 @@ function private.FrameXML.QuestMapFrame()
 
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
+    Skin.ScrollFrameTemplate(QuestsFrame)
     Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
@@ -198,13 +197,6 @@ function private.FrameXML.QuestMapFrame()
     QuestsFrame.DetailFrame.BottomDetail:Hide()
     QuestsFrame.DetailFrame.TopDetail:Hide()
 
-    Skin.UIPanelScrollBarTemplate(QuestsFrame.ScrollBar)
-    local _, top, bottom, middle = QuestsFrame.ScrollBar:GetRegions()
-    top:Hide()
-    bottom:Hide()
-    middle:Hide()
-    QuestsFrame.ScrollBar:SetPoint("TOPLEFT", QuestsFrame, "TOPRIGHT", 2, -17)
-    QuestsFrame.ScrollBar:SetPoint("BOTTOMLEFT", QuestsFrame, "BOTTOMRIGHT", 2, 17)
 
     Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
 
@@ -233,7 +225,7 @@ function private.FrameXML.QuestMapFrame()
     DetailsFrame.RewardsFrame.Background:Hide()
     select(2, DetailsFrame.RewardsFrame:GetRegions()):Hide()
 
-    Skin.MinimalScrollBarTemplate(DetailsFrame.ScrollFrame.ScrollBar)
+    Skin.ScrollFrameTemplate(DetailsFrame.ScrollFrame)
 
     bg, tile = DetailsFrame.CompleteQuestFrame:GetRegions()
     bg:Hide()

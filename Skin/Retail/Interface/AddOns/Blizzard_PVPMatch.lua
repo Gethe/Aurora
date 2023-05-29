@@ -54,7 +54,7 @@ function private.AddOns.Blizzard_PVPMatch()
     resultsContent.InsetBorderRight:Hide()
 
     Skin.WowScrollBoxList(resultsContent.scrollBox)
-    Skin.WowTrimScrollBar(resultsContent.scrollBar)
+    Skin.MinimalScrollBar(resultsContent.scrollBar)
 
     local tabContainer = resultsContent.tabContainer
     tabContainer.InsetBorderTop:Hide()
@@ -92,7 +92,7 @@ function private.AddOns.Blizzard_PVPMatch()
     scoreContent.InsetBorderRight:Hide()
 
     Skin.WowScrollBoxList(scoreContent.ScrollBox)
-    Skin.WowTrimScrollBar(scoreContent.ScrollBar)
+    Skin.MinimalScrollBar(scoreContent.ScrollBar)
 
     local scoreTabContainer = scoreContent.TabContainer
     scoreTabContainer.InsetBorderTop:Hide()

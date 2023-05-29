@@ -1217,6 +1217,91 @@ function commands.test()
                 }
             end
 
+            do -- Guild
+                local canSignPetition = true
+                function _G.CanSignPetition()
+                    return canSignPetition
+                end
+
+                local isOriginator = true
+                local petitionType = "guild"
+                local petitionTypes = {
+                    "guild",
+                    "arena",
+                }
+
+                local petitionInfo = {
+                    GetItem(24282),
+                    GetItem(13422),
+                    GetItem(16252),
+                    GetItem(11815),
+                    GetItem(14551),
+                    GetItem(17771),
+
+                    GetItem(18492),
+                    GetItem(22727),
+
+                    GetItem(401, true),
+                    GetItem(1534, true),
+                }
+                function _G.GetPetitionInfo()
+                        -- petitionType, title,            bodyText,    maxSignatures, originatorName, isOriginator, minSignatures
+                    return petitionType, "Petition Title", "Body Text", 10,            "Originator",   isOriginator, 5
+                end
+
+                test.args.guild = {
+                    name = "Guild",
+                    type = "group",
+                    args = {
+                        canSignPetition = {
+                            name = "canSignPetition",
+                            desc = "CanSignPetition()",
+                            type = "toggle",
+                            get = function() return canSignPetition end,
+                            set = function(info, value)
+                                canSignPetition = value
+                            end,
+                            order = 1,
+                        },
+                        isOriginator = {
+                            name = "isOriginator",
+                            type = "toggle",
+                            get = function() return isOriginator end,
+                            set = function(info, value)
+                                isOriginator = value
+                            end,
+                            order = 1,
+                        },
+                        petitionType = {
+                            name = "Petition type",
+                            type = "select",
+                            values = petitionTypes,
+                            get = function()
+                                for i, qType in _G.ipairs(petitionTypes) do
+                                    if qType == petitionType then
+                                        return i
+                                    end
+                                end
+                            end,
+                            set = function(info, value)
+                                petitionType = petitionTypes[value]
+                            end,
+                            order = 2,
+                        },
+                        petitionFrame = {
+                            name = "PetitionFrame",
+                            desc = "PetitionFrame",
+                            type = "execute",
+                            func = function()
+                                _G.ShowUIPanel(_G.PetitionFrame)
+                                _G.PetitionFrame_Update(_G.PetitionFrame)
+                            end,
+                            order = 10,
+                        },
+                    }
+                }
+            end
+
             if Aurora then -- Skins
                 local bdOptions = {
                     bgFile = "Interface/Tooltips/UI-Tooltip-Background",

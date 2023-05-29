@@ -101,7 +101,7 @@ function private.SharedXML.AddonList()
     AddonList.ScrollBox:SetPoint("TOPLEFT", 5, -60)
     AddonList.ScrollBox:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -21, 5)
 
-    Skin.WowTrimScrollBar(AddonList.ScrollBar)
+    Skin.MinimalScrollBar(AddonList.ScrollBar)
 
     Skin.UIDropDownMenuTemplate(_G.AddonCharacterDropDown)
     _G.AddonCharacterDropDown:SetPoint("TOPLEFT", 10, -27)

@@ -47,7 +47,7 @@ function private.SharedXML.SharedBasicControls()
     ScriptErrorsFrame:SetSize(600, 400)
     ScriptErrorsFrame:SetScale(_G.UIParent:GetScale())
 
-    Skin.UIPanelScrollFrameTemplate(ScriptErrorsFrame.ScrollFrame)
+    Skin.ScrollFrameTemplate(ScriptErrorsFrame.ScrollFrame)
     ScriptErrorsFrame.ScrollFrame:SetPoint("BOTTOMRIGHT", -26, 34)
     ScriptErrorsFrame.ScrollFrame.Text:SetPoint("BOTTOMRIGHT", -26, 34)
 

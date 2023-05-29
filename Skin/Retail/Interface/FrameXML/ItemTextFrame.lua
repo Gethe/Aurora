@@ -61,9 +61,7 @@ function private.FrameXML.ItemTextFrame()
 
     _G.ItemTextCurrentPage:SetPoint("TOP", 0, -(private.FRAME_TITLE_HEIGHT + 10))
 
-    Skin.UIPanelStretchableArtScrollBarTemplate(_G.ItemTextScrollFrame.ScrollBar)
-    _G.ItemTextScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, "TOPRIGHT", 1, -17)
-    _G.ItemTextScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.ItemTextScrollFrame, "BOTTOMRIGHT", 1, 17)
+    Skin.ScrollFrameTemplate(_G.ItemTextScrollFrame)
     _G.ItemTextPageText:SetPoint("TOPLEFT", _G.ItemTextScrollFrame, 10, -10)
     _G.ItemTextPageText:SetPoint("BOTTOMRIGHT", _G.ItemTextScrollFrame, -10, 10)
 

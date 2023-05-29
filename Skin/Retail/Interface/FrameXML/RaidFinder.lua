@@ -62,10 +62,7 @@ function private.FrameXML.RaidFinder()
     Skin.LFGRoleButtonTemplate(_G.RaidFinderQueueFrameRoleButtonLeader)
     Skin.UIDropDownMenuTemplate(_G.RaidFinderQueueFrameSelectionDropDown)
 
-    Skin.UIPanelScrollFrameTemplate(_G.RaidFinderQueueFrameScrollFrame)
-    _G.RaidFinderQueueFrameScrollFrameScrollBackground:Hide()
-    _G.RaidFinderQueueFrameScrollFrameScrollBackgroundTopLeft:Hide()
-    _G.RaidFinderQueueFrameScrollFrameScrollBackgroundBottomRight:Hide()
+    Skin.ScrollFrameTemplate(_G.RaidFinderQueueFrameScrollFrame)
     Skin.LFGRewardFrameTemplate(_G.RaidFinderQueueFrameScrollFrameChildFrame)
 
     Skin.LFGBackfillCoverTemplate(_G.RaidFinderQueueFramePartyBackfill)

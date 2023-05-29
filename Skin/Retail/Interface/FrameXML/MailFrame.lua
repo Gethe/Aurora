@@ -232,24 +232,9 @@ function private.FrameXML.MailFrame()
         select(i, _G.SendMailFrame:GetRegions()):Hide()
     end
 
-    Skin.UIPanelScrollFrameTemplate(_G.SendMailScrollFrame)
-    _G.SendMailScrollFrame:SetPoint("TOPLEFT", 10, -83)
-    _G.SendMailScrollFrame:SetWidth(298)
-
+    Skin.ScrollFrameTemplate(_G.SendMailScrollFrame)
     _G.SendStationeryBackgroundLeft:Hide()
     _G.SendStationeryBackgroundRight:Hide()
-    _G.SendScrollBarBackgroundTop:Hide()
-    select(4, _G.SendMailScrollFrame:GetRegions()):Hide() -- SendScrollBarBackgroundBottom
-
-    local sendScrollBG = _G.CreateFrame("Frame", nil, _G.SendMailScrollFrame)
-    sendScrollBG:SetFrameLevel(_G.SendMailScrollFrame:GetFrameLevel() - 1)
-    sendScrollBG:SetPoint("TOPLEFT", 0, 2)
-    sendScrollBG:SetPoint("BOTTOMRIGHT", 20, -2)
-    Base.SetBackdrop(sendScrollBG, Color.frame)
-
-    _G.SendMailScrollChildFrame:SetSize(298, 257)
-    _G.SendMailBodyEditBox:SetPoint("TOPLEFT", 2, -2)
-    _G.SendMailBodyEditBox:SetWidth(298)
 
     -- BlizzWTF: these should use InputBoxTemplate
     Skin.SendMailInputBox(_G.SendMailNameEditBox)
@@ -306,24 +291,9 @@ function private.FrameXML.MailFrame()
 
     Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
 
-    Skin.UIPanelScrollFrameTemplate(_G.OpenMailScrollFrame)
-    _G.OpenMailScrollFrame:SetPoint("TOPLEFT", 10, -83)
-    _G.OpenMailScrollFrame:SetWidth(298)
-
-    _G.OpenScrollBarBackgroundTop:Hide()
-    select(2, _G.OpenMailScrollFrame:GetRegions()):Hide() -- OpenScrollBarBackgroundBottom
+    Skin.ScrollFrameTemplate(_G.OpenMailScrollFrame)
     _G.OpenStationeryBackgroundLeft:Hide()
     _G.OpenStationeryBackgroundRight:Hide()
-
-    local openScrollBG = _G.CreateFrame("Frame", nil, _G.OpenMailScrollFrame)
-    openScrollBG:SetFrameLevel(_G.OpenMailScrollFrame:GetFrameLevel() - 1)
-    openScrollBG:SetPoint("TOPLEFT", 0, 2)
-    openScrollBG:SetPoint("BOTTOMRIGHT", 20, -2)
-    Base.SetBackdrop(openScrollBG, Color.frame)
-
-    _G.OpenMailScrollChildFrame:SetSize(298, 257)
-    _G.OpenMailBodyText:SetPoint("TOPLEFT", 2, -2)
-    _G.OpenMailBodyText:SetWidth(298)
 
     _G.OpenMailArithmeticLine:SetColorTexture(Color.grayLight:GetRGB())
     _G.OpenMailArithmeticLine:SetSize(256, 1)

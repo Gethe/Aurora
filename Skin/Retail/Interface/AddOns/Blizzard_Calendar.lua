@@ -86,9 +86,6 @@ do --[[ AddOns\Blizzard_Calendar.xml ]]
     function Skin.CalendarEventCloseButtonTemplate(Button)
         Skin.CalendarCloseButtonTemplate(Button)
     end
-    function Skin.CalendarEventDescriptionScrollFrame(ScrollFrame)
-        Skin.UIPanelScrollFrameTemplate(ScrollFrame)
-    end
     function Skin.CalendarEventInviteSortButtonTemplate(Button)
         local arrow = Button:GetRegions()
         arrow:SetSize(10, 5)

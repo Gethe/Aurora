@@ -87,16 +87,11 @@ function private.FrameXML.LFDFrame()
     Skin.LFGRoleButtonTemplate(_G.LFDQueueFrameRoleButtonLeader)
     Skin.UIDropDownMenuTemplate(_G.LFDQueueFrameTypeDropDown)
 
-    Skin.UIPanelScrollFrameTemplate(_G.LFDQueueFrameRandomScrollFrame)
-    _G.LFDQueueFrameRandomScrollFrame.ScrollBar:SetPoint("TOPLEFT", _G.LFDQueueFrameRandomScrollFrame, "TOPRIGHT", 2.4, -17)
-    _G.LFDQueueFrameRandomScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", _G.LFDQueueFrameRandomScrollFrame, "BOTTOMRIGHT", 2.4, 17)
-    _G.LFDQueueFrameRandomScrollFrameScrollBackground:Hide()
-    _G.LFDQueueFrameRandomScrollFrameScrollBackgroundTopLeft:Hide()
-    _G.LFDQueueFrameRandomScrollFrameScrollBackgroundBottomRight:Hide()
+    Skin.ScrollFrameTemplate(_G.LFDQueueFrameRandomScrollFrame)
     Skin.LFGRewardFrameTemplate(_G.LFDQueueFrameRandomScrollFrameChildFrame)
 
     Skin.WowScrollBoxList(LFDQueueFrame.Specific.ScrollBox)
-    Skin.WowTrimScrollBar(LFDQueueFrame.Specific.ScrollBar)
+    Skin.MinimalScrollBar(LFDQueueFrame.Specific.ScrollBar)
 
     Skin.MagicButtonTemplate(_G.LFDQueueFrameFindGroupButton)
     Skin.LFGBackfillCoverTemplate(LFDQueueFrame.PartyBackfill)

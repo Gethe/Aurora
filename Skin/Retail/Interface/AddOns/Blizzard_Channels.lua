@@ -93,13 +93,13 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     do --[[ ChannelList.xml ]]
         function Skin.ChannelListTemplate(ScrollFrame)
             Util.Mixin(ScrollFrame.headerButtonPool, Hook.ObjectPoolMixin)
-            Skin.UIPanelStretchableArtScrollBarTemplate(ScrollFrame.ScrollBar)
+            Skin.ScrollFrameTemplate(ScrollFrame)
         end
     end
     do --[[ ChannelRoster.xml ]]
         function Skin.ChannelRosterTemplate(Frame)
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
 end

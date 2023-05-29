@@ -13,6 +13,7 @@ local Skin = Aurora.Skin
 
 do --[[ SharedXML\MinimalScrollBar.xml ]]
     function Skin.MinimalScrollBar(Frame)
+        Skin.FrameTypeScrollBar(Frame)
     end
 end
 

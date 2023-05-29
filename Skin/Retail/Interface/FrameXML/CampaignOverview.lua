@@ -52,14 +52,10 @@ end
 do --[[ FrameXML\CampaignOverview.xml ]]
     function Skin.CampaignOverviewTemplate(Frame)
         Skin.CampaignHeaderDisplayTemplate(Frame.Header)
-        Skin.UIPanelScrollFrameTemplate(Frame.ScrollFrame)
+        Skin.ScrollFrameTemplate(Frame.ScrollFrame)
 
-        Frame.ScrollFrame.Top:Hide()
-        Frame.ScrollFrame.Bottom:Hide()
-        Frame.ScrollFrame.Middle:Hide()
         Frame.ScrollFrame.TopShadow:Hide()
         Frame.ScrollFrame.BottomShadow:Hide()
-
         Frame.BG:Hide()
 
         Util.Mixin(Frame, Hook.CampaignOverviewMixin)

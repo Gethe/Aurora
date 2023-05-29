@@ -91,6 +91,7 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         Button:SetHighlightFontObject("GameFontHighlightSmall")
     end
     function Skin.FloatingChatFrameTemplate(ScrollingMessageFrame)
+        Skin.ChatFrameTemplate(ScrollingMessageFrame)
         Skin.FloatingBorderedFrame(ScrollingMessageFrame)
         local buttonFrame = ScrollingMessageFrame.buttonFrame
 
@@ -105,6 +106,7 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         line:SetPoint("BOTTOMRIGHT", bg, -3, 3)
         line:SetColorTexture(1, 1, 1)
 
+        --[[
         local bottomButton = ScrollingMessageFrame.ScrollToBottomButton
         bottomButton:SetPoint("BOTTOMRIGHT", ScrollingMessageFrame.ResizeButton, "TOPRIGHT", -5, 0)
         Skin.ChatFrameButton(bottomButton)
@@ -118,8 +120,7 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         bottom:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 3, 5)
         bottom:SetPoint("BOTTOMRIGHT", bg, -3, 3)
         bottom:SetColorTexture(1, 1, 1)
-
-        Skin.ScrollBarThumb(ScrollingMessageFrame.ScrollBar.ThumbTexture)
+        ]]
 
         Hook.FCF_SetButtonSide(ScrollingMessageFrame, _G.FCF_GetButtonSide(ScrollingMessageFrame))
         _G.FloatingChatFrame_UpdateBackgroundAnchors(ScrollingMessageFrame)

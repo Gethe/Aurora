@@ -171,31 +171,13 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ChatConfigBoxWithHeaderTemplate(_G.ChatConfigOtherSettingsSystem)
     Skin.ChatConfigBoxWithHeaderTemplate(_G.ChatConfigOtherSettingsCreature)
 
-    Skin.UIPanelButtonTemplate(ChatConfigFrame.DefaultButton)
-    ChatConfigFrame.DefaultButton:SetPoint("BOTTOMLEFT", 10, 10)
-    Skin.UIPanelButtonTemplate(ChatConfigFrame.RedockButton)
-    ChatConfigFrame.RedockButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.DefaultButton, "BOTTOMRIGHT", 5, 0)
-    Skin.UIPanelButtonTemplate(ChatConfigFrame.ToggleChatButton)
-    ChatConfigFrame.ToggleChatButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.RedockButton, "BOTTOMRIGHT", 5, 0)
-
-    Skin.UIPanelButtonTemplate(_G.CombatLogDefaultButton)
-
-    Skin.UIPanelButtonTemplate(_G.TextToSpeechDefaultButton)
-    Skin.UICheckButtonTemplate(_G.TextToSpeechCharacterSpecificButton)
-    _G.TextToSpeechCharacterSpecificButton:SetPoint("BOTTOMLEFT", _G.TextToSpeechDefaultButton, "BOTTOMRIGHT", 5, 0)
-
-    --Skin.UIPanelButtonTemplate(_G.ChatConfigFrameCancelButton) -- BlizzWTF: Not used?
-    Skin.UIPanelButtonTemplate(_G.ChatConfigFrameOkayButton)
-    _G.ChatConfigFrameOkayButton:ClearAllPoints()
-    _G.ChatConfigFrameOkayButton:SetPoint("BOTTOMRIGHT", -10, 10)
-
     -------------------------
     -- Combat Log Settings --
     -------------------------
     local Filters = _G.ChatConfigCombatSettings.Filters
     Skin.ChatConfigBoxTemplate(_G.ChatConfigCombatSettingsFilters)
     Skin.WowScrollBoxList(Filters.ScrollBox)
-    Skin.WowTrimScrollBar(Filters.ScrollBar)
+    Skin.MinimalScrollBar(Filters.ScrollBar)
     Skin.UIPanelButtonTemplate(_G.ChatConfigCombatSettingsFiltersDeleteButton)
     Skin.UIPanelButtonTemplate(_G.ChatConfigCombatSettingsFiltersAddFilterButton)
     _G.ChatConfigCombatSettingsFiltersAddFilterButton:SetPoint("RIGHT", _G.ChatConfigCombatSettingsFiltersDeleteButton, "LEFT", -5, 0)
@@ -259,4 +241,19 @@ function private.FrameXML.ChatConfigFrame()
     for index, value in ipairs(_G.COMBAT_CONFIG_TABS) do
         Skin.ChatConfigTabTemplate(_G[_G.CHAT_CONFIG_COMBAT_TAB_NAME..index])
     end
+
+    Skin.UIPanelButtonTemplate(ChatConfigFrame.DefaultButton)
+    ChatConfigFrame.DefaultButton:SetPoint("BOTTOMLEFT", 10, 10)
+    Skin.UIPanelButtonTemplate(ChatConfigFrame.RedockButton)
+    ChatConfigFrame.RedockButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.DefaultButton, "BOTTOMRIGHT", 5, 0)
+
+    Skin.UIPanelButtonTemplate(_G.CombatLogDefaultButton)
+    Skin.UIPanelButtonTemplate(_G.TextToSpeechDefaultButton)
+    Skin.UICheckButtonTemplate(_G.TextToSpeechCharacterSpecificButton)
+    _G.TextToSpeechCharacterSpecificButton:SetPoint("BOTTOMLEFT", _G.TextToSpeechDefaultButton, "BOTTOMRIGHT", 5, 0)
+
+    --Skin.UIPanelButtonTemplate(_G.ChatConfigFrameCancelButton) -- BlizzWTF: Not used?
+    Skin.UIPanelButtonTemplate(_G.ChatConfigFrameOkayButton)
+    _G.ChatConfigFrameOkayButton:ClearAllPoints()
+    _G.ChatConfigFrameOkayButton:SetPoint("BOTTOMRIGHT", -10, 10)
 end

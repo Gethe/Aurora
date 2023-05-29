@@ -53,6 +53,8 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
                 Skin[_G.SCROLL_FRAME_SCROLL_BAR_TEMPLATE](ScrollFrame.ScrollBar)
             end
         end
+
+        Base.SetBackdrop(ScrollFrame, Color.frame)
         ---ScrollFrame.ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
         ---ScrollFrame.ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
     end

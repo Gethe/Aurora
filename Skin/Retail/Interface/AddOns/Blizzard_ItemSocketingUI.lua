@@ -162,11 +162,7 @@ function private.AddOns.Blizzard_ItemSocketingUI()
         ItemSocketingFrame.TopRightNub:Hide()
     end
 
-    Skin.UIPanelScrollFrameTemplate(_G.ItemSocketingScrollFrame)
-    _G.ItemSocketingScrollFrameBottom:SetAlpha(0)
-    _G.ItemSocketingScrollFrameTop:SetAlpha(0)
-    _G.ItemSocketingScrollFrameMiddle:SetAlpha(0)
-
+    Skin.ScrollFrameTemplate(_G.ItemSocketingScrollFrame)
     Skin.ItemSocketingSocketButtonTemplate(_G.ItemSocketingSocket1)
     Skin.ItemSocketingSocketButtonTemplate(_G.ItemSocketingSocket2)
     Skin.ItemSocketingSocketButtonTemplate(_G.ItemSocketingSocket3)

@@ -151,12 +151,12 @@ function private.FrameXML.PaperDollFrame()
 
     local TitleManagerPane = _G.PaperDollFrame.TitleManagerPane
     Skin.WowScrollBoxList(TitleManagerPane.ScrollBox)
-    Skin.WowTrimScrollBar(TitleManagerPane.ScrollBar)
+    Skin.MinimalScrollBar(TitleManagerPane.ScrollBar)
 
 
     local EquipmentManagerPane = _G.PaperDollFrame.EquipmentManagerPane
     Skin.WowScrollBoxList(EquipmentManagerPane.ScrollBox)
-    Skin.WowTrimScrollBar(EquipmentManagerPane.ScrollBar)
+    Skin.MinimalScrollBar(EquipmentManagerPane.ScrollBar)
 
     Skin.UIPanelButtonTemplate(EquipmentManagerPane.EquipSet)
     Skin.UIPanelButtonTemplate(EquipmentManagerPane.SaveSet)

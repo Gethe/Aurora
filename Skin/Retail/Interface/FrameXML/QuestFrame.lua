@@ -125,14 +125,9 @@ do --[[ FrameXML\QuestFrameTemplates.xml ]]
     function Skin.QuestTitleButtonTemplate(Button)
     end
     function Skin.QuestScrollFrameTemplate(ScrollFrame)
-        Skin.UIPanelScrollFrameTemplate(ScrollFrame)
-        ScrollFrame:SetPoint("TOPLEFT", 5, -(private.FRAME_TITLE_HEIGHT + 2))
+        Skin.ScrollFrameTemplate(ScrollFrame)
+        ScrollFrame:SetPoint("TOPLEFT", 5, -(private.FRAME_TITLE_HEIGHT + 5))
         ScrollFrame:SetPoint("BOTTOMRIGHT", -23, 32)
-
-        local name = ScrollFrame:GetName()
-        _G[name.."Top"]:Hide()
-        _G[name.."Bottom"]:Hide()
-        _G[name.."Middle"]:Hide()
     end
 end
 
@@ -231,12 +226,7 @@ function private.FrameXML.QuestFrame()
     QuestNPCModelTextFrame.BorderRight:Hide()
 
     local npcModelScroll = _G.QuestNPCModelTextScrollFrame
-    Skin.UIPanelScrollFrameTemplate(npcModelScroll)
-    npcModelScroll:SetPoint("TOPLEFT", 4, -4)
-    npcModelScroll:SetPoint("BOTTOMRIGHT", -4, 4)
-
-    -- BlizzWTF: Why doesn't this use the self.noScrollThumb option?
-    npcModelScroll.ScrollBar.ThumbTexture._auroraThumb:Hide()
-    npcModelScroll.ScrollBar:SetPoint("TOPLEFT", npcModelScroll, "TOPRIGHT", -14, -15)
-    npcModelScroll.ScrollBar:SetPoint("BOTTOMLEFT", npcModelScroll, "BOTTOMRIGHT", -14, 15)
+    Skin.ScrollFrameTemplate(npcModelScroll)
+    --npcModelScroll:SetPoint("TOPLEFT", 4, -4)
+    --npcModelScroll:SetPoint("BOTTOMRIGHT", -4, 4)
 end

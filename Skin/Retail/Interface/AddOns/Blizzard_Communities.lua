@@ -150,8 +150,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.BottomFiligree:Hide()
 
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
-            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
+            Skin.MinimalScrollBar(Frame.ScrollBar)
             Frame.FilligreeOverlay:Hide()
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
@@ -173,8 +172,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ColumnDisplay.InsetBorderLeft:Hide()
 
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
-            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
+            Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.CommunitiesFrameMemberListDropDownMenuTemplate(Frame)
@@ -185,16 +183,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
     end
     do --[[ CommunitiesChatFrame ]]
         function Skin.CommunitiesChatTemplate(Frame)
-            local ScrollBar = Frame.MessageFrame.ScrollBar
-            Skin.HybridScrollBarBackgroundTemplate(Frame.MessageFrame.ScrollBar)
-
-            ScrollBar.ScrollUp:SetPoint("BOTTOM", ScrollBar, "TOP")
-            Skin.UIPanelScrollUpButtonTemplate(ScrollBar.ScrollUp)
-
-            ScrollBar.ScrollDown:SetPoint("TOP", ScrollBar, "BOTTOM")
-            Skin.UIPanelScrollDownButtonTemplate(ScrollBar.ScrollDown)
-
-            local _, JumpToUnreadButton = Frame:GetChildren()
+            Skin.MinimalScrollBar(Frame.ScrollBar)
+            local _, _, JumpToUnreadButton = Frame:GetChildren()
             Skin.UIPanelButtonTemplate(JumpToUnreadButton)
             --Skin.UIPanelButtonTemplate(Frame.JumpToUnreadButton)
             Skin.InsetFrameTemplate(Frame.InsetFrame)
@@ -254,7 +244,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.Selector.Center = Frame.BG
             Skin.SelectionFrameTemplate(Frame.Selector)
             Skin.CommunitiesListDropDownMenuTemplate(Frame.CommunitiesListDropDownMenu)
-            Skin.UIPanelStretchableArtScrollBarTemplate(Frame.ScrollFrame.ScrollBar)
+            Skin.ScrollFrameTemplate(Frame.ScrollFrame)
             Skin.UICheckButtonTemplate(Frame.ScrollFrame.Child.QuickJoinButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.NoneButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.AllButton)
@@ -281,8 +271,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         function Skin.ClubFinderApplicantListFrameTemplate(Frame)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
-            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
+            Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
     end
@@ -400,7 +389,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.ClubFinderCommunitiesCardFrameTemplate(Frame)
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
         function Skin.ClubFinderOptionsTemplate(Frame)
             Skin.ClubFinderFilterDropdownTemplate(Frame.ClubFilterDropdown)
@@ -448,8 +437,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ArtOverlay.TopRight:ClearAllPoints()
 
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
-            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
+            Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
             Frame.ColumnDisplay.InsetBorderTopLeft:ClearAllPoints()
             Frame.ColumnDisplay.InsetBorderTopRight:ClearAllPoints()
@@ -492,7 +480,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         function Skin.CommunitiesGuildRewardsFrameTemplate(Frame)
             Frame.Bg:Hide()
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
     do --[[ GuildPerks ]]
@@ -507,8 +495,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         function Skin.CommunitiesGuildPerksFrameTemplate(Frame)
             Frame:GetRegions():Hide()
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
-            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
     do --[[ GuildInfo ]]
@@ -526,8 +513,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             Frame.MOTDScrollFrame:SetWidth(246)
             Frame.MOTDScrollFrame.MOTD:SetWidth(246)
-            Skin.MinimalScrollFrameTemplate(Frame.MOTDScrollFrame)
-            Skin.MinimalScrollFrameTemplate(Frame.DetailsFrame)
+            Skin.ScrollFrameTemplate(Frame.MOTDScrollFrame)
+            Skin.ScrollFrameTemplate(Frame.DetailsFrame)
         end
     end
     do --[[ GuildNews ]]
@@ -598,8 +585,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.Header:Hide()
 
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
-            Frame.ScrollBar:GetChildren():Hide() -- .Background from WowTrimScrollBar is overwritten with a texture
+            Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.CommunitiesGuildNewsBossModelTemplate(Frame.BossModel)
         end
     end
@@ -724,7 +710,7 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesAvatarPickerDialog.Selector.Center = CommunitiesAvatarPickerDialog:GetRegions()
     Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog.Selector)
     Skin.WowScrollBoxList(CommunitiesAvatarPickerDialog.ScrollBox)
-    Skin.WowTrimScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
+    Skin.MinimalScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
 
     ----====####$$$$%%%%$$$$####====----
     --  CommunitiesAddDialogInsecure  --
@@ -826,7 +812,7 @@ function private.AddOns.Blizzard_Communities()
     local close1, container, close2 = _G.CommunitiesGuildLogFrame:GetChildren()
     Skin.UIPanelCloseButton(close1) -- BlizzWTF: close1 and close2 have the same global name
     Util.HideNineSlice(container)
-    Skin.MinimalScrollFrameTemplate(container.ScrollFrame)
+    Skin.ScrollFrameTemplate(container.ScrollFrame)
     Skin.UIPanelButtonTemplate(close2)
 
     ----====####$$$$%%%%%$$$$####====----

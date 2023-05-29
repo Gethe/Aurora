@@ -490,6 +490,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.PortraitContainer:Hide()
 
         Frame.TitleContainer:SetHeight(private.FRAME_TITLE_HEIGHT)
+        Frame.TitleContainer:SetPoint("TOPLEFT", 24, -1)
         local titleText = Frame.TitleContainer.TitleText
         titleText:ClearAllPoints()
         titleText:SetPoint("TOPLEFT", Frame.TitleContainer)
@@ -772,6 +773,52 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     function Skin.IconSelectorPopupFrameTemplate(Frame)
         Skin.SelectionFrameTemplate(Frame.BorderBox)
         Skin.ScrollBoxSelectorTemplate(Frame.IconSelector)
+    end
+    function Skin.BottomPopupScrollBoxTemplate(Frame)
+        Skin.FrameTypeFrame(Frame)
+
+        local titleText = Frame.TitleText
+        titleText:ClearAllPoints()
+        titleText:SetPoint("TOPLEFT")
+        titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        local name = Frame:GetName()
+        _G[name.."Bg"]:Hide()
+        _G[name.."TopLeftCorner"]:Hide()
+        _G[name.."TopRightCorner"]:Hide()
+        _G[name.."TopBorder"]:Hide()
+        Frame.leftBorderBar:Hide()
+        _G[name.."RightBorder"]:Hide()
+        _G[name.."TopTileStreaks"]:Hide()
+        _G[name.."TopLeftCorner2"]:Hide()
+        _G[name.."TopRightCorner2"]:Hide()
+        _G[name.."TopBorder2"]:Hide()
+
+        Skin.UIPanelCloseButton(_G[name.."CloseButton"])
+        Skin.WowScrollBoxList(Frame.ScrollBox)
+        Skin.MinimalScrollBar(Frame.ScrollBar)
+    end
+    function Skin.SearchBoxListTemplate(Frame)
+        Skin.SearchBoxTemplate(Frame)
+
+        local searchPreview = Frame.searchPreviewContainer
+        searchPreview:DisableDrawLayer("ARTWORK")
+        Skin.FrameTypeFrame(searchPreview)
+        local searchPreviewBG = searchPreview:GetBackdropTexture("bg")
+        --searchPreviewBG:SetPoint("BOTTOMRIGHT", searchBox.showAllResults, 0, 0)
+        searchPreview.botLeftCorner:Hide()
+        searchPreview.botRightCorner:Hide()
+        searchPreview.bottomBorder:Hide()
+        searchPreview.leftBorder:Hide()
+        searchPreview.rightBorder:Hide()
+        searchPreview.topBorder:Hide()
+    end
+    function Skin.SearchBoxListAllButtonTemplate(Button)
+        Button:ClearNormalTexture()
+        Button:ClearPushedTexture()
+
+        local r, g, b = Color.highlight:GetRGB()
+        Button.selectedTexture:SetColorTexture(r, g, b, 0.2)
     end
 end
 
