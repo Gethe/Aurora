@@ -6,8 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Skin = Aurora.Base, Aurora.Skin
-local Color = Aurora.Color
+local Skin = Aurora.Skin
 
 --do --[[ FrameXML\GuildRegistrarFrame.lua ]]
 --end

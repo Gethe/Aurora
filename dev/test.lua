@@ -1230,20 +1230,6 @@ function commands.test()
                     "arena",
                 }
 
-                local petitionInfo = {
-                    GetItem(24282),
-                    GetItem(13422),
-                    GetItem(16252),
-                    GetItem(11815),
-                    GetItem(14551),
-                    GetItem(17771),
-
-                    GetItem(18492),
-                    GetItem(22727),
-
-                    GetItem(401, true),
-                    GetItem(1534, true),
-                }
                 function _G.GetPetitionInfo()
                         -- petitionType, title,            bodyText,    maxSignatures, originatorName, isOriginator, minSignatures
                     return petitionType, "Petition Title", "Body Text", 10,            "Originator",   isOriginator, 5

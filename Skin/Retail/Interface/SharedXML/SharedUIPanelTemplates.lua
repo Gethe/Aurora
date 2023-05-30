@@ -804,7 +804,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local searchPreview = Frame.searchPreviewContainer
         searchPreview:DisableDrawLayer("ARTWORK")
         Skin.FrameTypeFrame(searchPreview)
-        local searchPreviewBG = searchPreview:GetBackdropTexture("bg")
+        --local searchPreviewBG = searchPreview:GetBackdropTexture("bg")
         --searchPreviewBG:SetPoint("BOTTOMRIGHT", searchBox.showAllResults, 0, 0)
         searchPreview.botLeftCorner:Hide()
         searchPreview.botRightCorner:Hide()

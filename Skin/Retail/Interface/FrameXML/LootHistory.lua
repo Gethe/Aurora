@@ -1,3 +1,4 @@
+-- luacheck: ignore
 local _, private = ...
 if true then return end
 
