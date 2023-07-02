@@ -18,6 +18,7 @@ do --[[ FrameXML\OribosScrollBar.xml ]]
 
     function Skin.OribosScrollBar(Frame)
         Skin.VerticalScrollBarTemplate(Frame)
+        Skin.FrameTypeScrollBar(Frame)
 
         Frame.Track:GetRegions():Hide() -- background
         Skin.OribosScrollBarButtonScripts(Frame.Track.Thumb)

@@ -222,7 +222,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseRefreshFrameTemplate(Frame.RefreshFrame)
             --Skin.AuctionHouseItemListHeadersTemplate(Frame.HeaderContainer)
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
     do --[[ Blizzard_AuctionHouseCategoriesList ]]
@@ -236,7 +236,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         function Skin.AuctionHouseCategoriesListTemplate(Frame)
             Skin.NineSlicePanelTemplate(Frame.NineSlice)
             Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.ScrollBar)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
             Frame.Background:Hide()
         end
     end
@@ -391,7 +391,6 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseFrameTopTabTemplate(Button)
         end
         function Skin.AuctionHouseAuctionsSummaryLineTemplate(Button)
-            Skin.ScrollListLineTextTemplate(Button)
             Button.Icon._auroraIconBG = Base.CropIcon(Button.Icon, Button)
         end
         function Skin.AuctionHouseAuctionsFrameTemplate(Frame)
@@ -404,7 +403,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
 
             Skin.AuctionHouseBackgroundTemplate(Frame.SummaryList)
             Skin.WowScrollBoxList(Frame.SummaryList.ScrollBox)
-            Skin.WowTrimScrollBar(Frame.SummaryList.ScrollBar)
+            Skin.MinimalScrollBar(Frame.SummaryList.ScrollBar)
 
             Skin.AuctionHouseItemDisplayTemplate(Frame.ItemDisplay)
             Skin.AuctionHouseItemListTemplate(Frame.AllAuctionsList)
@@ -415,7 +414,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
     end
     do --[[ Blizzard_AuctionHouseWoWTokenFrame ]]
         function Skin.DummyAuctionHouseScrollBarTemplate(Slider)
-            Skin.WowTrimScrollBar(Slider)
+            Skin.MinimalScrollBar(Slider)
         end
         function Skin.BrowseWowTokenResultsTemplate(Frame)
             Skin.AuctionHouseBackgroundTemplate(Frame)

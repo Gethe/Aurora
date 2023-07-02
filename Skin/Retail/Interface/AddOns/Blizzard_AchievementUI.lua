@@ -67,6 +67,49 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         end
     end
 
+    function Hook.AchievementFrameStats_SetStat(button, category, index, colorIndex, isSummary)
+        if not button.id then return end
+        if not colorIndex then
+            colorIndex = index
+        end
+
+        if (colorIndex % 2) == 1 then
+            button.background:Hide()
+        else
+            button.background:SetColorTexture(1, 1, 1, 0.25)
+        end
+    end
+    function Hook.AchievementFrameStats_SetHeader(button, id)
+        button.background:Show()
+        button.background:SetAlpha(1.0)
+        button.background:SetBlendMode("DISABLE")
+        button.background:SetColorTexture(Color.button:GetRGB())
+    end
+    Hook.AchievementFrameComparisonStats_SetStat = Hook.AchievementFrameStats_SetStat
+    Hook.AchievementFrameComparisonStats_SetHeader = Hook.AchievementFrameStats_SetHeader
+
+    local numAchievements = 0
+    function Hook.AchievementFrameSummary_UpdateAchievements(...)
+        for i = numAchievements + 1, _G.ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
+            local button = _G["AchievementFrameSummaryAchievement"..i]
+            if button then
+                Skin.SummaryAchievementTemplate(button)
+                if button.saturatedStyle then
+                    Hook.AchievementButton_Saturate(button)
+                else
+                    Hook.AchievementButton_Desaturate(button)
+                end
+
+                if i > 1 then
+                    local anchorTo = _G["AchievementFrameSummaryAchievement"..i-1]
+                    button:SetPoint("TOPLEFT", anchorTo, "BOTTOMLEFT", 0, -1 )
+                    button:SetPoint("TOPRIGHT", anchorTo, "BOTTOMRIGHT", 0, -1 )
+                end
+                numAchievements = numAchievements + 1
+            end
+        end
+    end
+
     local SearchPreviewButtonHieght = 27
     function Hook.AchievementFrame_ShowSearchPreviewResults()
         local numResults = _G.GetNumFilteredAchievements()
@@ -304,13 +347,10 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
         Skin.AchievementIconFrameTemplate(Frame.friend.icon)
     end
-    function Skin.StatTemplate(Button)
-        Button.left:SetAlpha(0)
-        Button.middle:SetAlpha(0)
-        Button.right:SetAlpha(0)
-
-        local r, g, b = Color.highlight:GetRGB()
-        Button:GetHighlightTexture():SetColorTexture(r, g, b, 0.2)
+    function Skin.AchievementStatTemplate(Button)
+        Button.Left:SetAlpha(0)
+        Button.Right:SetAlpha(0)
+        Button.Middle:SetAlpha(0)
     end
     function Skin.ComparisonStatTemplate(Frame)
         Frame.left:SetAlpha(0)
@@ -326,6 +366,11 @@ end
 function private.AddOns.Blizzard_AchievementUI()
     _G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
     _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
+    _G.hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)
+    --_G.hooksecurefunc("AchievementFrameStats_SetStat", Hook.AchievementFrameStats_SetStat)
+    --_G.hooksecurefunc("AchievementFrameStats_SetHeader", Hook.AchievementFrameStats_SetHeader)
+    --_G.hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
+    --_G.hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
 
     ----------------------
     -- AchievementFrame --
@@ -333,6 +378,7 @@ function private.AddOns.Blizzard_AchievementUI()
     local AchievementFrame = _G.AchievementFrame
     Skin.FrameTypeFrame(AchievementFrame)
     AchievementFrame.Background:Hide()
+    AchievementFrame.BackgroundBlackCover:Hide()
     local bg = AchievementFrame:GetBackdropTexture("bg")
 
     _G.AchievementFrameMetalBorderLeft:Hide()
@@ -384,7 +430,7 @@ function private.AddOns.Blizzard_AchievementUI()
     local Categories = AchievementFrame.Categories
     Util.HideNineSlice(Categories)
     Skin.WowScrollBoxList(Categories.ScrollBox)
-    Skin.WowTrimScrollBar(Categories.ScrollBar)
+    Skin.MinimalScrollBar(Categories.ScrollBar)
 
 
 
@@ -395,7 +441,8 @@ function private.AddOns.Blizzard_AchievementUI()
     Achievements.Background:Hide()
     select(3, Achievements:GetRegions()):Hide()
     Skin.WowScrollBoxList(Achievements.ScrollBox)
-    Skin.WowTrimScrollBar(Achievements.ScrollBar)
+    Achievements.ScrollBox:SetBackdropBorderColor(Color.yellow)
+    Skin.MinimalScrollBar(Achievements.ScrollBar)
     select(3, Achievements:GetChildren()):Hide()
 
 
@@ -406,8 +453,9 @@ function private.AddOns.Blizzard_AchievementUI()
     local Stats = _G.AchievementFrameStats
     _G.AchievementFrameStatsBG:Hide()
     Skin.WowScrollBoxList(Stats.ScrollBox)
-    Skin.WowTrimScrollBar(Stats.ScrollBar)
-    select(3, _G.AchievementFrameStats:GetChildren()):Hide()
+    Stats.ScrollBox:SetBackdropBorderColor(Color.yellow)
+    Skin.MinimalScrollBar(Stats.ScrollBar)
+    select(4, _G.AchievementFrameStats:GetChildren()):Hide()
 
 
 
@@ -462,10 +510,10 @@ function private.AddOns.Blizzard_AchievementUI()
     end
 
     Skin.WowScrollBoxList(AchievementFrameComparison.AchievementContainer.ScrollBox)
-    Skin.WowTrimScrollBar(AchievementFrameComparison.AchievementContainer.ScrollBar)
+    Skin.MinimalScrollBar(AchievementFrameComparison.AchievementContainer.ScrollBar)
 
     Skin.WowScrollBoxList(AchievementFrameComparison.StatContainer.ScrollBox)
-    Skin.WowTrimScrollBar(AchievementFrameComparison.StatContainer.ScrollBar)
+    Skin.MinimalScrollBar(AchievementFrameComparison.StatContainer.ScrollBar)
 
     select(5, AchievementFrameComparison:GetChildren()):Hide()
 
@@ -555,5 +603,5 @@ function private.AddOns.Blizzard_AchievementUI()
 
     Skin.UIPanelCloseButton(SearchResults.CloseButton)
     Skin.WowScrollBoxList(SearchResults.ScrollBox)
-    Skin.WowTrimScrollBar(SearchResults.ScrollBar)
+    Skin.MinimalScrollBar(SearchResults.ScrollBar)
 end

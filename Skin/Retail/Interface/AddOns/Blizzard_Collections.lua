@@ -569,7 +569,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.UICheckButtonTemplate(MountDisplay.ModelScene.TogglePlayer)
 
     Skin.WowScrollBoxList(MountJournal.ScrollBox)
-    Skin.WowTrimScrollBar(MountJournal.ScrollBar)
+    Skin.MinimalScrollBar(MountJournal.ScrollBar)
     Skin.MagicButtonTemplate(MountJournal.MountButton)
 
 
@@ -600,7 +600,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.SearchBoxTemplate(PetJournal.searchBox)
     Skin.UIResettableDropdownButtonTemplate(_G.PetJournalFilterButton)
     Skin.WowScrollBoxList(PetJournal.ScrollBox)
-    Skin.WowTrimScrollBar(PetJournal.ScrollBar)
+    Skin.MinimalScrollBar(PetJournal.ScrollBar)
 
     PetJournal.loadoutBorder:DisableDrawLayer("ARTWORK")
     _G.PetJournalLoadoutBorderSlotHeaderBG:Hide()
@@ -749,7 +749,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(SetsCollectionFrame.LeftInset)
     Skin.CollectionsBackgroundTemplate(SetsCollectionFrame.RightInset)
     Skin.WowScrollBoxList(SetsCollectionFrame.ListContainer.ScrollBox)
-    Skin.WowTrimScrollBar(SetsCollectionFrame.ListContainer.ScrollBar)
+    Skin.MinimalScrollBar(SetsCollectionFrame.ListContainer.ScrollBar)
 
     local DetailsFrame = SetsCollectionFrame.DetailsFrame
     DetailsFrame.ModelFadeTexture:Hide()
