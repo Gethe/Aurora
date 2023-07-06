@@ -27,7 +27,7 @@ function private.FrameXML.PVPHelper()
 
     --[[ PVPReadyDialog ]]--
     local PVPReadyDialog = _G.PVPReadyDialog
-    Skin.DialogBorderTemplate(PVPReadyDialog.Border)
+    Skin.DialogBorderTranslucentTemplate(PVPReadyDialog.Border)
     local bg = PVPReadyDialog.Border:GetBackdropTexture("bg")
 
     PVPReadyDialog.background:SetAlpha(0.75)
@@ -35,10 +35,12 @@ function private.FrameXML.PVPHelper()
     PVPReadyDialog.background:SetPoint("TOPLEFT", bg, 1, -1)
     PVPReadyDialog.background:SetPoint("BOTTOMRIGHT", bg, -1, 68)
 
-    PVPReadyDialog.filigree:Hide()
+    if not private.isPatch then
+        PVPReadyDialog.filigree:Hide()
+    end
     PVPReadyDialog.bottomArt:Hide()
 
-    Skin.MinimizeButton(_G.PVPReadyDialogCloseButton)
+    Skin.UIPanelHideButtonNoScripts(_G.PVPReadyDialogCloseButton)
     Skin.UIPanelButtonTemplate(PVPReadyDialog.enterButton)
     Skin.UIPanelButtonTemplate(PVPReadyDialog.leaveButton)
 

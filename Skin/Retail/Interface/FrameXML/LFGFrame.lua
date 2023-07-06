@@ -97,7 +97,9 @@ end
 
 do --[[ FrameXML\LFGFrame.xml ]]
     function Skin.LFGRoleButtonTemplate(Button)
-        Button.cover:SetColorTexture(0, 0, 0, 0.75)
+        if not private.isPatch then
+            Button.cover:SetColorTexture(0, 0, 0, 0.75)
+        end
         Base.SetTexture(Button:GetNormalTexture(), "icon"..(Button.role or "GUIDE"))
         Skin.UICheckButtonTemplate(Button.checkButton)
         Button.checkButton:SetPoint("BOTTOMLEFT", -4, -4)
@@ -181,11 +183,13 @@ function private.FrameXML.LFGFrame()
     LFGDungeonReadyDialog.background:SetPoint("TOPLEFT", 6, -6)
     LFGDungeonReadyDialog.background:SetPoint("BOTTOMRIGHT", -6, 64)
 
-    LFGDungeonReadyDialog.filigree:Hide()
+    if not private.isPatch then
+        LFGDungeonReadyDialog.filigree:Hide()
+    end
     LFGDungeonReadyDialog.bottomArt:Hide()
 
-    Skin.DialogBorderTemplate(LFGDungeonReadyDialog.Border)
-    Skin.MinimizeButton(_G.LFGDungeonReadyDialogCloseButton)
+    Skin.DialogBorderTranslucentTemplate(LFGDungeonReadyDialog.Border)
+    Skin.UIPanelHideButtonNoScripts(_G.LFGDungeonReadyDialogCloseButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.enterButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.leaveButton)
 

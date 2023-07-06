@@ -329,7 +329,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="ReputationFrame.lua"/>
     <!--Script file="FriendshipStatusBar.lua"/-->
     <Script file="QuestFrame.lua"/>
-    <Script file="QuestPOI.lua"/>
+    <!--Script file="QuestPOI.lua"/-->
     <Script file="QuestInfo.lua"/>
     <Script file="MerchantFrame.lua"/>
     <Script file="TradeFrame.lua"/>

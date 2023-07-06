@@ -228,6 +228,22 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
+    function Skin.UIPanelHideButtonNoScripts(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 4,
+            right = 11,
+            top = 10,
+            bottom = 5,
+        })
+
+        local bg = Button:GetBackdropTexture("bg")
+        local hline = Button:CreateTexture()
+        hline:SetColorTexture(1, 1, 1)
+        hline:SetSize(11, 1)
+        hline:SetPoint("BOTTOMLEFT", bg, 3, 3)
+        Button._auroraTextures = {hline}
+    end
     function Skin.UIPanelCloseButton(Button)
         Skin.FrameTypeButton(Button)
         Button:SetBackdropOption("offsets", {
@@ -315,7 +331,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         check:SetVertexColor(Color.highlight:GetRGB())
 
         local disabled = CheckButton:GetDisabledCheckedTexture()
-        disabled:SetAllPoints(check)
+        if disabled then
+            disabled:SetAllPoints(check)
+        end
     end
 
     function Skin.GlowBoxArrowTemplate(Frame, direction)

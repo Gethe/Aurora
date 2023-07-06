@@ -6,48 +6,29 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Skin = Aurora.Skin
-local F, C = _G.unpack(Aurora)
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
+
+--do --[[ FrameXML\RolePoll.lua ]]
+--end
+
+do --[[ FrameXML\RolePoll.xml ]]
+    function Skin.RolePollRoleButtonTemplate(Button)
+        if not private.isPatch then
+            Button.cover:SetColorTexture(0, 0, 0, 0.75)
+        end
+        Base.SetTexture(Button:GetNormalTexture(), "icon"..(Button.role or "GUIDE"))
+        Skin.UICheckButtonTemplate(Button.checkButton)
+        Button.checkButton:SetPoint("BOTTOMLEFT", -4, -4)
+    end
+end
 
 function private.FrameXML.RolePoll()
     Skin.DialogBorderTemplate(_G.RolePollPopup.Border)
-    F.Reskin(_G.RolePollPopupAcceptButton)
-    F.ReskinClose(_G.RolePollPopupCloseButton)
-
-    for _, roleButton in pairs({_G.RolePollPopupRoleButtonTank, _G.RolePollPopupRoleButtonHealer, _G.RolePollPopupRoleButtonDPS}) do
-        roleButton.cover:SetTexture(C.media.roleIcons)
-        roleButton:SetNormalTexture(C.media.roleIcons)
-
-        roleButton.checkButton:SetFrameLevel(roleButton:GetFrameLevel() + 2)
-
-        local left = roleButton:CreateTexture(nil, "OVERLAY")
-        left:SetWidth(1)
-        left:SetTexture(C.media.backdrop)
-        left:SetVertexColor(0, 0, 0)
-        left:SetPoint("TOPLEFT", 9, -7)
-        left:SetPoint("BOTTOMLEFT", 9, 11)
-
-        local right = roleButton:CreateTexture(nil, "OVERLAY")
-        right:SetWidth(1)
-        right:SetTexture(C.media.backdrop)
-        right:SetVertexColor(0, 0, 0)
-        right:SetPoint("TOPRIGHT", -9, -7)
-        right:SetPoint("BOTTOMRIGHT", -9, 11)
-
-        local top = roleButton:CreateTexture(nil, "OVERLAY")
-        top:SetHeight(1)
-        top:SetTexture(C.media.backdrop)
-        top:SetVertexColor(0, 0, 0)
-        top:SetPoint("TOPLEFT", 9, -7)
-        top:SetPoint("TOPRIGHT", -9, -7)
-
-        local bottom = roleButton:CreateTexture(nil, "OVERLAY")
-        bottom:SetHeight(1)
-        bottom:SetTexture(C.media.backdrop)
-        bottom:SetVertexColor(0, 0, 0)
-        bottom:SetPoint("BOTTOMLEFT", 9, 11)
-        bottom:SetPoint("BOTTOMRIGHT", -9, 11)
-
-        F.ReskinRadio(roleButton.checkButton)
-    end
+    Skin.UIPanelCloseButton(_G.RolePollPopupCloseButton)
+    Skin.LFGRoleButtonTemplate(_G.RolePollPopupRoleButtonTank)
+    Skin.LFGRoleButtonTemplate(_G.RolePollPopupRoleButtonHealer)
+    Skin.LFGRoleButtonTemplate(_G.RolePollPopupRoleButtonDPS)
+    Skin.UIPanelButtonTemplate(_G.RolePollPopupAcceptButton)
 end
