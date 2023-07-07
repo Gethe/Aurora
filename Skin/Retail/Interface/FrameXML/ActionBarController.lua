@@ -418,10 +418,8 @@ do --[[ FrameXML\ActionBarController.xml ]]
             CheckButton.cooldown:SetPoint("BOTTOMRIGHT")
 
             CheckButton:ClearNormalTexture()
+            Base.CropIcon(CheckButton:GetPushedTexture())
             Base.CropIcon(CheckButton:GetHighlightTexture())
-            if not private.isPatch then
-                Base.CropIcon(CheckButton:GetCheckedTexture())
-            end
         end
     end
 end
