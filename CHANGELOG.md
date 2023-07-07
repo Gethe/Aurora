@@ -1,4 +1,11 @@
-﻿## [10.1.5.0] ##
+﻿## [10.1.5.1] ##
+### Fixed ###
+
+  * [retail] Error when opening the battlefield map
+  * [retail] Action bar error on login
+
+
+## [10.1.5.0] ##
 ### Fixed ###
 
   * [retail] Fixed for Patch 10.1.5
@@ -415,6 +422,7 @@
   * Error when opening azerite respec UI
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/master...develop
+[10.1.5.1]: https://github.com/Haleth/Aurora/compare/10.1.5.0...10.1.5.1
 [10.1.5.0]: https://github.com/Haleth/Aurora/compare/10.0.2.2...10.1.5.0
 [10.0.2.2]: https://github.com/Haleth/Aurora/compare/10.0.2.1...10.0.2.2
 [10.0.2.1]: https://github.com/Gethe/Aurora/compare/10.0.2.0...10.0.2.1
