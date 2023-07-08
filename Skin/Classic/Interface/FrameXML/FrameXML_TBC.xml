@@ -20,9 +20,18 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="FontStyles.lua"/-->
     <!--Script file="..\SharedXML\ErrorUtil.lua"/-->
     <!--Script file="..\SharedXML\Mixin.lua"/-->
+    <!--Script file="..\SharedXML\TableUtil.lua"/-->
+    <!--Script file="..\SharedXML\EnumUtil.lua"/-->
+    <!--Script file="..\SharedXML\Stubs.lua"/-->
     <!--Script file="..\SharedXML\FunctionUtil.lua"/-->
+    <!--Script file="..\SharedXML\MathUtil.lua"/-->
     <!--Script file="..\SharedXML\Rectangle.lua"/-->
+    <!--Script file="..\SharedXML\TextureUtil.lua"/-->
     <!--Script file="..\SharedXML\Flags.lua"/-->
+    <!--Script file="..\SharedXML\CallbackRegistry.lua"/-->
+    <!--Script file="..\SharedXML\CvarUtil.lua"/-->
+    <!--Script file="..\SharedXML\Color.lua"/-->
+    <!--Script file="..\..\Interface_TBC\SharedXML\ColorUtil.lua"/-->
     <!--Script file="..\SharedXML\LinkUtil.lua"/-->
     <!--Script file="..\SharedXML\InterfaceUtil.lua"/-->
     <!--Script file="..\SharedXML\AccountUtil.lua"/-->
@@ -31,7 +40,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\SmoothStatusBar.lua"/-->
     <!--Script file="..\SharedXML\PredictedSetting.lua"/-->
     <!--Script file="..\SharedXML\SecureUtil.lua"/-->
-    <!--Script file="..\SharedXML\AnchorUtil.lua"/-->
+    <!--Script file="..\SharedXML\TimeUtil.lua"/-->
     <!--Script file="..\SharedXML\NineSliceLayouts.lua"/-->
     <Script file="..\SharedXML\NineSlice.lua"/>
     <!--Script file="..\SharedXML\Backdrop.lua"/-->
@@ -40,15 +49,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\Color.lua"/-->
     <!--Script file="..\..\Interface_TBC\SharedXML\ColorUtil.lua"/-->
     <Script file="..\SharedXML\Constants.lua"/>
-    <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
-    <!--Script file="..\SharedXML\TableUtil.lua"/-->
-    <!--Script file="..\SharedXML\EnumUtil.lua"/-->
-    <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
-    <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
-    <Script file="..\SharedXML\SharedBasicControls.lua"/>
+    <!--Script file="..\SharedXML\LocaleUtil.lua"/-->
 
     <!--Script file="..\SharedXML\CallbackRegistry.lua"/-->
-    <!--Script file="..\SharedXML\CvarUtil.lua"/-->
     <!--Script file="..\SharedXML\ClassicCvarUtil.lua"/-->
     <!--Script file="..\SharedXML\TimeUtil.lua"/-->
     <!--Script file="..\SharedXML\EasingUtil.lua"/-->
@@ -56,6 +59,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\FrameUtil.lua"/-->
     <!--Script file="..\SharedXML\EventUtil.lua"/-->
     <!--Script file="..\SharedXML\RegionUtil.lua"/-->
+    <!--Script file="..\SharedXML\AnchorUtil.lua"/-->
+    <!--Script file="..\SharedXML\ScriptAnimationUtil.lua"/-->
     <Script file="..\SharedXML\Pools.lua"/>
     <!--Script file="..\SharedXML\LoopingSoundEffect.lua"/-->
     <!--Script file="..\SharedXML\CircularBuffer.lua"/-->
@@ -70,41 +75,53 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\KeyCommand.lua"/-->
     <!--Script file="..\SharedXML\CustomBindingButtonMixin.lua"/-->
     <!--Script file="..\SharedXML\PixelUtil.lua"/-->
+    <!--Script file="..\SharedXML\StringUtil.lua"/-->
     <!--Script file="..\SharedXML\Dump.lua"/-->
-    <!--Script file="MixinUtil.lua"/-->
-    <!--Script file="..\SharedXML\LinkUtil.lua"/-->
-    <!--Script file="..\SharedXML\ScriptAnimationUtil.lua"/-->
-
+    <!--Script file="..\SharedXML\FrameStack.lua"/-->
+    <!--Script file="..\SharedXML\MixinUtil.lua"/-->
     <!--Script file="..\SharedXML\GlobalCallbackRegistry.lua"/-->
+    <!--Script file="..\SharedXML\SelectableButton.lua"/-->
+    <!--Script file="..\SharedXML\ButtonGroup.lua"/-->
     <!--Script file="..\SharedXML\Frame\EventFrame.lua"/-->
     <!--Script file="..\SharedXML\Frame\EventButton.lua"/-->
+    <!--Script file="..\SharedXML\Frame\EventScrollFrame.lua"/-->
     <!--Script file="..\SharedXML\Frame\EventEditBox.lua"/-->
     <!--Script file="..\SharedXML\DataProviders.lua"/-->
     <!--Script file="..\SharedXML\Interpolator.lua"/-->
+    <!--Script file="..\SharedXML\ButtonStateBehavior.lua"/-->
+    <!--Script file="..\SharedXML\Slider\MinimalSlider.lua"/-->
     <!--Script file="..\SharedXML\Scroll\ScrollUtil.lua"/-->
     <!--Script file="..\SharedXML\Scroll\ScrollController.lua"/-->
     <Script file="..\SharedXML\Scroll\ScrollBox.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
+    <!--Script file="..\SharedXML\Scroll\MinimalScrollBar.lua"/-->
     <Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ClassicTrimScrollBar.lua"/>
-    <!--## intrinsics-->
     <!--Script file="..\SharedXML\ScrollingMessageFrame.lua"/-->
     <!--Script file="..\SharedXML\DropDownToggleButton.lua"/-->
-
     <!--Script file="..\SharedXML\AnimationTemplates.lua"/-->
+    <Script file="..\SharedXML\HybridScrollFrame.lua"/>
+
     <Script file="..\SharedXML\ModelSceneTemplates.lua"/>
     <!--Script file="..\SharedXML\ModelSceneMixin.lua"/-->
     <!--Script file="..\SharedXML\ModelSceneActorMixin.lua"/-->
-    <!--Script file="..\SharedXML\FrameStack.lua"/-->
+    <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
+    <!--Script file="..\SharedXML\ScrollDefine.lua"/-->
+    <!--Script file="..\SharedXML\SecureScrollTemplates.lua"/-->
+    <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
+    <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
+    <Script file="..\SharedXML\SharedBasicControls.lua"/>
+    <!--Script file="..\SharedXML\Tabs\MinimalTab.lua"/-->
+
+    <!--Script file="..\..\Interface_TBC\SharedXML\SoundKitConstants.lua"/-->
+    <Script file="..\SharedXML\Constants.lua"/>
+
 
     <!--Script file="AnimatedStatusBar.lua"/-->
     <!--Script file="FlowContainer.lua"/-->
     <!--Script file="FrameLocks.lua"/-->
     <!--Script file="PlayerMovementFrameFader.lua"/-->
-
-    <!--Script file="..\..\Interface_TBC\SharedXML\SoundKitConstants.lua"/-->
-    <!--Script file="..\..\Interface_TBC\FrameXML\Constants.lua"/-->
 
     <!--Script file="..\SharedXML\PropertyBindingMixin.lua"/-->
     <Script file="..\SharedXML\PropertyButton.lua"/>
@@ -121,6 +138,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="ChatBubbleTemplates.lua"/>
     <!--Script file="WorldFrame.lua"/-->
     <!--Script file="..\..\Interface_TBC\FrameXML\UIParent.lua"/-->
+    <!--Script file="FrameXML\UIParent.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptedAnimationEffects.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
@@ -128,6 +146,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/-->
     <!--Script file="..\SharedXML\Selector\Blizzard_GridSelectorUI.lua"/-->
     <!--Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/-->
+
 
     <!--Script file="QuestUtils.lua"/-->
     <!--Script file="MapUtil.lua"/-->
@@ -156,8 +175,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="DressUpFrames.lua"/>
     <Script file="ItemButtonTemplate.lua"/>
     <Script file="NavigationBar.lua"/>
-    <Script file="..\SharedXML\HybridScrollFrame.lua"/>
-
     <Script file="GameMenuFrame.lua"/>
     <Script file="CharacterFrameTemplates.lua"/>
     <!--Script file="TextStatusBar.lua"/-->
@@ -165,7 +182,12 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="UIErrorsFrame.lua"/-->
     <Script file="AutoComplete.lua"/>
     <Script file="StaticPopup.lua"/>
+    <!--Script file="..\SharedXML\DialogUtil.lua"/-->
     <!--Script file="Sound.lua"/-->
+    <!--Script file="..\SharedXML\Settings\GameplaySettingsGroup.lua"/-->
+    <!--Script file="..\SharedXML\Settings\Settings.lua"/-->
+    <!--Script file="..\FrameXML\SettingDefinitions\OverrideDefinitions.lua"/-->
+    <!--Script file="SettingDefinitions\Definitions.lua"/-->
     <Script file="OptionsFrameTemplates.lua"/>
     <Script file="OptionsPanelTemplates.lua"/>
     <Script file="UIOptions.lua"/>
@@ -201,14 +223,15 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\..\Interface_TBC\FrameXML\CastingBarFrame.lua"/-->
     <!--Script file="VoiceChatHeadsetButton.lua"/-->
     <Script file="VoiceToggleButton.lua"/>
+    <!--Script file="..\SharedXML\SharedReportFrame.lua"/-->
     <!--Script file="ReportFrame.lua"/-->
     <Script file="UnitPopupSlider.lua"/>
     <Script file="UnitPopupCustomControls.lua"/>
-    <!--Script file="UnitPopupSharedUtils.lua"/-->
+    <!--Script file="..\SharedXML\UnitPopupSharedUtils.lua"/-->
     <!--Script file="UnitPopupUtils.lua"/-->
-    <!--Script file="UnitPopupShared.lua"/-->
-    <!--Script file="UnitPopupSharedMenus.lua"/-->
-    <!--Script file="UnitPopupSharedButtonMixins.lua"/-->
+    <!--Script file="..\SharedXML\UnitPopupShared.lua"/-->
+    <!--Script file="..\SharedXML\UnitPopupSharedMenus.lua"/-->
+    <!--Script file="..\SharedXML\UnitPopupSharedButtonMixins.lua"/-->
     <!--Script file="UnitPopupButtons_Shared.lua"/-->
     <!--Script file="..\..\Interface_TBC\FrameXML\UnitPopupButtons.lua"/-->
     <!--Script file="..\..\Interface_TBC\FrameXML\UnitPopupMenus.lua"/-->
@@ -231,6 +254,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\..\Interface_TBC\FrameXML\PetPaperDollFrame.lua"/-->
     <Script file="SkillFrame.lua"/>
     <Script file="ReputationFrame.lua"/>
+    <!--Script file="..\..\Interface_TBC\FrameXML\QuestFrameTemplates.lua"/-->
     <!--Script file="..\..\Interface_TBC\FrameXML\QuestFrame.lua"/-->
     <!--Script file="..\..\Interface_TBC\FrameXML\QuestLogFrame.lua"/-->
     <Script file="QuestTimerFrame.lua"/>
