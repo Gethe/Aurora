@@ -215,32 +215,71 @@ end
 
 
 do -- ScrollBar
+    local function Hook_Hide(self)
+        self._auroraThumb:Hide()
+    end
+    local function Hook_Show(self)
+        self._auroraThumb:Show()
+    end
+    local function ScrollBarThumb(ScrollThumb)
+        local thumb
+        if ScrollThumb.Middle then
+            ScrollThumb.Middle:SetAlpha(0)
+            ScrollThumb.Begin:SetAlpha(0)
+            ScrollThumb.End:SetAlpha(0)
+
+            thumb = ScrollThumb
+        else
+            ScrollThumb:SetAlpha(0)
+            ScrollThumb:SetSize(16, 24)
+
+            thumb = _G.CreateFrame("Frame", nil, ScrollThumb:GetParent())
+            thumb:SetPoint("TOPLEFT", ScrollThumb)
+            thumb:SetPoint("BOTTOMRIGHT", ScrollThumb)
+        end
+
+        Base.SetBackdrop(thumb, Color.button)
+        thumb:SetShown(ScrollThumb:IsShown())
+        thumb:SetBackdropOption("offsets", {
+            left = 0,
+            right = 0,
+            top = 2,
+            bottom = 2,
+        })
+        ScrollThumb._auroraThumb = thumb
+
+        _G.hooksecurefunc(ScrollThumb, "Hide", Hook_Hide)
+        _G.hooksecurefunc(ScrollThumb, "Show", Hook_Show)
+    end
+
     local function UpdateTexture(self)
         local tex = self._auroraTextures[1]
         local texAnchor = self
-
-        tex:ClearAllPoints()
-        local length, width = 14, 7
-        if self._isMinimal then
-            length, width = 12, 6
+        local length, width = 14, 6
+        local xOffset, yOffset = 2, 4
+        if not self._isMinimal then
+            texAnchor = self:GetBackdropTexture("bg")
         end
 
         local isDecrement = self.direction == _G.ScrollControllerMixin.Directions.Decrease
+        self:SetSize(18, 16)
+        tex:ClearAllPoints()
         if self.isHorizontal then
             tex:SetSize(width, length)
-            tex:SetPoint("TOPLEFT", texAnchor, 1, -1)
             if isDecrement then
+                tex:SetPoint("BOTTOMRIGHT", texAnchor, -yOffset, xOffset)
                 Base.SetTexture(tex, "arrowLeft")
             else
+                tex:SetPoint("BOTTOMLEFT", texAnchor, yOffset, xOffset)
                 Base.SetTexture(tex, "arrowRight")
             end
         else
             tex:SetSize(length, width)
             if isDecrement then
-                tex:SetPoint("BOTTOMLEFT", texAnchor, 3, 1)
+                tex:SetPoint("BOTTOMLEFT", texAnchor, xOffset, yOffset)
                 Base.SetTexture(tex, "arrowUp")
             else
-                tex:SetPoint("TOPLEFT", texAnchor, 3, 0)
+                tex:SetPoint("TOPLEFT", texAnchor, xOffset, -yOffset)
                 Base.SetTexture(tex, "arrowDown")
             end
         end
@@ -248,15 +287,6 @@ do -- ScrollBar
     local function ScrollBarButton(Button, notMinimal)
         Button._isMinimal = not notMinimal
         Skin.FrameTypeButton(Button)
-
-        if notMinimal then
-            Button:SetBackdropOption("offsets", {
-                left = 2,
-                right = 1,
-                top = 0,
-                bottom = 1,
-            })
-        end
 
         local tex = Button:GetRegions()
         if Button.direction then
@@ -275,10 +305,13 @@ do -- ScrollBar
     end
 
     function Skin.FrameTypeScrollBar(ScrollBar, notMinimal)
-        local back = ScrollBar.Back
+        local back = ScrollBar.ScrollUpButton or ScrollBar.Back
         ScrollBarButton(back, notMinimal)
 
-        local forward = ScrollBar.Forward
+        local forward = ScrollBar.ScrollDownButton or ScrollBar.Forward
         ScrollBarButton(forward, notMinimal)
+
+        local thumb = ScrollBar.ThumbTexture or ScrollBar.Track.Thumb
+        ScrollBarThumb(thumb)
     end
 end

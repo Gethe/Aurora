@@ -49,6 +49,13 @@ do --[[ SharedXML\DeprecatedTemplates.lua ]]
     function Skin.OptionsListButtonTemplate(Button)
         Skin.ExpandOrCollapse(Button.toggle)
     end
+
+    -- This is technically in SharedXML/SecureScrollTemplates, but those are deprecated too so *shrug*
+    function Skin.UIPanelScrollBarTemplate(Slider)
+        Slider.ScrollUpButton.direction = _G.ScrollControllerMixin.Directions.Decrease
+        Slider.ScrollDownButton.direction = _G.ScrollControllerMixin.Directions.Increase
+        Skin.FrameTypeScrollBar(Slider, true)
+    end
 end
 
 --do --[[ SharedXML\DeprecatedTemplates.xml ]]
