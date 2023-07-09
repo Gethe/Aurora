@@ -6,9 +6,8 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.EmbeddedItemTooltip_Clear(self)
@@ -27,57 +26,56 @@ do --[[ FrameXML\GameTooltip.lua ]]
 end
 
 do --[[ FrameXML\GameTooltip.xml ]]
-    do --[[ GameTooltipTemplate ]]
-        function Skin.GameTooltipTemplate(GameTooltip)
-            Skin.TooltipBackdropTemplate(GameTooltip)
+    function Skin.GameTooltipTemplate(GameTooltip)
+        Skin.SharedTooltipTemplate(GameTooltip)
 
-            local statusBar = _G[GameTooltip:GetName().."StatusBar"]
-            Skin.FrameTypeStatusBar(statusBar)
-            Base.SetBackdropColor(statusBar, Color.frame)
+        local statusBar = _G[GameTooltip:GetName().."StatusBar"]
+        Skin.FrameTypeStatusBar(statusBar)
+        Base.SetBackdropColor(statusBar, Color.frame)
 
-            statusBar:SetHeight(4)
-            statusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
-            statusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
-        end
-        function Skin.ShoppingTooltipTemplate(GameTooltip)
-            Skin.TooltipBackdropTemplate(GameTooltip)
-        end
-        function Skin.TooltipStatusBarTemplate(StatusBar)
-            Skin.FrameTypeStatusBar(StatusBar)
-            local _, border = StatusBar:GetRegions()
-            border:Hide()
-        end
-        function Skin.TooltipProgressBarTemplate(Frame)
-            local bar = Frame.Bar
-            Skin.FrameTypeStatusBar(bar)
-
-            bar:GetStatusBarTexture():SetDrawLayer("BORDER")
-            bar.BorderLeft:Hide()
-            bar.BorderRight:Hide()
-            bar.BorderMid:Hide()
-
-            local LeftDivider = bar.LeftDivider
-            LeftDivider:SetColorTexture(Color.button:GetRGB())
-            LeftDivider:SetSize(1, 15)
-            LeftDivider:SetPoint("LEFT", 73, 0)
-
-            local RightDivider = bar.RightDivider
-            RightDivider:SetColorTexture(Color.button:GetRGB())
-            RightDivider:SetSize(1, 15)
-            RightDivider:SetPoint("RIGHT", -73, 0)
-
-            _G.select(7, bar:GetRegions()):Hide()
-        end
+        statusBar:SetHeight(4)
+        statusBar:SetPoint("TOPLEFT", GameTooltip, "BOTTOMLEFT", 1, 0)
+        statusBar:SetPoint("TOPRIGHT", GameTooltip, "BOTTOMRIGHT", -1, 0)
     end
-    do --[[ GameTooltip ]]
-        function Skin.InternalEmbeddedItemTooltipTemplate(Frame)
-            Base.CropIcon(Frame.Icon)
-            local bg = _G.CreateFrame("Frame", nil, Frame)
-            bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
-            bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
-            Base.SetBackdrop(bg, Color.black, 0)
-            Frame._auroraIconBorder = bg
-        end
+    function Skin.InternalEmbeddedItemTooltipTemplate(Frame)
+        Base.CropIcon(Frame.Icon)
+        local bg = _G.CreateFrame("Frame", nil, Frame)
+        bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
+        bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
+        Base.SetBackdrop(bg, Color.black, 0)
+        Frame._auroraIconBorder = bg
+
+        Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
+        Util.Mixin(_G.GarrisonFollowerPortraitMixin, Hook.GarrisonFollowerPortraitMixin)
+    end
+    function Skin.ShoppingTooltipTemplate(GameTooltip)
+        Skin.SharedTooltipTemplate(GameTooltip)
+    end
+    function Skin.TooltipStatusBarTemplate(StatusBar)
+        Skin.FrameTypeStatusBar(StatusBar)
+        local _, border = StatusBar:GetRegions()
+        border:Hide()
+    end
+    function Skin.TooltipProgressBarTemplate(Frame)
+        local bar = Frame.Bar
+        Skin.FrameTypeStatusBar(bar)
+
+        bar:GetStatusBarTexture():SetDrawLayer("BORDER")
+        bar.BorderLeft:Hide()
+        bar.BorderRight:Hide()
+        bar.BorderMid:Hide()
+
+        local LeftDivider = bar.LeftDivider
+        LeftDivider:SetColorTexture(Color.button:GetRGB())
+        LeftDivider:SetSize(1, 15)
+        LeftDivider:SetPoint("LEFT", 73, 0)
+
+        local RightDivider = bar.RightDivider
+        RightDivider:SetColorTexture(Color.button:GetRGB())
+        RightDivider:SetSize(1, 15)
+        RightDivider:SetPoint("RIGHT", -73, 0)
+
+        _G.select(7, bar:GetRegions()):Hide()
     end
 end
 

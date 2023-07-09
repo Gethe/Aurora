@@ -12,9 +12,41 @@ local Color = Aurora.Color
 do --[[ FrameXML\ReputationFrame.lua ]]
     function Hook.ReputationFrame_OnShow(self)
         -- The TOPRIGHT anchor for ReputationBar1 is set in C code
-        _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -49)
+        _G.ReputationBar1:SetPoint("TOPRIGHT", -34, -(private.FRAME_TITLE_HEIGHT + 22))
     end
+    function Hook.ReputationFrame_SetRowType(factionRow, isChild, isHeader, hasRep)
+        if isHeader then
+            factionRow:SetBackdrop(false)
+        else
+            factionRow:SetBackdrop(true)
+        end
+    end
+    function Hook.ReputationFrame_InitReputationRow(factionRow, elementData)
+        local _, _, _, _, _, _, atWarWith = _G.GetFactionInfo(elementData.index)
+
+        local bd = factionRow._bdFrame or factionRow
+        if atWarWith then
+            Base.SetBackdropColor(bd, Color.red)
+        else
+            Base.SetBackdropColor(bd, Color.button)
+        end
+
+        if elementData.index == _G.GetSelectedFaction() then
+            if _G.ReputationDetailFrame:IsShown() then
+                bd:SetBackdropBorderColor(Color.highlight)
+            end
+        end
+    end
+
+    local hasShown = false
     function Hook.ReputationFrame_Update(self)
+        if not hasShown then
+            hasShown = true
+            _G.ReputationFrame:Hide()
+            _G.ReputationFrame:Show()
+            return
+        end
+
         for i = 1, _G.NUM_FACTIONS_DISPLAYED do
             local factionRow = _G["ReputationBar"..i]
             if factionRow.index then
@@ -34,6 +66,8 @@ do --[[ FrameXML\ReputationFrame.lua ]]
                 end
             end
         end
+
+        Hook.ReputationFrame_OnShow(self)
     end
 end
 
@@ -52,96 +86,62 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         end
     end
 
-    function Skin.ReputationHeaderTemplate(Button)
-        Skin.ExpandOrCollapse(Button)
+    function Skin.ReputationBarTemplate(Button)
+        Skin.FrameTypeButton(Button, OnEnter, OnLeave)
         Button:SetBackdropOption("offsets", {
-            left = 3,
-            right = 286,
+            left = 30,
+            right = 10,
             top = 0,
             bottom = 0,
         })
-    end
-    function Skin.ReputationBarTemplate(StatusBar)
-        Skin.FrameTypeStatusBar(StatusBar)
-        StatusBar:HookScript("OnEnter", OnEnter)
-        StatusBar:HookScript("OnLeave", OnLeave)
 
-        local bdFrame = _G.CreateFrame("Frame", nil, StatusBar)
-        bdFrame:SetFrameLevel(StatusBar:GetFrameLevel() - 1)
-        bdFrame:SetPoint("TOPRIGHT", 3, 3)
-        bdFrame:SetPoint("BOTTOMLEFT", -133, -3)
-        Base.SetBackdrop(bdFrame, Color.button)
-        StatusBar._bdFrame = bdFrame
+        local Container = Button.Container
+        Container.Background:SetAlpha(0)
 
-        local name = StatusBar:GetName()
-        local atWarCheck = _G[name.."AtWarCheck"]:GetRegions()
-        atWarCheck:SetTexture([[Interface\Buttons\UI-CheckBox-SwordCheck]])
-        atWarCheck:SetTexCoord(0, 0.625, 0, 0.5625)
-        atWarCheck:SetSize(20, 18)
+        Skin.ExpandOrCollapse(Container.ExpandOrCollapseButton)
 
-        _G[name.."FactionName"]:SetPoint("LEFT", bdFrame, 5, 0)
-        _G[name.."FactionName"]:SetPoint("RIGHT", StatusBar,"LEFT" , -5, 0)
+        local ReputationBar = Container.ReputationBar
+        Skin.FrameTypeStatusBar(ReputationBar)
+        ReputationBar:ClearAllPoints()
+        ReputationBar:SetPoint("TOPRIGHT", -3, -2)
+        ReputationBar:SetPoint("BOTTOMLEFT", Button, "BOTTOMRIGHT", -102, 2)
 
-        _G[name.."ReputationBarLeft"]:Hide()
-        _G[name.."ReputationBarRight"]:Hide()
+        ReputationBar.AtWarHighlight2:SetAlpha(0)
+        ReputationBar.AtWarHighlight1:SetAlpha(0)
 
-        _G[name.."Highlight2"]:SetAlpha(0)
-        _G[name.."Highlight1"]:SetAlpha(0)
+        ReputationBar.LeftTexture:Hide()
+        ReputationBar.RightTexture:Hide()
+
+        ReputationBar.Highlight2:SetAlpha(0)
+        ReputationBar.Highlight1:SetAlpha(0)
     end
 end
 
 function private.FrameXML.ReputationFrame()
-    _G.ReputationFrame:HookScript("OnShow", Hook.ReputationFrame_OnShow)
-    _G.hooksecurefunc("ReputationFrame_Update", Hook.ReputationFrame_Update)
+    local ReputationFrame = _G.ReputationFrame
+    _G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
+    _G.hooksecurefunc("ReputationFrame_InitReputationRow", Hook.ReputationFrame_InitReputationRow)
 
     ---------------------
     -- ReputationFrame --
     ---------------------
-    local charFrameBG = _G.CharacterFrame:GetBackdropTexture("bg")
+    _G.ReputationFrameFactionLabel:SetPoint("TOPLEFT", 75, -32)
+    _G.ReputationFrameStandingLabel:ClearAllPoints()
+    _G.ReputationFrameStandingLabel:SetPoint("TOPRIGHT", -75, -32)
 
-    local tl, tr, bl, br = _G.ReputationFrame:GetRegions()
-    tl:Hide()
-    tr:Hide()
-    bl:Hide()
-    br:Hide()
+    Skin.WowScrollBoxList(ReputationFrame.ScrollBox)
+    ReputationFrame.ScrollBox:SetPoint("TOPLEFT", _G.CharacterFrame.Inset, 4, -26)
 
-    _G.ReputationHeader1:ClearAllPoints()
-    _G.ReputationHeader1:SetPoint("TOPLEFT", charFrameBG, 10, -45)
-    for i = 1, _G.NUM_FACTIONS_DISPLAYED do
-        local factionRow = _G["ReputationBar"..i]
-        local factionHeader = _G["ReputationHeader"..i]
-        Skin.ReputationBarTemplate(factionRow)
-        Skin.ReputationHeaderTemplate(factionHeader)
-
-        if i > 1 then
-            factionHeader:ClearAllPoints()
-            factionHeader:SetPoint("TOPLEFT", _G["ReputationHeader"..i-1], "BOTTOMLEFT", 0, -10)
-        end
-        factionRow:SetPoint("TOPLEFT", factionHeader, 152, 0)
-    end
-
-    _G.ReputationFrameFactionLabel:SetPoint("TOPLEFT", 80, -40)
-    _G.ReputationFrameStandingLabel:SetPoint("TOPLEFT", 220, -40)
-
-    _G.ReputationListScrollFrame:SetPoint("TOPLEFT", charFrameBG, 4, -4)
-    _G.ReputationListScrollFrame:SetPoint("BOTTOMRIGHT", charFrameBG, -23, 4)
-
-    Skin.FauxScrollFrameTemplate(_G.ReputationListScrollFrame)
-    local top, bottom = _G.ReputationListScrollFrame:GetRegions()
-    top:Hide()
-    bottom:Hide()
-
-
-    Skin.MainMenuBarWatchBarTemplate(_G.ReputationWatchBar)
+    Skin.MinimalScrollBar(ReputationFrame.ScrollBar)
 
 
     ---------------------------
     -- ReputationDetailFrame --
     ---------------------------
     local ReputationDetailFrame = _G.ReputationDetailFrame
-    ReputationDetailFrame:SetPoint("TOPLEFT", charFrameBG, "TOPRIGHT", 1, -28)
-    Skin.DialogBorderTemplate(ReputationDetailFrame)
-    local repDetailBG = ReputationDetailFrame:GetBackdropTexture("bg")
+    ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
+    Skin.DialogBorderTemplate(ReputationDetailFrame.Border)
+    local repDetailBG = ReputationDetailFrame.Border:GetBackdropTexture("bg")
 
     _G.ReputationDetailFactionName:SetPoint("TOPLEFT", repDetailBG, 10, -8)
     _G.ReputationDetailFactionName:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -10, -26)
@@ -152,7 +152,6 @@ function private.FrameXML.ReputationFrame()
     detailBG:SetPoint("TOPLEFT", repDetailBG, 1, -1)
     detailBG:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -1, -142)
     detailBG:SetColorTexture(Color.button:GetRGB())
-    _G.ReputationDetailCorner:Hide()
 
     _G.ReputationDetailDivider:SetColorTexture(Color.frame:GetRGB())
     _G.ReputationDetailDivider:ClearAllPoints()
@@ -165,7 +164,7 @@ function private.FrameXML.ReputationFrame()
     do -- AtWarCheckBox
         local atWarCheckBox = _G.ReputationDetailAtWarCheckBox
         Skin.FrameTypeCheckButton(atWarCheckBox)
-        atWarCheckBox:SetPoint("BOTTOMLEFT", repDetailBG, 14, 25)
+        atWarCheckBox:SetPoint("TOPLEFT", detailBG, "BOTTOMLEFT", 10, -2)
         atWarCheckBox:SetBackdropOption("offsets", {
             left = 6,
             right = 6,
@@ -182,6 +181,6 @@ function private.FrameXML.ReputationFrame()
         disabled:SetAllPoints(check)
     end
 
-    Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
-    Skin.OptionsSmallCheckButtonTemplate(_G.ReputationDetailMainScreenCheckBox)
+    Skin.UICheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
+    Skin.UICheckButtonTemplate(_G.ReputationDetailMainScreenCheckBox)
 end

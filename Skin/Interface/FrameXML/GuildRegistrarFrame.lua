@@ -6,8 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Skin = Aurora.Base, Aurora.Skin
-local Color = Aurora.Color
+local Skin = Aurora.Skin
 
 --do --[[ FrameXML\GuildRegistrarFrame.lua ]]
 --end
@@ -17,33 +16,29 @@ local Color = Aurora.Color
 
 function private.FrameXML.GuildRegistrarFrame()
     local GuildRegistrarFrame = _G.GuildRegistrarFrame
-    Skin.FrameTypeFrame(GuildRegistrarFrame)
-    GuildRegistrarFrame:SetBackdropOption("offsets", {
-        left = 14,
-        right = 34,
-        top = 14,
-        bottom = 75,
-    })
+    local frameBG, _, _, artBG = GuildRegistrarFrame:GetRegions()
 
-    local portrait, tl, tr, bl, br = GuildRegistrarFrame:GetRegions()
-    portrait:Hide()
-    tl:Hide()
-    tr:Hide()
-    bl:Hide()
-    br:Hide()
+    GuildRegistrarFrame.Bg = frameBG -- Bg from ButtonFrameTemplate
+    Skin.ButtonFrameTemplate(GuildRegistrarFrame)
+    artBG:Hide()
 
-    local bg = GuildRegistrarFrame:GetBackdropTexture("bg")
-    _G.GuildRegistrarFrameNpcNameText:ClearAllPoints()
-    _G.GuildRegistrarFrameNpcNameText:SetPoint("TOPLEFT", bg)
-    _G.GuildRegistrarFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    -- BlizzWTF: This should use the title text included in the template
+    _G.GuildRegistrarFrameNpcNameText:SetAllPoints(_G.GuildRegistrarFrame.TitleContainer)
+    Skin.MinimalScrollBar(GuildRegistrarFrame.ScrollBar)
 
+    -------------------
+    -- GreetingFrame --
+    -------------------
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFrameGoodbyeButton)
 
+    -------------------
+    -- PurchaseFrame --
+    -------------------
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFrameCancelButton)
     Skin.UIPanelButtonTemplate(_G.GuildRegistrarFramePurchaseButton)
 
+    Skin.FrameTypeEditBox(_G.GuildRegistrarFrameEditBox)
     _G.GuildRegistrarFrameEditBox:SetHeight(20)
-    Base.SetBackdrop(_G.GuildRegistrarFrameEditBox, Color.frame)
     local _, _, left, right = _G.GuildRegistrarFrameEditBox:GetRegions()
     left:Hide()
     right:Hide()

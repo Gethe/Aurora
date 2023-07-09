@@ -6,9 +6,8 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_Channels.lua ]]
     do --[[ ChannelButton.lua ]]
@@ -44,20 +43,12 @@ end
 
 do --[[ AddOns\Blizzard_Channels.xml ]]
     do --[[ ChannelButton.xml ]]
-        Skin.ChannelButtonBaseTemplate = private.nop
+        function Skin.ChannelButtonBaseTemplate(Button)
+            Skin.FrameTypeButton(Button)
+        end
         function Skin.ChannelButtonHeaderTemplate(Button)
             _G.hooksecurefunc(Button, "Update", Hook.ChannelButtonHeaderMixin.Update)
-
             Skin.ChannelButtonBaseTemplate(Button)
-            if private.isClassic then
-                Button:SetNormalTexture("")
-                Button:SetHighlightTexture("")
-            else
-                Button:ClearNormalTexture()
-                Button:ClearHighlightTexture()
-            end
-            Base.SetBackdrop(Button, Color.button)
-            Base.SetHighlight(Button)
 
             Button.Collapsed:SetAlpha(0)
             local minus = Button:CreateTexture(nil, "OVERLAY")
@@ -101,12 +92,14 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     end
     do --[[ ChannelList.xml ]]
         function Skin.ChannelListTemplate(ScrollFrame)
-            Skin.UIPanelStretchableArtScrollBarTemplate(ScrollFrame.ScrollBar)
+            Util.Mixin(ScrollFrame.headerButtonPool, Hook.ObjectPoolMixin)
+            Skin.ScrollFrameTemplate(ScrollFrame)
         end
     end
     do --[[ ChannelRoster.xml ]]
         function Skin.ChannelRosterTemplate(Frame)
-            Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
+            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
 end
@@ -135,24 +128,14 @@ function private.AddOns.Blizzard_Channels()
     --       CreateChannelPopup       --
     ----====####$$$$%%%%$$$$####====----
     local CreateChannelPopup = _G.CreateChannelPopup
-
-    CreateChannelPopup.Title:ClearAllPoints()
-    CreateChannelPopup.Title:SetPoint("TOPLEFT")
-    CreateChannelPopup.Title:SetPoint("BOTTOMRIGHT", CreateChannelPopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-    CreateChannelPopup.Titlebar:Hide()
-    CreateChannelPopup.Corner:Hide()
-
-    Skin.DialogBorderTemplate(CreateChannelPopup)
+    Skin.DialogHeaderTemplate(CreateChannelPopup.Header)
+    Skin.DialogBorderTemplate(CreateChannelPopup.BG)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Name)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Password)
     Skin.UICheckButtonTemplate(CreateChannelPopup.UseVoiceChat)
     Skin.UIPanelCloseButton(CreateChannelPopup.CloseButton)
     Skin.CreateChannelPopupButtonTemplate(CreateChannelPopup.OKButton)
-    CreateChannelPopup.OKButton:SetPoint("BOTTOMLEFT", 5, 5)
     Skin.CreateChannelPopupButtonTemplate(CreateChannelPopup.CancelButton)
-    CreateChannelPopup.CancelButton:ClearAllPoints()
-    CreateChannelPopup.CancelButton:SetPoint("BOTTOMRIGHT", -5, 5)
 
 
     ----====####$$$$%%%%%$$$$####====----

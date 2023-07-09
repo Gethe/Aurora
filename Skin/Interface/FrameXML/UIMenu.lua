@@ -6,20 +6,14 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 
-do --[[ FrameXML\UIMenu.lua ]]
-    function Hook.UIMenuTemplate_OnShow(self)
-        Base.SetBackdropColor(self)
-    end
-end
+--do --[[ FrameXML\UIMenu.lua ]]
+--end
 
 do --[[ FrameXML\UIMenu.xml ]]
     function Skin.UIMenuTemplate(Frame)
-        Frame:HookScript("OnShow", Hook.UIMenuTemplate_OnShow)
-
-        Skin.FrameTypeFrame(Frame)
+        Skin.TooltipBackdropTemplate(Frame)
     end
 end
 

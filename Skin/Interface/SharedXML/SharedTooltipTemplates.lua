@@ -28,18 +28,25 @@ do --[[ FrameXML\SharedTooltipTemplates.xml ]]
     function Skin.SharedNoHeaderTooltipTemplate(GameTooltip)
         Skin.SharedTooltipTemplate(GameTooltip)
     end
+
     function Skin.TooltipBackdropTemplate(Frame)
+        if Frame.debug then
+            Frame.NineSlice.debug = Frame.debug
+        end
         Skin.NineSlicePanelTemplate(Frame.NineSlice)
 
         local r, g, b = Color.frame:GetRGB()
         Frame:SetBackdropColor(r, g, b, Frame.backdropColorAlpha or 1)
     end
+
     function Skin.TooltipBorderBackdropTemplate(Frame)
         Skin.TooltipBackdropTemplate(Frame)
     end
+
     function Skin.TooltipBorderedFrameTemplate(Frame)
         Skin.TooltipBackdropTemplate(Frame)
     end
+
 end
 
 function private.SharedXML.SharedTooltipTemplates()

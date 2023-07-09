@@ -73,13 +73,12 @@ do --[[ FrameXML\ChatBubbleTemplates.xml ]]
         Skin.FrameTypeFrame(Frame)
         Frame:SetScale(_G.UIParent:GetScale())
 
-        local yOfs = -5
         local tail = Frame.Tail
         tail:SetColorTexture(0, 0, 0)
-        tail:SetVertexOffset(1, 0, yOfs)
-        tail:SetVertexOffset(2, 16, yOfs)
-        tail:SetVertexOffset(3, 0, yOfs)
-        tail:SetVertexOffset(4, 0, yOfs)
+        tail:SetVertexOffset(1, 0, -5)
+        tail:SetVertexOffset(2, 16, -5)
+        tail:SetVertexOffset(3, 0, -5)
+        tail:SetVertexOffset(4, 0, -5)
 
         local name = Frame:CreateFontString(nil, "BORDER")
         name:SetPoint("TOPLEFT", 5, 5)

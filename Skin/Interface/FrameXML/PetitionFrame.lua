@@ -16,42 +16,31 @@ local Skin = Aurora.Skin
 
 function private.FrameXML.PetitionFrame()
     local PetitionFrame = _G.PetitionFrame
+    local frameBG, _, portrait, artBG = PetitionFrame:GetRegions()
 
-    Skin.FrameTypeFrame(PetitionFrame)
-    PetitionFrame:SetBackdropOption("offsets", {
-        left = 14,
-        right = 34,
-        top = 14,
-        bottom = 75,
-    })
-
-    local portrait, tl, tr, bl, br = PetitionFrame:GetRegions()
+    PetitionFrame.Bg = frameBG -- Bg from ButtonFrameTemplate
+    Skin.ButtonFrameTemplate(PetitionFrame)
     portrait:Hide()
-    tl:Hide()
-    tr:Hide()
-    bl:Hide()
-    br:Hide()
+    artBG:Hide()
 
 
-    _G.PetitionFrameCharterTitle:SetPoint("TOPLEFT", 8, -private.FRAME_TITLE_HEIGHT)
+    _G.PetitionFrameCharterTitle:SetPoint("TOPLEFT", 12, -(private.FRAME_TITLE_HEIGHT + 10))
     _G.PetitionFrameCharterTitle:SetTextColor(1, 1, 1)
     _G.PetitionFrameCharterTitle:SetShadowColor(0, 0, 0)
     _G.PetitionFrameMasterTitle:SetTextColor(1, 1, 1)
     _G.PetitionFrameMasterTitle:SetShadowColor(0, 0, 0)
     _G.PetitionFrameMemberTitle:SetTextColor(1, 1, 1)
     _G.PetitionFrameMemberTitle:SetShadowColor(0, 0, 0)
-    _G.PetitionFrameInstructions:SetPoint("RIGHT", -8, 0)
+    _G.PetitionFrameInstructions:SetPoint("RIGHT", -32, 0)
 
-    local bg = PetitionFrame:GetBackdropTexture("bg")
-    _G.PetitionFrameNpcNameText:ClearAllPoints()
-    _G.PetitionFrameNpcNameText:SetPoint("TOPLEFT", bg)
-    _G.PetitionFrameNpcNameText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    -- BlizzWTF: This should use the title text included in the template
+    _G.PetitionFrameNpcNameText:SetAllPoints(PetitionFrame.TitleContainer)
 
+    Skin.MinimalScrollBar(PetitionFrame.ScrollBar)
     Skin.UIPanelButtonTemplate(_G.PetitionFrameCancelButton)
     _G.PetitionFrameCancelButton:SetPoint("BOTTOMRIGHT", -4, 4)
     Skin.UIPanelButtonTemplate(_G.PetitionFrameSignButton)
     Skin.UIPanelButtonTemplate(_G.PetitionFrameRequestButton)
-    Skin.UIPanelCloseButton(_G.PetitionFrameCloseButton)
     Skin.UIPanelButtonTemplate(_G.PetitionFrameRenameButton)
     _G.PetitionFrameRenameButton:ClearAllPoints()
     _G.PetitionFrameRenameButton:SetPoint("TOPLEFT", _G.PetitionFrameRequestButton, "TOPRIGHT", 1, 0)

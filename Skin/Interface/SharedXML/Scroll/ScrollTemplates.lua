@@ -24,6 +24,9 @@ do --[[ FrameXML\ScrollTemplates.xml ]]
     function Skin.ScrollingEditBoxTemplate(Frame)
         Skin.WowScrollBox(Frame.ScrollBox)
     end
+    function Skin.ScrollingFontTemplate(Frame)
+        Skin.WowScrollBox(Frame.ScrollBox)
+    end
 end
 
 function private.SharedXML.ScrollTemplates()

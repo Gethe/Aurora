@@ -49,14 +49,10 @@ function private.FrameXML.ColorPickerFrame()
     ColorPickerFrame:HookScript("OnShow", Hook.ColorPickerFrame_UpdateDisplay)
     ColorPickerFrame:SetPropagateKeyboardInput(true)
 
-    Skin.DialogBorderTemplate(ColorPickerFrame)
-    local bg = ColorPickerFrame:GetBackdropTexture("bg")
+    Skin.DialogBorderTemplate(ColorPickerFrame.Border)
+    local bg = ColorPickerFrame.Border:GetBackdropTexture("bg")
 
-    local _, header, text = ColorPickerFrame:GetRegions()
-    header:Hide()
-    text:ClearAllPoints()
-    text:SetPoint("TOPLEFT")
-    text:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    Skin.DialogHeaderTemplate(ColorPickerFrame.Header)
 
     Skin.GameMenuButtonTemplate(_G.ColorPickerCancelButton)
     Skin.GameMenuButtonTemplate(_G.ColorPickerOkayButton)
@@ -70,6 +66,6 @@ function private.FrameXML.ColorPickerFrame()
     ------------------
     -- OpacityFrame --
     ------------------
-    Skin.DialogBorderTemplate(_G.OpacityFrame)
+    Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
     Skin.OpacitySlider(_G.OpacityFrameSlider)
 end

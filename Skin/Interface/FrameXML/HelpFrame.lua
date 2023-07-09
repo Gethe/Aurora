@@ -27,10 +27,6 @@ do --[[ FrameXML\HelpFrame.xml ]]
     function Skin.HelpFrameContainerFrameTemplate(Frame)
         Skin.TooltipBackdropTemplate(Frame)
     end
-    function Skin.HelpFrameButtonTemplate(Button)
-        Skin.FrameTypeButton(Button)
-        Button.selected:SetTexture("")
-    end
     function Skin.BrowserTemplate(Browser)
         Browser.BrowserInset:Hide()
         --Skin.InsetFrameTemplate(Browser.BrowserInset)
@@ -42,12 +38,7 @@ function private.FrameXML.HelpFrame()
     -- HelpFrame --
     ---------------
     local HelpFrame = _G.HelpFrame
-    if private.isClassic then
-        Skin.ButtonFrameTemplate(HelpFrame)
-    else
-        Skin.DefaultPanelTemplate(HelpFrame)
-    end
-
+    Skin.DefaultPanelTemplate(HelpFrame)
     Skin.BrowserTemplate(HelpFrame.Browser)
     HelpFrame.Browser:SetPoint("TOPLEFT", 1, -private.FRAME_TITLE_HEIGHT)
     HelpFrame.Browser:SetPoint("BOTTOMRIGHT", -1, 1)

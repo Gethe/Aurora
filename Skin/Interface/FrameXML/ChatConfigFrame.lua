@@ -15,14 +15,10 @@ do --[[ FrameXML\ChatConfigFrame.lua ]]
         local checkBoxNameString = frame:GetName().."CheckBox"
 
         for index, value in ipairs(checkBoxTable) do
-            if Skin[checkBoxTemplate] then
-                local checkBoxName = checkBoxNameString..index
-                if not _G[checkBoxName]._auroraSkinned then
-                    Skin[checkBoxTemplate](_G[checkBoxName])
-                    _G[checkBoxName]._auroraSkinned = true
-                end
-            else
-                private.debug("Missing template for ChatConfig", checkBoxTemplate)
+            local checkBoxName = checkBoxNameString..index
+            if not _G[checkBoxName]._auroraSkinned then
+                Skin[checkBoxTemplate](_G[checkBoxName])
+                _G[checkBoxName]._auroraSkinned = true
             end
         end
     end
@@ -59,6 +55,16 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
     function Skin.ChatConfigBoxTemplate(Frame)
         Util.HideNineSlice(Frame)
     end
+    function Skin.ChatConfigBorderBoxTemplate(Frame)
+        Skin.TooltipBorderBackdropTemplate(Frame)
+        Frame.NineSlice:SetBackdropBorderColor(Color.button)
+        Frame.NineSlice:SetBackdropOption("offsets", {
+            left = 3,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
+    end
     function Skin.ChatConfigBoxWithHeaderTemplate(Frame)
         Skin.ChatConfigBoxTemplate(Frame)
     end
@@ -75,16 +81,9 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
     function Skin.ChatConfigSmallCheckButtonTemplate(CheckButton)
         Skin.ChatConfigBaseCheckButtonTemplate(CheckButton)
     end
-    function Skin.ChatConfigCheckBoxTemplate(Frame)
-        Base.SetBackdrop(Frame, Color.frame)
-        Frame:SetBackdropBorderColor(Color.button)
-        Frame:SetBackdropOption("offsets", {
-            left = 3,
-            right = 2,
-            top = 2,
-            bottom = 2,
-        })
 
+    function Skin.ChatConfigCheckBoxTemplate(Frame)
+        Skin.ChatConfigBorderBoxTemplate(Frame)
         Skin.ChatConfigCheckButtonTemplate(Frame.CheckButton)
     end
     function Skin.ChatConfigCheckBoxSmallTemplate(Frame)
@@ -102,26 +101,17 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
         Frame.ArtOverlay.GrayedOut:SetPoint("TOPLEFT")
     end
     function Skin.ChatConfigSwatchTemplate(Frame)
-        Base.SetBackdrop(Frame, Color.frame)
-        Frame:SetBackdropBorderColor(Color.button)
-        Frame:SetBackdropOption("offsets", {
-            left = 3,
-            right = 2,
-            top = 2,
-            bottom = 2,
-        })
-
+        Skin.ChatConfigBorderBoxTemplate(Frame)
         Skin.ColorSwatchTemplate(_G[Frame:GetName().."ColorSwatch"])
     end
     function Skin.ChatConfigTabTemplate(Button)
-        local name = Button:GetName()
-        _G[name.."Left"]:Hide()
-        _G[name.."Middle"]:Hide()
-        _G[name.."Right"]:Hide()
+        Button.Left:Hide()
+        Button.Right:Hide()
+        Button.Middle:Hide()
 
-        _G[name.."Text"]:SetHeight(0)
-        _G[name.."Text"]:SetPoint("LEFT", 0, -5)
-        _G[name.."Text"]:SetPoint("RIGHT", 0, -5)
+        Button.Text:SetHeight(0)
+        Button.Text:SetPoint("LEFT", 0, -5)
+        Button.Text:SetPoint("RIGHT", 0, -5)
         Button:GetHighlightTexture():Hide()
     end
     function Skin.ChatWindowTab(Button)
@@ -155,18 +145,17 @@ function private.FrameXML.ChatConfigFrame()
     _G.hooksecurefunc("ChatConfig_CreateColorSwatches", Hook.ChatConfig_CreateColorSwatches)
 
     local ChatConfigFrame = _G.ChatConfigFrame
-    Skin.DialogBorderTemplate(ChatConfigFrame)
-
-    _G.ChatConfigFrameHeader:Hide()
-    _G.ChatConfigFrameHeaderText:ClearAllPoints()
-    _G.ChatConfigFrameHeaderText:SetPoint("TOPLEFT")
-    _G.ChatConfigFrameHeaderText:SetPoint("BOTTOMRIGHT", _G.ChatConfigFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    Skin.DialogBorderTemplate(ChatConfigFrame.Border)
+    Skin.DialogHeaderTemplate(ChatConfigFrame.Header)
 
     Skin.ChatConfigBoxTemplate(_G.ChatConfigCategoryFrame)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton1)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton2)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton3)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton4)
+    Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton5)
+    Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton6)
+    Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton7)
     Util.Mixin(ChatConfigFrame.ChatTabManager.tabPool, Hook.ObjectPoolMixin)
     Skin.ChatConfigBoxTemplate(_G.ChatConfigBackgroundFrame)
 
@@ -182,27 +171,13 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ChatConfigBoxWithHeaderTemplate(_G.ChatConfigOtherSettingsSystem)
     Skin.ChatConfigBoxWithHeaderTemplate(_G.ChatConfigOtherSettingsCreature)
 
-    Skin.UIPanelButtonTemplate(ChatConfigFrame.DefaultButton)
-    ChatConfigFrame.DefaultButton:SetPoint("BOTTOMLEFT", 10, 10)
-    Skin.UIPanelButtonTemplate(ChatConfigFrame.RedockButton)
-    ChatConfigFrame.RedockButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.DefaultButton, "BOTTOMRIGHT", 5, 0)
-    Skin.UIPanelButtonTemplate(_G.CombatLogDefaultButton)
-    --Skin.UIPanelButtonTemplate(_G.ChatConfigFrameCancelButton) -- BlizzWTF: Not used?
-    Skin.UIPanelButtonTemplate(_G.ChatConfigFrameOkayButton)
-    _G.ChatConfigFrameOkayButton:ClearAllPoints()
-    _G.ChatConfigFrameOkayButton:SetPoint("BOTTOMRIGHT", -10, 10)
-
     -------------------------
     -- Combat Log Settings --
     -------------------------
+    local Filters = _G.ChatConfigCombatSettings.Filters
     Skin.ChatConfigBoxTemplate(_G.ChatConfigCombatSettingsFilters)
-    Skin.FauxScrollFrameTemplateLight(_G.ChatConfigCombatSettingsFiltersScrollFrame)
-    _G.ChatConfigCombatSettingsFiltersScrollFrame:SetPoint("TOPLEFT", 5, -5)
-    _G.ChatConfigCombatSettingsFiltersScrollFrame:SetPoint("BOTTOMRIGHT", -19, 5)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton1)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton2)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton3)
-    Skin.ConfigFilterButtonTemplate(_G.ChatConfigCombatSettingsFiltersButton4)
+    Skin.WowScrollBoxList(Filters.ScrollBox)
+    Skin.MinimalScrollBar(Filters.ScrollBar)
     Skin.UIPanelButtonTemplate(_G.ChatConfigCombatSettingsFiltersDeleteButton)
     Skin.UIPanelButtonTemplate(_G.ChatConfigCombatSettingsFiltersAddFilterButton)
     _G.ChatConfigCombatSettingsFiltersAddFilterButton:SetPoint("RIGHT", _G.ChatConfigCombatSettingsFiltersDeleteButton, "LEFT", -5, 0)
@@ -228,16 +203,20 @@ function private.FrameXML.ChatConfigFrame()
 
     Util.HideNineSlice(_G.CombatConfigColorsColorizeUnitName)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeUnitNameCheck)
+
     Util.HideNineSlice(_G.CombatConfigColorsColorizeSpellNames)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeSpellNamesCheck)
     Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigColorsColorizeSpellNamesSchoolColoring)
     Skin.ColorSwatchTemplate(_G.CombatConfigColorsColorizeSpellNamesColorSwatch)
+
     Util.HideNineSlice(_G.CombatConfigColorsColorizeDamageNumber)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeDamageNumberCheck)
     Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigColorsColorizeDamageNumberSchoolColoring)
     Skin.ColorSwatchTemplate(_G.CombatConfigColorsColorizeDamageNumberColorSwatch)
+
     Util.HideNineSlice(_G.CombatConfigColorsColorizeDamageSchool)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeDamageSchoolCheck)
+
     Util.HideNineSlice(_G.CombatConfigColorsColorizeEntireLine)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigColorsColorizeEntireLineCheck)
     Skin.UIRadioButtonTemplate(_G.CombatConfigColorsColorizeEntireLineBySource)
@@ -245,6 +224,10 @@ function private.FrameXML.ChatConfigFrame()
 
     -- Formatting --
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowTimeStamp)
+    Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingShowBraces)
+    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingUnitNames)
+    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingSpellNames)
+    Skin.ChatConfigSmallCheckButtonTemplate(_G.CombatConfigFormattingItemNames)
     Skin.ChatConfigCheckButtonTemplate(_G.CombatConfigFormattingFullText)
 
     -- Settings --
@@ -258,4 +241,19 @@ function private.FrameXML.ChatConfigFrame()
     for index, value in ipairs(_G.COMBAT_CONFIG_TABS) do
         Skin.ChatConfigTabTemplate(_G[_G.CHAT_CONFIG_COMBAT_TAB_NAME..index])
     end
+
+    Skin.UIPanelButtonTemplate(ChatConfigFrame.DefaultButton)
+    ChatConfigFrame.DefaultButton:SetPoint("BOTTOMLEFT", 10, 10)
+    Skin.UIPanelButtonTemplate(ChatConfigFrame.RedockButton)
+    ChatConfigFrame.RedockButton:SetPoint("BOTTOMLEFT", ChatConfigFrame.DefaultButton, "BOTTOMRIGHT", 5, 0)
+
+    Skin.UIPanelButtonTemplate(_G.CombatLogDefaultButton)
+    Skin.UIPanelButtonTemplate(_G.TextToSpeechDefaultButton)
+    Skin.UICheckButtonTemplate(_G.TextToSpeechCharacterSpecificButton)
+    _G.TextToSpeechCharacterSpecificButton:SetPoint("BOTTOMLEFT", _G.TextToSpeechDefaultButton, "BOTTOMRIGHT", 5, 0)
+
+    --Skin.UIPanelButtonTemplate(_G.ChatConfigFrameCancelButton) -- BlizzWTF: Not used?
+    Skin.UIPanelButtonTemplate(_G.ChatConfigFrameOkayButton)
+    _G.ChatConfigFrameOkayButton:ClearAllPoints()
+    _G.ChatConfigFrameOkayButton:SetPoint("BOTTOMRIGHT", -10, 10)
 end

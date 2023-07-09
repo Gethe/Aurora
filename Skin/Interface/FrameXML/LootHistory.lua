@@ -1,5 +1,6 @@
+-- luacheck: ignore
 local _, private = ...
-if private.shouldSkip() then return end
+if true then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals
@@ -70,7 +71,7 @@ function private.FrameXML.LootHistory()
     _G.hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", Hook.LootHistoryFrame_UpdatePlayerFrame)
 
     local LootHistoryFrame = _G.LootHistoryFrame
-    Skin.TooltipBorderedFrameTemplate(LootHistoryFrame)
+    Skin.TooltipBackdropTemplate(LootHistoryFrame)
 
     LootHistoryFrame.LootIcon:Hide()
     LootHistoryFrame.Label:ClearAllPoints()
@@ -79,11 +80,7 @@ function private.FrameXML.LootHistory()
 
     Skin.MinimizeButton(LootHistoryFrame.CloseButton)
     do -- [[ Resize button ]]
-        if private.isClassic then
-            LootHistoryFrame.ResizeButton:SetNormalTexture("")
-        else
-            LootHistoryFrame.ResizeButton:ClearNormalTexture()
-        end
+        LootHistoryFrame.ResizeButton:ClearNormalTexture()
         LootHistoryFrame.ResizeButton:SetHeight(8)
 
         local line1 = LootHistoryFrame.ResizeButton:CreateTexture()
@@ -107,7 +104,6 @@ function private.FrameXML.LootHistory()
         end)
     end
     Skin.UIPanelScrollFrameTemplate(LootHistoryFrame.ScrollFrame)
-    LootHistoryFrame.ScrollFrame.ScrollBarBackground:Hide()
 
     -- [[ Dropdown ]]
     _G.LootHistoryDropDown.initialize = function(self)

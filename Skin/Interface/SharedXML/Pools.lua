@@ -48,7 +48,5 @@ function private.SharedXML.Pools()
     Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)
     Util.Mixin(_G.ActorPoolMixin, Hook.ObjectPoolMixin)
 
-    if private.isWrath then
-        Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin)
-    end
+    Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin)
 end

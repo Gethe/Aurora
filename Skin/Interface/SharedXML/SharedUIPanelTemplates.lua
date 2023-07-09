@@ -15,11 +15,7 @@ do -- BlizzWTF: These are not templates, but they should be
         local function Hook_SetHighlightTexture(self, texture)
             if self.settingHighlight then return end
             self.settingHighlight = true
-            if private.isClassic then
-                self:SetHighlightTexture("")
-            else
-                self:ClearHighlightTexture()
-            end
+            self:ClearHighlightTexture()
             self.settingHighlight = nil
         end
         local function Hook_SetPushedTexture(self, texture)
@@ -117,11 +113,20 @@ do -- BlizzWTF: These are not templates, but they should be
                 self._auroraIconBG:SetColorTexture(Color.black:GetRGB())
             end
         end
-        function Skin.SideTabTemplate(CheckButton)
-            _G.hooksecurefunc(CheckButton, "SetChecked", Hook_SetChecked)
-            CheckButton:GetRegions():Hide()
+        function Skin.SideTabTemplate(TabButton)
+            TabButton:GetRegions():Hide()
 
-            local icon = CheckButton.Icon or CheckButton:GetNormalTexture()
+            local CheckButton = TabButton.Button or TabButton
+            _G.hooksecurefunc(CheckButton, "SetChecked", Hook_SetChecked)
+
+            local icon = CheckButton.IconTexture
+            if icon then
+                CheckButton:ClearNormalTexture()
+                Base.CropIcon(CheckButton:GetPushedTexture())
+            else
+                icon = CheckButton.Icon or CheckButton:GetNormalTexture()
+            end
+
             CheckButton._auroraIconBG = Base.CropIcon(icon, CheckButton)
             Base.CropIcon(CheckButton:GetHighlightTexture())
             Base.CropIcon(CheckButton:GetCheckedTexture())
@@ -215,22 +220,37 @@ do --[[ SharedXML\SharedUIPanelTemplates.lua ]]
         Hook.ThreeSliceButtonMixin = {}
         function Hook.ThreeSliceButtonMixin:UpdateButton(buttonState)
             self.Left:SetTexture("")
-            self.Center:SetTexture(private.textures.plain) -- this is used in the backdrop
             self.Right:SetTexture("")
 
-            self:SetButtonColor(self:GetButtonColor())
+            self:SetButtonColor((self:GetButtonColor()))
         end
     end
 end
 
 do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
-    function Skin.UIPanelCloseButton(Button)
+    function Skin.UIPanelHideButtonNoScripts(Button)
         Skin.FrameTypeButton(Button)
         Button:SetBackdropOption("offsets", {
             left = 4,
             right = 11,
             top = 10,
             bottom = 5,
+        })
+
+        local bg = Button:GetBackdropTexture("bg")
+        local hline = Button:CreateTexture()
+        hline:SetColorTexture(1, 1, 1)
+        hline:SetSize(11, 1)
+        hline:SetPoint("BOTTOMLEFT", bg, 3, 3)
+        Button._auroraTextures = {hline}
+    end
+    function Skin.UIPanelCloseButton(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 3,
+            right = 4,
+            top = 3,
+            bottom = 4,
         })
 
         local bg = Button:GetBackdropTexture("bg")
@@ -241,16 +261,20 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             line:SetThickness(1.2)
             line:Show()
             if i == 1 then
-                line:SetStartPoint("TOPLEFT", bg, 3.6, -3)
+                line:SetStartPoint("TOPLEFT", bg, 3, -3)
                 line:SetEndPoint("BOTTOMRIGHT", bg, -3, 3)
             else
                 line:SetStartPoint("TOPRIGHT", bg, -3, -3)
-                line:SetEndPoint("BOTTOMLEFT", bg, 3.6, 3)
+                line:SetEndPoint("BOTTOMLEFT", bg, 3, 3)
             end
             tinsert(cross, line)
         end
 
         Button._auroraTextures = cross
+    end
+    function Skin.UIPanelCloseButtonDefaultAnchors(Button)
+        Skin.UIPanelCloseButton(Button)
+        Button:SetPoint("TOPRIGHT", 1.2, 0)
     end
     function Skin.UIPanelGoldButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
@@ -307,66 +331,221 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         check:SetVertexColor(Color.highlight:GetRGB())
 
         local disabled = CheckButton:GetDisabledCheckedTexture()
-        disabled:SetAllPoints(check)
+        if disabled then
+            disabled:SetAllPoints(check)
+        end
     end
 
-    function Skin.PortraitFrameTemplateNoCloseButton(Frame)
-        Skin.FrameTypeFrame(Frame)
-        local bg = Frame:GetBackdropTexture("bg")
+    function Skin.GlowBoxArrowTemplate(Frame, direction)
+        direction = direction or "Down"
+        local parent = Frame:GetParent()
+        if not parent.info then
+            if direction == "Left" or direction == "Right" then
+                Frame:SetSize(21, 53)
+            else
+                Frame:SetSize(53, 21)
+            end
 
-        Frame.Bg:Hide()
+            Base.SetTexture(Frame.Arrow, "arrow"..direction)
+        end
+        Frame.Arrow:SetAllPoints()
+        Frame.Arrow:SetVertexColor(1, 1, 0)
+        Frame.Glow:Hide()
+    end
+    function Skin.GlowBoxTemplate(Frame)
+        Frame.BG:Hide()
 
-        Frame.TitleBg:Hide()
-        Frame.portrait:SetAlpha(0)
-        Frame.PortraitFrame:SetTexture("")
-        Frame.TopRightCorner:Hide()
-        Frame.TopLeftCorner:SetTexture("")
-        Frame.TopBorder:SetTexture("")
+        Frame.GlowTopLeft:Hide()
+        Frame.GlowTopRight:Hide()
+        Frame.GlowBottomLeft:Hide()
+        Frame.GlowBottomRight:Hide()
 
-        local titleText = Frame.TitleText
+        Frame.GlowTop:Hide()
+        Frame.GlowBottom:Hide()
+        Frame.GlowLeft:Hide()
+        Frame.GlowRight:Hide()
+
+        Frame.ShadowTopLeft:Hide()
+        Frame.ShadowTopRight:Hide()
+        Frame.ShadowBottomLeft:Hide()
+        Frame.ShadowBottomRight:Hide()
+
+        Frame.ShadowTop:Hide()
+        Frame.ShadowBottom:Hide()
+        Frame.ShadowLeft:Hide()
+        Frame.ShadowRight:Hide()
+
+        Base.SetBackdrop(Frame, Color.yellow:Lightness(-0.8), 0.75)
+        Frame:SetBackdropBorderColor(Color.yellow)
+    end
+
+    --[[
+        SetClampedTextureRotation(self.Arrow.Arrow, 90) -- Left
+        SetClampedTextureRotation(self.Arrow.Arrow, 180) -- Up
+        SetClampedTextureRotation(self.Arrow.Arrow, 270) -- Right
+    ]]
+    -- BlizzWTF: This should be a template
+    function Skin.GlowBoxFrame(Frame, direction)
+        if Frame.BigText then
+            -- BlizzWTF: Why not just use GlowBoxArrowTemplate?
+            local Arrow = _G.CreateFrame("Frame", nil, Frame)
+            Arrow.Arrow = Frame["Arrow"..direction] or Frame["Arrow"..direction:upper()]
+            Arrow.Arrow:SetParent(Arrow)
+            Arrow.Glow = Frame["ArrowGlow"..direction] or Frame["ArrowGlow"..direction:upper()]
+            Arrow.Glow:SetParent(Arrow)
+
+            Frame.Arrow = Arrow
+            Frame.Text = Frame.BigText
+        end
+        Skin.GlowBoxTemplate(Frame)
+        Skin.UIPanelCloseButton(Frame.CloseButton)
+
+        direction = direction or "Down"
+        local point = direction:upper()
+        if point == "UP" then
+            point = "TOP"
+        elseif point == "DOWN" then
+            point = "BOTTOM"
+        end
+
+        Skin.GlowBoxArrowTemplate(Frame.Arrow, direction)
+        Frame.Arrow:ClearAllPoints()
+        Frame.Arrow:SetPoint(Util.OpposingSide[point], Frame, point)
+    end
+
+    function Skin.NineSlicePanelTemplate(Frame)
+        Frame._auroraNineSlice = true
+        local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
+        if Frame.debug then
+            _G.print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
+        end
+        Hook.NineSliceUtil.ApplyLayout(Frame, layout)
+    end
+    function Skin.InsetFrameTemplate(Frame)
+        Frame.NineSlice.Center = Frame.Bg
+        if Frame.debug then
+            Frame.NineSlice.debug = Frame.debug
+        end
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+    end
+    function Skin.DialogBorderNoCenterTemplate(Frame)
+        Skin.NineSlicePanelTemplate(Frame)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 0)
+    end
+    function Skin.DialogBorderTemplate(Frame)
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, Util.GetFrameAlpha())
+    end
+    function Skin.DialogBorderDarkTemplate(Frame)
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 0.87)
+    end
+    function Skin.DialogBorderTranslucentTemplate(Frame)
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 0.8)
+    end
+    function Skin.DialogBorderOpaqueTemplate(Frame)
+        Frame.Center = Frame.Bg
+        Skin.DialogBorderNoCenterTemplate(Frame)
+
+        local r, g, b = Frame:GetBackdropColor()
+        Frame:SetBackdropColor(r, g, b, 1)
+    end
+
+    function Skin.DialogHeaderTemplate(Frame)
+        Frame.LeftBG:Hide()
+        Frame.RightBG:Hide()
+        Frame.CenterBG:Hide()
+
+        Frame.Text:SetPoint("TOP", 0, -17)
+        Frame.Text:SetPoint("BOTTOM", Frame, "TOP", 0, -(private.FRAME_TITLE_HEIGHT + 17))
+    end
+    function Skin.FlatPanelBackgroundTemplate(Frame)
+        Frame.BottomLeft:Hide()
+        Frame.BottomRight:Hide()
+        Frame.BottomEdge:Hide()
+        Frame.TopSection:Hide()
+    end
+
+    function Skin.SimplePanelTemplate(Frame)
+        Skin.InsetFrameTemplate(Frame.Inset)
+        Frame.NineSlice.Center = Frame.Bg
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+    end
+
+    function Skin.DefaultPanelBaseTemplate(Frame)
+        Frame.NineSlice:SetFrameLevel(Frame:GetFrameLevel())
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+    end
+    function Skin.DefaultPanelTemplate(Frame)
+        Frame.NineSlice.Center = Frame.Bg
+        Skin.DefaultPanelBaseTemplate(Frame)
+    end
+    function Skin.DefaultPanelFlatTemplate(Frame)
+        Skin.DefaultPanelBaseTemplate(Frame)
+        Skin.FlatPanelBackgroundTemplate(Frame.Bg)
+    end
+
+    function Skin.PortraitFrameBaseTemplate(Frame)
+        Util.Mixin(Frame, Hook.PortraitFrameMixin)
+
+        if Frame.debug then
+            Frame.NineSlice.debug = Frame.debug
+        end
+        Frame.NineSlice:SetFrameLevel(Frame:GetFrameLevel() + 1)
+        Skin.NineSlicePanelTemplate(Frame.NineSlice)
+        Frame.PortraitContainer:Hide()
+
+        Frame.TitleContainer:SetHeight(private.FRAME_TITLE_HEIGHT)
+        Frame.TitleContainer:SetPoint("TOPLEFT", 24, -1)
+        local titleText = Frame.TitleContainer.TitleText
         titleText:ClearAllPoints()
-        titleText:SetPoint("TOPLEFT", bg)
-        titleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
+        titleText:SetPoint("TOPLEFT", Frame.TitleContainer)
+        titleText:SetPoint("BOTTOMRIGHT", Frame.TitleContainer)
+    end
+    function Skin.PortraitFrameTexturedBaseTemplate(Frame)
+        Frame.NineSlice.Center = Frame.Bg
+        Skin.PortraitFrameBaseTemplate(Frame)
         Frame.TopTileStreaks:SetTexture("")
-        Frame.BotLeftCorner:Hide()
-        Frame.BotRightCorner:Hide()
-        Frame.BottomBorder:Hide()
-        Frame.LeftBorder:Hide()
-        Frame.RightBorder:Hide()
-
+    end
+    function Skin.PortraitFrameFlatBaseTemplate(Frame)
+        Skin.PortraitFrameBaseTemplate(Frame)
+        Skin.FlatPanelBackgroundTemplate(Frame.Bg)
+    end
+    function Skin.PortraitFrameTemplateNoCloseButton(Frame)
+        Skin.PortraitFrameTexturedBaseTemplate(Frame)
     end
     function Skin.PortraitFrameTemplate(Frame)
         Skin.PortraitFrameTemplateNoCloseButton(Frame)
         Skin.UIPanelCloseButton(Frame.CloseButton)
 
-        local bg = Frame:GetBackdropTexture("bg")
-        Frame.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
+        --Frame.CloseButton:SetPoint("TOPRIGHT", Frame.Bg, 5.6, 5)
     end
-
-    function Skin.InsetFrameTemplate(Frame)
-        Frame.Bg:Hide()
-
-        Frame.InsetBorderTopLeft:Hide()
-        Frame.InsetBorderTopRight:Hide()
-        Frame.InsetBorderBottomLeft:Hide()
-        Frame.InsetBorderBottomRight:Hide()
-
-        Frame.InsetBorderTop:Hide()
-        Frame.InsetBorderBottom:Hide()
-        Frame.InsetBorderLeft:Hide()
-        Frame.InsetBorderRight:Hide()
+    function Skin.PortraitFrameFlatTemplate(Frame)
+        Skin.PortraitFrameFlatBaseTemplate(Frame)
+        Skin.UIPanelCloseButtonDefaultAnchors(Frame.CloseButton)
     end
 
     function Skin.ButtonFrameTemplate(Frame)
-        Skin.PortraitFrameTemplate(Frame)
-
-        local name = Frame:GetName()
-        _G[name.."BtnCornerLeft"]:SetAlpha(0)
-        _G[name.."BtnCornerRight"]:SetAlpha(0)
-        _G[name.."ButtonBottomBorder"]:SetAlpha(0)
-
+        Frame.NineSlice.Center = Frame.Bg
+        Frame.TopTileStreaks:SetTexture("")
+        Skin.PortraitFrameBaseTemplate(Frame)
+        Skin.UIPanelCloseButtonDefaultAnchors(Frame.CloseButton)
         Skin.InsetFrameTemplate(Frame.Inset)
+    end
+    function Skin.ButtonFrameTemplateMinimizable(Frame)
+        Skin.ButtonFrameTemplate(Frame)
     end
 
     function Skin.MagicButtonTemplate(Button)
@@ -402,6 +581,9 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local bg = Button:GetBackdropTexture("bg")
         Button.Text:SetPoint("CENTER", bg, 0, 0)
     end
+    function Skin.UIResettableDropdownButtonTemplate(Button)
+        Skin.UIMenuButtonStretchTemplate(Button)
+    end
 
     function Skin.HorizontalSliderTemplate(Slider)
         Base.SetBackdrop(Slider, Color.frame)
@@ -422,50 +604,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         thumb:SetPoint("BOTTOMRIGHT", thumbTexture, 0, 0)
         Base.SetBackdrop(thumb, Color.button)
         Slider._auroraThumb = thumb
-    end
-
-    function Skin.UIPanelStretchableArtScrollBarTemplate(Slider)
-        Skin.UIPanelScrollBarTemplate(Slider)
-
-        Slider.Top:Hide()
-        Slider.Bottom:Hide()
-        Slider.Middle:Hide()
-
-        Slider.Background:Hide()
-    end
-    function Skin.UIPanelScrollBarTemplateLightBorder(Slider)
-        local name = Slider:GetName()
-
-        Skin.UIPanelScrollUpButtonTemplate(_G[name.."ScrollUpButton"])
-        Skin.UIPanelScrollDownButtonTemplate(_G[name.."ScrollDownButton"])
-        Util.HideNineSlice(_G[name.."Border"])
-
-        Skin.ScrollBarThumb(Slider:GetThumbTexture())
-    end
-    function Skin.UIPanelScrollFrameTemplate2(Slider)
-        Skin.UIPanelScrollFrameTemplate(Slider)
-
-        local name = Slider:GetName()
-        _G[name.."Top"]:SetAlpha(0)
-        _G[name.."Bottom"]:SetAlpha(0)
-    end
-    function Skin.MinimalScrollBarTemplate(Slider)
-        Slider.trackBG:Hide()
-        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
-        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
-
-        Skin.ScrollBarThumb(Slider:GetThumbTexture())
-    end
-    function Skin.MinimalScrollFrameTemplate(ScrollFrame)
-        Skin.MinimalScrollBarTemplate(ScrollFrame.ScrollBar)
-    end
-    function Skin.FauxScrollFrameTemplateLight(ScrollFrame)
-        local name = ScrollFrame:GetName()
-
-        local scrollBar = _G[name.."ScrollBar"]
-        Skin.UIPanelScrollBarTemplateLightBorder(scrollBar)
-        scrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 2, -17)
-        scrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 2, 17)
     end
 
     function Skin.SpinnerButton(Button)
@@ -510,6 +648,42 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         EditBox.Instructions:SetTextColor(Color.gray:GetRGB())
         EditBox.searchIcon:SetPoint("LEFT", 3, -1)
     end
+    function Skin.PanelTabButtonTemplate(Button)
+        Skin.FrameTypeButton(Button)
+        Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
+        Button:SetBackdropOption("offsets", {
+            left = 0,
+            right = 0,
+            top = 0,
+            bottom = 6,
+        })
+
+        Button.LeftActive:SetAlpha(0)
+        Button.RightActive:SetAlpha(0)
+        Button.MiddleActive:SetAlpha(0)
+        Button.Left:SetAlpha(0)
+        Button.Right:SetAlpha(0)
+        Button.Middle:SetAlpha(0)
+
+        Button.LeftHighlight:SetAlpha(0)
+        Button.RightHighlight:SetAlpha(0)
+        Button.MiddleHighlight:SetAlpha(0)
+
+        local bg = Button:GetBackdropTexture("bg")
+        Button.Text:ClearAllPoints()
+        Button.Text:SetAllPoints(bg)
+
+        Button._auroraTabResize = true
+    end
+    function Skin.PanelTopTabButtonTemplate(Button)
+        Skin.PanelTabButtonTemplate(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 0,
+            right = 0,
+            top = 8,
+            bottom = -5,
+        })
+    end
     function Skin.TabButtonTemplate(Button)
         Button.LeftDisabled:SetAlpha(0)
         Button.MiddleDisabled:SetAlpha(0)
@@ -527,10 +701,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             local Button = Frame[name]
             Skin.FrameTypeButton(Button)
             Button:SetBackdropOption("offsets", {
-                left = 4,
-                right = 11,
-                top = 10,
-                bottom = 5,
+                left = 3,
+                right = 4,
+                top = 3,
+                bottom = 4,
             })
 
 
@@ -539,7 +713,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             line:SetColorTexture(1, 1, 1)
             line:SetThickness(1.2)
             line:SetStartPoint("TOPRIGHT", bg, -3, -3)
-            line:SetEndPoint("BOTTOMLEFT", bg, 3.6, 3)
+            line:SetEndPoint("BOTTOMLEFT", bg, 3, 3)
 
             local hline = Button:CreateTexture()
             hline:SetColorTexture(1, 1, 1)
@@ -564,110 +738,6 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             }
         end
     end
-
-    function Skin.NineSlicePanelTemplate(Frame)
-        Frame._auroraNineSlice = true
-        local layout = _G.NineSliceUtil.GetLayout(Frame:GetFrameLayoutType())
-        if Frame.debug then
-            _G.print("NineSlicePanelTemplate", layout, Frame:GetDebugName())
-        end
-        Hook.NineSliceUtil.ApplyLayout(Frame, layout)
-    end
-    function Skin.DialogBorderNoCenterTemplate(Frame)
-        Skin.NineSlicePanelTemplate(Frame)
-
-        local r, g, b = Frame:GetBackdropColor()
-        Frame:SetBackdropColor(r, g, b, 0)
-    end
-    function Skin.DialogBorderTemplate(Frame)
-        if Frame.Bg then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-            Skin.FrameTypeFrame(Frame)
-        else
-            Skin.FrameTypeFrame(Frame)
-            Frame:SetBackdropOption("offsets", {
-                left = 5,
-                right = 5,
-                top = 5,
-                bottom = 5,
-            })
-        end
-    end
-    function Skin.DialogBorderDarkTemplate(Frame)
-        if Frame.Bg then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-
-            local r, g, b = Frame:GetBackdropColor()
-            Frame:SetBackdropColor(r, g, b, 0.87)
-        else
-            Base.SetBackdrop(Frame, Color.frame, 0.87)
-            Frame:SetBackdropOption("offsets", {
-                left = 5,
-                right = 5,
-                top = 5,
-                bottom = 5,
-            })
-        end
-    end
-    function Skin.DialogBorderTranslucentTemplate(Frame)
-        if Frame.Bg then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-
-            local r, g, b = Frame:GetBackdropColor()
-            Frame:SetBackdropColor(r, g, b, 0.8)
-        else
-            Base.SetBackdrop(Frame, Color.frame, 0.8)
-            Frame:SetBackdropOption("offsets", {
-                left = 5,
-                right = 5,
-                top = 5,
-                bottom = 5,
-            })
-        end
-    end
-    function Skin.DialogBorderOpaqueTemplate(Frame)
-        if Frame.Bg then
-            Frame.Center = Frame.Bg
-            Skin.DialogBorderNoCenterTemplate(Frame)
-
-            local r, g, b = Frame:GetBackdropColor()
-            Frame:SetBackdropColor(r, g, b, 1)
-        else
-            Base.SetBackdrop(Frame, Color.frame, 1)
-            Frame:SetBackdropOption("offsets", {
-                left = 5,
-                right = 5,
-                top = 5,
-                bottom = 5,
-            })
-        end
-    end
-
-    function Skin.DialogHeaderTemplate(Frame)
-        Frame.LeftBG:Hide()
-        Frame.RightBG:Hide()
-        Frame.CenterBG:Hide()
-
-        Frame.Text:SetPoint("TOP", 0, -17)
-        Frame.Text:SetPoint("BOTTOM", Frame, "TOP", 0, -(private.FRAME_TITLE_HEIGHT + 17))
-    end
-
-    function Skin.DefaultPanelBaseTemplate(Frame)
-        Frame.NineSlice:SetFrameLevel(Frame:GetFrameLevel())
-        Skin.NineSlicePanelTemplate(Frame.NineSlice)
-    end
-    function Skin.DefaultPanelTemplate(Frame)
-        Frame.NineSlice.Center = Frame.Bg
-        Skin.DefaultPanelBaseTemplate(Frame)
-    end
-    function Skin.DefaultPanelFlatTemplate(Frame)
-        Skin.DefaultPanelBaseTemplate(Frame)
-        Skin.FlatPanelBackgroundTemplate(Frame.Bg)
-    end
-
     function Skin.ColumnDisplayTemplate(Frame)
         Frame.Background:Hide()
         Frame.TopTileStreaks:Hide()
@@ -702,26 +772,78 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.ThreeSliceButtonTemplate(Button)
         Util.Mixin(Button, Hook.ThreeSliceButtonMixin)
-        Button:HookScript("OnShow", function()
-            -- Textures re-appear when "OnShow" fires, so wait a frame after to hide them again
-            _G.C_Timer.After(0, function()
-                Hook.ThreeSliceButtonMixin.UpdateButton(Button, "OnShow")
-            end)
-        end)
+        Button:HookScript("OnShow", Hook.ThreeSliceButtonMixin.UpdateButton)
+        Button:HookScript("OnDisable", Hook.ThreeSliceButtonMixin.UpdateButton)
+        Button:HookScript("OnEnable", Hook.ThreeSliceButtonMixin.UpdateButton)
+
         Skin.FrameTypeButton(Button)
     end
     function Skin.BigRedThreeSliceButtonTemplate(Button)
         Skin.ThreeSliceButtonTemplate(Button)
     end
-    function Skin.SharedButtonTemplate(Button)
+    function Skin.SharedButtonLargeTemplate(Button)
         Skin.BigRedThreeSliceButtonTemplate(Button)
     end
     function Skin.SharedButtonSmallTemplate(Button)
         Skin.BigRedThreeSliceButtonTemplate(Button)
     end
+
+    function Skin.IconSelectorPopupFrameTemplate(Frame)
+        Skin.SelectionFrameTemplate(Frame.BorderBox)
+        Skin.ScrollBoxSelectorTemplate(Frame.IconSelector)
+    end
+    function Skin.BottomPopupScrollBoxTemplate(Frame)
+        Skin.FrameTypeFrame(Frame)
+
+        local titleText = Frame.TitleText
+        titleText:ClearAllPoints()
+        titleText:SetPoint("TOPLEFT")
+        titleText:SetPoint("BOTTOMRIGHT", Frame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        local name = Frame:GetName()
+        _G[name.."Bg"]:Hide()
+        _G[name.."TopLeftCorner"]:Hide()
+        _G[name.."TopRightCorner"]:Hide()
+        _G[name.."TopBorder"]:Hide()
+        Frame.leftBorderBar:Hide()
+        _G[name.."RightBorder"]:Hide()
+        _G[name.."TopTileStreaks"]:Hide()
+        _G[name.."TopLeftCorner2"]:Hide()
+        _G[name.."TopRightCorner2"]:Hide()
+        _G[name.."TopBorder2"]:Hide()
+
+        Skin.UIPanelCloseButton(_G[name.."CloseButton"])
+        Skin.WowScrollBoxList(Frame.ScrollBox)
+        Skin.MinimalScrollBar(Frame.ScrollBar)
+    end
+    function Skin.SearchBoxListTemplate(Frame)
+        Skin.SearchBoxTemplate(Frame)
+
+        local searchPreview = Frame.searchPreviewContainer
+        searchPreview:DisableDrawLayer("ARTWORK")
+        Skin.FrameTypeFrame(searchPreview)
+        --local searchPreviewBG = searchPreview:GetBackdropTexture("bg")
+        --searchPreviewBG:SetPoint("BOTTOMRIGHT", searchBox.showAllResults, 0, 0)
+        searchPreview.botLeftCorner:Hide()
+        searchPreview.botRightCorner:Hide()
+        searchPreview.bottomBorder:Hide()
+        searchPreview.leftBorder:Hide()
+        searchPreview.rightBorder:Hide()
+        searchPreview.topBorder:Hide()
+    end
+    function Skin.SearchBoxListAllButtonTemplate(Button)
+        Button:ClearNormalTexture()
+        Button:ClearPushedTexture()
+
+        local r, g, b = Color.highlight:GetRGB()
+        Button.selectedTexture:SetColorTexture(r, g, b, 0.2)
+    end
 end
 
 function private.SharedXML.SharedUIPanelTemplates()
+    _G.hooksecurefunc("UIPanelCloseButton_SetBorderAtlas", Hook.UIPanelCloseButton_SetBorderAtlas)
+    Util.Mixin(_G.SquareIconButtonMixin, Hook.SquareIconButtonMixin)
+
     _G.hooksecurefunc("PanelTemplates_TabResize", Hook.PanelTemplates_TabResize)
     _G.hooksecurefunc("PanelTemplates_DeselectTab", Hook.PanelTemplates_DeselectTab)
     _G.hooksecurefunc("PanelTemplates_SelectTab", Hook.PanelTemplates_SelectTab)

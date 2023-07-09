@@ -13,18 +13,19 @@ local Skin = Aurora.Skin
 
 do --[[ FrameXML\MirrorTimer.xml ]]
     function Skin.MirrorTimerTemplate(Frame)
-        local name = Frame:GetName()
-        Skin.FrameTypeStatusBar(_G[name.."StatusBar"])
-
-        Frame:GetRegions():Hide()
-        _G[name.."Text"]:ClearAllPoints()
-        _G[name.."Text"]:SetPoint("CENTER", _G[name.."StatusBar"])
-        _G[name.."Border"]:Hide()
+        Skin.FrameTypeStatusBar(Frame.StatusBar)
+        Frame.Border:Hide()
     end
 end
 
 function private.FrameXML.MirrorTimer()
-    Skin.MirrorTimerTemplate(_G.MirrorTimer1)
-    Skin.MirrorTimerTemplate(_G.MirrorTimer2)
-    Skin.MirrorTimerTemplate(_G.MirrorTimer3)
+    if private.isPatch then
+        Skin.MirrorTimerTemplate(_G.MirrorTimerContainer.mirrorTimers[1])
+        Skin.MirrorTimerTemplate(_G.MirrorTimerContainer.mirrorTimers[2])
+        Skin.MirrorTimerTemplate(_G.MirrorTimerContainer.mirrorTimers[3])
+    else
+        Skin.MirrorTimerTemplate(_G.MirrorTimer1)
+        Skin.MirrorTimerTemplate(_G.MirrorTimer2)
+        Skin.MirrorTimerTemplate(_G.MirrorTimer3)
+    end
 end

@@ -11,6 +11,13 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ FrameXML\PetStable.lua ]]
+    function Hook.PetStable_SetSelectedPetInfo(icon, name, level, family, talent)
+        if family then
+            _G.PetStableTypeText:SetText(family)
+        else
+            _G.PetStableTypeText:SetText("")
+        end
+    end
     function Hook.PetStable_Update()
         for i = 1, _G.NUM_PET_STABLE_SLOTS do
             local button = _G["PetStableStabledPet"..i]
@@ -21,14 +28,13 @@ do --[[ FrameXML\PetStable.lua ]]
                 button:SetBackdropColor(Color.red, 0.75)
                 button:SetBackdropBorderColor(Color.red, 1)
             end
-            Base.CropIcon(button:GetBackdropTexture("bg"))
         end
     end
 end
 
 do --[[ FrameXML\PetStable.xml ]]
-    function Skin.PetStableSlotTemplate(CheckButton)
-        Base.CreateBackdrop(CheckButton, {
+    function Skin.PetStableSlotTemplate(Button)
+        Base.CreateBackdrop(Button, {
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
             tile = false,
             offsets = {
@@ -38,75 +44,81 @@ do --[[ FrameXML\PetStable.xml ]]
                 bottom = -1,
             }
         })
-        Base.SetBackdrop(CheckButton, Color.black, Color.frame.a)
-        Base.CropIcon(CheckButton:GetBackdropTexture("bg"))
-        CheckButton._auroraIconBorder = CheckButton
 
-        CheckButton:SetBackdropColor(1, 1, 1, 0.75)
-        CheckButton:SetBackdropBorderColor(Color.frame, 1)
+        Button:SetBackdropColor(1, 1, 1, 0.75)
+        Button:SetBackdropBorderColor(Color.frame:GetRGB())
+        Base.CropIcon(Button:GetBackdropTexture("bg"))
 
-        local name = CheckButton:GetName()
-        Base.CropIcon(_G[name.."IconTexture"])
-        _G[name.."Background"]:Hide()
+        Base.CropIcon(_G[Button:GetName().."IconTexture"])
+        Button.Background:Hide()
+        Base.CropIcon(Button.Checked)
+        Base.CropIcon(Button:GetPushedTexture())
+        Base.CropIcon(Button:GetHighlightTexture())
+    end
+    function Skin.PetStableActiveSlotTemplate(Button)
+        Skin.PetStableSlotTemplate(Button)
 
-        if private.isClassic then
-            CheckButton:SetNormalTexture("")
-        else
-            CheckButton:ClearNormalTexture()
-        end
-        Base.CropIcon(CheckButton:GetPushedTexture())
-        Base.CropIcon(CheckButton:GetHighlightTexture())
-        Base.CropIcon(CheckButton:GetCheckedTexture())
+        Button.Border:Hide()
+        Button.PetName:SetPoint("BOTTOMLEFT", Button, "TOPLEFT", -16, 5)
+        Button.PetName:SetPoint("BOTTOMRIGHT", Button, "TOPRIGHT", 16, 5)
     end
 end
 
 function private.FrameXML.PetStable()
-    _G.hooksecurefunc("PetStable_Update", Hook.PetStable_Update)
+    _G.hooksecurefunc("PetStable_SetSelectedPetInfo", Hook.PetStable_SetSelectedPetInfo)
 
     local PetStableFrame = _G.PetStableFrame
-    Skin.FrameTypeFrame(PetStableFrame)
-    PetStableFrame:SetBackdropOption("offsets", {
-        left = 14,
-        right = 34,
-        top = 14,
-        bottom = 75,
-    })
+    Skin.ButtonFrameTemplate(PetStableFrame)
+    PetStableFrame.Inset:SetPoint("TOPLEFT", PetStableFrame.LeftInset, "TOPRIGHT", 5)
+    PetStableFrame.Inset:SetPoint("BOTTOMRIGHT", -5, 126)
 
-    local bg = PetStableFrame:GetBackdropTexture("bg")
-    local portrait, tl, tr, bl, br = PetStableFrame:GetRegions()
-    portrait:Hide()
-    tl:Hide()
-    tr:Hide()
-    bl:Hide()
-    br:Hide()
+    _G.PetStableFrameModelBg:SetAtlas("GarrFollower-Shadow")
+    _G.PetStableFrameModelBg:SetPoint("TOPLEFT", PetStableFrame.Inset, 0, -160)
+    _G.PetStableFrameModelBg:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, 0, 0)
+    _G.PetStableFrameModelBg:SetTexCoord(0.2, 0.8, 0, 0.8)
 
-    _G.PetStableTitleLabel:ClearAllPoints()
-    _G.PetStableTitleLabel:SetPoint("TOPLEFT", bg)
-    _G.PetStableTitleLabel:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    Skin.InsetFrameTemplate(PetStableFrame.LeftInset)
+    PetStableFrame.LeftInset:SetPoint("TOPLEFT", 0, -private.FRAME_TITLE_HEIGHT)
+    PetStableFrame.LeftInset:SetPoint("BOTTOMRIGHT", PetStableFrame, "BOTTOMLEFT", 91, 0)
+    _G.PetStableActiveBg:Hide()
 
-    --_G.PetStableModel:SetPoint("TOPLEFT", PetStableFrame.Inset)
-    --_G.PetStableModel:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset)
+    Skin.InsetFrameTemplate(PetStableFrame.BottomInset)
+    _G.PetStableFrameStableBg:Hide()
+
+    _G.PetStableModel:SetPoint("TOPLEFT", PetStableFrame.Inset)
+    _G.PetStableModel:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset)
     _G.PetStableModelRotateLeftButton:Hide()
     _G.PetStableModelRotateRightButton:Hide()
+    _G.PetStableModelShadow:Hide()
 
-    --_G.PetStablePetInfo:SetPoint("TOPLEFT", PetStableFrame.Inset)
-    --_G.PetStablePetInfo:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, "TOPRIGHT", 0, -52)
+    _G.PetStablePetInfo:SetPoint("TOPLEFT", PetStableFrame.Inset)
+    _G.PetStablePetInfo:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, "TOPRIGHT", 0, -52)
 
-    Skin.PetStableSlotTemplate(_G.PetStableCurrentPet)
-    _G.PetStableCurrentPet:SetBackdropBorderColor(Color.yellow, 1)
-    Skin.PetStableSlotTemplate(_G.PetStableStabledPet1)
-    Skin.PetStableSlotTemplate(_G.PetStableStabledPet2)
+    Base.CropIcon(_G.PetStableSelectedPetIcon)
 
-    Skin.UIPanelButtonTemplate(_G.PetStablePurchaseButton)
+    _G.PetStableNameText:SetFontObject("GameFontNormalHuge2")
+    _G.PetStableNameText:SetPoint("TOPLEFT", _G.PetStableSelectedPetIcon, "TOPRIGHT", 2, 0)
+    _G.PetStableTypeText:SetPoint("BOTTOMRIGHT", -6, 6)
 
-    local moneyBG = _G.CreateFrame("Frame", nil, PetStableFrame)
-    Base.SetBackdrop(moneyBG, Color.frame)
-    moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
-    moneyBG:SetPoint("BOTTOMLEFT", bg, 5, 5)
-    moneyBG:SetPoint("TOPRIGHT", bg, "BOTTOMRIGHT", -5, 27)
-    Skin.SmallMoneyFrameTemplate(_G.PetStableMoneyFrame)
-    _G.PetStableMoneyFrame:SetPoint("BOTTOMRIGHT", moneyBG, 7, 5)
+    _G.PetStableDiet:SetSize(20, 20)
+    _G.PetStableDiet:SetPoint("TOPRIGHT", -6, -6)
 
-    Skin.SmallMoneyFrameTemplate(_G.PetStableCostMoneyFrame)
-    Skin.UIPanelCloseButton(_G.PetStableFrameCloseButton)
+    _G.PetStableDietTexture:SetTexture([[Interface\Icons\Ability_Hunter_BeastTraining]])
+    _G.PetStableDietTexture:SetAllPoints()
+    Base.CropIcon(_G.PetStableDietTexture)
+
+    for i = 1, _G.NUM_PET_ACTIVE_SLOTS do
+        local slot = _G["PetStableActivePet"..i]
+        Skin.PetStableActiveSlotTemplate(slot)
+        if i > 1 then
+            slot:SetPoint("TOPLEFT", _G["PetStableActivePet"..(i - 1)], "BOTTOMLEFT", 0, -35)
+        end
+    end
+
+    for i = 1, _G.NUM_PET_STABLE_SLOTS do
+        Skin.PetStableSlotTemplate(_G["PetStableStabledPet"..i])
+    end
+
+    Skin.UIPanelSquareButton(_G.PetStableNextPageButton, "RIGHT")
+    Skin.UIPanelSquareButton(_G.PetStablePrevPageButton, "LEFT")
 end

@@ -31,7 +31,6 @@ function private.AddOns.Blizzard_BattlefieldMap()
     BattlefieldMapFrame.ScrollContainer:SetAllPoints()
 
     local BorderFrame = BattlefieldMapFrame.BorderFrame
-    BorderFrame.CloseButtonBorder:Hide()
     Base.CreateBackdrop(BorderFrame, private.backdrop, {
         tl = BorderFrame.TopLeft,
         tr = BorderFrame.TopRight,

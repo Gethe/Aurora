@@ -16,7 +16,7 @@ do --[[ FrameXML\MailFrame.lua ]]
         _G.InboxTitleText:SetShown(not isTrialOrVeteran)
     end
     function Hook.InboxFrame_Update()
-        local numItems, totalItems = _G.GetInboxNumItems()
+        local numItems = _G.GetInboxNumItems()
         local index = ((_G.InboxFrame.pageNum - 1) * _G.INBOXITEMS_TO_DISPLAY) + 1
         for i = 1, _G.INBOXITEMS_TO_DISPLAY do
             local name = "MailItem"..i
@@ -30,23 +30,20 @@ do --[[ FrameXML\MailFrame.lua ]]
 
                 if wasRead then
                     -- We need to call this in case the item is a relic, to ensure that the relic border color is updated.
-                    Hook.SetItemButtonQuality(item.Button, private.Enum.ItemQuality.Common, firstItemLink)
+                    Hook.SetItemButtonQuality(item.Button, _G.Enum.ItemQuality.Common, firstItemLink)
                 end
             else
                 item.Button._auroraIconBorder:SetBackdropBorderColor(Color.frame, 1)
             end
             index = index + 1
         end
-
-        _G.InboxTitleText:SetShown(totalItems <= numItems)
-        --MailFrame_UpdateTrialState(_G.MailFrame)
     end
     function Hook.SendMailFrame_Update()
         local numAttachments = 0
         for i = 1, _G.ATTACHMENTS_MAX_SEND do
             local button = _G.SendMailFrame.SendMailAttachments[i]
             if i == 1 then
-                button:SetPoint("TOPLEFT", _G.MailEditBox, "BOTTOMLEFT", 3, -10)
+                button:SetPoint("TOPLEFT", _G.SendMailScrollFrame, "BOTTOMLEFT", 1, -12)
             else
                 if (i % _G.ATTACHMENTS_PER_ROW_SEND) == 1 then
                     button:SetPoint("TOPLEFT", _G.SendMailFrame.SendMailAttachments[i - _G.ATTACHMENTS_PER_ROW_SEND], "BOTTOMLEFT", 23, -9)
@@ -65,12 +62,13 @@ do --[[ FrameXML\MailFrame.lua ]]
             end
         end
 
-        local scrollHeight = 218
+        local scrollHeight = 194
         if numAttachments >= _G.ATTACHMENTS_PER_ROW_SEND then
-            scrollHeight = 173
+            scrollHeight = 148
         end
 
-        _G.MailEditBox:SetHeight(scrollHeight)
+        _G.SendMailScrollFrame:SetHeight(scrollHeight + 20)
+        _G.SendMailScrollChildFrame:SetHeight(scrollHeight)
     end
     function Hook.OpenMail_Update()
         if ( not _G.InboxFrame.openMailID ) then
@@ -90,27 +88,6 @@ do --[[ FrameXML\MailFrame.lua ]]
                 end
             end
         end
-
-        _G.OpenMailAttachmentText:SetPoint("TOPLEFT", _G.OpenMailScrollFrame, "BOTTOMLEFT", 5, -10)
-        for i, button in ipairs(_G.OpenMailFrame.activeAttachmentButtons) do
-            if i == 1 then
-                button:SetPoint("TOPLEFT", _G.OpenMailAttachmentText, "BOTTOMLEFT", -5, -5)
-            else
-                if (i % _G.ATTACHMENTS_PER_ROW_RECEIVE) == 1 then
-                    button:SetPoint("TOPLEFT", _G.OpenMailFrame.activeAttachmentButtons[i - _G.ATTACHMENTS_PER_ROW_RECEIVE], "BOTTOMLEFT", 23, -9)
-                else
-                    button:SetPoint("TOPLEFT", _G.OpenMailFrame.activeAttachmentButtons[i - 1], "TOPRIGHT", 9, 0)
-                end
-            end
-        end
-
-        local scrollHeight = 238
-        if #_G.OpenMailFrame.activeAttachmentButtons >= _G.ATTACHMENTS_PER_ROW_RECEIVE then
-            scrollHeight = 192
-        end
-
-        _G.OpenMailScrollFrame:SetHeight(scrollHeight)
-        _G.OpenMailScrollChildFrame:SetHeight(scrollHeight)
     end
 end
 
@@ -209,7 +186,7 @@ function private.FrameXML.MailFrame()
     Skin.ButtonFrameTemplate(_G.MailFrame)
 
     -- BlizzWTF: The portrait in the template is not being used.
-    _G.select(18, _G.MailFrame:GetRegions()):Hide()
+    _G.select(3, _G.MailFrame:GetRegions()):Hide()
     _G.MailFrame.trialError:ClearAllPoints()
     _G.MailFrame.trialError:SetPoint("TOPLEFT", _G.MailFrame.TitleText, 50, -5)
     _G.MailFrame.trialError:SetPoint("BOTTOMRIGHT", _G.MailFrame.TitleText, -50, -6)
@@ -218,10 +195,7 @@ function private.FrameXML.MailFrame()
     -- InboxFrame --
     ----------------
     _G.InboxFrame:SetPoint("BOTTOMRIGHT")
-
     _G.InboxFrameBg:Hide()
-    _G.InboxTitleText:ClearAllPoints()
-    _G.InboxTitleText:SetAllPoints(_G.MailFrame.TitleText)
 
     _G.InboxTooMuchMail:ClearAllPoints()
     _G.InboxTooMuchMail:SetAllPoints(_G.MailFrame.trialError)
@@ -254,34 +228,13 @@ function private.FrameXML.MailFrame()
     -- SendMailFrame --
     -------------------
     _G.SendMailFrame:SetPoint("BOTTOMRIGHT")
-
-    _G.SendMailTitleText:ClearAllPoints()
-    _G.SendMailTitleText:SetAllPoints(_G.MailFrame.TitleText)
-    for i = 4, 7 do
+    for i = 3, 6 do
         select(i, _G.SendMailFrame:GetRegions()):Hide()
     end
 
-    local MailEditBox = _G.MailEditBox
-    Skin.ScrollingEditBoxTemplate(MailEditBox)
-    if private.isWrath then
-        MailEditBox:SetTextColor(Color.grayLight)
-    end
-    MailEditBox:SetPoint("TOPLEFT", 10, -83)
-    MailEditBox:SetWidth(298)
-
+    Skin.ScrollFrameTemplate(_G.SendMailScrollFrame)
     _G.SendStationeryBackgroundLeft:Hide()
     _G.SendStationeryBackgroundRight:Hide()
-
-    --local sendScrollBG = _G.CreateFrame("Frame", nil, MailEditBox)
-    --sendScrollBG:SetFrameLevel(MailEditBox:GetFrameLevel() - 1)
-    --sendScrollBG:SetPoint("TOPLEFT", 0, 2)
-    --sendScrollBG:SetPoint("BOTTOMRIGHT", 20, -2)
-    --Base.SetBackdrop(sendScrollBG, Color.frame)
-
-    local MailEditBoxScrollBar = _G.MailEditBoxScrollBar
-    Skin.WowClassicScrollBar(MailEditBoxScrollBar)
-    MailEditBoxScrollBar:SetPoint("TOPLEFT", MailEditBox, "TOPRIGHT", 0, -3)
-    MailEditBoxScrollBar:SetPoint("BOTTOMLEFT", MailEditBox, "BOTTOMRIGHT", 0, 0)
 
     -- BlizzWTF: these should use InputBoxTemplate
     Skin.SendMailInputBox(_G.SendMailNameEditBox)
@@ -319,6 +272,13 @@ function private.FrameXML.MailFrame()
     _G.SendMailFrameLockSendMail:SetPoint("TOPLEFT", "SendMailAttachment1", -12, 12)
     _G.SendMailFrameLockSendMail:SetPoint("BOTTOMRIGHT", "SendMailCancelButton", 5, -5)
 
+    Skin.FriendsFrameTabTemplate(_G.MailFrameTab1)
+    Skin.FriendsFrameTabTemplate(_G.MailFrameTab2)
+    Util.PositionRelative("TOPLEFT", _G.MailFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+        _G.MailFrameTab1,
+        _G.MailFrameTab2,
+    })
+
     -------------------
     -- OpenMailFrame --
     -------------------
@@ -326,25 +286,14 @@ function private.FrameXML.MailFrame()
     _G.OpenMailFrame:SetPoint("TOPLEFT", _G.InboxFrame, "TOPRIGHT", 5, 0)
 
     _G.OpenMailFrameIcon:Hide()
-    _G.OpenMailTitleText:ClearAllPoints()
-    _G.OpenMailTitleText:SetAllPoints(_G.OpenMailFrame.TitleText)
     _G.OpenMailHorizontalBarLeft:Hide()
-    select(25, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    select(9, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
 
     Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
 
-    Skin.UIPanelScrollFrameTemplate(_G.OpenMailScrollFrame)
-    _G.OpenMailScrollFrame:SetPoint("TOPLEFT", 10, -83)
-    _G.OpenMailScrollFrame:SetWidth(298)
-
-    _G.OpenScrollBarBackgroundTop:Hide()
-    select(2, _G.OpenMailScrollFrame:GetRegions()):Hide() -- OpenScrollBarBackgroundBottom
+    Skin.ScrollFrameTemplate(_G.OpenMailScrollFrame)
     _G.OpenStationeryBackgroundLeft:Hide()
     _G.OpenStationeryBackgroundRight:Hide()
-
-    _G.OpenMailScrollChildFrame:SetSize(298, 257)
-    _G.OpenMailBodyText:SetPoint("TOPLEFT", 2, -2)
-    _G.OpenMailBodyText:SetWidth(298)
 
     _G.OpenMailArithmeticLine:SetColorTexture(Color.grayLight:GetRGB())
     _G.OpenMailArithmeticLine:SetSize(256, 1)
@@ -365,10 +314,4 @@ function private.FrameXML.MailFrame()
         _G.OpenMailReplyButton,
     })
 
-    Skin.FriendsFrameTabTemplate(_G.MailFrameTab1)
-    Skin.FriendsFrameTabTemplate(_G.MailFrameTab2)
-    Util.PositionRelative("TOPLEFT", _G.MailFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
-        _G.MailFrameTab1,
-        _G.MailFrameTab2,
-    })
 end

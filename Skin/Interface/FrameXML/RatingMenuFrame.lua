@@ -16,12 +16,7 @@ local Skin = Aurora.Skin
 
 function private.FrameXML.RatingMenuFrame()
     local RatingMenuFrame = _G.RatingMenuFrame
-    Skin.DialogBorderTemplate(RatingMenuFrame)
-
-    _G.RatingMenuFrameHeader:Hide()
-    _G.RatingMenuFrameText:ClearAllPoints()
-    _G.RatingMenuFrameText:SetPoint("TOPLEFT")
-    _G.RatingMenuFrameText:SetPoint("BOTTOMRIGHT", _G.RatingMenuFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
-    Skin.OptionsButtonTemplate(_G.RatingMenuButtonOkay)
+    Skin.DialogBorderTemplate(RatingMenuFrame.Border)
+    Skin.DialogHeaderTemplate(RatingMenuFrame.Header)
+    Skin.UIPanelButtonTemplate(_G.RatingMenuButtonOkay)
 end

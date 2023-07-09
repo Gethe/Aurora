@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Util = Aurora.Util
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ SharedXML\NineSlice.lua ]]
     local nineSliceSetup = {
@@ -28,8 +28,31 @@ do --[[ SharedXML\NineSlice.lua ]]
         Base.SetBackdropColor(Frame, kit.backdrop, Util.GetFrameAlpha())
     end
 
+    local function InsetFrame(Frame, kit)
+        Base.SetBackdrop(Frame, kit.backdrop, Color.frame.a)
+    end
+
+    local function HideFrame(Frame, kit)
+        Base.SetBackdrop(Frame, kit.backdrop, 0)
+        Frame:SetBackdropBorderColor(kit.backdrop, 0)
+    end
+
     local layouts = {
+        SimplePanelTemplate = BasicFrame,
+        PortraitFrameTemplate = BasicFrame,
+        PortraitFrameTemplateMinimizable = BasicFrame,
+        ButtonFrameTemplateNoPortrait = BasicFrame,
+        ButtonFrameTemplateNoPortraitMinimizable = BasicFrame,
+        InsetFrameTemplate = HideFrame,
+        BFAMissionHorde = BasicFrame,
+        BFAMissionAlliance = BasicFrame,
+        --CovenantMissionFrame = BasicFrame,
+        GenericMetal = BasicFrame,
         Dialog = function(Frame, kit)
+            if Frame.debug then
+                _G.print("Layout Dialog", Frame.debug, kit)
+            end
+
             BasicFrame(Frame, kit)
             Frame:SetBackdropOption("offsets", {
                 left = 5,
@@ -38,14 +61,33 @@ do --[[ SharedXML\NineSlice.lua ]]
                 bottom = 5,
             })
         end,
-        ChatBubble = BasicFrame,
-        GMChatRequest = BasicFrame,
-        TooltipDefaultLayout = BasicFrame,
-        TooltipGluesLayout = BasicFrame,
-        TooltipMixedLayout = BasicFrame,
-        UniqueCornersLayout = BasicFrame,
-        IdenticalCornersLayout = BasicFrame,
+        WoodenNeutralFrameTemplate = BasicFrame,
+        Runeforge = BasicFrame,
+        AdventuresMissionComplete = InsetFrame,
+        CharacterCreateDropdown = BasicFrame,
+        --ChatBubble = BasicFrame,
         SelectionFrameTemplate = BasicFrame,
+        UniqueCornersLayout = BasicFrame,
+        --GMChatRequest = BasicFrame,
+        TooltipDefaultLayout = BasicFrame,
+        TooltipAzeriteLayout = BasicFrame,
+        TooltipCorruptedLayout = BasicFrame,
+        TooltipMawLayout = BasicFrame,
+        --TooltipGluesLayout = BasicFrame,
+        --TooltipMixedLayout = BasicFrame,
+        HeldBagLayout = BasicFrame,
+        --IdenticalCornersLayoutNoCenter = BasicFrame,
+        IdenticalCornersLayout = BasicFrame,
+        --ThreeSliceVerticalLayout = BasicFrame,
+        --ThreeSliceHorizontalLayout = BasicFrame,
+
+        -- Blizzard_OrderHallTalents
+        BFAOrderTalentHorde = BasicFrame,
+        BFAOrderTalentAlliance = BasicFrame,
+
+        -- Blizzard_PartyPoseUI
+        PartyPoseFrameTemplate = BasicFrame,
+        PartyPoseKit = BasicFrame,
     }
 
     local function GetNameforLayout(userLayout)
@@ -59,7 +101,7 @@ do --[[ SharedXML\NineSlice.lua ]]
     Hook.NineSliceUtil = {}
     function Hook.NineSliceUtil.ApplyLayout(container, userLayout, textureKit)
         if not container._auroraNineSlice then return end
-        if container._applyLayout then return end
+        if textureKit == "AuroraSkin" or container._applyLayout then return end
 
         container._applyLayout = true
         local userLayoutName = container:GetFrameLayoutType()

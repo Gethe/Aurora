@@ -6,35 +6,79 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_UIWidgets.lua ]]
     do --[[ Blizzard_UIWidgetManager ]]
-        Hook.UIWidgetManagerMixin = {}
-        function Hook.UIWidgetManagerMixin:CreateWidget(widgetID, widgetSetID, widgetType)
-            if self.widgetVisTypeInfo[widgetType] then
-                local widgetFrame = self.widgetIdToFrame[widgetID]
-                if not widgetFrame then return end
+        Hook.UIWidgetContainerMixin = {}
+        function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
+            local widgetFrame = self.widgetFrames[widgetID]
+            if not widgetFrame then return end
 
-                local template = self.widgetVisTypeInfo[widgetType].templateInfo.frameTemplate
-                if Skin[template] then
-                    if not widgetFrame._auroraSkinned then
-                        Skin[template](widgetFrame)
-                        widgetFrame._auroraSkinned = true
-                    end
-                else
-                    private.debug("Missing template for UIWidgetContainerMixin", widgetFrame:GetDebugName(), template)
+            local template = widgetTypeInfo.templateInfo.frameTemplate
+            if Skin[template] then
+                if not widgetFrame._auroraSkinned then
+                    Skin[template](widgetFrame)
+                    widgetFrame._auroraSkinned = true
                 end
+            else
+                private.debug("Missing template for UIWidgetContainerMixin", widgetFrame:GetDebugName(), template)
             end
+        end
+
+        Hook.UIWidgetManagerMixin = {}
+        function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
+            local setWidgets = _G.C_UIWidgetManager.GetAllWidgetsBySetID(widgetContainer.widgetSetID)
+            local widgetID, widgetType, widgetTypeInfo, widgetVisInfo
+            for _, widgetInfo in next, setWidgets do
+                widgetID, widgetType = widgetInfo.widgetID, widgetInfo.widgetType
+                widgetTypeInfo = _G.UIWidgetManager:GetWidgetTypeInfo(widgetType)
+                widgetVisInfo = widgetTypeInfo.visInfoDataFunction(widgetID)
+
+                Hook.UIWidgetContainerMixin.CreateWidget(widgetContainer, widgetID, widgetType, widgetTypeInfo, widgetVisInfo)
+            end
+
+            Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
         end
     end
 end
 
 do --[[ AddOns\Blizzard_UIWidgets.xml ]]
+    do --[[ Blizzard_UIWidgetTemplateBase ]]
+        function Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
+            Skin.FrameTypeStatusBar(StatusBar)
+        end
+        function Skin.UIWidgetBaseSpellTemplate(Frame)
+            Base.CropIcon(Frame.Icon, Frame)
+
+            Frame.Border:SetAlpha(0)
+            Frame.DebuffBorder:SetAlpha(0)
+        end
+        function Skin.UIWidgetBaseScenarioHeaderTemplate(Frame)
+            Frame.Frame:SetAlpha(0)
+        end
+    end
+    do --[[ Blizzard_UIWidgetTemplateIconAndText ]]
+        Skin.UIWidgetTemplateIconAndText = private.nop
+    end
+    do --[[ Blizzard_UIWidgetTemplateStatusBar ]]
+        function Skin.UIWidgetTemplateStatusBar(Frame)
+            local StatusBar = Frame.Bar
+            Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
+            StatusBar.BGLeft:SetAlpha(0)
+            StatusBar.BGRight:SetAlpha(0)
+            StatusBar.BGCenter:SetAlpha(0)
+            StatusBar.BorderLeft:SetAlpha(0)
+            StatusBar.BorderRight:SetAlpha(0)
+            StatusBar.BorderCenter:SetAlpha(0)
+            StatusBar.Spark:SetAlpha(0)
+        end
+    end
     do --[[ Blizzard_UIWidgetTemplateDoubleStatusBar ]]
         function Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(StatusBar)
-            Skin.FrameTypeStatusBar(StatusBar)
+            Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
 
             StatusBar.BG:SetAlpha(0)
             StatusBar.BorderLeft:SetAlpha(0)
@@ -50,27 +94,18 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
             Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(Frame.RightBar)
         end
     end
-    do --[[ Blizzard_UIWidgetTemplateIconAndText ]]
-        Skin.UIWidgetTemplateIconAndText = private.nop
-    end
-    do --[[ Blizzard_UIWidgetTemplateStatusBar ]]
-        function Skin.UIWidgetTemplateStatusBar(Frame)
-            local StatusBar = Frame.Bar
-            Skin.FrameTypeStatusBar(StatusBar)
-            StatusBar.BGLeft:SetAlpha(0)
-            StatusBar.BGRight:SetAlpha(0)
-            StatusBar.BGCenter:SetAlpha(0)
-            StatusBar.BorderLeft:SetAlpha(0)
-            StatusBar.BorderRight:SetAlpha(0)
-            StatusBar.BorderCenter:SetAlpha(0)
-            StatusBar.Spark:SetAlpha(0)
-        end
-    end
-    do --[[ Blizzard_UIWidgetTemplateTextureWithState ]]
-        Skin.UIWidgetTemplateTextureWithState = private.nop
-    end
     do --[[ Blizzard_UIWidgetTemplateTextWithState ]]
         Skin.UIWidgetTemplateTextWithState = private.nop
+    end
+    do --[[ Blizzard_UIWidgetTemplateScenarioHeaderCurrenciesAndBackground ]]
+        function Skin.UIWidgetTemplateScenarioHeaderCurrenciesAndBackground(Frame)
+            Skin.UIWidgetBaseScenarioHeaderTemplate(Frame)
+        end
+    end
+    do --[[ Blizzard_UIWidgetTemplateSpellDisplay ]]
+        function Skin.UIWidgetTemplateSpellDisplay(Frame)
+            Skin.UIWidgetBaseSpellTemplate(Frame.Spell)
+        end
     end
 end
 
@@ -146,12 +181,51 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$####====----
 
 
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateTextureAndText --
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateSpellDisplay --
+    ----====####$$$$%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateDoubleStateIconRow --
+    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateTextureAndTextRow --
+    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateZoneControl --
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateCaptureZone --
+    ----====####$$$$%%%%%%%%%%$$$$####====----
+
+
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_UIWidgetTopCenterFrame --
     ----====####$$$$%%%%%$$$$####====----
+    Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
 
 
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_UIWidgetBelowMinimapFrame --
     ----====####$$$$%%%%%%%%$$$$####====----
+    Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
+
+
+    ----====####$$$$%%%%$$$$####====----
+    -- Blizzard_UIWidgetPowerBarFrame --
+    ----====####$$$$%%%%$$$$####====----
+
+
 end

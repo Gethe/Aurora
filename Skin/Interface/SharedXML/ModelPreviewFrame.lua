@@ -19,7 +19,7 @@ function private.SharedXML.ModelPreviewFrame()
 
     --BlizzWTF: The close button added in this frame interferes with the one created in the template.
     local closeButton = ModelPreviewFrame.CloseButton
-    ModelPreviewFrame.CloseButton = ModelPreviewFrame:GetChildren()
+    ModelPreviewFrame.CloseButton = select(4, ModelPreviewFrame:GetChildren())
     Skin.ButtonFrameTemplate(ModelPreviewFrame)
     Skin.MagicButtonTemplate(closeButton)
     closeButton:SetPoint("BOTTOMRIGHT", -5, 5)
