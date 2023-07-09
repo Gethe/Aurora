@@ -12,7 +12,7 @@ header="<Ui xmlns=\"http://www.blizzard.com/wow/ui/\" xmlns:xsi=\"http://www.w3.
 space="\n\n\n\n\n\n"
 footer="</Ui>"
 
-skin="./Skin/$branch/Interface"
+skin="./Skin/Interface"
 
 FrameXML="${skin}/FrameXML/"
 FrameXMLList='../wow-ui-source/Interface/FrameXML/*.toc'

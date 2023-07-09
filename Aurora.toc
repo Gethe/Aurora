@@ -31,14 +31,14 @@ Skin\skin.xml
 # #@end-version-wrath@
 #@end-non-debug@
 #@debug@
-Skin\Retail\Interface\FrameXML\FrameXML.xml
-Skin\Retail\Interface\AddOns\AddOns.xml
+Skin\Interface\FrameXML\FrameXML.xml
+Skin\Interface\AddOns\AddOns.xml
 
-Skin\Classic\Interface\FrameXML\FrameXML_Vanilla.xml
-Skin\Classic\Interface\AddOns\AddOns_Vanilla.xml
+Skin\Interface\FrameXML\FrameXML_Vanilla.xml
+Skin\Interface\AddOns\AddOns_Vanilla.xml
 
-Skin\Classic\Interface\FrameXML\FrameXML_Wrath.xml
-Skin\Classic\Interface\AddOns\AddOns_Wrath.xml
+Skin\Interface\FrameXML\FrameXML_Wrath.xml
+Skin\Interface\AddOns\AddOns_Wrath.xml
 #@end-debug@
 
 aurora.lua
