@@ -24,7 +24,7 @@ do --[[ FrameXML\CharacterFrameTemplates.xml ]]
         _G[name.."Middle"]:SetTexture("")
         _G[name.."Right"]:SetTexture("")
         _G[name.."Text"]:SetPoint("CENTER", Button, "CENTER")
-        if private.isClassic then
+        if private.isVanilla then
             Button:SetHighlightTexture("")
         else
             Button:ClearHighlightTexture()

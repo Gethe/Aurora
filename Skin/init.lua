@@ -6,16 +6,16 @@ local ADDON_NAME, private = ...
 private.API_MAJOR, private.API_MINOR = 0, 8
 
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
-private.isClassic = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
+private.isVanilla = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
 private.isBCC = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 private.isWrath = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_WRATH_CLASSIC or 11)
 
---private.hasAPI = (not private.isRetail) and _G.InClickBindingMode
+private.isClassic = not private.isRetail
 private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 100105
 
 local debugProjectID = {
     [0] = private.isRetail,
-    [1] = private.isClassic,
+    [1] = private.isVanilla,
     [2] = private.isBCC,
     [3] = private.isWrath,
 }

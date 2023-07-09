@@ -12,7 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_AuctionUI.lua ]]
     function Hook.FilterButton_SetUp(button, info)
-        if private.isClassic then
+        if private.isVanilla then
             button:SetNormalTexture("")
         else
             button:ClearNormalTexture()
@@ -128,7 +128,7 @@ do --[[ AddOns\Blizzard_AuctionUITemplates.xml ]]
         })
 
         Button:GetRegions():SetTexture("") -- lines
-        if private.isClassic then
+        if private.isVanilla then
             Button:SetNormalTexture("")
         else
             Button:ClearNormalTexture()
