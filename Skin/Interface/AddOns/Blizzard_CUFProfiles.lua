@@ -1,5 +1,5 @@
 local _, private = ...
-if private.shouldSkip() then return end
+if not private.isVanilla then return end
 
 --[[ Lua Globals ]]
 -- luacheck: globals

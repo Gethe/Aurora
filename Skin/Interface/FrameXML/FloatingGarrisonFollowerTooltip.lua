@@ -6,7 +6,8 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\FloatingGarrisonFollowerTooltip.lua ]]
     function Hook.GarrisonFollowerAbilityTooltipTemplate_SetAbility(tooltipFrame, garrFollowerAbilityID, followerTypeID)

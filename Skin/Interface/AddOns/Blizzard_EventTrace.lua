@@ -91,11 +91,11 @@ function private.AddOns.Blizzard_EventTrace()
 
     Skin.WowScrollBoxList(Log.Events.ScrollBox)
     Log.Events.ScrollBox:GetRegions():Hide()
-    Skin.WowTrimScrollBar(Log.Events.ScrollBar)
+    Skin.MinimalScrollBar(Log.Events.ScrollBar)
 
     Skin.WowScrollBoxList(Log.Search.ScrollBox)
     Log.Search.ScrollBox:GetRegions():Hide()
-    Skin.WowTrimScrollBar(Log.Search.ScrollBar)
+    Skin.MinimalScrollBar(Log.Search.ScrollBar)
 
 
     local Filter = EventTrace.Filter
@@ -105,5 +105,5 @@ function private.AddOns.Blizzard_EventTrace()
 
     Skin.WowScrollBoxList(Filter.ScrollBox)
     Filter.ScrollBox:GetRegions():Hide()
-    Skin.WowTrimScrollBar(Filter.ScrollBar)
+    Skin.MinimalScrollBar(Filter.ScrollBar)
 end

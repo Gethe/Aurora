@@ -9,7 +9,10 @@ local Aurora = private.Aurora
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ SharedXML\DeprecatedTemplates.lua ]]
+--do --[[ SharedXML\DeprecatedTemplates.lua ]]
+--end
+
+do --[[ SharedXML\DeprecatedTemplates.xml ]]
     function Skin.OptionsBaseCheckButtonTemplate(CheckButton)
         Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
     end
@@ -49,24 +52,7 @@ do --[[ SharedXML\DeprecatedTemplates.lua ]]
     function Skin.OptionsListButtonTemplate(Button)
         Skin.ExpandOrCollapse(Button.toggle)
     end
-
-    -- This is technically in SharedXML/SecureScrollTemplates, but those are deprecated too so *shrug*
-    function Skin.UIPanelScrollBarTemplate(Slider)
-        Slider.ScrollUpButton.direction = _G.ScrollControllerMixin.Directions.Decrease
-        Slider.ScrollDownButton.direction = _G.ScrollControllerMixin.Directions.Increase
-        Skin.FrameTypeScrollBar(Slider, true)
-    end
 end
 
---do --[[ SharedXML\DeprecatedTemplates.xml ]]
+--function private.SharedXML.DeprecatedTemplates()
 --end
-
-function private.SharedXML.DeprecatedTemplates()
-    ----====####$$$$%%%%$$$$####====----
-    --              DeprecatedTemplates              --
-    ----====####$$$$%%%%$$$$####====----
-
-    -------------
-    -- Section --
-    -------------
-end

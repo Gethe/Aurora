@@ -93,13 +93,21 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     do --[[ ChannelList.xml ]]
         function Skin.ChannelListTemplate(ScrollFrame)
             Util.Mixin(ScrollFrame.headerButtonPool, Hook.ObjectPoolMixin)
-            Skin.ScrollFrameTemplate(ScrollFrame)
+            if private.isRetail then
+                Skin.ScrollFrameTemplate(ScrollFrame)
+            else
+                Skin.UIPanelScrollBarTemplate(ScrollFrame.ScrollBar)
+            end
         end
     end
     do --[[ ChannelRoster.xml ]]
         function Skin.ChannelRosterTemplate(Frame)
-            Skin.WowScrollBoxList(Frame.ScrollBox)
-            Skin.MinimalScrollBar(Frame.ScrollBar)
+            if private.isRetail then
+                Skin.WowScrollBoxList(Frame.ScrollBox)
+                Skin.MinimalScrollBar(Frame.ScrollBar)
+            else
+                Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
+            end
         end
     end
 end
@@ -128,8 +136,20 @@ function private.AddOns.Blizzard_Channels()
     --       CreateChannelPopup       --
     ----====####$$$$%%%%$$$$####====----
     local CreateChannelPopup = _G.CreateChannelPopup
-    Skin.DialogHeaderTemplate(CreateChannelPopup.Header)
-    Skin.DialogBorderTemplate(CreateChannelPopup.BG)
+
+    if private.isRetail then
+        Skin.DialogHeaderTemplate(CreateChannelPopup.Header)
+        Skin.DialogBorderTemplate(CreateChannelPopup.BG)
+    else
+        CreateChannelPopup.Title:ClearAllPoints()
+        CreateChannelPopup.Title:SetPoint("TOPLEFT")
+        CreateChannelPopup.Title:SetPoint("BOTTOMRIGHT", CreateChannelPopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+        CreateChannelPopup.Titlebar:Hide()
+        CreateChannelPopup.Corner:Hide()
+
+        Skin.DialogBorderTemplate(CreateChannelPopup)
+    end
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Name)
     Skin.CreateChannelPopupEditBoxTemplate(CreateChannelPopup.Password)
     Skin.UICheckButtonTemplate(CreateChannelPopup.UseVoiceChat)

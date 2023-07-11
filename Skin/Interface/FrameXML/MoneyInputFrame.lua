@@ -24,9 +24,9 @@ do --[[ FrameXML\MoneyInputFrame.xml ]]
                 bottom = 0,
             })
 
-            EditBox.left:Hide()
+            _G[EditBox:GetName().."Left"]:Hide()
+            _G[EditBox:GetName().."Right"]:Hide()
             _G[EditBox:GetName().."Middle"]:Hide()
-            EditBox.right:Hide()
 
             local bg = EditBox:GetBackdropTexture("bg")
             EditBox.texture:ClearAllPoints()

@@ -6,8 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 do --[[ FrameXML\TutorialFrame.lua ]]
     local MAX_TUTORIAL_IMAGES = 3
@@ -83,27 +82,31 @@ end
 -- /run TutorialFrame_NewTutorial(1, true)
 function private.FrameXML.TutorialFrame()
     _G.hooksecurefunc("TutorialFrame_Update", Hook.TutorialFrame_Update)
-    _G.hooksecurefunc("HelpPlate_GetButton", Hook.HelpPlate_GetButton)
+    if private.isRetail then
+        _G.hooksecurefunc("HelpPlate_GetButton", Hook.HelpPlate_GetButton)
+    end
 
     -------------------
     -- TutorialFrame --
     -------------------
     Skin.FrameTypeFrame(_G.TutorialFrame)
-    _G.TutorialFrameTop:SetAlpha(0)
-    _G.TutorialFrameBottom:SetAlpha(0)
+    if private.isRetail then
+        _G.TutorialFrameTop:SetAlpha(0)
+        _G.TutorialFrameBottom:SetAlpha(0)
 
-    -- BlizzWTF: Why would you create a ton of textures instead of using vert tiling?
-    for i = 1, 30 do
-        _G["TutorialFrameLeft"..i]:SetAlpha(0)
-        _G["TutorialFrameRight"..i]:SetAlpha(0)
+        -- BlizzWTF: Why would you create a ton of textures instead of using vert tiling?
+        for i = 1, 30 do
+            _G["TutorialFrameLeft"..i]:SetAlpha(0)
+            _G["TutorialFrameRight"..i]:SetAlpha(0)
+        end
+
+        _G.TutorialFrame._auroraMouseTex = {
+            _G.TutorialFrameMouseLeftClick,
+            _G.TutorialFrameMouseRightClick,
+            _G.TutorialFrameMouseBothClick,
+            _G.TutorialFrameMouseWheel,
+        }
     end
-
-    _G.TutorialFrame._auroraMouseTex = {
-        _G.TutorialFrameMouseLeftClick,
-        _G.TutorialFrameMouseRightClick,
-        _G.TutorialFrameMouseBothClick,
-        _G.TutorialFrameMouseWheel,
-    }
 
     local title = _G.TutorialFrameTitle
     title:ClearAllPoints()
@@ -112,35 +115,35 @@ function private.FrameXML.TutorialFrame()
     title:SetJustifyH("CENTER")
     title:SetJustifyV("MIDDLE")
 
-    Skin.ScrollFrameTemplate(_G.TutorialFrameTextScrollFrame)
-    Skin.UIPanelCloseButton(_G.TutorialFrameCloseButton)
+    Skin.FrameTypeButton(_G.TutorialFrameOkayButton)
+    if private.isRetail then
+        Skin.ScrollFrameTemplate(_G.TutorialFrameTextScrollFrame)
+        Skin.UIPanelCloseButton(_G.TutorialFrameCloseButton)
 
-    -- BlizzWTF: This should use the UIPanelButtonTemplate
-    _G.TutorialFrameOkayButton:ClearNormalTexture()
-    _G.TutorialFrameOkayButton:ClearPushedTexture()
-    _G.TutorialFrameOkayButton:ClearHighlightTexture()
-    Base.SetBackdrop(_G.TutorialFrameOkayButton, Color.button)
-    Base.SetHighlight(_G.TutorialFrameOkayButton)
+        Skin.NavButtonPrevious(_G.TutorialFramePrevButton)
+        _G.TutorialFramePrevButton:SetPoint("BOTTOMLEFT", 30, 10)
+        _G.TutorialFramePrevButton:GetRegions():SetPoint("LEFT", _G.TutorialFramePrevButton, "RIGHT", 3, 0)
 
-    Skin.NavButtonPrevious(_G.TutorialFramePrevButton)
-    _G.TutorialFramePrevButton:SetPoint("BOTTOMLEFT", 30, 10)
-    _G.TutorialFramePrevButton:GetRegions():SetPoint("LEFT", _G.TutorialFramePrevButton, "RIGHT", 3, 0)
-
-    Skin.NavButtonNext(_G.TutorialFrameNextButton)
-    _G.TutorialFrameNextButton:SetPoint("BOTTOMRIGHT", -132, 10)
-    _G.TutorialFrameNextButton:GetRegions():SetPoint("RIGHT", _G.TutorialFrameNextButton, "LEFT", -3, 0)
+        Skin.NavButtonNext(_G.TutorialFrameNextButton)
+        _G.TutorialFrameNextButton:SetPoint("BOTTOMRIGHT", -132, 10)
+        _G.TutorialFrameNextButton:GetRegions():SetPoint("RIGHT", _G.TutorialFrameNextButton, "LEFT", -3, 0)
+    else
+        Skin.UICheckButtonTemplate(_G.TutorialFrameCheckButton)
+    end
 
 
     ------------------------------
     -- TutorialFrameAlertButton --
     ------------------------------
-    local mask = _G.TutorialFrameAlertButton:CreateMaskTexture(nil, "BORDER")
-    mask:SetTexture([[Interface\PetBattles\BattleBar-AbilityBadge-Neutral]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-    mask:SetPoint("CENTER", 3, 3)
-    mask:SetSize(56, 56)
-    mask:Show()
-    _G.TutorialFrameAlertButton:GetNormalTexture():AddMaskTexture(mask)
-    _G.TutorialFrameAlertButton:GetHighlightTexture():AddMaskTexture(mask)
+    if private.isRetail then
+        local mask = _G.TutorialFrameAlertButton:CreateMaskTexture(nil, "BORDER")
+        mask:SetTexture([[Interface\PetBattles\BattleBar-AbilityBadge-Neutral]], "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+        mask:SetPoint("CENTER", 3, 3)
+        mask:SetSize(56, 56)
+        mask:Show()
+        _G.TutorialFrameAlertButton:GetNormalTexture():AddMaskTexture(mask)
+        _G.TutorialFrameAlertButton:GetHighlightTexture():AddMaskTexture(mask)
+    end
 
 
     -----------------------------------

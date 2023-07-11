@@ -23,6 +23,9 @@ end
 
 do --[[ FrameXML\SharedTooltipTemplates.xml ]]
     function Skin.SharedTooltipTemplate(GameTooltip)
+        if GameTooltip.debug then
+            GameTooltip.NineSlice.debug = GameTooltip.debug
+        end
         Skin.NineSlicePanelTemplate(GameTooltip.NineSlice)
     end
     function Skin.SharedNoHeaderTooltipTemplate(GameTooltip)

@@ -315,18 +315,19 @@ function private.AddOns.Blizzard_AuctionUI()
     Skin.UICheckButtonTemplate(_G.IsUsableCheckButton)
     Skin.UICheckButtonTemplate(_G.ShowOnPlayerCheckButton)
     Skin.UIPanelButtonTemplate(_G.BrowseSearchButton)
+    Skin.UIPanelButtonTemplate(_G.BrowseResetButton)
 
     --[[ Browse Footer ]]--
+    Skin.UIPanelButtonTemplate(_G.BrowseBidButton)
+    select(6, _G.BrowseBidButton:GetRegions()):Hide()
+
     Skin.UIPanelButtonTemplate(_G.BrowseCloseButton)
     select(6, _G.BrowseCloseButton:GetRegions()):Hide()
     Skin.UIPanelButtonTemplate(_G.BrowseBuyoutButton)
     select(6, _G.BrowseBuyoutButton:GetRegions()):Hide()
-    Skin.UIPanelButtonTemplate(_G.BrowseBidButton)
-    select(6, _G.BrowseBidButton:GetRegions()):Hide()
     Util.PositionRelative("BOTTOMRIGHT", auctionBg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
         _G.BrowseCloseButton,
         _G.BrowseBuyoutButton,
-        _G.BrowseBidButton,
     })
 
     Skin.MoneyInputFrameTemplate(_G.BrowseBidPrice)

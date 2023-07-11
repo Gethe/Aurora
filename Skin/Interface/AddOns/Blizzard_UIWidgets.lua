@@ -113,7 +113,11 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_UIWidgetManager    --
     ----====####$$$$%%%%$$$$####====----
-    Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetManagerMixin)
+    if private.isRetail then
+        Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetManagerMixin)
+    else
+        Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetContainerMixin)
+    end
 
 
     ----====####$$$$%%%%%$$$$####====----
@@ -211,16 +215,18 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%%%%%%%$$$$####====----
 
 
-    ----====####$$$$%%%%%$$$$####====----
-    -- Blizzard_UIWidgetTopCenterFrame --
-    ----====####$$$$%%%%%$$$$####====----
-    Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
+    if private.isRetail then
+        ----====####$$$$%%%%%$$$$####====----
+        -- Blizzard_UIWidgetTopCenterFrame --
+        ----====####$$$$%%%%%$$$$####====----
+        Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
 
 
-    ----====####$$$$%%%%%%%%$$$$####====----
-    -- Blizzard_UIWidgetBelowMinimapFrame --
-    ----====####$$$$%%%%%%%%$$$$####====----
-    Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
+        ----====####$$$$%%%%%%%%$$$$####====----
+        -- Blizzard_UIWidgetBelowMinimapFrame --
+        ----====####$$$$%%%%%%%%$$$$####====----
+        Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetContainerMixin)
+    end
 
 
     ----====####$$$$%%%%$$$$####====----

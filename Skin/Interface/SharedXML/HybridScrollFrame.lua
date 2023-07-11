@@ -26,29 +26,9 @@ end
 do --[[ SharedXML\HybridScrollFrame.xml ]]
     Skin.HybridScrollBarButton = Skin.ScrollBarThumb
 
-    function Skin.HybridScrollBarBackgroundTemplate(Slider)
-        local parent = Slider:GetParent()
-        Slider:SetPoint("TOPLEFT", parent, "TOPRIGHT", 0, -17)
-        Slider:SetPoint("BOTTOMLEFT", parent, "BOTTOMRIGHT", 0, 17)
-
-        Slider.trackBG:SetAlpha(0)
-
-        Slider.ScrollBarTop:Hide()
-        Slider.ScrollBarMiddle:Hide()
-        Slider.ScrollBarBottom:Hide()
-
-        Skin.ScrollBarThumb(Slider.thumbTexture)
-    end
-
     function Skin.HybridScrollBarTemplate(Slider)
-        Skin.HybridScrollBarBackgroundTemplate(Slider)
-
-
-        Slider.ScrollUpButton:SetPoint("BOTTOM", Slider, "TOP")
-        Skin.UIPanelScrollUpButtonTemplate(Slider.ScrollUpButton)
-
-        Slider.ScrollDownButton:SetPoint("TOP", Slider, "BOTTOM")
-        Skin.UIPanelScrollDownButtonTemplate(Slider.ScrollDownButton)
+        Slider.ThumbTexture = Slider.thumbTexture
+        Skin.UIPanelScrollBarTemplate(Slider)
     end
     function Skin.HybridScrollBarTrimTemplate(Slider)
         local parent = Slider:GetParent()
@@ -72,16 +52,9 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         Skin.ScrollBarThumb(Slider.thumbTexture)
     end
     function Skin.MinimalHybridScrollBarTemplate(Slider)
-        local parent = Slider:GetParent()
-        Slider.trackBG:SetAlpha(0)
-
-        --Slider.scrollUp:SetPoint("BOTTOM", Slider, "TOP")
-        Skin.UIPanelScrollUpButtonTemplate(parent.scrollUp)
-
-        --Slider.scrollDown:SetPoint("TOP", Slider, "BOTTOM")
-        Skin.UIPanelScrollDownButtonTemplate(parent.scrollDown)
-
-        Skin.ScrollBarThumb(Slider.thumbTexture)
+        Slider:GetParent().scrollUp.direction = _G.ScrollControllerMixin.Directions.Decrease
+        Slider:GetParent().scrollDown.direction = _G.ScrollControllerMixin.Directions.Increase
+        Skin.FrameTypeScrollBar(Slider)
     end
     -- HybridScrollFrameTemplate -- Has no visible parts
     function Skin.BasicHybridScrollFrameTemplate(ScrollFrame)

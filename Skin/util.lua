@@ -197,12 +197,16 @@ local uiTextureKits = {
         backdrop = Color.frame,
         title = Color.white,
         text = Color.grayLight,
+        emblem = "",
+        emblemSmall = "",
     },
     alt = {
         color = Color.button,
         backdrop = Color.button,
         title = Color.white,
         text = Color.grayLight,
+        emblem = "",
+        emblemSmall = "",
     },
 
     alliance = {
@@ -211,6 +215,7 @@ local uiTextureKits = {
         title = Color.white,
         text = Color.grayLight,
         emblem = "pvpqueue-sidebar-honorbar-badge-alliance",
+        emblemSmall = "communities-create-button-wow-alliance",
     },
     horde = {
         color = private.FACTION_COLORS.Horde,
@@ -218,6 +223,7 @@ local uiTextureKits = {
         title = Color.white,
         text = Color.grayLight,
         emblem = "pvpqueue-sidebar-honorbar-badge-horde",
+        emblemSmall = "communities-create-button-wow-horde",
     },
 
     legion = {
@@ -228,35 +234,35 @@ local uiTextureKits = {
         emblem = "",
     },
 
-    Kyrian = {
+    kyrian = {
         color = private.COVENANT_COLORS.Kyrian,
         backdrop = private.COVENANT_COLORS.Kyrian:Lightness(-0.8),
         title = Color.white,
         text = Color.grayLight,
         emblem = "ShadowlandsMissionsLandingPage-Background-Kyrian",
     },
-    Necrolord = {
+    necrolord = {
         color = private.COVENANT_COLORS.Necrolord,
         backdrop = private.COVENANT_COLORS.Necrolord:Lightness(-0.8),
         title = Color.white,
         text = Color.grayLight,
         emblem = "ShadowlandsMissionsLandingPage-Background-Necrolord",
     },
-    NightFae = {
+    nightfae = {
         color = private.COVENANT_COLORS.NightFae,
         backdrop = private.COVENANT_COLORS.NightFae,
         title = Color.white,
         text = Color.grayLight,
         emblem = "ShadowlandsMissionsLandingPage-Background-NightFae",
     },
-    Venthyr = {
+    venthyr = {
         color = private.COVENANT_COLORS.Venthyr,
         backdrop = private.COVENANT_COLORS.Venthyr:Lightness(-0.8),
         title = Color.white,
         text = Color.grayLight,
         emblem = "ShadowlandsMissionsLandingPage-Background-Venthyr",
     },
-    Maw = {
+    maw = {
         color = private.COVENANT_COLORS.Maw,
         backdrop = private.COVENANT_COLORS.Maw:Lightness(-0.8),
         title = Color.white,
@@ -264,12 +270,12 @@ local uiTextureKits = {
         emblem = "",
     },
 }
-uiTextureKits.Bastion = uiTextureKits.Kyrian
-uiTextureKits.Maldraxxus = uiTextureKits.Necrolord
-uiTextureKits.Ardenweald = uiTextureKits.NightFae
-uiTextureKits.Fey = uiTextureKits.NightFae
-uiTextureKits.Revendreth = uiTextureKits.Venthyr
-uiTextureKits["jailerstower-scenario"] = uiTextureKits.Maw
+uiTextureKits.bastion = uiTextureKits.kyrian
+uiTextureKits.maldraxxus = uiTextureKits.necrolord
+uiTextureKits.ardenweald = uiTextureKits.nightfae
+uiTextureKits.fey = uiTextureKits.nightfae
+uiTextureKits.fevendreth = uiTextureKits.venthyr
+uiTextureKits["jailerstower-scenario"] = uiTextureKits.maw
 Util.uiTextureKits = uiTextureKits
 
 --[[ Util.GetTextureKit(_textureKit_)
@@ -290,6 +296,7 @@ Provides the skin colors for a given textureKit.
 --]]
 function Util.GetTextureKit(textureKit, useAlt)
     if textureKit then
+        textureKit = textureKit:lower()
         if uiTextureKits[textureKit] then
             return uiTextureKits[textureKit]
         else

@@ -101,11 +101,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
     <Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ClassicTrimScrollBar.lua"/>
-    <!--Script file="..\SharedXML\Scroll\MinimalScrollBar.lua"/-->
+    <Script file="..\SharedXML\Scroll\MinimalScrollBar.lua"/>
     <!--Script file="..\SharedXML\ButtonStateBehavior.lua"/-->
     <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
     <!--Script file="..\SharedXML\ScrollDefine.lua"/-->
-    <!--Script file="..\SharedXML\SecureScrollTemplates.lua"/-->
+    <Script file="..\SharedXML\SecureScrollTemplates.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
@@ -158,9 +158,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelScene.lua"/-->
-    <!--Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/-->
+    <Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/>
     <!--Script file="..\SharedXML\Selector\Blizzard_GridSelectorUI.lua"/-->
-    <!--Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/-->
+    <Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/>
 
 
     <!--Script file="QuestUtils.lua"/-->
@@ -212,11 +212,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="AudioOptionsFrame.lua"/-->
     <Script file="AudioOptionsPanels.lua"/>
     <Script file="InterfaceOptionsFrame.lua"/>
-    <Script file="..\..\Interface_Wrath\FrameXML\InterfaceOptionsPanels.lua"/>
+    <!--Script file="..\..\Interface_Wrath\FrameXML\InterfaceOptionsPanels.lua"/-->
     <Script file="..\SharedXML\AddonList.lua"/>
     <!--Script file="AlertFrameIntrinsic.lua"/-->
-    <!--Script file="AlertFrames.lua"/-->
-    <!--Script file="AlertFrameSystems.lua"/-->
+    <Script file="AlertFrames.lua"/>
+    <Script file="AlertFrameSystems.lua"/>
     <Script file="SocialToast.lua"/>
     <Script file="MirrorTimer.lua"/>
     <!--Script file="CoinPickupFrame.lua"/-->
@@ -225,7 +225,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="ZoneText.lua"/-->
     <!--Script file="UnitFrame.lua"/-->
     <!--Script file="Cooldown.lua"/-->
-    <Script file="..\..\Interface_Wrath\FrameXML\MainMenuBarMicroButtons.lua"/>
+    <!--Script file="..\..\Interface_Wrath\FrameXML\MainMenuBarMicroButtons.lua"/-->
     <Script file="ActionBarController.lua"/>
     <!--Script file="..\..\Interface_TBC\FrameXML\StanceBar.lua"/-->
     <Script file="OverrideActionBar.lua"/>
@@ -272,8 +272,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\..\Interface_Wrath\FrameXML\PetPaperDollFrame.lua"/>
     <Script file="SkillFrame.lua"/>
     <Script file="..\..\Interface_Wrath\FrameXML\ReputationFrame.lua"/>
-    <!--Script file="..\..\Interface_Wrath\FrameXML\QuestFrameTemplates.lua"/-->
-    <!--Script file="..\..\Interface_TBC\FrameXML\QuestFrame.lua"/-->
+    <Script file="..\..\Interface_Wrath\FrameXML\QuestFrameTemplates.lua"/>
+    <Script file="..\..\Interface_TBC\FrameXML\QuestFrame.lua"/>
     <Script file="..\..\Interface_Wrath\FrameXML\QuestLogFrame.lua"/>
     <Script file="..\..\Interface_Wrath\FrameXML\QuestInfo.lua"/>
     <!--Script file="..\..\Interface_Wrath\FrameXML\WatchFrame.lua"/-->

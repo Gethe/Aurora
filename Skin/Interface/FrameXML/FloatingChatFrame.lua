@@ -34,8 +34,10 @@ do --[[ FrameXML\FloatingChatFrame.lua ]]
         frame:SetBackdropColor(r, g, b)
         frame:SetBackdropBorderColor(r, g, b)
 
-        frame.buttonFrame:SetBackdropColor(r, g, b)
-        frame.buttonFrame:SetBackdropBorderColor(r, g, b)
+        if private.isRetail then
+            frame.buttonFrame:SetBackdropColor(r, g, b)
+            frame.buttonFrame:SetBackdropBorderColor(r, g, b)
+        end
     end
     function Hook.FCF_SetButtonSide(chatFrame, buttonSide, forceUpdate)
         if buttonSide == "left" then
@@ -74,17 +76,31 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         Base.SetBackdrop(Frame, Color.frame, 0.3)
     end
     function Skin.ChatTabArtTemplate(Button)
-        Button.Left:SetAlpha(0)
-        Button.Right:SetAlpha(0)
-        Button.Middle:SetAlpha(0)
+        if private.isRetail then
+            Button.Left:SetAlpha(0)
+            Button.Right:SetAlpha(0)
+            Button.Middle:SetAlpha(0)
 
-        Button.ActiveLeft:SetAlpha(0)
-        Button.ActiveMiddle:SetAlpha(0)
-        Button.ActiveRight:SetAlpha(0)
+            Button.ActiveLeft:SetAlpha(0)
+            Button.ActiveMiddle:SetAlpha(0)
+            Button.ActiveRight:SetAlpha(0)
 
-        Button.HighlightLeft:SetAlpha(0)
-        Button.HighlightMiddle:SetAlpha(0)
-        Button.HighlightRight:SetAlpha(0)
+            Button.HighlightLeft:SetAlpha(0)
+            Button.HighlightMiddle:SetAlpha(0)
+            Button.HighlightRight:SetAlpha(0)
+        else
+            Button.leftTexture:SetAlpha(0)
+            Button.middleTexture:SetAlpha(0)
+            Button.rightTexture:SetAlpha(0)
+
+            Button.leftSelectedTexture:SetAlpha(0)
+            Button.middleSelectedTexture:SetAlpha(0)
+            Button.rightSelectedTexture:SetAlpha(0)
+
+            Button.leftHighlightTexture:SetAlpha(0)
+            Button.middleHighlightTexture:SetAlpha(0)
+            Button.rightHighlightTexture:SetAlpha(0)
+        end
     end
     function Skin.ChatTabTemplate(Button)
         Skin.ChatTabArtTemplate(Button)
@@ -93,9 +109,11 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
     function Skin.FloatingChatFrameTemplate(ScrollingMessageFrame)
         Skin.ChatFrameTemplate(ScrollingMessageFrame)
         Skin.FloatingBorderedFrame(ScrollingMessageFrame)
-        local buttonFrame = ScrollingMessageFrame.buttonFrame
 
-        Skin.FloatingBorderedFrame(buttonFrame)
+        local buttonFrame = ScrollingMessageFrame.buttonFrame
+        if private.isRetail then
+            Skin.FloatingBorderedFrame(buttonFrame)
+        end
 
         local minimizeButton = buttonFrame.minimizeButton
         Skin.ChatFrameButton(minimizeButton)
@@ -126,8 +144,10 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
         _G.FloatingChatFrame_UpdateBackgroundAnchors(ScrollingMessageFrame)
 
         Skin.ChatFrameEditBoxTemplate(ScrollingMessageFrame.editBox)
-        ScrollingMessageFrame.editBox:SetPoint("TOPLEFT", ScrollingMessageFrame, "BOTTOMLEFT", 0, -5)
-        ScrollingMessageFrame.editBox:SetPoint("RIGHT", ScrollingMessageFrame.ScrollBar)
+        if private.isRetail then
+            ScrollingMessageFrame.editBox:SetPoint("TOPLEFT", ScrollingMessageFrame, "BOTTOMLEFT", 0, -5)
+            ScrollingMessageFrame.editBox:SetPoint("RIGHT", ScrollingMessageFrame.ScrollBar)
+        end
     end
     function Skin.FloatingChatFrameMinimizedTemplate(Button)
         Button:SetSize(172, 23)
@@ -191,9 +211,11 @@ function private.FrameXML.FloatingChatFrame()
 
     Skin.ChatFrameButton(_G.ChatFrameMenuButton, [[Interface\GossipFrame\ChatBubbleGossipIcon]])
     Skin.VoiceToggleButtonTemplate(_G.ChatFrameChannelButton)
-    _G.ChatFrameChannelButton:SetPoint("TOP", _G.ChatFrame1ButtonFrame, 0, -3)
-    Skin.ToggleVoiceDeafenButtonTemplate(_G.ChatFrameToggleVoiceDeafenButton)
-    Skin.ToggleVoiceMuteButtonTemplate(_G.ChatFrameToggleVoiceMuteButton)
+    if private.isRetail then
+        _G.ChatFrameChannelButton:SetPoint("TOP", _G.ChatFrame1ButtonFrame, 0, -3)
+        Skin.ToggleVoiceDeafenButtonTemplate(_G.ChatFrameToggleVoiceDeafenButton)
+        Skin.ToggleVoiceMuteButtonTemplate(_G.ChatFrameToggleVoiceMuteButton)
+    end
 
     Skin.UIMenuTemplate(_G.ChatMenu)
     Skin.UIMenuTemplate(_G.EmoteMenu)

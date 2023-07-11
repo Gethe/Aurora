@@ -90,7 +90,30 @@ do --[[ SharedXML\NineSlice.lua ]]
         PartyPoseKit = BasicFrame,
     }
 
-    local function GetNameforLayout(userLayout)
+    local function GetNameforLayout(container, userLayout)
+        if container.debug then
+            _G.print("GetNameforLayout", container.debug, userLayout, container.GetFrameLayoutType)
+        end
+
+        local layoutType = userLayout
+        if container.GetFrameLayoutType then
+            layoutType = container:GetFrameLayoutType()
+        elseif container.backdropInfo then
+            if container.backdropInfo.bgFile:find("DialogBox") then
+                return "Dialog"
+            else
+                return "SimplePanelTemplate"
+            end
+        end
+
+        if container.debug then
+            _G.print("find name", container.debug, layoutType)
+        end
+
+        if layoutType then
+            return layoutType
+        end
+
         for layoutName, layout in next, _G.NineSliceLayouts do
             if layout == userLayout then
                 return layoutName
@@ -104,10 +127,7 @@ do --[[ SharedXML\NineSlice.lua ]]
         if textureKit == "AuroraSkin" or container._applyLayout then return end
 
         container._applyLayout = true
-        local userLayoutName = container:GetFrameLayoutType()
-        if not userLayoutName then
-            userLayoutName = GetNameforLayout(userLayout)
-        end
+        local userLayoutName = GetNameforLayout(container, userLayout)
 
         if container.debug then
             _G.print("ApplyLayout", container.debug, userLayout, userLayoutName, textureKit)

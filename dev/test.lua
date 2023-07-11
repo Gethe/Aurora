@@ -49,7 +49,7 @@ local GetDungeonTypeIDs, GetDungeonTypeID, SetDungeonTypeID
 local GetDungeonSubTypeIDs, GetDungeonSubTypeID, SetDungeonSubTypeID
 local SetHasResponded, GetDungeonID
 local function LoadLFGFunctions()
-    if private.isClassic then return end
+    if private.isVanilla then return end
 
     local dungeonId, hasResponded, totalEncounters, completedEncounters, numMembers = 1778, true, 4, 2, 5
     local icon = [[Interface\Icons\Achievement_Dungeon_TolDagor]]

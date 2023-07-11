@@ -10,15 +10,32 @@ local Skin = Aurora.Skin
 
 function private.FrameXML.GameMenuFrame()
     local GameMenuFrame = _G.GameMenuFrame
-    Skin.DialogBorderTemplate(GameMenuFrame.Border)
-    Skin.DialogHeaderTemplate(GameMenuFrame.Header)
+
+    if private.isRetail then
+        Skin.DialogBorderTemplate(GameMenuFrame.Border)
+        Skin.DialogHeaderTemplate(GameMenuFrame.Header)
+    else
+        Skin.DialogBorderTemplate(GameMenuFrame)
+
+        local header, text = GameMenuFrame:GetRegions()
+        header:Hide()
+        text:ClearAllPoints()
+        text:SetPoint("TOPLEFT")
+        text:SetPoint("BOTTOMRIGHT", _G.GameMenuFrame, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    end
 
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonHelp)
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonStore)
-    Skin.GameMenuButtonTemplate(_G.GameMenuButtonWhatsNew)
 
-    Skin.GameMenuButtonTemplate(_G.GameMenuButtonSettings)
-    Skin.GameMenuButtonTemplate(_G.GameMenuButtonEditMode)
+    if private.isRetail then
+        Skin.GameMenuButtonTemplate(_G.GameMenuButtonWhatsNew)
+
+        Skin.GameMenuButtonTemplate(_G.GameMenuButtonSettings)
+        Skin.GameMenuButtonTemplate(_G.GameMenuButtonEditMode)
+    else
+        Skin.GameMenuButtonTemplate(_G.GameMenuButtonOptions)
+    end
+
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonMacros)
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonAddons)
     Skin.GameMenuButtonTemplate(_G.GameMenuButtonRatings) -- Used in Korean locale

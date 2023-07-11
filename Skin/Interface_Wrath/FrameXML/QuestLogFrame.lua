@@ -96,9 +96,9 @@ function private.FrameXML.QuestLogFrame()
     Skin.UIPanelCloseButton(_G.QuestLogDetailFrameCloseButton)
     Skin.UIPanelScrollFrameTemplate(_G.QuestLogDetailScrollFrame)
     _G.QuestLogDetailScrollFrame:SetPoint("TOPLEFT", bg, 5, -(private.FRAME_TITLE_HEIGHT + 5))
-    _G.QuestLogDetailScrollFrame:SetPoint("BOTTOMRIGHT", bg, -25, 30)
-    _G.QuestLogDetailScrollFrameScrollBackgroundTopLeft:Hide()
-    _G.QuestLogDetailScrollFrameScrollBackgroundBottomRight:Hide()
+    _G.QuestLogDetailScrollFrame:SetPoint("BOTTOMRIGHT", bg, -30, 30)
+    _G.QuestLogDetailScrollFrameScrollBackgroundTopLeft:SetAlpha(0)
+    _G.QuestLogDetailScrollFrameScrollBackgroundBottomRight:SetAlpha(0)
 
     -------------------
     -- QuestLogFrame --
@@ -145,6 +145,6 @@ function private.FrameXML.QuestLogFrame()
 
     _G.QuestLogSkillHighlight:SetColorTexture(1, 1, 1, 0.5)
 
-    Skin.HybridScrollBarTemplate(_G.QuestLogListScrollFrameScrollBar)
+    Skin.HybridScrollBarTemplate(_G.QuestLogListScrollFrame.scrollBar)
     Hook.HybridScrollFrame_CreateButtons(_G.QuestLogListScrollFrame, "QuestLogTitleButtonTemplate") -- Called here since the original is called OnLoad
 end

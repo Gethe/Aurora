@@ -13,8 +13,13 @@ local Skin = Aurora.Skin
 
 do --[[ FrameXML\MirrorTimer.xml ]]
     function Skin.MirrorTimerTemplate(Frame)
-        Skin.FrameTypeStatusBar(Frame.StatusBar)
-        Frame.Border:Hide()
+        if private.isRetail then
+            Skin.FrameTypeStatusBar(Frame.StatusBar)
+            Frame.Border:Hide()
+        else
+            Skin.FrameTypeStatusBar(_G[Frame:GetName().."StatusBar"])
+            _G[Frame:GetName().."Border"]:Hide()
+        end
     end
 end
 

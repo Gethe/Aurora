@@ -61,19 +61,12 @@ do --[[ FrameXML\GroupLootFrame.xml ]]
 
         Frame.CurrentCountFrame:SetPoint("BOTTOMRIGHT", -2, 0)
     end
-    function Skin.GroupLootFrameTemplate(Frame)
-    end
 end
 
 function private.FrameXML.GroupLootFrame()
     ---------------
     -- GroupLoot --
     ---------------
-    Skin.GroupLootFrameTemplate(_G.GroupLootFrame1)
-    Skin.GroupLootFrameTemplate(_G.GroupLootFrame2)
-    Skin.GroupLootFrameTemplate(_G.GroupLootFrame3)
-    Skin.GroupLootFrameTemplate(_G.GroupLootFrame4)
-
 
     --------------------
     -- BonusRollFrame --

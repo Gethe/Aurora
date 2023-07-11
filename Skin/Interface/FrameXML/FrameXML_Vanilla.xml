@@ -95,7 +95,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\SharedXML\Scroll\ScrollBox.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
-    <!--Script file="..\SharedXML\Scroll\MinimalScrollBar.lua"/-->
+    <Script file="..\SharedXML\Scroll\MinimalScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ClassicTrimScrollBar.lua"/>
 
@@ -110,7 +110,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ModelSceneActorMixin.lua"/-->
     <Script file="..\SharedXML\SharedTooltipTemplates.lua"/>
     <!--Script file="..\SharedXML\ScrollDefine.lua"/-->
-    <!--Script file="..\SharedXML\SecureScrollTemplates.lua"/-->
+    <Script file="..\SharedXML\SecureScrollTemplates.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
@@ -146,9 +146,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelScene.lua"/-->
-    <!--Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/-->
+    <Script file="..\SharedXML\Selector\Blizzard_SelectorUI.lua"/>
     <!--Script file="..\SharedXML\Selector\Blizzard_GridSelectorUI.lua"/-->
-    <!--Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/-->
+    <Script file="..\SharedXML\Selector\Blizzard_ScrollBoxSelector.lua"/>
 
 
     <!--Script file="QuestUtils.lua"/-->
@@ -203,8 +203,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\..\Interface_Vanilla\FrameXML\InterfaceOptionsPanels.lua"/>
     <Script file="..\SharedXML\AddonList.lua"/>
     <!--Script file="AlertFrameIntrinsic.lua"/-->
-    <!--Script file="AlertFrames.lua"/-->
-    <!--Script file="AlertFrameSystems.lua"/-->
+    <Script file="AlertFrames.lua"/>
+    <Script file="AlertFrameSystems.lua"/>
     <Script file="SocialToast.lua"/>
     <Script file="MirrorTimer.lua"/>
     <!--Script file="CoinPickupFrame.lua"/-->
@@ -213,7 +213,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="ZoneText.lua"/-->
     <!--Script file="UnitFrame.lua"/-->
     <!--Script file="Cooldown.lua"/-->
-    <Script file="MainMenuBarMicroButtons.lua"/>
+    <!--Script file="MainMenuBarMicroButtons.lua"/-->
     <Script file="ActionBarController.lua"/>
     <!--Script file="..\..\Interface_Vanilla\FrameXML\StanceBar.lua"/-->
     <!--Script file="PossessActionBar.lua"/-->

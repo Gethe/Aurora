@@ -13,37 +13,6 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ AddOns\Blizzard_Communities.lua ]]
     do --[[ CommunitiesList ]]
         Hook.CommunitiesListEntryMixin = {}
-        function Hook.CommunitiesListEntryMixin:Init(elementData)
-            local clubInfo = elementData.clubInfo
-            self._iconBG:SetWidth(self._iconBG:GetHeight())
-
-            if clubInfo and self._iconBG then
-                local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
-                if isGuild then
-                    self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
-                else
-                    self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-                end
-
-                self.CircleMask:Hide()
-                Base.CropIcon(self.Icon)
-                self.Icon:SetAllPoints(self._iconBG)
-                self._iconBG:Hide()
-            end
-        end
-        function Hook.CommunitiesListEntryMixin:SetFindCommunity()
-            self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-
-            self.CircleMask:Hide()
-            self.Icon:SetTexCoord(0, 1, 0, 1)
-            self.Icon:ClearAllPoints()
-            self.Icon:SetSize(34, 34)
-            self.Icon:SetPoint("CENTER", self._iconBG)
-            self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
-
-            self._iconBG:Show()
-            self._iconBG:SetColorTexture(Color.black:GetRGB())
-        end
         function Hook.CommunitiesListEntryMixin:SetAddCommunity()
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
@@ -54,16 +23,65 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self._iconBG:Show()
             self._iconBG:SetColorTexture(Color.black:GetRGB())
         end
-        function Hook.CommunitiesListEntryMixin:SetGuildFinder()
-            self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+        if private.isRetail then
+            function Hook.CommunitiesListEntryMixin:Init(elementData)
+                local clubInfo = elementData.clubInfo
+                self._iconBG:SetWidth(self._iconBG:GetHeight())
 
-            self.CircleMask:Hide()
-            self.Icon:SetTexCoord(0, 1, 0, 1)
-            self.Icon:ClearAllPoints()
-            self.Icon:SetSize(40, 40)
-            self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
+                if clubInfo and self._iconBG then
+                    local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
+                    if isGuild then
+                        self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+                    else
+                        self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+                    end
 
-            self._iconBG:Hide()
+                    self.CircleMask:Hide()
+                    Base.CropIcon(self.Icon)
+                    self.Icon:SetAllPoints(self._iconBG)
+                    self._iconBG:Hide()
+                end
+            end
+            function Hook.CommunitiesListEntryMixin:SetFindCommunity()
+                self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+
+                self.CircleMask:Hide()
+                self.Icon:SetTexCoord(0, 1, 0, 1)
+                self.Icon:ClearAllPoints()
+                self.Icon:SetSize(34, 34)
+                self.Icon:SetPoint("CENTER", self._iconBG)
+                self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
+
+                self._iconBG:Show()
+                self._iconBG:SetColorTexture(Color.black:GetRGB())
+            end
+            function Hook.CommunitiesListEntryMixin:SetGuildFinder()
+                self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+
+                self.CircleMask:Hide()
+                self.Icon:SetTexCoord(0, 1, 0, 1)
+                self.Icon:ClearAllPoints()
+                self.Icon:SetSize(40, 40)
+                self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
+
+                self._iconBG:Hide()
+            end
+        else
+            function Hook.CommunitiesListEntryMixin:SetClubInfo(clubInfo, isInvitation, isTicket, isInviteFromFinder)
+                if clubInfo and self._iconBG then
+                    local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
+                    if isGuild then
+                        self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+                    else
+                        self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+                    end
+
+                    self.CircleMask:Hide()
+                    Base.CropIcon(self.Icon)
+                    self.Icon:SetAllPoints(self._iconBG)
+                    self._iconBG:Hide()
+                end
+            end
         end
     end
     do --[[ CommunitiesMemberList ]]
@@ -707,10 +725,23 @@ function private.AddOns.Blizzard_Communities()
     CommunitiesAvatarPickerDialog:ClearAllPoints()
     CommunitiesAvatarPickerDialog:SetPoint("TOP", 0, -140)
 
-    CommunitiesAvatarPickerDialog.Selector.Center = CommunitiesAvatarPickerDialog:GetRegions()
-    Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog.Selector)
-    Skin.WowScrollBoxList(CommunitiesAvatarPickerDialog.ScrollBox)
-    Skin.MinimalScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
+    if private.isRetail then
+        CommunitiesAvatarPickerDialog.Selector.Center = CommunitiesAvatarPickerDialog:GetRegions()
+        Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog.Selector)
+        Skin.WowScrollBoxList(CommunitiesAvatarPickerDialog.ScrollBox)
+        Skin.MinimalScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
+    else
+        if private.isVanilla then
+            Base.CreateBackdrop(CommunitiesAvatarPickerDialog, private.backdrop, {
+                bg = select(9, CommunitiesAvatarPickerDialog:GetRegions())
+            })
+        else
+            CommunitiesAvatarPickerDialog.Center = CommunitiesAvatarPickerDialog:GetRegions()
+        end
+
+        Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog)
+        Skin.ListScrollFrameTemplate(CommunitiesAvatarPickerDialog.ScrollFrame)
+    end
 
     ----====####$$$$%%%%$$$$####====----
     --  CommunitiesAddDialogInsecure  --
@@ -741,7 +772,11 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     local CommunitiesSettingsDialog = _G.CommunitiesSettingsDialog
     _G.hooksecurefunc(CommunitiesSettingsDialog, "SetClubId", Hook.CommunitiesSettingsDialogMixin.SetClubId)
-    Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog.BG)
+    if private.isRetail then
+        Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog.BG)
+    else
+        Skin.DialogBorderDarkTemplate(CommunitiesSettingsDialog)
+    end
 
     CommunitiesSettingsDialog.IconPreview:RemoveMaskTexture(CommunitiesSettingsDialog.CircleMask)
     CommunitiesSettingsDialog._iconBorder = Base.CropIcon(CommunitiesSettingsDialog.IconPreview, CommunitiesSettingsDialog)
@@ -750,19 +785,26 @@ function private.AddOns.Blizzard_Communities()
     Skin.InputBoxTemplate(CommunitiesSettingsDialog.NameEdit)
     Skin.InputBoxTemplate(CommunitiesSettingsDialog.ShortNameEdit)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.ChangeAvatarButton)
-    Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.MessageOfTheDay)
 
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.ShouldListClub.Button)
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.AutoAcceptApplications.Button)
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MaxLevelOnly.Button)
-    Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
-    Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
+    if private.isRetail then
+        Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.MessageOfTheDay)
 
-    Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
-    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
-    Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.ShouldListClub.Button)
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.AutoAcceptApplications.Button)
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MaxLevelOnly.Button)
+        Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
+        Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
 
-    Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.Description)
+        Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
+        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
+        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
+
+        Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.Description)
+    else
+        Skin.UIPanelInputScrollFrameTemplate(CommunitiesSettingsDialog.MessageOfTheDay)
+        Skin.UIPanelInputScrollFrameTemplate(CommunitiesSettingsDialog.Description)
+    end
+
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Delete)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Accept)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Cancel)
@@ -805,24 +847,26 @@ function private.AddOns.Blizzard_Communities()
     --           GuildPerks           --
     ----====####$$$$%%%%$$$$####====----
 
-    ----====####$$$$%%%%%$$$$####====----
-    --            GuildInfo            --
-    ----====####$$$$%%%%%$$$$####====----
-    Skin.TranslucentFrameTemplate(_G.CommunitiesGuildLogFrame)
-    local close1, container, close2 = _G.CommunitiesGuildLogFrame:GetChildren()
-    Skin.UIPanelCloseButton(close1) -- BlizzWTF: close1 and close2 have the same global name
-    Util.HideNineSlice(container)
-    Skin.ScrollFrameTemplate(container.ScrollFrame)
-    Skin.UIPanelButtonTemplate(close2)
+    if private.isRetail then
+        ----====####$$$$%%%%%$$$$####====----
+        --            GuildInfo            --
+        ----====####$$$$%%%%%$$$$####====----
+        Skin.TranslucentFrameTemplate(_G.CommunitiesGuildLogFrame)
+        local close1, container, close2 = _G.CommunitiesGuildLogFrame:GetChildren()
+        Skin.UIPanelCloseButton(close1) -- BlizzWTF: close1 and close2 have the same global name
+        Util.HideNineSlice(container)
+        Skin.ScrollFrameTemplate(container.ScrollFrame)
+        Skin.UIPanelButtonTemplate(close2)
 
-    ----====####$$$$%%%%%$$$$####====----
-    --            GuildNews            --
-    ----====####$$$$%%%%%$$$$####====----
-    local CommunitiesGuildNewsFiltersFrame = _G.CommunitiesGuildNewsFiltersFrame
-    Skin.TranslucentFrameTemplate(CommunitiesGuildNewsFiltersFrame)
-    Skin.UIPanelCloseButton(CommunitiesGuildNewsFiltersFrame.CloseButton)
-    for i, CheckButton in next, CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons do
-        Skin.CommunitiesGuildNewsCheckButtonTemplate(CheckButton)
+        ----====####$$$$%%%%%$$$$####====----
+        --            GuildNews            --
+        ----====####$$$$%%%%%$$$$####====----
+        local CommunitiesGuildNewsFiltersFrame = _G.CommunitiesGuildNewsFiltersFrame
+        Skin.TranslucentFrameTemplate(CommunitiesGuildNewsFiltersFrame)
+        Skin.UIPanelCloseButton(CommunitiesGuildNewsFiltersFrame.CloseButton)
+        for i, CheckButton in next, CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons do
+            Skin.CommunitiesGuildNewsCheckButtonTemplate(CheckButton)
+        end
     end
 
     ----====####$$$$%%%%%$$$$####====----

@@ -390,8 +390,10 @@ function private.FrameXML.AlertFrameSystems()
     Util.Mixin(_G.ScenarioAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.InvasionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.DigsiteCompleteAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.EntitlementDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.RafRewardDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    if private.isRetail then
+        Util.Mixin(_G.EntitlementDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+        Util.Mixin(_G.RafRewardDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    end
     Util.Mixin(_G.GarrisonBuildingAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.GarrisonMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.GarrisonShipMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
@@ -403,7 +405,9 @@ function private.FrameXML.AlertFrameSystems()
 
     Util.Mixin(_G.NewPetAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.NewMountAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.NewToyAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    if private.isRetail then
+        Util.Mixin(_G.NewToyAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    end
 
     --[[
     ]]

@@ -386,8 +386,26 @@ function private.FrameXML.FriendsFrame()
     Skin.UIPanelButtonTemplate(_G.GuildMemberRemoveButton)
     Skin.UIPanelButtonTemplate(_G.GuildMemberGroupInviteButton)
 
-    Skin.UIPanelScrollUpButtonTemplate(_G.GuildFramePromoteButton)
-    Skin.UIPanelScrollDownButtonTemplate(_G.GuildFrameDemoteButton)
+    do -- GuildFramePromoteButton
+        local Button = _G.GuildFramePromoteButton
+        Button:SetSize(18, 16)
+        Skin.FrameTypeButton(Button)
+
+        local arrow = Button:CreateTexture()
+        arrow:SetSize(14, 6)
+        arrow:SetPoint("BOTTOMLEFT", Button, 2, 4)
+        Base.SetTexture(arrow, "arrowUp")
+    end
+    do -- GuildFrameDemoteButton
+        local Button = _G.GuildFrameDemoteButton
+        Button:SetSize(18, 16)
+        Skin.FrameTypeButton(Button)
+
+        local arrow = Button:CreateTexture()
+        arrow:SetSize(14, 6)
+        arrow:SetPoint("BOTTOMLEFT", Button, 2, 4)
+        Base.SetTexture(arrow, "arrowDown")
+    end
 
     Skin.FrameTypeEditBox(_G.GuildMemberNoteBackground)
     Skin.FrameTypeEditBox(_G.GuildMemberOfficerNoteBackground)

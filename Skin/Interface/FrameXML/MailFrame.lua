@@ -43,7 +43,7 @@ do --[[ FrameXML\MailFrame.lua ]]
         for i = 1, _G.ATTACHMENTS_MAX_SEND do
             local button = _G.SendMailFrame.SendMailAttachments[i]
             if i == 1 then
-                button:SetPoint("TOPLEFT", _G.SendMailScrollFrame, "BOTTOMLEFT", 1, -12)
+                button:SetPoint("TOPLEFT", private.isRetail and _G.SendMailScrollFrame or _G.MailEditBox, "BOTTOMLEFT", 1, -12)
             else
                 if (i % _G.ATTACHMENTS_PER_ROW_SEND) == 1 then
                     button:SetPoint("TOPLEFT", _G.SendMailFrame.SendMailAttachments[i - _G.ATTACHMENTS_PER_ROW_SEND], "BOTTOMLEFT", 23, -9)
@@ -67,8 +67,12 @@ do --[[ FrameXML\MailFrame.lua ]]
             scrollHeight = 148
         end
 
-        _G.SendMailScrollFrame:SetHeight(scrollHeight + 20)
-        _G.SendMailScrollChildFrame:SetHeight(scrollHeight)
+        if private.isRetail then
+            _G.SendMailScrollFrame:SetHeight(scrollHeight + 20)
+            _G.SendMailScrollChildFrame:SetHeight(scrollHeight)
+        else
+            _G.MailEditBox:SetHeight(scrollHeight)
+        end
     end
     function Hook.OpenMail_Update()
         if ( not _G.InboxFrame.openMailID ) then
@@ -186,7 +190,7 @@ function private.FrameXML.MailFrame()
     Skin.ButtonFrameTemplate(_G.MailFrame)
 
     -- BlizzWTF: The portrait in the template is not being used.
-    _G.select(3, _G.MailFrame:GetRegions()):Hide()
+    _G.select(private.isRetail and 3 or 18, _G.MailFrame:GetRegions()):Hide()
     _G.MailFrame.trialError:ClearAllPoints()
     _G.MailFrame.trialError:SetPoint("TOPLEFT", _G.MailFrame.TitleText, 50, -5)
     _G.MailFrame.trialError:SetPoint("BOTTOMRIGHT", _G.MailFrame.TitleText, -50, -6)
@@ -228,11 +232,33 @@ function private.FrameXML.MailFrame()
     -- SendMailFrame --
     -------------------
     _G.SendMailFrame:SetPoint("BOTTOMRIGHT")
-    for i = 3, 6 do
-        select(i, _G.SendMailFrame:GetRegions()):Hide()
-    end
 
-    Skin.ScrollFrameTemplate(_G.SendMailScrollFrame)
+    if private.isRetail then
+        for i = 3, 6 do
+            select(i, _G.SendMailFrame:GetRegions()):Hide()
+        end
+
+        Skin.ScrollFrameTemplate(_G.SendMailScrollFrame)
+    else
+        _G.SendMailTitleText:ClearAllPoints()
+        _G.SendMailTitleText:SetAllPoints(_G.MailFrame.TitleText)
+        for i = 4, 7 do
+            select(i, _G.SendMailFrame:GetRegions()):Hide()
+        end
+
+        local MailEditBox = _G.MailEditBox
+        Skin.ScrollingEditBoxTemplate(MailEditBox)
+        if private.isWrath then
+            MailEditBox:SetTextColor(Color.grayLight)
+        end
+        MailEditBox:SetPoint("TOPLEFT", 10, -83)
+        MailEditBox:SetWidth(298)
+
+        local MailEditBoxScrollBar = _G.MailEditBoxScrollBar
+        Skin.WowClassicScrollBar(MailEditBoxScrollBar)
+        MailEditBoxScrollBar:SetPoint("TOPLEFT", MailEditBox, "TOPRIGHT", 0, -3)
+        MailEditBoxScrollBar:SetPoint("BOTTOMLEFT", MailEditBox, "BOTTOMRIGHT", 0, 0)
+    end
     _G.SendStationeryBackgroundLeft:Hide()
     _G.SendStationeryBackgroundRight:Hide()
 
@@ -285,15 +311,38 @@ function private.FrameXML.MailFrame()
     Skin.ButtonFrameTemplate(_G.OpenMailFrame)
     _G.OpenMailFrame:SetPoint("TOPLEFT", _G.InboxFrame, "TOPRIGHT", 5, 0)
 
-    _G.OpenMailFrameIcon:Hide()
-    _G.OpenMailHorizontalBarLeft:Hide()
-    select(9, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+    if private.isRetail then
+        _G.OpenMailFrameIcon:Hide()
+        _G.OpenMailHorizontalBarLeft:Hide()
+        select(9, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
 
-    Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
+        Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
 
-    Skin.ScrollFrameTemplate(_G.OpenMailScrollFrame)
-    _G.OpenStationeryBackgroundLeft:Hide()
-    _G.OpenStationeryBackgroundRight:Hide()
+        Skin.ScrollFrameTemplate(_G.OpenMailScrollFrame)
+        _G.OpenStationeryBackgroundLeft:Hide()
+        _G.OpenStationeryBackgroundRight:Hide()
+    else
+        _G.OpenMailFrameIcon:Hide()
+        _G.OpenMailTitleText:ClearAllPoints()
+        _G.OpenMailTitleText:SetAllPoints(_G.OpenMailFrame.TitleText)
+        _G.OpenMailHorizontalBarLeft:Hide()
+        select(25, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
+
+        Skin.UIPanelButtonTemplate(_G.OpenMailReportSpamButton)
+
+        Skin.UIPanelScrollFrameTemplate(_G.OpenMailScrollFrame)
+        _G.OpenMailScrollFrame:SetPoint("TOPLEFT", 10, -83)
+        _G.OpenMailScrollFrame:SetWidth(298)
+
+        _G.OpenScrollBarBackgroundTop:Hide()
+        select(2, _G.OpenMailScrollFrame:GetRegions()):Hide() -- OpenScrollBarBackgroundBottom
+        _G.OpenStationeryBackgroundLeft:Hide()
+        _G.OpenStationeryBackgroundRight:Hide()
+
+        _G.OpenMailScrollChildFrame:SetSize(298, 257)
+        _G.OpenMailBodyText:SetPoint("TOPLEFT", 2, -2)
+        _G.OpenMailBodyText:SetWidth(298)
+    end
 
     _G.OpenMailArithmeticLine:SetColorTexture(Color.grayLight:GetRGB())
     _G.OpenMailArithmeticLine:SetSize(256, 1)

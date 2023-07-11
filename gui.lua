@@ -106,7 +106,7 @@ local createToggleBox do
     end
 
     function createToggleBox(parent, value, text)
-        local checkbutton = _G.CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
+        local checkbutton = _G.CreateFrame("CheckButton", nil, parent, "UICheckButtonTemplate")
         checkbutton.Text:SetText(text)
         checkbutton.value = value
 
@@ -395,7 +395,7 @@ function private.SetupGUI()
 
     Skin.OptionsSliderTemplate(alphaSlider)
     for i = 1, #checkboxes do
-        Skin.InterfaceOptionsCheckButtonTemplate(checkboxes[i])
+        Skin.UICheckButtonTemplate(checkboxes[i])
     end
 
     Skin.UIPanelButtonTemplate(reloadButton)

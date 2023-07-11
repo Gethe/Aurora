@@ -35,20 +35,30 @@ do -- Button
 
     local DISABLED_COLOR = Color.Lightness(Color.button, -0.3)
     local function Hook_Enable(self)
+        if self.isEnabled then return end
+
         if self._isMinimal then
             SetTexturesToColor(self, self._enabledColor)
         else
             Base.SetBackdropColor(self, self._enabledColor)
             SetTexturesToColor(self, Color.white)
         end
+
+        self.isEnabled = true
+        self.isDisabled = not self.isEnabled
     end
     local function Hook_Disable(self)
+        if self.isDisabled then return end
+
         if self._isMinimal then
             SetTexturesToColor(self, self._disabledColor)
         else
             Base.SetBackdropColor(self, self._disabledColor)
             SetTexturesToColor(self, Color.gray)
         end
+
+        self.isDisabled = true
+        self.isEnabled = not self.isDisabled
     end
     local function Hook_SetEnabled(self, enabledState)
         if enabledState then
@@ -288,7 +298,7 @@ do -- ScrollBar
         Button._isMinimal = not notMinimal
         Skin.FrameTypeButton(Button)
 
-        local tex = Button:GetRegions()
+        local tex = Button.Texture or Button:CreateTexture()
         if Button.direction then
             Button._auroraTextures = {tex}
             if Button.UpdateAtlas then
@@ -305,13 +315,13 @@ do -- ScrollBar
     end
 
     function Skin.FrameTypeScrollBar(ScrollBar, notMinimal)
-        local back = ScrollBar.ScrollUpButton or ScrollBar.Back
+        local back = ScrollBar.Back or ScrollBar.ScrollUpButton or _G[ScrollBar:GetName().."ScrollUpButton"]
         ScrollBarButton(back, notMinimal)
 
-        local forward = ScrollBar.ScrollDownButton or ScrollBar.Forward
+        local forward = ScrollBar.Forward or ScrollBar.ScrollDownButton or  _G[ScrollBar:GetName().."ScrollDownButton"]
         ScrollBarButton(forward, notMinimal)
 
-        local thumb = ScrollBar.ThumbTexture or ScrollBar.Track.Thumb
+        local thumb = (ScrollBar.Track and ScrollBar.Track.Thumb) or ScrollBar.ThumbTexture or  _G[ScrollBar:GetName().."ThumbTexture"]
         ScrollBarThumb(thumb)
     end
 end
