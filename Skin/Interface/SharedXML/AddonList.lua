@@ -69,7 +69,11 @@ end
 
 do --[[ SharedXML\AddonList.xml ]]
     function Skin.AddonListEntryTemplate(Button)
-        Skin.UICheckButtonTemplate(_G[Button:GetName().."Enabled"]) -- BlizzWTF: Doesn't use a template, but it should
+        if private.isRetail then
+            Skin.UICheckButtonTemplate(Button.Enabled) -- BlizzWTF: Doesn't use a template, but it should
+        else
+            Skin.UICheckButtonTemplate(_G[Button:GetName().."Enabled"]) -- BlizzWTF: Doesn't use a template, but it should
+        end
         Skin.UIPanelButtonTemplate(Button.LoadAddonButton)
     end
 end

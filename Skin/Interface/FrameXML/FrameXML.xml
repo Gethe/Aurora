@@ -86,7 +86,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="..\SharedXML\Scroll\ScrollBox.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\ScrollTemplates.lua"/>
-    <!--Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/-->
+    <Script file="..\SharedXML\Scroll\TrimScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\OribosScrollBar.lua"/>
     <Script file="..\SharedXML\Scroll\MinimalScrollBar.lua"/>
     <!--Script file="..\SharedXML\ButtonTray\ButtonTrayUtil.lua"/-->
@@ -190,7 +190,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="MoneyInputFrame.lua"/>
 
     <!--Script file="..\SharedXML\ScrollDefine.lua"/-->
-    <!--Script file="..\SharedXML\SecureScrollTemplates.lua"/-->
+    <Script file="..\SharedXML\SecureScrollTemplates.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <!--Script file="..\SharedXML\Tabs\MinimalTab.lua"/-->
@@ -339,7 +339,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="LootFrame.lua"/>
     <Script file="GroupLootFrame.lua"/>
     <Script file="ItemTextFrame.lua"/>
-    <!--Script file="TaxiFrame.lua"/-->
+    <Script file="TaxiFrame.lua"/>
     <Script file="BankFrame.lua"/>
     <!--Script file="RoleSelectionTemplate.lua"/-->
     <Script file="ItemRef.lua"/>

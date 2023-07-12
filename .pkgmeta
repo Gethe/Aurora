@@ -4,11 +4,7 @@ ignore:
     - *.sublime*
     - *.bat
     - dev
-    - Skin/Classic
 
 manual-changelog:
   filename: CHANGELOG.md
   markup-type: markdown
-
-move-folders:
-    Aurora/Skin/Retail/Interface: Aurora/Skin/Interface
