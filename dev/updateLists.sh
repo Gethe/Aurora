@@ -1,10 +1,21 @@
 #!/usr/bin/env bash
 
-# This script assumes that the wow-ui-source repo exists in a directory at the 
-# same level as the Aurora directory. Run this file using "Classic" or "Retail"
-# as a parameter and it will 1) locate any FrameXML_*.toc files to update the 
-# corrisponding FrameXML_*.xml file, and 2) run through the AddOns folder and
-# update the AddOns.xml file
+# This script assumes that the gethe/wow-ui-source repo exists in a directory at
+# the same level as the Aurora directory. Change WOW_SOURCE if you're setup is
+# different.
+
+# Usage #
+# In a bash shell, run
+# ./dev/updateLists.sh Retail
+# OR
+# ./dev/updateLists.sh Classic
+
+# This script will:
+# 1) Locate any FrameXML_*.toc files in wow-ui-source to update the
+#    corrisponding FrameXML_*.xml file in Aurora
+# 2) Run through the AddOns folder and update the AddOns.xml file
+
+WOW_SOURCE="../wow-ui-source"
 
 branch=$1
 
@@ -15,7 +26,7 @@ footer="</Ui>"
 skin="./Skin/Interface"
 
 FrameXML="${skin}/FrameXML/"
-FrameXMLList='../wow-ui-source/Interface/FrameXML/*.toc'
+FrameXMLList="$WOW_SOURCE/Interface/FrameXML/*.toc"
 for TOC in $FrameXMLList; do
 	echo "Processing $TOC"
 	tocName="${TOC##*/}"
@@ -27,18 +38,18 @@ for TOC in $FrameXMLList; do
 	printf "$header" >"$tocFile"
 
 	case $tocName in
-		FrameXML_Vanilla)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 1\n    </Script>" >>"$tocFile"
-			;;
-		FrameXML_TBC)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 2\n    </Script>" >>"$tocFile"
-			;;
-		FrameXML_Wrath)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 3\n    </Script>" >>"$tocFile"
-			;;
-		*)
-			printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 0\n    </Script>" >>"$tocFile"
-			;;
+	FrameXML_Vanilla)
+		printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 1\n    </Script>" >>"$tocFile"
+		;;
+	FrameXML_TBC)
+		printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 2\n    </Script>" >>"$tocFile"
+		;;
+	FrameXML_Wrath)
+		printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 3\n    </Script>" >>"$tocFile"
+		;;
+	*)
+		printf "    <Script>\n        _G.AURORA_DEBUG_PROJECT = 0\n    </Script>" >>"$tocFile"
+		;;
 	esac
 	# shellcheck disable=SC2059
 	printf "$space" >>"$tocFile"
@@ -85,7 +96,7 @@ for TOC in $FrameXMLList; do
 				echo "" >>"$tocFile"
 			fi
 		fi
-	done < "$TOC"
+	done <"$TOC"
 
 	{
 		# shellcheck disable=SC2059
@@ -101,7 +112,7 @@ if [[ ${branch,,} == "classic" ]]; then
 	declare -A addons
 
 	AddOns="${skin}/AddOns/"
-	AddOnsFolder="../wow-ui-source/Interface/AddOns"
+	AddOnsFolder="$WOW_SOURCE/Interface/AddOns"
 	AddOnsList="${AddOnsFolder}/*"
 
 	for AddOn in $AddOnsList; do
@@ -142,7 +153,7 @@ if [[ ${branch,,} == "classic" ]]; then
 					flag="w"
 					break
 				fi
-			done < "$addonPath.toc"
+			done <"$addonPath.toc"
 
 			if [ -z $flag ]; then
 				if [[ -n "${addons[$addonName]}" ]]; then
@@ -155,10 +166,9 @@ if [[ ${branch,,} == "classic" ]]; then
 
 	done
 
-
 	addonList="${AddOns}AddOns"
 	# shellcheck disable=SC2059
-	printf "$header" >"${addonList}_Vanilla.xml" 
+	printf "$header" >"${addonList}_Vanilla.xml"
 	# shellcheck disable=SC2059
 	printf "$header" >"${addonList}_TBC.xml"
 	# shellcheck disable=SC2059
@@ -217,7 +227,7 @@ if [[ ${branch,,} == "classic" ]]; then
 	echo $footer >>"${addonList}_Wrath.xml"
 else
 	AddOns="${skin}/AddOns/"
-	AddOnsList='../wow-ui-source/Interface/AddOns/*'
+	AddOnsList="$WOW_SOURCE/Interface/AddOns/*"
 
 	tocFile="${AddOns}AddOns.xml"
 	# shellcheck disable=SC2059
