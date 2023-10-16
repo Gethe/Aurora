@@ -437,7 +437,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             bd:SetPoint("BOTTOMRIGHT", 2, -2)
             Base.SetBackdrop(bd, Color.button, 0.3)
             DressUpModel._auroraBD = bd
-           
+
             highlight:SetTexCoord(.03, .97, .03, .97)
             highlight:SetPoint("TOPLEFT", 0, 0)
             highlight:SetPoint("BOTTOMRIGHT", 1, -1)

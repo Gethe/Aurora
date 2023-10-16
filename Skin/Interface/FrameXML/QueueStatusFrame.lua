@@ -46,12 +46,12 @@ do --[[ FrameXML\QueueStatusFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\QueueStatusFrame.xml ]]
+-- do --[[ FrameXML\QueueStatusFrame.xml ]]
     -- NEEDS REWORK...
     -- function Skin.QueueStatusRoleCountTemplate(Frame)
     --     local debugName = Frame:GetDebugName()
     --     if debugName:find("Healer") then
-    --         Base.SetTexture(Frame.RoleIcon.Texture, _G.GetIconForRole("HEALER")) 
+    --         Base.SetTexture(Frame.RoleIcon.Texture, _G.GetIconForRole("HEALER"))
     --     elseif debugName:find("Tank") then
     --         Base.SetTexture(Frame.RoleIcon.Texture, "iconTANK")
     --     elseif debugName:find("Damager") then
@@ -71,7 +71,7 @@ do --[[ FrameXML\QueueStatusFrame.xml ]]
     --     Skin.QueueStatusRoleCountTemplate(Frame.TanksFound)
     --     Skin.QueueStatusRoleCountTemplate(Frame.DamagersFound)
     -- end
-end
+-- end
 
 function private.FrameXML.QueueStatusFrame()
      _G.hooksecurefunc("QueueStatusEntry_SetFullDisplay", Hook.QueueStatusEntry_SetFullDisplay)

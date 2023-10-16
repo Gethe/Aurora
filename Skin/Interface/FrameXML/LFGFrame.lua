@@ -13,8 +13,8 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\LFGFrame.lua ]]
     function Hook.LFG_SetRoleIconIncentive(roleButton, incentiveIndex)
         local roleIcon = roleButton:GetNormalTexture()
-        if roleIcon._auroraBorder == nil then 
-            return 
+        if roleIcon._auroraBorder == nil then
+            return
         end
         if incentiveIndex then
             roleIcon._auroraBorder:SetColorTexture(Color.yellow:GetRGB())
