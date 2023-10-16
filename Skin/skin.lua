@@ -71,7 +71,7 @@ do -- Button
         local framesOk = true
         if Button:GetName() then
             local frameButtonNamed = Button:GetName()
-            if string.find(frameButtonNamed, "Tab") and not string.find(frameButtonNamed, "Tabard") then
+            if _G.string.find(frameButtonNamed, "Tab") and not _G.string.find(frameButtonNamed, "Tabard") then
                 framesOk = false
             end
         end
