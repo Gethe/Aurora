@@ -1,4 +1,10 @@
-﻿## [10.1.5.1] ##
+﻿## [10.1.7.0] ##
+### Fixed ###
+
+  * [retail] Fixed for Patch 10.1.7
+
+
+## [10.1.5.1] ##
 ### Fixed ###
 
   * [retail] Error when opening the battlefield map
