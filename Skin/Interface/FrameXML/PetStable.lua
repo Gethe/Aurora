@@ -84,12 +84,9 @@ function private.FrameXML.PetStable()
 
     Skin.InsetFrameTemplate(PetStableFrame.BottomInset)
     _G.PetStableFrameStableBg:Hide()
-
-    _G.PetStableModel:SetPoint("TOPLEFT", PetStableFrame.Inset)
-    _G.PetStableModel:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset)
-    _G.PetStableModelRotateLeftButton:Hide()
-    _G.PetStableModelRotateRightButton:Hide()
-    _G.PetStableModelShadow:Hide()
+    _G.PetStableModelScene:SetPoint("TOPLEFT", PetStableFrame.Inset,"TOPLEFT",0,-30)
+    _G.PetStableModelScene:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset)
+    _G.PetStableModelScene.ControlFrame:Hide()
 
     _G.PetStablePetInfo:SetPoint("TOPLEFT", PetStableFrame.Inset)
     _G.PetStablePetInfo:SetPoint("BOTTOMRIGHT", PetStableFrame.Inset, "TOPRIGHT", 0, -52)

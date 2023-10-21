@@ -13,6 +13,9 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\LFGFrame.lua ]]
     function Hook.LFG_SetRoleIconIncentive(roleButton, incentiveIndex)
         local roleIcon = roleButton:GetNormalTexture()
+        if roleIcon._auroraBorder == nil then
+            return
+        end
         if incentiveIndex then
             roleIcon._auroraBorder:SetColorTexture(Color.yellow:GetRGB())
         else
@@ -30,7 +33,6 @@ do --[[ FrameXML\LFGFrame.lua ]]
             role = "DAMAGER"
         end
 
-        Util.HideNineSlice(_G.LFGDungeonReadyDialog)
         if not hasResponded then
             if subtypeID == _G.LFG_SUBTYPEID_RAID then
                 _G.LFGDungeonReadyDialog.Border:SetBackdropBorderColor(Color.yellow, 1)

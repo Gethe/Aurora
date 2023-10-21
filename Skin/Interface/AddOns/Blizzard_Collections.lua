@@ -428,7 +428,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
     end
     do --[[ Blizzard_Wardrobe ]]
         function Skin.WardrobeItemsModelTemplate(DressUpModel)
-            local bg, _, _, _, _, highlight = DressUpModel:GetRegions()
+            local bg, _, _, highlight = DressUpModel:GetRegions()
             bg:Hide()
             DressUpModel.Border:Hide()
 
@@ -533,8 +533,6 @@ function private.AddOns.Blizzard_Collections()
         _G.CollectionsJournalTab4,
         _G.CollectionsJournalTab5,
     })
-
-
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_MountCollection    --
     ----====####$$$$%%%%$$$$####====----

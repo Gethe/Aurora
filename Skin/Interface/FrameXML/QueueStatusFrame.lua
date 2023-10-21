@@ -46,32 +46,32 @@ do --[[ FrameXML\QueueStatusFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\QueueStatusFrame.xml ]]
-    function Skin.QueueStatusRoleCountTemplate(Frame)
-        local debugName = Frame:GetDebugName()
-        if debugName:find("Healer") then
-            Base.SetTexture(Frame.Texture, "iconHEALER")
-        elseif debugName:find("Tank") then
-            Base.SetTexture(Frame.Texture, "iconTANK")
-        elseif debugName:find("Damager") then
-            Base.SetTexture(Frame.Texture, "iconDAMAGER")
-        end
+-- do --[[ FrameXML\QueueStatusFrame.xml ]]
+    -- NEEDS REWORK...
+    -- function Skin.QueueStatusRoleCountTemplate(Frame)
+    --     local debugName = Frame:GetDebugName()
+    --     if debugName:find("Healer") then
+    --         Base.SetTexture(Frame.RoleIcon.Texture, _G.GetIconForRole("HEALER"))
+    --     elseif debugName:find("Tank") then
+    --         Base.SetTexture(Frame.RoleIcon.Texture, "iconTANK")
+    --     elseif debugName:find("Damager") then
+    --         Base.SetTexture(Frame.RoleIcon.Texture, "iconDAMAGER")
+    --     end
+    --     -- Frame.Cover:SetColorTexture(0, 0, 0)
+    -- end
+    -- function Skin.QueueStatusEntryTemplate(Frame)
+    --     Util.PositionRelative("TOPRIGHT", Frame, "TOPRIGHT", -5, -5, 3, "Left", {
+    --         Frame.RoleIcon1,
+    --         Frame.RoleIcon2,
+    --         Frame.RoleIcon3,
+    --     })
 
-        Frame.Cover:SetColorTexture(0, 0, 0)
-    end
-    function Skin.QueueStatusEntryTemplate(Frame)
-        Util.PositionRelative("TOPRIGHT", Frame, "TOPRIGHT", -5, -5, 3, "Left", {
-            Frame.RoleIcon1,
-            Frame.RoleIcon2,
-            Frame.RoleIcon3,
-        })
-
-        Frame.EntrySeparator:SetHeight(1)
-        Skin.QueueStatusRoleCountTemplate(Frame.HealersFound)
-        Skin.QueueStatusRoleCountTemplate(Frame.TanksFound)
-        Skin.QueueStatusRoleCountTemplate(Frame.DamagersFound)
-    end
-end
+    --     Frame.EntrySeparator:SetHeight(1)
+    --     Skin.QueueStatusRoleCountTemplate(Frame.HealersFound)
+    --     Skin.QueueStatusRoleCountTemplate(Frame.TanksFound)
+    --     Skin.QueueStatusRoleCountTemplate(Frame.DamagersFound)
+    -- end
+-- end
 
 function private.FrameXML.QueueStatusFrame()
      _G.hooksecurefunc("QueueStatusEntry_SetFullDisplay", Hook.QueueStatusEntry_SetFullDisplay)

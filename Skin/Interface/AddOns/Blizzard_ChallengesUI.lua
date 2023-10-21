@@ -111,7 +111,9 @@ function private.AddOns.Blizzard_ChallengesUI()
 
     ChallengesFrame.WeeklyInfo:SetPoint("TOPLEFT")
     ChallengesFrame.WeeklyInfo:SetPoint("BOTTOMRIGHT")
-    Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesFrame.WeeklyInfo.Child.Affixes[1])
+    if ChallengesFrame.WeeklyInfo.Child.Affixes == not nil then
+        Skin.ChallengesKeystoneFrameAffixTemplate(ChallengesFrame.WeeklyInfo.Child.Affixes[1])
+    end
     Skin.MythicPlusSeasonChangesNoticeTemplate(ChallengesFrame.SeasonChangeNoticeFrame)
     ChallengesFrame.SeasonChangeNoticeFrame:ClearAllPoints()
     ChallengesFrame.SeasonChangeNoticeFrame:SetPoint("TOPLEFT", 0, -private.FRAME_TITLE_HEIGHT)

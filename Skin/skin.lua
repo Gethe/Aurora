@@ -9,13 +9,11 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-
 do -- Frame
     function Skin.FrameTypeFrame(Frame)
         Base.SetBackdrop(Frame, Color.frame, Util.GetFrameAlpha())
     end
 end
-
 
 do -- Button
     local function SetTexturesToColor(self, color)
@@ -32,10 +30,11 @@ do -- Button
         SetTexturesToColor(self, returnColor)
     end
 
-
     local DISABLED_COLOR = Color.Lightness(Color.button, -0.3)
     local function Hook_Enable(self)
-        if self.isEnabled then return end
+        if self.isEnabled then
+            return
+        end
 
         if self._isMinimal then
             SetTexturesToColor(self, self._enabledColor)
@@ -48,8 +47,9 @@ do -- Button
         self.isDisabled = not self.isEnabled
     end
     local function Hook_Disable(self)
-        if self.isDisabled then return end
-
+        if self.isDisabled then
+            return
+        end
         if self._isMinimal then
             SetTexturesToColor(self, self._disabledColor)
         else
@@ -68,10 +68,18 @@ do -- Button
         end
     end
     function Skin.FrameTypeButton(Button, OnEnter, OnLeave)
-        _G.hooksecurefunc(Button, "Enable", Hook_Enable)
-        _G.hooksecurefunc(Button, "Disable", Hook_Disable)
+        local framesOk = true
+        if Button:GetName() then
+            local frameButtonNamed = Button:GetName()
+            if _G.string.find(frameButtonNamed, "Tab") and not _G.string.find(frameButtonNamed, "Tabard") then
+                framesOk = false
+            end
+        end
+        if framesOk then    -- not sure when these are ok to use anymore - SetEnabled triggers properly for tabs
+            _G.hooksecurefunc(Button, "Disable", Hook_Disable)
+            _G.hooksecurefunc(Button, "Enable", Hook_Enable)
+        end
         _G.hooksecurefunc(Button, "SetEnabled", Hook_SetEnabled)
-
         if Button.ClearNormalTexture then
             Button:ClearNormalTexture()
             Button:ClearPushedTexture()
@@ -98,7 +106,6 @@ do -- Button
                 r, g, b = self:GetBackdropBorderColor()
             end
 
-
             self._enabledColor = Color.Create(r, g, b, alpha or a)
 
             if disabledColor == false then
@@ -110,8 +117,8 @@ do -- Button
                     self._disabledColor = Color.Lightness(self._enabledColor, -0.3)
                 end
             end
-
-            Hook_SetEnabled(self, self:IsEnabled())
+            -- This double trigger is breaking Tabs in the updated Aurora
+            -- Hook_SetEnabled(self, self:IsEnabled())
         end
         function Button:GetButtonColor()
             return self._enabledColor, self._disabledColor
@@ -126,7 +133,6 @@ do -- Button
         end
     end
 end
-
 
 do -- CheckButton
     function Skin.FrameTypeCheckButton(CheckButton)
@@ -145,7 +151,6 @@ do -- CheckButton
     end
 end
 
-
 do -- EditBox
     function Skin.FrameTypeEditBox(EditBox)
         Base.SetBackdrop(EditBox, Color.frame)
@@ -153,13 +158,14 @@ do -- EditBox
     end
 end
 
-
 do -- StatusBar
     local function Hook_SetStatusBarTexture(self, asset)
-        if self.__SetStatusBarTexture then return end
+        if self.__SetStatusBarTexture then
+            return
+        end
         self.__SetStatusBarTexture = true
         local color = private.assetColors[asset]
-        local color2 = private.assetColors[asset.."_2"]
+        local color2 = private.assetColors[asset .. "_2"]
 
         if color then
             local texture = self:GetStatusBarTexture()
@@ -193,12 +199,15 @@ do -- StatusBar
         _G.hooksecurefunc(StatusBar, "SetStatusBarColor", Hook_SetStatusBarColor)
 
         Base.SetBackdrop(StatusBar, Color.button, Color.frame.a)
-        StatusBar:SetBackdropOption("offsets", {
-            left = -1,
-            right = -2,
-            top = -1,
-            bottom = -1,
-        })
+        StatusBar:SetBackdropOption(
+            "offsets",
+            {
+                left = -1,
+                right = -2,
+                top = -1,
+                bottom = -1
+            }
+        )
 
         local red, green, blue = StatusBar:GetStatusBarColor()
         local tex = StatusBar:GetStatusBarTexture()
@@ -222,7 +231,6 @@ do -- StatusBar
         end
     end
 end
-
 
 do -- ScrollBar
     local function Hook_Hide(self)
@@ -250,12 +258,15 @@ do -- ScrollBar
 
         Base.SetBackdrop(thumb, Color.button)
         thumb:SetShown(ScrollThumb:IsShown())
-        thumb:SetBackdropOption("offsets", {
-            left = 0,
-            right = 0,
-            top = 2,
-            bottom = 2,
-        })
+        thumb:SetBackdropOption(
+            "offsets",
+            {
+                left = 0,
+                right = 0,
+                top = 2,
+                bottom = 2
+            }
+        )
         ScrollThumb._auroraThumb = thumb
 
         _G.hooksecurefunc(ScrollThumb, "Hide", Hook_Hide)
@@ -315,13 +326,15 @@ do -- ScrollBar
     end
 
     function Skin.FrameTypeScrollBar(ScrollBar, notMinimal)
-        local back = ScrollBar.Back or ScrollBar.ScrollUpButton or _G[ScrollBar:GetName().."ScrollUpButton"]
+        local back = ScrollBar.Back or ScrollBar.ScrollUpButton or _G[ScrollBar:GetName() .. "ScrollUpButton"]
         ScrollBarButton(back, notMinimal)
 
-        local forward = ScrollBar.Forward or ScrollBar.ScrollDownButton or  _G[ScrollBar:GetName().."ScrollDownButton"]
+        local forward = ScrollBar.Forward or ScrollBar.ScrollDownButton or _G[ScrollBar:GetName() .. "ScrollDownButton"]
         ScrollBarButton(forward, notMinimal)
 
-        local thumb = (ScrollBar.Track and ScrollBar.Track.Thumb) or ScrollBar.ThumbTexture or  _G[ScrollBar:GetName().."ThumbTexture"]
+        local thumb =
+            (ScrollBar.Track and ScrollBar.Track.Thumb) or ScrollBar.ThumbTexture or
+            _G[ScrollBar:GetName() .. "ThumbTexture"]
         ScrollBarThumb(thumb)
     end
 end

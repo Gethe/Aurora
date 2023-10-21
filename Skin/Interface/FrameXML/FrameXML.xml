@@ -4,10 +4,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
         _G.AURORA_DEBUG_PROJECT = 0
     </Script>
 
-
-
-
-
     <!--Script file="..\SharedXML\SharedConstants.lua"/-->
 
     <!--## add C namespace augmentations here-->
@@ -25,6 +21,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ExportUtil.lua"/-->
     <!--Script file="..\SharedXML\Rectangle.lua"/-->
     <!--Script file="..\SharedXML\TextureUtil.lua"/-->
+    <!--Script file="..\SharedXML\AddOnUtil.lua"/-->
     <!--Script file="..\SharedXML\Flags.lua"/-->
     <!--Script file="..\SharedXML\CallbackRegistry.lua"/-->
     <!--Script file="..\SharedXML\CallbackRegistrant.lua"/-->
@@ -146,6 +143,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="ObjectAPI\CovenantCalling.lua"/-->
 
     <!--## add new modules below here-->
+    <!--Script file="..\SharedXML\PingUtil.lua"/-->
+    <!--Script file="..\SharedXML\PingAttributes.xml"/-->
+    <!--Script file="..\SharedXML\PingableType.lua"/-->
+    <!--Script file="..\SharedXML\Blizzard_RadialWheel.lua"/-->
+    <!--Script file="..\SharedXML\Blizzard_RadialWheel.lua"/-->
     <!--Script file="..\SharedXML\Backdrop.lua"/-->
     <Script file="ChatBubbleTemplates.lua"/>
     <!--Script file="WorldFrame.lua"/-->

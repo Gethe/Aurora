@@ -1,11 +1,11 @@
-## Interface: 100100
+## Interface: 100107
 ## Interface-Classic: 11403
 ## Interface-Wrath: 30400
 ## Title: Aurora
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe
-## Version: 10.1.5.1
+## Version: 10.1.7.0-beta
 ## LoadWith: Blizzard_CompactRaidFrames
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## SavedVariables: AuroraConfig

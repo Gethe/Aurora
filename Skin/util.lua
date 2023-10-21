@@ -187,6 +187,7 @@ function Util.HideNineSlice(frame)
     if frame.NineSlice then
         frame.NineSlice:Hide()
     else
+        _G.print("Report: No NineSlice for", frame:GetName())
         frame:SetBackdrop(nil)
     end
 end
