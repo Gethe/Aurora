@@ -42,7 +42,7 @@ function Base.AddSkin(addonName, func)
     assert(not private.AddOns[addonName], addonName .. " already has a registered skin." )
     private.AddOns[addonName] = func
 
-    if _G.IsAddOnLoaded(addonName) then
+    if _G.C_AddOns.IsAddOnLoaded(addonName) then
         func()
     end
 end
