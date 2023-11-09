@@ -28,8 +28,8 @@ function private.SharedXML.ModelPreviewFrame()
     ModelPreviewFrame.Display.ShadowOverlay:Hide()
 
     local ModelScene = ModelPreviewFrame.Display.ModelScene
-    Skin.RotateOrbitCameraLeftButtonTemplate(ModelScene.RotateLeftButton)
-    Skin.RotateOrbitCameraRightButtonTemplate(ModelScene.RotateRightButton)
+    Skin.ModelSceneControlFrameTemplateLeftButtonTemplate(ModelScene.ControlFrame.rotateLeftButton)
+    Skin.ModelSceneControlFrameTemplateRightButtonTemplate(ModelScene.ControlFrame.rotateRightButton)
     Skin.NavButtonPrevious(ModelScene.CarouselLeftButton)
     Skin.NavButtonNext(ModelScene.CarouselRightButton)
 end
