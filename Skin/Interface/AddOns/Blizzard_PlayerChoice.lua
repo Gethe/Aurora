@@ -103,10 +103,10 @@ function private.AddOns.Blizzard_PlayerChoice()
     --      Blizzard_PlayerChoice      --
     ----====####$$$$%%%%%$$$$####====----
     local PlayerChoiceFrame = _G.PlayerChoiceFrame
-    Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
-    Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)
-    PlayerChoiceFrame.BlackBackground:SetAllPoints(PlayerChoiceFrame.NineSlice)
-    Skin.UIPanelCloseButton(PlayerChoiceFrame.CloseButton)
+    -- Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
+    -- Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)
+    -- PlayerChoiceFrame.BlackBackground:SetAllPoints(PlayerChoiceFrame.NineSlice)
+    -- -- Skin.UIPanelCloseButton(PlayerChoiceFrame.CloseButton)
 
 
     ----====####$$$$%%%%%%%$$$$####====----

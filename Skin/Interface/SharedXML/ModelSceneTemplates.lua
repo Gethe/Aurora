@@ -13,8 +13,8 @@ local Skin = Aurora.Skin
 --end
 
 do --[[ SharedXML\ModelSceneTemplates.xml ]]
-    function Skin.ModifyOrbitCameraBaseButtonTemplate(Button)
-        Skin.FrameTypeButton(Button)
+    function Skin.ModifyModelSceneControlFrameBaseButtonTemplate(Button)
+            Skin.FrameTypeButton(Button)
         Button:SetBackdropOption("offsets", {
             left = 5,
             right = 5,
@@ -22,8 +22,8 @@ do --[[ SharedXML\ModelSceneTemplates.xml ]]
             bottom = 5,
         })
     end
-    function Skin.RotateOrbitCameraLeftButtonTemplate(Button)
-        Skin.ModifyOrbitCameraBaseButtonTemplate(Button)
+    function Skin.ModelSceneControlFrameTemplateLeftButtonTemplate(Button)
+        Skin.ModifyModelSceneControlFrameBaseButtonTemplate(Button)
 
         local bg = Button:GetBackdropTexture("bg")
         local arrow = Button:CreateTexture(nil, "ARTWORK")
@@ -33,8 +33,8 @@ do --[[ SharedXML\ModelSceneTemplates.xml ]]
 
         Button._auroraTextures = {arrow}
     end
-    function Skin.RotateOrbitCameraRightButtonTemplate(Button)
-        Skin.ModifyOrbitCameraBaseButtonTemplate(Button)
+    function Skin.ModelSceneControlFrameTemplateRightButtonTemplate(Button)
+        Skin.ModifyModelSceneControlFrameBaseButtonTemplate(Button)
 
         local bg = Button:GetBackdropTexture("bg")
         local arrow = Button:CreateTexture(nil, "ARTWORK")

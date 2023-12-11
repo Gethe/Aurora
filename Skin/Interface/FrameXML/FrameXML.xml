@@ -440,8 +440,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="AzeriteEmpoweredItemDataSource.lua"/-->
     <!--Script file="GuildUtil.lua"/-->
     <!--Script file="QuestSession.lua"/-->
-    <!--Script file="ActionStatus.lua"/-->
-    <!--Script file="WeeklyReward.lua"/-->
+    <!--Script file="..\SharedXML\ActionStatus.xml"/-->
     <!--Script file="PlayerInteractionFrameManager.lua"/-->
     <!--Script file="TalkingHeadUI.lua"/-->
     <!--Script file="ArenaUI.lua"/-->

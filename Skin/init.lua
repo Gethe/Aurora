@@ -171,7 +171,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
 
             -- Skin prior loaded AddOns
             for addon, func in _G.next, private.AddOns do
-                local isLoaded, isFinished = _G.IsAddOnLoaded(addon)
+                local isLoaded, isFinished = _G.C_AddOns.IsAddOnLoaded(addon)
                 if isLoaded and isFinished then
                     func()
                 end

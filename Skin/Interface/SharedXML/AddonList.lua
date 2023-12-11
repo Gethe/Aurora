@@ -10,38 +10,6 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ SharedXML\AddonList.lua ]]
-    function Hook.TriStateCheckbox_SetState(checked, checkButton)
-        local checkedTexture = _G[checkButton:GetName().."CheckedTexture"]
-        if not checked or checked == 0 then
-            -- nil or 0 means not checked
-            checkButton:SetChecked(false)
-        else
-            checkedTexture:SetDesaturated(true)
-            checkButton:SetChecked(true)
-
-            if checked == 2 then
-                -- 2 is a normal check
-                checkedTexture:SetVertexColor(Color.highlight:GetRGB())
-            else
-                -- 1 is a dark check
-                checkedTexture:SetVertexColor(Color.gray:GetRGB())
-            end
-        end
-    end
-    function Hook.AddonList_InitButton(entry, addonIndex)
-        Hook.TriStateCheckbox_SetState(entry.Enabled.state, entry.Enabled)
-    end
-    function Hook.AddonList_Update()
-        local entry, checkbox
-        for i = 1, _G.MAX_ADDONS_DISPLAYED do
-            entry = _G["AddonListEntry"..i]
-            if entry:IsShown() then
-                checkbox = _G["AddonListEntry"..i.."Enabled"]
-                Hook.TriStateCheckbox_SetState(checkbox.state, checkbox)
-            end
-        end
-    end
-
     function Hook.AddonListCharacterDropDownButton_OnClick(self)
         for i = 1, 2 do
             local buttonName = "DropDownList1Button"..i
@@ -79,12 +47,6 @@ do --[[ SharedXML\AddonList.xml ]]
 end
 
 function private.SharedXML.AddonList()
-    if private.isRetail then
-        _G.hooksecurefunc("AddonList_InitButton", Hook.AddonList_InitButton)
-    else
-        _G.hooksecurefunc("AddonList_Update", Hook.AddonList_Update)
-    end
-
     local AddonList = _G.AddonList
     Skin.ButtonFrameTemplate(AddonList)
     Skin.UICheckButtonTemplate(_G.AddonListForceLoad) -- BlizzWTF: Doesn't use a template, but it should

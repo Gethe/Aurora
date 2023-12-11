@@ -1614,7 +1614,7 @@ function commands.test()
                 function _G.C_ProfSpecs.ShouldShowSpecTab() return true end
                 function _G.C_ProfSpecs.SkillLineHasSpecialization() return true end
                 function _G.C_ProfSpecs.GetConfigIDForSkillLine() return -1 end
-                _G.LoadAddOn('Blizzard_Professions')
+                _G.C_AddOns.LoadAddOn('Blizzard_Professions')
 
                 local s=_G.ProfessionsFrame.SpecPage
                 function s:GetConfigID() return _G.C_ClassTalents.GetActiveConfigID() end

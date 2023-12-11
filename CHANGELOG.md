@@ -1,4 +1,16 @@
-﻿## [10.1.7.0] ##
+﻿## [10.2.0.0] ##
+### Fixed ###
+
+  * [retail] Some new status bars in raids don't have a texture?
+  * [retail] Addon management functions moved to the C_AddOns namespace.
+  * [retail] Error on AddOn list in game. AddonList now uses ScrollBox.
+  * [retail] Change of OrbitCamera to ModelScene.ControlFrame  
+
+### Disabled ###
+  * [retail] PlayerChoiceFrame while fixing this
+
+
+## [10.1.7.0] ##
 ### Fixed ###
 
   * [retail] Fixed for Patch 10.1.7
