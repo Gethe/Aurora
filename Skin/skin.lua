@@ -188,6 +188,10 @@ do -- StatusBar
         self.__SetStatusBarTexture = nil
     end
     local function Hook_SetStatusBarColor(self, r, g, b)
+        if not self.GetStatusBarTexture then
+            -- some new status bars don't have a texture?
+            return
+        end
         self:GetStatusBarTexture():SetVertexColor(r, g, b)
     end
     function Skin.FrameTypeStatusBar(StatusBar)
