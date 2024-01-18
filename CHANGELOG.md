@@ -1,4 +1,12 @@
-﻿## [10.2.0.0] ##
+﻿## [10.2.5.0] ##
+### Fixed ###
+
+  * [retail] ColorPicker changes according to 10.2.5
+  * [retail] LFG and PVP Groupfinder cleanups
+  * [retail] license update for 2024
+
+
+## [10.2.0.0] ##
 ### Fixed ###
 
   * [retail] Some new status bars in raids don't have a texture?
