@@ -45,7 +45,7 @@ end
 
 function private.FrameXML.ColorPickerFrame()
     local ColorPickerFrame = _G.ColorPickerFrame
-    _G.hooksecurefunc(ColorPickerFrame, "SetColorRGB", Hook.ColorPickerFrame_UpdateDisplay)
+    _G.hooksecurefunc(ColorPickerFrame.Content.ColorPicker, "SetColorRGB", Hook.ColorPickerFrame_UpdateDisplay)
     ColorPickerFrame:HookScript("OnShow", Hook.ColorPickerFrame_UpdateDisplay)
     ColorPickerFrame:SetPropagateKeyboardInput(true)
 
@@ -66,22 +66,27 @@ function private.FrameXML.ColorPickerFrame()
         text:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     end
 
-    Skin.GameMenuButtonTemplate(_G.ColorPickerCancelButton)
-    Skin.GameMenuButtonTemplate(_G.ColorPickerOkayButton)
+    Skin.GameMenuButtonTemplate(ColorPickerFrame.Footer.CancelButton)
+    Skin.GameMenuButtonTemplate(ColorPickerFrame.Footer.OkayButton)
     Util.PositionRelative("BOTTOMRIGHT", bg, "BOTTOMRIGHT", -5, 5, 1, "Left", {
-        _G.ColorPickerCancelButton,
-        _G.ColorPickerOkayButton,
+        ColorPickerFrame.Footer.CancelButton,
+        ColorPickerFrame.Footer.OkayButton,
     })
 
-    Skin.OpacitySlider(_G.OpacitySliderFrame)
 
-    ------------------
-    -- OpacityFrame --
-    ------------------
-    if private.isRetail then
-        Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
-    else
-        Skin.DialogBorderTemplate(_G.OpacityFrame)
-    end
-    Skin.OpacitySlider(_G.OpacityFrameSlider)
+    -- ----------------------
+    -- OpacitySliderFrame has been removed
+    -- ----------------------
+    
+    -- Skin.OpacitySlider(_G.OpacitySliderFrame)
+
+    -- ------------------
+    -- -- OpacityFrame --
+    -- ------------------
+    -- if private.isRetail then
+    --     Skin.DialogBorderTemplate(_G.OpacityFrame.Border)
+    -- else
+    --     Skin.DialogBorderTemplate(_G.OpacityFrame)
+    -- end
+    -- Skin.OpacitySlider(_G.OpacityFrameSlider)
 end

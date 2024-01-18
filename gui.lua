@@ -155,7 +155,7 @@ local createColorSwatch do
         end
         swatch = self
         info.r, info.g, info.b = value.r, value.g, value.b
-        _G.OpenColorPicker(info)
+        _G.ColorPickerFrame:SetupColorPickerAndShow(info)
     end
 
     local frameColor = Aurora.Color.frame
