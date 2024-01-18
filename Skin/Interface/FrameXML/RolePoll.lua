@@ -26,8 +26,8 @@ end
 function private.FrameXML.RolePoll()
     Skin.DialogBorderTemplate(_G.RolePollPopup.Border)
     Skin.UIPanelCloseButton(_G.RolePollPopupCloseButton)
-    Skin.LFGRoleButtonTemplate(_G.RolePollPopupRoleButtonTank)
-    Skin.LFGRoleButtonTemplate(_G.RolePollPopupRoleButtonHealer)
-    Skin.LFGRoleButtonTemplate(_G.RolePollPopupRoleButtonDPS)
-    Skin.UIPanelButtonTemplate(_G.RolePollPopupAcceptButton)
+    Skin.LFGRoleButtonTemplate(RolePollPopupRoleButtonTank)
+    Skin.LFGRoleButtonTemplate(RolePollPopupRoleButtonHealer)
+    Skin.LFGRoleButtonTemplate(RolePollPopupRoleButtonDPS)
+    Skin.UIPanelButtonTemplate(RolePollPopupAcceptButton)
 end

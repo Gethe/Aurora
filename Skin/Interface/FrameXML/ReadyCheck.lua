@@ -20,4 +20,5 @@ function private.FrameXML.ReadyCheck()
     _G.ReadyCheckFrameYesButton:SetPoint("TOPRIGHT", -184, -55)
     Skin.UIPanelButtonTemplate(_G.ReadyCheckFrameNoButton)
     _G.ReadyCheckFrameNoButton:SetPoint("TOPLEFT", 184, -55)
+    
 end

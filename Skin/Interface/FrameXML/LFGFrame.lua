@@ -1,5 +1,7 @@
 local _, private = ...
-if private.shouldSkip() then return end
+if private.shouldSkip() then
+    return
+end
 
 --[[ Lua Globals ]]
 -- luacheck: globals pairs hooksecurefunc
@@ -10,7 +12,15 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ FrameXML\LFGFrame.lua ]]
+local LFGRoleEnumToString = {
+    [Enum.LFGRole.Tank] = "TANK",
+    [Enum.LFGRole.Healer] = "HEALER",
+    [Enum.LFGRole.Damage] = "DAMAGER",
+    [Constants.LFG_ROLEConstants.LFG_ROLE_NO_ROLE] = "GUIDE"
+}
+
+do
+    --[[ FrameXML\LFGFrame.lua ]]
     function Hook.LFG_SetRoleIconIncentive(roleButton, incentiveIndex)
         local roleIcon = roleButton:GetNormalTexture()
         if roleIcon._auroraBorder == nil then
@@ -23,14 +33,15 @@ do --[[ FrameXML\LFGFrame.lua ]]
         end
     end
     function Hook.LFGDungeonReadyPopup_Update()
-        local proposalExists, _, _, subtypeID, _, _, role, hasResponded, _, _, _, _, _, _, isSilent = _G.GetLFGProposal()
+        local proposalExists, _, _, subtypeID, _, _, role, hasResponded, _, _, _, _, _, _, isSilent =
+            _G.GetLFGProposal()
         if not proposalExists or isSilent then
             return
         end
 
         --When the group doesn't require a role (like scenarios and legacy raids), we get "NONE" as the role
         if role == "NONE" then
-            role = "DAMAGER"
+            role = Enum.LFGRole.Damage
         end
 
         if not hasResponded then
@@ -41,29 +52,43 @@ do --[[ FrameXML\LFGFrame.lua ]]
             end
 
             if _G.LFGDungeonReadyDialogRoleIcon:IsShown() then
-                Base.SetTexture(_G.LFGDungeonReadyDialogRoleIconTexture, "icon"..role)
+                Base.SetTexture(_G.LFGDungeonReadyDialogRoleIconTexture, "icon" .. role)
             end
         end
     end
     function Hook.LFGDungeonReadyStatusIndividual_UpdateIcon(button)
         local _, role = _G.GetLFGProposalMember(button:GetID())
-        Base.SetTexture(button.texture, "icon"..role)
+        Base.SetTexture(button.texture, "icon" .. role)
 
         if not button._auroraSkinned then
             Skin.LFGDungeonReadyStatusPlayerTemplate(button)
             button._auroraSkinned = true
         end
     end
-    function Hook.LFGRewardsFrame_SetItemButton(parentFrame, dungeonID, index, id, name, texture, numItems, rewardType, rewardID, quality, shortageIndex, showTankIcon, showHealerIcon, showDamageIcon)
+    function Hook.LFGRewardsFrame_SetItemButton(
+        parentFrame,
+        dungeonID,
+        index,
+        id,
+        name,
+        texture,
+        numItems,
+        rewardType,
+        rewardID,
+        quality,
+        shortageIndex,
+        showTankIcon,
+        showHealerIcon,
+        showDamageIcon)
         local parentName = parentFrame:GetName()
-        local frame = _G[parentName.."Item"..index]
+        local frame = _G[parentName .. "Item" .. index]
 
         if not frame._auroraIconBorder then
             Skin.LFGRewardsLootTemplate(frame)
         end
 
-        Base.SetTexture(frame.roleIcon1.texture, "icon"..(frame.roleIcon1.role or "GUIDE"))
-        Base.SetTexture(frame.roleIcon2.texture, "icon"..(frame.roleIcon2.role or "GUIDE"))
+        Base.SetTexture(frame.roleIcon1.texture, "icon" .. (frame.roleIcon1.role or "GUIDE"))
+        Base.SetTexture(frame.roleIcon2.texture, "icon" .. (frame.roleIcon2.role or "GUIDE"))
 
         if shortageIndex then
             frame._auroraIconBorder:SetBackdropBorderColor(Color.yellow)
@@ -84,7 +109,7 @@ do --[[ FrameXML\LFGFrame.lua ]]
                 break
             end
 
-            local unit = prefix..i
+            local unit = prefix .. i
             if _G.UnitHasLFGDeserter(unit) or (self.showCooldown and _G.UnitHasLFGRandomCooldown(unit)) or self.showAll then
                 local _, classToken = _G.UnitName(unit)
                 local classColor = classToken and _G.CUSTOM_CLASS_COLORS[classToken]
@@ -97,12 +122,18 @@ do --[[ FrameXML\LFGFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\LFGFrame.xml ]]
+do
+    --[[ FrameXML\LFGFrame.xml ]]
     function Skin.LFGRoleButtonTemplate(Button)
         if not private.isPatch then
             Button.cover:SetColorTexture(0, 0, 0, 0.75)
         end
-        Base.SetTexture(Button:GetNormalTexture(), "icon"..(Button.role or "GUIDE"))
+
+        if (Button.role == "TANK" or Button.role == "HEALER" or Button.role == "DAMAGER" or Button.role == nil) then
+            Base.SetTexture(Button:GetNormalTexture(), "icon" .. (Button.role or "GUIDE"))
+        else
+            Base.SetTexture(Button:GetNormalTexture(), "icon" .. (LFGRoleEnumToString[Button.role]))
+        end
         Skin.UICheckButtonTemplate(Button.checkButton)
         Button.checkButton:SetPoint("BOTTOMLEFT", -4, -4)
     end
@@ -132,9 +163,8 @@ do --[[ FrameXML\LFGFrame.xml ]]
     end
     function Skin.LFGDungeonReadyRewardTemplate(Frame)
         Base.CropIcon(Frame.texture, Frame)
-        _G[Frame:GetName().."Border"]:Hide()
+        _G[Frame:GetName() .. "Border"]:Hide()
     end
-
 
     function Skin.LFGRewardsLootTemplate(Button)
         Skin.LargeItemButtonTemplate(Button)
@@ -143,10 +173,9 @@ do --[[ FrameXML\LFGFrame.xml ]]
     end
     function Skin.LFGRewardFrameTemplate(Frame)
         local name = Frame:GetName()
-        Skin.LFGRewardsLootTemplate(_G[name.."Item1"])
+        Skin.LFGRewardsLootTemplate(_G[name .. "Item1"])
         Skin.LargeItemButtonTemplate(Frame.MoneyReward)
     end
-
 
     function Skin.LFGDungeonReadyStatusPlayerTemplate(Frame)
         Frame.texture:ClearAllPoints()
@@ -156,13 +185,12 @@ do --[[ FrameXML\LFGFrame.xml ]]
         Frame.statusIcon:SetPoint("BOTTOMLEFT", -5, -5)
     end
 
-
     function Skin.LFGCooldownCoverTemplate(Frame)
     end
     function Skin.LFGBackfillCoverTemplate(Frame)
         local name = Frame:GetName()
-        Skin.UIPanelButtonTemplate(_G[name.."BackfillButton"])
-        Skin.UIPanelButtonTemplate(_G[name.."NoBackfillButton"])
+        Skin.UIPanelButtonTemplate(_G[name .. "BackfillButton"])
+        Skin.UIPanelButtonTemplate(_G[name .. "NoBackfillButton"])
     end
 end
 
@@ -172,7 +200,6 @@ function private.FrameXML.LFGFrame()
     _G.hooksecurefunc("LFGDungeonReadyStatusIndividual_UpdateIcon", Hook.LFGDungeonReadyStatusIndividual_UpdateIcon)
     _G.hooksecurefunc("LFGRewardsFrame_SetItemButton", Hook.LFGRewardsFrame_SetItemButton)
     _G.hooksecurefunc("LFGCooldownCover_Update", Hook.LFGCooldownCover_Update)
-
 
     --------------------------
     -- LFGDungeonReadyPopup --
@@ -204,7 +231,6 @@ function private.FrameXML.LFGFrame()
     Skin.LFGDungeonReadyRewardTemplate(_G.LFGDungeonReadyDialogRewardsFrame.Rewards[1])
     Skin.LFGDungeonReadyRewardTemplate(_G.LFGDungeonReadyDialogRewardsFrame.Rewards[2])
 
-
     --------------------
     -- LFGInvitePopup --
     --------------------
@@ -217,8 +243,17 @@ function private.FrameXML.LFGFrame()
     end
     Skin.UIPanelButtonTemplate(_G.LFGInvitePopupAcceptButton)
     Skin.UIPanelButtonTemplate(_G.LFGInvitePopupDeclineButton)
-    Util.PositionRelative("BOTTOMLEFT", LFGInvitePopup, "BOTTOMLEFT", 37, 25, 5, "Right", {
-        _G.LFGInvitePopupAcceptButton,
-        _G.LFGInvitePopupDeclineButton,
-    })
+    Util.PositionRelative(
+        "BOTTOMLEFT",
+        LFGInvitePopup,
+        "BOTTOMLEFT",
+        37,
+        25,
+        5,
+        "Right",
+        {
+            _G.LFGInvitePopupAcceptButton,
+            _G.LFGInvitePopupDeclineButton
+        }
+    )
 end

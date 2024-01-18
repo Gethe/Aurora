@@ -45,6 +45,7 @@ function private.FrameXML.PVPHelper()
         Skin.UIPanelHideButtonNoScripts(_G.PVPReadyDialogCloseButton)
         Skin.UIPanelButtonTemplate(PVPReadyDialog.enterButton)
         Skin.UIPanelButtonTemplate(PVPReadyDialog.leaveButton)
+        -- Skin.UIPanelButtonTemplate(PVPReadyDialog.hideButton)
 
         PVPReadyDialog.roleIcon:SetSize(64, 64)
     end
