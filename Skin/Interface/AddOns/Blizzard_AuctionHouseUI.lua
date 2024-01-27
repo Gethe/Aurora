@@ -56,27 +56,27 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     end
     do --[[ Blizzard_AuctionHouseItemList ]]
         Hook.AuctionHouseItemListMixin = {}
-        function Hook.AuctionHouseItemListMixin:OnScrollBoxRangeChanged(sortPending)
-            if not self.hideStripes then
-                local index = self.ScrollBox:GetDataIndexBegin()
-                self.ScrollBox:ForEachFrame(function(button)
-                    local oddRow = (index % 2) == 1
-                    button.NormalTexture:SetColorTexture(Color.white:GetRGB())
-                    button.NormalTexture:SetAlpha(oddRow and 0.05 or 0.0)
-                end)
-            end
-        end
-        function Hook.AuctionHouseItemListMixin:UpdateSelectionHighlights()
-            self.ScrollBox:ForEachFrame(function(button)
-                if self.highlightCallback then
-                    local currentRowData = button.rowData
-                    local quantity = min(self.quantitySelected or 0, currentRowData.quantity)
-                    local highlightAlpha = _G.Lerp(0.2, 0.8, quantity / currentRowData.quantity)
+        -- function Hook.AuctionHouseItemListMixin:OnScrollBoxRangeChanged(sortPending)
+        --     if not self.hideStripes then
+        --         local index = self.ScrollBox:GetDataIndexBegin()
+        --         self.ScrollBox:ForEachFrame(function(button)
+        --             local oddRow = (index % 2) == 1
+        --             button.NormalTexture:SetColorTexture(Color.white:GetRGB())
+        --             button.NormalTexture:SetAlpha(oddRow and 0.05 or 0.0)
+        --         end)
+        --     end
+        -- end
+        -- function Hook.AuctionHouseItemListMixin:UpdateSelectionHighlights()
+        --     self.ScrollBox:ForEachFrame(function(button)
+        --         if self.highlightCallback then
+        --             local currentRowData = button.rowData
+        --             local quantity = min(self.quantitySelected or 0, currentRowData.quantity)
+        --             local highlightAlpha = _G.Lerp(0.2, 0.8, quantity / currentRowData.quantity)
 
-                    button.SelectedHighlight:SetAlpha(highlightAlpha)
-                end
-            end)
-        end
+        --             button.SelectedHighlight:SetAlpha(highlightAlpha)
+        --         end
+        --     end)
+        -- end
     end
     do --[[ Blizzard_AuctionHouseCategoriesList ]]
         function Hook.AuctionHouseFilterButton_SetUp(button, info)
