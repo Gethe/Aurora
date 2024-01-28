@@ -309,7 +309,8 @@ local credits = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 credits:SetText([[
 Aurora by Lightsword @ Argent Dawn - EU / Haleth on wowinterface.com
 
-Maintained by Gethe
+Maintained by Gethe (2016-2023) and Hanshi/arnvid (2023-)
+
 ]])
 credits:SetPoint("TOP", line, "BOTTOM", 0, -20)
 

@@ -1,4 +1,10 @@
-﻿## [10.2.5.0] ##
+﻿## [10.2.5.1] ##
+### Fixed ###
+
+  * [retail] AuctionHouseItemListMixin no longer has the functions OnScrollBoxRangeChanged or UpdateSelectionHighlights
+
+
+## [10.2.5.0] ##
 ### Fixed ###
 
   * [retail] ColorPicker changes according to 10.2.5

@@ -1,6 +1,7 @@
 Copyright (c) 2010-2024 
 [Haleth/Lightsword](http://www.wowinterface.com/forums/member.php?u=110142), 
-[Gethe](http://www.wowinterface.com/forums/member.php?u=111611). 
+[Gethe](http://www.wowinterface.com/forums/member.php?u=111611),
+[Hanshi/arnvid](https://github.com/arnvid)
 All rights reserved.
 
 The contents of this software (the "AddOn"), excluding third-party resources,

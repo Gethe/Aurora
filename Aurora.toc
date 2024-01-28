@@ -4,8 +4,8 @@
 ## Title: Aurora
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
-## Author: Haleth/Lightsword, Gethe
-## Version: 10.2.5.0
+## Author: Haleth/Lightsword, Gethe, Hanshi/arnvid
+## Version: 10.2.5.1
 ## LoadWith: Blizzard_CompactRaidFrames
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## SavedVariables: AuroraConfig
