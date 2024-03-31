@@ -127,11 +127,15 @@ do --[[ FrameXML\LFGList.lua ]]
             _G.GameTooltipTextLeft1:SetTextColor(classColor.r, classColor.g, classColor.b)
         end
     end
-    function Hook.LFGListUtil_SetSearchEntryTooltip(tooltip, resultID, autoAcceptOption)
+    function Hook.LFGListUtil_SetSearchEntryTooltip(tooltip, resultID)
+        _G.print("LFGListUtil_SetSearchEntryTooltip loaded.")
         local searchResultInfo = _G.C_LFGList.GetSearchResultInfo(resultID)
         local activityInfo = _G.C_LFGList.GetActivityInfoTable(searchResultInfo.activityID)
         if activityInfo.displayType ~= _G.Enum.LFGListDisplayType.ClassEnumerate then return end
-
+        if searchResultInfo.isDelisted or not tooltip:IsShown() then 
+            _G.print("LFGListUtil_SetSearchEntryTooltip is isDelisted or not shown.")
+            return
+        end
         local name = tooltip:GetName() .. "TextLeft"
         local start
         for i = 4, tooltip:NumLines() do
@@ -140,7 +144,6 @@ do --[[ FrameXML\LFGList.lua ]]
                 break
             end
         end
-
         if start then
             for i = 1, searchResultInfo.numMembers do
                 local _, classToken = _G.C_LFGList.GetSearchResultMemberInfo(resultID, i)
@@ -298,6 +301,8 @@ function private.FrameXML.LFGList()
     ApplicationViewer.InfoBackground:Hide()
     Skin.LFGListGroupDataDisplayTemplate(ApplicationViewer.DataDisplay)
     Skin.UICheckButtonTemplate(ApplicationViewer.AutoAcceptButton) -- BlizzWTF: This doesn't use the template, but it should
+    --  /run C_LFGList.CanActiveEntryUseAutoAccept = function() return true end
+
     Skin.InsetFrameTemplate(ApplicationViewer.Inset)
     Skin.LFGListColumnHeaderTemplate(ApplicationViewer.NameColumnHeader)
     Skin.LFGListColumnHeaderTemplate(ApplicationViewer.RoleColumnHeader)
@@ -351,6 +356,7 @@ function private.FrameXML.LFGList()
     Skin.LFGListRequirementTemplate(EntryCreation.PVPRating)
     Skin.LFGListRequirementTemplate(EntryCreation.MythicPlusRating)
     Skin.LFGListRequirementTemplate(EntryCreation.VoiceChat)
+    Skin.LFGListOptionCheckButtonTemplate(EntryCreation.CrossFactionGroup)
     Skin.LFGListOptionCheckButtonTemplate(EntryCreation.PrivateGroup)
     Skin.LFGListMagicButtonTemplate(EntryCreation.ListGroupButton)
     Skin.LFGListMagicButtonTemplate(EntryCreation.CancelButton)
