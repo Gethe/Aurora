@@ -1,4 +1,11 @@
-﻿## [10.2.5.1] ##
+﻿## [10.2.6.0] ##
+### Fixed ###
+
+  * [retail] LFGListUtil_SetSearchEntryTooltip updates
+  * [retail] Fix for 10.2.6 API changes C_Item
+
+
+## [10.2.5.1] ##
 ### Fixed ###
 
   * [retail] AuctionHouseItemListMixin no longer has the functions OnScrollBoxRangeChanged or UpdateSelectionHighlights
