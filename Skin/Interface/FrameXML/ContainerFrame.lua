@@ -63,7 +63,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
             end
 
             if link then
-                local _, _, _, _, _, _, _, _, _, _, _, itemClassID = _G.GetItemInfo(link)
+                local _, _, _, _, _, _, _, _, _, _, _, itemClassID = _G.C_Item.GetItemInfo(link)
                 if itemClassID == _G.LE_ITEM_CLASS_QUESTITEM then
                     itemButton._questTexture:Show()
                     itemButton._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)

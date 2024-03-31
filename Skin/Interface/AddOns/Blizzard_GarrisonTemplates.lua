@@ -42,7 +42,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
             end
         end
         function Hook.GarrisonMissionFrame_SetItemRewardDetails(frame)
-            local _, _, quality = _G.GetItemInfo(frame.itemID)
+            local _, _, quality = _G.C_Item.GetItemInfo(frame.itemID)
             Hook.SetItemButtonQuality(frame, quality, frame.itemID)
         end
     end

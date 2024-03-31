@@ -23,7 +23,7 @@ local function GetItem(itemID, isCurrency)
     if not isCurrency then
         local item = _G.Item:CreateFromItemID(itemID)
         item:ContinueOnItemLoad(function(...)
-            local itemName, itemLink, itemRarity, _, _, _, _, itemStackCount, _, itemIcon, _, itemClassID = _G.GetItemInfo(itemID)
+            local itemName, itemLink, itemRarity, _, _, _, _, itemStackCount, _, itemIcon, _, itemClassID = _G.C_Item.GetItemInfo(itemID)
 
             data.link = itemLink
             data.name = itemName

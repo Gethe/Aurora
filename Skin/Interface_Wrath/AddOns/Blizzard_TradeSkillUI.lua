@@ -55,7 +55,7 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
 
         local quality, link = 0, _G.GetTradeSkillItemLink(id)
         if link then
-            _, _, quality = _G.GetItemInfo(link)
+            _, _, quality = _G.C_Item.GetItemInfo(link)
         end
 
         Hook.SetItemButtonQuality(_G.TradeSkillSkillIcon, quality, link)
@@ -67,7 +67,7 @@ do --[[ AddOns\Blizzard_TradeSkillUI.lua ]]
         local numReagents = _G.GetTradeSkillNumReagents(id)
         for i = 1, numReagents do
             link = _G.GetTradeSkillReagentItemLink(id, i)
-            _, _, quality = _G.GetItemInfo(link)
+            _, _, quality = _G.C_Item.GetItemInfo(link)
             Hook.SetItemButtonQuality(_G["TradeSkillReagent"..i], quality, link)
         end
     end

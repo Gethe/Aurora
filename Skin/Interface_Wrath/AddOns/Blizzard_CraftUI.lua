@@ -56,7 +56,7 @@ do --[[ AddOns\Blizzard_CraftUI.lua ]]
 
         local quality, link = 0, _G.GetCraftItemLink(id)
         if link then
-            _, _, quality = _G.GetItemInfo(link)
+            _, _, quality = _G.C_Item.GetItemInfo(link)
         end
 
         Hook.SetItemButtonQuality(_G.CraftIcon, quality, link)
@@ -65,7 +65,7 @@ do --[[ AddOns\Blizzard_CraftUI.lua ]]
         local numReagents = _G.GetCraftNumReagents(id)
         for i = 1, numReagents do
             link = _G.GetCraftReagentItemLink(id, i)
-            _, _, quality = _G.GetItemInfo(link)
+            _, _, quality = _G.C_Item.GetItemInfo(link)
             Hook.SetItemButtonQuality(_G["CraftReagent"..i], quality, link)
         end
     end

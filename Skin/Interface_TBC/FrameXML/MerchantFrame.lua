@@ -11,7 +11,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\MoneyFrame.lua ]]
     function Hook.MerchantFrameItem_UpdateQuality(self, link)
-        local quality = link and select(3, _G.GetItemInfo(link)) or nil
+        local quality = link and select(3, _G.C_Item.GetItemInfo(link)) or nil
         Hook.SetItemButtonQuality(self.ItemButton, quality, link)
     end
 
