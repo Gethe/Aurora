@@ -2,6 +2,7 @@
 ### Fixed ###
 
   * [retail] Remove LFGListUtil_SetSearchEntryTooltip debug print spam
+  * [retail] Fixed some missing _G references and cleared out luacheck warnings
 
 ## [10.2.6.0] ##
 ### Fixed ###
