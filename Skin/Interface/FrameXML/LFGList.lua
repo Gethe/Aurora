@@ -131,7 +131,7 @@ do --[[ FrameXML\LFGList.lua ]]
         local searchResultInfo = _G.C_LFGList.GetSearchResultInfo(resultID)
         local activityInfo = _G.C_LFGList.GetActivityInfoTable(searchResultInfo.activityID)
         if activityInfo.displayType ~= _G.Enum.LFGListDisplayType.ClassEnumerate then return end
-        if searchResultInfo.isDelisted or not tooltip:IsShown() then 
+        if searchResultInfo.isDelisted or not tooltip:IsShown() then
             -- _G.print("LFGListUtil_SetSearchEntryTooltip is isDelisted or not shown.")
             return
         end

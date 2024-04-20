@@ -13,10 +13,10 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 local LFGRoleEnumToString = {
-    [Enum.LFGRole.Tank] = "TANK",
-    [Enum.LFGRole.Healer] = "HEALER",
-    [Enum.LFGRole.Damage] = "DAMAGER",
-    [Constants.LFG_ROLEConstants.LFG_ROLE_NO_ROLE] = "GUIDE"
+    [_G.Enum.LFGRole.Tank] = "TANK",
+    [_G.Enum.LFGRole.Healer] = "HEALER",
+    [_G.Enum.LFGRole.Damage] = "DAMAGER",
+    [_G.Constants.LFG_ROLEConstants.LFG_ROLE_NO_ROLE] = "GUIDE"
 }
 
 do
@@ -41,7 +41,7 @@ do
 
         --When the group doesn't require a role (like scenarios and legacy raids), we get "NONE" as the role
         if role == "NONE" then
-            role = Enum.LFGRole.Damage
+            role = _G.Enum.LFGRole.Damage
         end
 
         if not hasResponded then

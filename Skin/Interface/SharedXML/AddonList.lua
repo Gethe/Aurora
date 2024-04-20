@@ -7,7 +7,8 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Util = Aurora.Util
+-- local Color = Aurora.Color
 
 do --[[ SharedXML\AddonList.lua ]]
     function Hook.AddonListCharacterDropDownButton_OnClick(self)

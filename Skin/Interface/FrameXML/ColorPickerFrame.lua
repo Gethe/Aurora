@@ -77,7 +77,6 @@ function private.FrameXML.ColorPickerFrame()
     -- ----------------------
     -- OpacitySliderFrame has been removed
     -- ----------------------
-    
     -- Skin.OpacitySlider(_G.OpacitySliderFrame)
 
     -- ------------------
