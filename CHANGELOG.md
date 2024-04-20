@@ -1,4 +1,9 @@
-﻿## [10.2.6.0] ##
+﻿## [10.2.6.1] ##
+### Fixed ###
+
+  * [retail] Remove LFGListUtil_SetSearchEntryTooltip debug print spam
+
+## [10.2.6.0] ##
 ### Fixed ###
 
   * [retail] LFGListUtil_SetSearchEntryTooltip updates

@@ -128,12 +128,11 @@ do --[[ FrameXML\LFGList.lua ]]
         end
     end
     function Hook.LFGListUtil_SetSearchEntryTooltip(tooltip, resultID)
-        _G.print("LFGListUtil_SetSearchEntryTooltip loaded.")
         local searchResultInfo = _G.C_LFGList.GetSearchResultInfo(resultID)
         local activityInfo = _G.C_LFGList.GetActivityInfoTable(searchResultInfo.activityID)
         if activityInfo.displayType ~= _G.Enum.LFGListDisplayType.ClassEnumerate then return end
         if searchResultInfo.isDelisted or not tooltip:IsShown() then 
-            _G.print("LFGListUtil_SetSearchEntryTooltip is isDelisted or not shown.")
+            -- _G.print("LFGListUtil_SetSearchEntryTooltip is isDelisted or not shown.")
             return
         end
         local name = tooltip:GetName() .. "TextLeft"
