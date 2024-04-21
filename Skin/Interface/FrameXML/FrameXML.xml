@@ -235,7 +235,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
     <Script file="ItemButtonTemplate.lua"/>
     <Script file="..\SharedXML\UIDropDownMenu.lua"/>
-    Script file="..\SharedXML\AutoComplete.lua"/
+    <Script file="..\SharedXML\AutoComplete.lua"/>
     <Script file="StaticPopup.lua"/>
     <!--Script file="..\SharedXML\DialogUtil.lua"/-->
     <!--Script file="..\SharedXML\Settings\GameplaySettingsGroup.lua"/-->
