@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script>
-        _G.AURORA_DEBUG_PROJECT = 3
+        _G.AURORA_DEBUG_PROJECT = 0
     </Script>
 
 
@@ -157,7 +157,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--## add new modules below here-->
     <Script file="ChatBubbleTemplates.lua"/>
     <!--Script file="WorldFrame.lua"/-->
-    <Script file="..\..\Interface_Wrath\FrameXML\UIParent.lua"/>
+    <!--Script file="..\..\Interface_Cata\FrameXML\UIParent.lua"/-->
 
     <!--Script file="PartyUtil.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptedAnimationEffects.lua"/-->
@@ -261,7 +261,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\..\Interface_Wrath\FrameXML\UnitPopupButtons.lua"/-->
     <!--Script file="..\..\Interface_Wrath\FrameXML\UnitPopupMenus.lua"/-->
     <!--Script file="..\..\Interface_TBC\FrameXML\UnitPopup.lua"/-->
-    <!--Script file="..\SharedXML\HistoryKeeper.lua"/-->
+    <!--Script file="HistoryKeeper.lua"/-->
     <!--Script file="ChatFrame.lua"/-->
     <!--Script file="FloatingChatFrame.lua"/-->
     <!--Script file="..\SharedXML\BNetShared.lua"/-->
@@ -277,14 +277,14 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="StatsFrame.lua"/-->
     <Script file="SpellBookFrame.lua"/>
     <Script file="..\..\Interface_Wrath\FrameXML\CharacterFrame.lua"/>
-    <Script file="..\..\Interface_Wrath\FrameXML\PaperDollFrame.lua"/>
+    <!--Script file="..\..\Interface_Cata\FrameXML\PaperDollFrame.lua"/-->
     <Script file="..\..\Interface_Wrath\FrameXML\PetPaperDollFrame.lua"/>
     <Script file="SkillFrame.lua"/>
     <Script file="..\..\Interface_Wrath\FrameXML\ReputationFrame.lua"/>
     <Script file="..\..\Interface_Wrath\FrameXML\QuestFrameTemplates.lua"/>
     <Script file="..\..\Interface_TBC\FrameXML\QuestFrame.lua"/>
     <!--Script file="..\..\Interface_Wrath\FrameXML\QuestPOI.lua"/-->
-    <Script file="..\..\Interface_Wrath\FrameXML\QuestLogFrame.lua"/>
+    <!--Script file="..\..\Interface_Cata\FrameXML\QuestLogFrame.lua"/-->
     <Script file="..\..\Interface_Wrath\FrameXML\QuestInfo.lua"/>
     <!--Script file="..\..\Interface_Wrath\FrameXML\WatchFrame.lua"/-->
     <Script file="..\..\Interface_TBC\FrameXML\MerchantFrame.lua"/>
@@ -344,8 +344,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="CompactPartyFrame.lua"/-->
     <!--Script file="..\..\Interface_Wrath\FrameXML\RolePoll.lua"/-->
     <!--Script file="StreamingFrame.lua"/-->
-    <!--Script file="IconIntroAnimation.lua"/-->
-
     <Script file="LootHistory.lua"/>
     <!--Script file="CurrencyContainer.lua"/-->
     <Script file="StaticPopupSpecial.lua"/>

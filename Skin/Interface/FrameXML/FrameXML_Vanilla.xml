@@ -8,6 +8,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
 
 
+    <!--Script file="..\SharedXML\ProjectConstants.lua"/-->
     <!--Script file="..\SharedXML\SharedConstants.lua"/-->
 
     <!--## add C namespace augmentations here-->
@@ -27,6 +28,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\MathUtil.lua"/-->
     <!--Script file="..\SharedXML\Rectangle.lua"/-->
     <!--Script file="..\SharedXML\TextureUtil.lua"/-->
+    <!--Script file="..\SharedXML\AddOnUtil.lua"/-->
     <!--Script file="..\SharedXML\Flags.lua"/-->
     <!--Script file="..\SharedXML\CallbackRegistry.lua"/-->
     <!--Script file="..\SharedXML\CvarUtil.lua"/-->
@@ -41,10 +43,10 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\PredictedSetting.lua"/-->
     <!--Script file="..\SharedXML\SecureUtil.lua"/-->
     <!--Script file="..\SharedXML\TimeUtil.lua"/-->
+    <!--Script file="..\SharedXML\VectorLib.lua"/-->
     <!--Script file="..\SharedXML\NineSliceLayouts.lua"/-->
     <Script file="..\SharedXML\NineSlice.lua"/>
     <!--Script file="..\SharedXML\Backdrop.lua"/-->
-    <!--Script file="..\SharedXML\TextureUtil.lua"/-->
     <!--Script file="..\SharedXML\MathUtil.lua"/-->
     <!--Script file="..\SharedXML\Color.lua"/-->
     <!--Script file="..\..\Interface_Vanilla\SharedXML\ColorUtil.lua"/-->
@@ -57,6 +59,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\EasingUtil.lua"/-->
     <!--Script file="..\SharedXML\BindingUtil.lua"/-->
     <!--Script file="..\SharedXML\FrameUtil.lua"/-->
+    <!--Script file="..\SharedXML\InputUtil.lua"/-->
     <!--Script file="..\SharedXML\EventUtil.lua"/-->
     <!--Script file="..\SharedXML\RegionUtil.lua"/-->
     <!--Script file="..\SharedXML\AnchorUtil.lua"/-->
@@ -65,8 +68,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\LoopingSoundEffect.lua"/-->
     <!--Script file="..\SharedXML\CircularBuffer.lua"/-->
     <!--Script file="..\SharedXML\FontableFrameMixin.lua"/-->
-    <!--Script file="..\SharedXML\Vector2D.lua"/-->
-    <!--Script file="..\SharedXML\Vector3D.lua"/-->
     <!--Script file="..\SharedXML\Spline.lua"/-->
     <!--Script file="..\SharedXML\LayoutFrame.lua"/-->
     <!--Script file="..\SharedXML\ManagedLayoutFrame.lua"/-->
@@ -80,6 +81,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\FrameStack.lua"/-->
     <!--Script file="..\SharedXML\MixinUtil.lua"/-->
     <!--Script file="..\SharedXML\GlobalCallbackRegistry.lua"/-->
+    <!--Script file="..\SharedXML\DebugBarManager.lua"/-->
     <!--Script file="..\SharedXML\SelectableButton.lua"/-->
     <!--Script file="..\SharedXML\ButtonGroup.lua"/-->
     <!--Script file="..\SharedXML\Frame\EventFrame.lua"/-->
@@ -105,6 +107,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\AnimationTemplates.lua"/-->
     <Script file="..\SharedXML\HybridScrollFrame.lua"/>
 
+    <!--Script file="..\SharedXML\ModelSceneControlFrame.lua"/-->
     <Script file="..\SharedXML\ModelSceneTemplates.lua"/>
     <!--Script file="..\SharedXML\ModelSceneMixin.lua"/-->
     <!--Script file="..\SharedXML\ModelSceneActorMixin.lua"/-->
@@ -112,6 +115,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ScrollDefine.lua"/-->
     <Script file="..\SharedXML\SecureScrollTemplates.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
+    <!--Script file="..\SharedXML\Spinner.lua"/-->
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <Script file="..\SharedXML\SharedBasicControls.lua"/>
     <!--Script file="..\SharedXML\Tabs\MinimalTab.lua"/-->
@@ -142,6 +146,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="WorldFrame.lua"/-->
     <Script file="..\..\Interface_Vanilla\FrameXML\UIParent.lua"/>
 
+    <!--Script file="PartyUtil.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptedAnimationEffects.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedModelSceneActor.lua"/-->
     <!--Script file="..\SharedXML\ScriptedAnimations\ScriptAnimatedEffectController.lua"/-->
@@ -167,7 +172,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="CustomBindingManager.lua"/-->
     <!--Script file="CustomBindingHandler.lua"/-->
     <Script file="GameTooltip.lua"/>
-    <Script file="UIMenu.lua"/>
+    <!--Script file="UIMenu.lua"/-->
     <Script file="UIDropDownMenu.lua"/>
     <Script file="UIPanelTemplates.lua"/>
 
@@ -183,7 +188,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="TextStatusBar.lua"/-->
 
     <!--Script file="UIErrorsFrame.lua"/-->
-    <Script file="AutoComplete.lua"/>
+    <!--Script file="AutoComplete.lua"/-->
     <Script file="StaticPopup.lua"/>
     <!--Script file="..\SharedXML\DialogUtil.lua"/-->
     <!--Script file="Sound.lua"/-->
@@ -193,7 +198,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="SettingDefinitions\Definitions.lua"/-->
     <Script file="OptionsFrameTemplates.lua"/>
     <Script file="OptionsPanelTemplates.lua"/>
-    <Script file="UIOptions.lua"/>
+    <!--Script file="UIOptions.lua"/-->
     <Script file="VideoOptionsFrame.lua"/>
     <Script file="..\SharedXML\VideoOptionsPanels.lua"/>
     <!--Script file="MacOptionsPanel.lua"/-->
@@ -205,7 +210,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="AlertFrameIntrinsic.lua"/-->
     <Script file="AlertFrames.lua"/>
     <Script file="AlertFrameSystems.lua"/>
-    <Script file="SocialToast.lua"/>
+    <!--Script file="SocialToast.lua"/-->
     <Script file="MirrorTimer.lua"/>
     <!--Script file="CoinPickupFrame.lua"/-->
     <Script file="StackSplitFrame.lua"/>
@@ -218,6 +223,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\..\Interface_Vanilla\FrameXML\StanceBar.lua"/-->
     <!--Script file="PossessActionBar.lua"/-->
     <Script file="TutorialFrame.lua"/>
+    <Script file="QueueStatusFrame.lua"/>
     <!--Script file="..\..\Interface_Vanilla\FrameXML\Minimap.lua"/-->
     <!--Script file="..\..\Interface_Vanilla\FrameXML\GameTime.lua"/-->
     <!--Script file="BuffFrame.lua"/-->
@@ -228,6 +234,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="VoiceToggleButton.lua"/>
     <!--Script file="..\SharedXML\SharedReportFrame.lua"/-->
     <!--Script file="ReportFrame.lua"/-->
+    <!--Script file="..\SharedXML\SharedUtils.lua"/-->
     <Script file="UnitPopupSlider.lua"/>
     <Script file="UnitPopupCustomControls.lua"/>
     <!--Script file="..\SharedXML\UnitPopupSharedUtils.lua"/-->
@@ -239,10 +246,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\..\Interface_Vanilla\FrameXML\UnitPopupButtons.lua"/-->
     <!--Script file="..\..\Interface_Vanilla\FrameXML\UnitPopupMenus.lua"/-->
     <!--Script file="..\..\Interface_Vanilla\FrameXML\UnitPopup.lua"/-->
-    <!--Script file="HistoryKeeper.lua"/-->
-    <Script file="ChatFrame.lua"/>
-    <Script file="FloatingChatFrame.lua"/>
-    <Script file="BNet.lua"/>
+    <!--Script file="..\SharedXML\HistoryKeeper.lua"/-->
+    <!--Script file="ChatFrame.lua"/-->
+    <!--Script file="FloatingChatFrame.lua"/-->
+    <!--Script file="..\SharedXML\BNetShared.lua"/-->
+    <!--Script file="BNet.lua"/-->
     <Script file="ReadyCheck.lua"/>
     <!--Script file="PlayerFrame.lua"/-->
     <!--Script file="PartyFrame.lua"/-->
@@ -290,6 +298,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="PetStable.lua"/>
     <!--Script file="DurabilityFrame.lua"/-->
     <!--Script file="BattlegroundChatFilters.lua"/-->
+    <!--Script file="QueueUpdater.lua"/-->
+    <Script file="PVEFrame.lua"/>
+    <Script file="LFGFrame.lua"/>
+    <Script file="LFDFrame.lua"/>
+    <Script file="LFGList.lua"/>
     <!--Script file="..\..\Interface_Vanilla\FrameXML\WorldStateFrame.lua"/-->
     <Script file="RatingMenuFrame.lua"/>
     <!--Script file="..\..\Interface_Vanilla\FrameXML\TalentFrameBase.lua"/-->
@@ -299,7 +312,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="TextToSpeechCommands.lua"/-->
     <!--Script file="TextToSpeechFrame.lua"/-->
     <!--Script file="TextToSpeech.lua"/-->
-    <!--Script file="VoiceChatTranscriptionFrame.lua"/-->
+    <!--Script file="..\SharedXML\VoiceChatTranscriptionFrame.lua"/-->
     <!--Script file="VoiceChatTranscriptionButton.lua"/-->
     <!--Script file="..\..\Interface_Vanilla\FrameXML\ChatConfigFrame_Vanilla.lua"/-->
     <Script file="ChatConfigFrame.lua"/>
@@ -309,6 +322,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="CompactRaidGroup.lua"/-->
     <!--Script file="CompactPartyFrame.lua"/-->
     <!--Script file="StreamingFrame.lua"/-->
+    <!--Script file="IconIntroAnimation.lua"/-->
+
     <Script file="LootHistory.lua"/>
     <Script file="StaticPopupSpecial.lua"/>
     <Script file="PVPHelper.lua"/>
@@ -319,6 +334,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="PlayerInteractionFrameManager.lua"/-->
     <!--Script file="SocialQueue.lua"/-->
     <!--Script file="InviteConfirmationDialog.lua"/-->
+    <!--Script file="..\SharedXML\ToolWindowOwnerMixin.lua"/-->
 
     <!--#Save off whatever we need available unmodified-->
     <!--Script file="SecureCapsule.lua"/-->
