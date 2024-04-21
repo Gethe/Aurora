@@ -235,7 +235,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
     <Script file="ItemButtonTemplate.lua"/>
     <Script file="..\SharedXML\UIDropDownMenu.lua"/>
-    <!--Script file="..\SharedXML\AutoComplete.lua"/-->
+    <Script file="..\SharedXML\AutoComplete.lua"/>
     <Script file="StaticPopup.lua"/>
     <!--Script file="..\SharedXML\DialogUtil.lua"/-->
     <!--Script file="..\SharedXML\Settings\GameplaySettingsGroup.lua"/-->
@@ -259,7 +259,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
 
     <Script file="GameTooltip.lua"/>
-    <!--Script file="..\SharedXML\UIMenu.lua"/-->
+    <Script file="..\SharedXML\UIMenu.lua"/>
     <!--Script file="SecureTemplates.lua"/-->
     <!--Script file="SecureHandlerTemplates.lua"/-->
     <!--Script file="SecureGroupHeaders.lua"/-->
@@ -293,7 +293,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\AlertFrameIntrinsic.lua"/-->
     <Script file="AlertFrames.lua"/>
     <Script file="AlertFrameSystems.lua"/>
-    <!--Script file="..\SharedXML\SocialToast.lua"/-->
+    <Script file="..\SharedXML\SocialToast.lua"/>
     <Script file="MirrorTimer.lua"/>
     <!--Script file="CoinPickupFrame.lua"/-->
     <Script file="StackSplitFrame.lua"/>
@@ -339,14 +339,14 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="WoWLabs\Interface\FrameXML\UnitPopupMenus.lua"/-->
     <!--Script file="UnitPopup.lua"/-->
     <!--Script file="..\SharedXML\HistoryKeeper.lua"/-->
-    <!--Script file="..\SharedXML\Chat\ChatFrame.lua"/-->
-    <!--Script file="..\SharedXML\Chat\FloatingChatFrame.lua"/-->
+    <Script file="..\SharedXML\Chat\ChatFrame.lua"/>
+    <Script file="..\SharedXML\Chat\FloatingChatFrame.lua"/>
     <!--Script file="FloatingChatFrameVoiceChat.lua"/-->
     <!--Script file="FloatingChatFrameAlertFrame.lua"/-->
     <!--Script file="FloatingChatFrameMenus.lua"/-->
     <!--Script file="..\SharedXML\VoiceChatTranscriptionFrame.lua"/-->
     <!--Script file="..\SharedXML\BNetShared.lua"/-->
-    <!--Script file="..\SharedXML\BNet.lua"/-->
+    <Script file="..\SharedXML\BNet.lua"/>
     <Script file="ReadyCheck.lua"/>
     <!--Script file="PlayerFrame.lua"/-->
     <!--Script file="PartyFrame.lua"/-->
