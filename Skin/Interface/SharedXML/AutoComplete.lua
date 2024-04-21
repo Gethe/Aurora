@@ -9,10 +9,10 @@ local Aurora = private.Aurora
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
---do --[[ FrameXML\AutoComplete.lua ]]
+--do --[[ SharedXML\AutoComplete.lua ]]
 --end
 
-do --[[ FrameXML\AutoComplete.xml ]]
+do --[[ SharedXML\AutoComplete.xml ]]
     function Skin.AutoCompleteButtonTemplate(Button)
         local highlight = Button:GetHighlightTexture()
         highlight:ClearAllPoints()
@@ -24,7 +24,7 @@ do --[[ FrameXML\AutoComplete.xml ]]
     end
 end
 
-function private.FrameXML.AutoComplete()
+function private.SharedXML.AutoComplete()
     local AutoCompleteBox = _G.AutoCompleteBox
     Skin.FrameTypeFrame(AutoCompleteBox)
 

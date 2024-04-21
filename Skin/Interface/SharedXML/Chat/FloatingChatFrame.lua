@@ -10,7 +10,7 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ FrameXML\FloatingChatFrame.lua ]]
+do --[[ SharedXML\FloatingChatFrame.lua ]]
     function Hook.FloatingChatFrame_UpdateBackgroundAnchors(self)
         local bg, tl, bl, tr, br = self:GetRegions()
         tl:SetPoint("TOPLEFT", bg)
@@ -54,7 +54,7 @@ do --[[ FrameXML\FloatingChatFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\FloatingChatFrame.xml ]]
+do --[[ SharedXML\FloatingChatFrame.xml ]]
     function Skin.FloatingBorderedFrame(Frame)
         local bg, tl, bl, tr, br, l, r, b, t = Frame:GetRegions()
         Base.CreateBackdrop(Frame, private.backdrop, {
@@ -195,7 +195,7 @@ do --[[ FrameXML\FloatingChatFrame.xml ]]
     end
 end
 
-function private.FrameXML.FloatingChatFrame()
+function private.SharedXML.FloatingChatFrame()
     if private.disabled.chat then return end
 
     _G.hooksecurefunc("FloatingChatFrame_UpdateBackgroundAnchors", Hook.FloatingChatFrame_UpdateBackgroundAnchors)

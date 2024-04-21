@@ -8,14 +8,14 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---do --[[ FrameXML\UIMenu.lua ]]
+--do --[[ SharedXML\UIMenu.lua ]]
 --end
 
-do --[[ FrameXML\UIMenu.xml ]]
+do --[[ SharedXML\UIMenu.xml ]]
     function Skin.UIMenuTemplate(Frame)
         Skin.TooltipBackdropTemplate(Frame)
     end
 end
 
---function private.FrameXML.UIMenu()
+--function private.SharedXML.UIMenu()
 --end

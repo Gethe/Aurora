@@ -9,6 +9,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
 
     <!--Script file="..\SharedXML\ProjectConstants.lua"/-->
+
     <!--Script file="..\SharedXML\SharedConstants.lua"/-->
 
     <!--## add C namespace augmentations here-->
@@ -23,7 +24,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\FunctionUtil.lua"/-->
     <!--Script file="..\SharedXML\ObjectUpdater.lua"/-->
     <!--Script file="..\SharedXML\MathUtil.lua"/-->
-    <!--Script file="..\SharedXML\ExpansionUtil.lua"/-->
     <!--Script file="..\SharedXML\ExportUtil.lua"/-->
     <!--Script file="..\SharedXML\Rectangle.lua"/-->
     <!--Script file="..\SharedXML\TextureUtil.lua"/-->
@@ -99,7 +99,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\Dump.lua"/-->
     <!--Script file="..\SharedXML\MixinUtil.lua"/-->
     <!--Script file="..\SharedXML\DebugBarManager.lua"/-->
-    <!--Script file="..\SharedXML\ScrollableTabsContainer.lua"/-->
     <!--Script file="IconDataProvider.lua"/-->
 
     <!--Script file="..\SharedXML\Tooltip\TooltipUtil.lua"/-->
@@ -128,6 +127,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
     <!--Script file="..\SharedXML\SoundKitConstants.lua"/-->
     <Script file="Constants.lua"/>
+    <!--Script file="WoWLabs\Interface\FrameXML\GameModeConstants.lua"/-->
     <!--Script file="Localization.lua"/-->
     <Script file="Fonts.lua"/>
     <!--Script file="FontStyles.lua"/-->
@@ -207,14 +207,14 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="ItemDisplay.lua"/-->
     <Script file="..\SharedXML\HelpTip.lua"/>
     <!--Script file="CurrencyContainer.lua"/-->
+    <!--Script file="..\SharedXML\Spinner.lua"/-->
+    <!--Script file="..\SharedXML\ScrollDefine.lua"/-->
     <Script file="MoneyFrame.lua"/>
 
     <Script file="MoneyInputFrame.lua"/>
 
-    <!--Script file="..\SharedXML\ScrollDefine.lua"/-->
     <Script file="..\SharedXML\SecureScrollTemplates.lua"/>
     <Script file="..\SharedXML\SecureUIPanelTemplates.lua"/>
-    <!--Script file="..\SharedXML\Spinner.lua"/-->
     <Script file="..\SharedXML\SharedUIPanelTemplates.lua"/>
     <!--Script file="..\SharedXML\Tabs\MinimalTab.lua"/-->
     <!--Script file="RAFUtil.lua"/-->
@@ -235,7 +235,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
     <Script file="ItemButtonTemplate.lua"/>
     <Script file="..\SharedXML\UIDropDownMenu.lua"/>
-    Script file="..\SharedXML\AutoComplete.lua"/
+    <!--Script file="..\SharedXML\AutoComplete.lua"/-->
     <Script file="StaticPopup.lua"/>
     <!--Script file="..\SharedXML\DialogUtil.lua"/-->
     <!--Script file="..\SharedXML\Settings\GameplaySettingsGroup.lua"/-->
@@ -245,7 +245,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="QuickKeybind.lua"/-->
     <Script file="TutorialFrame.lua"/>
     <!--Script file="EditModePresetLayoutSystemUtils.lua"/-->
-    <!--Script file="EditModePresetLayouts.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\EditModePresetLayouts.lua"/-->
     <!--Script file="EditModePresetLayoutsManager.lua"/-->
     <!--Script file="EditModeSettingDisplayInfo.lua"/-->
     <!--Script file="EditModeUtil.lua"/-->
@@ -259,7 +259,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
 
     <Script file="GameTooltip.lua"/>
-    <Script file="..\SharedXML\UIMenu.lua"/>
+    <!--Script file="..\SharedXML\UIMenu.lua"/-->
     <!--Script file="SecureTemplates.lua"/-->
     <!--Script file="SecureHandlerTemplates.lua"/-->
     <!--Script file="SecureGroupHeaders.lua"/-->
@@ -281,7 +281,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
     <Script file="..\SharedXML\TemplatedList.lua"/>
     <!--Script file="..\SharedXML\PagedList.lua"/-->
-    <Script file="GameMenuFrame.lua"/>
+    <!--Script file="WoWLabs\Interface\FrameXML\GameMenuFrame.lua"/-->
     <!--Script file="FilterDropDown.lua"/-->
     <!--Script file="TextStatusBar.lua"/-->
 
@@ -289,12 +289,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="ExtraAbilityContainer.lua"/-->
     <!--Script file="Sound.lua"/-->
     <!--Script file="UIOptions.lua"/-->
-    <Script file="..\SharedXML\DeprecatedTemplates.lua"/>
     <Script file="..\SharedXML\AddonList.lua"/>
     <!--Script file="..\SharedXML\AlertFrameIntrinsic.lua"/-->
     <Script file="AlertFrames.lua"/>
     <Script file="AlertFrameSystems.lua"/>
-    <Script file="..\SharedXML\SocialToast.lua"/>
+    <!--Script file="..\SharedXML\SocialToast.lua"/-->
     <Script file="MirrorTimer.lua"/>
     <!--Script file="CoinPickupFrame.lua"/-->
     <Script file="StackSplitFrame.lua"/>
@@ -308,8 +307,10 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="PVPUITemplates.lua"/>
     <Script file="PVPHonorSystem.lua"/>
     <!--Script file="GuildUtil.lua"/-->
-    <!--Script file="ActionBarConstants.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\ActionBarConstants.lua"/-->
     <Script file="ActionBarController.lua"/>
+    <!--Script file="WoWLabs\Interface\FrameXML\CustomActionBarOverlays.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\CustomActionBarOverlays.lua"/-->
     <!--Script file="InstanceDifficulty.lua"/-->
     <!--Script file="Minimap.lua"/-->
     <!--Script file="GameTime.lua"/-->
@@ -334,18 +335,18 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\UnitPopupSharedButtonMixins.lua"/-->
     <!--Script file="..\SharedXML\UnitPopupShared.lua"/-->
     <!--Script file="..\SharedXML\UnitPopupSharedMenus.lua"/-->
-    <!--Script file="UnitPopupButtons.lua"/-->
-    <!--Script file="UnitPopupMenus.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\UnitPopupButtons.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\UnitPopupMenus.lua"/-->
     <!--Script file="UnitPopup.lua"/-->
     <!--Script file="..\SharedXML\HistoryKeeper.lua"/-->
-    <Script file="..\SharedXML\Chat\ChatFrame.lua"/>
-    <Script file="..\SharedXML\Chat\FloatingChatFrame.lua"/>
+    <!--Script file="..\SharedXML\Chat\ChatFrame.lua"/-->
+    <!--Script file="..\SharedXML\Chat\FloatingChatFrame.lua"/-->
     <!--Script file="FloatingChatFrameVoiceChat.lua"/-->
     <!--Script file="FloatingChatFrameAlertFrame.lua"/-->
     <!--Script file="FloatingChatFrameMenus.lua"/-->
     <!--Script file="..\SharedXML\VoiceChatTranscriptionFrame.lua"/-->
     <!--Script file="..\SharedXML\BNetShared.lua"/-->
-    <Script file="..\SharedXML\BNet.lua"/>
+    <!--Script file="..\SharedXML\BNet.lua"/-->
     <Script file="ReadyCheck.lua"/>
     <!--Script file="PlayerFrame.lua"/-->
     <!--Script file="PartyFrame.lua"/-->
@@ -357,6 +358,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="SpellBookFrame.lua"/>
     <Script file="CharacterFrame.lua"/>
     <Script file="PaperDollFrame.lua"/>
+    <!--#LoadoutFrame-->
+    <!--Script file="WoWLabs\Interface\FrameXML\SpectateFrame.lua"/-->
     <Script file="ReputationFrame.lua"/>
     <!--Script file="FriendshipStatusBar.lua"/-->
     <Script file="QuestFrame.lua"/>
@@ -364,6 +367,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="MerchantFrame.lua"/>
     <Script file="TradeFrame.lua"/>
     <Script file="ContainerFrame.lua"/>
+
+    <!--Script file="WoWLabs\Interface\FrameXML\ItemBeltFrame.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\ItemBeltFrame.lua"/-->
     <Script file="ScrollingFlatPanel.lua"/>
     <Script file="LootFrame.lua"/>
     <Script file="GroupLootFrame.lua"/>
@@ -373,13 +379,13 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="RoleSelectionTemplate.lua"/-->
     <Script file="ItemRef.lua"/>
     <!--Script file="SocialQueue.lua"/-->
-    <!--Script file="SummonButtonTemplateOverride.lua"/-->
-    <Script file="..\SharedXML\FriendsFrame.lua"/>
     <Script file="QuickJoinToast.lua"/>
     <!--Script file="TextToSpeechFrameConstants.lua"/-->
     <!--Script file="TextToSpeechCommands.lua"/-->
     <!--Script file="TextToSpeechFrame.lua"/-->
     <!--Script file="TextToSpeech.lua"/-->
+    <!--Script file="SummonButtonTemplateOverride.lua"/-->
+    <Script file="..\SharedXML\FriendsFrame.lua"/>
     <Script file="QuickJoin.lua"/>
     <Script file="RaidFrame.lua"/>
     <Script file="PetActionBar.lua"/>
@@ -440,7 +446,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="CompactUnitFrame.lua"/>
     <!--Script file="CompactRaidGroup.lua"/-->
     <!--Script file="CompactPartyFrame.lua"/-->
-    <!--Script file="CompactArenaFrame.lua"/-->
     <!--Script file="Deprecated_ArenaUI.lua"/-->
     <Script file="RolePoll.lua"/>
     <!--Script file="SpellFlyout.lua"/-->
@@ -451,13 +456,13 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="GhostFrame.lua"/>
     <!--Script file="StreamingFrame.lua"/-->
     <!--Script file="IconIntroAnimation.lua"/-->
+    <!--Script file="WoWLabs\IconIntroAnimation.lua"/-->
 
     <Script file="Timer.lua"/>
     <!--Script file="MonkHarmonyBar.lua"/-->
     <Script file="RecruitAFriendFrame.lua"/>
     <!--Script file="DestinyFrame.lua"/-->
     <Script file="SharedPetBattleTemplates.lua"/>
-    <Script file="LootHistory.lua"/>
     <Script file="FloatingPetBattleTooltip.lua"/>
     <Script file="QueueStatusFrame.lua"/>
     <Script file="BattlePetTooltip.lua"/>
@@ -482,6 +487,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="..\SharedXML\ToolWindowOwnerMixin.lua"/-->
     <!--Script file="..\SharedXML\RewardTrack\MajorFactionRenownSharedTemplates.lua"/-->
 
+    <!--Script file="ArrowCalloutFrame.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\PingKeybindReminder.lua"/-->
+    <!--Script file="WoWLabs\Interface\FrameXML\PingKeybindReminder.lua"/-->
 
     <!--#Save off whatever we need available unmodified-->
     <!--Script file="SecureCapsule.lua"/-->

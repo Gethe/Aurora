@@ -9,7 +9,7 @@ local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ FrameXML\ChatFrame.lua ]]
+do --[[ SharedXML\ChatFrame.lua ]]
     function Hook.ChatEdit_UpdateHeader(editBox)
         local chatType = editBox:GetAttribute("chatType")
         if not chatType then
@@ -60,7 +60,7 @@ do --[[ FrameXML\ChatFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\ChatFrame.xml ]]
+do --[[ SharedXML\ChatFrame.xml ]]
     function Skin.ChatFrameTemplate(ScrollingMessageFrame)
         if private.isRetail then
             Skin.MinimalScrollBar(ScrollingMessageFrame.ScrollBar)
@@ -82,7 +82,7 @@ do --[[ FrameXML\ChatFrame.xml ]]
     end
 end
 
-function private.FrameXML.ChatFrame()
+function private.SharedXML.ChatFrame()
     if private.disabled.chat then return end
     _G.hooksecurefunc("ChatEdit_UpdateHeader", Hook.ChatEdit_UpdateHeader)
 

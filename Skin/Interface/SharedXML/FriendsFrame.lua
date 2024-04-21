@@ -10,7 +10,7 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ FrameXML\FriendsFrame.lua ]]
+do --[[ SharedXML\FriendsFrame.lua ]]
     Hook.FriendsBroadcastFrameMixin = {}
     function Hook.FriendsBroadcastFrameMixin:ShowFrame()
         self.BroadcastButton:LockHighlight()
@@ -47,7 +47,7 @@ do --[[ FrameXML\FriendsFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\FriendsFrame.xml ]]
+do --[[ SharedXML\FriendsFrame.xml ]]
     function Skin.FriendsTabTemplate(Button)
         Skin.PanelTopTabButtonTemplate(Button)
     end
@@ -107,7 +107,7 @@ do --[[ FrameXML\FriendsFrame.xml ]]
     end
 end
 
-function private.FrameXML.FriendsFrame()
+function private.SharedXML.FriendsFrame()
     _G.hooksecurefunc("FriendsFrame_UpdateFriendButton", Hook.FriendsFrame_UpdateFriendButton)
     _G.hooksecurefunc("WhoList_InitButton", Hook.WhoList_InitButton)
 

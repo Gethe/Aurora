@@ -8,13 +8,13 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---do --[[ FrameXML\BNet.lua ]]
+--do --[[ SharedXML\BNet.lua ]]
 --end
 
---do --[[ FrameXML\BNet.xml ]]
+--do --[[ SharedXML\BNet.xml ]]
 --end
 
-function private.FrameXML.BNet()
+function private.SharedXML.BNet()
     ------------------
     -- BNToastFrame --
     ------------------

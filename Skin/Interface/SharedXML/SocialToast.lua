@@ -8,13 +8,13 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
---do --[[ FrameXML\SocialToast.lua ]]
+--do --[[ SharedXML\SocialToast.lua ]]
 --end
 
-do --[[ FrameXML\SocialToast.xml ]]
+do --[[ SharedXML\SocialToast.xml ]]
     function Skin.SocialToastTemplate(ContainedAlertFrame)
     end
 end
 
---function private.FrameXML.SocialToast()
+--function private.SharedXML.SocialToast()
 --end
