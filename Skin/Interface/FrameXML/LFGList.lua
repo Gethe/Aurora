@@ -163,7 +163,7 @@ do --[[ FrameXML\LFGList.xml ]]
     function Skin.LFGListGroupDataDisplayTemplate(Frame)
         Skin.RoleCountNoScriptsTemplate(Frame.RoleCount)
         for i = 1, #Frame.Enumerate.Icons do
-            Base.SetTexture(Frame.Enumerate.Icons[i], "iconTANK")
+            Base.SetTexture(Frame.Enumerate.Icons[i].RoleIcon, "iconTANK")
         end
     end
     function Skin.LFGListSearchAutoCompleteButtonTemplate(Button)
