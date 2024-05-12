@@ -40,6 +40,10 @@ do --[[ FrameXML\StaticPopup.xml ]]
         Button._setPushed = nil
     end
     function Skin.StaticPopupTemplate(Frame)
+        if not Frame then 
+            print("ReportError: Frame is nil in StaticPopupTemplate")
+            return 
+        end
         local name = Frame:GetName()
         if private.isRetail then
             Skin.DialogBorderTemplate(Frame.Border)
