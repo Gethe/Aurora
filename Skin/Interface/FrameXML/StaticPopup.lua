@@ -40,9 +40,9 @@ do --[[ FrameXML\StaticPopup.xml ]]
         Button._setPushed = nil
     end
     function Skin.StaticPopupTemplate(Frame)
-        if not Frame then 
-            print("ReportError: Frame is nil in StaticPopupTemplate")
-            return 
+        if not Frame then
+            _G.print("ReportError: Frame is nil in StaticPopupTemplate - Report to Aurora developers.")
+            return
         end
         local name = Frame:GetName()
         if private.isRetail then

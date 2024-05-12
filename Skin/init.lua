@@ -151,7 +151,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
         private.UpdateUIScale()
     else
         if addonName == ADDON_NAME then
-            print(("%s v%s loaded."):format(ADDON_NAME, private.API_MAJOR + private.API_MINOR / 100))
+            _G.print(("%s v%s loaded."):format(ADDON_NAME, private.API_MAJOR + private.API_MINOR / 100))
             -- Setup function for the host addon
             private.OnLoad()
             private.UpdateUIScale()

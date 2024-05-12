@@ -410,6 +410,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="BattlegroundChatFilters.lua"/-->
     <!--Script file="QueueUpdater.lua"/-->
     <Script file="PVEFrame.lua"/>
+    <!-- 10.2.7 - REWORK NEEDED
+    -->
     <Script file="LFGFrame.lua"/>
     <Script file="LFDFrame.lua"/>
     <Script file="RaidFinder.lua"/>

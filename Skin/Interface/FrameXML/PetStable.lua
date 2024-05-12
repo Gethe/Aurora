@@ -5,10 +5,10 @@ if private.shouldSkip() then return end
 -- luacheck: globals
 
 --[[ Core ]]
-local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+-- local Aurora = private.Aurora
+-- local Base = Aurora.Base
+-- local Hook, Skin = Aurora.Hook, Aurora.Skin
+-- local Color = Aurora.Color
 
 -- do --[[ FrameXML\PetStable.lua ]]
 --     function Hook.PetStable_SetSelectedPetInfo(icon, name, level, family, talent)
