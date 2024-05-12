@@ -1,4 +1,4 @@
-## Interface: 100206
+## Interface: 100207
 ## Interface-Classic: 11403
 ## Interface-Wrath: 30400
 ## Title: Aurora
@@ -6,7 +6,7 @@
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe, Hanshi/arnvid
 ## Version: 10.2.6.1
-## LoadWith: Blizzard_CompactRaidFrames
+# LoadWith: Blizzard_Dispatcher
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
@@ -34,11 +34,7 @@ Skin\skin.xml
 Skin\Interface\FrameXML\FrameXML.xml
 Skin\Interface\AddOns\AddOns.xml
 
-Skin\Interface\FrameXML\FrameXML_Vanilla.xml
-Skin\Interface\AddOns\AddOns_Vanilla.xml
 
-Skin\Interface\FrameXML\FrameXML_Wrath.xml
-Skin\Interface\AddOns\AddOns_Wrath.xml
 #@end-debug@
 
 aurora.lua
