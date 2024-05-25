@@ -1,4 +1,17 @@
-﻿## [10.2.6.1] ##
+﻿## [10.2.7.0] ##
+### Fixed ###
+
+  * [classic] disabled non-mainline builds while rebuilding the structure
+  * [retail] disable: hooksecurefunc FriendsFrame - this is no longer a function
+  * [retail] fix: changes to LoadWith and toc - Blizzard fubard this one
+  * [retail] fix: LFGList is changed - added another layer
+  * [retail] disable petstable broken code - add a error on staticpopups.
+  * [general] chore: resync all Addons and FramleXML xml files. Cata is added..
+  * [retail] chore: resync Skin/Interface/FrameXML/FrameXML_WoWLabs.xml
+  * [retail] fix: missing brackets
+  * [retail] chore: sync with gethe/wow-ui-source
+
+## [10.2.6.1] ##
 ### Fixed ###
 
   * [retail] Remove LFGListUtil_SetSearchEntryTooltip debug print spam
