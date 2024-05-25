@@ -1,6 +1,4 @@
 ## Interface: 100207
-## Interface-Classic: 11403
-## Interface-Wrath: 30400
 ## Title: Aurora
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
@@ -16,26 +14,9 @@
 
 libs\Libs.xml
 Skin\skin.xml
-#@non-debug@
-# #@version-retail@
-# Skin\Interface\FrameXML\FrameXML.xml
-# Skin\Interface\AddOns\AddOns.xml
-# #@end-version-retail@
-# #@version-classic@
-# Skin\Interface\FrameXML\FrameXML_Vanilla.xml
-# Skin\Interface\AddOns\AddOns_Vanilla.xml
-# #@end-version-classic@
-# #@version-wrath@
-# Skin\Interface\FrameXML\FrameXML_Wrath.xml
-# Skin\Interface\AddOns\AddOns_Wrath.xml
-# #@end-version-wrath@
-#@end-non-debug@
-#@debug@
+
 Skin\Interface\FrameXML\FrameXML.xml
 Skin\Interface\AddOns\AddOns.xml
-
-
-#@end-debug@
 
 aurora.lua
 gui.lua

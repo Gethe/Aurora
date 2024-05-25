@@ -34,32 +34,32 @@ jobs:
     - name: Create Mainline Package
       uses: BigWigsMods/packager@v2
 
-  wrath:
-    needs: is_beta
-    runs-on: ubuntu-latest
+  # wrath:
+  #   needs: is_beta
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
+  #   steps:
+  #   - uses: actions/checkout@v3
 
-    - name: Remove Changelog
-      run: rm -f CHANGELOG.md
+  #   - name: Remove Changelog
+  #     run: rm -f CHANGELOG.md
 
-    - name: Create Wrath Package
-      uses: BigWigsMods/packager@v2
-      with:
-        args: -g wrath -m .pkgmeta-wrath
+  #   - name: Create Wrath Package
+  #     uses: BigWigsMods/packager@v2
+  #     with:
+  #       args: -g wrath -m .pkgmeta-wrath
 
-  vanilla:
-    needs: is_beta
-    runs-on: ubuntu-latest
+  # vanilla:
+  #   needs: is_beta
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
+  #   steps:
+  #   - uses: actions/checkout@v3
 
-    - name: Remove Changelog
-      run: rm -f CHANGELOG.md
+  #   - name: Remove Changelog
+  #     run: rm -f CHANGELOG.md
 
-    - name: Create Vanilla Package
-      uses: BigWigsMods/packager@v2
-      with:
-        args: -g classic -m .pkgmeta-vanilla
+  #   - name: Create Vanilla Package
+  #     uses: BigWigsMods/packager@v2
+  #     with:
+  #       args: -g classic -m .pkgmeta-vanilla
