@@ -1,4 +1,12 @@
-﻿## [10.2.7.0] ##
+﻿## [10.2.7.1] ##
+### Fixed ###
+
+  * [retail] fix: Another LFGList layer change - missed previously - #116
+  * [retail] fix: GetPlayerStyleString Taint
+  * [retail] add: support for groupfinder-icon-role-micro
+
+
+## [10.2.7.0] ##
 ### Fixed ###
 
   * [classic] disabled non-mainline builds while rebuilding the structure
@@ -10,6 +18,7 @@
   * [retail] chore: resync Skin/Interface/FrameXML/FrameXML_WoWLabs.xml
   * [retail] fix: missing brackets
   * [retail] chore: sync with gethe/wow-ui-source
+
 
 ## [10.2.6.1] ##
 ### Fixed ###

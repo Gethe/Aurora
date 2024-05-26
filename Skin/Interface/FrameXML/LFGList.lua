@@ -253,7 +253,7 @@ function private.FrameXML.LFGList()
             elseif activityInfo.isMythicActivity then
                 PlaystyleString = "GROUP_FINDER_PVE_MYTHICZERO_PLAYSTYLE"
             end
-            return PlaystyleString and _G[PlaystyleString .. tostring(playstyle)] or nil
+            return PlaystyleString and _G[PlaystyleString .. _G.tostring(playstyle)] or nil
         end
         _G.LFGListEntryCreation_SetTitleFromActivityInfo = function(_) end
     end
