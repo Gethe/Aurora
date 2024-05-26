@@ -58,7 +58,7 @@ do --[[ FrameXML\LFGList.lua ]]
     function Hook.LFGListGroupDataDisplayEnumerate_Update(self, numPlayers, displayData, disabled, iconOrder)
         local iconIndex = numPlayers;
         for i=1, #self.Icons do
-            local icon = self.Icons[i]
+            local icon = self.Icons[i].RoleIcon
             if i > numPlayers then
                 icon._auroraBorder:Hide();
                 icon._auroraBG:Hide();
@@ -70,7 +70,7 @@ do --[[ FrameXML\LFGList.lua ]]
 
         for i=1, #iconOrder do
             for j=1, displayData[iconOrder[i]] do
-                Base.SetTexture(self.Icons[iconIndex], "icon"..iconOrder[i])
+                Base.SetTexture(self.Icons[iconIndex].RoleIcon, "icon"..iconOrder[i])
                 self.Icons[iconIndex]:SetSize(14, 14)
                 iconIndex = iconIndex - 1;
                 if iconIndex < 1 then
@@ -80,7 +80,7 @@ do --[[ FrameXML\LFGList.lua ]]
         end
 
         for i=1, iconIndex do
-            local icon = self.Icons[i]
+            local icon = self.Icons[i].RoleIcon
             icon:SetAlpha(0)
             icon:SetSize(8, 8)
 
