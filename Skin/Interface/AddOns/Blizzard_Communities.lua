@@ -391,6 +391,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             ["UI-LFG-RoleIcon-Tank"] = "iconTANK",
             ["UI-LFG-RoleIcon-Healer"] = "iconHEALER",
             ["UI-LFG-RoleIcon-DPS"] = "iconDAMAGER",
+            ["groupfinder-icon-role-micro-tank"] = "iconTANK",
+            ["groupfinder-icon-role-micro-heal"] = "iconHEALER",
+            ["groupfinder-icon-role-micro-dps"] = "iconDAMAGER",
         }
         function Skin.ClubFinderRoleTemplate(Frame)
             local atlas = Frame.Icon:GetAtlas()
