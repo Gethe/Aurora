@@ -315,22 +315,3 @@ do -- Shapes
         texture:SetVertexOffset(4, 0, height / 2)
     end)
 end
-
---[[
-Base.RegisterTexture("test", function(frame, texture)
-    texture:SetColorTexture(Color.white:GetRGB())
-end)
-
-local snapshot = _G.UIParent:CreateTexture("$parentSnapshotTest", "BACKGROUND")
-snapshot:SetPoint("CENTER")
-snapshot:SetSize(256, 256)
-Base.SetTexture(snapshot, "test")
---Base.SetTexture(snapshot, "shapeStar")
---Base.SetTexture(snapshot, "iconDAMAGER")
---Base.SetTexture(snapshot, "iconWARRIOR")
---Base.SetTexture(snapshot, "gradientUp")
---Base.SetTexture(snapshot, "arrowLeft")
---Base.SetTexture(snapshot, "gradientLeft")
---local color = _G.RAID_CLASS_COLORS[private.charClass.token]
---snapshot:SetVertexColor(color.r, color.g, color.b)
-]]
