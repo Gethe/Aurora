@@ -571,8 +571,9 @@ function private.FrameXML.ActionBarController()
     if not private.disabled.mainmenubar then
         if private.isRetail then
             local MainMenuBar = _G.MainMenuBar
-            MainMenuBar.BorderArt:SetAlpha(0)
-            MainMenuBar.Background:SetAlpha(0)
+            MainMenuBar.BorderArt:SetAlpha(0) 
+            -- Removed in 10.2.0
+            -- MainMenuBar.Background:SetAlpha(0)
             MainMenuBar.EndCaps:SetAlpha(0)
         else
             _G.hooksecurefunc("MainMenuTrackingBar_Configure", Hook.MainMenuTrackingBar_Configure)
