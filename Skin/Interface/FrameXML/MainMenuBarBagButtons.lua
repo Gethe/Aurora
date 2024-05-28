@@ -21,10 +21,9 @@ end
 
 function private.FrameXML.MainMenuBarBagButtons()
     if private.disabled.mainmenubar then return end
-
-    Skin.FrameTypeItemButton(_G.MainMenuBarBackpackButton)
-    Base.CropIcon(_G.MainMenuBarBackpackButton.SlotHighlightTexture)
-
+    -- Skin.FrameTypeItemButton(_G.MainMenuBarBackpackButton)
+    -- Base.CropIcon(_G.MainMenuBarBackpackButton.SlotHighlightTexture)
+ 
     Skin.BagSlotButtonTemplate(_G.CharacterBag0Slot)
     Skin.BagSlotButtonTemplate(_G.CharacterBag1Slot)
     Skin.BagSlotButtonTemplate(_G.CharacterBag2Slot)
