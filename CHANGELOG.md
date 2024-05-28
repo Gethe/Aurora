@@ -1,4 +1,12 @@
-﻿## [10.2.7.1] ##
+﻿## [10.2.7.2] ##
+### Fixed ###
+
+  * [retail] fix: MainMenuBar no longer have the frame Background - this is now a layer. #113
+  * [retail] chg: as part of fix for #113 - tmp disabled skinning of backpack icon. It goes invisible
+  * [retail] fix: a missing C_Container
+
+
+## [10.2.7.1] ##
 ### Fixed ###
 
   * [retail] fix: Another LFGList layer change - missed previously - #116
