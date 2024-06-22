@@ -1,4 +1,10 @@
-﻿## [10.2.7.2] ##
+﻿## [10.2.7.3] ##
+### Fixed ###
+
+  * [retail] fix: luacheck
+
+
+## [10.2.7.2] ##
 ### Fixed ###
 
   * [retail] fix: MainMenuBar no longer have the frame Background - this is now a layer. #113
