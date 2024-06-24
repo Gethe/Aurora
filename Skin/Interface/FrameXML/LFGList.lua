@@ -239,7 +239,8 @@ function private.FrameXML.LFGList()
         if (not _G.C_LFGList.IsPlayerAuthenticatedForLFG(activityID)) then
             _G.print("Aurora: LFGList Taint Fix not installed.")
             return
-        end        
+        end
+        _G.print("Aurora: LFGList Taint Fix installed.")
         _G.C_LFGList.GetPlaystyleString = function(playstyle, activityInfo)
             if not (activityInfo and playstyle and playstyle ~= 0 and _G.C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID).showPlaystyleDropdown) then
                 return nil

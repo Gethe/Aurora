@@ -1,4 +1,11 @@
-﻿## [10.2.7.3] ##
+﻿## [10.2.7.4] ##
+### Fixed ###
+
+  * [retail] fix: workaround for #117 if user does not have authenticator
+  * [retail]  fix: #119 make questContrast be dark
+
+
+## [10.2.7.3] ##
 ### Fixed ###
 
   * [retail] fix: luacheck
