@@ -237,7 +237,7 @@ function private.FrameXML.LFGList()
     do -- GetPlayerStyleString TaintFix
         local activityID = 1164;
         if (not _G.C_LFGList.IsPlayerAuthenticatedForLFG(activityID)) then
-            _G.print("Aurora: LFGList Taint Fix cannot be installed due to lack of authenticator.")
+            _G.print("Aurora: LFGList Taint Fix not installed.")
             return
         end        
         _G.C_LFGList.GetPlaystyleString = function(playstyle, activityInfo)
