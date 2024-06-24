@@ -155,7 +155,7 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
             -- Setup function for the host addon
             private.OnLoad()
             private.UpdateUIScale()
-            if not (tonumber(_G.GetCVar("questTextContrast")) == 4) then
+            if (tonumber(_G.GetCVar("questTextContrast")) ~= 4) then
                 _G.SetCVar("questTextContrast", 4);
             end
 

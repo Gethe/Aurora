@@ -222,7 +222,8 @@ end
 -- create frames/widgets
 local gui = _G.CreateFrame("Frame", "AuroraOptions", _G.UIParent)
 -- gui.name = "Aurora"
-local category = category or _G.Settings.GetCategory("Aurora");
+-- local category = category or _G.Settings.GetCategory("Aurora");
+_G.Settings.GetCategory("Aurora");
 -- local subcategory, layout = _G.Settings.RegisterCanvasLayoutSubcategory(category, gui, "AuroraOptions");
 
 local title = gui:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
