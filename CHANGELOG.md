@@ -1,4 +1,4 @@
-﻿## [10.2.7.4] ##
+﻿## [10.2.7.5] ##
 ### Fixed ###
 
   * [retail] fix: workaround for #117 if user does not have authenticator
