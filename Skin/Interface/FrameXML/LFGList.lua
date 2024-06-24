@@ -235,11 +235,12 @@ function private.FrameXML.LFGList()
     _G.hooksecurefunc("LFGListUtil_SetSearchEntryTooltip", Hook.LFGListUtil_SetSearchEntryTooltip)
 
     do -- GetPlayerStyleString TaintFix
+        local activityID = 1164;
+        if (not _G.C_LFGList.IsPlayerAuthenticatedForLFG(activityID)) then
+            _G.print("Aurora: LFGList Taint Fix cannot be installed due to lack of authenticator.")
+            return
+        end        
         _G.C_LFGList.GetPlaystyleString = function(playstyle, activityInfo)
-            local activityID = 1164;
-            if (not _G.C_LFGList.IsPlayerAuthenticatedForLFG(activityID)) then
-                return
-            end
             if not (activityInfo and playstyle and playstyle ~= 0 and _G.C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID).showPlaystyleDropdown) then
                 return nil
             end
