@@ -1,4 +1,4 @@
-## Interface: 100207
+## Interface: 100207,110000,110002
 ## Title: Aurora
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
@@ -15,8 +15,9 @@
 libs\Libs.xml
 Skin\skin.xml
 
-Skin\Interface\FrameXML\FrameXML.xml
-Skin\Interface\AddOns\AddOns.xml
+Skin\Interface\AddOns\Blizzard_FrameXML\Blizzard_FrameXML_Standard.xml
+Skin\Interface\AddOns\Blizzard_UIPanels_Game\Blizzard_UIPanels_Game_Mainline.xml
+Skin\Interface\AddOns\AddOns_Mainline.xml
 
 aurora.lua
 gui.lua
