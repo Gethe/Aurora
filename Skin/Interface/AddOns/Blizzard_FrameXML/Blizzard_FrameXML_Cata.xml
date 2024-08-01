@@ -1,0 +1,56 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
+
+    <Script>
+        _G.AURORA_DEBUG_PROJECT = 40
+    </Script>
+
+    <!--Script file="Shared\Localization.lua"/-->
+    <!--Script file="Wrath\SparkleFrame.lua"/-->
+    <!--Script file="CustomBindingManager.lua"/-->
+    <!--Script file="CustomBindingHandler.lua"/-->
+    <!--Script file="Classic\SecureTemplatesBase.lua"/-->
+    <!--Script file="Classic\SecureTemplates.lua"/-->
+    <!--Script file="SecureStateDriver.lua"/-->
+    <!--Script file="SecureHoverDriver.lua"/-->
+    <!--Script file="SecureHandlerTemplates.lua"/-->
+    <!--Script file="SecureGroupHeaders.lua"/-->
+    <!--Script file="Classic\NavigationBar.lua"/-->
+    <!--Script file="FilterDropDown.lua"/-->
+    <!--Script file="Cata\CharacterFrameTemplates.lua"/-->
+    <!--Script file="Classic\Sound.lua"/-->
+    <!--Script file="Classic\AlertFrames.lua"/-->
+    <!--Script file="Classic\AlertFrameSystems.lua"/-->
+    <!--Script file="Classic\MirrorTimer.lua"/-->
+    <!--Script file="Classic\CoinPickupFrame.lua"/-->
+    <!--Script file="Classic\StackSplitFrame.lua"/-->
+    <!--Script file="FadingFrame.lua"/-->
+    <!--Script file="Classic\ZoneText.lua"/-->
+    <!--Script file="Shared\Cooldown.lua"/-->
+    <!--Script file="Classic\Cooldown.lua"/-->
+    <!--Script file="GuildUtil.lua"/-->
+    <!--Script file="Classic\TutorialFrame.lua"/-->
+    <!--Script file="Shared\LowHealthFrame.lua"/-->
+    <!--Script file="Classic\LowHealthFrame.lua"/-->
+    <!--Script file="Classic\CombatFeedback.lua"/-->
+    <!--Script file="Classic\RaidWarning.lua"/-->
+    <Script file="Shared\CinematicFrame.lua"/>
+    <!--Script file="Classic\ColorPickerFrame.lua"/-->
+    <!--Script file="TBC\WorldStateFrame.lua"/-->
+    <!--Script file="Cata\WorldStateFrame.lua"/-->
+    <!--Script file="Classic\TalentFrameBase_Shared.lua"/-->
+    <!--Script file="Cata\TalentFrameBase.lua"/-->
+    <!--Script file="Cata\Blizzard_TalentUITemplates.lua"/-->
+    <!--Script file="EasyMenu.lua"/-->
+    <!--Script file="Classic\MovieFrame.lua"/-->
+    <!--Script file="Wrath\RolePoll.lua"/-->
+    <!--Script file="Classic\StreamingFrame.lua"/-->
+    <!--Script file="IconIntroAnimation.lua"/-->
+    <Script file="Timer.lua"/>
+    <!--Script file="Classic\LootHistory.lua"/-->
+    <!--Script file="Classic\ClassTrainerFrameTemplates.lua"/-->
+    <!--Script file="Wrath\EquipmentManager.lua"/-->
+    <Script file="EquipmentFlyout.lua"/>
+    <Script file="GhostFrame.lua"/>
+
+</Ui>

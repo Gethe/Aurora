@@ -1,0 +1,34 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
+
+    <Script>
+        _G.AURORA_DEBUG_PROJECT = 0
+    </Script>
+
+    <!--Script file="ErrorUtil.lua"/-->
+    <!--Script file="Mixin.lua"/-->
+    <!--Script file="TableUtil.lua"/-->
+    <!--Script file="EnumUtil.lua"/-->
+    <!--Script file="LocaleUtil.lua"/-->
+    <!--Script file="FunctionUtil.lua"/-->
+    <!--Script file="ObjectUpdater.lua"/-->
+    <!--Script file="MathUtil.lua"/-->
+    <!--Script file="ExportUtil.lua"/-->
+    <!--Script file="Rectangle.lua"/-->
+    <!--Script file="TextureUtil.lua"/-->
+    <!--Script file="AddOnUtil.lua"/-->
+    <!--Script file="Flags.lua"/-->
+    <!--Script file="CallbackRegistry.lua"/-->
+    <!--Script file="CallbackRegistrant.lua"/-->
+    <!--Script file="GlobalCallbackRegistry.lua"/-->
+    <!--Script file="CvarUtil.lua"/-->
+    <!--Script file="TemplateInfoCache.lua"/-->
+    <!--Script file="FrameUtil.lua"/-->
+    <!--Script file="FrameFactory.lua"/-->
+    <!--Script file="SecureTypes.lua"/-->
+    <!--Script file="ProxyUtil.lua"/-->
+    <Script file="Pools.lua"/>
+    <!--Script file="ButtonStateBehavior.lua"/-->
+    <!--Script file="ColorSwatch.lua"/-->
+
+</Ui>

@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
+
+    <Script>
+        _G.AURORA_DEBUG_PROJECT = 40
+    </Script>
+
+    <!--Script file="Classic\IconDataProvider.lua"/-->
+    <!--Script file="AnimatedStatusBar.lua"/-->
+    <!--Script file="FlowContainer.lua"/-->
+    <!--Script file="Classic\FrameLocks.lua"/-->
+    <!--Script file="PlayerMovementFrameFader.lua"/-->
+    <!--Script file="Classic\Constants.lua"/-->
+    <Script file="Shared\Constants.lua"/>
+    <!--Script file="Wrath\Constants.lua"/-->
+    <!--Script file="Cata\Constants.lua"/-->
+    <!--Script file="TBC\Localization.lua"/-->
+
+</Ui>
