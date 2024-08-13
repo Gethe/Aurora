@@ -3,8 +3,8 @@
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe, Hanshi/arnvid
-## Version: 10.2.7.5
-## LoadWith: Blizzard_ChatFrame
+## Version: 11.0.0.0
+
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## SavedVariables: AuroraConfig
 ## X-Website: http://www.wowinterface.com/downloads/info18589.html
@@ -14,9 +14,6 @@
 
 libs\Libs.xml
 Skin\skin.xml
-
-Skin\Interface\AddOns\Blizzard_FrameXML\Blizzard_FrameXML_Standard.xml
-Skin\Interface\AddOns\Blizzard_UIPanels_Game\Blizzard_UIPanels_Game_Mainline.xml
 Skin\Interface\AddOns\AddOns_Mainline.xml
 
 aurora.lua
