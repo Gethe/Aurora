@@ -428,7 +428,7 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
     elseif private.commands[msg] then
         private.commands[msg]()
     else
-        _G.InterfaceOptionsFrame_OpenToCategory(gui)
-        _G.InterfaceOptionsFrame_OpenToCategory(gui)
+
+        _G.Settings.OpenToCategory(gui)
     end
 end
