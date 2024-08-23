@@ -425,8 +425,14 @@ function private.FrameXML.ActionBarController()
             SpellbookMicroButton = {
                 texture = [[Interface\Icons\INV_Misc_Book_09]]
             },
+            ProfessionMicroButton1 = {
+                texture = [[Interface\Icons\INV_Misc_Wrench_01]]
+            },
             TalentMicroButton = {
                 texture = [[Interface\Icons\Ability_Marksmanship]]
+            },
+            PlayerSpellsMicroButton = {
+                texture = [[Interface\Icons\Spell_Nature_WispSplode]]
             },
             AchievementMicroButton = {
                 icon = "Achievement"
