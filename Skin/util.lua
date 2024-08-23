@@ -16,7 +16,7 @@ Helpful functions for layout, widget info, and debugging.
 --[[ Layout ]]--
 
 local anchors = {}
-local tickPool = _G.CreateObjectPool(function(pool)
+local tickPool = _G.CreateUnsecuredObjectPool(function(pool)
     local tick = _G.UIParent:CreateTexture(nil, "ARTWORK", nil, 5)
     tick:SetSize(1, 1)
     return tick
@@ -317,8 +317,12 @@ function Util.Mixin(table, ...)
             tempMixin[name] = func
         end
     end
-
+    if not table then
+        -- _G.print("util.Mixin: ", name, " empty table")
+        return
+    end
     for name, func in next, tempMixin do
+        -- _G.print("util.Mixin: ", name, "functions: ", table[name], func)
         _G.hooksecurefunc(table, name, func)
     end
 end
