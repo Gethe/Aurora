@@ -1,4 +1,12 @@
-﻿## [10.2.7.5] ##
+﻿
+## [11.0.0.0] ##
+### Fixed ###
+
+  * Updated for The War Within
+  * Many features are currently disabled while the UI is being rebuilt
+  * Some skins are not applied correctly
+
+## [10.2.7.5] ##
 ### Fixed ###
 
   * [retail] fix: workaround for #117 if user does not have authenticator
