@@ -41,6 +41,7 @@ addonName.
 function Base.AddSkin(addonName, func)
     assert(not private.AddOns[addonName], addonName .. " already has a registered skin." )
     private.AddOns[addonName] = func
+    _G.print("Aurora: Registered skin for", addonName)
 
     if _G.C_AddOns.IsAddOnLoaded(addonName) then
         func()
