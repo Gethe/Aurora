@@ -180,8 +180,9 @@ function private.SharedXML.FriendsFrame()
     local _, blizzIcon = select(11, BNetFrame.UnavailableInfoFrame:GetRegions())
     blizzIcon:SetTexture([[Interface\Glues\MainMenu\Glues-BlizzardLogo]])
 
-    Skin.UIDropDownMenuTemplate(_G.FriendsFrameStatusDropDown)
-    _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
+    -- FIXLATER
+    -- Skin.UIDropDownMenuTemplate(_G.FriendsFrameStatusDropdown)
+    -- _G.FriendsFrameStatusDropdown:SetPoint("TOPLEFT", -12, -27)
     local FriendsTabHeader = FriendsFrame.FriendsTabHeader
     Skin.FriendsTabTemplate(FriendsTabHeader.Tab1)
     Skin.FriendsTabTemplate(FriendsTabHeader.Tab2)
@@ -217,8 +218,10 @@ function private.SharedXML.FriendsFrame()
     Skin.InsetFrameTemplate(_G.WhoFrameListInset)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader1)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader2)
-    Skin.UIDropDownMenuTemplate(_G.WhoFrameDropDown)
-    _G.WhoFrameDropDownHighlightTexture:SetAlpha(0)
+
+    -- FIXLATER
+    -- Skin.UIDropDownMenuTemplate(_G.WhoFrameDropdown)
+    -- _G.WhoFrameDropdownHighlightTexture:SetAlpha(0)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader3)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader4)
 

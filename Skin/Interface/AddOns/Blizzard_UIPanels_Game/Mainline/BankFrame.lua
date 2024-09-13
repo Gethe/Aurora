@@ -17,7 +17,7 @@ do --[[ FrameXML\BankFrame.lua ]]
 
         local _, _, _, quality, _, _, link = _G.C_Container.GetContainerItemInfo(bagID, slotID)
         if not button._auroraIconBorder then
-            if bagID == _G.REAGENTBANK_CONTAINER then
+            if bagID == _G.Enum.BagIndex.Reagentbank then
                 Skin.ReagentBankItemButtonGenericTemplate(button)
             else
                 if button.isBag then
@@ -80,12 +80,14 @@ function private.FrameXML.BankFrame()
     select(4, BankFrame:GetRegions()):Hide() -- Bank-Background
     Skin.PanelTabButtonTemplate(_G.BankFrameTab1)
     Skin.PanelTabButtonTemplate(_G.BankFrameTab2)
+    Skin.PanelTabButtonTemplate(_G.BankFrameTab3)
 
     Util.PositionRelative("TOPLEFT", BankFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.BankFrameTab1,
         _G.BankFrameTab2,
+        _G.BankFrameTab3,
     })
-
+    
     Skin.BagSearchBoxTemplate(_G.BankItemSearchBox)
     Skin.BankAutoSortButtonTemplate(_G.BankItemAutoSortButton)
 
@@ -95,7 +97,6 @@ function private.FrameXML.BankFrame()
     select(10, BankSlotsFrame:GetRegions()):SetDrawLayer("OVERLAY") -- BAGSLOTTEXT
 
     Skin.UIPanelButtonTemplate(_G.BankFramePurchaseButton)
-    Skin.InsetFrameTemplate(_G.BankFrameMoneyFrameInset)
     Skin.ThinGoldEdgeTemplate(_G.BankFrameMoneyFrameBorder)
 
 

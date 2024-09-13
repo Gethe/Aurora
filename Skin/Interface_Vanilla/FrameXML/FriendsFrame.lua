@@ -172,10 +172,11 @@ function private.FrameXML.FriendsFrame()
     local _, blizzIcon = select(11, BNetFrame.UnavailableInfoFrame:GetRegions())
     blizzIcon:SetTexture([[Interface\Glues\MainMenu\Glues-BlizzardLogo]])
 
-    Skin.UIDropDownMenuTemplate(_G.FriendsFrameStatusDropDown)
-    _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
-    Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab1)
-    Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab2)
+    -- FIXLATER
+    -- Skin.UIDropDownMenuTemplate(_G.FriendsFrameStatusDropDown)
+    -- _G.FriendsFrameStatusDropDown:SetPoint("TOPLEFT", -12, -27)
+    -- Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab1)
+    -- Skin.FriendsTabTemplate(_G.FriendsTabHeaderTab2)
 
 
     ----------------------

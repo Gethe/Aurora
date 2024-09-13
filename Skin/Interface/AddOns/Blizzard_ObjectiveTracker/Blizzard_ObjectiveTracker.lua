@@ -312,6 +312,8 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
 end
 
 function private.AddOns.Blizzard_ObjectiveTracker()
+    -- FIXLATER - disable for now
+    if private.isRetail then return end
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ObjectiveTrackerShared --
     ----====####$$$$%%%%%$$$$####====----

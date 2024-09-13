@@ -533,22 +533,22 @@ function private.AddOns.Blizzard_AchievementUI()
         _G.AchievementFrameTab3,
     })
 
+    -- FIXLATER -- dropdowns are changed to use the new widget system
+    -- Base.SetBackdrop(_G.AchievementFrameFilterDropDown, Color.button)
+    -- local filterBG = _G.AchievementFrameFilterDropDown:GetBackdropTexture("bg")
 
-    Base.SetBackdrop(_G.AchievementFrameFilterDropDown, Color.button)
-    local filterBG = _G.AchievementFrameFilterDropDown:GetBackdropTexture("bg")
+    -- _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", bg, 148, -6)
+    -- _G.AchievementFrameFilterDropDown:SetHeight(16)
+    -- _G.AchievementFrameFilterDropDownText:SetPoint("LEFT", filterBG, 5, 0)
 
-    _G.AchievementFrameFilterDropDown:SetPoint("TOPLEFT", bg, 148, -6)
-    _G.AchievementFrameFilterDropDown:SetHeight(16)
-    _G.AchievementFrameFilterDropDownText:SetPoint("LEFT", filterBG, 5, 0)
+    -- Skin.FrameTypeButton(_G.AchievementFrameFilterDropDownButton)
+    -- _G.AchievementFrameFilterDropDownButton:SetSize(16, 16)
 
-    Skin.FrameTypeButton(_G.AchievementFrameFilterDropDownButton)
-    _G.AchievementFrameFilterDropDownButton:SetSize(16, 16)
-
-    local filterArrow = _G.AchievementFrameFilterDropDownButton:CreateTexture(nil, "ARTWORK")
-    filterArrow:SetPoint("TOPLEFT", 4, -6)
-    filterArrow:SetPoint("BOTTOMRIGHT", -4, 6)
-    Base.SetTexture(filterArrow, "arrowDown")
-    Base.SetTexture(filterArrow, "arrowDown")
+    -- local filterArrow = _G.AchievementFrameFilterDropDownButton:CreateTexture(nil, "ARTWORK")
+    -- filterArrow:SetPoint("TOPLEFT", 4, -6)
+    -- filterArrow:SetPoint("BOTTOMRIGHT", -4, 6)
+    -- Base.SetTexture(filterArrow, "arrowDown")
+    -- Base.SetTexture(filterArrow, "arrowDown")
 
 
     local SearchBox = AchievementFrame.SearchBox

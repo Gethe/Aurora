@@ -149,7 +149,6 @@ function private.FrameXML.QuestFrame()
     _G.QuestFrameCompleteQuestButton:SetPoint("BOTTOMLEFT", 5, 5)
     Skin.QuestScrollFrameTemplate(_G.QuestRewardScrollFrame)
 
-
     Skin.QuestFramePanelTemplate(_G.QuestFrameProgressPanel)
     Skin.UIPanelButtonTemplate(_G.QuestFrameGoodbyeButton)
     _G.QuestFrameGoodbyeButton:SetPoint("BOTTOMRIGHT", -5, 5)
@@ -160,7 +159,6 @@ function private.FrameXML.QuestFrame()
         Skin.QuestItemTemplate(_G["QuestProgressItem"..i])
     end
 
-
     Skin.QuestFramePanelTemplate(_G.QuestFrameDetailPanel)
     Skin.UIPanelButtonTemplate(_G.QuestFrameDeclineButton)
     _G.QuestFrameDeclineButton:SetPoint("BOTTOMRIGHT", -5, 5)
@@ -168,14 +166,12 @@ function private.FrameXML.QuestFrame()
     _G.QuestFrameAcceptButton:SetPoint("BOTTOMLEFT", 5, 5)
     Skin.QuestScrollFrameTemplate(_G.QuestFrameDetailPanel.ScrollFrame)
 
-
     Skin.QuestFramePanelTemplate(_G.QuestFrameGreetingPanel)
     Skin.UIPanelButtonTemplate(_G.QuestFrameGreetingGoodbyeButton)
     _G.QuestFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.QuestScrollFrameTemplate(_G.QuestGreetingScrollFrame)
     _G.QuestGreetingFrameHorizontalBreak:SetColorTexture(1, 1, 1, .2)
     _G.QuestGreetingFrameHorizontalBreak:SetSize(256, 1)
-
     -------------------
     -- QuestNPCModel --
     -------------------
@@ -187,22 +183,18 @@ function private.FrameXML.QuestFrame()
     modelBackground:SetFrameLevel(0)
     Skin.FrameTypeFrame(modelBackground)
 
-    _G.QuestNPCModelBg:Hide()
-    _G.QuestNPCModelTopBg:Hide()
-    _G.QuestNPCModelShadowOverlay:Hide()
+    
+    -- FIXLATER
+    QuestModel.ModelBackground:Hide()
+    QuestModel.Border:Hide()
 
-    QuestModel.BorderBottomLeft:Hide()
-    QuestModel.BorderBottomRight:Hide()
-    QuestModel.BorderTop:Hide()
-    QuestModel.BorderBottom:Hide()
-    QuestModel.BorderLeft:Hide()
-    QuestModel.BorderRight:Hide()
-
-    _G.QuestNPCCornerTopLeft:Hide()
+    modelBackground.TopLeftCorner:Hide()
+    if private.isRetail then return end
     _G.QuestNPCCornerTopRight:Hide()
     _G.QuestNPCCornerBottomLeft:Hide()
     _G.QuestNPCCornerBottomRight:Hide()
 
+    if private.isRetail then return end
     _G.QuestNPCModelNameplate:SetAlpha(0)
 
     _G.QuestNPCModelNameText:SetPoint("TOPLEFT", modelBackground, "BOTTOMLEFT")
@@ -217,7 +209,7 @@ function private.FrameXML.QuestFrame()
     Skin.FrameTypeFrame(QuestNPCModelTextFrame)
     QuestNPCModelTextFrame:SetPoint("TOPLEFT", _G.QuestNPCModelNameplate, "BOTTOMLEFT", -1, 12)
     QuestNPCModelTextFrame:SetWidth(200)
-    _G.QuestNPCModelTextFrameBg:Hide()
+    QuestNPCModelTextFrame.Background:Hide()
 
     QuestNPCModelTextFrame.BorderBottomLeft:Hide()
     QuestNPCModelTextFrame.BorderBottomRight:Hide()
@@ -225,7 +217,7 @@ function private.FrameXML.QuestFrame()
     QuestNPCModelTextFrame.BorderLeft:Hide()
     QuestNPCModelTextFrame.BorderRight:Hide()
 
-    local npcModelScroll = _G.QuestNPCModelTextScrollFrame
+    local npcModelScroll = _G.QuestModelScene.QuestNPCModelTextScrollFrame
     Skin.ScrollFrameTemplate(npcModelScroll)
     --npcModelScroll:SetPoint("TOPLEFT", 4, -4)
     --npcModelScroll:SetPoint("BOTTOMRIGHT", -4, 4)

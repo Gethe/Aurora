@@ -17,16 +17,15 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
             self.Icon:ClearAllPoints()
-            self.Icon:SetPoint("CENTER", self._iconBG)
-            self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
-
-            self._iconBG:Show()
-            self._iconBG:SetColorTexture(Color.black:GetRGB())
+            self.Icon:SetPoint("CENTER")
+            self.Name:SetPoint("LEFT", self.Icon, "RIGHT", 11, 0)
+            self.Icon:Show()
+            self.Icon:SetColorTexture(Color.black:GetRGB())
         end
         if private.isRetail then
             function Hook.CommunitiesListEntryMixin:Init(elementData)
                 local clubInfo = elementData.clubInfo
-                self._iconBG:SetWidth(self._iconBG:GetHeight())
+                -- self._iconBG:SetWidth(self._iconBG:GetHeight())
 
                 if clubInfo and self._iconBG then
                     local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
@@ -49,11 +48,11 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 self.Icon:SetTexCoord(0, 1, 0, 1)
                 self.Icon:ClearAllPoints()
                 self.Icon:SetSize(34, 34)
-                self.Icon:SetPoint("CENTER", self._iconBG)
-                self.Name:SetPoint("LEFT", self._iconBG, "RIGHT", 11, 0)
+                self.Icon:SetPoint("CENTER" )
+                self.Name:SetPoint("LEFT", self.Icon, "RIGHT", 11, 0)
 
-                self._iconBG:Show()
-                self._iconBG:SetColorTexture(Color.black:GetRGB())
+                self.Icon:Show()
+                self.Icon:SetColorTexture(Color.black:GetRGB())
             end
             function Hook.CommunitiesListEntryMixin:SetGuildFinder()
                 self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
@@ -181,7 +180,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Util.Mixin(Button, Hook.CommunitiesMemberListEntryMixin)
         end
         function Skin.CommunitiesMemberListFrameTemplate(Frame)
-            Skin.UICheckButtonTemplate(Frame.ShowOfflineButton)
+            -- FIXLATER
+            -- Skin.UICheckButtonTemplate(Frame.ShowOfflineButton)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
             Frame.ColumnDisplay.InsetBorderTopLeft:Hide()
             Frame.ColumnDisplay.InsetBorderTopRight:Hide()
@@ -253,7 +253,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             Skin.InputBoxTemplate(Frame.NameEdit)
             Skin.InputScrollFrameTemplate(Frame.Description)
-            Skin.UICheckButtonTemplate(Frame.TypeCheckBox)
+            -- FIXLATER
+            -- Skin.UICheckButtonTemplate(Frame.TypeCheckBox)
             Skin.UIPanelButtonTemplate(Frame.Accept)
             Skin.UIPanelButtonTemplate(Frame.Delete)
             Skin.UIPanelButtonTemplate(Frame.Cancel)
@@ -263,7 +264,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.SelectionFrameTemplate(Frame.Selector)
             Skin.CommunitiesListDropDownMenuTemplate(Frame.CommunitiesListDropDownMenu)
             Skin.ScrollFrameTemplate(Frame.ScrollFrame)
-            Skin.UICheckButtonTemplate(Frame.ScrollFrame.Child.QuickJoinButton)
+            -- FIXLATER
+            -- Skin.UICheckButtonTemplate(Frame.ScrollFrame.Child.QuickJoinButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.NoneButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.AllButton)
         end
@@ -313,9 +315,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.DialogBorderDarkTemplate(Frame.BG)
 
             Skin.ClubFinderCheckboxTemplate(Frame.ShouldListClub.Button)
-            Skin.ClubFinderFocusDropdownTemplate(Frame.ClubFocusDropdown)
-            Skin.UIDropDownMenuTemplate(Frame.LookingForDropdown)
-            Skin.UIDropDownMenuTemplate(Frame.LanguageDropdown)
+            -- FIXLATER
+            -- Skin.ClubFinderFocusDropdownTemplate(Frame.ClubFocusDropdown)
+            -- Skin.UIDropDownMenuTemplate(Frame.LookingForDropdown)
+            -- Skin.UIDropDownMenuTemplate(Frame.LanguageDropdown)
 
             -- BlizzWTF: RecruitmentMessageFrame.RecruitmentMessageInput already has a border via InputScrollFrameTemplate
             local EditBox = Frame.RecruitmentMessageFrame
@@ -369,13 +372,16 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelButtonTemplate(Frame.RequestJoin)
         end
         function Skin.ClubFinderFocusDropdownTemplate(Frame)
-            Skin.UIDropDownMenuTemplate(Frame)
+            -- FIXLATER
+            -- Skin.UIDropDownMenuTemplate(Frame)
         end
         function Skin.ClubFinderFilterDropdownTemplate(Frame)
-            Skin.UIDropDownMenuTemplate(Frame)
+            -- FIXLATER
+            -- Skin.UIDropDownMenuTemplate(Frame)
         end
         function Skin.ClubFinderCheckboxTemplate(CheckButton)
-            Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
+            -- -- FIXLATER
+            -- Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
         end
         function Skin.ClubFinderGuildCardsFrameTemplate(Frame)
             Skin.ClubFinderGuildCardTemplate(Frame.FirstCard)
@@ -417,8 +423,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.ClubFinderOptionsTemplate(Frame)
             Skin.ClubFinderFilterDropdownTemplate(Frame.ClubFilterDropdown)
-            Skin.UIDropDownMenuTemplate(Frame.ClubSizeDropdown)
-            Skin.UIDropDownMenuTemplate(Frame.SortByDropdown)
+            -- FIXLATER
+            -- Skin.UIDropDownMenuTemplate(Frame.ClubSizeDropdown)
+            -- Skin.UIDropDownMenuTemplate(Frame.SortByDropdown)
             Skin.ClubFinderRoleTemplate(Frame.TankRoleFrame)
             Skin.ClubFinderRoleTemplate(Frame.HealerRoleFrame)
             Skin.ClubFinderRoleTemplate(Frame.DpsRoleFrame)
@@ -619,7 +626,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelCloseButton(Frame.CloseButton)
             Skin.UIPanelButtonTemplate(Frame.RemoveButton)
             Skin.UIPanelButtonTemplate(Frame.GroupInviteButton)
-            Skin.UIDropDownMenuTemplate(Frame.RankDropdown)
+            -- FIXLATER
+            -- Skin.UIDropDownMenuTemplate(Frame.RankDropdown)
 
             Skin.FrameTypeFrame(Frame.NoteBackground)
             Skin.FrameTypeFrame(Frame.OfficerNoteBackground)
@@ -698,6 +706,8 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 end
 
 function private.AddOns.Blizzard_Communities()
+    -- FIXLATER - disable for now
+    -- if private.isRetail then return end
     ----====####$$$$%%%%%$$$$####====----
     --         CommunitiesList         --
     ----====####$$$$%%%%%$$$$####====----
@@ -801,9 +811,10 @@ function private.AddOns.Blizzard_Communities()
         Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
         Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
 
-        Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
-        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
-        Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
+        -- FIXLATER
+        -- Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
+        -- Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LookingForDropdown)
+        -- Skin.UIDropDownMenuTemplate(CommunitiesSettingsDialog.LanguageDropdown)
 
         Skin.InputScrollFrameTemplate(CommunitiesSettingsDialog.Description)
     else
@@ -834,8 +845,9 @@ function private.AddOns.Blizzard_Communities()
 
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.LinkToChat)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.Copy)
-    Skin.UIDropDownMenuTemplate(CommunitiesTicketManagerDialog.ExpiresDropDownMenu)
-    Skin.UIDropDownMenuTemplate(CommunitiesTicketManagerDialog.UsesDropDownMenu)
+    -- FIXLATER
+    -- Skin.UIDropDownMenuTemplate(CommunitiesTicketManagerDialog.ExpiresDropDownMenu)
+    -- Skin.UIDropDownMenuTemplate(CommunitiesTicketManagerDialog.UsesDropDownMenu)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.GenerateLinkButton)
     Skin.UIPanelSquareButton(CommunitiesTicketManagerDialog.MaximizeButton, "DOWN")
     Skin.CommunitiesTicketManagerScrollFrameTemplate(CommunitiesTicketManagerDialog.InviteManager)

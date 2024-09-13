@@ -59,7 +59,7 @@ do --[[ FrameXML\ReputationFrame.lua ]]
                     Base.SetBackdropColor(bd, Color.button)
                 end
 
-                if factionRow.index == _G.GetSelectedFaction() then
+                if factionRow.index == _G.C_Reputation.GetSelectedFaction() then
                     if _G.ReputationDetailFrame:IsShown() then
                         bd:SetBackdropBorderColor(Color.highlight)
                     end
@@ -76,8 +76,8 @@ do --[[ FrameXML\ReputationFrame.xml ]]
         (button._bdFrame or button):SetBackdropBorderColor(Color.highlight)
     end
     local function OnLeave(button)
-        if (_G.GetSelectedFaction() ~= button.index) or (not _G.ReputationDetailFrame:IsShown()) then
-            local _, _, _, _, _, _, atWarWith = _G.GetFactionInfo(button.index)
+        if (_G.C_Reputation.GetSelectedFaction() ~= button.index) or (not _G.ReputationDetailFrame:IsShown()) then
+            local _, _, _, _, _, _, atWarWith = _G.C_Reputation.GetFactionInfo(button.index)
             if atWarWith then
                 (button._bdFrame or button):SetBackdropBorderColor(Color.red)
             else
@@ -117,17 +117,19 @@ do --[[ FrameXML\ReputationFrame.xml ]]
     end
 end
 
-function private.FrameXML.ReputationFrame()
+function private.FrameXML.ReputationFrame()  -- FIXLATER - removed
     local ReputationFrame = _G.ReputationFrame
-    _G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
-    _G.hooksecurefunc("ReputationFrame_InitReputationRow", Hook.ReputationFrame_InitReputationRow)
+    -- FIXLATER 
+    --_G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
+    -- _G.hooksecurefunc("ReputationFrame_InitReputationRow", Hook.ReputationFrame_InitReputationRow)
 
     ---------------------
     -- ReputationFrame --
     ---------------------
-    _G.ReputationFrameFactionLabel:SetPoint("TOPLEFT", 75, -32)
-    _G.ReputationFrameStandingLabel:ClearAllPoints()
-    _G.ReputationFrameStandingLabel:SetPoint("TOPRIGHT", -75, -32)
+    --- FIXLATER -- RepuitaiontFrame is changed
+    -- _G.ReputationFrameFactionLabel:SetPoint("TOPLEFT", 75, -32)
+    -- _G.ReputationFrameStandingLabel:ClearAllPoints()
+    -- _G.ReputationFrameStandingLabel:SetPoint("TOPRIGHT", -75, -32)
 
     Skin.WowScrollBoxList(ReputationFrame.ScrollBox)
     ReputationFrame.ScrollBox:SetPoint("TOPLEFT", _G.CharacterFrame.Inset, 4, -26)
@@ -138,49 +140,51 @@ function private.FrameXML.ReputationFrame()
     ---------------------------
     -- ReputationDetailFrame --
     ---------------------------
-    local ReputationDetailFrame = _G.ReputationDetailFrame
-    ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
-    Skin.DialogBorderTemplate(ReputationDetailFrame.Border)
-    local repDetailBG = ReputationDetailFrame.Border:GetBackdropTexture("bg")
+    --- FIXLATER -- ReputationDetailFrame is changed
+    ---
+    -- local ReputationDetailFrame = _G.ReputationDetailFrameMixin
+    -- ReputationDetailFrame:SetPoint("TOPLEFT", _G.ReputationFrame, "TOPRIGHT", 1, -28)
+    -- Skin.DialogBorderTemplate(ReputationDetailFrame.Border)
+    -- local repDetailBG = ReputationDetailFrame.Border:GetBackdropTexture("bg")
 
-    _G.ReputationDetailFactionName:SetPoint("TOPLEFT", repDetailBG, 10, -8)
-    _G.ReputationDetailFactionName:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -10, -26)
-    _G.ReputationDetailFactionDescription:SetPoint("TOPLEFT", _G.ReputationDetailFactionName, "BOTTOMLEFT", 0, -5)
-    _G.ReputationDetailFactionDescription:SetPoint("TOPRIGHT", _G.ReputationDetailFactionName, "BOTTOMRIGHT", 0, -5)
+    -- _G.ReputationDetailFactionName:SetPoint("TOPLEFT", repDetailBG, 10, -8)
+    -- _G.ReputationDetailFactionName:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -10, -26)
+    -- _G.ReputationDetailFactionDescription:SetPoint("TOPLEFT", _G.ReputationDetailFactionName, "BOTTOMLEFT", 0, -5)
+    -- _G.ReputationDetailFactionDescription:SetPoint("TOPRIGHT", _G.ReputationDetailFactionName, "BOTTOMRIGHT", 0, -5)
 
-    local detailBG = _G.select(3, ReputationDetailFrame:GetRegions())
-    detailBG:SetPoint("TOPLEFT", repDetailBG, 1, -1)
-    detailBG:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -1, -142)
-    detailBG:SetColorTexture(Color.button:GetRGB())
+    -- local detailBG = _G.select(3, ReputationDetailFrame:GetRegions())
+    -- detailBG:SetPoint("TOPLEFT", repDetailBG, 1, -1)
+    -- detailBG:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -1, -142)
+    -- detailBG:SetColorTexture(Color.button:GetRGB())
 
-    _G.ReputationDetailDivider:SetColorTexture(Color.frame:GetRGB())
-    _G.ReputationDetailDivider:ClearAllPoints()
-    _G.ReputationDetailDivider:SetPoint("BOTTOMLEFT", detailBG)
-    _G.ReputationDetailDivider:SetPoint("BOTTOMRIGHT", detailBG)
-    _G.ReputationDetailDivider:SetHeight(1)
+    -- _G.ReputationDetailDivider:SetColorTexture(Color.frame:GetRGB())
+    -- _G.ReputationDetailDivider:ClearAllPoints()
+    -- _G.ReputationDetailDivider:SetPoint("BOTTOMLEFT", detailBG)
+    -- _G.ReputationDetailDivider:SetPoint("BOTTOMRIGHT", detailBG)
+    -- _G.ReputationDetailDivider:SetHeight(1)
 
-    Skin.UIPanelCloseButton(_G.ReputationDetailCloseButton)
+    -- Skin.UIPanelCloseButton(_G.ReputationDetailCloseButton)
 
-    do -- AtWarCheckBox
-        local atWarCheckBox = _G.ReputationDetailAtWarCheckBox
-        Skin.FrameTypeCheckButton(atWarCheckBox)
-        atWarCheckBox:SetPoint("TOPLEFT", detailBG, "BOTTOMLEFT", 10, -2)
-        atWarCheckBox:SetBackdropOption("offsets", {
-            left = 6,
-            right = 6,
-            top = 6,
-            bottom = 6,
-        })
+    -- do -- AtWarCheckBox
+    --     local atWarCheckBox = _G.ReputationDetailAtWarCheckBox
+    --     Skin.FrameTypeCheckButton(atWarCheckBox)
+    --     atWarCheckBox:SetPoint("TOPLEFT", detailBG, "BOTTOMLEFT", 10, -2)
+    --     atWarCheckBox:SetBackdropOption("offsets", {
+    --         left = 6,
+    --         right = 6,
+    --         top = 6,
+    --         bottom = 6,
+    --     })
 
-        local bg = atWarCheckBox:GetBackdropTexture("bg")
-        local check = atWarCheckBox:GetCheckedTexture()
-        check:SetPoint("TOPLEFT", bg, -3, 2)
+    --     local bg = atWarCheckBox:GetBackdropTexture("bg")
+    --     local check = atWarCheckBox:GetCheckedTexture()
+    --     check:SetPoint("TOPLEFT", bg, -3, 2)
 
-        local disabled = atWarCheckBox:GetDisabledCheckedTexture()
-        disabled:SetTexture([[Interface\Buttons\UI-CheckBox-SwordCheck]])
-        disabled:SetAllPoints(check)
-    end
+    --     local disabled = atWarCheckBox:GetDisabledCheckedTexture()
+    --     disabled:SetTexture([[Interface\Buttons\UI-CheckBox-SwordCheck]])
+    --     disabled:SetAllPoints(check)
+    -- end
 
-    Skin.UICheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
-    Skin.UICheckButtonTemplate(_G.ReputationDetailMainScreenCheckBox)
+    -- Skin.UICheckButtonTemplate(_G.ReputationDetailInactiveCheckBox)
+    -- Skin.UICheckButtonTemplate(_G.ReputationDetailMainScreenCheckBox)
 end

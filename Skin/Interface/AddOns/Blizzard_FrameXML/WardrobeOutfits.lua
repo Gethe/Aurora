@@ -58,14 +58,14 @@ do --[[ FrameXML\WardrobeOutfits.xml ]]
 end
 
 function private.FrameXML.WardrobeOutfits()
-    local WardrobeOutfitFrame = _G.WardrobeOutfitFrame
-    Util.Mixin(WardrobeOutfitFrame, Hook.WardrobeOutfitFrameMixin)
-    Skin.DialogBorderDarkTemplate(WardrobeOutfitFrame.Border)
-    Skin.WardrobeOutfitButtonTemplate(WardrobeOutfitFrame.Buttons[1])
+    -- local WardrobeOutfitFrame = _G.WardrobeOutfitFrame
+    -- Util.Mixin(WardrobeOutfitFrame, Hook.WardrobeOutfitFrameMixin)
+    -- Skin.DialogBorderDarkTemplate(WardrobeOutfitFrame.Border)
+    -- Skin.WardrobeOutfitButtonTemplate(WardrobeOutfitFrame.Buttons[1])
+    -- FIXLATER
 
-
-    local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
-    Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
+    -- local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
+    -- Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
 
     local EditBox = WardrobeOutfitEditFrame.EditBox
     Skin.FrameTypeEditBox(EditBox)

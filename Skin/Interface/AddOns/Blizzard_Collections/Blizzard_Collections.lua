@@ -57,27 +57,28 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
         local NO_SPEC_FILTER = 0
 
         Hook.HeirloomsMixin = {}
-        function Hook.HeirloomsMixin:UpdateClassFilterDropDownText()
-            local text
-            local classFilter, specFilter = _G.C_Heirloom.GetClassAndSpecFilters()
-            if classFilter == NO_CLASS_FILTER then
-                text = _G.ALL_CLASSES
-            else
-                local classInfo = _G.C_CreatureInfo.GetClassInfo(classFilter)
-                if not classInfo then
-                    return
-                end
+        -- FIXLATER ?? this has been removed
+        -- function Hook.HeirloomsMixin:UpdateClassFilterDropDownText()
+        --     local text
+        --     local classFilter, specFilter = _G.C_Heirloom.GetClassAndSpecFilters()
+        --    	if classFilter == UNSPECIFIED_CLASS_FILTER and specFilter == UNSPECIFIED_SPEC_FILTER then
+        --         text = _G.ALL_CLASSES
+        --     else
+        --         local classInfo = _G.C_CreatureInfo.GetClassInfo(classFilter)
+        --         if not classInfo then
+        --             return
+        --         end
 
-                local classColorStr = _G.CUSTOM_CLASS_COLORS[classInfo.classFile].colorStr
-                if specFilter == NO_SPEC_FILTER then
-                    text = _G.HEIRLOOMS_CLASS_FILTER_FORMAT:format(classColorStr, classInfo.className)
-                else
-                    local specName = _G.GetSpecializationNameForSpecID(specFilter)
-                    text = _G.HEIRLOOMS_CLASS_SPEC_FILTER_FORMAT:format(classColorStr, classInfo.className, specName)
-                end
-            end
-            _G.UIDropDownMenu_SetText(self.classDropDown, text)
-        end
+        --         local classColorStr = _G.CUSTOM_CLASS_COLORS[classInfo.classFile].colorStr
+        --         if specFilter == NO_SPEC_FILTER then
+        --             text = _G.HEIRLOOMS_CLASS_FILTER_FORMAT:format(classColorStr, classInfo.className)
+        --         else
+        --             local specName = _G.GetSpecializationNameForSpecID(specFilter)
+        --             text = _G.HEIRLOOMS_CLASS_SPEC_FILTER_FORMAT:format(classColorStr, classInfo.className, specName)
+        --         end
+        --     end
+        --     _G.UIDropDownMenu_SetText(self.classDropDown, text)
+        -- end
         function Hook.HeirloomsMixin:UpdateButton(button)
             if not button._auroraSkinned then
                 Skin.HeirloomSpellButtonTemplate(button)
@@ -554,7 +555,8 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.InsetFrameTemplate(MountJournal.RightInset)
     Skin.SearchBoxTemplate(MountJournal.searchBox)
-    Skin.UIResettableDropdownButtonTemplate(_G.MountJournalFilterButton)
+    -- FIXLATER    
+    -- Skin.UIResettableDropdownButtonTemplate(_G.MountJournalFilterButton)
     Skin.InsetFrameTemplate3(MountJournal.MountCount)
 
     local MountDisplay = MountJournal.MountDisplay
@@ -596,7 +598,8 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(PetJournal.PetCardInset)
     Skin.InsetFrameTemplate(PetJournal.RightInset)
     Skin.SearchBoxTemplate(PetJournal.searchBox)
-    Skin.UIResettableDropdownButtonTemplate(_G.PetJournalFilterButton)
+    -- FIXLATER
+    -- Skin.UIResettableDropdownButtonTemplate(_G.PetJournalFilterButton)
     Skin.WowScrollBoxList(PetJournal.ScrollBox)
     Skin.MinimalScrollBar(PetJournal.ScrollBar)
 
@@ -681,7 +684,8 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.CollectionsProgressBarTemplate(ToyBox.progressBar)
     Skin.SearchBoxTemplate(ToyBox.searchBox)
-    Skin.UIResettableDropdownButtonTemplate(_G.ToyBoxFilterButton)
+    -- FIXLATER
+    -- Skin.UIResettableDropdownButtonTemplate(_G.ToyBoxFilterButton)
 
     local iconsFrame = ToyBox.iconsFrame
     Skin.CollectionsBackgroundTemplate(iconsFrame)
@@ -698,12 +702,14 @@ function private.AddOns.Blizzard_Collections()
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_HeirloomCollection   --
     ----====####$$$$%%%%%$$$$####====----
+    -- FIXLATER
     local HeirloomsJournal = _G.HeirloomsJournal
     Util.Mixin(HeirloomsJournal, Hook.HeirloomsMixin)
 
     Skin.CollectionsProgressBarTemplate(HeirloomsJournal.progressBar)
     Skin.SearchBoxTemplate(HeirloomsJournal.SearchBox)
-    Skin.UIResettableDropdownButtonTemplate(HeirloomsJournal.FilterButton)
+    -- FIXLATER
+    -- Skin.UIResettableDropdownButtonTemplate(HeirloomsJournal.FilterButton)
     Skin.UIDropDownMenuTemplate(HeirloomsJournal.classDropDown)
 
     Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
@@ -726,7 +732,8 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
-    Skin.UIResettableDropdownButtonTemplate(WardrobeCollectionFrame.FilterButton)
+    -- FIXLATER
+    -- Skin.UIResettableDropdownButtonTemplate(WardrobeCollectionFrame.FilterButton)
 
     -- Items
     local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
@@ -751,7 +758,8 @@ function private.AddOns.Blizzard_Collections()
 
     local DetailsFrame = SetsCollectionFrame.DetailsFrame
     DetailsFrame.ModelFadeTexture:Hide()
-    Skin.UIMenuButtonStretchTemplate(DetailsFrame.VariantSetsButton)
+    -- FIXLATER
+    -- Skin.UIMenuButtonStretchTemplate(DetailsFrame.VariantSetsButton)
 
     local SetsTransmogFrame = WardrobeCollectionFrame.SetsTransmogFrame
     Util.Mixin(SetsTransmogFrame, Hook.WardrobeSetsTransmogMixin)
@@ -774,7 +782,8 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
     WardrobeTransmogFrame.Inset.BG:Hide()
-    Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
+    --- FIXLATER    
+    -- Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
 
     local ModelScene = WardrobeTransmogFrame.ModelScene
     Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
@@ -790,5 +799,6 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
     Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
-    Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
+    -- FIXLATER
+    -- Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
 end

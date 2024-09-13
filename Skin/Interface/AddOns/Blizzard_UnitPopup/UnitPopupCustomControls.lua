@@ -21,8 +21,10 @@ do --[[ FrameXML\UnitPopupCustomControls.xml ]]
 end
 
 function private.FrameXML.UnitPopupCustomControls()
-    Skin.UnitPopupVoiceSliderTemplate(_G.UnitPopupVoiceSpeakerVolume.Slider)
-    Skin.UnitPopupVoiceToggleButtonTemplate(_G.UnitPopupVoiceSpeakerVolume.Toggle)
+    -- FIXLATER - disable for now
+    if private.isRetail then return end
+    Skin.UnitPopupVoiceSliderTemplate(_G.UnitPopupVoiceSpeakerVolumeTemplate.Slider)
+    Skin.UnitPopupVoiceToggleButtonTemplate(_G.UnitPopupVoiceSpeakerVolumeTemplate.Toggle)
 
     Skin.UnitPopupVoiceSliderTemplate(_G.UnitPopupVoiceMicrophoneVolume.Slider)
     Skin.UnitPopupVoiceToggleButtonTemplate(_G.UnitPopupVoiceMicrophoneVolume.Toggle)

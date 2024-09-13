@@ -51,6 +51,8 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     ----====####$$$$%%%%%%$$$$####====----
     -- Blizzard_CompactRaidFrameManager --
     ----====####$$$$%%%%%%$$$$####====----
+    -- FIXLATER - disable for now
+    if private.isRetail then return end
     _G.hooksecurefunc("CompactRaidFrameManager_Toggle", Hook.CompactRaidFrameManager_Toggle)
 
     local CompactRaidFrameManager = _G.CompactRaidFrameManager
@@ -72,29 +74,30 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     local displayFrameName = displayFrame:GetName()
     displayFrame:GetRegions():Hide()
 
-    local headerDelineator = _G[displayFrameName.."HeaderDelineator"]
-    headerDelineator:SetColorTexture(1, 1, 1)
-    headerDelineator:SetPoint("TOPLEFT", 0, -27)
-    headerDelineator:SetPoint("TOPRIGHT", -7, -27)
-    headerDelineator:SetHeight(1)
+    --  FIXLATER removed
+    -- local headerDelineator = _G[displayFrameName.."HeaderDelineator"]
+    -- headerDelineator:SetColorTexture(1, 1, 1)
+    -- headerDelineator:SetPoint("TOPLEFT", 0, -27)
+    -- headerDelineator:SetPoint("TOPRIGHT", -7, -27)
+    -- headerDelineator:SetHeight(1)
 
     local optionsButton = _G[displayFrameName.."OptionsButton"]
     Skin.UIPanelInfoButton(optionsButton)
 
-    displayFrame.optionsFlowContainer:SetPoint("TOPLEFT", headerDelineator, "BOTTOMLEFT", -10, -1)
-
+    --  FIXLATER removed
+    -- displayFrame.optionsFlowContainer:SetPoint("TOPLEFT", headerDelineator, "BOTTOMLEFT", -10, -1)
 
 
     local filterOptions = displayFrame.filterOptions
-    local footerDelineator = _G[filterOptions:GetName().."FooterDelineator"]
-    footerDelineator:SetColorTexture(1, 1, 1)
-    footerDelineator:SetPoint("BOTTOMLEFT", 0, 7)
-    footerDelineator:SetPoint("BOTTOMRIGHT", 4, 7)
-    footerDelineator:SetHeight(1)
+    -- local footerDelineator = _G[filterOptions:GetName().."FooterDelineator"]
+    -- footerDelineator:SetColorTexture(1, 1, 1)
+    -- footerDelineator:SetPoint("BOTTOMLEFT", 0, 7)
+    -- footerDelineator:SetPoint("BOTTOMRIGHT", 4, 7)
+    -- footerDelineator:SetHeight(1)
 
-    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleTank)
-    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleHealer)
-    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleDamager)
+    -- Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleTank)
+    -- Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleHealer)
+    -- Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleDamager)
     for i = 1, 8 do
         Skin.CRFManagerFilterGroupButtonTemplate(filterOptions["filterGroup"..i])
     end

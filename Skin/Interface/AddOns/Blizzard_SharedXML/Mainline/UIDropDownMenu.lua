@@ -197,6 +197,12 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         end
         function Skin.UIDropDownMenuTemplate(Frame)
             local rightOfs = -105
+            if not Frame then
+                if IsDebugBuild() then
+                    _G.print("Nil frame")
+                end
+                return
+            end
             if _G.Round(Frame:GetWidth()) > 40 then
                 -- Adjust offset when the frame is wider than the default
                 rightOfs = 20
@@ -211,9 +217,15 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
             })
             Frame._auroraWidth = nil
 
-            Frame.Left:SetAlpha(0)
-            Frame.Middle:SetAlpha(0)
-            Frame.Right:SetAlpha(0)
+            if Frame.Left then
+                Frame.Left:SetAlpha(0)
+            end
+            if Frame.Middle then
+                Frame.Middle:SetAlpha(0)
+            end
+            if Frame.Right then
+                Frame.Right:SetAlpha(0)
+            end
 
             local Button = Frame.Button
             Skin.FrameTypeButton(Button)

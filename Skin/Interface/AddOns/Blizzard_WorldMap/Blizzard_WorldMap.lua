@@ -29,9 +29,10 @@ end
 
 do --[[ AddOns\Blizzard_WorldMap.xml ]]
     do --[[ Blizzard_WorldMapTemplates.xml ]]
-        function Skin.WorldMapFloorNavigationFrameTemplate(Frame)
-            Skin.UIDropDownMenuTemplate(Frame)
-        end
+        -- FIXLATER - disable for now
+        -- function Skin.WorldMapFloorNavigationFrameTemplate(Frame)
+        --     Skin.UIDropDownMenuTemplate(Frame)
+        -- end
         function Skin.WorldMapTrackingOptionsButtonTemplate(Button)
             Button:GetRegions():SetPoint("TOPRIGHT")
             Button.Background:Hide()
@@ -98,8 +99,8 @@ function private.AddOns.Blizzard_WorldMap()
     Skin.MainHelpPlateButton(WorldMapFrame.BorderFrame.Tutorial)
     WorldMapFrame.BorderFrame.Tutorial:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -15, 15)
     Skin.MaximizeMinimizeButtonFrameTemplate(WorldMapFrame.BorderFrame.MaximizeMinimizeFrame)
-
-    Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
+    -- FIXLATER - disable for now
+    -- Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
     Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])
     WorldMapFrame.overlayFrames[2]:SetPoint("TOPRIGHT", WorldMapFrame:GetCanvasContainer(), "TOPRIGHT", 0, 0)
     Skin.WorldMapTrackingPinButtonTemplate(WorldMapFrame.overlayFrames[3])

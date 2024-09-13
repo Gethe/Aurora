@@ -9,6 +9,8 @@ local Aurora = private.Aurora
 local Hook = Aurora.Hook
 local Util = Aurora.Util
 
+local PoolsParent = UIParent
+
 do --[[ SharedXML\Pools.lua ]]
     local function EnumerateActive(pool)
         return function()
@@ -22,7 +24,7 @@ do --[[ SharedXML\Pools.lua ]]
         if not template then return end
 
         --local templates = {(", "):split(template)}
-        --print("Acquire", template)
+        print("Acquire", template)
         Util.CheckTemplate(EnumerateActive(self), "ObjectPoolMixin", (", "):split(template))
     end
 
@@ -32,7 +34,7 @@ do --[[ SharedXML\Pools.lua ]]
     end
 
     Hook.FramePoolCollectionMixin = {}
-    function Hook.FramePoolCollectionMixin:CreatePool(frameType, parent, template, resetterFunc, forbidden, specialization)
+    function Hook.FramePoolCollectionMixin:CreateUnsecuredFramePool(frameType, parent, template, resetterFunc, forbidden, specialization)
         local poolKey = FramePoolCollection_GetPoolKey(template, specialization)
         Util.Mixin(self.pools[poolKey], Hook.ObjectPoolMixin)
     end
@@ -40,13 +42,13 @@ end
 
 
 function private.SharedXML.Pools()
-    --Util.Mixin(objectPool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.ObjectPoolMixin, Hook.ObjectPoolMixin)
+    -- Util.Mixin(_G.objectPool, Hook.ObjectPoolMixin)
 
-    Util.Mixin(_G.FramePoolMixin, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.ActorPoolMixin, Hook.ObjectPoolMixin)
-
-    Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin)
+    -- FIXLATER
+    -- Util.Mixin(_G.ObjectPoolMixin, Hook.ObjectPoolMixin)
+    -- Util.Mixin(_G.FramePoolMixin, Hook.ObjectPoolMixin)
+    -- Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)
+    -- Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)
+    -- Util.Mixin(_G.ActorPoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0
+    -- Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin)
 end

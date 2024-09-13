@@ -19,16 +19,16 @@ function private.AddOns.Blizzard_TimeManager()
     _G.TimeManagerStopwatchCheck:SetCheckedTexture(C.media.checked)
     F.CreateBG(_G.TimeManagerStopwatchCheck)
 
-    _G.TimeManagerAlarmHourDropDown:SetWidth(80)
-    _G.TimeManagerAlarmMinuteDropDown:SetWidth(80)
-    _G.TimeManagerAlarmAMPMDropDown:SetWidth(90)
+    -- _G.TimeManagerAlarmHourDropDown:SetWidth(80) -- removed in 11.0.0
+    -- _G.TimeManagerAlarmMinuteDropDown:SetWidth(80)
+    -- _G.TimeManagerAlarmAMPMDropDown:SetWidth(90)
 
     F.ReskinPortraitFrame(_G.TimeManagerFrame, true)
 
     F.CreateBD(_G.StopwatchFrame)
-    F.ReskinDropDown(_G.TimeManagerAlarmHourDropDown)
-    F.ReskinDropDown(_G.TimeManagerAlarmMinuteDropDown)
-    F.ReskinDropDown(_G.TimeManagerAlarmAMPMDropDown)
+    -- F.ReskinDropDown(_G.TimeManagerAlarmHourDropDown)
+    -- F.ReskinDropDown(_G.TimeManagerAlarmMinuteDropDown)
+    -- F.ReskinDropDown(_G.TimeManagerAlarmAMPMDropDown)
     F.ReskinInput(_G.TimeManagerAlarmMessageEditBox)
     F.ReskinCheck(_G.TimeManagerAlarmEnabledButton)
     F.ReskinCheck(_G.TimeManagerMilitaryTimeCheck)

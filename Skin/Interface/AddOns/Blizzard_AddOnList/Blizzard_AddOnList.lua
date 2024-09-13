@@ -98,7 +98,8 @@ function private.SharedXML.AddonList()
         _G.AddonListScrollFrameScrollBarMiddle:Hide()
     end
 
-    Skin.UIDropDownMenuTemplate(_G.AddonCharacterDropDown)
-    _G.AddonCharacterDropDown:SetPoint("TOPLEFT", 10, -27)
-    _G.AddonCharacterDropDown.Button:HookScript("OnClick", Hook.AddonListCharacterDropDownButton_OnClick)
+    -- FIXLATER - removed in 11.0.0
+    -- Skin.UIDropDownMenuTemplate(AddonList.Dropdown)
+    -- _G.AddonCharacterDropDown:SetPoint("TOPLEFT", 10, -27)
+    -- _G.AddonCharacterDropDown.Button:HookScript("OnClick", Hook.AddonListCharacterDropDownButton_OnClick)
 end

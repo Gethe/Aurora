@@ -19,16 +19,19 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
             if campaign then
                 kit = Util.GetTextureKit(campaign.uiTextureKit, true)
                 campaignHeader.Background:SetTexture("")
-                campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
+                if campaignHeader._auroraBG then
+                    campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
+                end
+                if campaignHeader._auroraOverlay then
+                    overlay = campaignHeader._auroraOverlay
+                    overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -25, 0)
+                    overlay:SetAtlas(kit.emblem)
+                    overlay:SetSize(66.33, 76.56)
 
-                overlay = campaignHeader._auroraOverlay
-                overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -25, 0)
-                overlay:SetAtlas(kit.emblem)
-                overlay:SetSize(66.33, 76.56)
-
-                overlay:SetBlendMode("BLEND")
-                overlay:SetVertexColor(0, 0, 0)
-                campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+                    overlay:SetBlendMode("BLEND")
+                    overlay:SetVertexColor(0, 0, 0)
+                    campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
+                end
             end
         end
 
@@ -112,6 +115,8 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
 end
 
 function private.FrameXML.QuestMapFrame()
+    -- FIXLATER - disable for now
+    -- if private.isRetail then return end
     ------------------------------
     -- QuestLogPopupDetailFrame --
     ------------------------------
@@ -145,11 +150,14 @@ function private.FrameXML.QuestMapFrame()
     Base.SetBackdrop(ShowMapButton, Color.button)
     Base.SetHighlight(ShowMapButton)
 
-    Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.AbandonButton)
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.AbandonButton)
     QuestLogPopupDetailFrame.AbandonButton:SetPoint("BOTTOMLEFT", 5, 5)
-    Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.TrackButton)
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.TrackButton)
     QuestLogPopupDetailFrame.TrackButton:SetPoint("BOTTOMRIGHT", -5, 5)
-    Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.ShareButton)
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.ShareButton)
     QuestLogPopupDetailFrame.ShareButton:SetPoint("LEFT", QuestLogPopupDetailFrame.AbandonButton, "RIGHT", 1, 0)
     QuestLogPopupDetailFrame.ShareButton:SetPoint("RIGHT", QuestLogPopupDetailFrame.TrackButton, "LEFT", -1, 0)
 
@@ -160,7 +168,9 @@ function private.FrameXML.QuestMapFrame()
     _G.hooksecurefunc("QuestLogQuests_Update", Hook.QuestLogQuests_Update)
 
     local QuestMapFrame = _G.QuestMapFrame
-    QuestMapFrame.Background:Hide()
+    if  QuestMapFrame.Background then
+        QuestMapFrame.Background:Hide()
+    end
     QuestMapFrame.VerticalSeparator:Hide()
 
 
@@ -194,9 +204,10 @@ function private.FrameXML.QuestMapFrame()
         StoryHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
     end
 
-    QuestsFrame.DetailFrame.BottomDetail:Hide()
-    QuestsFrame.DetailFrame.TopDetail:Hide()
-
+    if QuestsFrame.DetailFrame then
+        QuestsFrame.DetailFrame.BottomDetail:Hide()
+        QuestsFrame.DetailFrame.TopDetail:Hide()
+    end
 
     Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
 
@@ -218,29 +229,33 @@ function private.FrameXML.QuestMapFrame()
     local bg, overlay, _, tile = DetailsFrame:GetRegions()
     bg:Hide()
     overlay:Hide()
-    tile:Hide()
+    -- tile:Hide()
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(DetailsFrame.BackButton)
 
-    Skin.UIPanelButtonTemplate(DetailsFrame.BackButton)
-
-    DetailsFrame.RewardsFrame.Background:Hide()
-    select(2, DetailsFrame.RewardsFrame:GetRegions()):Hide()
+    -- FIXLATER
+    -- DetailsFrame.RewardsFrame.Background:Hide()
+    -- select(2, DetailsFrame.RewardsFrame:GetRegions()):Hide()
 
     Skin.ScrollFrameTemplate(DetailsFrame.ScrollFrame)
 
-    bg, tile = DetailsFrame.CompleteQuestFrame:GetRegions()
-    bg:Hide()
-    tile:Hide()
-    Skin.UIPanelButtonTemplate(DetailsFrame.CompleteQuestFrame.CompleteButton)
-    local left, right = select(6, DetailsFrame.CompleteQuestFrame.CompleteButton:GetRegions())
-    left:Hide()
-    right:Hide()
+    -- FIXLATER
+    -- bg, tile = DetailsFrame.CompleteQuestFrame:GetRegions()
+    -- bg:Hide()
+    -- tile:Hide()
+    -- Skin.UIPanelButtonTemplate(DetailsFrame.CompleteQuestFrame.CompleteButton)
+    -- local left, right = select(6, DetailsFrame.CompleteQuestFrame.CompleteButton:GetRegions())
+    -- left:Hide()
+    -- right:Hide()
 
-    Skin.UIPanelButtonTemplate(DetailsFrame.AbandonButton)
-    Skin.UIPanelButtonTemplate(DetailsFrame.ShareButton)
-    left, right = select(6, DetailsFrame.ShareButton:GetRegions())
-    left:Hide()
-    right:Hide()
-    Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(DetailsFrame.AbandonButton)
+    -- Skin.UIPanelButtonTemplate(DetailsFrame.ShareButton)
+    -- left, right = select(6, DetailsFrame.ShareButton:GetRegions())
+    -- left:Hide()
+    -- right:Hide()
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
 
     Skin.CampaignOverviewTemplate(QuestMapFrame.CampaignOverview)
 end

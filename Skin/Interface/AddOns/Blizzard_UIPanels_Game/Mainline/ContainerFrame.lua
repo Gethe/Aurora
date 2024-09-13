@@ -110,6 +110,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
             bg = Frame.NineSlice:GetBackdropTexture("bg")
 
             for i = 1, 36 do
+                _G.print("contents of Frame.Items["..i.."]:")
                 Skin.ContainerFrameItemButtonTemplate(Frame.Items[i])
             end
 
@@ -168,20 +169,19 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     end
     function Skin.ContainerFrameBackpackTemplate(Frame)
-        Skin.ContainerFrameTemplate(Frame)
+        -- FIXLATER
+        -- Skin.ContainerFrameTemplate(Frame)
         --Skin.ContainerMoneyFrameTemplate(Frame.MoneyFrame)
     end
 end
 
 function private.FrameXML.ContainerFrame()
+
     if private.disabled.bags then return end
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
 
-    Skin.ContainerFrameBackpackTemplate(_G.ContainerFrame1)
-    for i = 2, 13 do
-        Skin.ContainerFrameTemplate(_G["ContainerFrame"..i])
-    end
-
+    Skin.ContainerFrameBackpackTemplate(_G.ContainerFrame)
+                          
     if private.isRetail then
         Skin.BagSearchBoxTemplate(_G.BagItemSearchBox)
         _G.BagItemSearchBox:SetWidth(120)

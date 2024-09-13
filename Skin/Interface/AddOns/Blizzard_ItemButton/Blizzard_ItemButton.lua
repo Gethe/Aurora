@@ -191,6 +191,7 @@ end
 
 do --[[ FrameXML\ItemButtonTemplate.xml ]]
     function Skin.FrameTypeItemButton(Button)
+
         Button.Count:SetPoint("BOTTOMRIGHT", -2, 2)
 
         Base.SetBackdrop(Button, Color.black, Color.frame.a)

@@ -34,8 +34,9 @@ function private.FrameXML.DressUpFrames()
         SideDressUpFrame.ModelScene:SetPoint("BOTTOMRIGHT")
 
         Skin.UIPanelButtonTemplate(SideDressUpFrame.ResetButton)
-        Skin.UIPanelCloseButton(_G.SideDressUpFrameCloseButton)
-        select(5, _G.SideDressUpFrameCloseButton:GetRegions()):Hide()
+        -- FIXLATER
+        -- Skin.UIPanelCloseButton(_G.SideDressUpFrameCloseButton)
+        -- select(5, _G.SideDressUpFrameCloseButton:GetRegions()):Hide()
     else
         _G.SideDressUpModel:SetPoint("TOPLEFT")
         _G.SideDressUpModel:SetPoint("BOTTOMRIGHT")
@@ -66,7 +67,8 @@ function private.FrameXML.DressUpFrames()
 
     if private.isRetail then
         Skin.ButtonFrameTemplateMinimizable(DressUpFrame)
-        Skin.WardrobeOutfitDropDownTemplate(DressUpFrame.OutfitDropDown)
+        -- FIXLATER
+        -- Skin.WardrobeOutfitDropDownTemplate(DressUpFrame.OutfitDropDown)
         Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
         Skin.UIPanelButtonTemplate(_G.DressUpFrameCancelButton)
 
@@ -104,7 +106,8 @@ function private.FrameXML.DressUpFrames()
 
         -- Raise the frame level of interactable child frames above the model frame.
         local newFrameLevel = ModelScene:GetFrameLevel() + 1
-        DressUpFrame.OutfitDropDown:SetFrameLevel(newFrameLevel)
+        -- FXILATER
+        -- DressUpFrame.OutfitDropDown:SetFrameLevel(newFrameLevel)
         DressUpFrame.MaximizeMinimizeFrame:SetFrameLevel(newFrameLevel)
         _G.DressUpFrameCancelButton:SetFrameLevel(newFrameLevel)
         DressUpFrame.ToggleOutfitDetailsButton:SetFrameLevel(newFrameLevel)

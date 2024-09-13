@@ -59,12 +59,16 @@ do --[[ FrameXML\LFGList.lua ]]
         local iconIndex = numPlayers;
         for i=1, #self.Icons do
             local icon = self.Icons[i].RoleIcon
-            if i > numPlayers then
-                icon._auroraBorder:Hide();
-                icon._auroraBG:Hide();
-            else
-                icon._auroraBorder:Show();
-                icon._auroraBG:Show();
+            if  icon._auroraBorder ~= nil then
+                if i > numPlayers then
+                    icon._auroraBorder:Hide();
+                    icon._auroraBG:Hide();
+                else
+                    icon._auroraBorder:Show();
+                    icon._auroraBG:Show();
+                end
+            -- else
+                -- _G.print("Aurora: LFGListGroupDataDisplayEnumerate_Update icon._auroraBorder is nil.")
             end
         end
 
@@ -265,7 +269,8 @@ function private.FrameXML.LFGList()
     ------------------
     local LFGListFrame =_G.LFGListFrame
 
-    Skin.UIDropDownMenuTemplate(_G.LFGListFrameDropDown)
+    -- FIXLATER
+    -- Skin.UIDropDownMenuTemplate(_G.LFGListFrameDropDown)
 
     -- CategorySelection --
     local CategorySelection = LFGListFrame.CategorySelection
@@ -287,8 +292,9 @@ function private.FrameXML.LFGList()
     -- SearchPanel --
     local SearchPanel = LFGListFrame.SearchPanel
     Skin.SearchBoxTemplate(SearchPanel.SearchBox)
-    Skin.UIMenuButtonStretchTemplate(SearchPanel.FilterButton)
-    Skin.UIDropDownMenuTemplate(_G.LFGListLanguageFilterDropDownFrame)
+    -- FIXLATER
+    -- Skin.UIMenuButtonStretchTemplate(SearchPanel.FilterButton)
+    -- Skin.UIDropDownMenuTemplate(_G.LFGListLanguageFilterDropcownFrame)
 
     local AutoCompleteFrame = SearchPanel.AutoCompleteFrame
     Skin.FrameTypeFrame(AutoCompleteFrame)
@@ -371,20 +377,20 @@ function private.FrameXML.LFGList()
         Skin.UIPanelButtonTemplate(Dialog.CancelButton)
     end
 
-    Skin.LFGListEditBoxTemplate(EntryCreation.Name)
-    Skin.UIDropDownMenuTemplate(EntryCreation.GroupDropDown)
-    Skin.UIDropDownMenuTemplate(EntryCreation.ActivityDropDown)
-    Skin.InputScrollFrameTemplate(EntryCreation.Description)
-    Skin.UIDropDownMenuTemplate(EntryCreation.PlayStyleDropdown)
-    Skin.LFGListRequirementTemplate(EntryCreation.ItemLevel)
-    Skin.LFGListRequirementTemplate(EntryCreation.PvpItemLevel)
-    Skin.LFGListRequirementTemplate(EntryCreation.PVPRating)
-    Skin.LFGListRequirementTemplate(EntryCreation.MythicPlusRating)
-    Skin.LFGListRequirementTemplate(EntryCreation.VoiceChat)
-    Skin.LFGListOptionCheckButtonTemplate(EntryCreation.CrossFactionGroup)
-    Skin.LFGListOptionCheckButtonTemplate(EntryCreation.PrivateGroup)
-    Skin.LFGListMagicButtonTemplate(EntryCreation.ListGroupButton)
-    Skin.LFGListMagicButtonTemplate(EntryCreation.CancelButton)
+    -- Skin.LFGListEditBoxTemplate(EntryCreation.Name)
+    -- Skin.UIDropDownMenuTemplate(EntryCreation.GroupDropDown)
+    -- Skin.UIDropDownMenuTemplate(EntryCreation.ActivityDropDown)
+    -- Skin.InputScrollFrameTemplate(EntryCreation.Description)
+    -- Skin.UIDropDownMenuTemplate(EntryCreation.PlayStyleDropdown)
+    -- Skin.LFGListRequirementTemplate(EntryCreation.ItemLevel)
+    -- Skin.LFGListRequirementTemplate(EntryCreation.PvpItemLevel)
+    -- Skin.LFGListRequirementTemplate(EntryCreation.PVPRating)
+    -- Skin.LFGListRequirementTemplate(EntryCreation.MythicPlusRating)
+    -- Skin.LFGListRequirementTemplate(EntryCreation.VoiceChat)
+    -- Skin.LFGListOptionCheckButtonTemplate(EntryCreation.CrossFactionGroup)
+    -- Skin.LFGListOptionCheckButtonTemplate(EntryCreation.PrivateGroup)
+    -- Skin.LFGListMagicButtonTemplate(EntryCreation.ListGroupButton)
+    -- Skin.LFGListMagicButtonTemplate(EntryCreation.CancelButton)
 
     ------------------------------
     -- LFGListApplicationDialog --

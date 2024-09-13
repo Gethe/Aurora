@@ -23,7 +23,9 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
         local slot, slotType = _G.SpellBook_GetSpellBookSlot(self)
         if slot then
             if private.isRetail then
-                local _, _, spellID = _G.GetSpellBookItemName(slot, _G.SpellBookFrame.bookType)
+
+                local spellID = select(2,C_SpellBook.GetSpellBookItemType(slot, _G.Enum.SpellBookSpellBank.Player))
+
                 local isDisabled = spellID and _G.C_SpellBook.IsSpellDisabled(spellID)
                 if slotType == "FUTURESPELL" or isDisabled then
                     local level = _G.GetSpellAvailableLevel(slot, _G.SpellBookFrame.bookType)
@@ -68,12 +70,15 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
         end
     end
     function Hook.SpellBookFrame_UpdateSkillLineTabs(self)
-        local numSkillLineTabs = _G.GetNumSpellTabs()
+        local numSkillLineTabs = _G.C_SpellBook.GetNumSpellBookSkillLines()
         for i = 1, _G.MAX_SKILLLINE_TABS do
             local skillLineTab = _G["SpellBookSkillLineTab"..i]
             local prevTab = _G["SpellBookSkillLineTab"..i-1]
             if i <= numSkillLineTabs and _G.SpellBookFrame.bookType == _G.BOOKTYPE_SPELL then
-                local _, _, _, _, isGuild, _, shouldHide = _G.GetSpellTabInfo(i)
+
+                local skillLineInfo = _G.C_SpellBook.GetSpellBookSkillLineInfo(i)
+                local isGuild = skillLineInfo.isGuild
+                local shouldHide = skillLineInfo.shouldHide
 
                 if not shouldHide then
                     -- Guild tab gets additional space
@@ -164,7 +169,7 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
             CheckButton.UnlearnedFrame:SetAlpha(0)
         end
 
-        local autoCast = _G[name.."AutoCastable"]
+        local autoCast = _G[name.."AutoCastable"] or _G[name.."AutoCastOverlay"]
         autoCast:ClearAllPoints()
         autoCast:SetPoint("TOPLEFT")
         autoCast:SetPoint("BOTTOMRIGHT")
@@ -259,6 +264,7 @@ function private.FrameXML.SpellBookFrame()
 
     local SpellBookFrame = _G.SpellBookFrame
     if private.isRetail then
+        -- FIXLATER ?? FormatProfession deprecated .. new spellbook setup
         _G.hooksecurefunc("FormatProfession", Hook.FormatProfession)
 
         Skin.ButtonFrameTemplate(SpellBookFrame)
