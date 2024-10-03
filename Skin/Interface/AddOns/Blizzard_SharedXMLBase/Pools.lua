@@ -18,6 +18,8 @@ do --[[ SharedXML\Pools.lua ]]
         end
     end
 
+
+    
     Hook.ObjectPoolMixin = {}
     function Hook.ObjectPoolMixin:Acquire()
         local template = self.frameTemplate or self.textureTemplate or self.fontStringTemplate or self.actorTemplate
@@ -42,13 +44,18 @@ end
 
 
 function private.SharedXML.Pools()
-    -- Util.Mixin(_G.objectPool, Hook.ObjectPoolMixin)
-
+    --- If different frames are used for specialized cases even though they have the same template,
+    --- supply a specialization key to differentiate. If specialization is a function, it will be
+    --- called the first time a frame is acquired. If specialization is a table, it will be mixed
+    --- in with FrameUtil.SpecializeFrameWithMixins.
     -- FIXLATER
-    -- Util.Mixin(_G.ObjectPoolMixin, Hook.ObjectPoolMixin)
-    -- Util.Mixin(_G.FramePoolMixin, Hook.ObjectPoolMixin)
-    -- Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)
-    -- Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)
+    -- Util.Mixin(_G.objectPool, Hook.ObjectPoolMixin) -- removed in 11.0.0
+    -- Util.Mixin(_G.ObjectPoolMixin, Hook.ObjectPoolMixin) -- removed in 11.0.0
+    -- Util.Mixin(_G.FramePoolMixin, Hook.ObjectPoolMixin) -- removed in 11.0.0 
+    -- replaced by FrameFactoryMixin ??
+    -- Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0 
+    -- Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0 
     -- Util.Mixin(_G.ActorPoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0
-    -- Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin)
+    -- +local FramePoolCollectionMixin = CreateFromMixinsPrivate(PoolCollectionMixin, FramePoolCollectionConverterMixin);
+    -- Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin) -- removed in 11.0.0
 end
