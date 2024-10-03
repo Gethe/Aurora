@@ -48,14 +48,15 @@ function private.FrameXML.HelpTip()
     Util.Mixin(_G.HelpTipTemplate, Hook.HelpTipTemplateMixin)
 
     -- FIXLATER - Broken in 11.0.0
-    -- Util.Mixin(_G.HelpTip.framePool, Hook.ObjectPoolMixin)
+    -- Not sure how to find the non active objects in the pool at this time.
+    Util.Mixin(_G.HelpTip.framePool, Hook.ObjectPoolMixin)
     -- for _, frame in _G.HelpTip.framePool:EnumerateInactive() do
     --     Skin.HelpTipTemplate(frame)
     --     Util.Mixin(frame, Hook.HelpTipTemplateMixin)
 	-- end
-	-- for frame in _G.HelpTip.framePool:EnumerateActive() do
-    --     Skin.HelpTipTemplate(frame)
-    --     Util.Mixin(frame, Hook.HelpTipTemplateMixin)
-    --     Hook.HelpTipTemplateMixin.RotateArrow(frame, frame.Arrow.rotation)
-	-- end
+	for frame in _G.HelpTip.framePool:EnumerateActive() do
+        Skin.HelpTipTemplate(frame)
+        Util.Mixin(frame, Hook.HelpTipTemplateMixin)
+        Hook.HelpTipTemplateMixin.RotateArrow(frame, frame.Arrow.rotation)
+	end
 end
