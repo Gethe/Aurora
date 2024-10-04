@@ -183,7 +183,6 @@ function private.FrameXML.QuestFrame()
     modelBackground:SetFrameLevel(0)
     Skin.FrameTypeFrame(modelBackground)
 
-    
     -- FIXLATER
     QuestModel.ModelBackground:Hide()
     QuestModel.Border:Hide()

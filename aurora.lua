@@ -134,7 +134,6 @@ function private.OnLoad()
         end
     end)
 
-   
     if private.isRetail then
         _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
 

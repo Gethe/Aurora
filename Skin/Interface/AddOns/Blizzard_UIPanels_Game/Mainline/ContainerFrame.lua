@@ -181,7 +181,7 @@ function private.FrameXML.ContainerFrame()
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
 
     Skin.ContainerFrameBackpackTemplate(_G.ContainerFrame)
-                          
+
     if private.isRetail then
         Skin.BagSearchBoxTemplate(_G.BagItemSearchBox)
         _G.BagItemSearchBox:SetWidth(120)

@@ -87,7 +87,7 @@ function private.FrameXML.BankFrame()
         _G.BankFrameTab2,
         _G.BankFrameTab3,
     })
-    
+
     Skin.BagSearchBoxTemplate(_G.BankItemSearchBox)
     Skin.BankAutoSortButtonTemplate(_G.BankItemAutoSortButton)
 

@@ -9,8 +9,6 @@ local Aurora = private.Aurora
 local Hook = Aurora.Hook
 local Util = Aurora.Util
 
-local PoolsParent = UIParent
-
 do --[[ SharedXML\Pools.lua ]]
     local function EnumerateActive(pool)
         return function()
@@ -18,8 +16,6 @@ do --[[ SharedXML\Pools.lua ]]
         end
     end
 
-
-    
     Hook.ObjectPoolMixin = {}
     function Hook.ObjectPoolMixin:Acquire()
         local template = self.frameTemplate or self.textureTemplate or self.fontStringTemplate or self.actorTemplate
@@ -51,11 +47,9 @@ function private.SharedXML.Pools()
     -- FIXLATER
     -- Util.Mixin(_G.objectPool, Hook.ObjectPoolMixin) -- removed in 11.0.0
     -- Util.Mixin(_G.ObjectPoolMixin, Hook.ObjectPoolMixin) -- removed in 11.0.0
-    -- Util.Mixin(_G.FramePoolMixin, Hook.ObjectPoolMixin) -- removed in 11.0.0 
-    -- replaced by FrameFactoryMixin ??
-    -- Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0 
-    -- Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0 
+    -- Util.Mixin(_G.FramePoolMixin, Hook.ObjectPoolMixin) -- removed in 11.0.0
+    -- Util.Mixin(_G.TexturePoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0
+    -- Util.Mixin(_G.FontStringPoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0
     -- Util.Mixin(_G.ActorPoolMixin, Hook.ObjectPoolMixin)  -- removed in 11.0.0
-    -- +local FramePoolCollectionMixin = CreateFromMixinsPrivate(PoolCollectionMixin, FramePoolCollectionConverterMixin);
     -- Util.Mixin(_G.FramePoolCollectionMixin, Hook.FramePoolCollectionMixin) -- removed in 11.0.0
 end

@@ -28,7 +28,7 @@ do --[[ AddOns\Blizzard_OrderHallUI.lua ]]
             --         choiceBackground._auroraRight:Show()
             --     end
             -- end
-            -- for _, pulsingArrows in self.arrowTexturePool:EnumerateActive() do
+            -- for _, pulsingArrows in self.arrowTexturePool:EnumerateInactive() do
             --     pulsingArrows._auroraLeft:Hide()
             --     pulsingArrows._auroraRight:Hide()
             -- end
@@ -140,7 +140,8 @@ function private.AddOns.Blizzard_OrderHallUI()
     ----====####$$$$%%%%%$$$$####====----
     local OrderHallTalentFrame = _G.OrderHallTalentFrame
     Util.Mixin(OrderHallTalentFrame, Hook.OrderHallTalentFrameMixin)
-    Util.Mixin(Button, Hook.GarrisonTalentButtonMixin)    
+    -- Util.Mixin(Button, Hook.GarrisonTalentButtonMixin)
+    -- FIXLATER
     -- Util.Mixin(OrderHallTalentFrame, Hook.GarrisonTalentButtonMixin)
 
     Skin.PortraitFrameTemplate(OrderHallTalentFrame)

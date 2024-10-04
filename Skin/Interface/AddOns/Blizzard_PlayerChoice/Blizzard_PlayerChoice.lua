@@ -102,6 +102,7 @@ function private.AddOns.Blizzard_PlayerChoice()
     ----====####$$$$%%%%%$$$$####====----
     --      Blizzard_PlayerChoice      --
     ----====####$$$$%%%%%$$$$####====----
+    -- FIXLATER
     -- local PlayerChoiceFrame = _G.PlayerChoiceFrame
     -- Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
     -- Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)

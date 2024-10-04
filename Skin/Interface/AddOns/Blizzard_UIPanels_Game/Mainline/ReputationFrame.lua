@@ -119,7 +119,7 @@ end
 
 function private.FrameXML.ReputationFrame()  -- FIXLATER - removed
     local ReputationFrame = _G.ReputationFrame
-    -- FIXLATER 
+    -- FIXLATER
     --_G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
     -- _G.hooksecurefunc("ReputationFrame_InitReputationRow", Hook.ReputationFrame_InitReputationRow)
 

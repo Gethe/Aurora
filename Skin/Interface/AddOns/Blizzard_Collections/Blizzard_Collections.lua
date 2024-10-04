@@ -555,7 +555,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.InsetFrameTemplate(MountJournal.RightInset)
     Skin.SearchBoxTemplate(MountJournal.searchBox)
-    -- FIXLATER    
+    -- FIXLATER
     -- Skin.UIResettableDropdownButtonTemplate(_G.MountJournalFilterButton)
     Skin.InsetFrameTemplate3(MountJournal.MountCount)
 
@@ -782,7 +782,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
     WardrobeTransmogFrame.Inset.BG:Hide()
-    --- FIXLATER    
+    --- FIXLATER
     -- Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
 
     local ModelScene = WardrobeTransmogFrame.ModelScene

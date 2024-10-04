@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 -- FIXLATER ??
--- Now Blizzard_StableUI 
+-- Now Blizzard_StableUI
 
 --[[ Lua Globals ]]
 -- luacheck: globals
