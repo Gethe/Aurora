@@ -65,12 +65,14 @@ function private.FrameXML.PVEFrame()
     Skin.PanelTabButtonTemplate(PVEFrame.tab1)
     Skin.PanelTabButtonTemplate(PVEFrame.tab2)
     Skin.PanelTabButtonTemplate(PVEFrame.tab3)
-    Util.PositionRelative("TOPLEFT", PVEFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+    Skin.PanelTabButtonTemplate(PVEFrame.tab4)
+     Util.PositionRelative("TOPLEFT", PVEFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         PVEFrame.tab1,
         PVEFrame.tab2,
         PVEFrame.tab3,
+        PVEFrame.tab4,
     })
-
+    
     local GroupFinderFrame = _G.GroupFinderFrame
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton1)
     GroupFinderFrame.groupButton1.icon:SetTexture([[Interface\Icons\INV_Helmet_08]])
