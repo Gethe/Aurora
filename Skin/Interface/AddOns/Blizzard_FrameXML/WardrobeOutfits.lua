@@ -67,7 +67,7 @@ function private.FrameXML.WardrobeOutfits()
     -- local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
     -- Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
 
-    local EditBox = WardrobeOutfitEditFrame.EditBox
+    local EditBox = _G.WardrobeOutfitEditFrame.EditBox
     Skin.FrameTypeEditBox(EditBox)
     EditBox:SetBackdropOption("offsets", {
         left = -5,
@@ -80,7 +80,7 @@ function private.FrameXML.WardrobeOutfits()
     EditBox.RightTexture:Hide()
     EditBox.MiddleTexture:Hide()
 
-    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.AcceptButton)
-    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.CancelButton)
-    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.DeleteButton)
+    Skin.UIPanelButtonTemplate(_G.WardrobeOutfitEditFrame.AcceptButton)
+    Skin.UIPanelButtonTemplate(_G.WardrobeOutfitEditFrame.CancelButton)
+    Skin.UIPanelButtonTemplate(_G.WardrobeOutfitEditFrame.DeleteButton)
 end
