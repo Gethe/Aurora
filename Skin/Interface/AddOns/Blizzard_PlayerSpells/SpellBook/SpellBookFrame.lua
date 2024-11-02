@@ -24,7 +24,7 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
         if slot then
             if private.isRetail then
 
-                local spellID = select(2,C_SpellBook.GetSpellBookItemType(slot, _G.Enum.SpellBookSpellBank.Player))
+                local spellID = select(2,_G.C_SpellBook.GetSpellBookItemType(slot, _G.Enum.SpellBookSpellBank.Player))
 
                 local isDisabled = spellID and _G.C_SpellBook.IsSpellDisabled(spellID)
                 if slotType == "FUTURESPELL" or isDisabled then
