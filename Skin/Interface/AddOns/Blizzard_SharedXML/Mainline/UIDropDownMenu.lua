@@ -198,7 +198,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
         function Skin.UIDropDownMenuTemplate(Frame)
             local rightOfs = -105
             if not Frame then
-                if IsDebugBuild() then
+                if _G.IsDebugBuild() then
                     _G.print("Nil frame")
                 end
                 return
