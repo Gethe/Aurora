@@ -142,6 +142,7 @@ do -- set up file order
     private.AddOns = {}
     private.FrameXML = setmetatable({}, mt)
     private.SharedXML = setmetatable({}, mt)
+    private.BlizzAddOns = setmetatable({}, mt)
 end
 
 
