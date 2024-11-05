@@ -226,7 +226,9 @@ function private.FrameXML.QuestMapFrame()
     end
 
     local DetailsFrame = QuestMapFrame.DetailsFrame
-    local bg, overlay, _, tile = DetailsFrame:GetRegions()
+    -- local bg, overlay, _, tile = DetailsFrame:GetRegions()
+    local bg, overlay, _, _ = DetailsFrame:GetRegions()
+
     bg:Hide()
     overlay:Hide()
     -- tile:Hide()

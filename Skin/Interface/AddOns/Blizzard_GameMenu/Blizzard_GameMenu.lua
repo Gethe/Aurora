@@ -5,8 +5,8 @@ if private.shouldSkip() then return end
 -- luacheck: globals next
 
 --[[ Core ]]
-local Aurora = private.Aurora
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+-- local Aurora = private.Aurora
+-- local Hook, Skin = Aurora.Hook, Aurora.Skin
 
 function private.FrameXML.GameMenuFrame()
     -- FIXLATER

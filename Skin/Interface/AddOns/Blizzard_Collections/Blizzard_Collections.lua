@@ -53,8 +53,8 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
         end
     end
     do --[[ Blizzard_HeirloomCollection ]]
-        local NO_CLASS_FILTER = 0
-        local NO_SPEC_FILTER = 0
+        -- local NO_CLASS_FILTER = 0
+        -- local NO_SPEC_FILTER = 0
 
         Hook.HeirloomsMixin = {}
         -- FIXLATER ?? this has been removed

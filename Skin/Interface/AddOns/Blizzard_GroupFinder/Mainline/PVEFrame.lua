@@ -72,7 +72,7 @@ function private.FrameXML.PVEFrame()
         PVEFrame.tab3,
         PVEFrame.tab4,
     })
-    
+
     local GroupFinderFrame = _G.GroupFinderFrame
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton1)
     GroupFinderFrame.groupButton1.icon:SetTexture([[Interface\Icons\INV_Helmet_08]])

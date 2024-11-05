@@ -8,7 +8,8 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Color = Aurora.Color
+-- local util = Aurora.util
 
 do --[[ FrameXML\WardrobeOutfits.lua ]]
     Hook.WardrobeOutfitFrameMixin = {}
@@ -58,16 +59,10 @@ do --[[ FrameXML\WardrobeOutfits.xml ]]
 end
 
 function private.FrameXML.WardrobeOutfits()
-    -- local WardrobeOutfitFrame = _G.WardrobeOutfitFrame
-    -- Util.Mixin(WardrobeOutfitFrame, Hook.WardrobeOutfitFrameMixin)
-    -- Skin.DialogBorderDarkTemplate(WardrobeOutfitFrame.Border)
-    -- Skin.WardrobeOutfitButtonTemplate(WardrobeOutfitFrame.Buttons[1])
-    -- FIXLATER
+    local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
+    Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
 
-    -- local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
-    -- Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
-
-    local EditBox = _G.WardrobeOutfitEditFrame.EditBox
+    local EditBox = WardrobeOutfitEditFrame.EditBox
     Skin.FrameTypeEditBox(EditBox)
     EditBox:SetBackdropOption("offsets", {
         left = -5,
@@ -80,7 +75,7 @@ function private.FrameXML.WardrobeOutfits()
     EditBox.RightTexture:Hide()
     EditBox.MiddleTexture:Hide()
 
-    Skin.UIPanelButtonTemplate(_G.WardrobeOutfitEditFrame.AcceptButton)
-    Skin.UIPanelButtonTemplate(_G.WardrobeOutfitEditFrame.CancelButton)
-    Skin.UIPanelButtonTemplate(_G.WardrobeOutfitEditFrame.DeleteButton)
+    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.AcceptButton)
+    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.CancelButton)
+    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.DeleteButton)
 end
