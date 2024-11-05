@@ -3,7 +3,7 @@ local _, private = ...
 -- [[ Lua Globals ]]
 -- luacheck: globals next ipairs
 local wago = private.wago
-local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
+local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata
 
 -- [[ Core ]]
 local Aurora = private.Aurora
@@ -219,12 +219,15 @@ local createButton do
     end
 end
 
+
 -- create frames/widgets
 local gui = _G.CreateFrame("Frame", "AuroraOptions", _G.UIParent)
--- gui.name = "Aurora"
--- local category = category or _G.Settings.GetCategory("Aurora");
-_G.Settings.GetCategory("Aurora");
--- local subcategory, layout = _G.Settings.RegisterCanvasLayoutSubcategory(category, gui, "AuroraOptions");
+gui.name = "Aurora"
+
+-- add the settings canvas to the addons settings
+category, layout = _G.Settings.RegisterCanvasLayoutCategory(gui, "Aurora", "Aurora")
+category.ID = "Aurora"
+_G.Settings.RegisterAddOnCategory(category)
 
 local title = gui:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 title:SetPoint("TOP", -30, -26)
@@ -428,7 +431,6 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
     elseif private.commands[msg] then
         private.commands[msg]()
     else
-
-        _G.Settings.OpenToCategory(gui)
+        _G.Settings.OpenToCategory(gui.name)
     end
 end
