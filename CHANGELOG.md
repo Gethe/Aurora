@@ -1,4 +1,20 @@
-﻿
+﻿## [11.0.5.0] ##
+### Fixed ###
+
+  * chg: worldmap updates
+  * fix: #130 - /aurora did not work after patch 11.
+  * chg: disable FriendsFrame code - not used by RealUI.
+  * add: new metatable for BlizzAddons
+  * Add: Skin/Interface/AddOns/Blizzard_GroupFinder/Mainline/LFGFrame.lua - reminder of failsafe.
+  * fix: IsDebugBuild is _G
+  * fix WardrobeOutfitEditFrame as _G
+  * fix: add PVEFrame.tab4 to skins
+  * fix: C_SpellBook is now _G.C_SpellBook
+  * chore: cleaned up depcreated and unused code
+  * enable: skinning for active HelpTips
+  * chore: enabled code disabled for debugging
+  * chore: fix comments for disabled pools
+
 ## [11.0.0.0] ##
 ### Fixed ###
 
@@ -6,11 +22,12 @@
   * Many features are currently disabled while the UI is being rebuilt
   * Some skins are not applied correctly
 
+
 ## [10.2.7.5] ##
 ### Fixed ###
 
   * [retail] fix: workaround for #117 if user does not have authenticator
-  * [retail]  fix: #119 make questContrast be dark
+  * [retail] fix: #119 make questContrast be dark
 
 
 ## [10.2.7.3] ##
