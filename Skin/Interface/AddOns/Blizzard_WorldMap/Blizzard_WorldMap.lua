@@ -30,9 +30,10 @@ end
 do --[[ AddOns\Blizzard_WorldMap.xml ]]
     do --[[ Blizzard_WorldMapTemplates.xml ]]
         -- FIXLATER - disable for now
-        -- function Skin.WorldMapFloorNavigationFrameTemplate(Frame)
-        --     Skin.UIDropDownMenuTemplate(Frame)
-        -- end
+        function Skin.WorldMapFloorNavigationFrameTemplate(Button)
+            _G.print("Skin.WorldMapFloorNavigationFrameTemplate")
+            Skin.DropdownButton(Button)
+        end
         function Skin.WorldMapTrackingOptionsButtonTemplate(Button)
             Button:GetRegions():SetPoint("TOPRIGHT")
             Button.Background:Hide()
@@ -42,7 +43,7 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
             tex:SetTexture([[Interface\Minimap\Tracking\None]], "ADD")
             tex:SetAllPoints(Button.Icon)
         end
-        function Skin.WorldMapTrackingPinButtonTemplate(Button)
+        function Skin.WorldMapShowLegendButtonTemplate(Button)
         end
         function Skin.WorldMapNavBarTemplate(Frame)
             Skin.NavBarTemplate(Frame)  -- this is skinned from hooks in NavigationBar.lua
@@ -92,6 +93,11 @@ function private.AddOns.Blizzard_WorldMap()
     Skin.WorldMapFrameTemplate(WorldMapFrame)
     Util.Mixin(WorldMapFrame, Hook.WorldMapMixin)
 
+    local overlayFramescount  = 0
+    for _ in pairs(WorldMapFrame.overlayFrames) do
+        overlayFramescount = overlayFramescount + 1
+    end
+    _G.print("overlayFramescount: " .. overlayFramescount)
     Skin.PortraitFrameTemplate(WorldMapFrame.BorderFrame)
     WorldMapFrame.BorderFrame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
 
@@ -99,11 +105,10 @@ function private.AddOns.Blizzard_WorldMap()
     Skin.MainHelpPlateButton(WorldMapFrame.BorderFrame.Tutorial)
     WorldMapFrame.BorderFrame.Tutorial:SetPoint("TOPLEFT", WorldMapFrame, "TOPLEFT", -15, 15)
     Skin.MaximizeMinimizeButtonFrameTemplate(WorldMapFrame.BorderFrame.MaximizeMinimizeFrame)
-    -- FIXLATER - disable for now
-    -- Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
+    Skin.WorldMapFloorNavigationFrameTemplate(WorldMapFrame.overlayFrames[1])
     Skin.WorldMapTrackingOptionsButtonTemplate(WorldMapFrame.overlayFrames[2])
     WorldMapFrame.overlayFrames[2]:SetPoint("TOPRIGHT", WorldMapFrame:GetCanvasContainer(), "TOPRIGHT", 0, 0)
-    Skin.WorldMapTrackingPinButtonTemplate(WorldMapFrame.overlayFrames[3])
+    Skin.WorldMapShowLegendButtonTemplate(WorldMapFrame.overlayFrames[3])
     Skin.WorldMapBountyBoardTemplate(WorldMapFrame.overlayFrames[4])
     Skin.WorldMapActionButtonTemplate(WorldMapFrame.overlayFrames[5])
     Skin.WorldMapZoneTimerTemplate(WorldMapFrame.overlayFrames[6])
