@@ -14,7 +14,7 @@ aurora_addons = ['Blizzard_FrameXML', 'Blizzard_FrameXMLBase', 'Blizzard_SharedX
                  'Blizzard_UIPanels_Game', 'Blizzard_UnitPopup', 'Blizzard_UIParent', 'Blizzard_StaticPopup_Frame',
                  'Blizzard_PlayerSpells', 'Blizzard_GroupFinder', 'Blizzard_QuickJoin', 'Blizzard_ActionBar',
                  'Blizzard_MoneyFrame','Blizzard_UIPanelTemplates','Blizzard_GarrisonBase', 'Blizzard_ChatFrame',
-                 'Blizzard_StaticPopup_Frame', 'Blizzard_ActionBar'
+                 'Blizzard_StaticPopup_Frame', 'Blizzard_ActionBar', 'Blizzard_Menu',
                 ]
 
 isLive = False
@@ -59,6 +59,7 @@ def check_git_branch():
         dontupdate_toc_types.append('Cata')
         dontupdate_toc_types.append('Wratch')
         dontupdate_toc_types.append('Vanilla')
+        dontupdate_toc_types.append('Classic')
         isLive = True
     elif branch.name == 'classic':
         dontupdate_toc_types.append('Mainline')
@@ -96,6 +97,8 @@ def close_xml_file(file_path):
 def determine_adp(toc_type):
     if toc_type == 'Mainline':
         return ADP_Retail
+    elif toc_type == 'Classic':
+        return ADP_Vanilla
     elif toc_type == 'Vanilla':
         return ADP_Vanilla
     elif toc_type == 'TBC':
@@ -114,6 +117,9 @@ def determine_toc_type(toc_file):
     filename = os.path.basename(toc_file).lower()
     if 'wowlabs' in filename:
         return 'WowLabs'
+    elif 'classic' in filename:
+        isVanilla = True
+        return 'Classic'    
     elif 'vanilla' in filename:
         isVanilla = True
         return 'Vanilla'    
