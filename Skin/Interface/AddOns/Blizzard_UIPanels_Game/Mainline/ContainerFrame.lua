@@ -52,7 +52,7 @@ do --[[ FrameXML\ContainerFrame.lua ]]
             else
                 local info = _G.C_Container.GetContainerItemInfo(bagID, slotID);
                 quality = info and info.quality;
-                link = info and info.itemLink;
+                link = info and info.hyperlink;
             end
 
             if not itemButton._auroraIconBorder then
