@@ -1,4 +1,14 @@
-﻿## [11.0.5.0] ##
+﻿## [11.0.5.1] ##
+### Fixed ###
+  * fix: comment out another dropdown menu
+  * fix: skin gamemenu
+  * fix: Communities update
+  * chg: restored skins on ContainerFrameBackpackTemplate
+  * chg: restored parts of communities.
+  * fix: TalentMicroButton replaced by ProfessionMicroButton
+  * fix: GetContainerItemInfo changes in 11.x
+
+## [11.0.5.0] ##
 ### Fixed ###
 
   * chg: worldmap updates
