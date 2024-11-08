@@ -82,7 +82,7 @@ do --[[ FrameXML\ActionBarController.lua ]]
         end
         function Hook.UpdateMicroButtons()
             if _G.UnitLevel("player") >= _G.SHOW_SPEC_LEVEL then
-                _G.QuestLogMicroButton:SetPoint("BOTTOMLEFT", _G.TalentMicroButton, "BOTTOMRIGHT", 2, 0);
+                _G.QuestLogMicroButton:SetPoint("BOTTOMLEFT", _G.ProfessionMicroButton, "BOTTOMRIGHT", 2, 0);
             end
         end
     end
