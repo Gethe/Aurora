@@ -1,0 +1,23 @@
+## Interface: 11502
+## Title: Aurora
+## IconAtlas: callings-backhighlight-full
+## Notes: Minimalistic window theme.
+## Author: Haleth/Lightsword, Gethe, Hanshi/arnvid
+## Version: 10.2.6.1
+## LoadWith: Blizzard_CompactRaidFrames
+## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
+## SavedVariables: AuroraConfig
+## X-Website: http://www.wowinterface.com/downloads/info18589.html
+## X-Curse-Project-ID: 278735
+## X-WoWI-ID: 18589
+## X-Wago-ID: JZKbRK19
+
+libs\Libs.xml
+Skin\skin.xml
+
+aurora.lua
+gui.lua
+
+#@do-not-package@
+dev\test.lua
+#@end-do-not-package@

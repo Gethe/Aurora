@@ -15,7 +15,6 @@ do --[[ FrameXML\BankFrame.lua ]]
         local bagID = button.isBag and -4 or button:GetParent():GetID()
         local slotID = button:GetID()
 
-        -- local _, _, _, quality, _, _, link = 
         local info = _G.C_Container.GetContainerItemInfo(bagID, slotID)
         if not button._auroraIconBorder then
             if bagID == _G.Enum.BagIndex.Reagentbank then

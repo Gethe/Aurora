@@ -54,8 +54,8 @@ do
 end
 
 function private.FrameXML.GameMenuFrame()
-    _G.hooksecurefunc(GameMenuFrame,"InitButtons", Hook.GameMenuInitButtons)
     local GameMenuFrame = _G.GameMenuFrame
+    _G.hooksecurefunc(GameMenuFrame,"InitButtons", Hook.GameMenuInitButtons)
     Util.Mixin(GameMenuFrame, Hook.GameMenuFrameMixin)
     Skin.GameMenuFrameTemplate(GameMenuFrame)
 end
