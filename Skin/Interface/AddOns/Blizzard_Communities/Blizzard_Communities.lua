@@ -161,6 +161,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.IconRing:SetAlpha(0)
             Button.NewCommunityFlash:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         end
+
         function Skin.CommunitiesListFrameTemplate(Frame)
             Frame.Bg:Hide()
             Frame.TopFiligree:Hide()
@@ -171,17 +172,18 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.FilligreeOverlay:Hide()
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
+
         function Skin.CommunitiesListDropDownMenuTemplate(Frame)
             Skin.UIDropDownMenuTemplate(Frame)
         end
+
     end
     do --[[ CommunitiesMemberList ]]
         function Skin.CommunitiesMemberListEntryTemplate(Button)
             Util.Mixin(Button, Hook.CommunitiesMemberListEntryMixin)
         end
         function Skin.CommunitiesMemberListFrameTemplate(Frame)
-            -- FIXLATER
-            -- Skin.UICheckButtonTemplate(Frame.ShowOfflineButton)
+            Skin.UICheckButtonTemplate(Frame.ShowOfflineButton)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
             Frame.ColumnDisplay.InsetBorderTopLeft:Hide()
             Frame.ColumnDisplay.InsetBorderTopRight:Hide()
@@ -204,7 +206,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.MinimalScrollBar(Frame.ScrollBar)
             local _, _, JumpToUnreadButton = Frame:GetChildren()
             Skin.UIPanelButtonTemplate(JumpToUnreadButton)
-            --Skin.UIPanelButtonTemplate(Frame.JumpToUnreadButton)
+            if JumpToUnreadButton then
+                Skin.UIPanelButtonTemplate(Frame.JumpToUnreadButton)
+            end
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.CommunitiesChatEditBoxTemplate(EditBox)
@@ -253,8 +257,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             Skin.InputBoxTemplate(Frame.NameEdit)
             Skin.InputScrollFrameTemplate(Frame.Description)
-            -- FIXLATER
-            -- Skin.UICheckButtonTemplate(Frame.TypeCheckBox)
+            Skin.UICheckButtonTemplate(Frame.TypeCheckBox)
             Skin.UIPanelButtonTemplate(Frame.Accept)
             Skin.UIPanelButtonTemplate(Frame.Delete)
             Skin.UIPanelButtonTemplate(Frame.Cancel)
@@ -264,8 +267,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.SelectionFrameTemplate(Frame.Selector)
             Skin.CommunitiesListDropDownMenuTemplate(Frame.CommunitiesListDropDownMenu)
             Skin.ScrollFrameTemplate(Frame.ScrollFrame)
-            -- FIXLATER
-            -- Skin.UICheckButtonTemplate(Frame.ScrollFrame.Child.QuickJoinButton)
+            Skin.UICheckButtonTemplate(Frame.ScrollFrame.Child.QuickJoinButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.NoneButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.AllButton)
         end
@@ -706,8 +708,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 end
 
 function private.AddOns.Blizzard_Communities()
-    -- FIXLATER - disable for now
-    -- if private.isRetail then return end
     ----====####$$$$%%%%%$$$$####====----
     --         CommunitiesList         --
     ----====####$$$$%%%%%$$$$####====----
@@ -899,6 +899,7 @@ function private.AddOns.Blizzard_Communities()
     --        CommunitiesFrame        --
     ----====####$$$$%%%%$$$$####====----
     local CommunitiesFrame = _G.CommunitiesFrame
+
     Skin.ButtonFrameTemplateMinimizable(CommunitiesFrame)
     CommunitiesFrame.PortraitOverlay:SetAlpha(0)
 
