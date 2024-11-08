@@ -206,9 +206,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.MinimalScrollBar(Frame.ScrollBar)
             local _, _, JumpToUnreadButton = Frame:GetChildren()
             Skin.UIPanelButtonTemplate(JumpToUnreadButton)
-            if JumpToUnreadButton then
-                Skin.UIPanelButtonTemplate(Frame.JumpToUnreadButton)
-            end
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.CommunitiesChatEditBoxTemplate(EditBox)
@@ -257,7 +254,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             Skin.InputBoxTemplate(Frame.NameEdit)
             Skin.InputScrollFrameTemplate(Frame.Description)
-            Skin.UICheckButtonTemplate(Frame.TypeCheckBox)
+            if Frame.TypeCheckBox then
+                Skin.UICheckButtonTemplate(Frame.TypeCheckBox)
+            end
             Skin.UIPanelButtonTemplate(Frame.Accept)
             Skin.UIPanelButtonTemplate(Frame.Delete)
             Skin.UIPanelButtonTemplate(Frame.Cancel)
