@@ -169,9 +169,8 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     end
     function Skin.ContainerFrameBackpackTemplate(Frame)
-        -- FIXLATER
-        -- Skin.ContainerFrameTemplate(Frame)
-        --Skin.ContainerMoneyFrameTemplate(Frame.MoneyFrame)
+        Skin.ContainerFrameTemplate(Frame)
+        Skin.ContainerMoneyFrameTemplate(Frame.MoneyFrame)
     end
 end
 
