@@ -64,11 +64,13 @@ do --[[ FrameXML\SecureUIPanelTemplates.xml ]]
     function Skin.UIPanelButtonNoTooltipTemplate(Button)
         Skin.FrameTypeButton(Button)
         Button.Left:SetAlpha(0)
-        Button.Right:SetAlpha(0)
-        Button.Middle:SetAlpha(0)
         Button.Left:Hide()
+        Button.Right:SetAlpha(0)
         Button.Right:Hide()
-        Button.Middle:Hide()
+        if Button.Middle then
+            Button.Middle:SetAlpha(0)
+            Button.Middle:Hide()
+        end
     end
     function Skin.UIPanelButtonNoTooltipResizeToFitTemplate(Button)
         Skin.UIPanelButtonNoTooltipTemplate(Button)

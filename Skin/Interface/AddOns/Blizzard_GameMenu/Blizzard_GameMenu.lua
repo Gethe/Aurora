@@ -5,45 +5,57 @@ if private.shouldSkip() then return end
 -- luacheck: globals next
 
 --[[ Core ]]
--- local Aurora = private.Aurora
--- local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
+
+do
+    do
+        Hook.GameMenuFrameMixin = {}
+        function Hook.GameMenuFrameMixin:OnShow()
+        end
+        function Hook.GameMenuFrameMixin:OnHide()
+        end
+        function Hook.GameMenuFrameMixin:OnEvent()
+        end
+        function Hook.GameMenuInitButtons(menu)
+            if not menu.buttonPool then return end
+            for button in menu.buttonPool:EnumerateActive() do
+                if not button._auroraSkinned then
+                    Base.CreateBackdrop(button, {
+                        bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                        tile = false,
+                        offsets = {
+                            left = -1,
+                            right = -1,
+                            top = -1,
+                            bottom = -1,
+                        }
+                    })
+                    Skin.UIPanelButtonTemplate(button)
+                    button._auroraSkinned = true
+                end
+            end
+        end
+    end
+end
+
+do
+    do
+        function Skin.GameMenuFrameTemplate(Frame)
+            if not Frame then
+                return
+            end
+            Skin.DialogBorderTemplate(Frame.Border)
+            Skin.DialogHeaderTemplate(Frame.Header)
+        end
+    end
+end
 
 function private.FrameXML.GameMenuFrame()
-    -- FIXLATER
-    -- local GameMenuFrame = _G.GameMenuFrameMixin
-
-    -- if private.isRetail then
-    --     Skin.DialogBorderTemplate(GameMenuFrame.Frame.Border)
-    --     Skin.DialogHeaderTemplate(GameMenuFrame.Header)
-    -- else
-    --     Skin.DialogBorderTemplate(GameMenuFrame)
-
-    --     local header, text = GameMenuFrame:GetRegions()
-    --     header:Hide()
-    --     text:ClearAllPoints()
-    --     text:SetPoint("TOPLEFT")
-    --     text:SetPoint("BOTTOMRIGHT", _G.GameMenuFrameMixin, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-    -- end
-
-    -- FIXLATER
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonHelp)
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonStore)
-
-    -- if private.isRetail then
-    --     Skin.GameMenuButtonTemplate(_G.GameMenuButtonWhatsNew)
-
-    --     Skin.GameMenuButtonTemplate(_G.GameMenuButtonSettings)
-    --     Skin.GameMenuButtonTemplate(_G.GameMenuButtonEditMode)
-    -- else
-    --     Skin.GameMenuButtonTemplate(_G.GameMenuButtonOptions)
-    -- end
-
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonMacros)
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonAddons)
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonRatings) -- Used in Korean locale
-
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonLogout)
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonQuit)
-
-    -- Skin.GameMenuButtonTemplate(_G.GameMenuButtonContinue)
+    _G.hooksecurefunc(GameMenuFrame,"InitButtons", Hook.GameMenuInitButtons)
+    local GameMenuFrame = _G.GameMenuFrame
+    Util.Mixin(GameMenuFrame, Hook.GameMenuFrameMixin)
+    Skin.GameMenuFrameTemplate(GameMenuFrame)
 end
