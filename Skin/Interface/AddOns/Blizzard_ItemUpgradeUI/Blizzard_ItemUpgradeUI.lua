@@ -12,7 +12,7 @@ local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_ItemUpgradeUI.lua ]]
     Hook.ItemUpgradeMixin = {}
-    function Hook.ItemUpgradeMixin:Update(fromDropDown)
+    function Hook.ItemUpgradeMixin:UpdateUpgradeItemInfo()
         local UpgradeItemButton = self.UpgradeItemButton
         if not self.upgradeInfo then
             Hook.SetItemButtonQuality(UpgradeItemButton, _G.Enum.ItemQuality.Uncommon)
@@ -23,6 +23,9 @@ do --[[ AddOns\Blizzard_ItemUpgradeUI.lua ]]
         end
 
         Base.CropIcon(UpgradeItemButton:GetPushedTexture())
+    end
+    function Hook.ItemUpgradeMixin:InitDropdown()
+        Skin.DropdownButton(self.ItemInfo.Dropdown, 130)
     end
 end
 
@@ -56,7 +59,6 @@ function private.AddOns.Blizzard_ItemUpgradeUI()
     UpgradeItemButton.EmptySlotGlow:SetAllPoints(UpgradeItemButton.icon)
     UpgradeItemButton.ButtonFrame:Hide()
 
-    Skin.UIDropDownMenuTemplate(ItemUpgradeFrame.ItemInfo.Dropdown)
     Skin.ItemUpgradePreviewTemplate(ItemUpgradeFrame.LeftItemPreviewFrame)
     Skin.ItemUpgradePreviewTemplate(ItemUpgradeFrame.RightItemPreviewFrame)
 
