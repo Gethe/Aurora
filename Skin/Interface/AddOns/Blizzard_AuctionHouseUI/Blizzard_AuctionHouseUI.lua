@@ -264,7 +264,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseLevelRangeFrameTemplate(Button.LevelRangeFrame)
         end
         function Skin.AuctionHouseFilterDropDownMenuTemplate(Frame)
-            Skin.UIDropDownMenuTemplate(Frame)
+            Skin.DropdownButton(Frame)
         end
         function Skin.AuctionHouseSearchButtonTemplate(Button)
             Skin.UIPanelButtonTemplate(Button)

@@ -35,7 +35,7 @@ function private.AddOns.Blizzard_TrainerUI()
         _G.ClassTrainerStatusBar:SetPoint("TOPLEFT", 8, -35)
         _G.ClassTrainerStatusBar:SetSize(192, 18)
 
-        Skin.UIDropDownMenuTemplate(_G.ClassTrainerFrameFilterDropDown)
+        Skin.DropdownButton(_G.ClassTrainerFrameFilterDropDown)
         Skin.MagicButtonTemplate(_G.ClassTrainerTrainButton)
 
         local moneyBG = _G.CreateFrame("Frame", nil, ClassTrainerFrame)
@@ -100,7 +100,7 @@ function private.AddOns.Blizzard_TrainerUI()
             top = 2,
             bottom = 7,
         })
-        Skin.UIDropDownMenuTemplate(_G.ClassTrainerFrameFilterDropDown)
+        Skin.DropdownButton(_G.ClassTrainerFrameFilterDropDown)
 
         _G.ClassTrainerSkillHighlight:SetColorTexture(1, 1, 1, 0.5)
         for i = 1, _G.CLASS_TRAINER_SKILLS_DISPLAYED do

@@ -85,8 +85,7 @@ function private.FrameXML.LFDFrame()
     Skin.LFDRoleButtonTemplate(_G.LFDQueueFrameRoleButtonHealer)
     Skin.LFDRoleButtonTemplate(_G.LFDQueueFrameRoleButtonDPS)
     Skin.LFGRoleButtonTemplate(_G.LFDQueueFrameRoleButtonLeader)
-    -- Skin.UIDropDownMenuTemplate(_G.LFDQueueFrameTypeDropDown)  -- FIXLATER:
-
+    Skin.DropdownButton(_G.LFDQueueFrameTypeDropDown)
     Skin.ScrollFrameTemplate(_G.LFDQueueFrameRandomScrollFrame)
     Skin.LFGRewardFrameTemplate(_G.LFDQueueFrameRandomScrollFrameChildFrame)
 

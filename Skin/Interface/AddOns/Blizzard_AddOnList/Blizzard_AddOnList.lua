@@ -99,7 +99,7 @@ function private.SharedXML.AddonList()
     end
 
     -- FIXLATER - removed in 11.0.0
-    -- Skin.UIDropDownMenuTemplate(AddonList.Dropdown)
+    Skin.DropdownButton(AddonList.Dropdown)
     -- _G.AddonCharacterDropDown:SetPoint("TOPLEFT", 10, -27)
     -- _G.AddonCharacterDropDown.Button:HookScript("OnClick", Hook.AddonListCharacterDropDownButton_OnClick)
 end

@@ -710,7 +710,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.SearchBoxTemplate(HeirloomsJournal.SearchBox)
     -- FIXLATER
     -- Skin.UIResettableDropdownButtonTemplate(HeirloomsJournal.FilterButton)
-    Skin.UIDropDownMenuTemplate(HeirloomsJournal.classDropDown)
+    Skin.DropdownButton(HeirloomsJournal.classDropDown)
 
     Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
     HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true)
@@ -741,7 +741,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.CollectionsBackgroundTemplate(ItemsCollectionFrame)
     Skin.CollectionsPagingFrameTemplate(ItemsCollectionFrame.PagingFrame)
-    Skin.UIDropDownMenuTemplate(ItemsCollectionFrame.WeaponDropDown)
+    Skin.DropdownButton(ItemsCollectionFrame.WeaponDropDown)
 
     local Models = ItemsCollectionFrame.Models
     for i = 1, #Models do

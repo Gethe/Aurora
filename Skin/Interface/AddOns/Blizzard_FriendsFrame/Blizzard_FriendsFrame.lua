@@ -181,7 +181,7 @@ function private.SharedXML.FriendsFrame()
     blizzIcon:SetTexture([[Interface\Glues\MainMenu\Glues-BlizzardLogo]])
 
     -- FIXLATER
-    -- Skin.UIDropDownMenuTemplate(_G.FriendsFrameStatusDropdown)
+    Skin.DropdownButton(_G.FriendsFrameStatusDropdown)
     -- _G.FriendsFrameStatusDropdown:SetPoint("TOPLEFT", -12, -27)
     local FriendsTabHeader = FriendsFrame.FriendsTabHeader
     Skin.FriendsTabTemplate(FriendsTabHeader.Tab1)
@@ -195,7 +195,7 @@ function private.SharedXML.FriendsFrame()
     local FriendsListFrame = _G.FriendsListFrame
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameAddFriendButton)
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameSendMessageButton)
-    Skin.UIDropDownMenuTemplate(FriendsListFrame.FilterDropDown)
+    Skin.DropdownButton(FriendsListFrame.FilterDropDown)
     Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
     Skin.WowScrollBoxList(FriendsListFrame.ScrollBox)
     Skin.MinimalScrollBar(FriendsListFrame.ScrollBar)
@@ -220,7 +220,7 @@ function private.SharedXML.FriendsFrame()
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader2)
 
     -- FIXLATER
-    -- Skin.UIDropDownMenuTemplate(_G.WhoFrameDropdown)
+    Skin.DropdownButton(_G.WhoFrameDropdown)
     -- _G.WhoFrameDropdownHighlightTexture:SetAlpha(0)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader3)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader4)
@@ -306,7 +306,7 @@ function private.SharedXML.FriendsFrame()
     local FriendsFriendsFrame = _G.FriendsFriendsFrame
     Skin.DialogBorderTemplate(FriendsFriendsFrame.Border)
 
-    Skin.UIDropDownMenuTemplate(_G.FriendsFriendsFrameDropDown)
+    Skin.DropdownButton(_G.FriendsFriendsFrameDropDown)
     Util.HideNineSlice(FriendsFriendsFrame.ScrollFrameBorder)
     Skin.WowScrollBoxList(FriendsFriendsFrame.ScrollBox)
     Skin.MinimalScrollBar(FriendsFriendsFrame.ScrollBar)

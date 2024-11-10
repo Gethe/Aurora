@@ -344,7 +344,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     --------------------
     local instanceSelect = EncounterJournal.instanceSelect
     instanceSelect.bg:SetAlpha(0)
-    Skin.UIDropDownMenuTemplate(instanceSelect.tierDropDown)
+    Skin.DropdownButton(instanceSelect.tierDropDown)
     Skin.WowScrollBoxList(instanceSelect.ScrollBox)
     Skin.MinimalScrollBar(instanceSelect.ScrollBar)
     Util.Mixin(instanceSelect.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)

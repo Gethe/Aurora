@@ -162,7 +162,7 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(HonorFrame.TankIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.HealerIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.DPSIcon)
-    Skin.UIDropDownMenuTemplate(_G.HonorFrameTypeDropDown)
+    Skin.DropdownButton(_G.HonorFrameTypeDropDown)
     Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
     Skin.MinimalScrollBar(HonorFrame.SpecificScrollBar)
 

@@ -53,9 +53,6 @@ do --[[ AddOns\Blizzard_GuildControlUI.xml ]]
 end
 
 function private.AddOns.Blizzard_GuildControlUI()
-    -- FIXLATER - disable for now
-    -- if private.isRetail then return end
-
     _G.hooksecurefunc("GuildControlUI_RankOrder_Update", Hook.GuildControlUI_RankOrder_Update)
     _G.hooksecurefunc("GuildControlUI_BankTabPermissions_Update", Hook.GuildControlUI_BankTabPermissions_Update)
 
@@ -65,7 +62,7 @@ function private.AddOns.Blizzard_GuildControlUI()
     Skin.HorizontalBarTemplate(_G.GuildControlUIHbar)
     Skin.UIPanelCloseButton(_G.GuildControlUICloseButton)
     -- FIXLATER - disable for now
-    -- Skin.UIDropDownMenuTemplate(GuildControlUI.dropdown)
+    Skin.DropdownButton(GuildControlUI.dropdown)
     -- GuildControlUI.dropdown.Button:SetWidth(24)
 
     Skin.RankChangeTemplate(_G.GuildControlUIRankOrderFrameRank1)
@@ -74,14 +71,14 @@ function private.AddOns.Blizzard_GuildControlUI()
 
     local bankTabFrame = GuildControlUI.bankTabFrame
     -- FIXLATER - disable for now
-    -- Skin.UIDropDownMenuTemplate(bankTabFrame.dropdown)
+    Skin.DropdownButton(bankTabFrame.dropdown)
     -- bankTabFrame.dropdown.Button:SetWidth(24)
     Skin.InsetFrameTemplate2(bankTabFrame.inset)
     Skin.ScrollFrameTemplate(bankTabFrame.inset.scrollFrame)
 
     local rankPermFrame = GuildControlUI.rankPermFrame
     -- FIXLATER - disable for now
-    -- Skin.UIDropDownMenuTemplate(rankPermFrame.dropdown)
+    Skin.DropdownButton(rankPermFrame.dropdown)
     -- rankPermFrame.dropdown.Button:SetWidth(24)
     -- Skin.GuildPermissionCheckBoxTemplate(rankPermFrame.OfficerCheckbox)
     -- Skin.GuildPermissionCheckBoxTemplate(rankPermFrame.InviteCheckbox)

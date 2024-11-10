@@ -87,9 +87,10 @@ do --[[ FrameXML\LFGList.lua ]]
             local icon = self.Icons[i].RoleIcon
             icon:SetAlpha(0)
             icon:SetSize(8, 8)
-
-            icon._auroraBorder:SetColorTexture(0, 0, 0)
-            icon._auroraBG:SetColorTexture(Color.button:GetRGB())
+            if  icon._auroraBorder ~= nil then
+                icon._auroraBorder:SetColorTexture(0, 0, 0)
+                icon._auroraBG:SetColorTexture(Color.button:GetRGB())
+            end
         end
     end
     function Hook.LFGListApplicationViewer_UpdateRoleIcons(member, grayedOut, tank, healer, damage, noTouchy, assignedRole)
@@ -269,8 +270,7 @@ function private.FrameXML.LFGList()
     ------------------
     local LFGListFrame =_G.LFGListFrame
 
-    -- FIXLATER
-    -- Skin.UIDropDownMenuTemplate(_G.LFGListFrameDropDown)
+    Skin.DropdownButton(_G.LFGListFrameDropDown)
 
     -- CategorySelection --
     local CategorySelection = LFGListFrame.CategorySelection
@@ -294,7 +294,7 @@ function private.FrameXML.LFGList()
     Skin.SearchBoxTemplate(SearchPanel.SearchBox)
     -- FIXLATER
     -- Skin.UIMenuButtonStretchTemplate(SearchPanel.FilterButton)
-    -- Skin.UIDropDownMenuTemplate(_G.LFGListLanguageFilterDropcownFrame)
+    Skin.DropdownButton(_G.LFGListLanguageFilterDropcownFrame)
 
     local AutoCompleteFrame = SearchPanel.AutoCompleteFrame
     Skin.FrameTypeFrame(AutoCompleteFrame)
@@ -378,10 +378,10 @@ function private.FrameXML.LFGList()
     end
 
     -- Skin.LFGListEditBoxTemplate(EntryCreation.Name)
-    -- Skin.UIDropDownMenuTemplate(EntryCreation.GroupDropDown)
-    -- Skin.UIDropDownMenuTemplate(EntryCreation.ActivityDropDown)
+    Skin.DropdownButton(EntryCreation.GroupDropDown)
+    Skin.DropdownButton(EntryCreation.ActivityDropDown)
     -- Skin.InputScrollFrameTemplate(EntryCreation.Description)
-    -- Skin.UIDropDownMenuTemplate(EntryCreation.PlayStyleDropdown)
+    Skin.DropdownButton(EntryCreation.PlayStyleDropdown)
     -- Skin.LFGListRequirementTemplate(EntryCreation.ItemLevel)
     -- Skin.LFGListRequirementTemplate(EntryCreation.PvpItemLevel)
     -- Skin.LFGListRequirementTemplate(EntryCreation.PVPRating)

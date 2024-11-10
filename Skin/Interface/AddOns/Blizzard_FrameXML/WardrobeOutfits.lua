@@ -44,7 +44,7 @@ do --[[ FrameXML\WardrobeOutfits.xml ]]
         Base.CropIcon(Frame.Icon)
     end
     function Skin.WardrobeOutfitDropDownTemplate(Frame)
-        Skin.UIDropDownMenuTemplate(Frame)
+        Skin.DropdownButton(Frame)
 
         local offsets = Frame:GetBackdropOption("offsets")
         Frame:SetBackdropOption("offsets", {

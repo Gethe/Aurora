@@ -56,7 +56,7 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     ArchaeologyFrame.bgLeft:Hide()
     ArchaeologyFrame.bgRight:Hide()
 
-    Skin.UIDropDownMenuTemplate(ArchaeologyFrame.raceFilterDropDown)
+    Skin.DropdownButton(ArchaeologyFrame.raceFilterDropDown)
     ArchaeologyFrame.raceFilterDropDown:HookScript("OnHide", Hook.RaceFilter_OnHide)
     ArchaeologyFrame.raceFilterDropDown:SetPoint("TOPRIGHT", -30, -52)
 

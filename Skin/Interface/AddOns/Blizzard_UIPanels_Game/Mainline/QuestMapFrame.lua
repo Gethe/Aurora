@@ -115,8 +115,6 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
 end
 
 function private.FrameXML.QuestMapFrame()
-    -- FIXLATER - disable for now
-    -- if private.isRetail then return end
     ------------------------------
     -- QuestLogPopupDetailFrame --
     ------------------------------
