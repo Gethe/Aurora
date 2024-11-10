@@ -1,4 +1,11 @@
-﻿## [11.0.5.1] ##
+﻿## [11.0.5.2] ##
+### Fixed ###
+  * fix: ItemUpgradeUI
+  * chg: move UIDropDownMenuTemplate to DropdownButton
+  * add:  Skin.DropdownButton to replace UIDropDownMenuTemplate
+  * cleanup: remove non mainline code from setup per now. Does not fit in current model.
+
+## [11.0.5.1] ##
 ### Fixed ###
   * fix: comment out another dropdown menu
   * fix: skin gamemenu
