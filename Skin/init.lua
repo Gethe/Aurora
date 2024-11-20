@@ -48,7 +48,9 @@ function private.UpdateUIScale()
         pixelScale = 768 / pysHeight
         local cvarScale, parentScale = _G.tonumber(_G.GetCVar("uiscale")), floor(_G.UIParent:GetScale() * 100 + 0.5) / 100
         private.debug("scale", pixelScale, cvarScale, parentScale)
-
+        if parentScale == 1 then -- bail if UIParent is scaled to 1... we don't want to mess with that
+            return
+        end
         uiScaleChanging = true
         -- Set Scale (WoW CVar can't go below .64)
         if cvarScale ~= pixelScale then
