@@ -54,11 +54,12 @@ function private.FrameXML.RecruitAFriendFrame()
     -- RecruitAFriendRewardsFrame --
     --------------------------------
     local RecruitAFriendRewardsFrame = _G.RecruitAFriendRewardsFrame
-    RecruitAFriendRewardsFrame.Background:Hide()
     RecruitAFriendRewardsFrame.Bracket_TopLeft:Hide()
     RecruitAFriendRewardsFrame.Bracket_TopRight:Hide()
     RecruitAFriendRewardsFrame.Bracket_BottomRight:Hide()
     RecruitAFriendRewardsFrame.Bracket_BottomLeft:Hide()
+    RecruitAFriendRewardsFrame.Background:SetTexture(nil)
+    RecruitAFriendRewardsFrame.Background:SetColorTexture(Color.black.r, Color.black.g, Color.black.b, 0.75)
 
     Util.Mixin(RecruitAFriendRewardsFrame.rewardPool, Hook.ObjectPoolMixin)
     Hook.ObjectPoolMixin.Acquire(RecruitAFriendRewardsFrame.rewardPool)
