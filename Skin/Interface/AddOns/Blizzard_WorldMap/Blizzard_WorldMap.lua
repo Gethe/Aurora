@@ -29,7 +29,6 @@ end
 
 do --[[ AddOns\Blizzard_WorldMap.xml ]]
     do --[[ Blizzard_WorldMapTemplates.xml ]]
-        -- FIXLATER - disable for now
         function Skin.WorldMapFloorNavigationFrameTemplate(Button)
             _G.print("Skin.WorldMapFloorNavigationFrameTemplate")
             Skin.DropdownButton(Button)
