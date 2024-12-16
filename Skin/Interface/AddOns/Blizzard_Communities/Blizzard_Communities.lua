@@ -22,65 +22,46 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self.Icon:Show()
             self.Icon:SetColorTexture(Color.black:GetRGB())
         end
-        if private.isRetail then
-            function Hook.CommunitiesListEntryMixin:Init(elementData)
-                local clubInfo = elementData.clubInfo
-                -- self._iconBG:SetWidth(self._iconBG:GetHeight())
+        function Hook.CommunitiesListEntryMixin:Init(elementData)
+            local clubInfo = elementData.clubInfo
+            -- self._iconBG:SetWidth(self._iconBG:GetHeight())
 
-                if clubInfo and self._iconBG then
-                    local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
-                    if isGuild then
-                        self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
-                    else
-                        self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-                    end
-
-                    self.CircleMask:Hide()
-                    Base.CropIcon(self.Icon)
-                    self.Icon:SetAllPoints(self._iconBG)
-                    self._iconBG:Hide()
+            if clubInfo and self._iconBG then
+                local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
+                if isGuild then
+                    self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+                else
+                    self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
                 end
-            end
-            function Hook.CommunitiesListEntryMixin:SetFindCommunity()
-                self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
 
                 self.CircleMask:Hide()
-                self.Icon:SetTexCoord(0, 1, 0, 1)
-                self.Icon:ClearAllPoints()
-                self.Icon:SetSize(34, 34)
-                self.Icon:SetPoint("CENTER" )
-                self.Name:SetPoint("LEFT", self.Icon, "RIGHT", 11, 0)
-
-                self.Icon:Show()
-                self.Icon:SetColorTexture(Color.black:GetRGB())
-            end
-            function Hook.CommunitiesListEntryMixin:SetGuildFinder()
-                self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
-
-                self.CircleMask:Hide()
-                self.Icon:SetTexCoord(0, 1, 0, 1)
-                self.Icon:ClearAllPoints()
-                self.Icon:SetSize(40, 40)
-                self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
-
+                Base.CropIcon(self.Icon)
+                self.Icon:SetAllPoints(self._iconBG)
                 self._iconBG:Hide()
             end
-        else
-            function Hook.CommunitiesListEntryMixin:SetClubInfo(clubInfo, isInvitation, isTicket, isInviteFromFinder)
-                if clubInfo and self._iconBG then
-                    local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
-                    if isGuild then
-                        self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
-                    else
-                        self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-                    end
+        end
+        function Hook.CommunitiesListEntryMixin:SetFindCommunity()
+            self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
 
-                    self.CircleMask:Hide()
-                    Base.CropIcon(self.Icon)
-                    self.Icon:SetAllPoints(self._iconBG)
-                    self._iconBG:Hide()
-                end
-            end
+            self.CircleMask:Hide()
+            self.Icon:SetTexCoord(0, 1, 0, 1)
+            self.Icon:ClearAllPoints()
+            self.Icon:SetSize(34, 34)
+            self.Icon:SetPoint("CENTER" )
+            self.Name:SetPoint("LEFT", self.Icon, "RIGHT", 11, 0)
+
+            self.Icon:Show()
+            self.Icon:SetColorTexture(Color.black:GetRGB())
+        end
+        function Hook.CommunitiesListEntryMixin:SetGuildFinder()
+            self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
+
+            self.CircleMask:Hide()
+            self.Icon:SetTexCoord(0, 1, 0, 1)
+            self.Icon:ClearAllPoints()
+            self.Icon:SetSize(40, 40)
+            self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
+            -- self._iconBG:Hide()
         end
     end
     do --[[ CommunitiesMemberList ]]
@@ -901,6 +882,7 @@ function private.AddOns.Blizzard_Communities()
     _G.hooksecurefunc(CommunitiesFrame.MaximizeMinimizeFrame, "maximizedCallback", function(...)
         CommunitiesFrame.Chat:SetPoint("BOTTOMRIGHT", CommunitiesFrame.MemberList, "BOTTOMLEFT", -32, 32)
     end)
+
     Skin.CommunitiesListFrameTemplate(CommunitiesFrame.CommunitiesList)
 
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.ChatTab)
