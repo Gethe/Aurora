@@ -24,7 +24,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
     end
     function Hook.AchievementButton_UpdatePlusMinusTexture(button)
         if button:IsForbidden() then return end -- twitter achievement share is protected
-        if button.plusMinus:IsShown() then
+        if button.PlusMinus:IsShown() then
             button._auroraPlusMinus:Show()
             if button.collapsed then
                 button._auroraPlusMinus.plus:Show()
@@ -66,27 +66,35 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
             end
         end
     end
-
-    function Hook.AchievementFrameStats_SetStat(button, category, index, colorIndex, isSummary)
-        if not button.id then return end
-        if not colorIndex then
-            colorIndex = index
-        end
-
-        if (colorIndex % 2) == 1 then
-            button.background:Hide()
-        else
-            button.background:SetColorTexture(1, 1, 1, 0.25)
+    do -- AchievementStatTemplateMixin
+        Hook.AchievementStatTemplateMixin = {}
+        function Hook.AchievementStatTemplateMixin:Init(elementData)
+            local category = elementData.id;
+            local colorIndex = elementData.colorIndex;
+            if elementData.header then
+                self.Left:Hide();
+                self.Middle:Hide();
+                self.Right:Hide();
+                self.Background:Show();
+                self.Background:SetAlpha(1.0)
+                self.Background:SetBlendMode("DISABLE")
+                self.Background:SetColorTexture(Color.button:GetRGB())
+            else
+                local id, _, _, _, _, _, _, _, _, _ = _G.GetAchievementInfo(category);
+                if not id then return end
+                if not colorIndex then
+                    _G.print("AchievementStatTemplateMixin:Init - colorIndex is nil")
+                    -- colorIndex = index;
+                end
+                if (colorIndex % 2) == 1 then
+                    self.Background:Hide();
+                else
+                    self.Background:Show();
+                    self.Background:SetColorTexture(1, 1, 1, 0.25);
+                end
+            end
         end
     end
-    function Hook.AchievementFrameStats_SetHeader(button, id)
-        button.background:Show()
-        button.background:SetAlpha(1.0)
-        button.background:SetBlendMode("DISABLE")
-        button.background:SetColorTexture(Color.button:GetRGB())
-    end
-    Hook.AchievementFrameComparisonStats_SetStat = Hook.AchievementFrameStats_SetStat
-    Hook.AchievementFrameComparisonStats_SetHeader = Hook.AchievementFrameStats_SetHeader
 
     local numAchievements = 0
     function Hook.AchievementFrameSummary_UpdateAchievements(...)
@@ -122,6 +130,16 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
 end
 
 do --[[ AddOns\Blizzard_AchievementUI.xml ]]
+    Hook.AchievementTemplateMixin = {}
+    function Hook.AchievementTemplateMixin:Init(elementData)
+        self.index = elementData.index;
+        self.id = elementData.id;
+        local category = elementData.category;
+        for key, value in pairs(elementData) do
+            print(key, value)
+        end
+ 
+    end
     function Skin.AchievementSearchPreviewButton(Button)
         Button.SelectedTexture:SetPoint("TOPLEFT", 1, -1)
         Button.SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
@@ -231,8 +249,30 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         StatusBar.Middle:Hide()
         select(4, StatusBar:GetRegions()):Hide() -- FillBar
     end
-    function Skin.AchievementCategoryTemplate(Frame)
-        local Button = Frame.Button
+    function Hook.AchievementFrameAchievements(Frame)
+        for _, child in next, { Frame.ScrollTarget:GetChildren() } do
+            if not child._auroraSkinned then
+                Skin.AchievementFrameAchievements(child)
+                child._auroraSkinned = true
+            end
+        end
+    end
+    function Skin.AchievementFrameAchievements(Frame)
+        Util.HideNineSlice(Frame)
+        Skin.AchievementTemplate(Frame)
+        hooksecurefunc(Frame, 'UpdatePlusMinusTexture', Hook.AchievementButton_UpdatePlusMinusTexture)
+    end
+
+    function Hook.AchievementCategoryTemplate(Frame)
+        for _, child in next, { Frame.ScrollTarget:GetChildren() } do
+            local Button = child.Button
+            if Button and not Button._auroraSkinned then
+                    Skin.AchievementCategoryTemplate(Button)
+                    Button._auroraSkinned = true
+            end
+        end
+    end
+    function Skin.AchievementCategoryTemplate(Button)
         Base.SetBackdrop(Button, Color.button)
         Button.Background:Hide()
 
@@ -254,7 +294,6 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         Skin.TooltipBorderBackdropTemplate(EventButton)
         _G.hooksecurefunc(EventButton, "Saturate", Hook.AchievementButton_Saturate)
         _G.hooksecurefunc(EventButton, "Desaturate", Hook.AchievementButton_Desaturate)
-
         EventButton.Background:Hide()
         EventButton.BottomLeftTsunami:Hide()
         EventButton.BottomRightTsunami:Hide()
@@ -364,13 +403,10 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 end
 
 function private.AddOns.Blizzard_AchievementUI()
+    _G.print("AddOns.Blizzard_AchievementUI")
     _G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
     _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
     _G.hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)
-    --_G.hooksecurefunc("AchievementFrameStats_SetStat", Hook.AchievementFrameStats_SetStat)
-    --_G.hooksecurefunc("AchievementFrameStats_SetHeader", Hook.AchievementFrameStats_SetHeader)
-    --_G.hooksecurefunc("AchievementFrameComparisonStats_SetStat", Hook.AchievementFrameComparisonStats_SetStat)
-    --_G.hooksecurefunc("AchievementFrameComparisonStats_SetHeader", Hook.AchievementFrameComparisonStats_SetHeader)
 
     ----------------------
     -- AchievementFrame --
@@ -427,12 +463,11 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------
     -- Categories --
     ----------------
-    local Categories = AchievementFrame.Categories
+    local Categories = _G.AchievementFrameCategories
     Util.HideNineSlice(Categories)
-    Skin.WowScrollBoxList(Categories.ScrollBox)
     Skin.MinimalScrollBar(Categories.ScrollBar)
-
-
+    Skin.WowScrollBoxList(Categories.ScrollBox)
+    _G.hooksecurefunc(Categories.ScrollBox, 'Update', Hook.AchievementCategoryTemplate)
 
     ------------------
     -- Achievements --
@@ -441,11 +476,11 @@ function private.AddOns.Blizzard_AchievementUI()
     Achievements.Background:Hide()
     select(3, Achievements:GetRegions()):Hide()
     Skin.WowScrollBoxList(Achievements.ScrollBox)
-    Achievements.ScrollBox:SetBackdropBorderColor(Color.yellow)
+    -- Achievements.ScrollBox:SetBackdropBorderColor(Color.yellow)
     Skin.MinimalScrollBar(Achievements.ScrollBar)
     select(3, Achievements:GetChildren()):Hide()
-
-
+    Util.Mixin(_G.AchievementTemplateMixin, Hook.AchievementTemplateMixin)
+    _G.hooksecurefunc(Achievements.ScrollBox, 'Update', Hook.AchievementFrameAchievements)
 
     -----------
     -- Stats --
@@ -453,10 +488,10 @@ function private.AddOns.Blizzard_AchievementUI()
     local Stats = _G.AchievementFrameStats
     _G.AchievementFrameStatsBG:Hide()
     Skin.WowScrollBoxList(Stats.ScrollBox)
-    Stats.ScrollBox:SetBackdropBorderColor(Color.yellow)
+    --Stats.ScrollBox:SetBackdropBorderColor(Color.yellow) -- This is not working well with the scrollbox headers from stats.
     Skin.MinimalScrollBar(Stats.ScrollBar)
     select(4, _G.AchievementFrameStats:GetChildren()):Hide()
-
+    Util.Mixin(_G.AchievementStatTemplateMixin, Hook.AchievementStatTemplateMixin)
 
 
     -------------
@@ -533,21 +568,18 @@ function private.AddOns.Blizzard_AchievementUI()
         _G.AchievementFrameTab3,
     })
 
-    Base.SetBackdrop(_G.AchievementFrameFilterDropdown, Color.button)
-    local filterBG = _G.AchievementFrameFilterDropdown:GetBackdropTexture("bg")
-
-    _G.AchievementFrameFilterDropdown:SetPoint("TOPLEFT", bg, 148, -6)
-    _G.AchievementFrameFilterDropdown:SetHeight(16)
-    filterBG:SetPoint("RIGHT",0, 0)
-    filterBG:SetHeight(16)
-    Skin.DropdownButton(_G.AchievementFrameFilterDropdown)
-    _G.AchievementFrameFilterDropdown:SetSize(16, 16)
-
     local SearchBox = AchievementFrame.SearchBox
     Skin.SearchBoxTemplate(SearchBox)
     SearchBox:ClearAllPoints()
     SearchBox:SetPoint("TOPRIGHT", bg, -148, 0)
 
+    local AchievementFrameFilterDropdown = _G.AchievementFrameFilterDropdown
+    Skin.DropdownButton(AchievementFrameFilterDropdown)
+    AchievementFrameFilterDropdown.resizeToText = false
+    AchievementFrameFilterDropdown:SetParent(AchievementFrame)
+    AchievementFrameFilterDropdown:SetPoint("TOPLEFT", bg, 25, -4)
+    AchievementFrameFilterDropdown:SetHeight(16)
+    AchievementFrameFilterDropdown:SetWidth(60)
 
     local SearchPreview = AchievementFrame.SearchPreviewContainer
     Skin.FrameTypeFrame(SearchPreview)
