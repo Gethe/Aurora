@@ -1,4 +1,12 @@
-﻿## [11.0.5.2] ##
+﻿## [11.0.5.4] ##
+  * chg: AchivementUI updated for post 10.0.0 and 11.0.0 - stats, categories, filter and new mixins skinned
+  * chore: removed fix it comment
+  * chg: remove unused code from communities
+  * fix: acchievemnts search box
+  * fix: skinning of RecruitAFriendRewardsFrame
+  * fix: dont update scale if parentscale is 1
+
+## [11.0.5.2] ##
 ### Fixed ###
   * fix: ItemUpgradeUI
   * chg: move UIDropDownMenuTemplate to DropdownButton
