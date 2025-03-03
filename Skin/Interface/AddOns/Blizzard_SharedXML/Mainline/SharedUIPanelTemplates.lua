@@ -529,7 +529,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.PortraitFrameBaseTemplate(Frame)
         Util.Mixin(Frame, Hook.PortraitFrameMixin)
-
+        if not Frame then
+            _G.print("ReportError: Frame is nil in PortraitFrameBaseTemplate - Report to Aurora developers.")
+            return
+        end
         if Frame.debug then
             Frame.NineSlice.debug = Frame.debug
         end
@@ -550,6 +553,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Frame.TopTileStreaks:SetTexture("")
     end
     function Skin.PortraitFrameFlatBaseTemplate(Frame)
+        if not Frame then
+            _G.print("ReportError: Frame is nil in PortraitFrameFlatBaseTemplate - Report to Aurora developers.")
+            return
+        end
         Skin.PortraitFrameBaseTemplate(Frame)
         Skin.FlatPanelBackgroundTemplate(Frame.Bg)
     end
@@ -589,6 +596,10 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         --Frame.CloseButton:SetPoint("TOPRIGHT", Frame.Bg, 5.6, 5)
     end
     function Skin.PortraitFrameFlatTemplate(Frame)
+        if not Frame then
+            _G.print("ReportError: Frame is nil in PortraitFrameFlatTemplate - Report to Aurora developers.")
+            return
+        end        
         Skin.PortraitFrameFlatBaseTemplate(Frame)
         Skin.UIPanelCloseButtonDefaultAnchors(Frame.CloseButton)
     end
