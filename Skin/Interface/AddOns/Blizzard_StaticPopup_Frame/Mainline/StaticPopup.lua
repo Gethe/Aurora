@@ -48,6 +48,7 @@ do --[[ FrameXML\StaticPopup.xml ]]
         if private.isRetail then
             Skin.DialogBorderTemplate(Frame.Border)
         else
+            _G.print("ReportError: StaticPopupTemplate is not supported in Classic - Report to Aurora developers.")
             Skin.DialogBorderDarkTemplate(Frame)
         end
 

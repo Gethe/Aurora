@@ -106,6 +106,12 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     function Skin.ContainerFrameTemplate(Frame)
         local bg
         if private.isRetail then
+            if not Frame then
+                if private.isDev then
+                    _G.print("ReportError: Frame is nil in ContainerFrameTemplate - Report to Aurora developers.")
+                end
+                return
+            end
             Skin.PortraitFrameFlatTemplate(Frame)
             bg = Frame.NineSlice:GetBackdropTexture("bg")
 
@@ -169,6 +175,10 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
     end
     function Skin.ContainerFrameBackpackTemplate(Frame)
+        if not Frame then
+            _G.print("ReportError: Frame is nil in ContainerFrameBackpackTemplate - Report to Aurora developers.")
+            return
+        end             
         Skin.ContainerFrameTemplate(Frame)
         Skin.ContainerMoneyFrameTemplate(Frame.MoneyFrame)
     end

@@ -17,7 +17,9 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
         function Skin.DropdownButton(Frame, Width)
             -- local rightOfs = -105
             if not Frame then
-                -- _G.print("Skin.DropdownButton - Frame is nil")
+                if private.isDev then
+                    _G.print("Skin.DropdownButton - Frame is nil")
+                end
                 return
             end
             if not Width then
