@@ -138,8 +138,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         for key, value in pairs(elementData) do
             print(key, value)
         end
- 
-    end
+     end
     function Skin.AchievementSearchPreviewButton(Button)
         Button.SelectedTexture:SetPoint("TOPLEFT", 1, -1)
         Button.SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
