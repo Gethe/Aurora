@@ -599,7 +599,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         if not Frame then
             _G.print("ReportError: Frame is nil in PortraitFrameFlatTemplate - Report to Aurora developers.")
             return
-        end        
+        end
         Skin.PortraitFrameFlatBaseTemplate(Frame)
         Skin.UIPanelCloseButtonDefaultAnchors(Frame.CloseButton)
     end

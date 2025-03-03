@@ -22,9 +22,9 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
                 end
                 return
             end
-            if not Width then
-                Width = 155
-            end
+            -- if not Width then
+            --     Width = 155
+            -- end
             if Frame.Left then
                 Frame.Left:SetAlpha(0)
             end

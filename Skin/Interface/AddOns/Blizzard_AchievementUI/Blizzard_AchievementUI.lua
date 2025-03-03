@@ -134,7 +134,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     function Hook.AchievementTemplateMixin:Init(elementData)
         self.index = elementData.index;
         self.id = elementData.id;
-        local category = elementData.category;
+        -- local category = elementData.category;
         for key, value in pairs(elementData) do
             print(key, value)
         end
@@ -259,7 +259,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     function Skin.AchievementFrameAchievements(Frame)
         Util.HideNineSlice(Frame)
         Skin.AchievementTemplate(Frame)
-        hooksecurefunc(Frame, 'UpdatePlusMinusTexture', Hook.AchievementButton_UpdatePlusMinusTexture)
+        _G.hooksecurefunc(Frame, 'UpdatePlusMinusTexture', Hook.AchievementButton_UpdatePlusMinusTexture)
     end
 
     function Hook.AchievementCategoryTemplate(Frame)

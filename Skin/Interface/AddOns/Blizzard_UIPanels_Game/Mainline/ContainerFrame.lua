@@ -178,7 +178,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         if not Frame then
             _G.print("ReportError: Frame is nil in ContainerFrameBackpackTemplate - Report to Aurora developers.")
             return
-        end             
+        end
         Skin.ContainerFrameTemplate(Frame)
         Skin.ContainerMoneyFrameTemplate(Frame.MoneyFrame)
     end
