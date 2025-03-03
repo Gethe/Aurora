@@ -312,18 +312,18 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
 end
 
 function private.AddOns.Blizzard_ObjectiveTracker()
-    -- FIXLATER - disable for now
-    if private.isRetail then return end
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ObjectiveTrackerShared --
     ----====####$$$$%%%%%$$$$####====----
-    _G.hooksecurefunc("QuestObjectiveItem_Initialize", Hook.QuestObjectiveItem_Initialize)
-    _G.hooksecurefunc("QuestObjectiveSetupBlockButton_AddRightButton", Hook.QuestObjectiveSetupBlockButton_AddRightButton)
+    -- _G.hooksecurefunc("QuestObjectiveItem_Initialize", Hook.QuestObjectiveItem_Initialize)
+    -- _G.hooksecurefunc("QuestObjectiveSetupBlockButton_AddRightButton", Hook.QuestObjectiveSetupBlockButton_AddRightButton)
+    -- -- FIXLATER - disable for now
+    if private.isRetail then return end
 
-    ----====####$$$$$$$####====----
-    -- Blizzard_ObjectiveTracker --
-    ----====####$$$$$$$####====----
-    _G.hooksecurefunc("ObjectiveTracker_Initialize", Hook.ObjectiveTracker_Initialize)
+    -- ----====####$$$$$$$####====----
+    -- -- Blizzard_ObjectiveTracker --
+    -- ----====####$$$$$$$####====----
+    -- _G.hooksecurefunc("ObjectiveTracker_Initialize", Hook.ObjectiveTracker_Initialize)
 
     Skin.ObjectiveTrackerHeaderTemplate(_G.ObjectiveTrackerFrame.BlocksFrame.CampaignQuestHeader)
     for _, headerName in next, {"QuestHeader", "AchievementHeader", "ScenarioHeader", "UIWidgetsHeader"} do
