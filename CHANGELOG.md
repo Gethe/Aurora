@@ -1,10 +1,13 @@
-﻿## [11.0.5.4] ##
+﻿## [11.1.0.0] ##
   * chg: AchivementUI updated for post 10.0.0 and 11.0.0 - stats, categories, filter and new mixins skinned
   * chore: removed fix it comment
   * chg: remove unused code from communities
   * fix: acchievemnts search box
   * fix: skinning of RecruitAFriendRewardsFrame
-  * fix: dont update scale if parentscale is 1
+  * fix: dont update scale if parentscale is 11
+  * fix: QuestMapFrame working for 11.1.0
+  * tmp: disabled broken kode in 11.1.0
+  * chg: make certain debug code only show if aurora\dev is running
 
 ## [11.0.5.2] ##
 ### Fixed ###

@@ -1,9 +1,9 @@
-## Interface: 110005
+## Interface: 110100
 ## Title: Aurora
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe, Hanshi/arnvid
-## Version: 11.0.5.2
+## Version: 11.1.0.0
 
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## SavedVariables: AuroraConfig
@@ -22,4 +22,3 @@ gui.lua
 #@do-not-package@
 dev\test.lua
 #@end-do-not-package@
-
