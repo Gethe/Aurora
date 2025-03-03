@@ -51,7 +51,7 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
             callingHeader.HighlightBackground:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
         end
 
-        local separator = _G.QuestScrollFrame.Contents.Separator
+        local separator = _G.QuestMapFrame.QuestsFrame.ScrollFrame.Contents.Separator
         if separator:IsShown() then
             separator.Divider:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.5)
             separator.Divider:SetSize(200, 1)
@@ -171,20 +171,20 @@ function private.FrameXML.QuestMapFrame()
     end
     QuestMapFrame.VerticalSeparator:Hide()
 
-
     local QuestsFrame = QuestMapFrame.QuestsFrame
-    Skin.ScrollFrameTemplate(QuestsFrame)
+
+    Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
     Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.covenantCallingsHeaderFramePool, Hook.ObjectPoolMixin)
 
-    QuestsFrame.Contents.Separator:SetSize(260, 10)
-    QuestsFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
+    QuestsFrame.ScrollFrame.Contents.Separator:SetSize(260, 10)
+    QuestsFrame.ScrollFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
 
     do -- StoryHeader
-        local StoryHeader = QuestsFrame.Contents.StoryHeader
+        local StoryHeader = QuestsFrame.ScrollFrame.Contents.StoryHeader
         StoryHeader.Text:SetPoint("TOPLEFT", 18, -25)
 
         local mask = StoryHeader:CreateMaskTexture(nil, "BACKGROUND")
@@ -206,8 +206,8 @@ function private.FrameXML.QuestMapFrame()
         QuestsFrame.DetailFrame.BottomDetail:Hide()
         QuestsFrame.DetailFrame.TopDetail:Hide()
     end
-
-    Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
+    -- FIXLATER --broken in 11.1.0
+    -- Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
 
     do -- QuestSessionManagement
         local QuestSessionManagement = QuestMapFrame.QuestSessionManagement
@@ -257,5 +257,5 @@ function private.FrameXML.QuestMapFrame()
     -- FIXLATER
     -- Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
 
-    Skin.CampaignOverviewTemplate(QuestMapFrame.CampaignOverview)
+    Skin.CampaignOverviewTemplate(QuestMapFrame.QuestsFrame.CampaignOverview)
 end
