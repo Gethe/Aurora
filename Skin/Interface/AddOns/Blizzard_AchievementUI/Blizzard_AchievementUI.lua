@@ -135,9 +135,9 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         self.index = elementData.index;
         self.id = elementData.id;
         -- local category = elementData.category;
-        for key, value in pairs(elementData) do
-            print(key, value)
-        end
+        -- for key, value in pairs(elementData) do
+        --     print(key, value)
+        -- end
      end
     function Skin.AchievementSearchPreviewButton(Button)
         Button.SelectedTexture:SetPoint("TOPLEFT", 1, -1)
