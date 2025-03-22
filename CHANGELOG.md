@@ -1,4 +1,7 @@
-﻿## [11.1.0.0] ##
+﻿## [11.1.0.1] ##
+  * fix: disabled debug messages in AchievementUI.lua - #133
+  
+## [11.1.0.0] ##
   * chg: AchivementUI updated for post 10.0.0 and 11.0.0 - stats, categories, filter and new mixins skinned
   * chore: removed fix it comment
   * chg: remove unused code from communities
