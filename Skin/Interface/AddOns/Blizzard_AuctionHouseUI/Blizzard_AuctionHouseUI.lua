@@ -89,7 +89,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
                 button.HighlightTexture:SetColorTexture(Color.highlight:GetRGB())
                 button.HighlightTexture:SetAlpha(0.5)
             else
-                button:SetBackdrop(true)
+                -- FIXLATER
+                -- button:SetBackdrop(true)
                 button.HighlightTexture:SetAlpha(0)
                 button.SelectedTexture:SetAlpha(0)
 
@@ -98,22 +99,22 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
                 else
                     button:UnlockHighlight()
                 end
-
-                if info.type == "category" then
-                    button:SetBackdropOption("offsets", {
-                        left = 1,
-                        right = 1,
-                        top = 1,
-                        bottom = 1,
-                    })
-                elseif info.type == "subCategory" then
-                    button:SetBackdropOption("offsets", {
-                        left = 11,
-                        right = 1,
-                        top = 1,
-                        bottom = 1,
-                    })
-                end
+                -- FIXLATER
+                -- if info.type == "category" then
+                --     button:SetBackdropOption("offsets", {
+                --         left = 1,
+                --         right = 1,
+                --         top = 1,
+                --         bottom = 1,
+                --     })
+                -- elseif info.type == "subCategory" then
+                --     button:SetBackdropOption("offsets", {
+                --         left = 11,
+                --         right = 1,
+                --         top = 1,
+                --         bottom = 1,
+                --     })
+                -- end
             end
         end
     end
@@ -258,8 +259,10 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseLevelRangeEditBoxTemplate(Frame.MaxLevel)
         end
         function Skin.AuctionHouseFilterButtonTemplate(Button)
-            Button.Icon:SetSize(5, 10)
-            Base.SetTexture(Button.Icon, "arrowRight")
+            if Button.Icon then
+                Button.Icon:SetSize(5, 10)
+                Base.SetTexture(Button.Icon, "arrowRight")
+            end
             Skin.UIMenuButtonStretchTemplate(Button)
             Skin.AuctionHouseLevelRangeFrameTemplate(Button.LevelRangeFrame)
         end
@@ -273,7 +276,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseFavoritesSearchButtonTemplate(Frame.FavoritesSearchButton)
             Skin.AuctionHouseSearchBoxTemplate(Frame.SearchBox)
             Skin.AuctionHouseSearchButtonTemplate(Frame.SearchButton)
-            Skin.AuctionHouseFilterButtonTemplate(Frame.FilterButton)
+            -- FIXLATER
+            -- Skin.AuctionHouseFilterButtonTemplate(Frame.FilterButton)
         end
     end
     do --[[ Blizzard_AuctionHouseBrowseResultsFrame ]]
@@ -321,7 +325,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         end
         function Skin.AuctionHouseAlignedDurationDropDownTemplate(Frame)
             Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
-            Skin.LargeUIDropDownMenuTemplate(Frame.DropDown)
+            -- FIXLATER
+            -- Skin.LargeUIDropDownMenuTemplate(Frame.DropDown)
         end
         function Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame)
             Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
