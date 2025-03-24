@@ -1,4 +1,8 @@
-﻿## [11.1.0.1] ##
+﻿## [11.1.0.2] ##
+  * fix: GetSearchResultInfo now returns ActivityIDs instead of ActivityID - fixes error on LFGListSearchEntryTooltip
+  * chg: disabled broken menus and dropdowns in Blizzard_AuctionHouseUI for later fix
+
+## [11.1.0.1] ##
   * fix: disabled debug messages in AchievementUI.lua - #133
   
 ## [11.1.0.0] ##
