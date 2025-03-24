@@ -133,10 +133,10 @@ do --[[ FrameXML\LFGList.lua ]]
         end
     end
     function Hook.LFGListUtil_SetSearchEntryTooltip(tooltip, resultID)
-        local searchResultInfo = _G.C_LFGList.GetSearchResultInfo(resultID)
-        local activityInfo = _G.C_LFGList.GetActivityInfoTable(searchResultInfo.activityID)
+        local searchResultData  = _G.C_LFGList.GetSearchResultInfo(resultID)
+        local activityInfo = _G.C_LFGList.GetActivityInfoTable(searchResultData.activityIDs[1])
         if activityInfo.displayType ~= _G.Enum.LFGListDisplayType.ClassEnumerate then return end
-        if searchResultInfo.isDelisted or not tooltip:IsShown() then
+        if searchResultData.isDelisted or not tooltip:IsShown() then
             -- _G.print("LFGListUtil_SetSearchEntryTooltip is isDelisted or not shown.")
             return
         end
@@ -149,7 +149,7 @@ do --[[ FrameXML\LFGList.lua ]]
             end
         end
         if start then
-            for i = 1, searchResultInfo.numMembers do
+            for i = 1, searchResultData.numMembers do
                 local _, classToken = _G.C_LFGList.GetSearchResultMemberInfo(resultID, i)
                 local classColor = classToken and _G.CUSTOM_CLASS_COLORS[classToken]
                 if classColor then
