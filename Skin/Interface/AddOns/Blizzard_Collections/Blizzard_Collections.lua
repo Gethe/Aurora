@@ -526,13 +526,19 @@ function private.AddOns.Blizzard_Collections()
     Skin.CollectionsJournalTab(_G.CollectionsJournalTab2)
     Skin.CollectionsJournalTab(_G.CollectionsJournalTab3)
     Skin.CollectionsJournalTab(_G.CollectionsJournalTab4)
-    Skin.CollectionsJournalTab(_G.CollectionsJournalTab5)
+    if _G.CollectionsJournalTab5 then
+        Skin.CollectionsJournalTab(_G.CollectionsJournalTab5)
+    end
+    if _G.CollectionsJournalTab6 then
+        Skin.CollectionsJournalTab(_G.CollectionsJournalTab6)
+    end
     Util.PositionRelative("TOPLEFT", CollectionsJournal, "BOTTOMLEFT", 20, -1, 1, "Right", {
         _G.CollectionsJournalTab1,
         _G.CollectionsJournalTab2,
         _G.CollectionsJournalTab3,
         _G.CollectionsJournalTab4,
         _G.CollectionsJournalTab5,
+        _G.CollectionsJournalTab6,
     })
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_MountCollection    --
