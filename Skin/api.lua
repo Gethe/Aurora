@@ -23,6 +23,7 @@ if not private.isRetail then
     Aurora.classIcons.DEATHKNIGHT = {0.26953125, 0.48046875, 0.51953125, 0.734375}
     Aurora.classIcons.MONK        = {0.515625, 0.7265625, 0.51953125, 0.734375}
     Aurora.classIcons.DEMONHUNTER = {0.76171875, 0.97265625, 0.51953125, 0.734375}
+    Aurora.classIcons.EVOKER      = {0.01953125, 0.234375, 0.734375, 0.94921875}
 end
 
 --[[ Base:header
