@@ -239,31 +239,31 @@ function private.FrameXML.LFGList()
     _G.hooksecurefunc("LFGListApplicantMember_OnEnter", Hook.LFGListApplicantMember_OnEnter)
     _G.hooksecurefunc("LFGListUtil_SetSearchEntryTooltip", Hook.LFGListUtil_SetSearchEntryTooltip)
 
-    do -- GetPlayerStyleString TaintFix
-        local activityID = 1164;
-        if (not _G.C_LFGList.IsPlayerAuthenticatedForLFG(activityID)) then
-            _G.print("Aurora: LFGList Taint Fix not installed.")
-            return
-        end
-        _G.print("Aurora: LFGList Taint Fix installed.")
-        _G.C_LFGList.GetPlaystyleString = function(playstyle, activityInfo)
-            if not (activityInfo and playstyle and playstyle ~= 0 and _G.C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID).showPlaystyleDropdown) then
-                return nil
-            end
-            local PlaystyleString
-            if activityInfo.isMythicPlusActivity then
-                PlaystyleString = "GROUP_FINDER_PVE_PLAYSTYLE"
-            elseif activityInfo.isRatedPvpActivity then
-                PlaystyleString = "GROUP_FINDER_PVP_PLAYSTYLE"
-            elseif activityInfo.isCurrentRaidActivity then
-                PlaystyleString = "GROUP_FINDER_PVE_RAID_PLAYSTYLE"
-            elseif activityInfo.isMythicActivity then
-                PlaystyleString = "GROUP_FINDER_PVE_MYTHICZERO_PLAYSTYLE"
-            end
-            return PlaystyleString and _G[PlaystyleString .. _G.tostring(playstyle)] or nil
-        end
-        _G.LFGListEntryCreation_SetTitleFromActivityInfo = function(_) end
-    end
+    -- do -- GetPlayerStyleString TaintFix
+    --     local activityID = 1164;
+    --     if (not _G.C_LFGList.IsPlayerAuthenticatedForLFG(activityID)) then
+    --         _G.print("Aurora: LFGList Taint Fix not installed.")
+    --         return
+    --     end
+    --     _G.print("Aurora: LFGList Taint Fix installed.")
+    --     _G.C_LFGList.GetPlaystyleString = function(playstyle, activityInfo)
+    --         if not (activityInfo and playstyle and playstyle ~= 0 and _G.C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID).showPlaystyleDropdown) then
+    --             return nil
+    --         end
+    --         local PlaystyleString
+    --         if activityInfo.isMythicPlusActivity then
+    --             PlaystyleString = "GROUP_FINDER_PVE_PLAYSTYLE"
+    --         elseif activityInfo.isRatedPvpActivity then
+    --             PlaystyleString = "GROUP_FINDER_PVP_PLAYSTYLE"
+    --         elseif activityInfo.isCurrentRaidActivity then
+    --             PlaystyleString = "GROUP_FINDER_PVE_RAID_PLAYSTYLE"
+    --         elseif activityInfo.isMythicActivity then
+    --             PlaystyleString = "GROUP_FINDER_PVE_MYTHICZERO_PLAYSTYLE"
+    --         end
+    --         return PlaystyleString and _G[PlaystyleString .. _G.tostring(playstyle)] or nil
+    --     end
+    --     _G.LFGListEntryCreation_SetTitleFromActivityInfo = function(_) end
+    -- end
 
     ------------------
     -- LFGListFrame --
