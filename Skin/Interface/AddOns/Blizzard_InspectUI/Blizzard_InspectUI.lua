@@ -47,22 +47,22 @@ do --[[ AddOns\Blizzard_InspectUI.lua ]]
             _G.InspectHonorFrameCurrentPVPTitle:SetPoint("TOP", _G.InspectFrame:GetBackdropTexture("bg"), -xOffset, -30)
         end
     end
-    do --[[ InspectTalentFrame.lua ]]
-        function Hook.InspectTalentFrameSpec_OnShow(self)
-            local spec
-            if _G.INSPECTED_UNIT ~= nil then
-                spec = _G.GetInspectSpecialization(_G.INSPECTED_UNIT)
-            end
-            if spec ~= nil and spec > 0 then
-                local role1 = _G.GetSpecializationRoleByID(spec)
-                if role1 ~= nil then
-                    local _, _, _, icon = _G.GetSpecializationInfoByID(spec)
-                    self.specIcon:SetTexture(icon)
-                    Base.SetTexture(self.roleIcon, "icon"..role1)
-                end
-            end
-        end
-    end
+    -- do --[[ InspectTalentFrame.lua ]]
+    --     function Hook.InspectTalentFrameSpec_OnShow(self)
+    --         local spec
+    --         if _G.INSPECTED_UNIT ~= nil then
+    --             spec = _G.GetInspectSpecialization(_G.INSPECTED_UNIT)
+    --         end
+    --         if spec ~= nil and spec > 0 then
+    --             local role1 = _G.GetSpecializationRoleByID(spec)
+    --             if role1 ~= nil then
+    --                 local _, _, _, icon = _G.GetSpecializationInfoByID(spec)
+    --                 self.specIcon:SetTexture(icon)
+    --                 Base.SetTexture(self.roleIcon, "icon"..role1)
+    --             end
+    --         end
+    --     end
+    -- end
 end
 
 do --[[ AddOns\Blizzard_InspectUI.xml ]]
@@ -122,6 +122,9 @@ function private.AddOns.Blizzard_InspectUI()
     InspectPaperDollFrame:HookScript("OnShow", Hook.InspectPaperDollFrame_OnShow)
 
     Skin.UIPanelButtonTemplate(InspectPaperDollFrame.ViewButton)
+
+    local InspectPaperDollItemsFrame = _G.InspectPaperDollItemsFrame
+    Skin.UIPanelButtonTemplate(InspectPaperDollItemsFrame.InspectTalents)
 
     local bg = InspectFrame.NineSlice:GetBackdropTexture("bg")
     local classBG = InspectPaperDollFrame:CreateTexture(nil, "BORDER")
@@ -202,26 +205,26 @@ function private.AddOns.Blizzard_InspectUI()
     ----====####$$$$%%%%$$$$####====----
     --       InspectTalentFrame       --
     ----====####$$$$%%%%$$$$####====----
-    _G.hooksecurefunc("InspectTalentFrameSpec_OnShow", Hook.InspectTalentFrameSpec_OnShow)
+    -- _G.hooksecurefunc("InspectTalentFrameSpec_OnShow", Hook.InspectTalentFrameSpec_OnShow)
 
-    local InspectTalentFrame = _G.InspectTalentFrame
-    local talentBG, talentTile = InspectTalentFrame:GetRegions()
-    talentBG:Hide()
-    talentTile:Hide()
+    -- local InspectTalentFrame = _G.InspectTalentFrame
+    -- local talentBG, talentTile = InspectTalentFrame:GetRegions()
+    -- talentBG:Hide()
+    -- talentTile:Hide()
 
-    local InspectSpec = InspectTalentFrame.InspectSpec
-    InspectSpec:HookScript("OnShow", Hook.InspectTalentFrameSpec_OnShow)
-    InspectSpec.ring:Hide()
-    Base.CropIcon(InspectSpec.specIcon, InspectSpec)
+    -- local InspectSpec = InspectTalentFrame.InspectSpec
+    -- InspectSpec:HookScript("OnShow", Hook.InspectTalentFrameSpec_OnShow)
+    -- InspectSpec.ring:Hide()
+    -- Base.CropIcon(InspectSpec.specIcon, InspectSpec)
 
-    local InspectTalents = InspectTalentFrame.InspectTalents
-    Skin.InspectTalentRowTemplate(InspectTalents.tier1)
-    Skin.InspectTalentRowTemplate(InspectTalents.tier2)
-    Skin.InspectTalentRowTemplate(InspectTalents.tier3)
-    Skin.InspectTalentRowTemplate(InspectTalents.tier4)
-    Skin.InspectTalentRowTemplate(InspectTalents.tier5)
-    Skin.InspectTalentRowTemplate(InspectTalents.tier6)
-    Skin.InspectTalentRowTemplate(InspectTalents.tier7)
+    -- local InspectTalents = InspectTalentFrame.InspectTalents
+    -- Skin.InspectTalentRowTemplate(InspectTalents.tier1)
+    -- Skin.InspectTalentRowTemplate(InspectTalents.tier2)
+    -- Skin.InspectTalentRowTemplate(InspectTalents.tier3)
+    -- Skin.InspectTalentRowTemplate(InspectTalents.tier4)
+    -- Skin.InspectTalentRowTemplate(InspectTalents.tier5)
+    -- Skin.InspectTalentRowTemplate(InspectTalents.tier6)
+    -- Skin.InspectTalentRowTemplate(InspectTalents.tier7)
 
     ----====####$$$$%%%%%$$$$####====----
     --        InspectGuildFrame        --
