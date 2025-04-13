@@ -1,4 +1,11 @@
-﻿## [11.1.0.2] ##
+﻿## [11.1.0.3] ##
+  * chg: Blizzard_InspectUI.lua - InspectTalentFrame has been removed
+  * chg: remove unused GetPlayerStyleString TaintFix
+  * add: evoker classicon to classIcons list.
+  * chg: temp workaround for 11.1.0.60189 break of InputMoneyFrame
+  * chg: fix skins for collection tabs 5 and 6 if they exists
+
+## [11.1.0.2] ##
   * fix: GetSearchResultInfo now returns ActivityIDs instead of ActivityID - fixes error on LFGListSearchEntryTooltip
   * chg: disabled broken menus and dropdowns in Blizzard_AuctionHouseUI for later fix
 
