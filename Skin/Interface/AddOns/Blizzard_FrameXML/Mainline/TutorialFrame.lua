@@ -82,9 +82,9 @@ end
 -- /run TutorialFrame_NewTutorial(1, true)
 function private.FrameXML.TutorialFrame()
     _G.hooksecurefunc("TutorialFrame_Update", Hook.TutorialFrame_Update)
-    if private.isRetail then
-        _G.hooksecurefunc("HelpPlate_GetButton", Hook.HelpPlate_GetButton)
-    end
+    -- if private.isRetail then
+    --     _G.hooksecurefunc("HelpPlate_GetButton", Hook.HelpPlate_GetButton)
+    -- end
 
     -------------------
     -- TutorialFrame --
