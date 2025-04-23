@@ -719,7 +719,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.DropdownButton(HeirloomsJournal.classDropDown)
 
     Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
-    -- HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true)
+    -- HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true) -- removed in 11.1.0.0
     -- HeirloomsJournal.iconsFrame.watermark:SetAlpha(0.5)
 
     Skin.CollectionsPagingFrameTemplate(HeirloomsJournal.PagingFrame)
