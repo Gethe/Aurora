@@ -218,6 +218,10 @@ do -- Base.SetTexture
     end
 
     function Base.SetTexture(texture, textureName)
+        if not texture then
+            _G.print("texture is nil")
+            return
+        end
         _G.assert(type(texture) == "table" and texture.GetObjectType, "texture widget expected, got "..type(texture))
         _G.assert(texture:GetObjectType() == "Texture", "texture widget expected, got "..texture:GetObjectType())
 
