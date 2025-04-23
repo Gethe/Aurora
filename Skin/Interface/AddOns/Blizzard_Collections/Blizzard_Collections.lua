@@ -251,14 +251,14 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Frame.OverlayShadowRight:Hide()
             Frame.OverlayShadowBottom:Hide()
 
-            Frame.BGCornerFilagreeBottomLeft:Hide()
-            Frame.BGCornerFilagreeBottomRight:Hide()
+            -- Frame.BGCornerFilagreeBottomLeft:Hide()
+            -- Frame.BGCornerFilagreeBottomRight:Hide()
             Frame.BGCornerTopLeft:SetAlpha(0)
             Frame.BGCornerTopRight:SetAlpha(0)
             Frame.BGCornerBottomLeft:Hide()
             Frame.BGCornerBottomRight:Hide()
-            Frame.ShadowLineTop:Hide()
-            Frame.ShadowLineBottom:Hide()
+            -- Frame.ShadowLineTop:Hide()
+            -- Frame.ShadowLineBottom:Hide()
         end
         function Skin.CollectionsPrevPageButton(Button)
             Skin.NavButtonPrevious(Button)
@@ -695,8 +695,8 @@ function private.AddOns.Blizzard_Collections()
 
     local iconsFrame = ToyBox.iconsFrame
     Skin.CollectionsBackgroundTemplate(iconsFrame)
-    iconsFrame.watermark:SetDesaturated(true)
-    iconsFrame.watermark:SetAlpha(0.5)
+    -- iconsFrame.watermark:SetDesaturated(true)
+    -- iconsFrame.watermark:SetAlpha(0.5)
 
     for i = 1, 18 do
         Skin.ToySpellButtonTemplate(iconsFrame["spellButton"..i])
@@ -719,8 +719,8 @@ function private.AddOns.Blizzard_Collections()
     Skin.DropdownButton(HeirloomsJournal.classDropDown)
 
     Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
-    HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true)
-    HeirloomsJournal.iconsFrame.watermark:SetAlpha(0.5)
+    -- HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true)
+    -- HeirloomsJournal.iconsFrame.watermark:SetAlpha(0.5)
 
     Skin.CollectionsPagingFrameTemplate(HeirloomsJournal.PagingFrame)
 
