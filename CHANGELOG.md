@@ -1,4 +1,15 @@
-﻿## [11.1.0.3] ##
+﻿## [11.1.5.0] ##
+### Fixed ###
+  * chg: 11.1.5 toc update
+  * debug: catching Arrows that were replaced in 11.1.5
+  * fix: HelpPlate_GetButton was removed from 11.1.5
+  * fix: removed parts of collections that was removed with 11.1.0
+  * fix: workaround to catch empty textures.
+
+## This version may contain bugs and some debug code. Please report them to the issue tracker. ##
+
+## [11.1.0.3] ##
+### Fixed ###
   * chg: Blizzard_InspectUI.lua - InspectTalentFrame has been removed
   * chg: remove unused GetPlayerStyleString TaintFix
   * add: evoker classicon to classIcons list.
@@ -6,13 +17,18 @@
   * chg: fix skins for collection tabs 5 and 6 if they exists
 
 ## [11.1.0.2] ##
+### Fixed ###
   * fix: GetSearchResultInfo now returns ActivityIDs instead of ActivityID - fixes error on LFGListSearchEntryTooltip
   * chg: disabled broken menus and dropdowns in Blizzard_AuctionHouseUI for later fix
 
+
 ## [11.1.0.1] ##
+### Fixed ###
   * fix: disabled debug messages in AchievementUI.lua - #133
-  
+
+
 ## [11.1.0.0] ##
+### Fixed ###
   * chg: AchivementUI updated for post 10.0.0 and 11.0.0 - stats, categories, filter and new mixins skinned
   * chore: removed fix it comment
   * chg: remove unused code from communities
@@ -22,6 +38,7 @@
   * fix: QuestMapFrame working for 11.1.0
   * tmp: disabled broken kode in 11.1.0
   * chg: make certain debug code only show if aurora\dev is running
+
 
 ## [11.0.5.2] ##
 ### Fixed ###
