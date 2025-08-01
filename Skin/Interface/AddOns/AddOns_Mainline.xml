@@ -636,7 +636,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!-- End of section added for Blizzard_UnitPopup by the Aurora XML Updater -->
     <!--Script file="Blizzard_UnitPopupShared\Blizzard_UnitPopupShared.lua"/-->
     <Script file="Blizzard_VoiceToggleButton\Blizzard_VoiceToggleButton.lua"/>
-    <Script file="Blizzard_VoidStorageUI\Blizzard_VoidStorageUI.lua"/>
     <Script file="Blizzard_WarfrontsPartyPoseUI\Blizzard_WarfrontsPartyPoseUI.lua"/>
     <!--Script file="Blizzard_WeeklyRewards\Blizzard_WeeklyRewards.lua"/-->
     <!--Script file="Blizzard_WeeklyRewardsUtil\Blizzard_WeeklyRewardsUtil.lua"/-->
