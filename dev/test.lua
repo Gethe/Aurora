@@ -1507,8 +1507,8 @@ function commands.test()
                     info.className = classInfo.className
                     info.classToken = classInfo.classFile
 
-                    local numSpecs = _G.GetNumSpecializationsForClassID(classInfo.classID)
-                    local _, name = _G.GetSpecializationInfoForClassID(classInfo.classID, (offsetIndex % numSpecs) + 1)
+                    local numSpecs = _G.C_SpecializationInfo.GetNumSpecializationsForClassID(classInfo.classID)
+                    local _, name = _G.C_SpecializationInfo.GetSpecializationInfoForClassID(classInfo.classID, (offsetIndex % numSpecs) + 1)
                     info.talentSpec = name
 
                     info.honorLevel = offsetIndex

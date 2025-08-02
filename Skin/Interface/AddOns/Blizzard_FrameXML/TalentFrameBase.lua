@@ -15,22 +15,27 @@ do --[[ FrameXML\TalentFrameBase.lua ]]
             local talentRow = TalentFrame["tier"..tier]
             for column = 1, _G.NUM_TALENT_COLUMNS do
                 local button = talentRow["talent"..column]
-                local _, _, _, selected, _, _, _, _, _, _, grantedByAura = _G.GetTalentInfo(tier, column, TalentFrame.talentGroup, TalentFrame.inspect, talentUnit)
-
+                local talentInfoQuery = {};
+				talentInfoQuery.tier = tier;
+				talentInfoQuery.column= column;
+				talentInfoQuery.groupIndex = TalentFrame.talentGroup;
+				talentInfoQuery.isInspect = TalentFrame.inspect;
+				talentInfoQuery.target = talentUnit;
+                local talentInfo = _G.C_SpecializationInfo.GetTalentInfo(talentInfoQuery);
                 if button.knownSelection then
-                    if grantedByAura then
+                    if talentInfo.grantedByAura then
                         local color = _G.ITEM_QUALITY_COLORS[_G.Enum.ItemQuality.Legendary]
                         button.knownSelection:SetColorTexture(color.r, color.g, color.b, 0.5)
-                    elseif selected then
+                    elseif talentInfo.selected then
                         button.knownSelection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.5)
                     end
                 end
 
                 if TalentFrame.inspect then
-                    if grantedByAura then
+                    if talentInfo.grantedByAura then
                         local color = _G.ITEM_QUALITY_COLORS[_G.Enum.ItemQuality.Legendary]
                         button._auroraIconBG:SetColorTexture(color.r, color.g, color.b)
-                    elseif selected then
+                    elseif talentInfo.selected then
                         local _, class = _G.UnitClass(talentUnit)
                         local color = _G.CUSTOM_CLASS_COLORS[class]
                         button._auroraIconBG:SetColorTexture(color:GetRGB())

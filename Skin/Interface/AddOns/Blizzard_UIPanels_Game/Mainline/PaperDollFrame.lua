@@ -22,7 +22,7 @@ do --[[ FrameXML\PaperDollFrame.lua ]]
                 level = _G.EFFECTIVE_LEVEL_FORMAT:format(effectiveLevel, level)
             end
 
-            local _, specName = _G.GetSpecializationInfo(_G.C_SpecializationInfo.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
+            local _, specName = _G.C_SpecializationInfo.GetSpecializationInfo(_G.C_SpecializationInfo.GetSpecialization(), nil, nil, nil, _G.UnitSex("player"))
             if specName and specName ~= "" then
                 _G.CharacterLevelText:SetFormattedText(_G.PLAYER_LEVEL, level, classColor.colorStr, specName, classLocale)
             end
