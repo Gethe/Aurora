@@ -118,17 +118,30 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
     end
 end
 
+-- EncounterJournalEncounterFrameInfo
+
 do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
     do --[[ Blizzard_EncounterJournal ]]
         function Skin.EJButtonTemplate(Button)
             Skin.FrameTypeButton(Button)
-
-            Button.UpLeft:SetTexture("")
-            Button.UpRight:SetTexture("")
-            Button.DownLeft:SetTexture("")
-            Button.DownRight:SetTexture("")
-            Button.HighLeft:SetTexture("")
-            Button.HighRight:SetTexture("")
+            if Button.UpLeft then
+                Button.UpLeft:SetTexture("")
+                Button.UpRight:SetTexture("")
+                Button.DownLeft:SetTexture("")
+                Button.DownRight:SetTexture("")
+                Button.HighLeft:SetTexture("")
+                Button.HighRight:SetTexture("")
+            end
+            if Button.TopLeftCorner then
+                Button.TopLeftCorner:SetTexture("")
+                Button.TopRightCorner:SetTexture("")
+                Button.LeftEdge:SetTexture("")
+                Button.RightEdge:SetTexture("")
+                Button.BottomLeftCorner:SetTexture("")
+                Button.BottomRightCorner:SetTexture("")
+                Button.TopEdge:SetTexture("")
+                Button.BottomEdge:SetTexture("")
+            end
         end
         function Skin.EncounterInstanceButtonTemplate(Button)
             Skin.FrameTypeButton(Button)
@@ -403,12 +416,6 @@ function private.AddOns.Blizzard_EncounterJournal()
     Util.Mixin(info.BossesScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
     Skin.MinimalScrollBar(info.BossesScrollBar)
     Skin.EJButtonTemplate(info.difficulty)
-
-    Base.SetBackdrop(info.reset, Color.button)
-    Base.SetHighlight(info.reset)
-    info.reset:ClearNormalTexture()
-    info.reset:ClearPushedTexture()
-    info.reset:ClearHighlightTexture()
 
     Skin.ScrollFrameTemplate(info.detailsScroll)
     info.detailsScroll.child.description:SetTextColor(Color.grayLight:GetRGB())
