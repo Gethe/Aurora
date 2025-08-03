@@ -415,6 +415,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.WowScrollBoxList(info.BossesScrollBox)
     Util.Mixin(info.BossesScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
     Skin.MinimalScrollBar(info.BossesScrollBar)
+    -- CHECKMELATER -- is this a DropdownButton too?
     Skin.EJButtonTemplate(info.difficulty)
 
     Skin.ScrollFrameTemplate(info.detailsScroll)
@@ -528,8 +529,11 @@ function private.AddOns.Blizzard_EncounterJournal()
     local LootJournal = EncounterJournal.LootJournal
     LootJournal:GetRegions():Hide()
 
-    Skin.EJButtonTemplate(LootJournal.ClassDropDownButton)
-    Skin.EJButtonTemplate(LootJournal.RuneforgePowerFilterDropDownButton)
+    -- FIXLATER
+    -- <DropdownButton parentKey="ClassDropdown" inherits="WowStyle1DropdownTemplate">
+    -- <DropdownButton parentKey="RuneforgePowerDropdown" inherits="WowStyle1DropdownTemplate">
+    -- Skin.EJButtonTemplate(LootJournal.ClassDropDownButton)
+    -- Skin.EJButtonTemplate(LootJournal.RuneforgePowerFilterDropDownButton)
     Skin.WowScrollBoxList(LootJournal.ScrollBox)
     Skin.MinimalScrollBar(LootJournal.ScrollBar)
 end
