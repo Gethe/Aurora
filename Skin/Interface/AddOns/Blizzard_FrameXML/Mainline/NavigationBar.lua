@@ -49,6 +49,8 @@ do --[[ FrameXML\NavigationBar.xml ]]
         Button.arrowDown:SetAlpha(0)
         Button.selected:SetAlpha(0)
 
+        -- FIXLATER
+        -- This is now a DropdownButton
         local arrowButton = Button.MenuArrowButton
         Skin.FrameTypeButton(arrowButton, nil, function(button, isBackdrop)
             button:SetBackdropBorderColor(Color.button, 0)

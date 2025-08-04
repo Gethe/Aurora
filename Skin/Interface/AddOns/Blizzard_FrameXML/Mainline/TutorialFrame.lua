@@ -65,15 +65,15 @@ do --[[ FrameXML\TutorialFrame.lua ]]
     end
 
     local skinnedPlates = 0
-    function Hook.HelpPlate_GetButton()
-        if skinnedPlates < #_G.HELP_PLATE_BUTTONS then
-            skinnedPlates = skinnedPlates + 1
-            local button = _G.HELP_PLATE_BUTTONS[skinnedPlates]
-            Skin.HelpPlateButton(button)
-            Skin.HelpPlateBox(button.box)
-            Skin.HelpPlateBoxHighlight(button.boxHighlight)
-        end
-    end
+    -- function Hook.HelpPlate_GetButton()
+    --     if skinnedPlates < #_G.HELP_PLATE_BUTTONS then
+    --         skinnedPlates = skinnedPlates + 1
+    --         local button = _G.HELP_PLATE_BUTTONS[skinnedPlates]
+    --         Skin.HelpPlateButton(button)
+    --         Skin.HelpPlateBox(button.box)
+    --         Skin.HelpPlateBoxHighlight(button.boxHighlight)
+    --     end
+    -- end
 end
 
 --do --[[ FrameXML\TutorialFrame.xml ]]
