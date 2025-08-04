@@ -181,29 +181,32 @@ function private.AddOns.Blizzard_Calendar()
     Skin.NavButtonNext(_G.CalendarNextMonthButton)
 
     do -- Filter button
-        Base.SetBackdrop(_G.CalendarFilterFrame, Color.button)
-        _G.CalendarFilterFrame:SetPoint("TOPRIGHT", -80, -13)
+        -- CalendarFilterFrame removed in 11.0.0 replaced with FilterButton
+        -- Base.SetBackdrop(_G.CalendarFilterFrame, Color.button)
+        -- _G.CalendarFilterFrame:SetPoint("TOPRIGHT", -80, -13)
 
-        _G.CalendarFilterFrameLeft:SetAlpha(0)
-        _G.CalendarFilterFrameMiddle:SetAlpha(0)
-        _G.CalendarFilterFrameRight:SetAlpha(0)
+        -- _G.CalendarFilterFrameLeft:SetAlpha(0)
+        -- _G.CalendarFilterFrameMiddle:SetAlpha(0)
+        -- _G.CalendarFilterFrameRight:SetAlpha(0)
 
-        local button = _G.CalendarFilterButton
-        Skin.FrameTypeButton(button)
+        local button = _G.CalendarFrame.FilterButton
+        Skin.DropdownButton(button)
+        -- Skin.FrameTypeButton(button)
         button:ClearAllPoints()
-        button:SetPoint("TOPRIGHT", _G.CalendarFilterFrame)
+        button:SetPoint("TOPRIGHT", -80, -13)
 
-        local arrow = button:CreateTexture(nil, "ARTWORK")
-        arrow:SetPoint("TOPLEFT", 4, -7)
-        arrow:SetPoint("BOTTOMRIGHT", -4, 7)
-        Base.SetTexture(arrow, "arrowDown")
+        -- local arrow = button:CreateTexture(nil, "ARTWORK")
+        -- arrow:SetPoint("TOPLEFT", 4, -7)
+        -- arrow:SetPoint("BOTTOMRIGHT", -4, 7)
+        -- Base.SetTexture(arrow, "arrowDown")
     end
 
     Skin.UIPanelCloseButton(_G.CalendarCloseButton)
     _G.CalendarCloseButton:SetPoint("TOPRIGHT", calenderBG, -5, -5)
 
-    Skin.UIMenuTemplate(_G.CalendarContextMenu)
-    Skin.UIMenuTemplate(_G.CalendarInviteStatusContextMenu)
+    -- FIXMELATER - replaced
+    -- Skin.UIMenuTemplate(_G.CalendarContextMenu) 
+    -- Skin.UIMenuTemplate(_G.CalendarInviteStatusContextMenu) 
     Skin.CalendarModalEventOverlayTemplate(_G.CalendarFrameModalOverlay)
 
     for i = 1, CALENDAR_MAX_DAYS_PER_MONTH do
@@ -266,12 +269,12 @@ function private.AddOns.Blizzard_Calendar()
     Skin.DialogBorderDarkTemplate(_G.CalendarCreateEventFrame.Border)
     Skin.DialogHeaderTemplate(_G.CalendarCreateEventFrame.Header)
     Skin.InputBoxTemplate(_G.CalendarCreateEventTitleEdit)
-    Skin.DropdownButton(_G.CalendarCreateEventTypeDropDown)
-    Skin.DropdownButton(_G.CalendarCreateEventHourDropDown)
-    Skin.DropdownButton(_G.CalendarCreateEventMinuteDropDown)
-    Skin.DropdownButton(_G.CalendarCreateEventAMPMDropDown)
-    Skin.DropdownButton(_G.CalendarCreateEventDifficultyOptionDropDown)
-    Skin.DropdownButton(_G.CalendarCreateEventCommunityDropDown)
+    Skin.DropdownButton(_G.CalendarCreateEventFrame.EventTypeDropdown)
+    Skin.DropdownButton(_G.CalendarCreateEventFrame.HourDropdown)
+    Skin.DropdownButton(_G.CalendarCreateEventFrame.MinuteDropdown)
+    Skin.DropdownButton(_G.CalendarCreateEventFrame.AMPMDropdown)
+    Skin.DropdownButton(_G.CalendarCreateEventFrame.DifficultyOptionDropdown)
+    Skin.DropdownButton(_G.CalendarCreateEventFrame.CommunityDropdown)
     _G.CalendarCreateEventDivider:Hide()
     Skin.UICheckButtonTemplate(_G.CalendarCreateEventAutoApproveCheck)
     Skin.UICheckButtonTemplate(_G.CalendarCreateEventLockEventCheck)
@@ -297,11 +300,12 @@ function private.AddOns.Blizzard_Calendar()
     -----------------
     _G.CalendarMassInviteFrame:SetPoint("BOTTOMRIGHT", _G.CalendarCreateEventMassInviteButton, "TOPRIGHT", 160, 4)
     Skin.DialogBorderDarkTemplate(_G.CalendarMassInviteFrame.Border)
-    Skin.DropdownButton(_G.CalendarMassInviteCommunityDropDown)
+    -- FIXMELATER - removed in 11.0.0
+    -- Skin.DropdownButton(_G._G.CalendarCreateEventFrame)
     Skin.DialogHeaderTemplate(_G.CalendarMassInviteFrame.Header)
     Skin.InputBoxTemplate(_G.CalendarMassInviteMinLevelEdit)
     Skin.InputBoxTemplate(_G.CalendarMassInviteMaxLevelEdit)
-    Skin.DropdownButton(_G.CalendarMassInviteRankMenu)
+    Skin.DropdownButton(_G.CalendarMassInviteFrame.RankDropdown)
     Skin.CalendarEventButtonTemplate(_G.CalendarMassInviteAcceptButton)
     Skin.CalendarCloseButtonTemplate(_G.CalendarMassInviteCloseButton)
     Skin.CalendarModalEventOverlayTemplate(_G.CalendarMassInviteFrameModalOverlay)
