@@ -402,7 +402,6 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 end
 
 function private.AddOns.Blizzard_AchievementUI()
-    _G.print("AddOns.Blizzard_AchievementUI")
     _G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
     _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
     _G.hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)

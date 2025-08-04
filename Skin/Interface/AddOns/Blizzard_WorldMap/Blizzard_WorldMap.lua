@@ -30,7 +30,6 @@ end
 do --[[ AddOns\Blizzard_WorldMap.xml ]]
     do --[[ Blizzard_WorldMapTemplates.xml ]]
         function Skin.WorldMapFloorNavigationFrameTemplate(Button)
-            _G.print("Skin.WorldMapFloorNavigationFrameTemplate")
             Skin.DropdownButton(Button)
         end
         function Skin.WorldMapTrackingOptionsButtonTemplate(Button)
@@ -91,12 +90,13 @@ function private.AddOns.Blizzard_WorldMap()
     local WorldMapFrame = _G.WorldMapFrame
     Skin.WorldMapFrameTemplate(WorldMapFrame)
     Util.Mixin(WorldMapFrame, Hook.WorldMapMixin)
-
-    local overlayFramescount  = 0
-    for _ in pairs(WorldMapFrame.overlayFrames) do
-        overlayFramescount = overlayFramescount + 1
+    if private.isDev then
+        local overlayFramescount  = 0
+        for _ in pairs(WorldMapFrame.overlayFrames) do
+            overlayFramescount = overlayFramescount + 1
+        end
+        _G.print("overlayFramescount: " .. overlayFramescount)
     end
-    _G.print("overlayFramescount: " .. overlayFramescount)
     Skin.PortraitFrameTemplate(WorldMapFrame.BorderFrame)
     WorldMapFrame.BorderFrame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
 
