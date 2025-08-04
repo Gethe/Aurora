@@ -10,7 +10,7 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ FrameXML\SpellBookFrame.lua ]]
+do --[[ FrameXML\Blizzard_SpellBookFrame.lua ]]
     function Hook.SpellButton_UpdateButton(self)
         if _G.SpellBookFrame.bookType == _G.BOOKTYPE_PROFESSION then return end
 
@@ -108,7 +108,7 @@ do --[[ FrameXML\SpellBookFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\SpellBookFrame.xml ]]
+do --[[ FrameXML\Blizzard_SpellBookFrame.xml ]]
     function Skin.SpellBookSkillLineTabTemplate(CheckButton)
         Skin.SideTabTemplate(CheckButton)
     end
@@ -259,44 +259,49 @@ do --[[ FrameXML\SpellBookFrame.xml ]]
     end
 end
 
-function private.FrameXML.SpellBookFrame()
-    _G.hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", Hook.SpellBookFrame_UpdateSkillLineTabs)
+function private.FrameXML.Blizzard_SpellBookFrame()
+    -- FIXMELATER
+    if private.isRetail then
+        _G.print("Blizzard_SpellBookFrame is not yet implemented.")
+        return
+    end
+    --_G.hooksecurefunc("SpellBookFrame_UpdateSkillLineTabs", Hook.SpellBookFrame_UpdateSkillLineTabs)
 
     local SpellBookFrame = _G.SpellBookFrame
-    if private.isRetail then
+    -- if private.isRetail then
         -- FIXLATER ?? FormatProfession deprecated .. new spellbook setup
-        _G.hooksecurefunc("FormatProfession", Hook.FormatProfession)
+        -- _G.hooksecurefunc("FormatProfession", Hook.FormatProfession)
 
-        Skin.ButtonFrameTemplate(SpellBookFrame)
+        -- Skin.ButtonFrameTemplate(SpellBookFrame)
         _G.SpellBookPage1:Hide()
         _G.SpellBookPage2:Hide()
 
         Skin.MainHelpPlateButton(SpellBookFrame.MainHelpButton)
         SpellBookFrame.MainHelpButton:SetPoint("TOPLEFT", SpellBookFrame, "TOPLEFT", -15, 15)
-    else
-        _G.hooksecurefunc("SpellButton_UpdateButton", Hook.SpellButton_UpdateButton)
+    -- else
+    --     _G.hooksecurefunc("SpellButton_UpdateButton", Hook.SpellButton_UpdateButton)
 
-        Skin.FrameTypeFrame(SpellBookFrame)
-        SpellBookFrame:SetBackdropOption("offsets", {
-            left = 14,
-            right = 34,
-            top = 14,
-            bottom = 75,
-        })
+    --     Skin.FrameTypeFrame(SpellBookFrame)
+    --     SpellBookFrame:SetBackdropOption("offsets", {
+    --         left = 14,
+    --         right = 34,
+    --         top = 14,
+    --         bottom = 75,
+    --     })
 
-        local portrait, tl, tr, bl, br, title, page = SpellBookFrame:GetRegions()
-        portrait:Hide()
-        tl:Hide()
-        tr:Hide()
-        bl:Hide()
-        br:Hide()
+    --     local portrait, tl, tr, bl, br, title, page = SpellBookFrame:GetRegions()
+    --     portrait:Hide()
+    --     tl:Hide()
+    --     tr:Hide()
+    --     bl:Hide()
+    --     br:Hide()
 
-        local bg = SpellBookFrame:GetBackdropTexture("bg")
-        title:ClearAllPoints()
-        title:SetPoint("TOPLEFT", bg)
-        title:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-        page:SetTextColor(Color.gray:GetRGB())
-    end
+    --     local bg = SpellBookFrame:GetBackdropTexture("bg")
+    --     title:ClearAllPoints()
+    --     title:SetPoint("TOPLEFT", bg)
+    --     title:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+    --     page:SetTextColor(Color.gray:GetRGB())
+    -- end
 
     Skin.SpellBookFrameTabButtonTemplate(_G.SpellBookFrameTabButton1)
     Skin.SpellBookFrameTabButtonTemplate(_G.SpellBookFrameTabButton2)
