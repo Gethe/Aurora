@@ -263,11 +263,10 @@ function private.FrameXML.UIPanelTemplates()
 
     local HelpPlateTooltip = _G.HelpPlateTooltip
     Skin.GlowBoxTemplate(HelpPlateTooltip)
-    for direction, dirUpper in next, {Down = "UP", Up = "DOWN", Left = "RIGHT", Right = "LEFT"} do
+    for direction, dirUpper in next, {Down = "Up", Up = "Down", Left = "Right", Right = "Left"} do
         local arrow = HelpPlateTooltip["Arrow"..dirUpper]
         if not arrow then
             _G.print("Arrow"..dirUpper.." not found")
-            return
         end
         Base.SetTexture(arrow, "arrow"..direction)
         arrow:SetVertexColor(1, 1, 0)
