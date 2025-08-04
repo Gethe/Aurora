@@ -544,10 +544,11 @@ function private.AddOns.Blizzard_Collections()
     --    Blizzard_MountCollection    --
     ----====####$$$$%%%%$$$$####====----
     local MountJournal = _G.MountJournal
-    Base.CropIcon(MountJournal.SummonRandomFavoriteButton.texture, MountJournal.SummonRandomFavoriteButton)
-    Base.CropIcon(MountJournal.SummonRandomFavoriteButton:GetPushedTexture())
-    Base.CropIcon(MountJournal.SummonRandomFavoriteButton:GetHighlightTexture())
-    _G.MountJournalSummonRandomFavoriteButtonBorder:Hide()
+    MountJournal.SummonRandomFavoriteSpellFrame.Button:SetSize(38, 38)
+    -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame.Button, MountJournal.SummonRandomFavoriteSpellFrame)
+    -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:PushedTexture())
+    -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:HighlightTexture())
+    -- MountJournal.SummonRandomFavoriteSpellFrame:Hide()
 
     Skin.InsetFrameTemplate(MountJournal.LeftInset)
 
@@ -590,15 +591,17 @@ function private.AddOns.Blizzard_Collections()
     Skin.MainHelpPlateButton(PetJournal.MainHelpButton)
     PetJournal.MainHelpButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -15, 15)
 
-    Base.CropIcon(PetJournal.HealPetButton.texture, PetJournal.HealPetButton)
-    Base.CropIcon(PetJournal.HealPetButton:GetPushedTexture())
-    Base.CropIcon(PetJournal.HealPetButton:GetHighlightTexture())
-    _G.PetJournalHealPetButtonBorder:Hide()
+    -- FIXLATER
+    -- Base.CropIcon(PetJournal.HealPetButton.texture, PetJournal.HealPetButton)
+    -- Base.CropIcon(PetJournal.HealPetButton:GetPushedTexture())
+    -- Base.CropIcon(PetJournal.HealPetButton:GetHighlightTexture())
+    -- _G.PetJournalHealPetButtonBorder:Hide()
 
-    Base.CropIcon(PetJournal.SummonRandomFavoritePetButton.texture, PetJournal.SummonRandomFavoritePetButton)
-    Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetPushedTexture())
-    Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetHighlightTexture())
-    _G.PetJournalSummonRandomFavoritePetButtonBorder:Hide()
+        -- FIXLATER
+    -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton.texture, PetJournal.SummonRandomFavoritePetButton)
+    -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetPushedTexture())
+    -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetHighlightTexture())
+    -- _G.PetJournalSummonRandomFavoritePetButtonBorder:Hide()
 
     Skin.InsetFrameTemplate(PetJournal.LeftInset)
     Skin.InsetFrameTemplate(PetJournal.PetCardInset)
@@ -716,7 +719,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.SearchBoxTemplate(HeirloomsJournal.SearchBox)
     -- FIXLATER
     -- Skin.UIResettableDropdownButtonTemplate(HeirloomsJournal.FilterButton)
-    Skin.DropdownButton(HeirloomsJournal.classDropDown)
+    -- Skin.DropdownButton(HeirloomsJournal.ClassDropdown)
 
     Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
     -- HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true) -- removed in 11.1.0.0
@@ -747,7 +750,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.CollectionsBackgroundTemplate(ItemsCollectionFrame)
     Skin.CollectionsPagingFrameTemplate(ItemsCollectionFrame.PagingFrame)
-    Skin.DropdownButton(ItemsCollectionFrame.WeaponDropDown)
+    Skin.DropdownButton(ItemsCollectionFrame.WeaponDropdown)
 
     local Models = ItemsCollectionFrame.Models
     for i = 1, #Models do

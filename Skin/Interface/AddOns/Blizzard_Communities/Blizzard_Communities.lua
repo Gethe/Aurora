@@ -298,7 +298,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             Skin.ClubFinderCheckboxTemplate(Frame.ShouldListClub.Button)
             -- FIXLATER
-            -- Skin.ClubFinderFocusDropdownTemplate(Frame.ClubFocusDropdown)
+            Skin.DropdownButton(Frame.ClubFocusDropdown)
             Skin.DropdownButton(Frame.LookingForDropdown)
             Skin.DropdownButton(Frame.LanguageDropdown)
 
@@ -360,6 +360,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.DropdownButton(Frame)
         end
         function Skin.ClubFinderCheckboxTemplate(CheckButton)
+            -- _G.print("ClubFinderCheckboxTemplate is not implemented in Aurora:"..CheckButton:GetName())
             -- -- FIXLATER
             -- Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
         end
@@ -821,8 +822,8 @@ function private.AddOns.Blizzard_Communities()
 
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.LinkToChat)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.Copy)
-    Skin.DropdownButton(CommunitiesTicketManagerDialog.ExpiresDropDownMenu)
-    Skin.DropdownButton(CommunitiesTicketManagerDialog.UsesDropDownMenu)
+    Skin.DropdownButton(CommunitiesTicketManagerDialog.ExpiresDropdown)
+    Skin.DropdownButton(CommunitiesTicketManagerDialog.UsesDropdown)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.GenerateLinkButton)
     Skin.UIPanelSquareButton(CommunitiesTicketManagerDialog.MaximizeButton, "DOWN")
     Skin.CommunitiesTicketManagerScrollFrameTemplate(CommunitiesTicketManagerDialog.InviteManager)
@@ -896,10 +897,10 @@ function private.AddOns.Blizzard_Communities()
         CommunitiesFrame.GuildInfoTab,
     })
 
-    Skin.StreamDropDownMenuTemplate(CommunitiesFrame.StreamDropDownMenu)
-    Skin.GuildMemberListDropDownMenuTemplate(CommunitiesFrame.GuildMemberListDropDownMenu)
-    Skin.CommunityMemberListDropDownMenuTemplate(CommunitiesFrame.CommunityMemberListDropDownMenu)
-    Skin.CommunitiesListDropDownMenuTemplate(CommunitiesFrame.CommunitiesListDropDownMenu)
+    Skin.StreamDropDownMenuTemplate(CommunitiesFrame.StreamDropdown)
+    Skin.GuildMemberListDropDownMenuTemplate(CommunitiesFrame.GuildMemberListDropdown)
+    Skin.CommunityMemberListDropDownMenuTemplate(CommunitiesFrame.CommunityMemberListDropdown)
+    Skin.CommunitiesListDropDownMenuTemplate(CommunitiesFrame.CommunitiesListDropdown)
     Skin.CommunitiesCalendarButtonTemplate(CommunitiesFrame.CommunitiesCalendarButton)
     Skin.CommunitiesMemberListFrameTemplate(CommunitiesFrame.MemberList)
     Skin.ClubFinderApplicantListFrameTemplate(CommunitiesFrame.ApplicantList)
@@ -919,7 +920,8 @@ function private.AddOns.Blizzard_Communities()
     Skin.CommunityPostingChangeFrameTemplate(CommunitiesFrame.CommunityPostingChangeFrame)
 
     Skin.CommunitiesEditStreamDialogTemplate(CommunitiesFrame.EditStreamDialog)
-    Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
+    -- FIXLATER 11.2.0
+    -- Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
     Skin.ClubsRecruitmentDialogTemplate(CommunitiesFrame.RecruitmentDialog)
     -- FIXLATER 11.0.7
     -- Skin.AddToChatButtonTemplate(CommunitiesFrame.AddToChatButton)
