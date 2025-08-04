@@ -11,17 +11,6 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 -- local util = Aurora.util
 
-do --[[ FrameXML\WardrobeOutfits.lua ]]
-    Hook.WardrobeOutfitFrameMixin = {}
-    local numButtons = 1
-    function Hook.WardrobeOutfitFrameMixin:Update()
-        while numButtons < #self.Buttons do
-            numButtons = numButtons + 1
-            Skin.WardrobeOutfitButtonTemplate(self.Buttons[numButtons])
-        end
-    end
-end
-
 do --[[ FrameXML\WardrobeOutfits.xml ]]
     function Skin.WardrobeOutfitButtonTemplate(Frame)
         local parent = Frame:GetParent()
