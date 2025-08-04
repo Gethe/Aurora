@@ -78,7 +78,7 @@ function private.AddOns.Blizzard_EventTrace()
     Skin.EventTraceMenuButtonTemplate(SubtitleBar.ViewLog)
     Skin.EventTraceMenuButtonTemplate(SubtitleBar.ViewFilter)
 
-    Skin.UIMenuButtonStretchTemplate(SubtitleBar.OptionsDropDown)
+    Skin.DropdownButton(SubtitleBar.OptionsDropDown)
     SubtitleBar.OptionsDropDown.Icon:SetSize(5, 10)
     Base.SetTexture(SubtitleBar.OptionsDropDown.Icon, "arrowRight")
 
