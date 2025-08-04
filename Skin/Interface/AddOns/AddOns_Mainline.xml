@@ -5,10 +5,14 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
         _G.AURORA_DEBUG_PROJECT = 0
     </Script>
 
+    <!--Script file="Blizzard_AccessibilityTemplates\Blizzard_AccessibilityTemplates.lua"/-->
     <!--Script file="Blizzard_AccountSaveUI\Blizzard_AccountSaveUI.lua"/-->
+    <!--Script file="Blizzard_AccountStore\Blizzard_AccountStore.lua"/-->
     <Script file="Blizzard_AchievementUI\Blizzard_AchievementUI.lua"/>
     <!-- This section is added for Blizzard_ActionBar by the Aurora XML Updater -->
     <!--Script file="Blizzard_ActionBar\ActionButtonUtil.lua"/-->
+    <!--Script file="Blizzard_ActionBar\Shared\ActionButtonSpellAlerts.lua"/-->
+    <!--Script file="Blizzard_ActionBar\Mainline\AssistedCombatManager.lua"/-->
     <!--Script file="Blizzard_ActionBar\Mainline\MainMenuBarMicroButtons.lua"/-->
     <!--Script file="Blizzard_ActionBar\Mainline\StatusTrackingBar.lua"/-->
     <!--Script file="Blizzard_ActionBar\Mainline\StatusTrackingBarTemplate.lua"/-->
@@ -39,6 +43,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_ActionBarController\Blizzard_ActionBarController.lua"/>
     <!--Script file="Blizzard_ActionStatus\Blizzard_ActionStatus.lua"/-->
     <Script file="Blizzard_AddOnList\Blizzard_AddOnList.lua"/>
+    <!--Script file="Blizzard_AddOnPerformance\Blizzard_AddOnPerformance.lua"/-->
     <Script file="Blizzard_AdventureMap\Blizzard_AdventureMap.lua"/>
     <!--Script file="Blizzard_AlliedRacesUI\Blizzard_AlliedRacesUI.lua"/-->
     <Script file="Blizzard_AnimaDiversionUI\Blizzard_AnimaDiversionUI.lua"/>
@@ -66,6 +71,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_Channels\Blizzard_Channels.lua"/>
     <!--Script file="Blizzard_CharacterCreate\Blizzard_CharacterCreate.lua"/-->
     <!--Script file="Blizzard_CharacterCustomize\Blizzard_CharacterCustomize.lua"/-->
+    <!--Script file="Blizzard_CharacterSelectNavBar\Blizzard_CharacterSelectNavBar.lua"/-->
     <!-- This section is added for Blizzard_ChatFrame by the Aurora XML Updater -->
     <!--Script file="Blizzard_ChatFrame\Shared\VoiceChatDots.lua"/-->
     <!--Script file="Blizzard_ChatFrame\Shared\VoiceChatTranscriptionButton.lua"/-->
@@ -82,7 +88,22 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_ChatFrame\Shared\ClassTalentHelper.lua"/-->
     <!--Script file="Blizzard_ChatFrame\Mainline\Localization.lua"/-->
     <!-- End of section added for Blizzard_ChatFrame by the Aurora XML Updater -->
-    <!--Script file="Blizzard_ChatFrameBase\Blizzard_ChatFrameBase.lua"/-->
+    <!-- This section is added for Blizzard_ChatFrameBase by the Aurora XML Updater -->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\HistoryKeeper.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\SlashCommandsRegistry.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\SlashCommands.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\ChatFrameConstants.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\CastRandomManager.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\CastSequenceManager.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\MacroExecutionManager.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Mainline\ChatEmoteConstants.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Mainline\SlashCommandsOverrides.lua"/-->
+    <Script file="Blizzard_ChatFrameBase\Mainline\ChatFrame.lua"/>
+    <!--Script file="Blizzard_ChatFrameBase\Shared\ChatAlertFrameMixin.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Mainline\ChannelFrameButtonMixin.lua"/-->
+    <!--Script file="Blizzard_ChatFrameBase\Shared\FloatingChatFrame.lua"/-->
+    <Script file="Blizzard_ChatFrameBase\Mainline\FloatingChatFrame.lua"/>
+    <!-- End of section added for Blizzard_ChatFrameBase by the Aurora XML Updater -->
     <!--Script file="Blizzard_ChatFrameUtil\Blizzard_ChatFrameUtil.lua"/-->
     <Script file="Blizzard_ChromieTimeUI\Blizzard_ChromieTimeUI.lua"/>
     <!--Script file="Blizzard_ClassMenu\Blizzard_ClassMenu.lua"/-->
@@ -91,8 +112,10 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_ClickBindingUI\Blizzard_ClickBindingUI.lua"/-->
     <!--Script file="Blizzard_ClientSavedVariables\Blizzard_ClientSavedVariables.lua"/-->
     <Script file="Blizzard_Collections\Blizzard_Collections.lua"/>
+    <!--Script file="Blizzard_Colors\Blizzard_Colors.lua"/-->
     <!--Script file="Blizzard_CombatLog\Blizzard_CombatLog.lua"/-->
     <!--Script file="Blizzard_CombatText\Blizzard_CombatText.lua"/-->
+    <!--Script file="Blizzard_CommandLineUtil\Blizzard_CommandLineUtil.lua"/-->
     <!--Script file="Blizzard_Commentator\Blizzard_Commentator.lua"/-->
     <Script file="Blizzard_Communities\Blizzard_Communities.lua"/>
     <!--Script file="Blizzard_CommunitiesSecure\Blizzard_CommunitiesSecure.lua"/-->
@@ -100,12 +123,14 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_Console\Blizzard_Console.lua"/-->
     <!--Script file="Blizzard_ContentTracking\Blizzard_ContentTracking.lua"/-->
     <Script file="Blizzard_Contribution\Blizzard_Contribution.lua"/>
+    <!--Script file="Blizzard_CooldownViewer\Blizzard_CooldownViewer.lua"/-->
     <!--Script file="Blizzard_CovenantCallings\Blizzard_CovenantCallings.lua"/-->
     <Script file="Blizzard_CovenantPreviewUI\Blizzard_CovenantPreviewUI.lua"/>
     <Script file="Blizzard_CovenantRenown\Blizzard_CovenantRenown.lua"/>
     <Script file="Blizzard_CovenantSanctum\Blizzard_CovenantSanctum.lua"/>
     <!--Script file="Blizzard_CovenantToasts\Blizzard_CovenantToasts.lua"/-->
     <!--Script file="Blizzard_CUFProfiles\Blizzard_CUFProfiles.lua"/-->
+    <!--Script file="Blizzard_CustomizationUI\Blizzard_CustomizationUI.lua"/-->
     <Script file="Blizzard_DeathRecap\Blizzard_DeathRecap.lua"/>
     <Script file="Blizzard_DebugTools\Blizzard_DebugTools.lua"/>
     <!--Script file="Blizzard_DeclensionFrame\Blizzard_DeclensionFrame.lua"/-->
@@ -113,30 +138,32 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_DelvesCompanionConfiguration\Blizzard_DelvesCompanionConfiguration.lua"/-->
     <!--Script file="Blizzard_DelvesDashboardUI\Blizzard_DelvesDashboardUI.lua"/-->
     <!--Script file="Blizzard_DelvesDifficultyPicker\Blizzard_DelvesDifficultyPicker.lua"/-->
+    <!--Script file="Blizzard_DelvesToast\Blizzard_DelvesToast.lua"/-->
     <!--Script file="Blizzard_Deprecated\Blizzard_Deprecated.lua"/-->
+    <!--Script file="Blizzard_DeprecatedChatInfo\Blizzard_DeprecatedChatInfo.lua"/-->
     <!--Script file="Blizzard_DeprecatedCurrencyScript\Blizzard_DeprecatedCurrencyScript.lua"/-->
     <!--Script file="Blizzard_DeprecatedGlue\Blizzard_DeprecatedGlue.lua"/-->
     <!--Script file="Blizzard_DeprecatedGuildScript\Blizzard_DeprecatedGuildScript.lua"/-->
     <!--Script file="Blizzard_DeprecatedItemScript\Blizzard_DeprecatedItemScript.lua"/-->
+    <!--Script file="Blizzard_DeprecatedLFG\Blizzard_DeprecatedLFG.lua"/-->
     <!--Script file="Blizzard_DeprecatedPvpScript\Blizzard_DeprecatedPvpScript.lua"/-->
     <!--Script file="Blizzard_DeprecatedSoundScript\Blizzard_DeprecatedSoundScript.lua"/-->
     <!--Script file="Blizzard_DeprecatedSpecialization\Blizzard_DeprecatedSpecialization.lua"/-->
+    <!--Script file="Blizzard_DeprecatedSpellBook\Blizzard_DeprecatedSpellBook.lua"/-->
     <!--Script file="Blizzard_DeprecatedSpellScript\Blizzard_DeprecatedSpellScript.lua"/-->
+    <!--Script file="Blizzard_DeprecatedUnitScript\Blizzard_DeprecatedUnitScript.lua"/-->
     <!--Script file="Blizzard_Deprecated_ArenaUI\Blizzard_Deprecated_ArenaUI.lua"/-->
     <!--Script file="Blizzard_Dispatcher\Blizzard_Dispatcher.lua"/-->
     <!--Script file="Blizzard_DurabilityFrame\Blizzard_DurabilityFrame.lua"/-->
     <!--Script file="Blizzard_EditMode\Blizzard_EditMode.lua"/-->
     <Script file="Blizzard_EncounterJournal\Blizzard_EncounterJournal.lua"/>
+    <!--Script file="Blizzard_EndOfMatchUI\Blizzard_EndOfMatchUI.lua"/-->
     <!--Script file="Blizzard_EnvironmentCleanup\Blizzard_EnvironmentCleanup.lua"/-->
     <Script file="Blizzard_EventTrace\Blizzard_EventTrace.lua"/>
     <!--Script file="Blizzard_ExpansionLandingPage\Blizzard_ExpansionLandingPage.lua"/-->
     <!--Script file="Blizzard_ExpansionTrial\Blizzard_ExpansionTrial.lua"/-->
     <Script file="Blizzard_FlightMap\Blizzard_FlightMap.lua"/>
-    <!--Script file="Blizzard_FontStyles_Frame\Blizzard_FontStyles_Frame.lua"/-->
-    <!--Script file="Blizzard_FontStyles_Glue\Blizzard_FontStyles_Glue.lua"/-->
-    <!--Script file="Blizzard_FontStyles_Shared\Blizzard_FontStyles_Shared.lua"/-->
-    <!--Script file="Blizzard_Fonts_Frame\Blizzard_Fonts_Frame.lua"/-->
-    <!--Script file="Blizzard_Fonts_Glue\Blizzard_Fonts_Glue.lua"/-->
+    <!--Script file="Blizzard_Flyout\Blizzard_Flyout.lua"/-->
     <Script file="Blizzard_Fonts_Shared\Blizzard_Fonts_Shared.lua"/>
     <!--Script file="Blizzard_FrameEffects\Blizzard_FrameEffects.lua"/-->
     <!--Script file="Blizzard_FramerateFrame\Blizzard_FramerateFrame.lua"/-->
@@ -161,7 +188,6 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_FrameXML\WardrobeOutfits.lua"/>
     <Script file="Blizzard_FrameXML\Mainline\NavigationBar.lua"/>
     <!--Script file="Blizzard_FrameXML\UIErrorsFrame.lua"/-->
-    <!--Script file="Blizzard_FrameXML\Mainline\Sound.lua"/-->
     <Script file="Blizzard_FrameXML\DeprecatedTemplates.lua"/>
     <Script file="Blizzard_FrameXML\Mainline\AlertFrames.lua"/>
     <Script file="Blizzard_FrameXML\Mainline\AlertFrameSystems.lua"/>
@@ -177,6 +203,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_FrameXML\Mainline\LowHealthFrame.lua"/-->
     <!--Script file="Blizzard_FrameXML\Mainline\CombatFeedback.lua"/-->
     <Script file="Blizzard_FrameXML\Mainline\ReadyCheck.lua"/>
+    <!--Script file="Blizzard_FrameXML\Mainline\InstanceAbandon.lua"/-->
     <!--Script file="Blizzard_FrameXML\CustomizationDebugFrame.lua"/-->
     <!--Script file="Blizzard_FrameXML\Mainline\RaidWarning.lua"/-->
     <Script file="Blizzard_FrameXML\Shared\CinematicFrame.lua"/>
@@ -184,10 +211,11 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_FrameXML\Mainline\RatingMenuFrame.lua"/>
     <Script file="Blizzard_FrameXML\TalentFrameBase.lua"/>
     <Script file="Blizzard_FrameXML\TalentFrameTemplates.lua"/>
-    <Script file="Blizzard_FrameXML\Mainline\MovieFrame.lua"/>
+    <Script file="Blizzard_FrameXML\MovieFrame.lua"/>
     <Script file="Blizzard_FrameXML\BossBannerToast.lua"/>
     <!--Script file="Blizzard_FrameXML\EventToastManager.lua"/-->
     <!--Script file="Blizzard_FrameXML\EquipmentManager.lua"/-->
+    <!--Script file="Blizzard_FrameXML\Shared\EquipmentManager.lua"/-->
     <Script file="Blizzard_FrameXML\RolePoll.lua"/>
     <!--Script file="Blizzard_FrameXML\SpellActivationOverlay.lua"/-->
     <Script file="Blizzard_FrameXML\GuildInviteFrame.lua"/>
@@ -227,6 +255,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_FrameXMLUtil\Blizzard_FrameXMLUtil.lua"/-->
     <Script file="Blizzard_FriendsFrame\Blizzard_FriendsFrame.lua"/>
     <Script file="Blizzard_GameMenu\Blizzard_GameMenu.lua"/>
+    <!--Script file="Blizzard_GameModeSelect\Blizzard_GameModeSelect.lua"/-->
     <Script file="Blizzard_GameTooltip\Blizzard_GameTooltip.lua"/>
     <!-- This section is added for Blizzard_GarrisonBase by the Aurora XML Updater -->
     <Script file="Blizzard_GarrisonBase\GarrisonBaseUtils.lua"/>
@@ -238,7 +267,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_GarrisonUI\Blizzard_GarrisonUI.lua"/>
     <!--Script file="Blizzard_GenericTraitUI\Blizzard_GenericTraitUI.lua"/-->
     <!--Script file="Blizzard_GlobalFXModelScenes\Blizzard_GlobalFXModelScenes.lua"/-->
-    <!--Script file="Blizzard_GlueDialogs\Blizzard_GlueDialogs.lua"/-->
+    <!--Script file="Blizzard_GlueCollections\Blizzard_GlueCollections.lua"/-->
+    <!--Script file="Blizzard_GlueMenuFrame\Blizzard_GlueMenuFrame.lua"/-->
     <!--Script file="Blizzard_GlueParent\Blizzard_GlueParent.lua"/-->
     <!--Script file="Blizzard_GlueSavedVariables\Blizzard_GlueSavedVariables.lua"/-->
     <!--Script file="Blizzard_GlueStubs\Blizzard_GlueStubs.lua"/-->
@@ -248,17 +278,22 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!-- This section is added for Blizzard_GroupFinder by the Aurora XML Updater -->
     <!--Script file="Blizzard_GroupFinder\Mainline\QueueUpdater.lua"/-->
     <Script file="Blizzard_GroupFinder\Mainline\PVEFrame.lua"/>
+    <!--Script file="Blizzard_GroupFinder\Shared\LFGFrame.lua"/-->
     <Script file="Blizzard_GroupFinder\Mainline\LFGFrame.lua"/>
     <Script file="Blizzard_GroupFinder\Mainline\LFDFrame.lua"/>
-    <Script file="Blizzard_GroupFinder\Mainline\RaidFinder.lua"/>
+    <Script file="Blizzard_GroupFinder\Shared\RaidFinder.lua"/>
     <Script file="Blizzard_GroupFinder\Mainline\LFGList.lua"/>
     <Script file="Blizzard_GroupFinder\Mainline\PvpPopup.lua"/>
     <Script file="Blizzard_GroupFinder\Mainline\PVPHelper.lua"/>
+    <!--Script file="Blizzard_GroupFinder\Shared\ScenarioFinder_Shared.lua"/-->
     <!--Script file="Blizzard_GroupFinder\Mainline\ScenarioFinder.lua"/-->
+    <!--Script file="Blizzard_GroupFinder\Shared\ScenarioFinder.lua"/-->
     <!-- End of section added for Blizzard_GroupFinder by the Aurora XML Updater -->
     <Script file="Blizzard_GuildBankUI\Blizzard_GuildBankUI.lua"/>
     <Script file="Blizzard_GuildControlUI\Blizzard_GuildControlUI.lua"/>
+    <!--Script file="Blizzard_GuildRename\Blizzard_GuildRename.lua"/-->
     <Script file="Blizzard_HelpFrame\Blizzard_HelpFrame.lua"/>
+    <!--Script file="Blizzard_HelpPlate\Blizzard_HelpPlate.lua"/-->
     <!--Script file="Blizzard_HybridMinimap\Blizzard_HybridMinimap.lua"/-->
     <!--Script file="Blizzard_IME\Blizzard_IME.lua"/-->
     <Script file="Blizzard_InspectUI\Blizzard_InspectUI.lua"/>
@@ -272,16 +307,21 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_Kiosk\Blizzard_Kiosk.lua"/-->
     <Script file="Blizzard_LandingSoulbinds\Blizzard_LandingSoulbinds.lua"/>
     <!--Script file="Blizzard_LoadLocale\Blizzard_LoadLocale.lua"/-->
+    <!--Script file="Blizzard_LoginWarningDialogs\Blizzard_LoginWarningDialogs.lua"/-->
     <Script file="Blizzard_MacroUI\Blizzard_MacroUI.lua"/>
     <Script file="Blizzard_MailFrame\Blizzard_MailFrame.lua"/>
     <!--Script file="Blizzard_MajorFactions\Blizzard_MajorFactions.lua"/-->
     <Script file="Blizzard_MapCanvas\Blizzard_MapCanvas.lua"/>
+    <!--Script file="Blizzard_MapCanvasSecureUtil\Blizzard_MapCanvasSecureUtil.lua"/-->
     <!--Script file="Blizzard_MatchCelebrationPartyPoseUI\Blizzard_MatchCelebrationPartyPoseUI.lua"/-->
+    <!--Script file="Blizzard_MatchmakingQueueDisplay\Blizzard_MatchmakingQueueDisplay.lua"/-->
     <Script file="Blizzard_MawBuffs\Blizzard_MawBuffs.lua"/>
     <!-- This section is added for Blizzard_Menu by the Aurora XML Updater -->
     <!--Script file="Blizzard_Menu\MenuConstants.lua"/-->
     <Script file="Blizzard_Menu\Mainline\MenuConstants.lua"/>
     <!--Script file="Blizzard_Menu\MenuVariants.lua"/-->
+    <!--Script file="Blizzard_Menu\Cata\MenuVariants.lua"/-->
+    <!--Script file="Blizzard_Menu\Vanilla\MenuVariants.lua"/-->
     <Script file="Blizzard_Menu\Mainline\MenuVariants.lua"/>
     <Script file="Blizzard_Menu\Compositor.lua"/>
     <Script file="Blizzard_Menu\Menu.lua"/>
@@ -293,7 +333,9 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_Minimap\Blizzard_Minimap.lua"/-->
     <Script file="Blizzard_MirrorTimer\Blizzard_MirrorTimer.lua"/>
     <!-- This section is added for Blizzard_MoneyFrame by the Aurora XML Updater -->
+    <!--Script file="Blizzard_MoneyFrame\Shared\MoneyFrame.lua"/-->
     <Script file="Blizzard_MoneyFrame\Mainline\MoneyFrame.lua"/>
+    <!--Script file="Blizzard_MoneyFrame\Shared\MoneyInputFrame.lua"/-->
     <Script file="Blizzard_MoneyFrame\Mainline\MoneyInputFrame.lua"/>
     <!--Script file="Blizzard_MoneyFrame\Mainline\Localization.lua"/-->
     <!-- End of section added for Blizzard_MoneyFrame by the Aurora XML Updater -->
@@ -334,11 +376,12 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookTemplates.lua"/-->
     <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookItem.lua"/-->
     <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookSearch.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookFrame.lua"/-->
+    <Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookFrame.lua"/>
     <!--Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpellsFrame.lua"/-->
     <!--Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpellsRegistration.lua"/-->
     <!-- End of section added for Blizzard_PlayerSpells by the Aurora XML Updater -->
     <!--Script file="Blizzard_PlunderstormBasics\Blizzard_PlunderstormBasics.lua"/-->
+    <!--Script file="Blizzard_PlunderstormPrematchUI\Blizzard_PlunderstormPrematchUI.lua"/-->
     <!--Script file="Blizzard_POIButton\Blizzard_POIButton.lua"/-->
     <!--Script file="Blizzard_PrintHandler\Blizzard_PrintHandler.lua"/-->
     <!--Script file="Blizzard_PrivateAurasUI\Blizzard_PrivateAurasUI.lua"/-->
@@ -366,6 +409,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_ReportFrameShared\Blizzard_ReportFrameShared.lua"/-->
     <!--Script file="Blizzard_RuneforgeUI\Blizzard_RuneforgeUI.lua"/-->
     <Script file="Blizzard_ScrappingMachineUI\Blizzard_ScrappingMachineUI.lua"/>
+    <!--Script file="Blizzard_ScriptErrors\Blizzard_ScriptErrors.lua"/-->
+    <!--Script file="Blizzard_ScriptErrorsFrame\Blizzard_ScriptErrorsFrame.lua"/-->
     <!--Script file="Blizzard_SecureTransferUI\Blizzard_SecureTransferUI.lua"/-->
     <!--Script file="Blizzard_SelectorUI\Blizzard_SelectorUI.lua"/-->
     <!--Script file="Blizzard_Settings\Blizzard_Settings.lua"/-->
@@ -377,12 +422,10 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedWidgetFrames\Blizzard_SharedWidgetFrames.lua"/-->
     <!-- This section is added for Blizzard_SharedXML by the Aurora XML Updater -->
     <!--Script file="Blizzard_SharedXML\Shared\LocalizationMachinery.lua"/-->
-    <!--Script file="Blizzard_SharedXML\EnvironmentUtil.lua"/-->
     <!--Script file="Blizzard_SharedXML\ProjectConstants.lua"/-->
     <!--Script file="Blizzard_SharedXML\WoWLabs\ProjectConstants.lua"/-->
     <!--Script file="Blizzard_SharedXML\SharedConstants.lua"/-->
     <!--Script file="Blizzard_SharedXML\middleclass.lua"/-->
-    <!--Script file="Blizzard_SharedXML\Color.lua"/-->
     <!--Script file="Blizzard_SharedXML\ColorUtil.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\ClassColors.lua"/-->
     <Script file="Blizzard_SharedXML\SharedColorConstants.lua"/>
@@ -396,6 +439,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXML\PredictedSetting.lua"/-->
     <!--Script file="Blizzard_SharedXML\SecureUtil.lua"/-->
     <!--Script file="Blizzard_SharedXML\TimeUtil.lua"/-->
+    <!--Script file="Blizzard_SharedXML\BenchmarkUtil.lua"/-->
     <!--Script file="Blizzard_SharedXML\VectorLib.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\NineSliceLayouts.lua"/-->
     <Script file="Blizzard_SharedXML\NineSlice.lua"/>
@@ -414,13 +458,14 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXML\LayoutFrame.lua"/-->
     <!--Script file="Blizzard_SharedXML\ManagedLayoutFrame.lua"/-->
     <!--Script file="Blizzard_SharedXML\SpaceToFitLayoutFrame.lua"/-->
+    <!--Script file="Blizzard_SharedXML\ScaleToFitFrame.lua"/-->
     <!--Script file="Blizzard_SharedXML\BulletPoint.lua"/-->
     <!--Script file="Blizzard_SharedXML\KeyCommand.lua"/-->
     <!--Script file="Blizzard_SharedXML\PixelUtilSecure.lua"/-->
     <!--Script file="Blizzard_SharedXML\PixelUtil.lua"/-->
     <!--Script file="Blizzard_SharedXML\TableBuilder.lua"/-->
     <!--Script file="Blizzard_SharedXML\NewFeatureLabel.lua"/-->
-    <!--Script file="Blizzard_SharedXML\Mainline\VASErrorLookup.lua"/-->
+    <!--Script file="Blizzard_SharedXML\Shared\VASErrorLookup.lua"/-->
     <!--Script file="Blizzard_SharedXML\SelectableButton.lua"/-->
     <!--Script file="Blizzard_SharedXML\ButtonGroup.lua"/-->
     <!--Script file="Blizzard_SharedXML\Shared\Frame\EventFrame.lua"/-->
@@ -446,10 +491,10 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_SharedXML\Shared\Scroll\ScrollBar.lua"/>
     <Script file="Blizzard_SharedXML\Shared\Scroll\ScrollTemplates.lua"/>
     <Script file="Blizzard_SharedXML\Shared\Scroll\TrimScrollBar.lua"/>
-    <!--Script file="Blizzard_SharedXML\Mainline\Scroll\OribosScrollBar.lua"/-->
+    <Script file="Blizzard_SharedXML\Mainline\Scroll\OribosScrollBar.lua"/>
     <Script file="Blizzard_SharedXML\Shared\Scroll\MinimalScrollBar.lua"/>
-    <!--Script file="Blizzard_SharedXML\Mainline\ButtonTray\ButtonTrayUtil.lua"/-->
-    <!--Script file="Blizzard_SharedXML\Mainline\ButtonTray\ButtonTray.lua"/-->
+    <!--Script file="Blizzard_SharedXML\Shared\ButtonTray\ButtonTrayUtil.lua"/-->
+    <!--Script file="Blizzard_SharedXML\Shared\ButtonTray\ButtonTray.lua"/-->
     <!--Script file="Blizzard_SharedXML\StringUtil.lua"/-->
     <!--Script file="Blizzard_SharedXML\TypeUtil.lua"/-->
     <!--Script file="Blizzard_SharedXML\Dump.lua"/-->
@@ -478,7 +523,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXML\PingableType.lua"/-->
     <!--Script file="Blizzard_SharedXML\Blizzard_RadialWheel.lua"/-->
     <!--Script file="Blizzard_SharedXML\Backdrop.lua"/-->
-    <!--Script file="Blizzard_SharedXML\Mainline\LoadSystem\LoadSystemTemplates.lua"/-->
+    <!--Script file="Blizzard_SharedXML\Shared\LoadSystem\LoadSystemTemplates.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\TabSystem\TabSystemTemplates.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\TabSystem\TabSystemOwner.lua"/-->
     <Script file="Blizzard_SharedXML\Shared\Selector\Blizzard_SelectorUI.lua"/>
@@ -494,6 +539,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXML\Spinner.lua"/-->
     <Script file="Blizzard_SharedXML\Mainline\SharedUIPanelTemplates.lua"/>
     <!--Script file="Blizzard_SharedXML\PortraitFrame.lua"/-->
+    <!--Script file="Blizzard_SharedXML\Mainline\SharedCollectionUtil.lua"/-->
+    <!--Script file="Blizzard_SharedXML\Mainline\SharedCollectionTemplates.lua"/-->
     <!--Script file="Blizzard_SharedXML\CustomBindingButtonMixin.lua"/-->
     <!--Script file="Blizzard_SharedXML\CustomBindingButtonTemplate.lua"/-->
     <!--Script file="Blizzard_SharedXML\Shared\Tabs\MinimalTab.lua"/-->
@@ -501,6 +548,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_SharedXML\Mainline\UIDropDownMenu.lua"/>
     <!--Script file="Blizzard_SharedXML\Mainline\UIDropDownMenuTemplates.lua"/-->
     <!--Script file="Blizzard_SharedXML\DialogUtil.lua"/-->
+    <!--Script file="Blizzard_SharedXML\Mainline\Sound.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\ModelFrames.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\ModelFrameMixin.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\ModelControlButtonMixin.lua"/-->
@@ -510,10 +558,12 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXML\ToolWindowOwnerMixin.lua"/-->
     <!--Script file="Blizzard_SharedXML\AlertFrameIntrinsic.lua"/-->
     <!--Script file="Blizzard_SharedXML\Mainline\MajorFactionRenownSharedTemplates.lua"/-->
+    <!--Script file="Blizzard_SharedXML\CommonUIPanelTemplates.lua"/-->
     <Script file="Blizzard_SharedXML\HybridScrollFrame.lua"/>
     <!--Script file="Blizzard_SharedXML\Shared\Localization.lua"/-->
     <!-- End of section added for Blizzard_SharedXML by the Aurora XML Updater -->
     <!-- This section is added for Blizzard_SharedXMLBase by the Aurora XML Updater -->
+    <!--Script file="Blizzard_SharedXMLBase\Compat.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\ErrorUtil.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\Mixin.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\TableUtil.lua"/-->
@@ -538,20 +588,37 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXMLBase\ProxyUtil.lua"/-->
     <Script file="Blizzard_SharedXMLBase\Pools.lua"/>
     <!--Script file="Blizzard_SharedXMLBase\ButtonStateBehavior.lua"/-->
+    <!--Script file="Blizzard_SharedXMLBase\EnvironmentUtil.lua"/-->
+    <!--Script file="Blizzard_SharedXMLBase\Color.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\ColorSwatch.lua"/-->
+    <!--Script file="Blizzard_SharedXMLBase\FrameWatcher.lua"/-->
+    <!--Script file="Blizzard_SharedXMLBase\TaggableObject.lua"/-->
+    <!--Script file="Blizzard_SharedXMLBase\TimedCallback.lua"/-->
+    <!--Script file="Blizzard_SharedXMLBase\RegionLayoutManager.lua"/-->
     <!-- End of section added for Blizzard_SharedXMLBase by the Aurora XML Updater -->
     <!--Script file="Blizzard_SharedXMLGame\Blizzard_SharedXMLGame.lua"/-->
+    <!--Script file="Blizzard_SimpleCheckout\Blizzard_SimpleCheckout.lua"/-->
     <Script file="Blizzard_SocialToast\Blizzard_SocialToast.lua"/>
     <Script file="Blizzard_Soulbinds\Blizzard_Soulbinds.lua"/>
     <!--Script file="Blizzard_SpectateFrame\Blizzard_SpectateFrame.lua"/-->
+    <!--Script file="Blizzard_SpellPickUpIndicator\Blizzard_SpellPickUpIndicator.lua"/-->
     <!--Script file="Blizzard_SpellSearch\Blizzard_SpellSearch.lua"/-->
     <!--Script file="Blizzard_StableUI\Blizzard_StableUI.lua"/-->
-    <!--Script file="Blizzard_StaticPopup\Blizzard_StaticPopup.lua"/-->
-    <!-- This section is added for Blizzard_StaticPopup_Frame by the Aurora XML Updater -->
-    <Script file="Blizzard_StaticPopup_Frame\Mainline\StaticPopup.lua"/>
-    <!--Script file="Blizzard_StaticPopup_Frame\Mainline\StaticPopupDialogFrames.lua"/-->
-    <Script file="Blizzard_StaticPopup_Frame\Mainline\StaticPopupSpecial.lua"/>
-    <!-- End of section added for Blizzard_StaticPopup_Frame by the Aurora XML Updater -->
+    <Script file="Blizzard_StaticPopup\Blizzard_StaticPopup.lua"/>
+    <!-- This section is added for Blizzard_StaticPopup_Game by the Aurora XML Updater -->
+    <!--Script file="Blizzard_StaticPopup_Game\GameDialogDefsUtil.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\GameDialogDefs.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\Mainline\GameDialogDefs.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\GameDialog.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\Mainline\GameDialog.lua"/-->
+    <Script file="Blizzard_StaticPopup_Game\Mainline\StaticPopupSpecial.lua"/>
+    <!--Script file="Blizzard_StaticPopup_Game\Wrath\StaticPopupGlyphs.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\Cata\StaticPopupGlyphs.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\Mists\StaticPopupGlyphs.lua"/-->
+    <!--Script file="Blizzard_StaticPopup_Game\Mainline\InviteConfirmationDialog.lua"/-->
+    <!-- End of section added for Blizzard_StaticPopup_Game by the Aurora XML Updater -->
+    <!--Script file="Blizzard_StaticPopup_Glue\Blizzard_StaticPopup_Glue.lua"/-->
     <!--Script file="Blizzard_StoreUI\Blizzard_StoreUI.lua"/-->
     <!--Script file="Blizzard_SubscriptionInterstitialUI\Blizzard_SubscriptionInterstitialUI.lua"/-->
     <!--Script file="Blizzard_Subtitles\Blizzard_Subtitles.lua"/-->
@@ -575,8 +642,8 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_UIPanels_Game\Mainline\PaperDollFrame.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\ReputationFrame.lua"/>
     <!--Script file="Blizzard_UIPanels_Game\Mainline\FriendshipStatusBar.lua"/-->
-    <Script file="Blizzard_UIPanels_Game\Mainline\QuestFrame.lua"/>
     <!--Script file="Blizzard_UIPanels_Game\Mainline\QuestFrameTemplates.lua"/-->
+    <Script file="Blizzard_UIPanels_Game\Mainline\QuestFrame.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\QuestInfo.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\MerchantFrame.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\TradeFrame.lua"/>
@@ -585,10 +652,12 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_UIPanels_Game\Mainline\LootFrame.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\GroupLootFrame.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\ItemTextFrame.lua"/>
-    <Script file="Blizzard_UIPanels_Game\Mainline\TaxiFrame.lua"/>
+    <Script file="Blizzard_UIPanels_Game\Shared\TaxiFrame.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\BankFrame.lua"/>
     <!--Script file="Blizzard_UIPanels_Game\Mainline\RoleSelectionTemplate.lua"/-->
     <Script file="Blizzard_UIPanels_Game\Mainline\ItemRef.lua"/>
+    <!--Script file="Blizzard_UIPanels_Game\Mainline\ItemRefHandlers.lua"/-->
+    <!--Script file="Blizzard_UIPanels_Game\Shared\ItemRefHandlersShared.lua"/-->
     <!--Script file="Blizzard_UIPanels_Game\Shared\SocialQueue.lua"/-->
     <!--Script file="Blizzard_UIPanels_Game\Mainline\UnitPositionFrameTemplates.lua"/-->
     <!--Script file="Blizzard_UIPanels_Game\Mainline\FogOfWarFrameTemplates.lua"/-->
@@ -600,6 +669,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_UIPanels_Game\Mainline\WarCampaignTemplates.lua"/>
     <Script file="Blizzard_UIPanels_Game\Mainline\CampaignOverview.lua"/>
     <!--Script file="Blizzard_UIPanels_Game\Mainline\MapLegendFrame.lua"/-->
+    <!--Script file="Blizzard_UIPanels_Game\Mainline\EventScheduler.lua"/-->
     <Script file="Blizzard_UIPanels_Game\Mainline\QuestMapFrame.lua"/>
     <!--Script file="Blizzard_UIPanels_Game\Mainline\TabardModelControlButtonMixin.lua"/-->
     <Script file="Blizzard_UIPanels_Game\Mainline\TabardFrame.lua"/>
@@ -614,14 +684,15 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!-- End of section added for Blizzard_UIPanels_Game by the Aurora XML Updater -->
     <!-- This section is added for Blizzard_UIPanelTemplates by the Aurora XML Updater -->
     <!--Script file="Blizzard_UIPanelTemplates\Mainline\AutoCastTemplates.lua"/-->
+    <!--Script file="Blizzard_UIPanelTemplates\Shared\UIPanelSpellButtonFrame.lua"/-->
     <Script file="Blizzard_UIPanelTemplates\Mainline\UIPanelTemplates.lua"/>
     <!-- End of section added for Blizzard_UIPanelTemplates by the Aurora XML Updater -->
     <!-- This section is added for Blizzard_UIParent by the Aurora XML Updater -->
     <Script file="Blizzard_UIParent\ChatBubbleTemplates.lua"/>
     <!--Script file="Blizzard_UIParent\Mainline\WorldFrame.lua"/-->
+    <!--Script file="Blizzard_UIParent\Shared\UIParent.lua"/-->
     <Script file="Blizzard_UIParent\Mainline\UIParent.lua"/>
     <!--Script file="Blizzard_UIParent\Shared\Localization.lua"/-->
-    <!--Script file="Blizzard_UIParent\Shared\UIParent.lua"/-->
     <!-- End of section added for Blizzard_UIParent by the Aurora XML Updater -->
     <!--Script file="Blizzard_UIParentPanelManager\Blizzard_UIParentPanelManager.lua"/-->
     <Script file="Blizzard_UIWidgets\Blizzard_UIWidgets.lua"/>
@@ -639,6 +710,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_WarfrontsPartyPoseUI\Blizzard_WarfrontsPartyPoseUI.lua"/>
     <!--Script file="Blizzard_WeeklyRewards\Blizzard_WeeklyRewards.lua"/-->
     <!--Script file="Blizzard_WeeklyRewardsUtil\Blizzard_WeeklyRewardsUtil.lua"/-->
+    <!--Script file="Blizzard_WorldLootObjectList\Blizzard_WorldLootObjectList.lua"/-->
     <Script file="Blizzard_WorldMap\Blizzard_WorldMap.lua"/>
     <!--Script file="Blizzard_WowTokenUI\Blizzard_WowTokenUI.lua"/-->
     <Script file="Blizzard_ZoneAbility\Blizzard_ZoneAbility.lua"/>
