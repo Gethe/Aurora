@@ -217,8 +217,9 @@ function private.SharedXML.FloatingChatFrame()
         Skin.ToggleVoiceMuteButtonTemplate(_G.ChatFrameToggleVoiceMuteButton)
     end
 
-    Skin.UIMenuTemplate(_G.ChatMenu)
-    Skin.UIMenuTemplate(_G.EmoteMenu)
-    Skin.UIMenuTemplate(_G.LanguageMenu)
-    Skin.UIMenuTemplate(_G.VoiceMacroMenu)
+    -- Removed in 11.0.2
+    -- Skin.UIMenuTemplate(_G.ChatMenu)
+    -- Skin.UIMenuTemplate(_G.EmoteMenu)
+    -- Skin.UIMenuTemplate(_G.LanguageMenu)
+    -- Skin.UIMenuTemplate(_G.VoiceMacroMenu)
 end
