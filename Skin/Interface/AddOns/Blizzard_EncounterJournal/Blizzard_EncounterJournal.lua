@@ -357,7 +357,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     --------------------
     local instanceSelect = EncounterJournal.instanceSelect
     instanceSelect.bg:SetAlpha(0)
-    Skin.DropdownButton(instanceSelect.tierDropDown)
+    Skin.DropdownButton(instanceSelect.ExpansionDropdown)
     Skin.WowScrollBoxList(instanceSelect.ScrollBox)
     Skin.MinimalScrollBar(instanceSelect.ScrollBar)
     Util.Mixin(instanceSelect.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
@@ -520,20 +520,17 @@ function private.AddOns.Blizzard_EncounterJournal()
         tooltip.Item2._auroraIconBorder = tooltip.Item2
     end
 
-
-
-
     ----====####$$$$%%%%$$$$####====----
     --      Blizzard_LootJournal      --
     ----====####$$$$%%%%$$$$####====----
     local LootJournal = EncounterJournal.LootJournal
+    local ItemSetsFrame = EncounterJournal.LootJournalItems.ItemSetsFrame
     LootJournal:GetRegions():Hide()
 
-    -- FIXLATER
-    -- <DropdownButton parentKey="ClassDropdown" inherits="WowStyle1DropdownTemplate">
-    -- <DropdownButton parentKey="RuneforgePowerDropdown" inherits="WowStyle1DropdownTemplate">
-    -- Skin.EJButtonTemplate(LootJournal.ClassDropDownButton)
-    -- Skin.EJButtonTemplate(LootJournal.RuneforgePowerFilterDropDownButton)
+    Skin.DropdownButton(LootJournal.ClassDropdown)
+    Skin.DropdownButton(ItemSetsFrame.ClassDropdown)
+
+    Skin.DropdownButton(LootJournal.RuneforgePowerDropdown)
     Skin.WowScrollBoxList(LootJournal.ScrollBox)
     Skin.MinimalScrollBar(LootJournal.ScrollBar)
 end
