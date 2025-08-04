@@ -192,7 +192,8 @@ do -- StatusBar
             -- some new status bars don't have a texture?
             return
         end
-        self:GetStatusBarTexture():SetVertexColor(r, g, b)
+        local texture = self:GetStatusBarTexture()
+        texture:SetVertexColor(r, g, b)
     end
     function Skin.FrameTypeStatusBar(StatusBar)
         if StatusBar.SetStatusBarAtlas then

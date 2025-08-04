@@ -95,8 +95,9 @@ do --[[ FrameXML\StaticPopup.xml ]]
 end
 
 function private.FrameXML.StaticPopup()
-    Skin.StaticPopupTemplate(_G.StaticPopup1)
-    Skin.StaticPopupTemplate(_G.StaticPopup2)
-    Skin.StaticPopupTemplate(_G.StaticPopup3)
-    Skin.StaticPopupTemplate(_G.StaticPopup4)
+    -- FIXLATER is it removed in 11.2?
+    -- Skin.StaticPopupTemplate(_G.StaticPopup1)
+    -- Skin.StaticPopupTemplate(_G.StaticPopup2)
+    -- Skin.StaticPopupTemplate(_G.StaticPopup3)
+    -- Skin.StaticPopupTemplate(_G.StaticPopup4)
 end

@@ -235,8 +235,8 @@ function private.SharedXML.FriendsFrame()
     _G.WhoFrameAddFriendButton:ClearAllPoints()
     _G.WhoFrameAddFriendButton:SetPoint("BOTTOMLEFT", _G.WhoFrameWhoButton, "BOTTOMRIGHT", 1, 0)
     _G.WhoFrameAddFriendButton:SetPoint("BOTTOMRIGHT", _G.WhoFrameGroupInviteButton, "BOTTOMLEFT", -1, 0)
-
-    Skin.InsetFrameTemplate(_G.WhoFrameEditBoxInset)
+    -- FIXLATER removed in 11.2?
+    -- Skin.InsetFrameTemplate(_G.WhoFrameEditBoxInset)
     Skin.FrameTypeEditBox(_G.WhoFrameEditBox)
     _G.WhoFrameEditBox:ClearAllPoints()
     _G.WhoFrameEditBox:SetPoint("BOTTOMLEFT", _G.WhoFrameWhoButton, "TOPLEFT", 2, -2)
@@ -282,7 +282,8 @@ function private.SharedXML.FriendsFrame()
     -- AddFriendFrame --
     --------------------
     Skin.DialogBorderTemplate(_G.AddFriendFrame.Border)
-    Skin.UIPanelButtonTemplate(_G.AddFriendInfoFrameContinueButton)
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(_G.AddFriendInfoFrameContinueButton)
 
     Skin.UIPanelInfoButton(_G.AddFriendEntryFrameInfoButton)
     do -- AddFriendNameEditBox
@@ -291,8 +292,9 @@ function private.SharedXML.FriendsFrame()
         _G.AddFriendNameEditBoxRight:Hide()
         _G.AddFriendNameEditBoxMiddle:Hide()
     end
-    Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameAcceptButton)
-    Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
+    -- FIXLATER
+    -- Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameAcceptButton)
+    -- Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
 
 
 
