@@ -10,7 +10,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 -- local Color = Aurora.Color
 
-do --[[ SharedXML\AddonList.lua ]]
+do --[[ AddOns\AddonList.lua ]]
     function Hook.AddonListCharacterDropDownButton_OnClick(self)
         for i = 1, 2 do
             local buttonName = "DropDownList1Button"..i
@@ -36,7 +36,9 @@ do --[[ SharedXML\AddonList.lua ]]
     end
 end
 
-do --[[ SharedXML\AddonList.xml ]]
+
+-- FIXMELATER - No Longer used
+do --[[ AddOns\AddonList.xml ]]
     function Skin.AddonListEntryTemplate(Button)
         if private.isRetail then
             Skin.UICheckButtonTemplate(Button.Enabled) -- BlizzWTF: Doesn't use a template, but it should
@@ -47,44 +49,33 @@ do --[[ SharedXML\AddonList.xml ]]
     end
 end
 
-function private.SharedXML.AddonList()
-    if private.isRetail then
-        return
-    end
+function private.AddOns.Blizzard_AddOnList()
     local AddonList = _G.AddonList
     Skin.ButtonFrameTemplate(AddonList)
-    Skin.UICheckButtonTemplate(_G.AddonListForceLoad) -- BlizzWTF: Doesn't use a template, but it should
-    _G.AddonListForceLoad:ClearAllPoints()
-    _G.AddonListForceLoad:SetPoint("TOPRIGHT", -150, -25)
+    Skin.UICheckButtonTemplate(AddonList.ForceLoad)
+    AddonList.ForceLoad:ClearAllPoints()
+    AddonList.ForceLoad:SetPoint("TOPRIGHT", -150, -25)
 
-    if private.isRetail then
-        Skin.SharedButtonSmallTemplate(AddonList.CancelButton)
-        Skin.SharedButtonSmallTemplate(AddonList.OkayButton)
-    else
-        Skin.MagicButtonTemplate(AddonList.CancelButton)
-        Skin.MagicButtonTemplate(AddonList.OkayButton)
-    end
+    Skin.SharedButtonSmallTemplate(AddonList.CancelButton)
+    Skin.SharedButtonSmallTemplate(AddonList.OkayButton)
+    Skin.SharedButtonSmallTemplate(AddonList.EnableAllButton)
+    Skin.SharedButtonSmallTemplate(AddonList.DisableAllButton)
     Util.PositionRelative("BOTTOMRIGHT", AddonList, "BOTTOMRIGHT", -5, 5, 5, "Left", {
         AddonList.CancelButton,
         AddonList.OkayButton,
     })
-
-    Skin.SharedButtonSmallTemplate(AddonList.EnableAllButton)
-    Skin.SharedButtonSmallTemplate(AddonList.DisableAllButton)
-
     Util.PositionRelative("BOTTOMLEFT", AddonList, "BOTTOMLEFT", 5, 5, 5, "Right", {
         AddonList.EnableAllButton,
         AddonList.DisableAllButton,
     })
+    Skin.DropdownButton(AddonList.Dropdown)
+    AddonList.Dropdown:SetPoint("TOPLEFT", 10, -27)
 
     Skin.WowScrollBoxList(AddonList.ScrollBox)
-    AddonList.ScrollBox:SetPoint("TOPLEFT", 5, -60)
-    AddonList.ScrollBox:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -21, 5)
-
     Skin.MinimalScrollBar(AddonList.ScrollBar)
-
+    AddonList.ScrollBox:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -21, 5)
+    AddonList.ScrollBox:SetPoint("TOPLEFT", 5, -120)
     -- FIXLATER - removed in 11.0.0
-    Skin.DropdownButton(AddonList.Dropdown)
-    -- _G.AddonCharacterDropDown:SetPoint("TOPLEFT", 10, -27)
-    -- _G.AddonCharacterDropDown.Button:HookScript("OnClick", Hook.AddonListCharacterDropDownButton_OnClick)
+    -- FIXLATER
+    -- AddonCharacterDropDown.Button:HookScript("OnClick", Hook.AddonListCharacterDropDownButton_OnClick)
 end
