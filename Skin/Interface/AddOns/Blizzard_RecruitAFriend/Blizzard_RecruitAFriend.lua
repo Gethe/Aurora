@@ -108,8 +108,6 @@ function private.FrameXML.RecruitAFriendFrame()
     Skin.FriendsFrameButtonTemplate(RewardClaiming.ClaimOrViewRewardButton)
 
     Skin.FriendsFrameButtonTemplate(RecruitAFriendFrame.RecruitmentButton)
-    Skin.DropdownButton(RecruitAFriendFrame.DropDown)
-
     local RecruitList = RecruitAFriendFrame.RecruitList
     RecruitList.Header.Background:Hide()
     Skin.InsetFrameTemplate(RecruitList.ScrollFrameInset)

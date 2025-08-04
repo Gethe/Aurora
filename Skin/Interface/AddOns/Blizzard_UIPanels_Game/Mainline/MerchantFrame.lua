@@ -138,5 +138,5 @@ function private.FrameXML.MerchantFrame()
         _G.MerchantFrameTab2,
     })
 
-    Skin.DropdownButton(_G.MerchantFrame.lootFilter)
+    Skin.DropdownButton(_G.MerchantFrame.FilterDropdown)
 end

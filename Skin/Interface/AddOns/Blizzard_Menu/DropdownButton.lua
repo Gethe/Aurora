@@ -18,9 +18,11 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
             -- local rightOfs = -105
             if not Frame then
                 if private.isDev then
-                    _G.print("Skin.DropdownButton - Frame is nil")
+                    -- FIXLATER
+                    _G.print("Skin.DropdownButton - Frame is nil. This is likely a bug. You shoould not see this message.")
+                else
+                    return
                 end
-                return
             end
             -- if not Width then
             --     Width = 155
@@ -37,7 +39,6 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
             Frame._auroraWidth = nil
             Base.SetBackdrop(Frame, Color.button)
             if Frame.Arrow then
-
                 Frame.Background:SetTexture(nil)
                 Frame:SetFrameLevel(Frame:GetFrameLevel() + 2)
                 Frame.Arrow:SetAlpha(0)

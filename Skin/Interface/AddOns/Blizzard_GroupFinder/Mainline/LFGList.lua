@@ -270,7 +270,8 @@ function private.FrameXML.LFGList()
     ------------------
     local LFGListFrame =_G.LFGListFrame
 
-    Skin.DropdownButton(_G.LFGListFrameDropDown)
+    -- FIXLATER - removed/replaced -LFGListSearchEntry_CreateContextMenu
+    -- Skin.DropdownButton(_G.LFGListFrameDropDown)
 
     -- CategorySelection --
     local CategorySelection = LFGListFrame.CategorySelection
@@ -294,7 +295,7 @@ function private.FrameXML.LFGList()
     Skin.SearchBoxTemplate(SearchPanel.SearchBox)
     -- FIXLATER
     -- Skin.UIMenuButtonStretchTemplate(SearchPanel.FilterButton)
-    Skin.DropdownButton(_G.LFGListLanguageFilterDropcownFrame)
+    -- Skin.DropdownButton(_G.LFGListLanguageFilterDropDownFrame)
 
     local AutoCompleteFrame = SearchPanel.AutoCompleteFrame
     Skin.FrameTypeFrame(AutoCompleteFrame)
@@ -378,8 +379,8 @@ function private.FrameXML.LFGList()
     end
 
     -- Skin.LFGListEditBoxTemplate(EntryCreation.Name)
-    Skin.DropdownButton(EntryCreation.GroupDropDown)
-    Skin.DropdownButton(EntryCreation.ActivityDropDown)
+    Skin.DropdownButton(EntryCreation.GroupDropdown)
+    Skin.DropdownButton(EntryCreation.ActivityDropdown)
     -- Skin.InputScrollFrameTemplate(EntryCreation.Description)
     Skin.DropdownButton(EntryCreation.PlayStyleDropdown)
     -- Skin.LFGListRequirementTemplate(EntryCreation.ItemLevel)
