@@ -75,7 +75,6 @@ function private.AddOns.Blizzard_AddOnList()
     Skin.MinimalScrollBar(AddonList.ScrollBar)
     AddonList.ScrollBox:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -21, 5)
     AddonList.ScrollBox:SetPoint("TOPLEFT", 5, -120)
-    -- FIXLATER - removed in 11.0.0
-    -- FIXLATER
+    -- FIXLATER - removed in 11.0.0 - replaced with a dropdown
     -- AddonCharacterDropDown.Button:HookScript("OnClick", Hook.AddonListCharacterDropDownButton_OnClick)
 end

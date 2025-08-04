@@ -57,8 +57,9 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     ArchaeologyFrame.bgRight:Hide()
 
     Skin.DropdownButton(ArchaeologyFrame.raceFilterDropDown)
-    ArchaeologyFrame.raceFilterDropDown:HookScript("OnHide", Hook.RaceFilter_OnHide)
-    ArchaeologyFrame.raceFilterDropDown:SetPoint("TOPRIGHT", -30, -52)
+    -- FIXMELATER
+    ArchaeologyFrame.RaceFilterDropdown:HookScript("OnHide", Hook.RaceFilter_OnHide)
+    ArchaeologyFrame.RaceFilterDropdown:SetPoint("TOPRIGHT", -30, -52)
 
     Skin.FrameTypeStatusBar(ArchaeologyFrame.rankBar)
     ArchaeologyFrame.rankBar:SetPoint("TOP", 0, -60)
@@ -180,7 +181,7 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     --------------
     -- HelpPage --
     --------------
-    Skin.UIPanelInfoButton(ArchaeologyFrame.infoButton)
+    Skin.MainHelpPlateButton(ArchaeologyFrame.infoButton)
     ArchaeologyFrame.infoButton:SetPoint("TOPLEFT", 3, -3)
 
     local helpPage = ArchaeologyFrame.helpPage
@@ -204,7 +205,8 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ArchaeologyProgressBar --
     ----====####$$$$%%%%%$$$$####====----
-    _G.hooksecurefunc("ArcheologyDigsiteProgressBar_OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
+    -- FIXMELATER 
+    -- _G.hooksecurefunc("ArcheologyDigsiteProgressBar_OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
 
     local ArcheologyDigsiteProgressBar = _G.ArcheologyDigsiteProgressBar
     ArcheologyDigsiteProgressBar:HookScript("OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
