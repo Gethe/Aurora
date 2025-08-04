@@ -71,7 +71,17 @@ end
 
 function private.FrameXML.BankFrame()
     if private.disabled.bags then return end
-    _G.hooksecurefunc("BankFrameItemButton_Update", Hook.BankFrameItemButton_Update)
+    if private.isRetail then
+        _G.print("ReportError: BankFrame is not supported in Retail 11.2 - Report to Aurora developers.")
+        return
+        -- FIXLATER is it removed in 11.2?
+        -- Skin.StaticPopupTemplate(_G.StaticPopup1)
+        -- Skin.StaticPopupTemplate(_G.StaticPopup2)
+        -- Skin.StaticPopupTemplate(_G.StaticPopup3)
+        -- Skin.StaticPopupTemplate(_G.StaticPopup4)
+    end
+    -- FIXLATER is it removed in 11.2
+    --  _G.hooksecurefunc("BankFrameItemButton_Update", Hook.BankFrameItemButton_Update)
 
     --[[ BankFrame ]]--
     local BankFrame = _G.BankFrame
