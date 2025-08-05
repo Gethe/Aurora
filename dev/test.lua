@@ -818,9 +818,9 @@ function commands.test()
                         timeout = 0,
                         closeButton = true,
                         hideOnEscape = true,
-                        OnShow = function(self)
+                        OnShow = function(dialog, data)
                             if addedFrame == 3 then
-                                _G.MoneyFrame_Update(self.moneyFrame, 123456)
+                                _G.MoneyFrame_Update(dialog.moneyFrame, 123456)
                             end
                         end,
                     }
