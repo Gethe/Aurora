@@ -180,6 +180,9 @@ do --[[ FrameXML\LFGList.xml ]]
         highlight:SetAlpha(Color.frame.a)
     end
     function Skin.LFGListApplicantMemberTemplate(Button)
+        if private.isDev then
+            _G.print("Aurora: LFGListApplicantMemberTemplate is called by:".._G.debugstack(2, 1, 0):gsub("\n", " "):gsub("Interface\\FrameXML\\LFGList.lua:", ""))
+        end
     end
     function Skin.LFGListApplicantTemplate(Button)
         Skin.LFGListApplicantMemberTemplate(Button.Member1)
@@ -293,9 +296,7 @@ function private.FrameXML.LFGList()
     -- SearchPanel --
     local SearchPanel = LFGListFrame.SearchPanel
     Skin.SearchBoxTemplate(SearchPanel.SearchBox)
-    -- FIXLATER
-    -- Skin.UIMenuButtonStretchTemplate(SearchPanel.FilterButton)
-    -- Skin.DropdownButton(_G.LFGListLanguageFilterDropDownFrame)
+    Skin.DropdownButton(SearchPanel.FilterButton)
 
     local AutoCompleteFrame = SearchPanel.AutoCompleteFrame
     Skin.FrameTypeFrame(AutoCompleteFrame)

@@ -52,7 +52,7 @@ do --[[ FrameXML\PvpPopup.xml ]]
     end
 end
 
-function private.FrameXML.PvpPopup()
+function private.AddOns.PvpPopup()
     ----====####$$$$%%%%$$$$####====----
     --              PvpPopup              --
     ----====####$$$$%%%%$$$$####====----

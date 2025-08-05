@@ -56,6 +56,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     end
     do --[[ Blizzard_AuctionHouseItemList ]]
         Hook.AuctionHouseItemListMixin = {}
+        -- FIXLATER
         -- function Hook.AuctionHouseItemListMixin:OnScrollBoxRangeChanged(sortPending)
         --     if not self.hideStripes then
         --         local index = self.ScrollBox:GetDataIndexBegin()
@@ -263,8 +264,9 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
                 Button.Icon:SetSize(5, 10)
                 Base.SetTexture(Button.Icon, "arrowRight")
             end
-            Skin.UIMenuButtonStretchTemplate(Button)
-            Skin.AuctionHouseLevelRangeFrameTemplate(Button.LevelRangeFrame)
+            -- FIXLATER
+            -- Skin.UIMenuButtonStretchTemplate(Button)
+            -- Skin.AuctionHouseLevelRangeFrameTemplate(Button.LevelRangeFrame)
         end
         function Skin.AuctionHouseFilterDropDownMenuTemplate(Frame)
             Skin.DropdownButton(Frame)
@@ -277,7 +279,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseSearchBoxTemplate(Frame.SearchBox)
             Skin.AuctionHouseSearchButtonTemplate(Frame.SearchButton)
             -- FIXLATER
-            -- Skin.AuctionHouseFilterButtonTemplate(Frame.FilterButton)
+            Skin.AuctionHouseFilterButtonTemplate(Frame.FilterButton)
         end
     end
     do --[[ Blizzard_AuctionHouseBrowseResultsFrame ]]

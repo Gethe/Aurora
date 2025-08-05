@@ -60,8 +60,7 @@ function private.FrameXML.RaidFinder()
     Skin.RaidFinderRoleButtonTemplate(_G.RaidFinderQueueFrameRoleButtonHealer)
     Skin.RaidFinderRoleButtonTemplate(_G.RaidFinderQueueFrameRoleButtonDPS)
     Skin.LFGRoleButtonTemplate(_G.RaidFinderQueueFrameRoleButtonLeader)
-    -- FIXLATER - removed/replaced
-    -- Skin.DropdownButton(_G.RaidFinderQueueFrameSelectionDropDown)
+    Skin.DropdownButton(_G.RaidFinderQueueFrameSelectionDropdown)
 
     Skin.ScrollFrameTemplate(_G.RaidFinderQueueFrameScrollFrame)
     Skin.LFGRewardFrameTemplate(_G.RaidFinderQueueFrameScrollFrameChildFrame)

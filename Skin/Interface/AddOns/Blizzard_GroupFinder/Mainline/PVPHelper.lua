@@ -18,7 +18,7 @@ end
 --do --[[ FrameXML\PVPHelper.xml ]]
 --end
 
-function private.FrameXML.PVPHelper()
+function private.AddOns.PVPHelper()
 
     --[[ PVPFramePopup ]]--
 
