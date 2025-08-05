@@ -39,7 +39,29 @@ do --[[ AddOns\Blizzard_GuildControlUI.xml ]]
         Skin.UIPanelSquareButton(Frame.downButton)
         Skin.UIPanelSquareButton(Frame.upButton)
     end
-    -- Skin.GuildPermissionCheckBoxTemplate = Skin.UICheckButtonTemplate
+    function Skin.GuildPermissionCheckBoxTemplate(CheckButton)
+        Skin.UICheckButtonTemplate(CheckButton)
+        -- Skin.FrameTypeCheckButton(CheckButton)
+        -- CheckButton:SetBackdropOption("offsets", {
+        --     left = 6,
+        --     right = 6,
+        --     top = 6,
+        --     bottom = 6,
+        -- })
+
+        -- local bg = CheckButton:GetBackdropTexture("bg")
+        -- local check = CheckButton:GetCheckedTexture()
+        -- check:ClearAllPoints()
+        -- check:SetPoint("TOPLEFT", bg, -6, 6)
+        -- check:SetPoint("BOTTOMRIGHT", bg, 6, -6)
+        -- check:SetDesaturated(true)
+        -- check:SetVertexColor(Color.highlight:GetRGB())
+
+        -- local disabled = CheckButton:GetDisabledCheckedTexture()
+        -- if disabled then
+        --     disabled:SetAllPoints(check)
+        -- end
+    end
     function Skin.BankTabPermissionTemplate(Frame)
         Base.CropIcon(Frame.owned.tabIcon, Frame.owned)
         -- Skin.GuildPermissionCheckBoxTemplate(Frame.owned.viewCB)
@@ -80,15 +102,15 @@ function private.AddOns.Blizzard_GuildControlUI()
     -- FIXLATER - disable for now
     Skin.DropdownButton(rankPermFrame.dropdown)
     -- rankPermFrame.dropdown.Button:SetWidth(24)
-    -- Skin.GuildPermissionCheckBoxTemplate(rankPermFrame.OfficerCheckbox)
-    -- Skin.GuildPermissionCheckBoxTemplate(rankPermFrame.InviteCheckbox)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox7)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox6)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox8)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox2)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox15)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox19)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox16)
+    Skin.GuildPermissionCheckBoxTemplate(rankPermFrame.OfficerCheckbox)
+    Skin.GuildPermissionCheckBoxTemplate(rankPermFrame.InviteCheckbox)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox7)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox6)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox8)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox2)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox15)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox19)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox16)
     Skin.InputBoxTemplate(rankPermFrame.goldBox)
-    -- Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox18)
+    Skin.GuildPermissionCheckBoxTemplate(_G.GuildControlUIRankSettingsFrameCheckbox18)
 end
