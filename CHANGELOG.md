@@ -1,4 +1,35 @@
-﻿## [11.1.5.0] ##
+﻿## [11.2.0.0] ##
+### Fixed ###
+  * chg: Minor fixes for Blizzard_PVPUI skin
+  * chg: Blizzard_GuildControlUI skin fixes
+  * chg: Blizzard_GroupFinder skins fix
+  * chg: removed some errors from Blizzard_FrameXML
+  * chg: fix Blizzard_EventTrace
+  * chg: cleaned up FrameXML\WardrobeOutfits.lua
+  * fix: Blizzard_EncounterJournal skins
+  * chg: updates to Blizzard_CompactRaidFrames skin
+  * fix: Blizzard_Collections and Blizzard_Communities skins
+  * chg: fix Blizzard_Calendar skins
+  * fix: Skin.DropdownButton reports error only when Aurora is in dev mode. Fixed wrong dropdowns
+  * fix: Blizzard_AddOnList skin
+  * chg: Blizzard_ArchaeologyUI skin fix
+  * chg: UIMenuTemplate was removed in 11.0.2
+  * disable: SpellBookFrame skins - reimplementing as  Blizzard_SpellBookFrame
+  * fix: Arrow directions are not UPPER case
+  * fix: remove debug messages
+  * update: changes to addon paths and updated luas missing from AddOns_Mainline.xml
+  * chg: temp workaround for 11.2 errors
+  * chg: fix for 11.2 BankFrame initial error...
+  * removed: unused FrameXML_*.xml's
+  * chg: removed some errors from Blizzard_EncounterJournal
+  * chg: EJButtonTemplate now supports new texture locations.
+  * chg: EncounterJournal.encounter.info.reset was removed in 11.0.2
+  * chg: other changes related to C_SpecializationInfo implementation.
+  * chg: GetSpecialization ->  C_SpecializationInfo.GetSpecialization
+  * chg: Blizzard_VoidStorageUI removed in retail.
+
+
+## [11.1.5.0] ##
 ### Fixed ###
   * chg: 11.1.5 toc update
   * debug: catching Arrows that were replaced in 11.1.5
