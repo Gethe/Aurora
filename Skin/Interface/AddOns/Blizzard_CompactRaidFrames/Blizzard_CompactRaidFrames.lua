@@ -108,7 +108,7 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     -- CompactRaidFrameManagerDisplayFrameOptionsButton
     Skin.UIPanelInfoButton(optionsButton)
 
-    -- FIXLATER     
+    -- FIXLATER
     Util.Mixin(_G.CRFManagerFilterRoleButtonMixin, Hook.CRFManagerFilterRoleButtonMixin)
     Util.Mixin(_G.CRFManagerRaidIconButtonMixin, Hook.CRFManagerRaidIconButtonMixin)
     -- CRFManagerRoleMarkerCheckMixin

@@ -205,8 +205,8 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarCloseButton:SetPoint("TOPRIGHT", calenderBG, -5, -5)
 
     -- FIXMELATER - replaced
-    -- Skin.UIMenuTemplate(_G.CalendarContextMenu) 
-    -- Skin.UIMenuTemplate(_G.CalendarInviteStatusContextMenu) 
+    -- Skin.UIMenuTemplate(_G.CalendarContextMenu)
+    -- Skin.UIMenuTemplate(_G.CalendarInviteStatusContextMenu)
     Skin.CalendarModalEventOverlayTemplate(_G.CalendarFrameModalOverlay)
 
     for i = 1, CALENDAR_MAX_DAYS_PER_MONTH do

@@ -205,7 +205,7 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ArchaeologyProgressBar --
     ----====####$$$$%%%%%$$$$####====----
-    -- FIXMELATER 
+    -- FIXMELATER
     -- _G.hooksecurefunc("ArcheologyDigsiteProgressBar_OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
 
     local ArcheologyDigsiteProgressBar = _G.ArcheologyDigsiteProgressBar

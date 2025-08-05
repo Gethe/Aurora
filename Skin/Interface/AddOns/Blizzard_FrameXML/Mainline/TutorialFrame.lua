@@ -64,7 +64,7 @@ do --[[ FrameXML\TutorialFrame.lua ]]
         end
     end
 
-    local skinnedPlates = 0
+    -- local skinnedPlates = 0
     -- function Hook.HelpPlate_GetButton()
     --     if skinnedPlates < #_G.HELP_PLATE_BUTTONS then
     --         skinnedPlates = skinnedPlates + 1
