@@ -137,7 +137,8 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
 end
 
 function private.AddOns.Blizzard_PVPUI()
-    _G.hooksecurefunc("PVPQueueFrame_SelectButton", Hook.PVPQueueFrame_SelectButton)
+    -- Util.Mixin(_G.PVEFrameMixin, Hook.PVEFrameMixin)
+    -- _G.hooksecurefunc("PVPQueueFrame_SelectButton", Hook.PVPQueueFrame_SelectButton)
 
     local PVPQueueFrame = _G.PVPQueueFrame
     Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton1)
@@ -162,7 +163,7 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(HonorFrame.TankIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.HealerIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.DPSIcon)
-    Skin.DropdownButton(_G.HonorFrameTypeDropDown)
+    Skin.DropdownButton(_G.HonorFrame.TypeDropdown)
     Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
     Skin.MinimalScrollBar(HonorFrame.SpecificScrollBar)
 
