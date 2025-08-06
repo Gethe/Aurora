@@ -169,35 +169,6 @@ F.ReskinScroll = function(f, parent)
     Skin.UIPanelScrollDownButtonTemplate(down)
 end
 
-F.ReskinDropDown = function(f, borderless)
-    local frame = f:GetName()
-
-    local button = f.Button or _G[frame.."Button"]
-    F.ReskinArrow(button, "Down")
-    button:ClearAllPoints()
-
-    local bg = _G.CreateFrame("Frame", nil, f)
-    bg:SetPoint("BOTTOMRIGHT", button, "BOTTOMLEFT", 1, 0)
-    bg:SetFrameLevel(f:GetFrameLevel()-1)
-    Base.SetBackdrop(bg, Color.button)
-
-    if borderless then
-        button:SetPoint("TOPRIGHT", 0, -6)
-        bg:SetPoint("TOPLEFT", 0, -6)
-    else
-        local left = _G[frame.."Left"]
-        local middle = _G[frame.."Middle"]
-        local right = _G[frame.."Right"]
-
-        left:SetAlpha(0)
-        middle:SetAlpha(0)
-        right:SetAlpha(0)
-
-        button:SetPoint("TOPRIGHT", right, -19, -21)
-        bg:SetPoint("TOPLEFT", 20, -4)
-    end
-end
-
 F.ReskinInput = function(f, height, width)
     local frame = f:GetName()
 
