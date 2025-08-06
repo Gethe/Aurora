@@ -11,13 +11,8 @@ local Color = Aurora.Color
 
 local keyColor = Color.Create(0.7254, 0.5490, 0.2235, 0.75)
 do --[[ FrameXML\ContainerFrame.lua ]]
-    local BAG_FILTER_ICONS = {
-        ["bags-icon-equipment"] = [[Interface\Icons\INV_Chest_Chain]],
-        ["bags-icon-consumables"] = [[Interface\Icons\INV_Potion_93]],
-        ["bags-icon-tradegoods"] = [[Interface\Icons\INV_Fabric_Silk_02]],
-    }
     function Hook.ContainerFrameFilterIcon_SetAtlas(self, atlas)
-        self:SetTexture(BAG_FILTER_ICONS[atlas])
+        self:SetTexture(_G.BAG_FILTER_ICONS[atlas])
     end
 
     local NUM_BAG_SLOTS = _G.NUM_TOTAL_EQUIPPED_BAG_SLOTS or _G.NUM_BAG_SLOTS
@@ -105,70 +100,35 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     end
     function Skin.ContainerFrameTemplate(Frame)
         local bg
-        if private.isRetail then
-            if not Frame then
-                if private.isDev then
-                    _G.print("ReportError: Frame is nil in ContainerFrameTemplate - Report to Aurora developers.")
-                end
-                return
+
+        if not Frame then
+            if private.isDev then
+                _G.print("ReportError: Frame is nil in ContainerFrameTemplate - Report to Aurora developers.")
             end
-            Skin.PortraitFrameFlatTemplate(Frame)
-            bg = Frame.NineSlice:GetBackdropTexture("bg")
-
-            for i = 1, 36 do
-                _G.print("contents of Frame.Items["..i.."]:")
-                Skin.ContainerFrameItemButtonTemplate(Frame.Items[i])
-            end
-
-            _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
-
-            Frame.PortraitButton:Hide()
-            Frame.FilterIcon:ClearAllPoints()
-            Frame.FilterIcon:SetPoint("TOPLEFT", bg, 5, -5)
-            Frame.FilterIcon:SetSize(17, 17)
-            Frame.FilterIcon.Icon:SetAllPoints()
-
-            Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
-
-            Frame.ClickableTitleFrame:ClearAllPoints()
-            Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bg)
-            Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-        else
-            Skin.FrameTypeFrame(Frame)
-            Frame:SetBackdropOption("offsets", {
-                left = 11,
-                right = 6,
-                top = 0,
-                bottom = 3,
-            })
-
-            local name = Frame:GetName()
-            Frame.Portrait:Hide()
-            _G[name.."BackgroundTop"]:SetAlpha(0)
-            _G[name.."BackgroundMiddle1"]:SetAlpha(0)
-            _G[name.."BackgroundMiddle2"]:SetAlpha(0)
-            _G[name.."BackgroundBottom"]:SetAlpha(0)
-            _G[name.."Background1Slot"]:SetAlpha(0)
-
-            local nameText = _G[name.."Name"]
-            nameText:ClearAllPoints()
-            nameText:SetPoint("TOPLEFT", Frame.ClickableTitleFrame, 19, 0)
-            nameText:SetPoint("BOTTOMRIGHT", Frame.ClickableTitleFrame, -19, 0)
-
-            bg = Frame:GetBackdropTexture("bg")
-            local moneyFrame = _G[name.."MoneyFrame"]
-            local moneyBG = _G.CreateFrame("Frame", nil, moneyFrame)
-            Base.SetBackdrop(moneyBG, Color.frame)
-            moneyBG:SetBackdropBorderColor(1, 0.95, 0.15)
-            moneyBG:SetPoint("TOP", moneyFrame, 0, 2)
-            moneyBG:SetPoint("BOTTOM", moneyFrame, 0, -2)
-            moneyBG:SetPoint("LEFT", bg, 3, 0)
-            moneyBG:SetPoint("RIGHT", bg, -3, 0)
-
-            Frame.PortraitButton:Hide()
-            Skin.UIPanelCloseButton(_G[name.."CloseButton"])
-            _G[name.."CloseButton"]:SetPoint("TOPRIGHT", bg, 6, 5)
+            return
         end
+        Skin.PortraitFrameFlatTemplate(Frame)
+        bg = Frame.NineSlice:GetBackdropTexture("bg")
+
+        for i = 1, 36 do
+            _G.print("contents of Frame.Items["..i.."]:")
+            Skin.ContainerFrameItemButtonTemplate(Frame.Items[i])
+        end
+
+        _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
+
+        Frame.PortraitButton:Hide()
+        Frame.FilterIcon:ClearAllPoints()
+        Frame.FilterIcon:SetPoint("TOPLEFT", bg, 5, -5)
+        Frame.FilterIcon:SetSize(17, 17)
+        Frame.FilterIcon.Icon:SetAllPoints()
+
+        Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
+
+        Frame.ClickableTitleFrame:ClearAllPoints()
+        Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bg)
+        Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
 
         Frame.ClickableTitleFrame:ClearAllPoints()
         Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bg)

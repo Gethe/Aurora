@@ -9,8 +9,7 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
-
-do --[[ FrameXML\QueueStatusFrame.lua ]]
+do --[[ AddOns\Blizzard_QueueStatusFrame\Blizzard_QueueStatusFrame.lua ]]
     function Hook.QueueStatusEntry_SetFullDisplay(entry, title, queuedTime, myWait, isTank, isHealer, isDPS, totalTanks, totalHealers, totalDPS, tankNeeds, healerNeeds, dpsNeeds, subTitle, extraText)
         local nextRoleIcon = 1
         if isDPS then
@@ -46,7 +45,7 @@ do --[[ FrameXML\QueueStatusFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\QueueStatusFrame.xml ]]
+do --[[ AddOns\Blizzard_QueueStatusFrame\Blizzard_QueueStatusFrame.xml ]]
     -- NEEDS REWORK...
     function Skin.QueueStatusRoleCountTemplate(Frame)
         local debugName = Frame:GetDebugName()

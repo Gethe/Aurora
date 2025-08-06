@@ -103,6 +103,7 @@ function private.AddOns.Blizzard_PlayerChoice()
     --      Blizzard_PlayerChoice      --
     ----====####$$$$%%%%%$$$$####====----
     -- FIXLATER
+    _G.print("Blizzard_PlayerChoice is not fully implemented yet, some features may not work as expected. Report this location to the RealUI Discord server.")
     -- local PlayerChoiceFrame = _G.PlayerChoiceFrame
     -- Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
     -- Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)

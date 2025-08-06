@@ -5,6 +5,11 @@ if private.shouldSkip() then return end
 -- luacheck: globals
 
 --[[ Core ]]
+local Aurora = private.Aurora
+local Base = Aurora.Base
+local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color, Util = Aurora.Color, Aurora.Util
+-- FIXME -- move to others..
 local F, C = _G.unpack(private.Aurora)
 
 function private.AddOns.Blizzard_TimeManager()
@@ -19,19 +24,19 @@ function private.AddOns.Blizzard_TimeManager()
     _G.TimeManagerStopwatchCheck:SetCheckedTexture(C.media.checked)
     F.CreateBG(_G.TimeManagerStopwatchCheck)
 
-    -- _G.TimeManagerAlarmHourDropDown:SetWidth(80) -- removed in 11.0.0
-    -- _G.TimeManagerAlarmMinuteDropDown:SetWidth(80)
-    -- _G.TimeManagerAlarmAMPMDropDown:SetWidth(90)
+    _G.TimeManagerFrame.AlarmTimeFrame.HourDropdown:SetWidth(80)
+    _G.TimeManagerFrame.AlarmTimeFrame.MinuteDropdown:SetWidth(80)
+    _G.TimeManagerFrame.AlarmTimeFrame.AMPMDropdown:SetWidth(90)
 
     F.ReskinPortraitFrame(_G.TimeManagerFrame, true)
-
     F.CreateBD(_G.StopwatchFrame)
-    -- F.ReskinDropDown(_G.TimeManagerAlarmHourDropDown)
-    -- F.ReskinDropDown(_G.TimeManagerAlarmMinuteDropDown)
-    -- F.ReskinDropDown(_G.TimeManagerAlarmAMPMDropDown)
-    F.ReskinInput(_G.TimeManagerAlarmMessageEditBox)
-    F.ReskinCheck(_G.TimeManagerAlarmEnabledButton)
-    F.ReskinCheck(_G.TimeManagerMilitaryTimeCheck)
-    F.ReskinCheck(_G.TimeManagerLocalTimeCheck)
-    F.ReskinClose(_G.StopwatchCloseButton, "TOPRIGHT", _G.StopwatchFrame, "TOPRIGHT", -2, -2)
+    Skin.DropdownButton(_G.TimeManagerFrame.AlarmTimeFrame.HourDropdown)
+    Skin.DropdownButton(_G.TimeManagerFrame.AlarmTimeFrame.MinuteDropdown)
+    Skin.DropdownButton(_G.TimeManagerFrame.AlarmTimeFrame.AMPMDropdown)
+    Skin.InputBoxTemplate(_G.TimeManagerAlarmMessageEditBox)
+    Skin.UICheckButtonTemplate(_G.TimeManagerAlarmEnabledButton)
+    Skin.UICheckButtonTemplate(_G.TimeManagerMilitaryTimeCheck)
+    Skin.UICheckButtonTemplate(_G.TimeManagerLocalTimeCheck)
+    Skin.UIPanelCloseButton(_G.StopwatchCloseButton) -- , "TOPRIGHT", _G.StopwatchFrame, "TOPRIGHT", -2, -2)
+    -- FIXMELATER
 end

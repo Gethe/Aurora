@@ -9,9 +9,21 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
+local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
-    function Hook.TokenFrame_InitTokenButton(self, button, elementData)
+    Hook.TokenFrameMixin = {}
+    function Hook.TokenFrameMixin:OnLoad()
+        local button = self.button
+        if not button then
+            if private.isDev then
+                _G.error("TokenFrameMixin:OnLoad called without button")
+            end
+            return
+        end
+        if not button._auroraSkinned then
+            Skin.TokenButtonTemplate(button)
+        end
         if button.isHeader then
             Base.SetBackdrop(button, Color.button)
             button.Highlight:SetAlpha(0)
@@ -35,7 +47,7 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
             button.Icon.bg:Show()
         end
     end
-    function Hook.TokenFrame_Update()
+    function Hook.TokenFrameMixin:Update(resetScrollPosition)
         local buttons = _G.TokenFrameContainer.buttons
         if not buttons then return end
 
@@ -97,6 +109,9 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
         plus:SetColorTexture(1, 1, 1)
         plus:Hide()
         Button._auroraPlus = plus
+        if not Button._auroraSkinned then
+            Button._auroraSkinned = true
+        end
     end
     function Skin.BackpackTokenTemplate(Button)
         Base.CropIcon(Button.Icon, Button)
@@ -106,9 +121,12 @@ end
 
 function private.AddOns.Blizzard_TokenUI()
     -- FIXLATER - disable for now
-    if private.isRetail then return end
+    -- if private.isRetail then return end
     local TokenFrame = _G.TokenFrame
-    _G.hooksecurefunc("TokenFrame_InitTokenButton", Hook.TokenFrame_InitTokenButton)
+    Util.Mixin(_G.TokenFrameMixin, Hook.TokenFrameMixin)
+
+    -- _G.hooksecurefunc("TokenFrame_InitTokenButton", Hook.TokenFrame_InitTokenButton)
+
     Skin.WowScrollBoxList(TokenFrame.ScrollBox)
     Skin.MinimalScrollBar(TokenFrame.ScrollBar)
 
@@ -121,10 +139,10 @@ function private.AddOns.Blizzard_TokenUI()
     titleText:SetPoint("TOPLEFT")
     titleText:SetPoint("BOTTOMRIGHT", TokenFramePopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
-    Skin.UICheckButtonTemplate(TokenFramePopup.InactiveCheckBox)
-    TokenFramePopup.InactiveCheckBox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
-    Skin.UICheckButtonTemplate(TokenFramePopup.BackpackCheckBox)
-    TokenFramePopup.BackpackCheckBox:SetPoint("TOPLEFT", TokenFramePopup.InactiveCheckBox, "BOTTOMLEFT", 0, -8)
+    Skin.UICheckButtonTemplate(TokenFramePopup.InactiveCheckbox)
+    TokenFramePopup.InactiveCheckbox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
+    Skin.UICheckButtonTemplate(TokenFramePopup.BackpackCheckbox)
+    TokenFramePopup.BackpackCheckbox:SetPoint("TOPLEFT", TokenFramePopup.InactiveCheckbox, "BOTTOMLEFT", 0, -8)
 
     Skin.UIPanelCloseButton(TokenFramePopup["$parent.CloseButton"])
 end

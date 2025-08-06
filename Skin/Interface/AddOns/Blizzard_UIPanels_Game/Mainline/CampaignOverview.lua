@@ -12,13 +12,15 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\CampaignOverview.lua ]]
     Hook.CampaignOverviewMixin = {}
     function Hook.CampaignOverviewMixin:SetCampaign(campaignID)
+        -- FIXME ? introduced in 11.0.0
+        -- local campaignBorderFrame = self.campaignBorderFrame
         local campaignHeader = self.Header
         local campaign = campaignHeader.campaign
         if campaign then
             local kit = Util.GetTextureKit(campaign.uiTextureKit, true)
             campaignHeader.Background:SetTexture("")
             campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
-
+            
             local overlay = campaignHeader._auroraOverlay
             overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -25, 0)
             overlay:SetAtlas(kit.emblem)

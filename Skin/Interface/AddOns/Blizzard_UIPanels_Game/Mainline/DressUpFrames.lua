@@ -67,7 +67,7 @@ function private.FrameXML.DressUpFrames()
     if private.isRetail then
         Skin.ButtonFrameTemplateMinimizable(DressUpFrame)
         -- FIXLATER
-        -- Skin.WardrobeOutfitDropDownTemplate(DressUpFrame.OutfitDropDown)
+        Skin.DropdownButton(DressUpFrame.OutfitDropdown)
         Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
         Skin.UIPanelButtonTemplate(_G.DressUpFrameCancelButton)
 

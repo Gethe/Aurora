@@ -791,8 +791,8 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
     WardrobeTransmogFrame.Inset.BG:Hide()
-    --- FIXLATER
-    -- Skin.WardrobeOutfitDropDownTemplate(WardrobeTransmogFrame.OutfitDropDown)
+
+    Skin.DropdownButton(WardrobeTransmogFrame.OutfitDropdown)
 
     local ModelScene = WardrobeTransmogFrame.ModelScene
     Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)

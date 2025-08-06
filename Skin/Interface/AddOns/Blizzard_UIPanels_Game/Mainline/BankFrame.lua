@@ -11,24 +11,24 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
 do --[[ FrameXML\BankFrame.lua ]]
-    function Hook.BankFrameItemButton_Update(button)
-        local bagID = button.isBag and -4 or button:GetParent():GetID()
-        local slotID = button:GetID()
+    -- function Hook.BankFrameItemButton_Update(button)
+    --     local bagID = button.isBag and -4 or button:GetParent():GetID()
+    --     local slotID = button:GetID()
 
-        local info = _G.C_Container.GetContainerItemInfo(bagID, slotID)
-        if not button._auroraIconBorder then
-            if button.isBag then
-                Skin.BankItemButtonBagTemplate(button)
-            else
-                Skin.BankItemButtonGenericTemplate(button)
-            end
-            Hook.SetItemButtonQuality(button, info.quality, info.hyperlink)
-        end
+    --     local info = _G.C_Container.GetContainerItemInfo(bagID, slotID)
+    --     if not button._auroraIconBorder then
+    --         if button.isBag then
+    --             Skin.BankItemButtonBagTemplate(button)
+    --         else
+    --             Skin.BankItemButtonGenericTemplate(button)
+    --         end
+    --         Hook.SetItemButtonQuality(button, info.quality, info.hyperlink)
+    --     end
 
-        if not button.isBag and button.IconQuestTexture:IsShown() then
-            button._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
-        end
-    end
+    --     if not button.isBag and button.IconQuestTexture:IsShown() then
+    --         button._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
+    --     end
+    -- end
 end
 
 do --[[ FrameXML\BankFrame.xml ]]
