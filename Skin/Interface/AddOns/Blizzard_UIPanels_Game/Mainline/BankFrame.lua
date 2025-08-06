@@ -17,14 +17,10 @@ do --[[ FrameXML\BankFrame.lua ]]
 
         local info = _G.C_Container.GetContainerItemInfo(bagID, slotID)
         if not button._auroraIconBorder then
-            if bagID == _G.Enum.BagIndex.Reagentbank then
-                Skin.ReagentBankItemButtonGenericTemplate(button)
+            if button.isBag then
+                Skin.BankItemButtonBagTemplate(button)
             else
-                if button.isBag then
-                    Skin.BankItemButtonBagTemplate(button)
-                else
-                    Skin.BankItemButtonGenericTemplate(button)
-                end
+                Skin.BankItemButtonGenericTemplate(button)
             end
             Hook.SetItemButtonQuality(button, info.quality, info.hyperlink)
         end
