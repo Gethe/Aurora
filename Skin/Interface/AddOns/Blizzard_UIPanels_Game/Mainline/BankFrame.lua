@@ -7,29 +7,31 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
+-- local Hook = Aurora.Hook
 local Util = Aurora.Util
 
-do --[[ FrameXML\BankFrame.lua ]]
-    -- function Hook.BankFrameItemButton_Update(button)
-    --     local bagID = button.isBag and -4 or button:GetParent():GetID()
-    --     local slotID = button:GetID()
+-- FIXME
+-- do --[[ FrameXML\BankFrame.lua ]]
+--     -- function Hook.BankFrameItemButton_Update(button)
+--     --     local bagID = button.isBag and -4 or button:GetParent():GetID()
+--     --     local slotID = button:GetID()
 
-    --     local info = _G.C_Container.GetContainerItemInfo(bagID, slotID)
-    --     if not button._auroraIconBorder then
-    --         if button.isBag then
-    --             Skin.BankItemButtonBagTemplate(button)
-    --         else
-    --             Skin.BankItemButtonGenericTemplate(button)
-    --         end
-    --         Hook.SetItemButtonQuality(button, info.quality, info.hyperlink)
-    --     end
+--     --     local info = _G.C_Container.GetContainerItemInfo(bagID, slotID)
+--     --     if not button._auroraIconBorder then
+--     --         if button.isBag then
+--     --             Skin.BankItemButtonBagTemplate(button)
+--     --         else
+--     --             Skin.BankItemButtonGenericTemplate(button)
+--     --         end
+--     --         Hook.SetItemButtonQuality(button, info.quality, info.hyperlink)
+--     --     end
 
-    --     if not button.isBag and button.IconQuestTexture:IsShown() then
-    --         button._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
-    --     end
-    -- end
-end
+--     --     if not button.isBag and button.IconQuestTexture:IsShown() then
+--     --         button._auroraIconBorder:SetBackdropBorderColor(1, 1, 0)
+--     --     end
+--     -- end
+-- end
 
 do --[[ FrameXML\BankFrame.xml ]]
     function Skin.BankItemButtonGenericTemplate(ItemButton)

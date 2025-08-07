@@ -20,7 +20,7 @@ do --[[ FrameXML\CampaignOverview.lua ]]
             local kit = Util.GetTextureKit(campaign.uiTextureKit, true)
             campaignHeader.Background:SetTexture("")
             campaignHeader._auroraBG:SetColorTexture(kit.color:GetRGB())
-            
+
             local overlay = campaignHeader._auroraOverlay
             overlay:SetPoint("CENTER", campaignHeader._auroraBG, "RIGHT", -25, 0)
             overlay:SetAtlas(kit.emblem)
