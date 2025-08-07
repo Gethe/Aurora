@@ -72,7 +72,6 @@ do --[[ FrameXML\QuestFrame.lua ]]
         else
             x = x + 5
         end
-
         _G.QuestModelScene:SetPoint("TOPLEFT", parentFrame, "TOPRIGHT", x, y)
     end
     function Hook.QuestFrame_SetTitleTextColor(fontString, material)
@@ -178,46 +177,54 @@ function private.FrameXML.QuestFrame()
     local QuestModel = _G.QuestModelScene
 
     local modelBackground = _G.CreateFrame("Frame", nil, QuestModel)
+    local ModelTextFrame =  _G.CreateFrame("Frame", nil, _G.QuestModelScene.ModelTextFrame)
+
     modelBackground:SetPoint("TOPLEFT", -1, 1)
     modelBackground:SetPoint("BOTTOMRIGHT", 1, -2)
     modelBackground:SetFrameLevel(0)
     Skin.FrameTypeFrame(modelBackground)
-
     -- FIXLATER
+    QuestModel.TopBarBg:Hide()
     QuestModel.ModelBackground:Hide()
     QuestModel.Border:Hide()
 
     modelBackground.TopLeftCorner:Hide()
-    if private.isRetail then return end
-    _G.QuestNPCCornerTopRight:Hide()
-    _G.QuestNPCCornerBottomLeft:Hide()
-    _G.QuestNPCCornerBottomRight:Hide()
+    modelBackground.TopRightCorner:Hide()
+    modelBackground.BottomLeftCorner:Hide()
+    modelBackground.BottomRightCorner:Hide()
+    modelBackground.RightEdge:Hide()
+    modelBackground.LeftEdge:Hide()
+    modelBackground.BottomEdge:Hide()
 
-    if private.isRetail then return end
-    _G.QuestNPCModelNameplate:SetAlpha(0)
 
-    _G.QuestNPCModelNameText:SetPoint("TOPLEFT", modelBackground, "BOTTOMLEFT")
-    _G.QuestNPCModelNameText:SetPoint("BOTTOMRIGHT", _G.QuestNPCModelTextFrame, "TOPRIGHT")
+    local QuestNPCModelNameTooltipFrame = _G.QuestNPCModelNameTooltipFrame
+    QuestNPCModelNameTooltipFrame:SetPoint("TOPLEFT", _G.QuestNPCModelNameText, 0, 1)
+    QuestNPCModelNameTooltipFrame:SetPoint("BOTTOMRIGHT", _G.QuestNPCModelNameText, 0, -1)
+    QuestNPCModelNameTooltipFrame:SetFrameLevel(0)
+    Skin.FrameTypeFrame(QuestNPCModelNameTooltipFrame)
+    QuestNPCModelNameTooltipFrame:SetAlpha(0)
+    QuestNPCModelNameTooltipFrame.TopLeftCorner:Hide()
+    QuestNPCModelNameTooltipFrame.TopRightCorner:Hide()
+    QuestNPCModelNameTooltipFrame.BottomLeftCorner:Hide()
+    QuestNPCModelNameTooltipFrame.BottomRightCorner:Hide()
+    QuestNPCModelNameTooltipFrame.RightEdge:Hide()
+    QuestNPCModelNameTooltipFrame.LeftEdge:Hide()
+    QuestNPCModelNameTooltipFrame.BottomEdge:Hide()
 
-    _G.QuestNPCModelNameTooltipFrame:SetPoint("TOPLEFT", _G.QuestNPCModelNameText, 0, 1)
-    _G.QuestNPCModelNameTooltipFrame:SetPoint("BOTTOMRIGHT", _G.QuestNPCModelNameText, 0, -1)
-    _G.QuestNPCModelNameTooltipFrame:SetFrameLevel(0)
-    Skin.FrameTypeFrame(_G.QuestNPCModelNameTooltipFrame)
+    Skin.FrameTypeFrame(ModelTextFrame)
+    ModelTextFrame:SetPoint("TOPLEFT",QuestNPCModelNameTooltipFrame, "BOTTOMLEFT", -1, 12)
+    ModelTextFrame:SetWidth(200)
 
-    local QuestNPCModelTextFrame = _G.QuestNPCModelTextFrame
-    Skin.FrameTypeFrame(QuestNPCModelTextFrame)
-    QuestNPCModelTextFrame:SetPoint("TOPLEFT", _G.QuestNPCModelNameplate, "BOTTOMLEFT", -1, 12)
-    QuestNPCModelTextFrame:SetWidth(200)
-    QuestNPCModelTextFrame.Background:Hide()
+    ModelTextFrame.TopLeftCorner:Hide()
+    ModelTextFrame.TopRightCorner:Hide()
+    ModelTextFrame.BottomLeftCorner:Hide()
+    ModelTextFrame.BottomRightCorner:Hide()
+    ModelTextFrame.RightEdge:Hide()
+    ModelTextFrame.LeftEdge:Hide()
+    ModelTextFrame.BottomEdge:Hide()
 
-    QuestNPCModelTextFrame.BorderBottomLeft:Hide()
-    QuestNPCModelTextFrame.BorderBottomRight:Hide()
-    QuestNPCModelTextFrame.BorderBottom:Hide()
-    QuestNPCModelTextFrame.BorderLeft:Hide()
-    QuestNPCModelTextFrame.BorderRight:Hide()
-
-    local npcModelScroll = _G.QuestModelScene.QuestNPCModelTextScrollFrame
+    local npcModelScroll = _G.QuestNPCModelTextScrollFrame
     Skin.ScrollFrameTemplate(npcModelScroll)
-    --npcModelScroll:SetPoint("TOPLEFT", 4, -4)
-    --npcModelScroll:SetPoint("BOTTOMRIGHT", -4, 4)
+    npcModelScroll:SetPoint("TOPLEFT", 4, -4)
+    npcModelScroll:SetPoint("BOTTOMRIGHT", -4, 4)
 end
