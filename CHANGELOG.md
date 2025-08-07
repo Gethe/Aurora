@@ -1,4 +1,13 @@
-﻿## [11.2.0.0] ##
+﻿## [11.2.0.1] ##
+### Fixed ###
+  * removed: F.ReskinDropDown from deprecated.lua
+  * chg: Skin and code overhaul for Blizzard_Collections, Blizzard_ObjectiveTracker, Blizzard_PlayerChoice
+  * chg: Skin and code overhaul for Blizzard_QueueStatusFrame, Blizzard_TimeManager, Blizzard_TokenUI
+  * chg: Skin and code overhaul for Blizzard_TrainerUI, Blizzard_UIPanels_Game
+  * chg:  Reagentbank is removed
+
+
+## [11.2.0.0] ##
 ### Fixed ###
   * chg: Minor fixes for Blizzard_PVPUI skin
   * chg: Blizzard_GuildControlUI skin fixes
