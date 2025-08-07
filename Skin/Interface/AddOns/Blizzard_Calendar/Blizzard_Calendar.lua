@@ -10,7 +10,6 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-
 -- local constants
 local CALENDAR_MAX_DAYS_PER_MONTH = 42 -- 6 weeks
 
@@ -190,15 +189,10 @@ function private.AddOns.Blizzard_Calendar()
         -- _G.CalendarFilterFrameRight:SetAlpha(0)
 
         local button = _G.CalendarFrame.FilterButton
-        Skin.DropdownButton(button)
-        -- Skin.FrameTypeButton(button)
+        Skin.FilterButton(button)
         button:ClearAllPoints()
         button:SetPoint("TOPRIGHT", -80, -13)
 
-        -- local arrow = button:CreateTexture(nil, "ARTWORK")
-        -- arrow:SetPoint("TOPLEFT", 4, -7)
-        -- arrow:SetPoint("BOTTOMRIGHT", -4, 7)
-        -- Base.SetTexture(arrow, "arrowDown")
     end
 
     Skin.UIPanelCloseButton(_G.CalendarCloseButton)
@@ -300,8 +294,6 @@ function private.AddOns.Blizzard_Calendar()
     -----------------
     _G.CalendarMassInviteFrame:SetPoint("BOTTOMRIGHT", _G.CalendarCreateEventMassInviteButton, "TOPRIGHT", 160, 4)
     Skin.DialogBorderDarkTemplate(_G.CalendarMassInviteFrame.Border)
-    -- FIXMELATER - removed in 11.0.0
-    -- Skin.DropdownButton(_G._G.CalendarCreateEventFrame)
     Skin.DialogHeaderTemplate(_G.CalendarMassInviteFrame.Header)
     Skin.InputBoxTemplate(_G.CalendarMassInviteMinLevelEdit)
     Skin.InputBoxTemplate(_G.CalendarMassInviteMaxLevelEdit)

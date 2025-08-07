@@ -296,7 +296,7 @@ function private.FrameXML.LFGList()
     -- SearchPanel --
     local SearchPanel = LFGListFrame.SearchPanel
     Skin.SearchBoxTemplate(SearchPanel.SearchBox)
-    Skin.DropdownButton(SearchPanel.FilterButton)
+    Skin.FilterButton(SearchPanel.FilterButton)
 
     local AutoCompleteFrame = SearchPanel.AutoCompleteFrame
     Skin.FrameTypeFrame(AutoCompleteFrame)

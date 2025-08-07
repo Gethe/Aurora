@@ -562,8 +562,7 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.InsetFrameTemplate(MountJournal.RightInset)
     Skin.SearchBoxTemplate(MountJournal.searchBox)
-    -- FIXLATER
-    -- Skin.UIResettableDropdownButtonTemplate(_G.MountJournalFilterButton)
+    Skin.FilterButton(MountJournal.FilterDropdown)
     Skin.InsetFrameTemplate3(MountJournal.MountCount)
 
     local MountDisplay = MountJournal.MountDisplay
@@ -607,8 +606,7 @@ function private.AddOns.Blizzard_Collections()
     Skin.InsetFrameTemplate(PetJournal.PetCardInset)
     Skin.InsetFrameTemplate(PetJournal.RightInset)
     Skin.SearchBoxTemplate(PetJournal.searchBox)
-    -- FIXLATER
-    -- Skin.UIResettableDropdownButtonTemplate(_G.PetJournalFilterButton)
+    Skin.FilterButton(PetJournal.FilterDropdown)
     Skin.WowScrollBoxList(PetJournal.ScrollBox)
     Skin.MinimalScrollBar(PetJournal.ScrollBar)
 
@@ -693,13 +691,10 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.CollectionsProgressBarTemplate(ToyBox.progressBar)
     Skin.SearchBoxTemplate(ToyBox.searchBox)
-    -- FIXLATER
-    -- Skin.UIResettableDropdownButtonTemplate(_G.ToyBoxFilterButton)
+    Skin.FilterButton(ToyBox.FilterDropdown)
 
     local iconsFrame = ToyBox.iconsFrame
     Skin.CollectionsBackgroundTemplate(iconsFrame)
-    -- iconsFrame.watermark:SetDesaturated(true)
-    -- iconsFrame.watermark:SetAlpha(0.5)
 
     for i = 1, 18 do
         Skin.ToySpellButtonTemplate(iconsFrame["spellButton"..i])
@@ -711,20 +706,15 @@ function private.AddOns.Blizzard_Collections()
     ----====####$$$$%%%%%$$$$####====----
     --   Blizzard_HeirloomCollection   --
     ----====####$$$$%%%%%$$$$####====----
-    -- FIXLATER
     local HeirloomsJournal = _G.HeirloomsJournal
     Util.Mixin(HeirloomsJournal, Hook.HeirloomsMixin)
 
     Skin.CollectionsProgressBarTemplate(HeirloomsJournal.progressBar)
     Skin.SearchBoxTemplate(HeirloomsJournal.SearchBox)
-    -- FIXLATER
-    -- Skin.UIResettableDropdownButtonTemplate(HeirloomsJournal.FilterButton)
-    -- Skin.DropdownButton(HeirloomsJournal.ClassDropdown)
+    Skin.DropdownButton(HeirloomsJournal.FilterDropdown)
+    Skin.DropdownButton(HeirloomsJournal.ClassDropdown)
 
     Skin.CollectionsBackgroundTemplate(HeirloomsJournal.iconsFrame)
-    -- HeirloomsJournal.iconsFrame.watermark:SetDesaturated(true) -- removed in 11.1.0.0
-    -- HeirloomsJournal.iconsFrame.watermark:SetAlpha(0.5)
-
     Skin.CollectionsPagingFrameTemplate(HeirloomsJournal.PagingFrame)
 
 
@@ -741,8 +731,8 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.SearchBoxTemplate(WardrobeCollectionFrame.searchBox)
     Skin.CollectionsProgressBarTemplate(WardrobeCollectionFrame.progressBar)
-    -- FIXLATER
-    -- Skin.UIResettableDropdownButtonTemplate(WardrobeCollectionFrame.FilterButton)
+    Skin.FilterButton(WardrobeCollectionFrame.FilterButton)
+    Skin.DropdownButton(WardrobeCollectionFrame.ClassDropdown)
 
     -- Items
     local ItemsCollectionFrame = WardrobeCollectionFrame.ItemsCollectionFrame
@@ -765,10 +755,10 @@ function private.AddOns.Blizzard_Collections()
     Skin.WowScrollBoxList(SetsCollectionFrame.ListContainer.ScrollBox)
     Skin.MinimalScrollBar(SetsCollectionFrame.ListContainer.ScrollBar)
 
+
     local DetailsFrame = SetsCollectionFrame.DetailsFrame
     DetailsFrame.ModelFadeTexture:Hide()
-    -- FIXLATER
-    -- Skin.UIMenuButtonStretchTemplate(DetailsFrame.VariantSetsButton)
+    Skin.DropdownButton(DetailsFrame.VariantSetsDropdown)
 
     local SetsTransmogFrame = WardrobeCollectionFrame.SetsTransmogFrame
     Util.Mixin(SetsTransmogFrame, Hook.WardrobeSetsTransmogMixin)
