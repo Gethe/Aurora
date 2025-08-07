@@ -24,38 +24,42 @@ end
 
 do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
     function Skin.CRFManagerFilterButtonTemplate(Button)
-        Skin.UIMenuButtonStretchTemplate(Button)
-        local bg = Button:GetBackdropTexture("bg")
-        Button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3)
-        Button.selectedHighlight:SetPoint("TOPLEFT", bg, 1, -1)
-        Button.selectedHighlight:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        Skin.FrameTypeButton(Button)
+        Button:SetBackdropOption("offsets", {
+            left = 2,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
+        if  Button.Background then
+            Button.Background:Hide()
+        end
+        Button.TopEdge:Hide()
+        Button.TopLeftCorner:Hide()
+        Button.TopRightCorner:Hide()
+        Button.BottomEdge:Hide()
+        Button.BottomLeftCorner:Hide()
+        Button.BottomRightCorner:Hide()
+        Button.LeftEdge:Hide()
+        Button.RightEdge:Hide()
+        if Button.Text then
+            local bg = Button:GetBackdropTexture("bg")
+            Button.Text:SetPoint("CENTER", bg, 0, 0)
+            Button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3)
+            Button.selectedHighlight:SetPoint("TOPLEFT", bg, 1, -1)
+            Button.selectedHighlight:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+        end
     end
     Skin.CRFManagerFilterRoleButtonTemplate = Skin.CRFManagerFilterButtonTemplate
     Skin.CRFManagerFilterGroupButtonTemplate = Skin.CRFManagerFilterButtonTemplate
+    Skin.CRFManagerTooltipButtonTemplate = Skin.CRFManagerFilterButtonTemplate
+
     function Skin.CRFManagerRaidIconButtonTemplate(Button)
         Button:SetSize(24, 24)
         Button:SetPoint(Button:GetPoint())
-
-        Button:GetNormalTexture():SetSize(24, 24)
+        Button:GetNormalTexture()
+        Button:SetSize(24, 24)
     end
-end
-
-do --[[ AddOns\Blizzard_CompactRaidFrames.lua ]]
-    Hook.CRFManagerFilterRoleButtonMixin = {}
-    -- function Hook.CRFManagerFilterRoleButtonMixin:Init()
-    --     _G.print("CRFManagerFilterRoleButtonMixin:Init - ", self:GetName())
-    -- end
-    function Hook.CRFManagerFilterRoleButtonMixin:OnEnter()
-       -- _G.print("CRFManagerFilterRoleButtonMixin:OnEnter - ", self:GetName())
-
-        -- if not button._auroraSkinned then
-        --     button._auroraSkinned = true
-        -- end
-    end
-    Hook.CRFManagerRaidIconButtonMixin = {}
-    -- function Hook.CRFManagerRaidIconButtonMixin:Init()
-    --     _G.print("CRFManagerRaidIconButtonMixin:Init - ", self:GetName())
-    -- end
 end
 
 function private.AddOns.Blizzard_CompactRaidFrames()
@@ -70,8 +74,6 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     ----====####$$$$%%%%%%$$$$####====----
     -- Blizzard_CompactRaidFrameManager --
     ----====####$$$$%%%%%%$$$$####====----
-    -- FIXLATER - disable for now
-    -- if private.isRetail then return end
     _G.hooksecurefunc("CompactRaidFrameManager_Toggle", Hook.CompactRaidFrameManager_Toggle)
 
     local CompactRaidFrameManager = _G.CompactRaidFrameManager
@@ -105,35 +107,31 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     local displayFrameName = displayFrame:GetName()
     displayFrame:GetRegions():Hide()
     local optionsButton = _G[displayFrameName.."OptionsButton"]
-    -- CompactRaidFrameManagerDisplayFrameOptionsButton
     Skin.UIPanelInfoButton(optionsButton)
 
-    -- FIXLATER
-    Util.Mixin(_G.CRFManagerFilterRoleButtonMixin, Hook.CRFManagerFilterRoleButtonMixin)
-    Util.Mixin(_G.CRFManagerRaidIconButtonMixin, Hook.CRFManagerRaidIconButtonMixin)
-    -- CRFManagerRoleMarkerCheckMixin
-    -- CRFManagerFilterGroupButtonMixin
-    -- FIXLATER - disable for now
-    -- local filterOptions = displayFrame.filterOptions
-    -- Skin.CRFManagerFilterRoleButtonTemplate(filterOptions["filterRoleTank"])
-    -- Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleHealer)
-    -- Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleDamager)
-    -- for i = 1, 8 do
-    --     Skin.CRFManagerFilterRoleButtonTemplate(filterOptions["filterGroup"..i])
-    -- end
+    local filterOptions = displayFrame.filterOptions
+    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions["filterRoleTank"])
+    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleHealer)
+    Skin.CRFManagerFilterRoleButtonTemplate(filterOptions.filterRoleDamager)
+    for i = 1, 8 do
+        Skin.CRFManagerFilterRoleButtonTemplate(filterOptions["filterGroup"..i])
+    end
 
-    -- Skin.UIMenuButtonStretchTemplate(displayFrame.editMode)
-    -- Skin.UIMenuButtonStretchTemplate(displayFrame.hiddenModeToggle) -> RaidFrameHiddenModeToggleMixin = CreateFromMixins(CRFManagerTooltipButtonMixin);
-    -- Skin.UIMenuButtonStretchTemplate(displayFrame.convertToRaid)
+    Skin.CRFManagerTooltipButtonTemplate(displayFrame.editMode)
+    Skin.CRFManagerTooltipButtonTemplate(displayFrame.hiddenModeToggle)
+    -- FIXMELATER
+    -- Skin.CRFManagerTooltipButtonTemplate(displayFrame.convertToGroup)
+    -- Skin.CRFManagerTooltipButtonTemplate(displayFrame.convertToRaid)
 
-    -- local icons = {displayFrame.raidMarkers:GetChildren()}
-    -- for i, icon in next, icons do
-    --     Skin.CRFManagerRaidIconButtonTemplate(icon)
-    -- end
+    local icons = {displayFrame.raidMarkers:GetChildren()}
+    for i, icon in next, icons do
+        Skin.CRFManagerRaidIconButtonTemplate(icon)
+    end
 
-    -- local leaderOptions = displayFrame.leaderOptions
-    -- Skin.UIMenuButtonStretchTemplate(leaderOptions.rolePollButton) -> displayFrame.rolePollButton:Enable();
-    -- Skin.UIMenuButtonStretchTemplate(leaderOptions.readyCheckButton) -> displayFrame.readyCheckButton
-    -- Skin.UIMenuButtonStretchTemplate(_G[leaderOptions:GetName().."RaidWorldMarkerButton"]) -- removewd
-    -- Skin.UICheckButtonTemplate(displayFrame.everyoneIsAssistButton) -> <CheckButton name="$parentEveryoneIsAssistButton" parentKey="everyoneIsAssistButton" hidden="true" mixin="RaidFrameEveryoneIsAssistMixin">
+    Skin.CRFManagerTooltipButtonTemplate(displayFrame.rolePollButton)
+    Skin.CRFManagerTooltipButtonTemplate(displayFrame.readyCheckButton)
+    Skin.CRFManagerTooltipButtonTemplate(displayFrame.countdownButton)
+    Skin.CRFManagerTooltipButtonTemplate(displayFrame.difficulty)
+    Skin.UICheckButtonTemplate(displayFrame.everyoneIsAssistButton)
+
 end
