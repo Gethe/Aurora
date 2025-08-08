@@ -25,8 +25,12 @@ do --[[ AddOns\Blizzard_PVPUI.lua ]]
         end
     end
     function Hook.PVPQueueFrame_SelectButton(index)
-        for i = 1, 3 do
+        for i = 1, 4 do
             local button = _G.PVPQueueFrame["CategoryButton"..i]
+            if i == 4 then
+                -- This button is not always present, so we need to check if it exists.
+                _G.print("PVPQueueFrame_SelectButton: CategoryButton4 exists. Screenshoot and report this to the Aurora team.")
+            end
             if i == index then
                 button.Background:Show()
             else
@@ -138,7 +142,7 @@ end
 
 function private.AddOns.Blizzard_PVPUI()
     -- Util.Mixin(_G.PVEFrameMixin, Hook.PVEFrameMixin)
-    -- _G.hooksecurefunc("PVPQueueFrame_SelectButton", Hook.PVPQueueFrame_SelectButton)
+    _G.hooksecurefunc("PVPQueueFrame_SelectButton", Hook.PVPQueueFrame_SelectButton)
 
     local PVPQueueFrame = _G.PVPQueueFrame
     Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton1)
@@ -151,6 +155,10 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton3)
     PVPQueueFrame.CategoryButton3:SetPoint("LEFT", PVPQueueFrame.CategoryButton2)
     PVPQueueFrame.CategoryButton3.Icon:SetTexture([[Interface\Icons\Ability_Warrior_OffensiveStance]])
+
+    Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton4)
+    PVPQueueFrame.CategoryButton4:SetPoint("LEFT", PVPQueueFrame.CategoryButton3)
+    PVPQueueFrame.CategoryButton4.Icon:SetTexture([[Interface\Icons\Ability_Warrior_OffensiveStance]])
 
     ------------
     -- Casual --
