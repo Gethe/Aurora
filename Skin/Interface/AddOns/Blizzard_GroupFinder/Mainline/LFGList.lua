@@ -48,11 +48,10 @@ do --[[ FrameXML\LFGList.lua ]]
         elseif bit.band(allFilters, private.Enum.LFGListFilter.PvP) ~= 0 then
             suffix = "-pvp"
         end
-
         --Try with the suffix and then without it
-        if not button.Icon:SetAtlas(atlasName..suffix) then
-            button.Icon:SetAtlas(atlasName)
-        end
+        if not _G.CheckSetAtlas(button.Icon, atlasName..suffix) then
+            _G.CheckSetAtlas(button.Icon, atlasName);
+ 	    end
     end
 
     function Hook.LFGListGroupDataDisplayEnumerate_Update(self, numPlayers, displayData, disabled, iconOrder)
