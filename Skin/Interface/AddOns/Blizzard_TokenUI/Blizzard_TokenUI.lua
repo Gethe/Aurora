@@ -120,11 +120,10 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
 end
 
 function private.AddOns.Blizzard_TokenUI()
-    -- FIXLATER - disable for now
-    -- if private.isRetail then return end
     local TokenFrame = _G.TokenFrame
     Util.Mixin(_G.TokenFrameMixin, Hook.TokenFrameMixin)
 
+    -- FIXLATER - disable for now
     -- _G.hooksecurefunc("TokenFrame_InitTokenButton", Hook.TokenFrame_InitTokenButton)
 
     Skin.WowScrollBoxList(TokenFrame.ScrollBox)
