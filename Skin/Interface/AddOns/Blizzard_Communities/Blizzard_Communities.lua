@@ -245,15 +245,14 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         function Skin.CommunitiesNotificationSettingsDialogTemplate(Frame)
             Frame.Selector.Center = Frame.BG
             Skin.SelectionFrameTemplate(Frame.Selector)
-            Skin.CommunitiesListDropDownMenuTemplate(Frame.CommunitiesListDropDownMenu)
+            Skin.CommunitiesListDropDownMenuTemplate(Frame.CommunitiesListDropdown)
             Skin.ScrollFrameTemplate(Frame.ScrollFrame)
             Skin.UICheckButtonTemplate(Frame.ScrollFrame.Child.QuickJoinButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.NoneButton)
             Skin.CommunitiesMassNotificationsSettingsButtonTemplate(Frame.ScrollFrame.Child.AllButton)
         end
         function Skin.AddToChatButtonTemplate(Frame)
-            Skin.UIMenuButtonStretchTemplate(Frame)
-            Hook.SquareButton_SetIcon(Frame, "DOWN")
+            Skin.WowStyle1ArrowDropdownTemplate(Frame)
         end
         function Skin.StreamDropDownMenuTemplate(Frame)
             Skin.DropdownButton(Frame)
@@ -788,8 +787,7 @@ function private.AddOns.Blizzard_Communities()
         Skin.ClubFinderCheckboxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.Button)
         Skin.InputBoxTemplate(CommunitiesSettingsDialog.MinIlvlOnly.EditBox)
 
-        -- FIXLATER
-        -- Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
+        Skin.ClubFinderFocusDropdownTemplate(CommunitiesSettingsDialog.ClubFocusDropdown)
         Skin.DropdownButton(CommunitiesSettingsDialog.LookingForDropdown)
         Skin.DropdownButton(CommunitiesSettingsDialog.LanguageDropdown)
 
@@ -920,11 +918,9 @@ function private.AddOns.Blizzard_Communities()
     Skin.CommunityPostingChangeFrameTemplate(CommunitiesFrame.CommunityPostingChangeFrame)
 
     Skin.CommunitiesEditStreamDialogTemplate(CommunitiesFrame.EditStreamDialog)
-    -- FIXLATER 11.2.0
-    -- Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
+    Skin.CommunitiesNotificationSettingsDialogTemplate(CommunitiesFrame.NotificationSettingsDialog)
     Skin.ClubsRecruitmentDialogTemplate(CommunitiesFrame.RecruitmentDialog)
-    -- FIXLATER 11.0.7
-    -- Skin.AddToChatButtonTemplate(CommunitiesFrame.AddToChatButton)
+    Skin.AddToChatButtonTemplate(CommunitiesFrame.AddToChatButton)
     Skin.CommunitiesInviteButtonTemplate(CommunitiesFrame.InviteButton)
     Skin.CommunitiesControlFrameTemplate(CommunitiesFrame.CommunitiesControlFrame)
     Skin.UIPanelButtonTemplate(CommunitiesFrame.GuildLogButton)
