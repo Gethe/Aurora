@@ -1,4 +1,21 @@
-﻿## [11.2.0.1] ##
+﻿## [11.2.0.2] ##
+### Fixed ###
+  * add: skin for UIPanelSpellButtonFrameTemplate
+  * chg: updated AlertFrameSystems
+  * add: skeleton for Blizzard_Flyout
+  * chg: renamed CRFManagerTooltipButtonTemplate to CRFManagerTooltipTemplate
+  * chg: QuestMapFrame - skin SideTabs and MapLegendScrollFrame
+  * add: Skin for Blizzard_WarbandSceneCollection in Blizzard_Collections
+  * chg: add support for PVPQueueFrame.CategoryButton4
+  * chg: fixed missing skins on Blizzard_Communities
+  * chg: cleaned up older bugs
+  * add: skin for WowStyle1ArrowDropdownTemplate
+  * fix: QuestFrame skin
+  * chg: Blizzard_CompactRaidFrames - code cleanup and skin fixes
+  * chg: fix filter and dropdown buttons
+
+
+## [11.2.0.1] ##
 ### Fixed ###
   * removed: F.ReskinDropDown from deprecated.lua
   * chg: Skin and code overhaul for Blizzard_Collections, Blizzard_ObjectiveTracker, Blizzard_PlayerChoice
