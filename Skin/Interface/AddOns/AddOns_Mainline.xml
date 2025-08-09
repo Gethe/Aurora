@@ -163,7 +163,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_ExpansionLandingPage\Blizzard_ExpansionLandingPage.lua"/-->
     <!--Script file="Blizzard_ExpansionTrial\Blizzard_ExpansionTrial.lua"/-->
     <Script file="Blizzard_FlightMap\Blizzard_FlightMap.lua"/>
-    <!--Script file="Blizzard_Flyout\Blizzard_Flyout.lua"/-->
+    <Script file="Blizzard_Flyout\Blizzard_Flyout.lua"/>
     <Script file="Blizzard_Fonts_Shared\Blizzard_Fonts_Shared.lua"/>
     <!--Script file="Blizzard_FrameEffects\Blizzard_FrameEffects.lua"/-->
     <!--Script file="Blizzard_FramerateFrame\Blizzard_FramerateFrame.lua"/-->
