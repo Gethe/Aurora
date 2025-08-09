@@ -14,26 +14,26 @@ do --[[ AddOns\Blizzard_PlayerChoice.lua ]]
         Hook.PlayerChoiceFrameMixin = {}
         function Hook.PlayerChoiceFrameMixin:SetupFrame()
             self.NineSlice:SetFrameLevel(1)
-            self.BlackBackground:Hide()
-            self.Background:Hide()
+            -- self.BlackBackground:SetTexture("")
+            Skin.UIPanelCloseButton(self.CloseButton)
 
-            self.Title.Left:Hide()
-            self.Title.Right:Hide()
-            self.Title.Middle:Hide()
+            -- self.Title.Left:Hide()
+            -- self.Title.Right:Hide()
+            -- self.Title.Middle:Hide()
         end
     end
     --do -- Blizzard_PlayerChoiceToggleButton
     --end
     do -- Blizzard_PlayerChoiceOptionBase
         Hook.PlayerChoiceBaseOptionTemplateMixin = {}
-        function Hook.PlayerChoiceBaseOptionTemplateMixin:Setup(optionInfo, frameTextureKit, soloOption)
+        function Hook.PlayerChoiceBaseOptionTemplateMixin:Setup(optionInfo, frameTextureKit, soloOption, showAsList)
             local kit = Util.GetTextureKit(frameTextureKit)
             self.OptionText:SetTextColor(kit.text:GetRGBA())
         end
     end
     do -- Blizzard_PlayerChoiceNormalOptionTemplate
         Hook.PlayerChoiceNormalOptionTemplateMixin = {}
-        function Hook.PlayerChoiceNormalOptionTemplateMixin:Setup(optionInfo, frameTextureKit, soloOption)
+        function Hook.PlayerChoiceNormalOptionTemplateMixin:Setup(optionInfo, frameTextureKit, soloOption, showAsList)
             local kit = Util.GetTextureKit(frameTextureKit)
             self.Background:SetAlpha(0)
             self.ArtworkBorder:SetAlpha(0)
@@ -51,7 +51,7 @@ do --[[ AddOns\Blizzard_PlayerChoice.lua ]]
     --end
     do -- Blizzard_PlayerChoiceCovenantChoiceOptionTemplate
         Hook.PlayerChoiceCovenantChoiceOptionTemplateMixin = {}
-        function Hook.PlayerChoiceCovenantChoiceOptionTemplateMixin:Setup(optionInfo, frameTextureKit, soloOption)
+        function Hook.PlayerChoiceCovenantChoiceOptionTemplateMixin:Setup(optionInfo, frameTextureKit, soloOption, showAsList)
             self.BackgroundShadowSmall:SetAlpha(0)
             self.BackgroundShadowLarge:SetAlpha(0)
         end
@@ -69,7 +69,7 @@ do --[[ AddOns\Blizzard_PlayerChoice.xml ]]
         function Skin.PlayerChoiceBaseOptionButtonTemplate(Button)
             Skin.UIPanelButtonTemplate(Button)
         end
-        function Skin.PlayerChoiceSmallerOptionButtonTemplate(Button)
+        function Skin.PlayerChoiceBaseSmallerOptionButtonTemplate(Button)
             Skin.PlayerChoiceBaseOptionButtonTemplate(Button)
         end
         function Skin.PlayerChoiceBaseOptionTemplate(Frame)
@@ -103,12 +103,12 @@ function private.AddOns.Blizzard_PlayerChoice()
     --      Blizzard_PlayerChoice      --
     ----====####$$$$%%%%%$$$$####====----
     -- FIXLATER
-    _G.print("Blizzard_PlayerChoice is not fully implemented yet, some features may not work as expected. Report this location to the RealUI Discord server.")
-    -- local PlayerChoiceFrame = _G.PlayerChoiceFrame
-    -- Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
-    -- Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)
+    _G.print("Blizzard_PlayerChoice is not fully implemented yet, some features may not work as expected.")
+    local PlayerChoiceFrame = _G.PlayerChoiceFrame
+    Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
+    Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)
     -- PlayerChoiceFrame.BlackBackground:SetAllPoints(PlayerChoiceFrame.NineSlice)
-    -- -- Skin.UIPanelCloseButton(PlayerChoiceFrame.CloseButton)
+    -- Skin.UIPanelCloseButton(PlayerChoiceFrame.CloseButton)
 
 
     ----====####$$$$%%%%%%%$$$$####====----
@@ -119,7 +119,7 @@ function private.AddOns.Blizzard_PlayerChoice()
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_PlayerChoiceOptionBase --
     ----====####$$$$%%%%%$$$$####====----
-    Util.Mixin(_G.PlayerChoiceBaseOptionTemplateMixin, Hook.PlayerChoiceBaseOptionTemplateMixin)
+    -- Util.Mixin(_G.PlayerChoiceBaseOptionTemplateMixin, Hook.PlayerChoiceBaseOptionTemplateMixin)
 
 
     ----====####$$$$%%%%%%%%%%%%%%%$$$$####====----

@@ -332,7 +332,6 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         end
         function Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame)
             Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
-            --Skin.MoneyDisplayFrameTemplate(Frame.MoneyDisplayFrame)
         end
         function Skin.AuctionHouseSellFrameTemplate(Frame)
             Skin.AuctionHouseBackgroundTemplate(Frame)

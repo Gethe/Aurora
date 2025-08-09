@@ -25,6 +25,8 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
             _G.print("CONTENT_TRACKING_UPDATE")
         elseif event == "TRACKING_TARGET_INFO_UPDATE" then
             _G.print("TRACKING_TARGET_INFO_UPDATE")
+        elseif event == "TRACKABLE_INFO_UPDATE" then
+            _G.print("TRACKABLE_INFO_UPDATE")
         end
     end
 end
