@@ -7,22 +7,15 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Util = Aurora.Util
+-- local Util = Aurora.Util
 
 do --[[ Blizzard_Flyout\Blizzard_Flyout.lua ]]
     Hook.FlyoutButtonMixin = {}
     function Hook.FlyoutButtonMixin:OnLoad()
         _G.print("Hook.FlyoutButtonMixin:OnLoad", self:GetName())
     end
-    function Skin.FlyoutButtonTemplate()
-        local button = _G[self:GetName() .. "Button"]
-        if button then
-            _G.print("Skin.FlyoutButtonTemplate", button:GetName())
-        end
-        local icon = _G[self:GetName() .. "Icon"]
-        if icon then
-            _G.print("Skin.FlyoutButtonTemplate", button:GetName())
-        end
+    function Skin.FlyoutButtonTemplate(button)
+        _G.print("Skin.FlyoutButtonTemplate", button:GetName())
     end
 end
 

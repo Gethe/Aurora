@@ -558,7 +558,7 @@ function private.AddOns.Blizzard_Collections()
     --    Blizzard_MountCollection    --
     ----====####$$$$%%%%$$$$####====----
     local MountJournal = _G.MountJournal
-    DynamicFlightFlyoutPopup = MountJournal.DynamicFlightFlyoutPopup
+    -- local DynamicFlightFlyoutPopup = MountJournal.DynamicFlightFlyoutPopup
 
     Skin.UIPanelSpellButtonFrameTemplate(MountJournal.SummonRandomFavoriteSpellFrame.Button)
     -- MountJournal.SummonRandomFavoriteSpellFrame.Button:SetSize(38, 38)
@@ -613,14 +613,14 @@ function private.AddOns.Blizzard_Collections()
     Skin.MainHelpPlateButton(PetJournal.MainHelpButton)
     PetJournal.MainHelpButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -15, 15)
 
-    -- FIXLATER 
+    -- FIXLATER
     -- replaced by HealPetSpellFrame
     -- Base.CropIcon(PetJournal.HealPetSpellFrame.texture, PetJournal.HealPetButton)
     -- Base.CropIcon(PetJournal.HealPetSpellFrame:GetPushedTexture())
     -- Base.CropIcon(PetJournal.HealPetSpellFrame:GetHighlightTexture())
     -- _G.PetJournalHealPetButtonBorder:Hide()
 
-        -- FIXLATER replaced by SummonRandomPetSpellFrame
+    -- FIXLATER replaced by SummonRandomPetSpellFrame
     -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton.texture, PetJournal.SummonRandomFavoritePetButton)
     -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetPushedTexture())
     -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetHighlightTexture())

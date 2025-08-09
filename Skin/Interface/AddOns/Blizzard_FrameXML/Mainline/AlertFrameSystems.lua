@@ -392,7 +392,7 @@ function private.FrameXML.AlertFrameSystems()
     Util.Mixin(_G.DigsiteCompleteAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.EntitlementDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.RafRewardDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    
+
     Util.Mixin(_G.GarrisonBuildingAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.GarrisonMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(_G.GarrisonShipMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)

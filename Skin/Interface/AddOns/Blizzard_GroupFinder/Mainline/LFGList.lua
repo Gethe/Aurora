@@ -51,7 +51,7 @@ do --[[ FrameXML\LFGList.lua ]]
         --Try with the suffix and then without it
         if not _G.CheckSetAtlas(button.Icon, atlasName..suffix) then
             _G.CheckSetAtlas(button.Icon, atlasName);
- 	    end
+        end
     end
 
     function Hook.LFGListGroupDataDisplayEnumerate_Update(self, numPlayers, displayData, disabled, iconOrder)

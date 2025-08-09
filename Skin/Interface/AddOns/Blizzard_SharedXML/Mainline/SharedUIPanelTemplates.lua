@@ -321,7 +321,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         -- Center = Texture {}
         -- _backdropInfo =  {}
         -- BlackCover = Texture {}
-        -- LockIcon = Texture {}        
+        -- LockIcon = Texture {}
 
     end
     function Skin.UIPanelButtonTemplate(Button)

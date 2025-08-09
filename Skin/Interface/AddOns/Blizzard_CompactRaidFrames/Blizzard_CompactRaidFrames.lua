@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Util = Aurora.Util
+-- local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_CompactRaidFrames.lua ]]
     do --[[ Blizzard_CompactRaidFrameManager ]]
@@ -60,7 +60,7 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
         Button:GetNormalTexture()
         Button:SetSize(24, 24)
     end
-end 
+end
 
 function private.AddOns.Blizzard_CompactRaidFrames()
     ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
