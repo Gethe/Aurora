@@ -112,6 +112,22 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
     end
     function Skin.QuestLogObjectiveTemplate(Button)
     end
+    function Skin.QuestMapFrameTabTemplate(Button)
+        Button:GetRegions():Hide()
+        -- local CheckButton = Button.Button or Button
+        local icon = Button.IconTexture
+        if icon then
+            Button:ClearNormalTexture()
+            Base.CropIcon(Button:GetPushedTexture())
+        else
+            icon = Button.Icon or Button:GetNormalTexture()
+        end
+        Button._auroraIconBG = Base.CropIcon(icon, Button)
+        -- Base.CropIcon(Button:GetHighlightTexture())
+        -- Base.CropIcon(Button:GetCheckedTexture())
+        Button.Background:SetTexture("")
+        Button.SelectedTexture:SetTexture("")
+    end
 end
 
 function private.FrameXML.QuestMapFrame()
@@ -171,8 +187,20 @@ function private.FrameXML.QuestMapFrame()
     end
     QuestMapFrame.VerticalSeparator:Hide()
 
-    local QuestsFrame = QuestMapFrame.QuestsFrame
+    -- SET UP TABS
+    local QuestsTab = QuestMapFrame.QuestsTab
+    Skin.QuestMapFrameTabTemplate(QuestsTab)
 
+    local MapLegendTab = QuestMapFrame.MapLegendTab
+    Skin.QuestMapFrameTabTemplate(MapLegendTab)
+
+    Util.PositionRelative("TOPLEFT", QuestMapFrame, "TOPRIGHT", 1, -40, 1, "Down", {
+        QuestsTab,
+        MapLegendTab,
+    })
+
+
+    local QuestsFrame = QuestMapFrame.QuestsFrame
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
     Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
     Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
@@ -256,6 +284,10 @@ function private.FrameXML.QuestMapFrame()
     -- right:Hide()
     -- FIXLATER
     -- Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
-
     Skin.CampaignOverviewTemplate(QuestMapFrame.QuestsFrame.CampaignOverview)
+
+    local MapLegend = QuestMapFrame.MapLegend
+    Skin.ScrollFrameTemplate(MapLegend.ScrollFrame)
+
+
 end
