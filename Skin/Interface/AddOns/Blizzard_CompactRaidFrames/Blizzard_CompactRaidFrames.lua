@@ -52,7 +52,7 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
     end
     Skin.CRFManagerFilterRoleButtonTemplate = Skin.CRFManagerFilterButtonTemplate
     Skin.CRFManagerFilterGroupButtonTemplate = Skin.CRFManagerFilterButtonTemplate
-    Skin.CRFManagerTooltipButtonTemplate = Skin.CRFManagerFilterButtonTemplate
+    Skin.CRFManagerTooltipTemplate = Skin.CRFManagerFilterButtonTemplate
 
     function Skin.CRFManagerRaidIconButtonTemplate(Button)
         Button:SetSize(24, 24)
@@ -60,7 +60,7 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
         Button:GetNormalTexture()
         Button:SetSize(24, 24)
     end
-end
+end 
 
 function private.AddOns.Blizzard_CompactRaidFrames()
     ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
@@ -117,21 +117,21 @@ function private.AddOns.Blizzard_CompactRaidFrames()
         Skin.CRFManagerFilterRoleButtonTemplate(filterOptions["filterGroup"..i])
     end
 
-    Skin.CRFManagerTooltipButtonTemplate(displayFrame.editMode)
-    Skin.CRFManagerTooltipButtonTemplate(displayFrame.hiddenModeToggle)
+    Skin.CRFManagerTooltipTemplate(displayFrame.editMode)
+    Skin.CRFManagerTooltipTemplate(displayFrame.hiddenModeToggle)
     -- FIXMELATER
-    -- Skin.CRFManagerTooltipButtonTemplate(displayFrame.convertToGroup)
-    -- Skin.CRFManagerTooltipButtonTemplate(displayFrame.convertToRaid)
+    -- Skin.CRFManagerTooltipTemplate(displayFrame.convertToGroup)
+    -- Skin.CRFManagerTooltipTemplate(displayFrame.convertToRaid)
 
     local icons = {displayFrame.raidMarkers:GetChildren()}
     for i, icon in next, icons do
         Skin.CRFManagerRaidIconButtonTemplate(icon)
     end
 
-    Skin.CRFManagerTooltipButtonTemplate(displayFrame.rolePollButton)
-    Skin.CRFManagerTooltipButtonTemplate(displayFrame.readyCheckButton)
-    Skin.CRFManagerTooltipButtonTemplate(displayFrame.countdownButton)
-    Skin.CRFManagerTooltipButtonTemplate(displayFrame.difficulty)
+    Skin.CRFManagerTooltipTemplate(displayFrame.rolePollButton)
+    Skin.CRFManagerTooltipTemplate(displayFrame.readyCheckButton)
+    Skin.CRFManagerTooltipTemplate(displayFrame.countdownButton)
+    Skin.CRFManagerTooltipTemplate(displayFrame.difficulty)
     Skin.UICheckButtonTemplate(displayFrame.everyoneIsAssistButton)
 
 end
