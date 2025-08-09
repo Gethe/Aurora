@@ -66,7 +66,7 @@ function private.FrameXML.PVEFrame()
     Skin.PanelTabButtonTemplate(PVEFrame.tab2)
     Skin.PanelTabButtonTemplate(PVEFrame.tab3)
     Skin.PanelTabButtonTemplate(PVEFrame.tab4)
-     Util.PositionRelative("TOPLEFT", PVEFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
+    Util.PositionRelative("TOPLEFT", PVEFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
         PVEFrame.tab1,
         PVEFrame.tab2,
         PVEFrame.tab3,
