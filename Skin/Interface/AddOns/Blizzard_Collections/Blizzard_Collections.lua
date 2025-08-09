@@ -506,6 +506,20 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             highlight:SetAllPoints(Button.Icon)
         end
     end
+
+
+    do --[[ Blizzard_HeirloomCollection ]]
+        -- local NO_CLASS_FILTER = 0
+        -- local NO_SPEC_FILTER = 0
+
+        Hook.WarbandSceneJounalMixin = {}
+        function Hook.WarbandSceneJounalMixin:OnLoad()
+        end
+        function Hook.WarbandSceneJounalMixin:OnShow()
+        end
+        function Hook.WarbandSceneJounalMixin:OnEvent()
+        end
+    end
 end
 
 function private.AddOns.Blizzard_Collections()
@@ -544,7 +558,15 @@ function private.AddOns.Blizzard_Collections()
     --    Blizzard_MountCollection    --
     ----====####$$$$%%%%$$$$####====----
     local MountJournal = _G.MountJournal
+    DynamicFlightFlyoutPopup = MountJournal.DynamicFlightFlyoutPopup
+
     MountJournal.SummonRandomFavoriteSpellFrame.Button:SetSize(38, 38)
+    -- FIXLATER
+    -- Util.Mixin(MountJournal.ToggleDynamicFlightFlyoutPopupButton, Hook.FlyoutButtonMixin)
+    -- MountJournal.DynamicFlightFlyoutPopup.Button:SetSize(38, 38)
+    -- DynamicFlightFlyoutPopup.OpenDynamicFlightSkillTreeButton:SetSize(38, 38)
+
+
     -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame.Button, MountJournal.SummonRandomFavoriteSpellFrame)
     -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:PushedTexture())
     -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:HighlightTexture())
@@ -800,4 +822,15 @@ function private.AddOns.Blizzard_Collections()
     Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
     -- FIXLATER
     -- Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
+
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+    --        Blizzard_WarbandSceneCollection        --
+    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+
+    local WarbandSceneJournal = _G.WarbandSceneJournal
+    Util.Mixin(WarbandSceneJournal, Hook.WarbandSceneJounalMixin)
+    Skin.UICheckButtonTemplate(WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Checkbox)
+    WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Checkbox:SetSize(24, 24)
+    Skin.CollectionsBackgroundTemplate(WarbandSceneJournal.IconsFrame)
+    Skin.CollectionsPagingFrameTemplate(WarbandSceneJournal.IconsFrame.Icons.Controls.PagingControls)
 end
