@@ -299,6 +299,31 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Button.Right:Hide()
         Button.Middle:Hide()
     end
+    function Skin.UIPanelSpellButtonFrameTemplate(Button)
+        -- Skin.FrameTypeButton(Button)
+        Button.Border:Hide()
+        -- Button.RightEdge:Hide()
+        -- Button.BottomRightCorner:Hide()
+        -- Button.LeftEdge:Hide()
+        -- Button.TopLeftCorner:Hide()
+        -- Button.TopEdge:Hide()
+        -- Button.BottomEdge:Hide()
+        -- Button.TopRightCorner:Hide()
+        -- Button.TopEdge:Hide()
+
+        -- _returnColor =  {}
+        -- Icon = Texture {}
+        -- _enabledColor =  {}
+        -- Border = Texture {}
+        -- _disabledColor =  {}
+        -- Cooldown = Cooldown {}
+        -- backdropInfo =  {}
+        -- Center = Texture {}
+        -- _backdropInfo =  {}
+        -- BlackCover = Texture {}
+        -- LockIcon = Texture {}        
+
+    end
     function Skin.UIPanelButtonTemplate(Button)
         Skin.UIPanelButtonNoTooltipTemplate(Button)
     end
