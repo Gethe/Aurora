@@ -352,6 +352,36 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     Skin.InsetFrameTemplate(EncounterJournal.inset)
 
+    ------------------
+    -- MonthlyActivitiesFrame --
+    ------------------
+    local MonthlyActivitiesFrame = EncounterJournalMonthlyActivitiesFrame
+    local ThemeContainer = MonthlyActivitiesFrame.ThemeContainer
+    local ThresholdContainer = MonthlyActivitiesFrame.ThresholdContainer
+    local MonthlyActivitiesFrameBg = MonthlyActivitiesFrame.Bg
+
+    MonthlyActivitiesFrame.HelpButton:Hide()
+    MonthlyActivitiesFrame.Divider:Hide()
+    MonthlyActivitiesFrame.DividerVertical:Hide()
+    MonthlyActivitiesFrameBg:SetAlpha(0)
+
+    ThemeContainer:SetAlpha(0)
+    ThemeContainer.Top:SetTexture("")
+    ThemeContainer.Bottom:SetTexture("")
+    ThemeContainer.Left:SetTexture("")
+    ThemeContainer.Right:SetTexture("")
+
+    Skin.FrameTypeStatusBar(ThresholdContainer.ThresholdBar)
+    select(3, ThresholdContainer.ThresholdBar:GetRegions()):Hide()
+    Skin.FrameTypeStatusBar(ThresholdContainer.BonusThresholdBar)
+    select(3, ThresholdContainer.BonusThresholdBar:GetRegions()):Hide()
+    ThresholdContainer.BarBorder:SetTexture("")
+    Skin.MinimalScrollBar(MonthlyActivitiesFrame.FilterList.ScrollBar)
+    Skin.WowScrollBoxList(MonthlyActivitiesFrame.FilterList.ScrollBox)
+    Skin.MinimalScrollBar(MonthlyActivitiesFrame.ScrollBar)
+    Skin.WowScrollBoxList(MonthlyActivitiesFrame.ScrollBox)
+
+
     --------------------
     -- InstanceSelect --
     --------------------
@@ -479,6 +509,7 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     Skin.AdventureJournal_SecondaryTemplate(suggestFrame.Suggestion2)
     Skin.AdventureJournal_SecondaryTemplate(suggestFrame.Suggestion3)
+
 
 
     ------------------
