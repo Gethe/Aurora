@@ -212,7 +212,7 @@ local createButton do
         local button = _G.CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
         button:SetText(text)
 
-        button:SetScript("OnClick", function(self)
+        button:SetScript("OnClick", function(dialog)
             func()
         end)
         return button
@@ -253,8 +253,8 @@ local chatBubbleNamesBox = createToggleBox(gui, "chatBubbleNames", "Show names")
 chatBubbleNamesBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMRIGHT", -3, 3)
 chatBubbleNamesBox:SetSize(20, 20)
 
-chatBubbleBox:SetScript("OnClick", function(self)
-    if self:GetChecked() then
+chatBubbleBox:SetScript("OnClick", function(dialog)
+    if dialog:GetChecked() then
         _G.AuroraConfig.chatBubbles = true
         chatBubbleNamesBox:Enable()
     else
@@ -282,10 +282,10 @@ highlightBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
 local highlightButton = createColorSwatch(gui, "customHighlight")
 highlightButton:SetPoint("LEFT", highlightBox, "RIGHT", 150, 0)
 
-highlightBox:SetScript("OnClick", function(self)
-    local isChecked = self:GetChecked()
+highlightBox:SetScript("OnClick", function(dialog)
+    local isChecked = dialog:GetChecked()
     _G.AuroraConfig.customHighlight.enabled = isChecked
-    wago:Switch(self.value, isChecked)
+    wago:Switch(dialog.value, isChecked)
 
     if isChecked then
         highlightButton:Enable()

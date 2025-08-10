@@ -33,8 +33,8 @@ end
 
 do --[[ AddOns\Blizzard_RaidUI.xml ]]
     function Skin.RaidGroupButtonTemplate(Button)
-        Skin.FrameTypeButton(Button, function(self)
-            self:SetBackdropBorderColor(_G.CUSTOM_CLASS_COLORS[self.class])
+        Skin.FrameTypeButton(Button, function(dialog)
+            dialog:SetBackdropBorderColor(_G.CUSTOM_CLASS_COLORS[dialog.class])
         end)
     end
     function Skin.RaidGroupSlotTemplate(Button)
@@ -42,11 +42,11 @@ do --[[ AddOns\Blizzard_RaidUI.xml ]]
         Base.SetBackdrop(Button, Color.button, 0)
         Button:SetBackdropBorderColor(Color.button, 0)
 
-        Button:HookScript("OnEnter", function(self)
-            self:SetBackdropBorderColor(Color.button, 1)
+        Button:HookScript("OnEnter", function(dialog)
+            dialog:SetBackdropBorderColor(Color.button, 1)
         end)
-        Button:HookScript("OnLeave", function(self)
-            self:SetBackdropBorderColor(Color.button, 0)
+        Button:HookScript("OnLeave", function(dialog)
+            dialog:SetBackdropBorderColor(Color.button, 0)
         end)
     end
     function Skin.RaidGroupTemplate(Frame)

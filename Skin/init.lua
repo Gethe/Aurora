@@ -151,7 +151,7 @@ end
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("UI_SCALE_CHANGED")
-eventFrame:SetScript("OnEvent", function(self, event, addonName)
+eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
     if event == "UI_SCALE_CHANGED" then
         private.UpdateUIScale()
     else

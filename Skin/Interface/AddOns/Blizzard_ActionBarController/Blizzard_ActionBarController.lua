@@ -188,8 +188,8 @@ do --[[ FrameXML\ActionBarController.xml ]]
             "AzeriteBarTemplate",
         }
         function Skin.StatusTrackingBarTemplate(Frame)
-            _G.hooksecurefunc(Frame, "Hide", function(self)
-                Util.ReleaseBarTicks(self.StatusBar)
+            _G.hooksecurefunc(Frame, "Hide", function(dialog)
+                Util.ReleaseBarTicks(dialog.StatusBar)
             end)
 
             local StatusBar = Frame.StatusBar

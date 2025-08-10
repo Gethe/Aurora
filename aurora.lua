@@ -183,10 +183,10 @@ function private.OnLoad()
     -- --         EditBox.icon:SetPoint("LEFT", 3, 0)
 
     -- --         local stop
-    -- --         _G.hooksecurefunc(EditBox, "SetTextInsets", function(self, left, right, top, bottom)
+    -- --         _G.hooksecurefunc(EditBox, "SetTextInsets", function(editbox, left, right, top, bottom)
     -- --             if stop then return end
     -- --             stop = true
-    -- --             self:SetTextInsets(20, right, 0, 0)
+    -- --             editbox:SetTextInsets(20, right, 0, 0)
     -- --             stop = nil
     -- --         end)
     --     end

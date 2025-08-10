@@ -790,7 +790,7 @@ function commands.test()
                                 name = "helpTip",
                                 desc = "HelpTip:Show()",
                                 type = "execute",
-                                func = function(self, ...)
+                                func = function(dialog, ...)
                                     local text = textFormat:format(targetPointType[infoTable.targetPoint], alignmentType[infoTable.alignment], buttonStyleType[infoTable.buttonStyle])
                                     if not _G.HelpTip:IsShowing(optionsFrame, text) then
                                         local info = CopyTable(infoTable)

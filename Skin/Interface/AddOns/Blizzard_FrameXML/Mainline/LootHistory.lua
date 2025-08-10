@@ -93,12 +93,12 @@ function private.FrameXML.LootHistory()
         line2:SetSize(30, 1)
         line2:SetPoint("TOP", 0, -3)
 
-        LootHistoryFrame.ResizeButton:HookScript("OnEnter", function(self)
+        LootHistoryFrame.ResizeButton:HookScript("OnEnter", function(dialog)
             line1:SetVertexColor(Color.highlight:GetRGB())
             line2:SetVertexColor(Color.highlight:GetRGB())
         end)
 
-        LootHistoryFrame.ResizeButton:HookScript("OnLeave", function(self)
+        LootHistoryFrame.ResizeButton:HookScript("OnLeave", function(dialog)
             line1:SetVertexColor(1, 1, 1)
             line2:SetVertexColor(1, 1, 1)
         end)
@@ -106,7 +106,7 @@ function private.FrameXML.LootHistory()
     Skin.UIPanelScrollFrameTemplate(LootHistoryFrame.ScrollFrame)
 
     -- [[ Dropdown ]]
-    _G.LootHistoryDropDown.initialize = function(self)
+    _G.LootHistoryDropDown.initialize = function(dialog)
         local info = _G.UIDropDownMenu_CreateInfo()
         info.isTitle = 1
         info.text = _G.MASTER_LOOTER
@@ -116,7 +116,7 @@ function private.FrameXML.LootHistory()
 
         info = _G.UIDropDownMenu_CreateInfo()
         info.notCheckable = 1
-        local name, class = _G.C_LootHistory.GetPlayerInfo(self.itemIdx, self.playerIdx)
+        local name, class = _G.C_LootHistory.GetPlayerInfo(dialog.itemIdx, dialog.playerIdx)
         local colorStr = _G.CUSTOM_CLASS_COLORS[class].colorStr
         info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorStr..name.."|r")
         info.func = _G.LootHistoryDropDown_OnClick

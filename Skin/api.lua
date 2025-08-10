@@ -198,11 +198,11 @@ do -- Base.SetHighlight
         button:HookScript("OnLeave", OnLeave)
 
         if button.LockHighlight then
-            _G.hooksecurefunc(button, "LockHighlight", function(self, ...)
+            _G.hooksecurefunc(button, "LockHighlight", function(dialog, ...)
                 button._isHighlightLocked = true
                 OnEnter(button)
             end)
-            _G.hooksecurefunc(button, "UnlockHighlight", function(self, ...)
+            _G.hooksecurefunc(button, "UnlockHighlight", function(dialog, ...)
                 button._isHighlightLocked = nil
                 OnLeave(button)
             end)
