@@ -604,13 +604,13 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SpellPickUpIndicator\Blizzard_SpellPickUpIndicator.lua"/-->
     <!--Script file="Blizzard_SpellSearch\Blizzard_SpellSearch.lua"/-->
     <!--Script file="Blizzard_StableUI\Blizzard_StableUI.lua"/-->
-    <Script file="Blizzard_StaticPopup\Blizzard_StaticPopup.lua"/>
+    <!--Script file="Blizzard_StaticPopup\Blizzard_StaticPopup.lua"/-->
     <!-- This section is added for Blizzard_StaticPopup_Game by the Aurora XML Updater -->
     <!--Script file="Blizzard_StaticPopup_Game\GameDialogDefsUtil.lua"/-->
     <!--Script file="Blizzard_StaticPopup_Game\GameDialogDefs.lua"/-->
     <!--Script file="Blizzard_StaticPopup_Game\Mainline\GameDialogDefs.lua"/-->
     <!--Script file="Blizzard_StaticPopup_Game\.lua"/-->
-    <!--Script file="Blizzard_StaticPopup_Game\GameDialog.lua"/-->
+    <Script file="Blizzard_StaticPopup_Game\GameDialog.lua"/>
     <!--Script file="Blizzard_StaticPopup_Game\Mainline\GameDialog.lua"/-->
     <Script file="Blizzard_StaticPopup_Game\Mainline\StaticPopupSpecial.lua"/>
     <!--Script file="Blizzard_StaticPopup_Game\Wrath\StaticPopupGlyphs.lua"/-->
