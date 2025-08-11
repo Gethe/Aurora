@@ -9,13 +9,14 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
 
---do --[[ FrameXML\StaticPopupSpecial.lua ]]
+--do --[[ AddOns\Blizzard_StaticPopup_Game\Mainline\StaticPopupSpecial.lua ]]
 --end
 
---do --[[ FrameXML\StaticPopupSpecial.xml ]]
+--do --[[ AddOns\Blizzard_StaticPopup_Game\Mainline\StaticPopupSpecial.xml ]]
 --end
+-- FIXLATER
 
-function private.FrameXML.StaticPopupSpecial()
+function private.AddOns.StaticPopupSpecial()
     if private.isRetail then
         local PetBattleQueueReadyFrame = _G.PetBattleQueueReadyFrame
         Skin.DialogBorderTemplate(PetBattleQueueReadyFrame.Border)
