@@ -1,4 +1,9 @@
-﻿## [11.2.0.3] ##
+﻿## [11.2.0.4] ##
+### Fixed ###
+  * Lint errors
+  
+  
+## [11.2.0.3] ##
 ### Fixed ###
   * chg: Aurora API Version to 11.2
   * chg: FriendsFrame adjustment
