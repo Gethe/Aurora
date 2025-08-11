@@ -18,34 +18,34 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
         Skin.FrameTypeButton(Button)
     end
 
-    local function CloseButton_SetNormalTexture(Button, texture)
-        if Button._setNormal then return end
-        Button._setNormal = true
-        Button:ClearNormalTexture()
-        if texture:find("Hide") then
-            Button._auroraTextures[1]:Hide()
-            Button._auroraTextures[2]:Hide()
-            Button._auroraTextures[3]:Show()
-        else
-            Button._auroraTextures[1]:Show()
-            Button._auroraTextures[2]:Show()
-            Button._auroraTextures[3]:Hide()
-        end
-        Button._setNormal = nil
-    end
-    local function CloseButton_SetPushedTexture(Button, texture)
-        if Button._setPushed then return end
-        Button._setPushed = true
-        Button:ClearPushedTexture()
-        Button._setPushed = nil
-    end
+    -- local function CloseButton_SetNormalTexture(Button, texture)
+    --     if Button._setNormal then return end
+    --     Button._setNormal = true
+    --     Button:ClearNormalTexture()
+    --     if texture:find("Hide") then
+    --         Button._auroraTextures[1]:Hide()
+    --         Button._auroraTextures[2]:Hide()
+    --         Button._auroraTextures[3]:Show()
+    --     else
+    --         Button._auroraTextures[1]:Show()
+    --         Button._auroraTextures[2]:Show()
+    --         Button._auroraTextures[3]:Hide()
+    --     end
+    --     Button._setNormal = nil
+    -- end
+
+    -- local function CloseButton_SetPushedTexture(Button, texture)
+    --     if Button._setPushed then return end
+    --     Button._setPushed = true
+    --     Button:ClearPushedTexture()
+    --     Button._setPushed = nil
+    -- end
     function Skin.StaticPopupTemplate(Frame)
         if ((not Frame) and private.isDev) then
             _G.print("ReportError: Frame is nil in StaticPopupTemplate - Report to Aurora developers.")
             return
         end
         -- FIXLATER?
-        local name = Frame:GetName()
         local background = Frame.BG
         -- background.Top:SetTexture("")
         background.Bottom:SetTexture("")
@@ -64,7 +64,6 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 
         local Buttons = ButtonContainer.Buttons
         for i = 1, #Buttons do
-            local Button = _G[name .. "Button" .. i]
             Skin.StaticPopupButtonTemplate(Buttons[i])
         end
 

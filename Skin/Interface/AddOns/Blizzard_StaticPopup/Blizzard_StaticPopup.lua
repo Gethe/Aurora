@@ -5,7 +5,7 @@ if private.shouldSkip() then return end
 -- luacheck: globals tinsert max
 
 --[[ Core ]]
-local Aurora = private.Aurora
+--local Aurora = private.Aurora
 -- local Base = Aurora.Base
 -- local Skin = Aurora.Skin
 -- local Color = Aurora.Color

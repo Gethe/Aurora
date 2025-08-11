@@ -355,7 +355,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     ------------------
     -- MonthlyActivitiesFrame --
     ------------------
-    local MonthlyActivitiesFrame = EncounterJournalMonthlyActivitiesFrame
+    local MonthlyActivitiesFrame = _G.EncounterJournalMonthlyActivitiesFrame
     local ThemeContainer = MonthlyActivitiesFrame.ThemeContainer
     local ThresholdContainer = MonthlyActivitiesFrame.ThresholdContainer
     local MonthlyActivitiesFrameBg = MonthlyActivitiesFrame.Bg
