@@ -1,4 +1,17 @@
-﻿## [11.2.0.2] ##
+﻿## [11.2.0.3] ##
+### Fixed ###
+  * chg: Aurora API Version to 11.2
+  * chg: FriendsFrame adjustment
+  * chg: disable Blizzard_StaticPopup\Blizzard_StaticPopup - enable Blizzard_StaticPopup_Game\GameDialog
+  * chg: Blizzard_StaticPopup_Game\Mainline\StaticPopupSpecial
+  * chg: removed most of the old StaticPopup code
+  * chg: Enable StaticPopup2-4
+  * chg: removed old StaticPopup with new Blizzard_StaticPopup_Game\GameDialog - now skinned.
+  * chg: Skin EJ MonthlyActivitiesFrame
+  * chg: Blizzard stopped using function(self) replaced function(dialog)
+q
+
+## [11.2.0.2] ##
 ### Fixed ###
   * add: skin for UIPanelSpellButtonFrameTemplate
   * chg: updated AlertFrameSystems
