@@ -93,12 +93,9 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 end
 
 function private.FrameXML.Blizzard_StaticPopup_Game_GameDialog()
-    -- FIXLATER it is moved in 11.2?
-    _G.print("Skinning StaticPopup1")
     Skin.StaticPopupTemplate(_G.StaticPopup1)
-
-    -- Skin.StaticPopupTemplate(_G.StaticPopup2)
-    -- Skin.StaticPopupTemplate(_G.StaticPopup3)
-    -- Skin.StaticPopupTemplate(_G.StaticPopup4)
+    Skin.StaticPopupTemplate(_G.StaticPopup2)
+    Skin.StaticPopupTemplate(_G.StaticPopup3)
+    Skin.StaticPopupTemplate(_G.StaticPopup4)
 end
 
