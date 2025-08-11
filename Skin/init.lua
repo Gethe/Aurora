@@ -3,7 +3,7 @@ local ADDON_NAME, private = ...
 -- luacheck: globals select tostring tonumber math floor
 -- luacheck: globals setmetatable rawset debugprofilestop type tinsert
 
-private.API_MAJOR, private.API_MINOR = 11, 0
+private.API_MAJOR, private.API_MINOR = 11, 2
 
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
 private.isVanilla = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
@@ -20,6 +20,7 @@ local debugProjectID = {
     [20] = private.isBCC,
     [30] = private.isWrath,
     [40] = private.isCata,
+    [50] = private.isMists,
 }
 function private.shouldSkip()
     return not debugProjectID[_G.AURORA_DEBUG_PROJECT]
