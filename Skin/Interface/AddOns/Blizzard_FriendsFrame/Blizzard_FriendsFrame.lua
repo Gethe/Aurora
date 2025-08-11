@@ -196,7 +196,7 @@ function private.SharedXML.FriendsFrame()
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameAddFriendButton)
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameSendMessageButton)
     -- FIXLATER
-    -- Skin.DropdownButton(FriendsListFrame.FilterDropDown)
+    --- Skin.WowStyle1FilterDropdownTemplate(FriendsListFrame.FilterDropdown)
     Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
     Skin.WowScrollBoxList(FriendsListFrame.ScrollBox)
     Skin.MinimalScrollBar(FriendsListFrame.ScrollBar)
@@ -284,7 +284,8 @@ function private.SharedXML.FriendsFrame()
     --------------------
     Skin.DialogBorderTemplate(_G.AddFriendFrame.Border)
     -- FIXLATER
-    -- Skin.UIPanelButtonTemplate(_G.AddFriendInfoFrameContinueButton)
+    -- Did this work?
+    Skin.FrameTypeButton(_G.AddFriendInfoFrame.ContinueButton)
 
     Skin.UIPanelInfoButton(_G.AddFriendEntryFrameInfoButton)
     do -- AddFriendNameEditBox
@@ -296,8 +297,7 @@ function private.SharedXML.FriendsFrame()
     -- FIXLATER
     -- Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameAcceptButton)
     -- Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
-
-
+    -- Skin.FrameTypeButton(Button)
 
 
 
