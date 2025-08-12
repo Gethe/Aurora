@@ -15,7 +15,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
         Hook.CommunitiesListEntryMixin = {}
         function Hook.CommunitiesListEntryMixin:SetAddCommunity()
             Skin.CommunitiesListEntryTemplate(self)
-            self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)           
+            self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
             -- self.Icon:ClearAllPoints()
@@ -55,7 +55,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             -- self.Icon:SetColorTexture(Color.black:GetRGB())
         end
         function Hook.CommunitiesListEntryMixin:SetGuildFinder()
-            Skin.CommunitiesListEntryTemplate(self)            
+            Skin.CommunitiesListEntryTemplate(self)
             self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
@@ -724,7 +724,7 @@ function private.AddOns.Blizzard_Communities()
     Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog.Selector)
     Skin.WowScrollBoxList(CommunitiesAvatarPickerDialog.ScrollBox)
     Skin.MinimalScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
- 
+
     ----====####$$$$%%%%$$$$####====----
     --  CommunitiesAddDialogInsecure  --
     ----====####$$$$%%%%$$$$####====----

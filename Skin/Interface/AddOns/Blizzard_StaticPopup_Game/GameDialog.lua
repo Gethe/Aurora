@@ -6,9 +6,9 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
+-- local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
+-- local Color = Aurora.Color
 
 --do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 --end
