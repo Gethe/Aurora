@@ -27,10 +27,6 @@ do --[[ AddOns\Blizzard_PVPUI.lua ]]
     function Hook.PVPQueueFrame_SelectButton(index)
         for i = 1, 4 do
             local button = _G.PVPQueueFrame["CategoryButton"..i]
-            if i == 4 then
-                -- This button is not always present, so we need to check if it exists.
-                _G.print("PVPQueueFrame_SelectButton: CategoryButton4 exists. Screenshoot and report this to the Aurora team.")
-            end
             if i == index then
                 button.Background:Show()
             else
@@ -142,6 +138,7 @@ end
 
 function private.AddOns.Blizzard_PVPUI()
     -- Util.Mixin(_G.PVEFrameMixin, Hook.PVEFrameMixin)
+
     _G.hooksecurefunc("PVPQueueFrame_SelectButton", Hook.PVPQueueFrame_SelectButton)
 
     local PVPQueueFrame = _G.PVPQueueFrame
@@ -171,8 +168,9 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(HonorFrame.TankIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.HealerIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.DPSIcon)
-    Skin.DropdownButton(_G.HonorFrame.TypeDropdown)
-    Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
+    Skin.DropdownButton(HonorFrame.TypeDropdown)
+    -- FIXMELATER -- This causes a taint error when the JoinButton is clicked.
+    --  Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
     Skin.MinimalScrollBar(HonorFrame.SpecificScrollBar)
 
     local BonusFrame = HonorFrame.BonusFrame
@@ -186,6 +184,8 @@ function private.AddOns.Blizzard_PVPUI()
 
     Skin.MagicButtonTemplate(HonorFrame.QueueButton)
     HonorFrame.QueueButton:SetPoint("BOTTOM", 0, 5)
+
+
 
     -----------
     -- Rated --
@@ -201,6 +201,8 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(ConquestFrame.HealerIcon)
     Skin.LFGRoleButtonTemplate(ConquestFrame.DPSIcon)
 
+    Skin.PVPRatedActivityButtonTemplate(ConquestFrame.RatedSoloShuffle)
+    Skin.PVPRatedActivityButtonTemplate(ConquestFrame.RatedBGBlitz)
     Skin.PVPRatedActivityButtonTemplate(ConquestFrame.Arena2v2)
     Skin.PVPRatedActivityButtonTemplate(ConquestFrame.Arena3v3)
     Skin.PVPRatedActivityButtonTemplate(ConquestFrame.RatedBG)
