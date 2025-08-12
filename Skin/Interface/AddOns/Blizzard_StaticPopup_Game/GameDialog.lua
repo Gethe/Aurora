@@ -47,8 +47,8 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
         end
         -- FIXLATER?
         local background = Frame.BG
-        -- background.Top:SetTexture("")
-        background.Bottom:SetTexture("")
+        background.Top:SetTexture("")
+        -- background.Bottom:SetTexture("")
         -- Skin.DialogBorderTemplate(border)
 
         local ButtonContainer = Frame.ButtonContainer
@@ -67,7 +67,7 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
             Skin.StaticPopupButtonTemplate(Buttons[i])
         end
 
-
+        -- FIXMELATER
         -- local EditBox = _G[name .. "EditBox"]
         -- EditBox.Left = _G[name .. "EditBoxLeft"]
         -- EditBox.Right = _G[name .. "EditBoxRight"]
@@ -79,15 +79,17 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 
         local ItemFrame = Frame.ItemFrame
         local nameFrame = ItemFrame.NameFrame
+        Skin.FrameTypeFrame(ItemFrame)
         nameFrame:Hide()
 
         Skin.FrameTypeItemButton(ItemFrame.Item)
-
-        local nameBG = _G.CreateFrame("Frame", nil, ItemFrame)
-        nameBG:SetPoint("TOPLEFT", ItemFrame.icon, "TOPRIGHT", 2, 1)
-        nameBG:SetPoint("BOTTOMLEFT", ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
-        nameBG:SetPoint("RIGHT", 120, 0)
-        Base.SetBackdrop(nameBG, Color.frame)
+        ItemFrame.Item.IconBorder:Hide()
+        -- FIXMELATER
+        -- local nameBG = _G.CreateFrame("Frame", nil, ItemFrame)
+        -- nameBG:SetPoint("TOPLEFT", ItemFrame.icon, "TOPRIGHT", 2, 1)
+        -- nameBG:SetPoint("BOTTOMLEFT", ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
+        -- nameBG:SetPoint("RIGHT", 120, 0)
+        -- Base.SetBackdrop(nameBG, Color.frame)
     end
 end
 
