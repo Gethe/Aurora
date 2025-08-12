@@ -191,6 +191,14 @@ function private.AddOns.Blizzard_Channels()
     ChannelFrame.ChannelRoster:SetPoint("TOPRIGHT", -20, -(private.FRAME_TITLE_HEIGHT + 20))
     ChannelFrame.ChannelRoster:SetPoint("BOTTOMRIGHT", -20, 28)
     Skin.InsetFrameTemplate(ChannelFrame.RightInset)
+    Skin.WowScrollBoxList(ChannelFrame.ChannelRoster.ScrollBox)
+    Skin.MinimalScrollBar(ChannelFrame.ChannelRoster.ScrollBar)
+
+    -- Skin.WowScrollBoxList(ChannelFrame.ChannelList.ScrollBox)
+    Skin.MinimalScrollBar(ChannelFrame.ChannelList.ScrollBar)
+
+
+    -- ChannelFrameannelFrame.ChannelRoster
 
     ----====####$$$$%%%%%$$$$####====----
     --    VoiceActivityNotification    --
