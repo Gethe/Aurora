@@ -1,4 +1,12 @@
-﻿## [11.2.0.4] ##
+﻿## [11.2.0.5] ##
+### Fixed ###
+  * fix: found rc of JoinBattleGround taint - disabled ScrollBoxList skin that does not work
+  * chg: Communities sidebuttons skin fix
+  * chg: Blizzards_Channel skin fix
+  * fx: StaticPopup fixes based on beta feedback
+
+
+## [11.2.0.4] ##
 ### Fixed ###
   * Lint errors
   
