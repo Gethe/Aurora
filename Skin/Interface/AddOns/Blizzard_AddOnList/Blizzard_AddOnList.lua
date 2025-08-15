@@ -10,32 +10,6 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 -- local Color = Aurora.Color
 
-do --[[ AddOns\AddonList.lua ]]
-    function Hook.AddonListCharacterDropDownButton_OnClick(self)
-        for i = 1, 2 do
-            local buttonName = "DropDownList1Button"..i
-            local button = _G[buttonName]
-            local checkBox = button._auroraCheckBox
-            local check = checkBox.check
-
-            checkBox:SetSize(8, 8)
-            checkBox:SetPoint("LEFT", 4, 0)
-            check:SetTexture(private.textures.plain)
-            check:SetSize(6, 6)
-            check:SetAlpha(0.6)
-
-            local checked = button.checked
-            if checked then
-                check:Show()
-            else
-                check:Hide()
-            end
-
-            _G[buttonName.."UnCheck"]:Hide()
-        end
-    end
-end
-
 
 -- FIXMELATER - No Longer used
 do --[[ AddOns\AddonList.xml ]]
@@ -51,10 +25,16 @@ end
 
 function private.AddOns.Blizzard_AddOnList()
     local AddonList = _G.AddonList
+    local bg = AddonList.NineSlice:GetBackdropTexture("bg")
+
     Skin.ButtonFrameTemplate(AddonList)
     Skin.UICheckButtonTemplate(AddonList.ForceLoad)
-    AddonList.ForceLoad:ClearAllPoints()
-    AddonList.ForceLoad:SetPoint("TOPRIGHT", -150, -25)
+    Skin.SearchBoxTemplate(AddonList.SearchBox)
+
+    local titleText = AddonList.TitleContainer
+    titleText:ClearAllPoints()
+    titleText:SetPoint("TOPLEFT", bg)
+    titleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
 
     Skin.SharedButtonSmallTemplate(AddonList.CancelButton)
     Skin.SharedButtonSmallTemplate(AddonList.OkayButton)
@@ -68,6 +48,10 @@ function private.AddOns.Blizzard_AddOnList()
         AddonList.EnableAllButton,
         AddonList.DisableAllButton,
     })
+    Util.PositionRelative("TOPRIGHT", AddonList, "TOPRIGHT", -10, -30, 5, "Down", {
+        AddonList.SearchBox,
+        AddonList.ForceLoad,
+    })
     Skin.DropdownButton(AddonList.Dropdown)
     AddonList.Dropdown:SetPoint("TOPLEFT", 10, -27)
 
@@ -75,6 +59,4 @@ function private.AddOns.Blizzard_AddOnList()
     Skin.MinimalScrollBar(AddonList.ScrollBar)
     AddonList.ScrollBox:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -21, 5)
     AddonList.ScrollBox:SetPoint("TOPLEFT", 5, -120)
-    -- FIXLATER - removed in 11.0.0 - replaced with a dropdown
-    -- AddonCharacterDropDown.Button:HookScript("OnClick", Hook.AddonListCharacterDropDownButton_OnClick)
 end
