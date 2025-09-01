@@ -134,7 +134,13 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     do --[[ Blizzard_AuctionHouseAuctionsFrame ]]
         Hook.AuctionHouseAuctionsSummaryLineMixin = {}
         function Hook.AuctionHouseAuctionsSummaryLineMixin:Init(listIndex)
-            self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
+            -- self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
+            if not self.Icon._auroraIconBG then
+                Skin.AuctionHouseAuctionsSummaryLineTemplate(self)
+                self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
+            else 
+                self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
+            end
             self.IconBorder:Hide()
         end
     end
