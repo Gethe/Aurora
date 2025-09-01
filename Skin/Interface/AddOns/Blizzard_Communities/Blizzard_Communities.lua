@@ -150,7 +150,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.TopFiligree:Hide()
             Frame.BottomFiligree:Hide()
 
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
             Frame.FilligreeOverlay:Hide()
             Skin.InsetFrameTemplate(Frame.InsetFrame)
@@ -174,7 +174,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ColumnDisplay.InsetBorderTop:Hide()
             Frame.ColumnDisplay.InsetBorderLeft:Hide()
 
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
@@ -273,7 +273,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
     do --[[ ClubFinderApplicantList ]]
         function Skin.ClubFinderApplicantListFrameTemplate(Frame)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
@@ -400,7 +400,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Base.SetHighlight(Button)
         end
         function Skin.ClubFinderCommunitiesCardFrameTemplate(Frame)
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
         end
         function Skin.ClubFinderOptionsTemplate(Frame)
@@ -448,7 +448,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ArtOverlay.TopLeft:ClearAllPoints()
             Frame.ArtOverlay.TopRight:ClearAllPoints()
 
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
             Frame.ColumnDisplay.InsetBorderTopLeft:ClearAllPoints()
@@ -491,7 +491,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunitiesGuildRewardsFrameTemplate(Frame)
             Frame.Bg:Hide()
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
@@ -506,7 +506,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         end
         function Skin.CommunitiesGuildPerksFrameTemplate(Frame)
             Frame:GetRegions():Hide()
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
         end
     end
@@ -596,7 +596,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame:GetRegions():Hide()
             Frame.Header:Hide()
 
-            Skin.WowScrollBoxList(Frame.ScrollBox)
+            Skin.WowScrollBox(Frame.ScrollBox)
             Skin.MinimalScrollBar(Frame.ScrollBar)
             Skin.CommunitiesGuildNewsBossModelTemplate(Frame.BossModel)
         end
@@ -722,7 +722,7 @@ function private.AddOns.Blizzard_Communities()
 
     CommunitiesAvatarPickerDialog.Selector.Center = CommunitiesAvatarPickerDialog:GetRegions()
     Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog.Selector)
-    Skin.WowScrollBoxList(CommunitiesAvatarPickerDialog.ScrollBox)
+    Skin.WowScrollBox(CommunitiesAvatarPickerDialog.ScrollBox)
     Skin.MinimalScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
 
     ----====####$$$$%%%%$$$$####====----
