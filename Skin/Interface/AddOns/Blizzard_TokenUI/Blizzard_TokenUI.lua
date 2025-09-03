@@ -14,6 +14,7 @@ local Util = Aurora.Util
 do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
     Hook.TokenFrameMixin = {}
     function Hook.TokenFrameMixin:OnLoad()
+        _G.print("TokenFrameMixin:OnLoad")
         local button = self.button
         if not button then
             if private.isDev then
@@ -21,6 +22,7 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
             end
             return
         end
+        _G.print("TokenFrameMixin:OnLoad" .. button:GetName())
         if not button._auroraSkinned then
             Skin.TokenButtonTemplate(button)
         end
@@ -38,7 +40,7 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
             local r, g, b = Color.highlight:GetRGB()
             button.Highlight:SetColorTexture(r, g, b)
             button.Highlight:SetAlpha(0.2)
-            button.Highlight:SetPoint("TOPLEFT", 1, 0)
+            button.Highlight:SetPoint("TOPLEFT", -10, 0)
             button.Highlight:SetPoint("BOTTOMRIGHT", -1, 0)
 
             button._auroraMinus:Hide()
@@ -48,6 +50,8 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
         end
     end
     function Hook.TokenFrameMixin:Update(resetScrollPosition)
+        _G.print("TokenFrameMixin:Update")
+
         local buttons = _G.TokenFrameContainer.buttons
         if not buttons then return end
 
@@ -80,6 +84,9 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
             end
         end
     end
+    function Hook.TokenFrameMixin:OnEvent(event, ...)
+        _G.print("TokenFrameMixin:OnEvent", event, ...)
+     end
 end
 
 do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
@@ -117,31 +124,67 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
         Base.CropIcon(Button.Icon, Button)
         Button.Count:SetPoint("RIGHT", Button.Icon, "LEFT", -2, 0)
     end
+
+    local function SecureUpdateCollapse(texture, atlas)
+        if not atlas then
+            local parent = texture:GetParent()
+            if parent:IsCollapsed() then
+                texture:SetAtlas('Soulbinds_Collection_CategoryHeader_Expand')
+            else
+                texture:SetAtlas('Soulbinds_Collection_CategoryHeader_Collapse')
+            end
+        end
+    end    
+    local function SecureUpdateCurrencyScrollBoxEntries(entry)
+        if not entry._auroraSkinned then
+            if entry.Right then
+                Base.SetBackdrop(entry, Color.button)
+                SecureUpdateCollapse(entry.Right)
+                SecureUpdateCollapse(entry.HighlightRight)
+                hooksecurefunc(entry.Right, 'SetAtlas', SecureUpdateCollapse)
+                hooksecurefunc(entry.HighlightRight, 'SetAtlas', SecureUpdateCollapse)
+            end
+            local icon = entry.Content and entry.Content.CurrencyIcon
+            if icon then
+                Base.CropIcon(icon)
+            end
+            entry._auroraSkinned = true
+        end
+    end    
+    function Hook.UpdateCurrencyScrollBox(frame)
+        frame:ForEachFrame(SecureUpdateCurrencyScrollBoxEntries)
+    end
 end
 
 function private.AddOns.Blizzard_TokenUI()
-    local TokenFrame = _G.TokenFrame
+    _G.print("Skinning Blizzard_TokenUI")
     Util.Mixin(_G.TokenFrameMixin, Hook.TokenFrameMixin)
-
-    -- FIXLATER - disable for now
-    -- _G.hooksecurefunc("TokenFrame_InitTokenButton", Hook.TokenFrame_InitTokenButton)
-
-    Skin.WowScrollBoxList(TokenFrame.ScrollBox)
-    Skin.MinimalScrollBar(TokenFrame.ScrollBar)
+    _G.print("Blizzard_TokenUI Mixin applied")
+    local TokenFrame = _G.TokenFrame
+    hooksecurefunc(TokenFrame.ScrollBox, 'Update', Hook.UpdateCurrencyScrollBox)
 
     local TokenFramePopup = _G.TokenFramePopup
     Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)
     TokenFramePopup:SetSize(175, 90)
-
     local titleText = TokenFramePopup.Title
     titleText:ClearAllPoints()
     titleText:SetPoint("TOPLEFT")
     titleText:SetPoint("BOTTOMRIGHT", TokenFramePopup, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
     Skin.UICheckButtonTemplate(TokenFramePopup.InactiveCheckbox)
     TokenFramePopup.InactiveCheckbox:SetPoint("TOPLEFT", TokenFramePopup, 24, -26)
     Skin.UICheckButtonTemplate(TokenFramePopup.BackpackCheckbox)
     TokenFramePopup.BackpackCheckbox:SetPoint("TOPLEFT", TokenFramePopup.InactiveCheckbox, "BOTTOMLEFT", 0, -8)
-
+    Skin.UIPanelButtonTemplate(TokenFramePopup.CurrencyTransferToggleButton)
+    TokenFramePopup.CurrencyTransferToggleButton:SetPoint("TOPLEFT", TokenFramePopup.BackpackCheckbox, "BOTTOMLEFT", 0, -8)
     Skin.UIPanelCloseButton(TokenFramePopup["$parent.CloseButton"])
+
+    local CurrencyTransferMenu = _G.CurrencyTransferMenu
+    Skin.DialogBorderNoCenterTemplate(CurrencyTransferMenu.NineSlice)
+    Skin.UIPanelButtonTemplate(CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton)
+    Skin.InputBoxTemplate(CurrencyTransferMenu.Content.AmountSelector.InputBox)
+    Skin.UIPanelButtonTemplate(CurrencyTransferMenu.Content.ConfirmButton)
+    Skin.UIPanelButtonTemplate(CurrencyTransferMenu.Content.CancelButton)
+    Skin.UIPanelCloseButton(CurrencyTransferMenu.CloseButton)
+    -- FIXLATER
+    Skin.DropdownButton(CurrencyTransferMenu.Content.SourceSelector.Dropdown)
 end
