@@ -25,7 +25,7 @@ end
 
 function private.AddOns.Blizzard_AddOnList()
     local AddonList = _G.AddonList
-    local bg = AddonList.NineSlice:GetBackdropTexture("bg")
+    local bg = AddonList.Bg
 
     Skin.ButtonFrameTemplate(AddonList)
     Skin.UICheckButtonTemplate(AddonList.ForceLoad)
