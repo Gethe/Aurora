@@ -386,7 +386,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_PrintHandler\Blizzard_PrintHandler.lua"/-->
     <!--Script file="Blizzard_PrivateAurasUI\Blizzard_PrivateAurasUI.lua"/-->
     <!--Script file="Blizzard_Professions\Blizzard_Professions.lua"/-->
-    <!--Script file="Blizzard_ProfessionsBook\Blizzard_ProfessionsBook.lua"/-->
+    <Script file="Blizzard_ProfessionsBook\Blizzard_ProfessionsBook.lua"/>
     <!--Script file="Blizzard_ProfessionsCustomerOrders\Blizzard_ProfessionsCustomerOrders.lua"/-->
     <!--Script file="Blizzard_ProfessionsTemplates\Blizzard_ProfessionsTemplates.lua"/-->
     <!--Script file="Blizzard_PTRFeedback\Blizzard_PTRFeedback.lua"/-->
