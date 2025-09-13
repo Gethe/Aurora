@@ -55,10 +55,10 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
                 Button.Arrow:SetAlpha(0)
             end
             -- if Button.TabHighlight then Button.TabHighlight:SetAlpha(0) end
-            local tex = Button:CreateTexture(nil, "ARTWORK")
-            tex:SetPoint("RIGHT", Button, -3, 0)
-            tex:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
-            tex:SetSize(13,13)
+            -- local tex = Button:CreateTexture(nil, "ARTWORK")
+            -- tex:SetPoint("RIGHT", Button, -3, 0)
+            -- tex:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
+            -- tex:SetSize(13,13)
         end
     end
 end

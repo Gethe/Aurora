@@ -75,10 +75,10 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
                 Frame.Arrow:SetAlpha(0)
             end
             -- if Frame.TabHighlight then Frame.TabHighlight:SetAlpha(0) end
-            local tex = Frame:CreateTexture(nil, "ARTWORK")
-            tex:SetPoint("RIGHT", Frame, -3, 0)
-            tex:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
-            tex:SetSize(13,13)
+            -- local tex = Frame:CreateTexture(nil, "ARTWORK")
+            -- tex:SetPoint("RIGHT", Frame, -3, 0)
+            -- tex:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
+            -- tex:SetSize(13,13)
         end
         function Skin.FilterButton(Frame, Width)
             -- local rightOfs = -105
@@ -128,10 +128,10 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
                 Frame.Arrow:SetAlpha(0)
             end
             -- if Frame.TabHighlight then Frame.TabHighlight:SetAlpha(0) end
-            local tex = Frame:CreateTexture(nil, "ARTWORK")
-            tex:SetPoint("RIGHT", Frame, -3, 0)
-            tex:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
-            tex:SetSize(13,13)
+            -- local tex = Frame:CreateTexture(nil, "ARTWORK")
+            -- tex:SetPoint("RIGHT", Frame, -3, 0)
+            -- tex:SetTexture([[Interface\AddOns\Aurora\media\-active]])
+            -- tex:SetSize(13,13)
         end
     end
 end

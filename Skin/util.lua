@@ -318,11 +318,9 @@ function Util.Mixin(table, ...)
         end
     end
     if not table then
-        -- _G.print("util.Mixin: ", name, " empty table")
         return
     end
     for name, func in next, tempMixin do
-        -- _G.print("util.Mixin: ", name, "functions: ", table[name], func)
         _G.hooksecurefunc(table, name, func)
     end
 end
