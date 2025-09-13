@@ -14,7 +14,8 @@ aurora_addons = ['Blizzard_FrameXML', 'Blizzard_FrameXMLBase', 'Blizzard_SharedX
                  'Blizzard_UIPanels_Game', 'Blizzard_UnitPopup', 'Blizzard_UIParent', 'Blizzard_StaticPopup_Frame',
                  'Blizzard_PlayerSpells', 'Blizzard_GroupFinder', 'Blizzard_QuickJoin', 'Blizzard_ActionBar',
                  'Blizzard_MoneyFrame','Blizzard_UIPanelTemplates','Blizzard_GarrisonBase', 'Blizzard_ChatFrame',
-                 'Blizzard_StaticPopup_Frame', 'Blizzard_ActionBar', 'Blizzard_Menu',
+                 'Blizzard_StaticPopup_Game', 'Blizzard_ActionBar', 'Blizzard_Menu','Blizzard_ChatFrameBase',
+                 'Blizzard_UIMenu'
                 ]
 
 isLive = False
@@ -27,12 +28,14 @@ isVanilla = False
 isTBC = False
 isWrath = False
 isCata = False
+isMists = False
 
 ADP_Retail = 0
 ADP_Vanilla = 10
 ADP_TBC = 20
 ADP_Wrath = 30
 ADP_Cata = 40
+ADP_Mists = 40
 ADP_WoWLabs= 99
 
 xml_header = "<Ui xmlns=\"http://www.blizzard.com/wow/ui/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.blizzard.com/wow/ui/\nhttps://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd\">\n"
@@ -44,6 +47,7 @@ xml_no_include_lua = "    <!--Script file=\"%s\"/-->\n"
 xml_space = "\n"
 xml_footer = "</Ui>"
 dontupdate_toc_types = ['WowLabs']
+replace_family_with = "Mainline"
 
 def _app_intro():
     global version
@@ -57,10 +61,17 @@ def check_git_branch():
     if branch.name == 'live':
         dontupdate_toc_types.append('TBC')
         dontupdate_toc_types.append('Cata')
-        dontupdate_toc_types.append('Wratch')
+        dontupdate_toc_types.append('Wrath')
         dontupdate_toc_types.append('Vanilla')
         dontupdate_toc_types.append('Classic')
         isLive = True
+    elif branch.name == 'ptr2':
+        dontupdate_toc_types.append('TBC')
+        dontupdate_toc_types.append('Cata')
+        dontupdate_toc_types.append('Wrath')
+        dontupdate_toc_types.append('Vanilla')
+        dontupdate_toc_types.append('Classic')
+        dontupdate_toc_types.append('Mists')
     elif branch.name == 'classic':
         dontupdate_toc_types.append('Mainline')
         isClassic = True
@@ -107,6 +118,8 @@ def determine_adp(toc_type):
         return ADP_Wrath
     elif toc_type == 'Cata':
         return ADP_Cata
+    elif toc_type == 'Mists':
+        return ADP_Mists
     elif toc_type == 'WowLabs':
         return ADP_WoWLabs
     else:
@@ -132,6 +145,9 @@ def determine_toc_type(toc_file):
     elif 'cata' in filename:
         isCata = True
         return 'Cata'
+    elif 'mists' in filename:
+        isMists = True
+        return 'Mists'    
     elif 'mainline' in filename:
         isRetail = True
         return 'Mainline'
@@ -162,6 +178,7 @@ def read_toc_for_aurora_specials(toc_file, directory, xml_file_path):
         for line in lines:
             if not line.startswith('#'):
                 filename = os.path.splitext(line)[0]
+                filename = filename.replace('[Family]', replace_family_with)
                 toc_file_entry = format(f"{filename}.lua")
                 lua_file_path = os.path.join(aurora_path, directory, filename) + '.lua'
                 if not toc_file_entry in processed_lines:
@@ -177,6 +194,7 @@ def read_toc_for_aurora_addons(toc_file, directory, xml_file_path):
         for line in lines:
             if not line.startswith('#'):
                 filename = os.path.splitext(line)[0]
+                filename = filename.replace('[Family]', replace_family_with)  # Replace spaces with underscores
                 toc_file_entry = format(f"{directory}\{filename}.lua")
                 lua_file_path = os.path.join(aurora_path, directory, filename) + '.lua'
                 if not toc_file_entry in processed_lines:
@@ -235,6 +253,45 @@ def read_toc_files(table_data):
             print(f"Directory: {directory}, TOC File: {toc_file}, TOC Type: {toc_type}")
             print(f"Content of {toc_file}:\n{content}\n")
 
+def find_and_list_unusued_files():
+    print("Searching for unused .lua files in the Aurora path...")
+
+    # Collect all .lua files in aurora_path subfolders
+    all_lua_files = set()
+    for root, dirs, files in os.walk(aurora_path):
+        for file in files:
+            if file.endswith('.lua'):
+                rel_path = os.path.relpath(os.path.join(root, file), aurora_path)
+                all_lua_files.add(rel_path.replace("\\", "/"))
+
+    # Use processed_lines from process_aurora_addons for referenced .lua files
+    # If not available globally, collect here as fallback
+    global processed_lines
+    processed_lua_files = set()
+    if 'processed_lines' in globals() and isinstance(processed_lines, dict):
+        processed_lua_files = set(k.replace("\\", "/") for k in processed_lines.keys())
+    else:
+        for root, dirs, files in os.walk(aurora_path):
+            for file in files:
+                if file.endswith('.xml'):
+                    xml_path = os.path.join(root, file)
+                    with open(xml_path, 'r', encoding='utf-8') as f:
+                        for line in f:
+                            if 'Script file="' in line:
+                                start = line.find('Script file="') + len('Script file="')
+                                end = line.find('"', start)
+                                lua_file = line[start:end]
+                                lua_file = lua_file.lstrip("./\\")
+                                processed_lua_files.add(lua_file.replace("\\", "/"))
+
+    unused_files = all_lua_files - processed_lua_files
+    if unused_files:
+        print("Unused .lua files found:")
+        for file in sorted(unused_files):
+            print(f"- {file}")
+    else:
+        print("No unused .lua files found.")
+
 # Example usage
 # find_and_read_toc_files(wou_ui_sources)
 _app_intro()
@@ -250,6 +307,7 @@ for directory, toc_files in toc_files_dict.items():
 # # read_toc_for_aurora_specials(table_data)
 process_aurora_specials(table_data, aurora_specials)
 process_aurora_addons(table_data, aurora_addons, aurora_specials)
+find_and_list_unusued_files()
 
 print(f"\nExpansions Detected in this run:")
-print(f"Retail {isRetail}, Classic {isVanilla}, Classic/Wrath {isWrath}, Classic/Cata {isCata}")
+print(f"Retail {isRetail}, Classic {isVanilla}, Classic/Wrath {isWrath}, Classic/Cata {isCata}, Classic/Mists {isMists}, Classic/TBC {isTBC}\n")
