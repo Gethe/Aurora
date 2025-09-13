@@ -194,11 +194,14 @@ function private.FrameXML.QuestMapFrame()
     local MapLegendTab = QuestMapFrame.MapLegendTab
     Skin.QuestMapFrameTabTemplate(MapLegendTab)
 
+    local EventsTab = QuestMapFrame.EventsTab
+    Skin.QuestMapFrameTabTemplate(EventsTab)
+
     Util.PositionRelative("TOPLEFT", QuestMapFrame, "TOPRIGHT", 1, -40, 1, "Down", {
         QuestsTab,
         MapLegendTab,
+        EventsTab,
     })
-
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
