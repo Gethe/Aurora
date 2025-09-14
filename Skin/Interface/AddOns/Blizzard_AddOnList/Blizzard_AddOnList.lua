@@ -6,7 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 local Util = Aurora.Util
 -- local Color = Aurora.Color
 

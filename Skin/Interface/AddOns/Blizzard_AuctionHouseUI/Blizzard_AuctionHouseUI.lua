@@ -138,7 +138,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
             if not self.Icon._auroraIconBG then
                 Skin.AuctionHouseAuctionsSummaryLineTemplate(self)
                 self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
-            else 
+            else
                 self.Icon._auroraIconBG:SetShown(self.Icon:IsShown())
             end
             self.IconBorder:Hide()

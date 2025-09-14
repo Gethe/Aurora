@@ -134,15 +134,15 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
                 texture:SetAtlas('Soulbinds_Collection_CategoryHeader_Collapse')
             end
         end
-    end    
+    end
     local function SecureUpdateCurrencyScrollBoxEntries(entry)
         if not entry._auroraSkinned then
             if entry.Right then
                 Base.SetBackdrop(entry, Color.button)
                 SecureUpdateCollapse(entry.Right)
                 SecureUpdateCollapse(entry.HighlightRight)
-                hooksecurefunc(entry.Right, 'SetAtlas', SecureUpdateCollapse)
-                hooksecurefunc(entry.HighlightRight, 'SetAtlas', SecureUpdateCollapse)
+                _G.hooksecurefunc(entry.Right, 'SetAtlas', SecureUpdateCollapse)
+                _G.hooksecurefunc(entry.HighlightRight, 'SetAtlas', SecureUpdateCollapse)
             end
             local icon = entry.Content and entry.Content.CurrencyIcon
             if icon then
@@ -150,7 +150,7 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
             end
             entry._auroraSkinned = true
         end
-    end    
+    end
     function Hook.UpdateCurrencyScrollBox(frame)
         frame:ForEachFrame(SecureUpdateCurrencyScrollBoxEntries)
     end
@@ -161,7 +161,7 @@ function private.AddOns.Blizzard_TokenUI()
     Util.Mixin(_G.TokenFrameMixin, Hook.TokenFrameMixin)
     _G.print("Blizzard_TokenUI Mixin applied")
     local TokenFrame = _G.TokenFrame
-    hooksecurefunc(TokenFrame.ScrollBox, 'Update', Hook.UpdateCurrencyScrollBox)
+    _G.hooksecurefunc(TokenFrame.ScrollBox, 'Update', Hook.UpdateCurrencyScrollBox)
 
     local TokenFramePopup = _G.TokenFramePopup
     Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)
