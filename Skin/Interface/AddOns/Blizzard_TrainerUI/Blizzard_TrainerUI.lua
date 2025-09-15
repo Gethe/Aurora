@@ -36,7 +36,8 @@ function private.AddOns.Blizzard_TrainerUI()
     _G.ClassTrainerStatusBar:SetSize(192, 18)
 
     Skin.DropdownButton(ClassTrainerFrame.FilterDropdown)
-    Skin.MagicButtonTemplate(ClassTrainerFrame.classTrainerTrainButton)
+    local ClassTrainerTrainButton = _G.ClassTrainerTrainButton
+    Skin.MagicButtonTemplate(ClassTrainerTrainButton)
 
     local moneyBG = _G.CreateFrame("Frame", nil, ClassTrainerFrame)
     moneyBG:SetSize(142, 18)
