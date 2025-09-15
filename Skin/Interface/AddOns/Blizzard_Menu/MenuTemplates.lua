@@ -18,7 +18,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
 end
 
 
-function private.BlizzAddOns.MenuTemplates()
+function private.AddOns.MenuTemplates()
 
 end
 

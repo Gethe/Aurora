@@ -136,6 +136,6 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
     end
 end
 
-function private.BlizzAddOns.DropdownButton()
+function private.AddOns.DropdownButton()
 
 end

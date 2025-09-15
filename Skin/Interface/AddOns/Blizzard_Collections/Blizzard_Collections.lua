@@ -507,17 +507,18 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
         end
     end
 
-
     do --[[ Blizzard_HeirloomCollection ]]
         -- local NO_CLASS_FILTER = 0
         -- local NO_SPEC_FILTER = 0
-
         Hook.WarbandSceneJounalMixin = {}
         function Hook.WarbandSceneJounalMixin:OnLoad()
+            _G.print("WarbandSceneJounalMixin:OnLoad")
         end
         function Hook.WarbandSceneJounalMixin:OnShow()
+            _G.print("WarbandSceneJounalMixin:OnShow")
         end
         function Hook.WarbandSceneJounalMixin:OnEvent()
+            _G.print("WarbandSceneJounalMixin:OnEvent")
         end
     end
 end

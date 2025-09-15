@@ -18,6 +18,6 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
 end
 
 
-function private.BlizzAddOns.Menu()
+function private.AddOns.Menu()
 
 end

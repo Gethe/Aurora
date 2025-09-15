@@ -64,6 +64,6 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
 end
 
 
-function private.BlizzAddOns.MainLineMenuTemplates()
+function private.AddOns.MainLineMenuTemplates()
 
 end
