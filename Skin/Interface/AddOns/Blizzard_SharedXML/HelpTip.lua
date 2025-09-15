@@ -45,7 +45,7 @@ do --[[ FrameXML\HelpTip.xml ]]
 end
 
 function private.FrameXML.HelpTip()
-    Util.Mixin(_G.HelpTipTemplate, Hook.HelpTipTemplateMixin)
+    Util.Mixin(_G.HelpTipTemplateMixin, Hook.HelpTipTemplateMixin)
 
     -- FIXLATER - Broken in 11.0.0
     -- Not sure how to find the non active objects in the pool at this time.

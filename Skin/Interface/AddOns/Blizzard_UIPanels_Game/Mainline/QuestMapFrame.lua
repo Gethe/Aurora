@@ -205,11 +205,12 @@ function private.FrameXML.QuestMapFrame()
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
-    Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(QuestsFrame.covenantCallingsHeaderFramePool, Hook.ObjectPoolMixin)
+    -- FIXLATER
+    -- Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
+    -- Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
+    -- Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
+    -- Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
+    -- Util.Mixin(QuestsFrame.covenantCallingsHeaderFramePool, Hook.ObjectPoolMixin)
 
     QuestsFrame.ScrollFrame.Contents.Separator:SetSize(260, 10)
     QuestsFrame.ScrollFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)

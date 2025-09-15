@@ -128,7 +128,8 @@ function private.FrameXML.GossipFrame()
         Skin.WowScrollBoxList(GreetingPanel.ScrollBox)
         GreetingPanel.ScrollBox:SetPoint("TOPLEFT", bg, 4, -(private.FRAME_TITLE_HEIGHT + 5))
         GreetingPanel.ScrollBox:SetPoint("BOTTOMRIGHT", bg, -23, 29)
-        Util.Mixin(GreetingPanel.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
+        -- FIXLATER - PrivateMixin
+        -- Util.Mixin(GreetingPanel.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
 
         Skin.MinimalScrollBar(GreetingPanel.ScrollBar)
     end
