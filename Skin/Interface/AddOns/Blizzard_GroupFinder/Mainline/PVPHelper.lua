@@ -37,9 +37,9 @@ function private.AddOns.PVPHelper()
         PVPReadyDialog.background:SetPoint("TOPLEFT", bg, 1, -1)
         PVPReadyDialog.background:SetPoint("BOTTOMRIGHT", bg, -1, 68)
 
-        if not private.isPatch then
-            PVPReadyDialog.filigree:Hide()
-        end
+        -- if not private.isPatch then
+        --     PVPReadyDialog.filigree:Hide()
+        -- end
         PVPReadyDialog.bottomArt:Hide()
 
         Skin.UIPanelHideButtonNoScripts(_G.PVPReadyDialogCloseButton)

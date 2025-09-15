@@ -189,9 +189,9 @@ do --[[ FrameXML\LFGList.xml ]]
         Skin.UIMenuButtonStretchTemplate(Button.InviteButton)
     end
     function Skin.LFGListRoleButtonTemplate(Button)
-        if not private.isPatch then
-            Button.cover:SetColorTexture(0, 0, 0, 0.75)
-        end
+        -- if not private.isPatch then
+        --     Button.cover:SetColorTexture(0, 0, 0, 0.75)
+        -- end
         Base.SetTexture(Button:GetNormalTexture(), "icon"..Button.role)
         Skin.UICheckButtonTemplate(Button.CheckButton)
     end

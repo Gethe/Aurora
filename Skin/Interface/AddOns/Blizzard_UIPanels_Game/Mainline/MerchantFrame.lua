@@ -50,15 +50,16 @@ function private.FrameXML.MerchantFrame()
     _G.BuybackBG:SetPoint("BOTTOMRIGHT")
 
     _G.MerchantFrameBottomLeftBorder:SetAlpha(0)
-    if not private.isPatch then
-        _G.MerchantFrameBottomRightBorder:SetAlpha(0)
-    end
+
+    -- if not private.isPatch then
+    --     _G.MerchantFrameBottomRightBorder:SetAlpha(0)
+    -- end
 
     for i = 1, _G.BUYBACK_ITEMS_PER_PAGE do
         Skin.MerchantItemTemplate(_G["MerchantItem"..i])
     end
 
-    if private.isPatch then
+    -- if private.isPatch then
         _G.MerchantSellAllJunkButton:ClearPushedTexture()
         Base.CropIcon(_G.MerchantSellAllJunkButton.Icon, _G.MerchantSellAllJunkButton)
 
@@ -70,21 +71,21 @@ function private.FrameXML.MerchantFrame()
 
         _G.MerchantGuildBankRepairButton:ClearPushedTexture()
         Base.CropIcon(_G.MerchantGuildBankRepairButton.Icon, _G.MerchantGuildBankRepairButton)
-    else
-        _G.MerchantRepairAllButton:ClearPushedTexture()
-        _G.MerchantRepairAllIcon:SetTexture([[Interface\Icons\Trade_BlackSmithing]])
-        Base.CropIcon(_G.MerchantRepairAllIcon, _G.MerchantRepairAllButton)
+    -- else
+    --     _G.MerchantRepairAllButton:ClearPushedTexture()
+    --     _G.MerchantRepairAllIcon:SetTexture([[Interface\Icons\Trade_BlackSmithing]])
+    --     Base.CropIcon(_G.MerchantRepairAllIcon, _G.MerchantRepairAllButton)
 
-        local repairItem = _G.MerchantRepairItemButton:GetRegions()
-        _G.MerchantRepairItemButton:ClearPushedTexture()
-        repairItem:SetTexture([[Interface\Icons\INV_Hammer_20]])
-        Base.CropIcon(repairItem, _G.MerchantRepairItemButton)
+    --     local repairItem = _G.MerchantRepairItemButton:GetRegions()
+    --     _G.MerchantRepairItemButton:ClearPushedTexture()
+    --     repairItem:SetTexture([[Interface\Icons\INV_Hammer_20]])
+    --     Base.CropIcon(repairItem, _G.MerchantRepairItemButton)
 
-        _G.MerchantGuildBankRepairButton:ClearPushedTexture()
-        _G.MerchantGuildBankRepairButtonIcon:SetTexture([[Interface\Icons\Trade_BlackSmithing]])
-        _G.MerchantGuildBankRepairButtonIcon:SetVertexColor(0.9, 0.8, 0)
-        Base.CropIcon(_G.MerchantGuildBankRepairButtonIcon, _G.MerchantGuildBankRepairButton)
-    end
+    --     _G.MerchantGuildBankRepairButton:ClearPushedTexture()
+    --     _G.MerchantGuildBankRepairButtonIcon:SetTexture([[Interface\Icons\Trade_BlackSmithing]])
+    --     _G.MerchantGuildBankRepairButtonIcon:SetVertexColor(0.9, 0.8, 0)
+    --     Base.CropIcon(_G.MerchantGuildBankRepairButtonIcon, _G.MerchantGuildBankRepairButton)
+    -- end
 
     do
         local name = _G.MerchantBuyBackItem:GetName()

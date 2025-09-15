@@ -90,13 +90,6 @@ function private.AddOns.Blizzard_WorldMap()
     local WorldMapFrame = _G.WorldMapFrame
     Skin.WorldMapFrameTemplate(WorldMapFrame)
     Util.Mixin(WorldMapFrame, Hook.WorldMapMixin)
-    if private.isDev then
-        local overlayFramescount  = 0
-        for _ in pairs(WorldMapFrame.overlayFrames) do
-            overlayFramescount = overlayFramescount + 1
-        end
-        _G.print("overlayFramescount: " .. overlayFramescount)
-    end
     Skin.PortraitFrameTemplate(WorldMapFrame.BorderFrame)
     WorldMapFrame.BorderFrame:SetFrameStrata(WorldMapFrame:GetFrameStrata())
 

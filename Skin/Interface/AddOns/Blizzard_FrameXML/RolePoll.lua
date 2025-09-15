@@ -14,9 +14,9 @@ local Skin = Aurora.Skin
 
 do --[[ FrameXML\RolePoll.xml ]]
     function Skin.RolePollRoleButtonTemplate(Button)
-        if not private.isPatch then
-            Button.cover:SetColorTexture(0, 0, 0, 0.75)
-        end
+        -- if not private.isPatch then
+        --     Button.cover:SetColorTexture(0, 0, 0, 0.75)
+        -- end
         Base.SetTexture(Button:GetNormalTexture(), "icon"..(Button.role or "GUIDE"))
         Skin.UICheckButtonTemplate(Button.checkButton)
         Button.checkButton:SetPoint("BOTTOMLEFT", -4, -4)
