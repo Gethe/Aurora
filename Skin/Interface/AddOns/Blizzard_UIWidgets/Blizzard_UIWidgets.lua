@@ -62,12 +62,9 @@ end
 do --[[ AddOns\Blizzard_UIWidgets.xml ]]
     do --[[ Blizzard_UIWidgetTemplateBase ]]
         function Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
-            _G.print("Skin.UIWidgetBaseStatusBarTemplate", StatusBar:GetDebugName())
             Skin.FrameTypeStatusBar(StatusBar)
         end
         function Skin.UIWidgetBaseSpellTemplate(Frame)
-            _G.print("Skin.UIWidgetBaseSpellTemplate", Frame:GetDebugName())
-
             Base.CropIcon(Frame.Icon, Frame)
 
             Frame.Border:SetAlpha(0)
