@@ -9,85 +9,7 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
-local Util = Aurora.Util
-
-do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.lua ]]
-    Hook.TokenFrameMixin = {}
-    function Hook.TokenFrameMixin:OnLoad()
-        _G.print("TokenFrameMixin:OnLoad")
-        local button = self.button
-        if not button then
-            if private.isDev then
-                _G.error("TokenFrameMixin:OnLoad called without button")
-            end
-            return
-        end
-        _G.print("TokenFrameMixin:OnLoad" .. button:GetName())
-        if not button._auroraSkinned then
-            Skin.TokenButtonTemplate(button)
-        end
-        if button.isHeader then
-            Base.SetBackdrop(button, Color.button)
-            button.Highlight:SetAlpha(0)
-
-            button._auroraMinus:Show()
-            button._auroraPlus:SetShown(not button.isExpanded)
-            button.Stripe:Hide()
-            button.Icon.bg:Hide()
-        else
-            button:SetBackdrop(false)
-
-            local r, g, b = Color.highlight:GetRGB()
-            button.Highlight:SetColorTexture(r, g, b)
-            button.Highlight:SetAlpha(0.2)
-            button.Highlight:SetPoint("TOPLEFT", -10, 0)
-            button.Highlight:SetPoint("BOTTOMRIGHT", -1, 0)
-
-            button._auroraMinus:Hide()
-            button._auroraPlus:Hide()
-            button.Stripe:SetShown(button.index % 2 == 1)
-            button.Icon.bg:Show()
-        end
-    end
-    function Hook.TokenFrameMixin:Update(resetScrollPosition)
-        _G.print("TokenFrameMixin:Update")
-
-        local buttons = _G.TokenFrameContainer.buttons
-        if not buttons then return end
-
-        for i = 1, #buttons do
-            local button = buttons[i]
-            if button:IsShown() then
-
-                if button.isHeader then
-                    Base.SetBackdrop(button, Color.button)
-                    button.highlight:SetAlpha(0)
-
-                    button._auroraMinus:Show()
-                    button._auroraPlus:SetShown(not button.isExpanded)
-                    button.stripe:Hide()
-                    button.icon.bg:Hide()
-                else
-                    button:SetBackdrop(false)
-
-                    local r, g, b = Color.highlight:GetRGB()
-                    button.highlight:SetColorTexture(r, g, b)
-                    button.highlight:SetAlpha(0.2)
-                    button.highlight:SetPoint("TOPLEFT", 1, 0)
-                    button.highlight:SetPoint("BOTTOMRIGHT", -1, 0)
-
-                    button._auroraMinus:Hide()
-                    button._auroraPlus:Hide()
-                    button.stripe:SetShown(button.index % 2 == 1)
-                    button.icon.bg:Show()
-                end
-            end
-        end
-    end
-    function Hook.TokenFrameMixin:OnEvent(event, ...)
-        _G.print("TokenFrameMixin:OnEvent", event, ...)
-     end
-end
+-- local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
     function Skin.TokenButtonTemplate(Button)
@@ -156,12 +78,15 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
     end
 end
 
-function private.AddOns.Blizzard_TokenUI()
-    _G.print("Skinning Blizzard_TokenUI")
-    Util.Mixin(_G.TokenFrameMixin, Hook.TokenFrameMixin)
-    _G.print("Blizzard_TokenUI Mixin applied")
+function private.FrameXML.Blizzard_TokenUI()
     local TokenFrame = _G.TokenFrame
+    Skin.WowScrollBoxList(TokenFrame.ScrollBox)
     _G.hooksecurefunc(TokenFrame.ScrollBox, 'Update', Hook.UpdateCurrencyScrollBox)
+    TokenFrame.ScrollBox:SetPoint("TOPLEFT", _G.CharacterFrame.Inset, 4, -35)
+    Skin.DropdownButton(TokenFrame.filterDropdown)
+    TokenFrame.filterDropdown:ClearAllPoints()
+    TokenFrame.filterDropdown:SetPoint("TOPLEFT", 18,  -30)
+    TokenFrame.CurrencyTransferLogToggleButton:SetPoint("TOPRIGHT", -10, -30)
 
     local TokenFramePopup = _G.TokenFramePopup
     Skin.SecureDialogBorderTemplate(TokenFramePopup.Border)
