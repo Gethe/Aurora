@@ -1,4 +1,25 @@
-﻿## [11.2.0.5] ##
+﻿## [11.2.0.6] ##
+### Fixed ###
+add: Blizzard_PlayerSpellsFrame skin - part 1
+  * chg: cleaned up broken Mixins - disabled some that are now private
+  * chg: removed BlizzAddOns and replaced with AddOns
+  * chg: cleaned up isPatch for older versions of wow
+  * chg: fix skin on ClassTrainerTrainButton from Blizzard_TrainerUI
+  * chg: lints
+  * chg: dev/updatexmls.py minor update of addons.
+  * chg: started skinning Blizzard_ProfessionsBook
+  * chg: CommunitiesListEntryMixin creates an c stack overflow somehow
+  * chg: removed static arrow-down-active from FilterButton, DropdownButton and WowStyle1ArrowDropdownTemplate
+  * chg: removed Blizzard_ProfessionsBook related code from Blizzard_SpellBookFrame
+  * chg: QuestMapFrame - EventsTab side tab skin
+  * chg: Blizzard_TokenUI should not taint anymore
+  * chg: fix Blizzard_AddOnList
+  * chg: work on AuctionHouseUI - missing _auroraIconBG
+  * chg: replace WowScrollBoxList with WowScrollBox
+  * chg: skin fix for AddOnsList
+
+
+## [11.2.0.5] ##
 ### Fixed ###
   * fix: found rc of JoinBattleGround taint - disabled ScrollBoxList skin that does not work
   * chg: Communities sidebuttons skin fix
@@ -22,7 +43,7 @@
   * chg: removed old StaticPopup with new Blizzard_StaticPopup_Game\GameDialog - now skinned.
   * chg: Skin EJ MonthlyActivitiesFrame
   * chg: Blizzard stopped using function(self) replaced function(dialog)
-q
+
 
 ## [11.2.0.2] ##
 ### Fixed ###
