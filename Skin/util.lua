@@ -317,9 +317,9 @@ function Util.Mixin(table, ...)
             tempMixin[name] = func
         end
     end
-    if not table then
-        return
-    end
+    -- if not table then
+    --     return
+    -- end
     for name, func in next, tempMixin do
         _G.hooksecurefunc(table, name, func)
     end
