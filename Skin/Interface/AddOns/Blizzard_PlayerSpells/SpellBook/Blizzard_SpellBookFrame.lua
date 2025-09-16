@@ -10,7 +10,7 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-do --[[ FrameXML\Blizzard_SpellBookFrame.lua ]]
+do --[[ AddOns\SpellBook\Blizzard_SpellBookFrame.lua ]]
     function Hook.SpellButton_UpdateButton(self)
         if _G.SpellBookFrame.bookType == _G.BOOKTYPE_PROFESSION then return end
 
@@ -108,7 +108,7 @@ do --[[ FrameXML\Blizzard_SpellBookFrame.lua ]]
     end
 end
 
-do --[[ FrameXML\Blizzard_SpellBookFrame.xml ]]
+do --[[ AddOns\SpellBook\Blizzard_SpellBookFrame.xml ]]
     function Skin.SpellBookSkillLineTabTemplate(CheckButton)
         Skin.SideTabTemplate(CheckButton)
     end
@@ -195,7 +195,7 @@ do --[[ FrameXML\Blizzard_SpellBookFrame.xml ]]
     end
 end
 
-function private.FrameXML.Blizzard_SpellBookFrame()
+function private.AddOns.Blizzard_SpellBookFrame()
     -- FIXMELATER
     if private.isRetail then
         _G.print("Blizzard_SpellBookFrame is not yet implemented.")
@@ -278,17 +278,5 @@ function private.FrameXML.Blizzard_SpellBookFrame()
     for i = 1, _G.MAX_SKILLLINE_TABS do
         local tab = _G["SpellBookSkillLineTab"..i]
         Skin.SpellBookSkillLineTabTemplate(tab)
-    end
-
-    ----------------
-    -- Profession --
-    ----------------
-    if private.isRetail then
-        Skin.PrimaryProfessionTemplate(_G.PrimaryProfession1)
-        Skin.PrimaryProfessionTemplate(_G.PrimaryProfession2)
-
-        Skin.SecondaryProfessionTemplate(_G.SecondaryProfession1)
-        Skin.SecondaryProfessionTemplate(_G.SecondaryProfession2)
-        Skin.SecondaryProfessionTemplate(_G.SecondaryProfession3)
     end
 end

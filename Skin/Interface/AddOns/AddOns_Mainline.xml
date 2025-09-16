@@ -377,7 +377,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookItem.lua"/-->
     <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookSearch.lua"/-->
     <Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookFrame.lua"/>
-    <!--Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpellsFrame.lua"/-->
+    <Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpellsFrame.lua"/>
     <!--Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpellsRegistration.lua"/-->
     <!-- End of section added for Blizzard_PlayerSpells by the Aurora XML Updater -->
     <!--Script file="Blizzard_PlunderstormBasics\Blizzard_PlunderstormBasics.lua"/-->

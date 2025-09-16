@@ -12,7 +12,7 @@ private.isWrath = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_WRATH_CLASSIC or 11)
 private.isCata = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_CATACLYSM_CLASSIC or 14)
 
 private.isClassic = not private.isRetail
-private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 100105
+private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 110105
 
 local debugProjectID = {
     [0] = private.isRetail,
@@ -142,10 +142,9 @@ do -- set up file order
         end
     }
 
-    private.AddOns = {}
+    private.AddOns = {} --  setmetatable({}, mt) --
     private.FrameXML = setmetatable({}, mt)
     private.SharedXML = setmetatable({}, mt)
-    private.BlizzAddOns = setmetatable({}, mt)
 end
 
 
@@ -170,6 +169,7 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
             end
 
             -- Skin FrameXML
+            _G.print("Skinning FrameXML")
             for i = 1, #private.fileOrder do
                 local file = private.fileOrder[i]
                 file.list[file.name]()
@@ -189,7 +189,6 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
 
             private.isLoaded = true
         else
-            -- Skin AddOn
             local addonModule = private.AddOns[addonName]
             if addonModule then
                 addonModule()
