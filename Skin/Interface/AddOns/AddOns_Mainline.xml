@@ -708,7 +708,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_UnitPopupShared\Blizzard_UnitPopupShared.lua"/-->
     <Script file="Blizzard_VoiceToggleButton\Blizzard_VoiceToggleButton.lua"/>
     <Script file="Blizzard_WarfrontsPartyPoseUI\Blizzard_WarfrontsPartyPoseUI.lua"/>
-    <!--Script file="Blizzard_WeeklyRewards\Blizzard_WeeklyRewards.lua"/-->
+    <Script file="Blizzard_WeeklyRewards\Blizzard_WeeklyRewards.lua"/>
     <!--Script file="Blizzard_WeeklyRewardsUtil\Blizzard_WeeklyRewardsUtil.lua"/-->
     <!--Script file="Blizzard_WorldLootObjectList\Blizzard_WorldLootObjectList.lua"/-->
     <Script file="Blizzard_WorldMap\Blizzard_WorldMap.lua"/>
