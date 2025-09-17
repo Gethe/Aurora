@@ -117,7 +117,7 @@ do --[[ FrameXML\ReputationFrame.xml ]]
     end
 end
 
-function private.FrameXML.ReputationFrame()  -- FIXLATER 
+function private.FrameXML.ReputationFrame()  -- FIXLATER
     local ReputationFrame = _G.ReputationFrame
     -- FIXLATER
     --_G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
