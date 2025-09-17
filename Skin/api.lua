@@ -91,6 +91,68 @@ function Base.CropIcon(texture, parent)
     end
 end
 
+local blizzTextures = {
+    "Inset",
+    "inset",
+    "InsetFrame",
+    "LeftInset",
+    "RightInset",
+    "NineSlice",
+    "BG",
+    "Bg",
+    "border",
+    "Border",
+    "Background",
+    "BorderFrame",
+    "bottomInset",
+    "BottomInset",
+    "bgLeft",
+    "bgRight",
+    "FilligreeOverlay",
+    "PortraitOverlay",
+    "ArtOverlayFrame",
+    "Portrait",
+    "portrait",
+    "ScrollFrameBorder",
+    "ScrollUpBorder",
+    "ScrollDownBorder"
+}
+
+function Base.StripBlizzardTextures(frame)
+    if not frame or not frame.GetNumRegions then return end
+    local frameName = frame.GetName and frame:GetName()
+    -- check for blizzTextures
+    for _, texture in pairs(blizzTextures) do
+        local blizzFrame = frame[texture] or (frameName and _G[frameName..texture])
+        if blizzFrame then
+            Base.StripBlizzardTextures(blizzFrame)
+        end
+    end
+    for i = 1, frame:GetNumRegions() do
+        local region = select(i, frame:GetRegions())
+        if region and region.GetObjectType and region:GetObjectType() == "Texture" then
+            region:SetTexture("")
+            region:SetAtlas("")
+        end
+    end
+end
+
+
+function Base.StripAllTextures(frame, kill)
+    if not frame or not frame.GetNumRegions then return end
+
+    for i = 1, frame:GetNumRegions() do
+        local region = select(i, frame:GetRegions())
+        if region and region.GetObjectType and region:GetObjectType() == "Texture" then
+            if kill then
+                region:Kill()
+            else
+                region:SetTexture(nil)
+            end
+        end
+    end
+end
+
 function Base.SetFont(fontObj, fontPath, fontSize, fontStyle, fontColor, shadowColor, shadowX, shadowY)
     if _G.type(fontObj) == "string" then fontObj = _G[fontObj] end
     if not fontObj then return end
