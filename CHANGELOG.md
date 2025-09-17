@@ -1,6 +1,14 @@
-﻿## [11.2.0.6] ##
+﻿## [11.2.0.7] ##
 ### Fixed ###
-add: Blizzard_PlayerSpellsFrame skin - part 1
+  * add: Blizzard_WeeklyRewards skin part 1
+  * add: api - StripTextures functionality
+  * chg: TokenUI fixes
+  * del: removed debug messages from Blizzard_UIWidgets
+
+
+## [11.2.0.6] ##
+### Fixed ###
+  * add: Blizzard_PlayerSpellsFrame skin - part 1
   * chg: cleaned up broken Mixins - disabled some that are now private
   * chg: removed BlizzAddOns and replaced with AddOns
   * chg: cleaned up isPatch for older versions of wow
