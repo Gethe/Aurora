@@ -189,7 +189,6 @@ function private.SharedXML.FriendsFrame()
 
     local FriendsTabHeader = _G.FriendsTabHeader
     for _, tab in next, {FriendsTabHeader.TabSystem:GetChildren()} do
-        local button = tab
         if not tab._auroraSkinned then
             Skin.FriendsTabTemplate(tab)
             tab._auroraSkinned = true

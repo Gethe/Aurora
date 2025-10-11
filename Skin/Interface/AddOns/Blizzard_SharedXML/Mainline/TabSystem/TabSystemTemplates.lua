@@ -6,8 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ Blizzard_SharedXML\Mainline\TabSystem\TabSystemTemplates.lua ]]
