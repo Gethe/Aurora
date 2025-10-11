@@ -524,7 +524,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXML\Blizzard_RadialWheel.lua"/-->
     <!--Script file="Blizzard_SharedXML\Backdrop.lua"/-->
     <!--Script file="Blizzard_SharedXML\Shared\LoadSystem\LoadSystemTemplates.lua"/-->
-    <!--Script file="Blizzard_SharedXML\Mainline\TabSystem\TabSystemTemplates.lua"/-->
+    <Script file="Blizzard_SharedXML\Mainline\TabSystem\TabSystemTemplates.lua"/>
     <!--Script file="Blizzard_SharedXML\Mainline\TabSystem\TabSystemOwner.lua"/-->
     <Script file="Blizzard_SharedXML\Shared\Selector\Blizzard_SelectorUI.lua"/>
     <!--Script file="Blizzard_SharedXML\Shared\Selector\Blizzard_GridSelectorUI.lua"/-->
