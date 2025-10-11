@@ -1,5 +1,8 @@
-﻿## [11.2.0.7] ##
+﻿## [11.2.5.0] ##
 ### Fixed ###
+  * minor fixes for 11.2.5
+  * add: TabSystemTemplates skin
+  * del: removed unused .xml's
   * add: Blizzard_WeeklyRewards skin part 1
   * add: api - StripTextures functionality
   * chg: TokenUI fixes
