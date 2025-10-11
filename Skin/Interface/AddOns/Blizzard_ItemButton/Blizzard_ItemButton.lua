@@ -121,13 +121,13 @@ do --[[ FrameXML\ItemButtonTemplate.lua ]]
                         overlay = private.AZERITE_COLORS[1]
                         overlay2 = private.AZERITE_COLORS[2]
                         visual = "bracket"
-                    elseif _G.IsCorruptedItem(itemIDOrLink) then
+                    elseif _G.C_Item.IsCorruptedItem(itemIDOrLink) then
                         overlay = Color.orange
                         overlay2 = _G.CORRUPTION_COLOR
                         visual = "corner"
                     end
                 end
-                isRelic = _G.IsArtifactRelicItem(itemIDOrLink)
+                isRelic = _G.C_ItemSocketInfo.IsArtifactRelicItem(itemIDOrLink)
             end
 
             local color

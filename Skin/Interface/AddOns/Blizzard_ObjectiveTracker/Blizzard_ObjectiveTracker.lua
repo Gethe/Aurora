@@ -333,7 +333,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
     ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
 end
 
-function private.AddOns.Blizzard_ObjectiveTracker()
+function private.FrameXML.Blizzard_ObjectiveTracker()
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ObjectiveTrackerShared --
     ----====####$$$$%%%%%$$$$####====----

@@ -13,10 +13,10 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ SharedXML\FriendsFrame.lua ]]
     Hook.FriendsBroadcastFrameMixin = {}
     function Hook.FriendsBroadcastFrameMixin:ShowFrame()
-        self.BroadcastButton:LockHighlight()
+        -- self.BroadcastButton:LockHighlight()
     end
     function Hook.FriendsBroadcastFrameMixin:HideFrame()
-        self.BroadcastButton:UnlockHighlight()
+        -- self.BroadcastButton:UnlockHighlight()
     end
 
     function Hook.FriendsFrame_UpdateFriendButton(button, elementData)
@@ -49,7 +49,7 @@ end
 
 do --[[ SharedXML\FriendsFrame.xml ]]
     function Skin.FriendsTabTemplate(Button)
-        Skin.PanelTopTabButtonTemplate(Button)
+        Skin.TabSystemButtonTemplate(Button)
     end
     function Skin.FriendsFrameSlider(Slider)
         Skin.HybridScrollBarTrimTemplate(Slider)
@@ -120,12 +120,12 @@ function private.SharedXML.FriendsFrame()
     ----------------------
     local BNetFrame = _G.FriendsFrameBattlenetFrame
     BNetFrame:GetRegions():Hide() -- BattleTag background
-    BNetFrame:SetWidth(245)
-    BNetFrame:SetPoint("TOPLEFT", 54, -26)
+    BNetFrame:SetWidth(250)
+    BNetFrame:SetPoint("TOP", 0, -26)
     Base.SetBackdrop(BNetFrame, _G.FRIENDS_BNET_BACKGROUND_COLOR, Color.frame.a)
 
     do -- BNetFrame.BroadcastButton
-        local Button = BNetFrame.BroadcastButton
+        local Button = BNetFrame.ContactsMenuButton
         Skin.FrameTypeButton(Button)
         Button:GetNormalTexture():SetAlpha(0)
         Button:GetPushedTexture():SetAlpha(0)
@@ -137,7 +137,7 @@ function private.SharedXML.FriendsFrame()
         })
 
         local icon = Button:CreateTexture(nil, "ARTWORK")
-        icon:SetTexture([[Interface\FriendsFrame\BroadcastIcon]])
+        icon:SetTexture([[Interface\FriendsFrame\MenuIcon]])
         icon:SetSize(16, 16)
         icon:SetPoint("CENTER")
     end
@@ -147,7 +147,7 @@ function private.SharedXML.FriendsFrame()
     local BroadcastFrame = BNetFrame.BroadcastFrame
     BroadcastFrame:SetPoint("TOPLEFT", -55, -24)
 
-    Util.Mixin(BroadcastFrame, Hook.FriendsBroadcastFrameMixin)
+    -- Util.Mixin(BroadcastFrame, Hook.FriendsBroadcastFrameMixin)
     Skin.DialogBorderOpaqueTemplate(BroadcastFrame.Border)
 
     local EditBox = BroadcastFrame.EditBox
@@ -181,13 +181,20 @@ function private.SharedXML.FriendsFrame()
     blizzIcon:SetTexture([[Interface\Glues\MainMenu\Glues-BlizzardLogo]])
 
     -- FIXLATER
-    Skin.DropdownButton(_G.FriendsFrameStatusDropdown)
-    -- _G.FriendsFrameStatusDropdown:SetPoint("TOPLEFT", -12, -27)
-    local FriendsTabHeader = FriendsFrame.FriendsTabHeader
-    Skin.FriendsTabTemplate(FriendsTabHeader.Tab1)
-    Skin.FriendsTabTemplate(FriendsTabHeader.Tab2)
-    Skin.FriendsTabTemplate(FriendsTabHeader.Tab3)
+    local FriendsFrameStatusDropdown = _G.FriendsFrameStatusDropdown
+    FriendsFrameStatusDropdown:ClearAllPoints()
+    Skin.DropdownButton(FriendsFrameStatusDropdown)
+    FriendsFrameStatusDropdown:SetPoint("TOPLEFT", 5, -27)
+    FriendsFrameStatusDropdown:SetWidth(50)
 
+    local FriendsTabHeader = _G.FriendsTabHeader
+    for _, tab in next, {FriendsTabHeader.TabSystem:GetChildren()} do
+        local button = tab
+        if not tab._auroraSkinned then
+            Skin.FriendsTabTemplate(tab)
+            tab._auroraSkinned = true
+        end
+    end
 
     ----------------------
     -- FriendsListFrame --
@@ -205,12 +212,18 @@ function private.SharedXML.FriendsFrame()
     ----------------------
     -- IgnoreListFrame --
     ----------------------
-    local IgnoreListFrame = _G.IgnoreListFrame
-    Skin.FriendsFrameButtonTemplate(_G.FriendsFrameIgnorePlayerButton)
-    Skin.FriendsFrameButtonTemplate(_G.FriendsFrameUnsquelchButton)
-    Skin.WowScrollBoxList(IgnoreListFrame.ScrollBox)
-    Skin.MinimalScrollBar(IgnoreListFrame.ScrollBar)
+    -- local IgnoreListFrame = _G.IgnoreListFrame
+    -- Skin.FriendsFrameButtonTemplate(_G.FriendsFrameIgnorePlayerButton)
+    -- Skin.FriendsFrameButtonTemplate(_G.FriendsFrameUnsquelchButton)
+    -- Skin.WowScrollBoxList(IgnoreListFrame.ScrollBox)
+    -- Skin.MinimalScrollBar(IgnoreListFrame.ScrollBar)
 
+    -----------------------
+    -- RecentAlliesFrame --
+    -----------------------
+    local RecentAlliesFrame = _G.RecentAlliesFrame
+    Skin.WowScrollBoxList(RecentAlliesFrame.List.ScrollBox)
+    Skin.MinimalScrollBar(RecentAlliesFrame.List.ScrollBar)
 
     --------------
     -- WhoFrame --
@@ -252,9 +265,6 @@ function private.SharedXML.FriendsFrame()
     Skin.WowScrollBoxList(WhoFrame.ScrollBox)
     Skin.MinimalScrollBar(WhoFrame.ScrollBar)
 
-
-
-
     ----------------------
     -- FriendsFrameMisc --
     ----------------------
@@ -272,12 +282,6 @@ function private.SharedXML.FriendsFrame()
     if not private.disabled.tooltips then
         Skin.FrameTypeFrame(_G.FriendsTooltip)
     end
-
-
-
-
-
-
 
     --------------------
     -- AddFriendFrame --
@@ -299,10 +303,6 @@ function private.SharedXML.FriendsFrame()
     -- Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
     -- Skin.FrameTypeButton(Button)
 
-
-
-
-
     -------------------------
     -- FriendsFriendsFrame --
     -------------------------
@@ -316,12 +316,6 @@ function private.SharedXML.FriendsFrame()
     Skin.MinimalScrollBar(FriendsFriendsFrame.ScrollBar)
     Skin.UIPanelButtonTemplate(FriendsFriendsFrame.SendRequestButton)
     Skin.UIPanelButtonTemplate(FriendsFriendsFrame.CloseButton)
-
-
-
-
-
-
 
     --------------------------
     -- BattleTagInviteFrame --

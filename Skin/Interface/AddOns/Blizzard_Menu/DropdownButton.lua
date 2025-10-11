@@ -24,10 +24,14 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
                     return
                 end
             end
+            if Frame._auroraSkinned then
+                return
+            else
+                Frame._auroraSkinned = true
+            end
             -- if not Width then
             --     Width = 155
             -- end
-
             if Frame.Left then
                 Frame.Left:SetAlpha(0)
             end
@@ -68,6 +72,10 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
                 Frame.RightEdge:Hide()
             end
             Frame._auroraWidth = nil
+            if Width then
+                Frame:SetWidth(Width)
+                Frame._auroraWidth = Width
+            end
             Base.SetBackdrop(Frame, Color.button)
             if Frame.Arrow then
                 Frame.Background:SetTexture(nil)
