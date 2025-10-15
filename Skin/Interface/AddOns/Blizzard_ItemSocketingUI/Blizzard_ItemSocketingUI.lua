@@ -63,7 +63,7 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
     }
 
     function Hook.ItemSocketingFrame_Update()
-        for i, socket in ipairs(_G.ItemSocketingFrame.Sockets) do
+        for i, socket in ipairs(_G.ItemSocketingFrame.SocketingContainer) do
             local gemInfo = GEM_TYPE_INFO[_G.GetSocketTypes(i)] or default
             socket.Background:SetTexCoord(gemInfo.coords[1], gemInfo.coords[2], gemInfo.coords[3], gemInfo.coords[4])
             socket:SetBackdropBorderColor(gemInfo.color, 1)
@@ -71,34 +71,37 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
 
         local num = _G.GetNumSockets()
         if num == 3 then
-            _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -80, 39)
+            _G.ItemSocketingFrame.SocketingContainer['Socket1']:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -80, 39)
         elseif num == 2 then
-            _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -40, 39)
+            _G.ItemSocketingFrame.SocketingContainer['Socket1']:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -40, 39)
         else
-            _G.ItemSocketingSocket1:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", 0, 39)
+            _G.ItemSocketingFrame.SocketingContainer['Socket1']:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", 0, 39)
         end
     end
 end
 
 do --[[ AddOns\Blizzard_ItemSocketingUI.xml ]]
-    function Skin.ItemSocketingSocketButtonTemplate(Button)
-        local name = Button:GetName()
-        _G[name.."Left"]:SetAlpha(0)
-        _G[name.."Right"]:SetAlpha(0)
+    function Skin.ItemSocketingSocketButtonTemplate(Button, index)
+        local LeftFiligree = Button.LeftFiligree
+        local RightFiligree = Button.RightFiligree
+        if LeftFiligree then LeftFiligree:Hide() end
+        if RightFiligree then RightFiligree:Hide() end
+        LeftFiligree:SetAlpha(0)
+        RightFiligree:SetAlpha(0)
         select(2, Button:GetRegions()):Hide() -- drop shadow
 
         Base.CreateBackdrop(Button, {
             edgeSize = 1,
-            bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+            bgFile = [["Interface\ItemSocketingFrame\UI-ItemSockets"]],
             insets = {left = 1, right = 1, top = 1, bottom = 1}
         }, {bg = Button.Background})
 
-        Base.CropIcon(Button.icon)
-        Button.icon:ClearAllPoints()
-        Button.icon:SetPoint("TOPLEFT", 1, -1)
-        Button.icon:SetPoint("BOTTOMRIGHT", -1, 1)
+        Base.CropIcon(Button.Icon)
+        Button.Icon:ClearAllPoints()
+        Button.Icon:SetPoint("TOPLEFT", 1, -1)
+        Button.Icon:SetPoint("BOTTOMRIGHT", -1, 1)
 
-        local shine = _G[name.."Shine"]
+        local shine = Button.Shine
         shine:ClearAllPoints()
         shine:SetAllPoints(Button.icon)
 
@@ -106,7 +109,6 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.xml ]]
         BracketFrame:ClearAllPoints()
         BracketFrame:SetPoint("TOPLEFT", -4, 4)
         BracketFrame:SetPoint("BOTTOMRIGHT", 4, -4)
-
         BracketFrame.ClosedBracket:SetAllPoints()
         BracketFrame.OpenBracket:SetAllPoints()
 
@@ -163,8 +165,9 @@ function private.AddOns.Blizzard_ItemSocketingUI()
     end
 
     Skin.ScrollFrameTemplate(_G.ItemSocketingScrollFrame)
-    Skin.ItemSocketingSocketButtonTemplate(_G.ItemSocketingSocket1)
-    Skin.ItemSocketingSocketButtonTemplate(_G.ItemSocketingSocket2)
-    Skin.ItemSocketingSocketButtonTemplate(_G.ItemSocketingSocket3)
-    Skin.UIPanelButtonTemplate(_G.ItemSocketingSocketButton) -- BlizzWTF: this doesn't use the template, but it should
+    for i = 1, _G.MAX_NUM_SOCKETS do
+        Skin.ItemSocketingSocketButtonTemplate(_G.ItemSocketingFrame.SocketingContainer['Socket'..i], i)
+    end
+    local ApplySocketsButton = ItemSocketingFrame.SocketingContainer.ApplySocketsButton
+    Skin.UIPanelButtonTemplate(ApplySocketsButton)
 end

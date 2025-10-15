@@ -1,4 +1,8 @@
-﻿## [11.2.5.0] ##
+﻿## [11.2.5.1] ##
+### Fixed ###
+  * chg: fixed skinning of sockets which broke with 11.2.5
+
+## [11.2.5.0] ##
 ### Fixed ###
   * minor fixes for 11.2.5
   * add: TabSystemTemplates skin
