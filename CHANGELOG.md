@@ -1,6 +1,7 @@
 ﻿## [11.2.5.1] ##
 ### Fixed ###
   * chg: fixed skinning of sockets which broke with 11.2.5
+  * chg: removed debug messages from Blizzard_UIWidgets which broke skinning of some widgets
 
 ## [11.2.5.0] ##
 ### Fixed ###

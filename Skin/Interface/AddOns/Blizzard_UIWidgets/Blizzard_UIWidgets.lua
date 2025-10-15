@@ -16,10 +16,11 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
             local widgetFrame = self.widgetFrames[widgetID]
             if not widgetFrame then
-                private.debug("Missing widgetFrame for UIWidgetContainerMixin", self:GetDebugName(), widgetID, widgetType)
+                if private.isDev then
+                    _G.print("UIWidgetContainerMixin:CreateWidget no widgetFrame", self:GetDebugName(), widgetID, widgetType)
+                end
                 return
             end
-
             local template = widgetTypeInfo.templateInfo.frameTemplate
             if Skin[template] then
                 private.debug("Skinning template for UIWidgetContainerMixin", widgetFrame:GetDebugName(), template)
