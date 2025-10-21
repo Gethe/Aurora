@@ -64,12 +64,12 @@ do --[[ AddOns\Blizzard_ItemSocketingUI.lua ]]
 
     function Hook.ItemSocketingFrame_Update()
         for i, socket in ipairs(_G.ItemSocketingFrame.SocketingContainer) do
-            local gemInfo = GEM_TYPE_INFO[_G.GetSocketTypes(i)] or default
+            local gemInfo = GEM_TYPE_INFO[_G.C_ItemSocketInfo.GetSocketTypes(i)] or default
             socket.Background:SetTexCoord(gemInfo.coords[1], gemInfo.coords[2], gemInfo.coords[3], gemInfo.coords[4])
             socket:SetBackdropBorderColor(gemInfo.color, 1)
         end
 
-        local num = _G.GetNumSockets()
+        local num = _G.C_ItemSocketInfo.GetNumSockets()
         if num == 3 then
             _G.ItemSocketingFrame.SocketingContainer['Socket1']:SetPoint("BOTTOM", _G.ItemSocketingFrame, "BOTTOM", -80, 39)
         elseif num == 2 then
