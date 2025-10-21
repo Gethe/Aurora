@@ -209,13 +209,18 @@ function private.SharedXML.FriendsFrame()
 
 
     ----------------------
-    -- IgnoreListFrame --
+    -- IgnoreListWindow --
     ----------------------
-    -- local IgnoreListFrame = _G.IgnoreListFrame
-    -- Skin.FriendsFrameButtonTemplate(_G.FriendsFrameIgnorePlayerButton)
-    -- Skin.FriendsFrameButtonTemplate(_G.FriendsFrameUnsquelchButton)
-    -- Skin.WowScrollBoxList(IgnoreListFrame.ScrollBox)
-    -- Skin.MinimalScrollBar(IgnoreListFrame.ScrollBar)
+    local IgnoreListWindow = FriendsFrame.IgnoreListWindow
+    Skin.NineSlicePanelTemplate(IgnoreListWindow.NineSlice)
+    Skin.WowScrollBoxList(IgnoreListWindow.ScrollBox)
+    IgnoreListWindow.ScrollBox.Shadows:Hide()
+    Skin.MinimalScrollBar(IgnoreListWindow.ScrollBar)
+    Skin.UIPanelCloseButton(IgnoreListWindow.CloseButton)
+    Skin.UIPanelButtonTemplate(IgnoreListWindow.UnignorePlayerButton)
+    local FriendsFrameInset = _G.FriendsFrameInset
+    Skin.NineSlicePanelTemplate(FriendsFrameInset.NineSlice)
+    -- FIXLATER - it is a bit dark,....
 
     -----------------------
     -- RecentAlliesFrame --
