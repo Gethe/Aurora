@@ -107,7 +107,7 @@ do --[[ SharedXML\FriendsFrame.xml ]]
     end
 end
 
-function private.SharedXML.FriendsFrame()
+function private.FrameXML.FriendsFrame()
     _G.hooksecurefunc("FriendsFrame_UpdateFriendButton", Hook.FriendsFrame_UpdateFriendButton)
     _G.hooksecurefunc("WhoList_InitButton", Hook.WhoList_InitButton)
 

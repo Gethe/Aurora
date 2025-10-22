@@ -134,87 +134,55 @@ function private.OnLoad()
         end
     end)
 
-    if private.isRetail then
-        _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
+    _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
+        _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
+        _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
+        _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
 
-            _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
-            _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
-            _G.CharacterStatsPane.ItemLevelFrame.Value:SetFontObject("SystemFont_Outline_WTF2")
-
-            _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
-                if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
-                    _G.CharacterStatsPane.ItemLevelCategory:Hide()
-                    _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
-                end
-            end)
+        _G.hooksecurefunc("PaperDollFrame_UpdateStats", function()
+            if ( _G.UnitLevel("player") >= _G.MIN_PLAYER_LEVEL_FOR_ITEM_LEVEL_DISPLAY ) then
+                _G.CharacterStatsPane.ItemLevelCategory:Hide()
+                _G.CharacterStatsPane.AttributesCategory:SetPoint("TOP", 0, -40)
+            end
         end)
-    end
-    -- _G.hooksecurefunc(private.FrameXML, "FriendsFrame", function()
-    --     local FriendsFrame = _G.FriendsFrame
-    --     local titleText = FriendsFrame.TitleText or FriendsFrame:GetTitleText()
+    end)
 
-    --     local BNetFrame = _G.FriendsFrameBattlenetFrame
-    --     BNetFrame.Tag:SetParent(FriendsFrame)
-    --     BNetFrame.Tag:SetAllPoints(titleText)
+    _G.hooksecurefunc(private.FrameXML, "FriendsFrame", function()
+        local FriendsFrame = _G.FriendsFrame
+        local titleText = FriendsFrame.TitleText or FriendsFrame:GetTitleText()
 
-    --     local BroadcastFrame = BNetFrame.BroadcastFrame
-    --     local EditBox
-    --     if private.isRetail then
-    --         EditBox = BroadcastFrame.EditBox
-    --         EditBox:SetParent(FriendsFrame)
-    --         EditBox:ClearAllPoints()
-    --         EditBox:SetSize(239, 25)
-    --         EditBox:SetPoint("TOPLEFT", 57, -28)
-    --         EditBox:SetScript("OnEnterPressed", function()
-    --             BroadcastFrame:SetBroadcast()
-    --         end)
-    --     -- else
-    -- --         EditBox = _G.FriendsFrameBroadcastInput
-    -- --         Skin.FrameTypeEditBox(EditBox)
+        local BNetFrame = _G.FriendsFrameBattlenetFrame
+        BNetFrame.Tag:SetParent(FriendsFrame)
+        BNetFrame.Tag:SetAllPoints(titleText)
+        local BroadcastFrame = BNetFrame.BroadcastFrame
+        local EditBox = BroadcastFrame.EditBox
+        EditBox:SetParent(FriendsFrame)
+        EditBox:ClearAllPoints()
+        EditBox:SetSize(239, 25)
+        EditBox:SetPoint("TOPLEFT", 57, -28)
+        EditBox:SetScript("OnEnterPressed", function()
+            BroadcastFrame:SetBroadcast()
+        end)
+        _G.hooksecurefunc("FriendsFrame_Update", function()
+            local selectedTab = _G.PanelTemplates_GetSelectedTab(FriendsFrame) or _G.FRIEND_TAB_FRIENDS
+            local isFriendsTab = selectedTab == _G.FRIEND_TAB_FRIENDS
 
-    -- --         EditBox:ClearAllPoints()
-    -- --         EditBox:SetSize(245, 29)
-    -- --         EditBox:SetPoint("TOPLEFT", 54, -26)
-
-    -- --         _G.FriendsFrameBroadcastInputLeft:Hide()
-    -- --         _G.FriendsFrameBroadcastInputRight:Hide()
-    -- --         _G.FriendsFrameBroadcastInputMiddle:Hide()
-    -- --         _G.FriendsFrameBroadcastInputFill:SetPoint("LEFT", 20, 0)
-    -- --         EditBox.icon:SetPoint("LEFT", 3, 0)
-
-    -- --         local stop
-    -- --         _G.hooksecurefunc(EditBox, "SetTextInsets", function(editbox, left, right, top, bottom)
-    -- --             if stop then return end
-    -- --             stop = true
-    -- --             editbox:SetTextInsets(20, right, 0, 0)
-    -- --             stop = nil
-    -- --         end)
-    --     end
-
-    --     _G.hooksecurefunc("FriendsFrame_Update", function()
-    --         local selectedTab = _G.PanelTemplates_GetSelectedTab(FriendsFrame) or _G.FRIEND_TAB_FRIENDS
-    --         local isFriendsTab = selectedTab == _G.FRIEND_TAB_FRIENDS
-
-    --         titleText:SetShown(not isFriendsTab)
-    --         BNetFrame.Tag:SetShown(isFriendsTab)
-    --         EditBox:SetShown(_G.BNConnected() and isFriendsTab)
-    --     end)
-    --     _G.hooksecurefunc("FriendsFrame_CheckBattlenetStatus", function()
-    --         if _G.BNFeaturesEnabled() then
-    --             if _G.BNConnected() then
-    --                 BNetFrame:Hide()
-    --                 EditBox:Show()
-    --                 if private.isRetail then
-    --                     BroadcastFrame:UpdateBroadcast()
-    --                 else
-    --                     _G.FriendsFrameBroadcastInput_UpdateDisplay()
-    --                 end
-    --             else
-    --                 EditBox:Hide()
-    --             end
-    --         end
-    --     end)
-    -- end)
+            titleText:SetShown(not isFriendsTab)
+            BNetFrame.Tag:SetShown(isFriendsTab)
+            EditBox:SetShown(_G.BNConnected() and isFriendsTab)
+        end)
+        _G.hooksecurefunc("FriendsFrame_CheckBattlenetStatus", function()
+            if _G.BNFeaturesEnabled() then
+                if _G.BNConnected() then
+                    BNetFrame:Hide()
+                    EditBox:Show()
+                    BroadcastFrame:UpdateBroadcast()
+                else
+                    EditBox:Hide()
+                end
+            end
+        end)
+    end)
 
     -- Disable skins as per user settings
     private.disabled.bags = not AuroraConfig.bags
