@@ -83,7 +83,6 @@ function private.AddOns.Blizzard_GuildControlUI()
     _G.GuildControlUITopBg:Hide()
     Skin.HorizontalBarTemplate(_G.GuildControlUIHbar)
     Skin.UIPanelCloseButton(_G.GuildControlUICloseButton)
-    -- FIXLATER - disable for now
     Skin.DropdownButton(GuildControlUI.dropdown)
     -- GuildControlUI.dropdown.Button:SetWidth(24)
 
@@ -92,14 +91,12 @@ function private.AddOns.Blizzard_GuildControlUI()
     Skin.UIPanelButtonTemplate(_G.GuildControlUIRankOrderFrame.dupButton)
 
     local bankTabFrame = GuildControlUI.bankTabFrame
-    -- FIXLATER - disable for now
     Skin.DropdownButton(bankTabFrame.dropdown)
     -- bankTabFrame.dropdown.Button:SetWidth(24)
     Skin.InsetFrameTemplate2(bankTabFrame.inset)
     Skin.ScrollFrameTemplate(bankTabFrame.inset.scrollFrame)
 
     local rankPermFrame = GuildControlUI.rankPermFrame
-    -- FIXLATER - disable for now
     Skin.DropdownButton(rankPermFrame.dropdown)
     -- rankPermFrame.dropdown.Button:SetWidth(24)
     Skin.GuildPermissionCheckBoxTemplate(rankPermFrame.OfficerCheckbox)
