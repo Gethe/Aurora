@@ -180,7 +180,6 @@ function private.SharedXML.FriendsFrame()
     local _, blizzIcon = select(11, BNetFrame.UnavailableInfoFrame:GetRegions())
     blizzIcon:SetTexture([[Interface\Glues\MainMenu\Glues-BlizzardLogo]])
 
-    -- FIXLATER
     local FriendsFrameStatusDropdown = _G.FriendsFrameStatusDropdown
     FriendsFrameStatusDropdown:ClearAllPoints()
     Skin.DropdownButton(FriendsFrameStatusDropdown)
@@ -214,20 +213,19 @@ function private.SharedXML.FriendsFrame()
     local IgnoreListWindow = FriendsFrame.IgnoreListWindow
     Skin.NineSlicePanelTemplate(IgnoreListWindow.NineSlice)
     Skin.WowScrollBoxList(IgnoreListWindow.ScrollBox)
-    IgnoreListWindow.ScrollBox.Shadows:Hide()
     Skin.MinimalScrollBar(IgnoreListWindow.ScrollBar)
     Skin.UIPanelCloseButton(IgnoreListWindow.CloseButton)
-    Skin.UIPanelButtonTemplate(IgnoreListWindow.UnignorePlayerButton)
-    local FriendsFrameInset = _G.FriendsFrameInset
-    Skin.NineSlicePanelTemplate(FriendsFrameInset.NineSlice)
+    Skin.MagicButtonTemplate(IgnoreListWindow.UnignorePlayerButton)
     -- FIXLATER - it is a bit dark,....
 
     -----------------------
     -- RecentAlliesFrame --
     -----------------------
     local RecentAlliesFrame = _G.RecentAlliesFrame
-    Skin.WowScrollBoxList(RecentAlliesFrame.List.ScrollBox)
-    Skin.MinimalScrollBar(RecentAlliesFrame.List.ScrollBar)
+    local ScrollBox = RecentAlliesFrame.List.ScrollBox
+    local ScrollBar = RecentAlliesFrame.List.ScrollBar
+    Skin.WowScrollBoxList(ScrollBox)
+    Skin.MinimalScrollBar(ScrollBar)
 
     --------------
     -- WhoFrame --
@@ -244,8 +242,8 @@ function private.SharedXML.FriendsFrame()
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader4)
 
     Skin.FriendsFrameButtonTemplate(_G.WhoFrameGroupInviteButton)
-    Skin.UIPanelButtonTemplate(_G.WhoFrameAddFriendButton)
-    Skin.UIPanelButtonTemplate(_G.WhoFrameWhoButton)
+    Skin.MagicButtonTemplate(_G.WhoFrameAddFriendButton)
+    Skin.MagicButtonTemplate(_G.WhoFrameWhoButton)
 
     _G.WhoFrameGroupInviteButton:SetPoint("BOTTOMRIGHT", -5, 5)
     _G.WhoFrameWhoButton:ClearAllPoints()
@@ -253,8 +251,7 @@ function private.SharedXML.FriendsFrame()
     _G.WhoFrameAddFriendButton:ClearAllPoints()
     _G.WhoFrameAddFriendButton:SetPoint("BOTTOMLEFT", _G.WhoFrameWhoButton, "BOTTOMRIGHT", 1, 0)
     _G.WhoFrameAddFriendButton:SetPoint("BOTTOMRIGHT", _G.WhoFrameGroupInviteButton, "BOTTOMLEFT", -1, 0)
-    -- FIXLATER removed in 11.2?
-    -- Skin.InsetFrameTemplate(_G.WhoFrameEditBoxInset)
+
     Skin.FrameTypeEditBox(_G.WhoFrameEditBox)
     _G.WhoFrameEditBox:ClearAllPoints()
     _G.WhoFrameEditBox:SetPoint("BOTTOMLEFT", _G.WhoFrameWhoButton, "TOPLEFT", 2, -2)
@@ -290,11 +287,9 @@ function private.SharedXML.FriendsFrame()
     --------------------
     -- AddFriendFrame --
     --------------------
-    Skin.DialogBorderTemplate(_G.AddFriendFrame.Border)
-    -- FIXLATER
-    -- Did this work?
-    Skin.FrameTypeButton(_G.AddFriendInfoFrame.ContinueButton)
-
+    local AddFriendFrame = _G.AddFriendFrame
+    Skin.DialogBorderTemplate(AddFriendFrame.Border)
+    Skin.FrameTypeButton(AddFriendInfoFrame.ContinueButton)
     Skin.UIPanelInfoButton(_G.AddFriendEntryFrameInfoButton)
     do -- AddFriendNameEditBox
         Skin.FrameTypeEditBox(_G.AddFriendNameEditBox)
@@ -302,11 +297,9 @@ function private.SharedXML.FriendsFrame()
         _G.AddFriendNameEditBoxRight:Hide()
         _G.AddFriendNameEditBoxMiddle:Hide()
     end
-    -- FIXLATER
-    -- Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameAcceptButton)
-    -- Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
-    -- Skin.FrameTypeButton(Button)
-
+    Skin.UIPanelCloseButton(AddFriendFrame.CloseButton)
+    Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameAcceptButton)
+    Skin.UIPanelButtonTemplate(_G.AddFriendEntryFrameCancelButton)
     -------------------------
     -- FriendsFriendsFrame --
     -------------------------
