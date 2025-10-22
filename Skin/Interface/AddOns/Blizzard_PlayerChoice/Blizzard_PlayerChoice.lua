@@ -108,7 +108,7 @@ function private.AddOns.Blizzard_PlayerChoice()
     Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
     Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)
     -- PlayerChoiceFrame.BlackBackground:SetAllPoints(PlayerChoiceFrame.NineSlice)
-    -- Skin.UIPanelCloseButton(PlayerChoiceFrame.CloseButton)
+    Skin.UIPanelCloseButton(PlayerChoiceFrame.CloseButton)
 
 
     ----====####$$$$%%%%%%%$$$$####====----
