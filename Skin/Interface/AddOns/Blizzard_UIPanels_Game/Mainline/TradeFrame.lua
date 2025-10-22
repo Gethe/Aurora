@@ -95,10 +95,6 @@ function private.FrameXML.TradeFrame()
 
     Skin.InsetFrameTemplate(_G.TradePlayerInputMoneyInset)
 
-    -- FIXLATER
-    -- Skin.MoneyInputFrameTemplate(_G.TradePlayerInputMoneyFrame)
-    -- _G.TradePlayerInputMoneyFrame:SetPoint("TOPLEFT", 15, -(private.FRAME_TITLE_HEIGHT + 13))
-
     SkinHighlightFrames("Player")
     SkinTradeItems("Player")
 

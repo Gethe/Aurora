@@ -110,6 +110,5 @@ function private.FrameXML.Blizzard_TokenUI()
     Skin.UIPanelButtonTemplate(CurrencyTransferMenu.Content.ConfirmButton)
     Skin.UIPanelButtonTemplate(CurrencyTransferMenu.Content.CancelButton)
     Skin.UIPanelCloseButton(CurrencyTransferMenu.CloseButton)
-    -- FIXLATER
     Skin.DropdownButton(CurrencyTransferMenu.Content.SourceSelector.Dropdown)
 end

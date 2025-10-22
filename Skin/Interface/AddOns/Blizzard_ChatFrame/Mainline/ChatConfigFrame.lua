@@ -139,7 +139,6 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
 end
 
 function private.FrameXML.ChatConfigFrame()
-    -- FIXLATER
     _G.hooksecurefunc("ChatConfig_CreateCheckboxes", Hook.ChatConfig_CreateCheckboxes)
     _G.hooksecurefunc("ChatConfig_CreateTieredCheckboxes", Hook.ChatConfig_CreateTieredCheckboxes)
     _G.hooksecurefunc("ChatConfig_CreateColorSwatches", Hook.ChatConfig_CreateColorSwatches)

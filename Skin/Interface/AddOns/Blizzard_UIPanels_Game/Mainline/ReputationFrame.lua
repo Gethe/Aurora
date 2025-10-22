@@ -117,12 +117,8 @@ do --[[ FrameXML\ReputationFrame.xml ]]
     end
 end
 
-function private.FrameXML.ReputationFrame()  -- FIXLATER
+function private.FrameXML.ReputationFrame()
     local ReputationFrame = _G.ReputationFrame
-    -- FIXLATER
-    --_G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
-    --_G.hooksecurefunc("ReputationFrame_InitReputationRow", Hook.ReputationFrame_InitReputationRow)
-
     ---------------------
     -- ReputationFrame --
     ---------------------
@@ -138,7 +134,7 @@ function private.FrameXML.ReputationFrame()  -- FIXLATER
     local ReputationDetailFrame = ReputationFrame.ReputationDetailFrame
     Skin.DialogBorderTemplate(ReputationDetailFrame.Border)
     local repDetailBG = ReputationDetailFrame.Border:GetBackdropTexture("bg")
-    -- FIXME -- remove backdrop texture
+    -- FIXLATER -- remove backdrop texture
     ReputationDetailFrame.Title:SetPoint("TOPLEFT", repDetailBG, 10, -8)
     ReputationDetailFrame.Title:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -10, -26)
     ReputationDetailFrame.ScrollingDescription:SetPoint("TOPLEFT", ReputationDetailFrame.Title, "BOTTOMLEFT", 0, -5)

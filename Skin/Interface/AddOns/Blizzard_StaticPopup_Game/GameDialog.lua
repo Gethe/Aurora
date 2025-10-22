@@ -59,15 +59,13 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 
         Skin.StaticPopupButtonTemplate(Frame.ExtraButton)
         Skin.StaticPopupButtonTemplate(Frame.CloseButton)
-        -- _G.hooksecurefunc(close, "SetNormalTexture", CloseButton_SetNormalTexture)
-        -- _G.hooksecurefunc(close, "SetPushedTexture", CloseButton_SetPushedTexture)
 
         local Buttons = ButtonContainer.Buttons
         for i = 1, #Buttons do
             Skin.StaticPopupButtonTemplate(Buttons[i])
         end
 
-        -- FIXMELATER
+        -- FIXLATER
         -- local EditBox = _G[name .. "EditBox"]
         -- EditBox.Left = _G[name .. "EditBoxLeft"]
         -- EditBox.Right = _G[name .. "EditBoxRight"]
@@ -84,7 +82,7 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 
         Skin.FrameTypeItemButton(ItemFrame.Item)
         ItemFrame.Item.IconBorder:Hide()
-        -- FIXMELATER
+        -- FIXLATER
         -- local nameBG = _G.CreateFrame("Frame", nil, ItemFrame)
         -- nameBG:SetPoint("TOPLEFT", ItemFrame.icon, "TOPRIGHT", 2, 1)
         -- nameBG:SetPoint("BOTTOMLEFT", ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
