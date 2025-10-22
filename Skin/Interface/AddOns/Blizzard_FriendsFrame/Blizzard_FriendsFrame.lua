@@ -289,7 +289,7 @@ function private.FrameXML.FriendsFrame()
     --------------------
     local AddFriendFrame = _G.AddFriendFrame
     Skin.DialogBorderTemplate(AddFriendFrame.Border)
-    Skin.FrameTypeButton(AddFriendInfoFrame.ContinueButton)
+    Skin.FrameTypeButton(_G.AddFriendInfoFrame.ContinueButton)
     Skin.UIPanelInfoButton(_G.AddFriendEntryFrameInfoButton)
     do -- AddFriendNameEditBox
         Skin.FrameTypeEditBox(_G.AddFriendNameEditBox)
