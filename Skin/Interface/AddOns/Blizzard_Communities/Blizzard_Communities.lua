@@ -298,7 +298,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.DialogBorderDarkTemplate(Frame.BG)
 
             Skin.ClubFinderCheckboxTemplate(Frame.ShouldListClub.Button)
-            -- FIXLATER
             Skin.DropdownButton(Frame.ClubFocusDropdown)
             Skin.DropdownButton(Frame.LookingForDropdown)
             Skin.DropdownButton(Frame.LanguageDropdown)
@@ -323,10 +322,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIPanelButtonTemplate(Frame.Cancel)
         end
         function Skin.ClubFinderBigSpecializationCheckBoxTemplate(Frame)
-            Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
+            Skin.ClubFinderCheckboxTemplate(Frame.Checkbox)
         end
         function Skin.ClubFinderLittleSpecializationCheckBoxTemplate(Frame)
-            Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
+            Skin.ClubFinderCheckboxTemplate(Frame.Checkbox)
         end
         function Skin.ClubFinderRequestToJoinTemplate(Frame)
             Skin.DialogBorderDarkTemplate(Frame.BG)
@@ -361,9 +360,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.DropdownButton(Frame)
         end
         function Skin.ClubFinderCheckboxTemplate(CheckButton)
-            -- _G.print("ClubFinderCheckboxTemplate is not implemented in Aurora:"..CheckButton:GetName())
-            -- -- FIXLATER
-            -- Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
+            Skin.UICheckButtonTemplate(CheckButton) -- BlizzWTF: Doesn't use the template
         end
         function Skin.ClubFinderGuildCardsFrameTemplate(Frame)
             Skin.ClubFinderGuildCardTemplate(Frame.FirstCard)
@@ -386,7 +383,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         function Skin.ClubFinderRoleTemplate(Frame)
             local atlas = Frame.Icon:GetAtlas()
             Base.SetTexture(Frame.Icon, roleIcons[atlas])
-            Skin.ClubFinderCheckboxTemplate(Frame.CheckBox)
+            Skin.ClubFinderCheckboxTemplate(Frame.Checkbox)
         end
         function Skin.ClubFinderCommunitiesCardTemplate(Button)
             Base.SetBackdrop(Button, Color.button, Color.frame.a)
