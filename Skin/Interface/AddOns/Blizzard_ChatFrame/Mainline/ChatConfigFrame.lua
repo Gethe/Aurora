@@ -12,8 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\ChatConfigFrame.lua ]]
     function Hook.ChatConfig_CreateCheckboxes(frame, checkBoxTable, checkBoxTemplate, title)
-        local checkBoxNameString = frame:GetName().."CheckBox"
-
+        local checkBoxNameString = frame:GetName().."Checkbox"
         for index, value in ipairs(checkBoxTable) do
             local checkBoxName = checkBoxNameString..index
             if not _G[checkBoxName]._auroraSkinned then
@@ -23,7 +22,7 @@ do --[[ FrameXML\ChatConfigFrame.lua ]]
         end
     end
     function Hook.ChatConfig_CreateTieredCheckboxes(frame, checkBoxTable, checkBoxTemplate, subCheckBoxTemplate, columns, spacing)
-        local checkBoxNameString = frame:GetName().."CheckBox"
+        local checkBoxNameString = frame:GetName().."Checkbox"
 
         for index, value in ipairs(checkBoxTable) do
             local checkBoxName = checkBoxNameString..index
@@ -82,22 +81,22 @@ do --[[ FrameXML\ChatConfigFrame.xml ]]
         Skin.ChatConfigBaseCheckButtonTemplate(CheckButton)
     end
 
-    function Skin.ChatConfigCheckBoxTemplate(Frame)
+    function Skin.ChatConfigCheckboxTemplate(Frame)
         Skin.ChatConfigBorderBoxTemplate(Frame)
         Skin.ChatConfigCheckButtonTemplate(Frame.CheckButton)
     end
-    function Skin.ChatConfigCheckBoxSmallTemplate(Frame)
-        Skin.ChatConfigCheckBoxTemplate(Frame)
+    function Skin.ChatConfigCheckboxSmallTemplate(Frame)
+        Skin.ChatConfigCheckboxTemplate(Frame)
     end
-    function Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
-        Skin.ChatConfigCheckBoxTemplate(Frame)
+    function Skin.ChatConfigCheckboxWithSwatchTemplate(Frame)
+        Skin.ChatConfigCheckboxTemplate(Frame)
         Skin.ColorSwatchTemplate(Frame.ColorSwatch)
     end
-    function Skin.ChatConfigWideCheckBoxWithSwatchTemplate(Frame)
-        Skin.ChatConfigCheckBoxWithSwatchTemplate(Frame)
+    function Skin.ChatConfigWideCheckboxWithSwatchTemplate(Frame)
+        Skin.ChatConfigCheckboxWithSwatchTemplate(Frame)
     end
-    function Skin.MovableChatConfigWideCheckBoxWithSwatchTemplate(Frame)
-        Skin.ChatConfigWideCheckBoxWithSwatchTemplate(Frame)
+    function Skin.MovableChatConfigWideCheckboxWithSwatchTemplate(Frame)
+        Skin.ChatConfigWideCheckboxWithSwatchTemplate(Frame)
         Frame.ArtOverlay.GrayedOut:SetPoint("TOPLEFT")
     end
     function Skin.ChatConfigSwatchTemplate(Frame)
@@ -141,8 +140,8 @@ end
 
 function private.FrameXML.ChatConfigFrame()
     -- FIXLATER
-    -- _G.hooksecurefunc("ChatConfig_CreateCheckboxes", Hook.ChatConfig_CreateCheckboxes)
-    -- _G.hooksecurefunc("ChatConfig_CreateTieredCheckboxes", Hook.ChatConfig_CreateTieredCheckboxes)
+    _G.hooksecurefunc("ChatConfig_CreateCheckboxes", Hook.ChatConfig_CreateCheckboxes)
+    _G.hooksecurefunc("ChatConfig_CreateTieredCheckboxes", Hook.ChatConfig_CreateTieredCheckboxes)
     _G.hooksecurefunc("ChatConfig_CreateColorSwatches", Hook.ChatConfig_CreateColorSwatches)
 
     local ChatConfigFrame = _G.ChatConfigFrame
