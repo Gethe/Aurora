@@ -7,11 +7,19 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
+local Util = Aurora.Util
+local Hook = Aurora.Hook
 
 --do --[[ FrameXML\UnitPopupCustomControls.lua ]]
 --end
 
 do --[[ FrameXML\UnitPopupCustomControls.xml ]]
+    Hook.UnitPopupVoiceLevelsMixin = {}
+    function Hook.UnitPopupVoiceLevelsMixin:OnLoad()
+        Skin.UnitPopupVoiceSliderTemplate(self.Slider)
+        Skin.UnitPopupVoiceToggleButtonTemplate(self.Toggle)
+     end
+
     function Skin.UnitPopupVoiceToggleButtonTemplate(Button)
         Skin.VoiceToggleButtonTemplate(Button)
     end
@@ -21,14 +29,5 @@ do --[[ FrameXML\UnitPopupCustomControls.xml ]]
 end
 
 function private.FrameXML.UnitPopupCustomControls()
-    -- FIXLATER - disable for now
-    if private.isRetail then return end
-    Skin.UnitPopupVoiceSliderTemplate(_G.UnitPopupVoiceSpeakerVolumeTemplate.Slider)
-    Skin.UnitPopupVoiceToggleButtonTemplate(_G.UnitPopupVoiceSpeakerVolumeTemplate.Toggle)
-
-    Skin.UnitPopupVoiceSliderTemplate(_G.UnitPopupVoiceMicrophoneVolume.Slider)
-    Skin.UnitPopupVoiceToggleButtonTemplate(_G.UnitPopupVoiceMicrophoneVolume.Toggle)
-
-    Skin.UnitPopupVoiceSliderTemplate(_G.UnitPopupVoiceUserVolume.Slider)
-    Skin.UnitPopupVoiceToggleButtonTemplate(_G.UnitPopupVoiceUserVolume.Toggle)
+    Util.Mixin(_G.UnitPopupVoiceLevelsMixin, Hook.UnitPopupVoiceLevelsMixin)
 end
