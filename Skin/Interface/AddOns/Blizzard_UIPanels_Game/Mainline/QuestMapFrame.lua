@@ -165,6 +165,7 @@ function private.FrameXML.QuestMapFrame()
     Base.SetHighlight(ShowMapButton)
 
     -- FIXLATER
+
     -- Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.AbandonButton)
     QuestLogPopupDetailFrame.AbandonButton:SetPoint("BOTTOMLEFT", 5, 5)
     -- FIXLATER
@@ -256,42 +257,35 @@ function private.FrameXML.QuestMapFrame()
     end
 
     local DetailsFrame = QuestMapFrame.DetailsFrame
-    -- local bg, overlay, _, tile = DetailsFrame:GetRegions()
     local bg, overlay, _, _ = DetailsFrame:GetRegions()
 
     bg:Hide()
     overlay:Hide()
-    -- tile:Hide()
-    -- FIXLATER
-    -- Skin.UIPanelButtonTemplate(DetailsFrame.BackButton)
+    local BorderFrame = DetailsFrame.BorderFrame
+    BorderFrame:Hide()
 
-    -- FIXLATER
-    -- DetailsFrame.RewardsFrame.Background:Hide()
-    -- select(2, DetailsFrame.RewardsFrame:GetRegions()):Hide()
+    local BackFrame = DetailsFrame.BackFrame
+    Base.StripBlizzardTextures(BackFrame)
+    Skin.UIPanelButtonTemplate(BackFrame.BackButton)
 
+    local RewardsFrameContainer = DetailsFrame.RewardsFrameContainer
+    local RewardsFrame = RewardsFrameContainer.RewardsFrame
+    Base.StripBlizzardTextures(RewardsFrame)
     Skin.ScrollFrameTemplate(DetailsFrame.ScrollFrame)
 
-    -- FIXLATER
-    -- bg, tile = DetailsFrame.CompleteQuestFrame:GetRegions()
-    -- bg:Hide()
-    -- tile:Hide()
-    -- Skin.UIPanelButtonTemplate(DetailsFrame.CompleteQuestFrame.CompleteButton)
-    -- local left, right = select(6, DetailsFrame.CompleteQuestFrame.CompleteButton:GetRegions())
-    -- left:Hide()
-    -- right:Hide()
+    Skin.UIPanelButtonTemplate(_G.QuestFrameCompleteButton)
+    local QuestFrameCompleteButtonLeft, QuestFrameCompleteButtonRight = select(6, _G.QuestFrameCompleteButton:GetRegions())
+    QuestFrameCompleteButtonLeft:Hide()
+    QuestFrameCompleteButtonRight:Hide()
 
-    -- FIXLATER
-    -- Skin.UIPanelButtonTemplate(DetailsFrame.AbandonButton)
-    -- Skin.UIPanelButtonTemplate(DetailsFrame.ShareButton)
-    -- left, right = select(6, DetailsFrame.ShareButton:GetRegions())
-    -- left:Hide()
-    -- right:Hide()
-    -- FIXLATER
-    -- Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
+    Skin.UIPanelButtonTemplate(DetailsFrame.AbandonButton)
+    Skin.UIPanelButtonTemplate(DetailsFrame.ShareButton)
+    local ShareButtonLeft, ShareButtonRight = select(6, DetailsFrame.ShareButton:GetRegions())
+    ShareButtonLeft:Hide()
+    ShareButtonRight:Hide()
+    Skin.UIPanelButtonTemplate(DetailsFrame.TrackButton)
     Skin.CampaignOverviewTemplate(QuestMapFrame.QuestsFrame.CampaignOverview)
 
     local MapLegend = QuestMapFrame.MapLegend
     Skin.ScrollFrameTemplate(MapLegend.ScrollFrame)
-
-
 end
