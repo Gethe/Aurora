@@ -1,4 +1,23 @@
-﻿## [11.2.5.1] ##
+﻿## [11.2.5.2] ##
+### Fixed ###
+  * chg: fix a missing _G in _G.AddFriendInfoFrame.ContinueButton
+  * chg: fix skinning of checkboxes in Blizzard_Communities
+  * chg: Blizzard_PlayerChoice skin close button
+  * chore: cleanup
+  * chg: fixup on DressUpFrame skin
+  * chg: fix skin of questslog of questmap
+  * chore: removed some FIXLATERs that have been fixed or just needed cleanup
+  * del: removed noisy debug message
+  * chg: fix skin on UnitPopUpVoiceLevels
+  * chg: removed some FIXLATER tags
+  * chg: fix for chatconfig checkboxes
+  * chg: Aurora handling of private.FrameXML "FriendsFrame" restored
+  * chg: more cleanup fixes for FriendsFrame
+  * chg: make UIPanelButtonTemplate also work with never buttons
+  * chg: IgnoreListFrame to IgnoreListWindow
+  * fix: C_ItemSocketInfo fix for Sockets
+
+## [11.2.5.1] ##
 ### Fixed ###
   * chg: fixed skinning of sockets which broke with 11.2.5
   * chg: removed debug messages from Blizzard_UIWidgets which broke skinning of some widgets
