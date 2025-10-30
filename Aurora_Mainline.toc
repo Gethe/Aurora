@@ -1,4 +1,5 @@
-## Interface: 110205
+## Interface: 110205, 110207, 120000
+## X-Min-Interface: 110200
 ## Title: Aurora
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
