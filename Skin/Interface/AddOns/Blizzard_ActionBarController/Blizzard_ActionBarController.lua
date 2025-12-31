@@ -572,15 +572,13 @@ function private.FrameXML.ActionBarController()
     end
 
     ----====####$$$$%%%%%$$$$####====----
-    --           MainMenuBar           --
+    --           MainActionBar           --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar then
         if private.isRetail then
-            local MainMenuBar = _G.MainMenuBar
-            MainMenuBar.BorderArt:SetAlpha(0)
-            -- Removed in 10.2.0
-            -- MainMenuBar.Background:SetAlpha(0)
-            MainMenuBar.EndCaps:SetAlpha(0)
+            local MainActionBar = _G.MainActionBar
+            MainActionBar.BorderArt:SetAlpha(0)
+            MainActionBar.EndCaps:SetAlpha(0)
         else
             _G.hooksecurefunc("MainMenuTrackingBar_Configure", Hook.MainMenuTrackingBar_Configure)
 
@@ -661,8 +659,9 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar and private.isRetail then
         Util.Mixin(_G.StatusTrackingBarManager, Hook.StatusTrackingManagerMixin)
-        Skin.StatusTrackingBarContainerTemplate(_G.MainStatusTrackingBarContainer)
-        Skin.StatusTrackingBarContainerTemplate(_G.SecondaryStatusTrackingBarContainer)
+        -- FIXLATER -- this is now a Mixin, so we need to hook the :New method to apply the mixin to new bars
+        -- Skin.StatusTrackingBarContainerTemplate(_G.MainStatusTrackingBarContainer)
+        -- Skin.StatusTrackingBarContainerTemplate(_G.SecondaryStatusTrackingBarContainer)
     end
 
     ----====####$$$$%%%%%$$$$####====----
