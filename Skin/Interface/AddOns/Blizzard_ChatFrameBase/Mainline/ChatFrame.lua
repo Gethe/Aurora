@@ -19,7 +19,8 @@ do --[[ SharedXML\ChatFrame.lua ]]
 
         local info = _G.ChatTypeInfo[chatType]
         if chatType == "CHANNEL" then
-            local localID, channelName = _G.GetChannelName(_G.ChatEdit_GetChannelTarget(editBox))
+            local channeleditBox = _G.ChatFrameUtil.GetActiveWindow();
+            local localID, channelName = _G.GetChannelName(channeleditBox:GetChannelTarget())
             if channelName then
                 info = _G.ChatTypeInfo["CHANNEL"..localID]
             end
