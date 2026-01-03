@@ -101,7 +101,7 @@ function private.SharedXML.ChatFrame()
         return AddMessage[frame](frame, message, ...)
     end
 
-    for i = 1, _G.NUM_CHAT_WINDOWS do
+    for i = 1, _G.Constants.ChatFrameConstants.MaxChatWindows do
         local frame = _G["ChatFrame"..i]
         AddMessage[frame] = frame.AddMessage
         frame.AddMessage = FixClassColors
