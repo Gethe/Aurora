@@ -46,7 +46,7 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
             return
         end
         -- FIXLATER?
-        local background = Frame.BG
+        local background = Frame.BG -- did 11.2.7 remove BG from StaticPopupTemplate??
         background.Top:SetTexture("")
         -- background.Bottom:SetTexture("")
         -- Skin.DialogBorderTemplate(border)
