@@ -342,6 +342,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
         function Skin.HorizontalMultiBar1(Frame)
             local name = Frame:GetName().."Button"
             for i = 1, 12 do
+                _G.print("Skinning MultiActionBars - HorizontalMultiBar1:", name..i)
                 Skin.MultiBar1ButtonTemplate(_G[name..i])
             end
         end
@@ -412,7 +413,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
     end
 end
 
-function private.FrameXML.ActionBarController()
+function private.FrameXML.Blizzard_ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --     MainMenuBarMicroButtons     --
     ----====####$$$$%%%%%$$$$####====----
@@ -475,6 +476,7 @@ function private.FrameXML.ActionBarController()
 
         Util.PositionRelative("BOTTOMLEFT", _G.MainMenuBarArtFrame, "BOTTOMLEFT", 555, 5, -2, "Right", buttons)
     end
+
 
     ----====####$$$$%%%%%$$$$####====----
     --    StatusTrackingBarTemplate    --
@@ -557,6 +559,7 @@ function private.FrameXML.ActionBarController()
         end
     end
 
+
     ----====####$$$$%%%%%$$$$####====----
     --        ActionBarTemplate        --
     ----====####$$$$%%%%%$$$$####====----
@@ -571,6 +574,7 @@ function private.FrameXML.ActionBarController()
         Skin.VerticalMultiBar4(_G.MultiBarLeft)
     end
 
+
     ----====####$$$$%%%%%$$$$####====----
     --           MainMenuBar           --
     ----====####$$$$%%%%%$$$$####====----
@@ -581,6 +585,7 @@ function private.FrameXML.ActionBarController()
             -- Removed in 10.2.0
             -- MainMenuBar.Background:SetAlpha(0)
             MainMenuBar.EndCaps:SetAlpha(0)
+
         else
             _G.hooksecurefunc("MainMenuTrackingBar_Configure", Hook.MainMenuTrackingBar_Configure)
 
@@ -665,6 +670,7 @@ function private.FrameXML.ActionBarController()
         Skin.StatusTrackingBarContainerTemplate(_G.SecondaryStatusTrackingBarContainer)
     end
 
+
     ----====####$$$$%%%%%$$$$####====----
     --        OverrideActionBar        --
     ----====####$$$$%%%%%$$$$####====----
@@ -696,4 +702,12 @@ function private.FrameXML.ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --       ActionBarController       --
     ----====####$$$$%%%%%$$$$####====----
+    --- FIXBETA - why is this here?
+    --- Bartender4 workaround!
+    local LeftEndCap = _G.MainActionBar.EndCaps.LeftEndCap
+    local RightEndCap = _G.MainActionBar.EndCaps.RightEndCap
+    local BoarderArt = _G.MainActionBar.BorderArt
+    BoarderArt:SetAlpha(0)
+    LeftEndCap:SetAlpha(0)
+    RightEndCap:SetAlpha(0)
 end

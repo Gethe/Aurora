@@ -34,6 +34,8 @@ do --[[ FrameXML\LFDFrame.xml ]]
 end
 
 function private.FrameXML.LFDFrame()
+    -- FIXBETA
+    if private.isMidnight then return end
     _G.hooksecurefunc("LFDQueueFrameRandomCooldownFrame_Update", Hook.LFDQueueFrameRandomCooldownFrame_Update)
 
     -----------------------

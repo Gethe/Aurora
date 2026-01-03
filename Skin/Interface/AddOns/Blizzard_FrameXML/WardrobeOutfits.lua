@@ -49,6 +49,8 @@ do --[[ FrameXML\WardrobeOutfits.xml ]]
 end
 
 function private.FrameXML.WardrobeOutfits()
+    -- FIXBETA
+    if private.isMidnight then return end
     local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
     Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
 

@@ -334,6 +334,8 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
 end
 
 function private.FrameXML.Blizzard_ObjectiveTracker()
+    if private.isMidnight then return end
+   
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ObjectiveTrackerShared --
     ----====####$$$$%%%%%$$$$####====----

@@ -237,9 +237,10 @@ local BackdropMixin do
             r, g, b, a = backdropInfo.backdropBorderColor:GetRGBA()
         end
         self:SetBackdropBorderColor(r, g, b, a)
-
-
-        self:SetupTextureCoordinates()
+        -- FIXBETA
+        if _G.canaccesssecrets(self) then
+            self:SetupTextureCoordinates()
+        end
     end
 
 

@@ -46,7 +46,8 @@ function private.FrameXML.DressUpFrames()
     -- DressUpFrame --
     ------------------
     local DressUpFrame = _G.DressUpFrame
-
+    -- FIXBETA
+    if private.isMidnight then return end
     Skin.ButtonFrameTemplateMinimizable(DressUpFrame)
     Skin.DropdownButton(DressUpFrame.OutfitDropdown)
     Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)

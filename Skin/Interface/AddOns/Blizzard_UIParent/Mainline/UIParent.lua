@@ -25,6 +25,8 @@ do --[[ FrameXML\UIParent.lua ]]
 end
 
 function private.FrameXML.UIParent()
+    -- FIXBETA
+    if private.isMidnight then return end
     _G.hooksecurefunc("SetPortraitToTexture", Hook.SetPortraitToTexture)
     _G.hooksecurefunc("BuildIconArray", Hook.BuildIconArray)
 end

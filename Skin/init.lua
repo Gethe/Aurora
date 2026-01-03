@@ -3,7 +3,7 @@ local ADDON_NAME, private = ...
 -- luacheck: globals select tostring tonumber math floor
 -- luacheck: globals setmetatable rawset debugprofilestop type tinsert
 
-private.API_MAJOR, private.API_MINOR = 11, 2
+private.API_MAJOR, private.API_MINOR = 12, 0
 
 private.isRetail = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE
 private.isVanilla = _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC
@@ -13,6 +13,8 @@ private.isCata = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_CATACLYSM_CLASSIC or 14)
 
 private.isClassic = not private.isRetail
 private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 110105
+private.isMidnight = private.isRetail and select(4, _G.GetBuildInfo()) >= 120000
+private.isBetaBuild = private.isRetail and select(4, _G.GetBuildInfo()) == 120001
 
 local debugProjectID = {
     [0] = private.isRetail,
@@ -157,6 +159,11 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
     else
         if addonName == ADDON_NAME then
             _G.print(("%s v%s loaded."):format(ADDON_NAME, private.API_MAJOR + private.API_MINOR / 100))
+            _G.print(("Blizzard World of Warcraft - %s (%s)"):format(select(1, _G.GetBuildInfo()),select(2, _G.GetBuildInfo())))
+            _G.print(("Running on %s - UI Scale: %.2f"):format(_G.GetCVar("gxWindowedResolution"), _G.UIParent:GetScale()))
+            if private.isBetaBuild then
+                _G.print("Aurora is running in a Beta Build of World of Warcraft. Some features may not work as intended.")
+            end
             -- Setup function for the host addon
             private.OnLoad()
             private.UpdateUIScale()
@@ -168,8 +175,6 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
                 Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient
             end
 
-            -- Skin FrameXML
-            _G.print("Skinning FrameXML")
             for i = 1, #private.fileOrder do
                 local file = private.fileOrder[i]
                 file.list[file.name]()
