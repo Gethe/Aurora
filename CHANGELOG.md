@@ -1,4 +1,9 @@
-﻿## [11.2.5.2] ##
+﻿## [11.2.7.0] ##
+### Fixed ###
+  * chg: renamed toc file to support _optional versions..
+  * chore: toc bump
+
+## [11.2.5.2] ##
 ### Fixed ###
   * chg: fix a missing _G in _G.AddFriendInfoFrame.ContinueButton
   * chg: fix skinning of checkboxes in Blizzard_Communities
