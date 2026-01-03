@@ -1,7 +1,11 @@
-﻿## [11.2.7.1] ##
+﻿## [11.2.7.2] ##
+### Fixed ###
+  * chg: moved from NUM_CHAT_WINDOWS to Constants.ChatFrameConstants.MaxChatWindows
+
+## [11.2.7.1] ##
 ### Fixed ###
   * chg: MainMenuBar replaced by MainActionBar
-  * fix:  channel editbox info when chatType is CHANNEL
+  * fix: channel editbox info when chatType is CHANNEL
   * chg: ScrollBox.view.poolCollection replaced by ScrollUpdate hooks
 
 ## [11.2.7.0] ##

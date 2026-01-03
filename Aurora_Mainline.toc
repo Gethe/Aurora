@@ -4,7 +4,7 @@
 ## IconAtlas: callings-backhighlight-full
 ## Notes: Minimalistic window theme.
 ## Author: Haleth/Lightsword, Gethe, Hanshi/arnvid
-## Version: 11.2.7.1
+## Version: 11.2.7.2
 ## OptionalDeps: Ace3, LibTextDump-1.0, BugSack, WagoAnalytics
 ## LoadWith: Blizzard_EncounterJournal
 ## SavedVariables: AuroraConfig
