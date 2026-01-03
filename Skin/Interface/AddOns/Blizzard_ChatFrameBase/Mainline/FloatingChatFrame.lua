@@ -18,7 +18,7 @@ do --[[ SharedXML\FloatingChatFrame.lua ]]
         tr:SetPoint("TOPRIGHT", bg)
         br:SetPoint("BOTTOMRIGHT", bg)
     end
-    local maxTempIndex = _G.NUM_CHAT_WINDOWS + 1
+    local maxTempIndex = _G.C_ChatInfo.GetNumReservedChatWindows() + 1
     function Hook.FCF_OpenTemporaryWindow(chatType, chatTarget, sourceChatFrame, selectWindow)
         local name = "ChatFrame"..maxTempIndex
         if _G[name] then
@@ -203,7 +203,7 @@ function private.SharedXML.FloatingChatFrame()
     _G.hooksecurefunc("FCF_SetButtonSide", Hook.FCF_SetButtonSide)
     _G.hooksecurefunc("FCF_CreateMinimizedFrame", Hook.FCF_CreateMinimizedFrame)
 
-    for i = 1, _G.NUM_CHAT_WINDOWS do
+    for i = 1, _G.Constants.ChatFrameConstants.MaxChatWindows do
         local name = "ChatFrame"..i
         Skin.ChatTabTemplate(_G[name.."Tab"])
         Skin.FloatingChatFrameTemplate(_G[name])

@@ -19,7 +19,8 @@ do --[[ SharedXML\ChatFrame.lua ]]
 
         local info = _G.ChatTypeInfo[chatType]
         if chatType == "CHANNEL" then
-            local localID, channelName = _G.GetChannelName(_G.ChatEdit_GetChannelTarget(editBox))
+            local channeleditBox = _G.ChatFrameUtil.GetActiveWindow();
+            local localID, channelName = _G.GetChannelName(channeleditBox:GetChannelTarget())
             if channelName then
                 info = _G.ChatTypeInfo["CHANNEL"..localID]
             end
@@ -100,7 +101,7 @@ function private.SharedXML.ChatFrame()
         return AddMessage[frame](frame, message, ...)
     end
 
-    for i = 1, _G.NUM_CHAT_WINDOWS do
+    for i = 1, _G.Constants.ChatFrameConstants.MaxChatWindows do
         local frame = _G["ChatFrame"..i]
         AddMessage[frame] = frame.AddMessage
         frame.AddMessage = FixClassColors

@@ -301,6 +301,29 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
         function Skin.BottomEncounterTierTabTemplate(Button)
             Skin.PanelTabButtonTemplate(Button)
         end
+        function Hook.EJInstanceSelectScrollUpdate(frame)
+            frame:ForEachFrame(function(child)
+                    if not child._auroraSkinned then
+                    local bgImage = child.bgImage
+                    if bgImage then
+                        bgImage:SetAlpha(0.6)
+                        bgImage:SetTexCoord(0.01953125, 0.66015625, 0.0390625, 0.7109375)
+                        bgImage:SetPoint("TOPLEFT", 1, -1)
+                        bgImage:SetPoint("BOTTOMRIGHT", -1, 1)
+                    end
+                    Skin.EncounterBossButtonTemplate(child)
+                    child._auroraSkinned = true
+                end
+            end)
+        end
+        function  Hook.EJBossesScrollBoxScrollUpdate(frame)
+            frame:ForEachFrame(function(child)
+                if not child._auroraSkinned then
+                    Skin.EncounterBossButtonTemplate(child)
+                    child._auroraSkinned = true
+                end
+            end)
+        end
     end
     do --[[ Blizzard_LootJournal ]]
         function Skin.RuneforgeLegendaryPowerLootJournalTemplate(Button)
@@ -322,6 +345,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
 end
 
 function private.AddOns.Blizzard_EncounterJournal()
+    _G.print("Skinning AddOns: Blizzard_EncounterJournal")
     ----====####$$$$%%%%%$$$$####====----
     --    Blizzard_EncounterJournal    --
     ----====####$$$$%%%%%$$$$####====----
@@ -389,9 +413,9 @@ function private.AddOns.Blizzard_EncounterJournal()
     instanceSelect.bg:SetAlpha(0)
     Skin.DropdownButton(instanceSelect.ExpansionDropdown)
     Skin.WowScrollBoxList(instanceSelect.ScrollBox)
+    _G.print("instanceSelect.ScrollBox")
     Skin.MinimalScrollBar(instanceSelect.ScrollBar)
-    Util.Mixin(instanceSelect.ScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
-
+    _G.hooksecurefunc(instanceSelect.ScrollBox, 'Update', Hook.EJInstanceSelectScrollUpdate)
 
     --------------------
     -- EncounterFrame --
@@ -426,8 +450,9 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     info.encounterTitle:SetTextColor(Color.white:GetRGB())
     info.instanceTitle:SetTextColor(Color.white:GetRGB())
-
-    Base.CropIcon(info.instanceButton.icon, info.instanceButton)
+    -- This one gets garbled by DropIcon
+    -- FIXMELATER
+    -- Base.CropIcon(info.instanceButton.icon, info.instanceButton)
     info.instanceButton:ClearNormalTexture()
     info.instanceButton:GetHighlightTexture():Hide()
 
@@ -435,6 +460,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.EncounterTabTemplate(info.lootTab)
     Skin.EncounterTabTemplate(info.bossTab)
     Skin.EncounterTabTemplate(info.modelTab)
+
     Util.PositionRelative("TOPLEFT", info, "TOPRIGHT", 10, -40, 5, "Down", {
         info.overviewTab,
         info.lootTab,
@@ -443,9 +469,8 @@ function private.AddOns.Blizzard_EncounterJournal()
     })
 
     Skin.WowScrollBoxList(info.BossesScrollBox)
-    Util.Mixin(info.BossesScrollBox.view.poolCollection, Hook.FramePoolCollectionMixin)
+    _G.hooksecurefunc(info.BossesScrollBox, 'Update', Hook.EJBossesScrollBoxScrollUpdate)
     Skin.MinimalScrollBar(info.BossesScrollBar)
-    -- CHECKMELATER -- is this a DropdownButton too?
     Skin.EJButtonTemplate(info.difficulty)
 
     Skin.ScrollFrameTemplate(info.detailsScroll)
@@ -520,12 +545,14 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.BottomEncounterTierTabTemplate(EncounterJournal.dungeonsTab)
     Skin.BottomEncounterTierTabTemplate(EncounterJournal.raidsTab)
     Skin.BottomEncounterTierTabTemplate(EncounterJournal.LootJournalTab)
+    Skin.BottomEncounterTierTabTemplate(EncounterJournal.TutorialsTab)
     Util.PositionRelative("TOPLEFT", EncounterJournal, "BOTTOMLEFT", 20, -1, 1, "Right", {
         EncounterJournal.MonthlyActivitiesTab,
         EncounterJournal.suggestTab,
         EncounterJournal.dungeonsTab,
         EncounterJournal.raidsTab,
         EncounterJournal.LootJournalTab,
+        EncounterJournal.TutorialsTab,
     })
 
 
@@ -564,4 +591,13 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.DropdownButton(LootJournal.RuneforgePowerDropdown)
     Skin.WowScrollBoxList(LootJournal.ScrollBox)
     Skin.MinimalScrollBar(LootJournal.ScrollBar)
+
+    ----====####$$$$%%%%$$$$####====----
+    --       Blizzard_Tutorials       --
+    ----====####$$$$%%%%$$$$####====----
+    -- FIXMELATER
+    -- Not sure what to expect here ..
+    local TutorialsTab = EncounterJournal.TutorialsTab
+    -- local TutorialsFrame = EncounterJournal.TutorialsFrame
+    TutorialsTab:GetRegions():Hide()
 end

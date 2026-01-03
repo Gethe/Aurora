@@ -450,13 +450,17 @@ function private.AddOns.Blizzard_AchievementUI()
     Header.Title:Hide()
     Header.LeftDDLInset:SetAlpha(0)
     Header.RightDDLInset:SetAlpha(0)
-
     Header.Points:SetParent(AchievementFrame)
     Header.Points:SetPoint("TOP", bg)
     Header.Points:SetPoint("BOTTOM", bg, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
     Header.Shield:SetParent(AchievementFrame)
 
-
+    -- FIXMELATER
+    -- AchievementFrame_HideFilterDropdown(AchievementFrame);
+    -- AchievementFrame_TryShowFilterDropdown(AchievementFrame);
+    -- -	AchievementFrameFilterDropdown:Hide();
+    -- -	AchievementFrame.Header.LeftDDLInset:Hide();
+    -- +	AchievementFrame_HideFilterDropdown(AchievementFrame);
 
     ----------------
     -- Categories --
