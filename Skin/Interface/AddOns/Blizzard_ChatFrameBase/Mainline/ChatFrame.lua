@@ -10,7 +10,7 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
 do --[[ SharedXML\ChatFrame.lua ]]
-    function Hook.ChatEdit_UpdateHeader(editBox)
+    function Hook.ChatFrameEditBoxMixinUpdateHeader(editBox)
         local chatType = editBox:GetAttribute("chatType")
         if not chatType then
             editBox:SetBackdropBorderColor(Color.frame)
@@ -85,7 +85,7 @@ end
 
 function private.SharedXML.ChatFrame()
     if private.disabled.chat then return end
-    _G.hooksecurefunc("ChatEdit_UpdateHeader", Hook.ChatEdit_UpdateHeader)
+    _G.hooksecurefunc("ChatEdit_UpdateHeader", Hook.ChatFrameEditBoxMixinUpdateHeader)
 
     _G.GetColoredName = Hook.GetColoredName
 
