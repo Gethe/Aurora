@@ -129,6 +129,13 @@ do
         --     Button.cover:SetColorTexture(0, 0, 0, 0.75)
         -- end
         -- This is a fail-safe for when the role is not ENUM but a string
+        if not Button then
+            if private.isDev then
+                -- FIXMELATER
+                _G.print("[Aurora-Dev]: Button is nil in LFGRoleButtonTemplate - Report to Aurora developers.")
+            end
+            return
+        end
         if (Button.role == "TANK" or Button.role == "HEALER" or Button.role == "DAMAGER" or Button.role == nil) then
             Base.SetTexture(Button:GetNormalTexture(), "icon" .. (Button.role or "GUIDE"))
         else
