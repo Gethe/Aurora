@@ -225,8 +225,8 @@ local gui = _G.CreateFrame("Frame", "AuroraOptions", _G.UIParent)
 gui.name = "Aurora"
 
 -- add the settings canvas to the addons settings
-local category, _ = _G.Settings.RegisterCanvasLayoutCategory(gui, "Aurora", "Aurora")
-category.ID = "Aurora"
+local category, layout = _G.Settings.RegisterCanvasLayoutCategory(gui, "Aurora", "Aurora")
+Aurora.category = category
 _G.Settings.RegisterAddOnCategory(category)
 
 local title = gui:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -431,6 +431,6 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
     elseif private.commands[msg] then
         private.commands[msg]()
     else
-        _G.Settings.OpenToCategory(gui.name)
+        _G.Settings.OpenToCategory(Aurora.category:GetID())
     end
 end
