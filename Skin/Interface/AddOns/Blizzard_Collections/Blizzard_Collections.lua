@@ -785,44 +785,46 @@ function private.AddOns.Blizzard_Collections()
     DetailsFrame.ModelFadeTexture:Hide()
     Skin.DropdownButton(DetailsFrame.VariantSetsDropdown)
 
-    local SetsTransmogFrame = WardrobeCollectionFrame.SetsTransmogFrame
-    Util.Mixin(SetsTransmogFrame, Hook.WardrobeSetsTransmogMixin)
-    Skin.CollectionsBackgroundTemplate(SetsTransmogFrame)
-    Skin.CollectionsPagingFrameTemplate(SetsTransmogFrame.PagingFrame)
-    for i = 1, #SetsTransmogFrame.Models do
-        Skin.WardrobeSetsTransmogModelTemplate(SetsTransmogFrame.Models[i])
-    end
+    local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
+    -- FIXMELATER 
+    -- Util.Mixin(SetsCollectionFrame, Hook.WardrobeSetsTransmogMixin)
+    -- Skin.CollectionsBackgroundTemplate(SetsCollectionFrame)
+    -- Skin.CollectionsPagingFrameTemplate(SetsCollectionFrame.PagingFrame)
+    -- for i = 1, #SetsCollectionFrame.Models do
+    --    Skin.WardrobeSetsTransmogModelTemplate(SetsCollectionFrame.Models[i])
+    -- end
 
     -------------------
     -- WardrobeFrame --
     -------------------
-    local WardrobeFrame = _G.WardrobeFrame
-    Skin.PortraitFrameTemplate(WardrobeFrame)
+    -- FIXMELATER 
+    -- local WardrobeFrame = _G.WardrobeFrame
+    -- Skin.PortraitFrameTemplate(WardrobeFrame)
 
-    local WardrobeTransmogFrame = _G.WardrobeTransmogFrame
-    WardrobeTransmogFrame.MoneyLeft:Hide()
-    WardrobeTransmogFrame.MoneyMiddle:Hide()
-    WardrobeTransmogFrame.MoneyRight:Hide()
+    -- local WardrobeTransmogFrame = _G.WardrobeTransmogFrame
+    -- WardrobeTransmogFrame.MoneyLeft:Hide()
+    -- WardrobeTransmogFrame.MoneyMiddle:Hide()
+    -- WardrobeTransmogFrame.MoneyRight:Hide()
 
-    Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
-    WardrobeTransmogFrame.Inset.BG:Hide()
+    -- Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
+    -- WardrobeTransmogFrame.Inset.BG:Hide()
 
-    Skin.DropdownButton(WardrobeTransmogFrame.OutfitDropdown)
+    -- Skin.DropdownButton(WardrobeTransmogFrame.OutfitDropdown)
 
-    local ModelScene = WardrobeTransmogFrame.ModelScene
-    Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
+    -- local ModelScene = WardrobeTransmogFrame.ModelScene
+    -- Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
 
-    local SlotButtons = WardrobeTransmogFrame.SlotButtons
-    for i = 1, #SlotButtons do
-        if i > 13 then
-            Skin.WardrobeTransmogEnchantButtonTemplate(SlotButtons[i])
-        else
-            Skin.WardrobeTransmogButtonTemplate(SlotButtons[i])
-        end
-    end
+    -- local SlotButtons = WardrobeTransmogFrame.SlotButtons
+    -- for i = 1, #SlotButtons do
+    --     if i > 13 then
+    --         Skin.WardrobeTransmogEnchantButtonTemplate(SlotButtons[i])
+    --     else
+    --         Skin.WardrobeTransmogButtonTemplate(SlotButtons[i])
+    --     end
+    -- end
 
-    Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
-    Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
+    -- Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
+    -- Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
     -- FIXLATER
     -- Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
 
