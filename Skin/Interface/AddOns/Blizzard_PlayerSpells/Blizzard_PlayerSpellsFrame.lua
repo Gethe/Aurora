@@ -92,5 +92,4 @@ function private.AddOns.Blizzard_PlayerSpells()
     local PagingControls = PagedSpellsFrame.PagingControls
     Skin.NavButtonPrevious(PagingControls.PrevPageButton)
     Skin.NavButtonNext(PagingControls.NextPageButton)
-    _G.print("Blizzard_PlayerSpellsFrame loaded")
 end

@@ -345,7 +345,6 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
 end
 
 function private.AddOns.Blizzard_EncounterJournal()
-    _G.print("Skinning AddOns: Blizzard_EncounterJournal")
     ----====####$$$$%%%%%$$$$####====----
     --    Blizzard_EncounterJournal    --
     ----====####$$$$%%%%%$$$$####====----
@@ -413,7 +412,6 @@ function private.AddOns.Blizzard_EncounterJournal()
     instanceSelect.bg:SetAlpha(0)
     Skin.DropdownButton(instanceSelect.ExpansionDropdown)
     Skin.WowScrollBoxList(instanceSelect.ScrollBox)
-    _G.print("instanceSelect.ScrollBox")
     Skin.MinimalScrollBar(instanceSelect.ScrollBar)
     _G.hooksecurefunc(instanceSelect.ScrollBox, 'Update', Hook.EJInstanceSelectScrollUpdate)
 

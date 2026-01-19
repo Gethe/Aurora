@@ -70,7 +70,6 @@ end
 function private.FrameXML.BankFrame()
     if private.disabled.bags then return end
     if private.isRetail then
-        _G.print("ReportError: BankFrame is not supported in Retail 11.2 - Report to Aurora developers.")
         return
         -- FIXLATER is it removed in 11.2?
         -- Skin.StaticPopupTemplate(_G.StaticPopup1)

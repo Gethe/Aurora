@@ -136,7 +136,9 @@ do --[[ FrameXML\ContainerFrame.xml ]]
     end
     function Skin.ContainerFrameBackpackTemplate(Frame)
         if not Frame then
-            _G.print("ReportError: Frame is nil in ContainerFrameBackpackTemplate - Report to Aurora developers.")
+            if private.isDev then
+                _G.print("[Aurora-Dev]: Frame is nil in ContainerFrameBackpackTemplate - Report to Aurora developers.")
+            end
             return
         end
         Skin.ContainerFrameTemplate(Frame)

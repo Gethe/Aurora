@@ -238,7 +238,6 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%%%%%$$$$####====----
     -- Blizzard_UIWidgetBelowMinimapFrame --
     ----====####$$$$%%%%%%%%$$$$####====----
-    _G.print("Blizzard_UIWidgetBelowMinimapFrame: OnLoad")
     Util.Mixin(_G.UIWidgetBelowMinimapContainerFrame, Hook.UIWidgetBelowMinimapContainerMixin)
     _G.UIWidgetBelowMinimapContainerFrame:Hide() -- Hide the frame until we can set the point
     -- _G.UIWidgetBelowMinimapContainerFrame:ClearAllPoints()
