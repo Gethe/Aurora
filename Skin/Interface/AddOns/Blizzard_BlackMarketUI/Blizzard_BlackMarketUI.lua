@@ -41,11 +41,10 @@ function private.AddOns.Blizzard_BlackMarketUI()
 
     F.SetBD(BlackMarketFrame)
     F.CreateBD(BlackMarketFrame.HotDeal, .25)
-    F.Reskin(BlackMarketFrame.BidButton)
-    F.ReskinClose(BlackMarketFrame.CloseButton)
+    Skin.UIPanelButtonTemplate(BlackMarketFrame.BidButton)
+    Skin.UIPanelCloseButton(BlackMarketFrame.CloseButton)
     F.ReskinInput(_G.BlackMarketBidPriceGold)
-    F.ReskinScroll(_G.BlackMarketScrollFrameScrollBar)
-
+    Skin.MinimalScrollBar(_G.BlackMarketFrame.ScrollBar)
     Skin.ThinGoldEdgeTemplate(BlackMarketFrame.MoneyFrameBorder)
     Skin.SmallMoneyFrameTemplate(_G.BlackMarketMoneyFrame)
 
