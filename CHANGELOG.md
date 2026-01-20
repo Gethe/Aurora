@@ -1,4 +1,17 @@
-﻿## [11.2.7.2] ##
+﻿## [12.0.0.0] ##
+### Fixed ###
+  * fix: added back removed Skin.FrameTypeScrollBarButton ...
+  * chg: updated AddOns_Mainline.xml file
+  * fix: removed some references to F.Reskin* (deprecated code) with newer Skin.. for BlackMarketFrame
+  * chg: SetsTransmogFrame, WardrobeFrame and WardrobeTransmogFrame removed - disabled code for now
+  * fix: LFGRoleButtonTemplate missing Button - catch error
+  * chg: remove old debug messages left in the codebase
+  * fix: Aurora AddOn Config window fix and /slashcmd fix
+  * chg: ChatEdit_UpdateHeader is now ChatFrameEditBoxMixinUpdateHeader so renaming functions
+  * beta: wrappers to make things run in beta
+  * chore: toc update for beta
+
+## [11.2.7.2] ##
 ### Fixed ###
   * chg: moved from NUM_CHAT_WINDOWS to Constants.ChatFrameConstants.MaxChatWindows
 
