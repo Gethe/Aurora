@@ -538,18 +538,20 @@ function private.AddOns.Blizzard_EncounterJournal()
     ------------------
     -- Tab Frames --
     ------------------
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.MonthlyActivitiesTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.suggestTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.dungeonsTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.raidsTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.LootJournalTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalMonthlyActivitiesTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalSuggestTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalDungeonTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalRaidTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalLootJournalTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalJourneysTab)
     Skin.BottomEncounterTierTabTemplate(EncounterJournal.TutorialsTab)
     Util.PositionRelative("TOPLEFT", EncounterJournal, "BOTTOMLEFT", 20, -1, 1, "Right", {
-        EncounterJournal.MonthlyActivitiesTab,
-        EncounterJournal.suggestTab,
-        EncounterJournal.dungeonsTab,
-        EncounterJournal.raidsTab,
-        EncounterJournal.LootJournalTab,
+        _G.EncounterJournalJourneysTab,
+        _G.EncounterJournalMonthlyActivitiesTab,
+        _G.EncounterJournalSuggestTab,
+        _G.EncounterJournalDungeonTab,
+        _G.EncounterJournalRaidTab,
+        _G.EncounterJournalLootJournalTab,
         EncounterJournal.TutorialsTab,
     })
 
