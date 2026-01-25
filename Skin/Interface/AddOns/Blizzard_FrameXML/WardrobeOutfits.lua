@@ -50,24 +50,25 @@ end
 
 function private.FrameXML.WardrobeOutfits()
     -- FIXBETA
-    if private.isMidnight then return end
-    local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
-    Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
+    if not private.isMidnight then
+        local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
+        Skin.DialogBorderTemplate(WardrobeOutfitEditFrame.Border)
 
-    local EditBox = WardrobeOutfitEditFrame.EditBox
-    Skin.FrameTypeEditBox(EditBox)
-    EditBox:SetBackdropOption("offsets", {
-        left = -5,
-        right = 3,
-        top = 3,
-        bottom = 3,
-    })
+        local EditBox = WardrobeOutfitEditFrame.EditBox
+        Skin.FrameTypeEditBox(EditBox)
+        EditBox:SetBackdropOption("offsets", {
+            left = -5,
+            right = 3,
+            top = 3,
+            bottom = 3,
+        })
 
-    EditBox.LeftTexture:Hide()
-    EditBox.RightTexture:Hide()
-    EditBox.MiddleTexture:Hide()
-
-    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.AcceptButton)
-    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.CancelButton)
-    Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.DeleteButton)
+        EditBox.LeftTexture:Hide()
+        EditBox.RightTexture:Hide()
+        EditBox.MiddleTexture:Hide()
+        Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.AcceptButton)
+        Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.CancelButton)
+        Skin.UIPanelButtonTemplate(WardrobeOutfitEditFrame.DeleteButton)
+    end
 end
+
