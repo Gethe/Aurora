@@ -596,6 +596,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     -- FIXMELATER
     -- Not sure what to expect here ..
     local TutorialsTab = EncounterJournal.TutorialsTab
-    -- local TutorialsFrame = EncounterJournal.TutorialsFrame
+    local TutorialsFrame = EncounterJournal.TutorialsFrame
+    Skin.UIPanelButtonTemplate(TutorialsFrame.Contents.StartButton)
     TutorialsTab:GetRegions():Hide()
 end
