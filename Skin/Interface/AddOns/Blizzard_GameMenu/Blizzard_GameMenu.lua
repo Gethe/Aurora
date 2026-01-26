@@ -19,22 +19,25 @@ do
         end
         function Hook.GameMenuFrameMixin:OnEvent()
         end
+        function Hook.GameMenuSkinButton(button)
+            Base.CreateBackdrop(button, {
+                bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                tile = false,
+                offsets = {
+                    left = -1,
+                    right = -1,
+                    top = -1,
+                    bottom = -1,
+                }
+            })
+            Skin.UIPanelButtonTemplate(button)
+            button._auroraSkinned = true
+        end
         function Hook.GameMenuInitButtons(menu)
             if not menu.buttonPool then return end
             for button in menu.buttonPool:EnumerateActive() do
                 if not button._auroraSkinned then
-                    Base.CreateBackdrop(button, {
-                        bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
-                        tile = false,
-                        offsets = {
-                            left = -1,
-                            right = -1,
-                            top = -1,
-                            bottom = -1,
-                        }
-                    })
-                    Skin.UIPanelButtonTemplate(button)
-                    button._auroraSkinned = true
+                    Hook.GameMenuSkinButton(button)
                 end
             end
         end
