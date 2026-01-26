@@ -798,6 +798,8 @@ function private.AddOns.Blizzard_Collections()
     -- WardrobeFrame --
     -------------------
     -- FIXMELATER 
+    -- WardrobeCollectionFrame.ItemsCollectionFrame
+    -- FIX WardrobeCollectionFrame
     -- local WardrobeFrame = _G.WardrobeFrame
     -- Skin.PortraitFrameTemplate(WardrobeFrame)
 
