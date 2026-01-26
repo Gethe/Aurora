@@ -73,6 +73,43 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
             self.ExecuteSessionCommand._auroraIcon:SetAtlas(atlas)
         end
     end
+
+    local EventsFrameHookedElements = {}
+    local function EventsFrameBackgroundNormal(element, texture)
+        -- _G.print(texture)
+        -- FIXLATER
+    end
+    local EventsFrameFunctions = {
+        function(element) -- 1: OngoingHeader
+            if not element.Background.backdrop then
+                element.Background:SetAlpha(0)
+            end
+            element.Label:SetTextColor(1, 0.8, 0)
+        end,
+        function(element) -- 2: OngoingEvent
+            if not EventsFrameHookedElements[element] then
+                hooksecurefunc(element.Background, "SetAtlas", EventsFrameBackgroundNormal)
+                EventsFrameHookedElements[element] = element.Background
+            end
+        end,
+        function(element) -- 3: ScheduledHeader
+            if not element.Background.backdrop then
+                element.Background:SetAlpha(0)
+            end
+        end,
+        function(element) -- 4: ScheduledEvent
+            if element.Highlight then
+                element.Highlight:SetAlpha(0)
+            end
+        end
+    }
+    function Hook.EventsFrameCallback(_, frame, elementData)
+        if not elementData.data then return end
+        local func = EventsFrameFunctions[elementData.data.entryType]
+        if func then
+            func(frame)
+        end
+    end
 end
 
 do --[[ FrameXML\QuestMapFrame.xml ]]
@@ -288,4 +325,11 @@ function private.FrameXML.QuestMapFrame()
 
     local MapLegend = QuestMapFrame.MapLegend
     Skin.ScrollFrameTemplate(MapLegend.ScrollFrame)
+
+    do -- EventsFrame
+        local EventsFrame = QuestMapFrame.EventsFrame
+        -- Skin.ScrollFrameTemplate(EventsFrame.ScrollFrame)
+        Skin.MinimalScrollBar(EventsFrame.ScrollBar)
+        _G.ScrollUtil.AddAcquiredFrameCallback(EventsFrame.ScrollBox, Hook.EventsFrameCallback, EventsFrame, true)
+    end
 end
