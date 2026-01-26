@@ -38,4 +38,6 @@ function private.AddOns.Blizzard_TimeManager()
     Skin.UICheckButtonTemplate(_G.TimeManagerLocalTimeCheck)
     Skin.UIPanelCloseButton(_G.StopwatchCloseButton) -- , "TOPRIGHT", _G.StopwatchFrame, "TOPRIGHT", -2, -2)
     -- FIXMELATER
+    -- StopwatchPlayPauseButton
+	-- StopwatchResetButton
 end

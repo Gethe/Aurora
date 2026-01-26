@@ -1,4 +1,4 @@
-Copyright (c) 2010-2024 
+Copyright (c) 2010-2026
 [Haleth/Lightsword](http://www.wowinterface.com/forums/member.php?u=110142), 
 [Gethe](http://www.wowinterface.com/forums/member.php?u=111611),
 [Hanshi/arnvid](https://github.com/arnvid)
