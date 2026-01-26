@@ -1,4 +1,14 @@
-﻿## [12.0.0.0] ##
+﻿## [12.0.0.1] ##
+### Fixed ###
+  * chg: fixes to GameMenu to not taint shop
+  * chg; updates to PVEFrame and Blizzard_PVPUI
+  * chg: updated Blizzard_EncounterJournal
+  * chg: only skin FrameTypeButton SetNormalTexture when SetNormalTexture exists
+  * chg: skin EncounterJournalJourneysTab
+  * fix: DressUpFrame fixes for wow12
+  * chg: skin TutorialsFrame.Contents.StartButton
+
+## [12.0.0.0] ##
 ### Fixed ###
   * fix: added back removed Skin.FrameTypeScrollBarButton ...
   * chg: updated AddOns_Mainline.xml file
