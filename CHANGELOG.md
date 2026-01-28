@@ -1,5 +1,6 @@
 ﻿## [12.0.0.1] ##
 ### Fixed ###
+  * chg: intial EventsFrame list setup (intial idea found from Wetxius/ShestakUI)
   * chg: fixes to GameMenu to not taint shop
   * chg; updates to PVEFrame and Blizzard_PVPUI
   * chg: updated Blizzard_EncounterJournal
