@@ -2,13 +2,30 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals next
+-- luacheck: globals _G next type
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
+
+local function IsSecret(value)
+    if _G.issecretvalue and _G.issecretvalue(value) then
+        return true
+    end
+    if _G.issecrettable and _G.issecrettable(value) then
+        return true
+    end
+    return false
+end
+
+local function SafeNumber(value, fallback)
+    if type(value) ~= "number" or IsSecret(value) then
+        return fallback
+    end
+    return value
+end
 
 do --[[ AddOns\Blizzard_UIWidgets.lua ]]
     do --[[ Blizzard_UIWidgetManager ]]
@@ -183,6 +200,51 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%%%%%%%%%$$$$####====----
     -- Blizzard_UIWidgetTemplateTextWithState --
     ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    if _G.UIWidgetTemplateTextWithStateMixin and _G.UIWidgetTemplateTextWithStateMixin.Setup then
+        local OriginalTextWithStateSetup = _G.UIWidgetTemplateTextWithStateMixin.Setup
+        _G.UIWidgetTemplateTextWithStateMixin.Setup = function(self, widgetInfo, widgetContainer)
+            if IsSecret(widgetInfo) or IsSecret(widgetInfo and widgetInfo.widgetSizeSetting) then
+                if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
+                    _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
+                end
+
+                local tooltip = widgetInfo and widgetInfo.tooltip
+                if IsSecret(tooltip) then
+                    tooltip = ""
+                end
+                self:SetTooltip(tooltip)
+
+                local text = widgetInfo and widgetInfo.text
+                if IsSecret(text) or type(text) ~= "string" then
+                    text = ""
+                end
+
+                local fontType = SafeNumber(widgetInfo and widgetInfo.fontType, 0)
+                local textSizeType = SafeNumber(widgetInfo and widgetInfo.textSizeType, 0)
+                local enabledState = SafeNumber(widgetInfo and widgetInfo.enabledState, 0)
+                local hAlign = SafeNumber(widgetInfo and widgetInfo.hAlign, 0)
+
+                self.Text:SetWidth(0)
+                self.Text:Setup(text, fontType, textSizeType, enabledState, hAlign)
+
+                if self.fontColor then
+                    self.Text:SetTextColor(self.fontColor:GetRGB())
+                end
+
+                self:SetWidth(self.Text:GetStringWidth())
+
+                local textHeight = self.Text:GetStringHeight()
+                local bottomPadding = SafeNumber(widgetInfo and widgetInfo.bottomPadding, 0)
+                if _G.Clamp then
+                    bottomPadding = _G.Clamp(bottomPadding, 0, textHeight - 1)
+                end
+                self:SetHeight(textHeight + bottomPadding)
+                return
+            end
+
+            return OriginalTextWithStateSetup(self, widgetInfo, widgetContainer)
+        end
+    end
 
 
     ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
