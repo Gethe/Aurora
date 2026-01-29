@@ -1,7 +1,8 @@
 ﻿## [12.0.0.2] ##
 ### Fixed ###
-
-
+  * chg: fix hooking of SetPortraitToTexture and BuildIconArray if they exist
+  * chg: avoid passing secret widgetSizeSetting into SetWidth.
+  * fix: chatframe errors in raid
 
 ## [12.0.0.1] ##
 ### Fixed ###
@@ -28,5 +29,6 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.0.2]: https://github.com/Haleth/Aurora/compare/12.0.0.1...12.0.0.2
 [12.0.0.1]: https://github.com/Haleth/Aurora/compare/12.0.0.0...12.0.0.1
 [12.0.0.0]: https://github.com/Haleth/Aurora/compare/11.2.7.2...12.0.0.0
