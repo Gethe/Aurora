@@ -2,12 +2,27 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals type next
+-- luacheck: globals _G pcall type next
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
+
+local function SafeAmbiguate(name, context)
+    if type(name) ~= "string" then
+        return name
+    end
+    if not _G.Ambiguate then
+        return name
+    end
+
+    local ok, result = pcall(_G.Ambiguate, name, context)
+    if ok then
+        return result
+    end
+    return name
+end
 
 do --[[ SharedXML\ChatFrame.lua ]]
     function Hook.ChatFrameEditBoxMixinUpdateHeader(editBox)
@@ -40,9 +55,9 @@ do --[[ SharedXML\ChatFrame.lua ]]
 
         --ambiguate guild chat names
         if (chatType == "GUILD") then
-            arg2 = _G.Ambiguate(arg2, "guild")
+            arg2 = SafeAmbiguate(arg2, "guild")
         else
-            arg2 = _G.Ambiguate(arg2, "none")
+            arg2 = SafeAmbiguate(arg2, "none")
         end
 
         local info = _G.ChatTypeInfo[chatType]
@@ -88,6 +103,55 @@ function private.SharedXML.ChatFrame()
     _G.hooksecurefunc("ChatEdit_UpdateHeader", Hook.ChatFrameEditBoxMixinUpdateHeader)
 
     _G.GetColoredName = Hook.GetColoredName
+
+    if _G.ChatFrameUtil and _G.ChatFrameUtil.GetDecoratedSenderName then
+        _G.ChatFrameUtil.GetDecoratedSenderName = function(event, ...)
+            local text, senderName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, senderGUID, bnSenderID, isMobile = ...
+            local chatType = event:sub(10)
+
+            if chatType:find("^WHISPER") then
+                chatType = "WHISPER"
+            end
+
+            if chatType:find("^CHANNEL") then
+                chatType = "CHANNEL" .. channelIndex
+            end
+
+            local chatTypeInfo = _G.ChatTypeInfo[chatType]
+            local decoratedPlayerName = senderName
+
+            if type(decoratedPlayerName) ~= "string" then
+                decoratedPlayerName = ""
+            end
+
+            if _G.Ambiguate then
+                if chatType == "GUILD" then
+                    decoratedPlayerName = SafeAmbiguate(decoratedPlayerName, "guild")
+                else
+                    decoratedPlayerName = SafeAmbiguate(decoratedPlayerName, "none")
+                end
+            end
+
+            if senderGUID and _G.C_ChatInfo.IsTimerunningPlayer(senderGUID) then
+                decoratedPlayerName = _G.TimerunningUtil.AddSmallIcon(decoratedPlayerName)
+            end
+
+            if senderGUID and chatTypeInfo and _G.ChatFrameUtil.ShouldColorChatByClass(chatTypeInfo) and _G.GetPlayerInfoByGUID ~= nil then
+                local localizedClass, englishClass = _G.GetPlayerInfoByGUID(senderGUID)
+
+                if englishClass then
+                    local classColor = _G.RAID_CLASS_COLORS[englishClass]
+
+                    if classColor then
+                        decoratedPlayerName = classColor:WrapTextInColorCode(decoratedPlayerName)
+                    end
+                end
+            end
+
+            decoratedPlayerName = _G.ChatFrameUtil.ProcessSenderNameFilters(event, decoratedPlayerName, ...)
+            return decoratedPlayerName
+        end
+    end
 
     --[[
     local AddMessage = {}
