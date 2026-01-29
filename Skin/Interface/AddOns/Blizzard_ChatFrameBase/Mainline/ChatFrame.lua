@@ -106,7 +106,7 @@ function private.SharedXML.ChatFrame()
 
     if _G.ChatFrameUtil and _G.ChatFrameUtil.GetDecoratedSenderName then
         _G.ChatFrameUtil.GetDecoratedSenderName = function(event, ...)
-            local text, senderName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, senderGUID, bnSenderID, isMobile = ...
+            local _, senderName, _, _, _, _, _, channelIndex, _, _, _, senderGUID, _, _ = ...
             local chatType = event:sub(10)
 
             if chatType:find("^WHISPER") then
@@ -137,7 +137,7 @@ function private.SharedXML.ChatFrame()
             end
 
             if senderGUID and chatTypeInfo and _G.ChatFrameUtil.ShouldColorChatByClass(chatTypeInfo) and _G.GetPlayerInfoByGUID ~= nil then
-                local localizedClass, englishClass = _G.GetPlayerInfoByGUID(senderGUID)
+                local _, englishClass = _G.GetPlayerInfoByGUID(senderGUID)
 
                 if englishClass then
                     local classColor = _G.RAID_CLASS_COLORS[englishClass]
