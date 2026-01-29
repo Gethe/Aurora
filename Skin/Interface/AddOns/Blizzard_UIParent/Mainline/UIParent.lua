@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals next
+-- luacheck: globals _G next type
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -25,8 +25,12 @@ do --[[ FrameXML\UIParent.lua ]]
 end
 
 function private.FrameXML.UIParent()
-    -- FIXBETA
-    if private.isMidnight then return end
-    _G.hooksecurefunc("SetPortraitToTexture", Hook.SetPortraitToTexture)
-    _G.hooksecurefunc("BuildIconArray", Hook.BuildIconArray)
+    -- Code replaced with SetTexture functions.....
+    if type(_G.SetPortraitToTexture) == "function" then
+        _G.hooksecurefunc("SetPortraitToTexture", Hook.SetPortraitToTexture)
+    end
+    -- this one is still around :)
+    if type(_G.BuildIconArray) == "function" then
+        _G.hooksecurefunc("BuildIconArray", Hook.BuildIconArray)
+    end
 end
