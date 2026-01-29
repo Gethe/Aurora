@@ -6,6 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Skin = Aurora.Skin
 
 --do --[[ FrameXML\ScrollBar.lua ]]

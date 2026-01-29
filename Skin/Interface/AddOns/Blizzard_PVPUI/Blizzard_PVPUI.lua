@@ -277,5 +277,5 @@ function private.AddOns.Blizzard_PVPUI()
         Skin.PVPCasualStandardButtonTemplate(button)
     end
     Skin.DropdownButton(_G.TrainingGroundsFrameTypeDropdown)
-    hooksecurefunc(TrainingGroundsFrame.SpecificTrainingGroundList.ScrollBox, "Update", Hook.PVPUIScrollBoxUpdate)
+    _G.hooksecurefunc(TrainingGroundsFrame.SpecificTrainingGroundList.ScrollBox, "Update", Hook.PVPUIScrollBoxUpdate)
 end

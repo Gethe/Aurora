@@ -7,19 +7,19 @@ if private.isMidnight then return end
 -- luacheck: globals select
 
 --[[ Core ]]
-local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+-- local Aurora = private.Aurora
+-- local Base = Aurora.Base
+-- local Hook, Skin = Aurora.Hook, Aurora.Skin
+-- local Color, Util = Aurora.Color, Aurora.Util
 
 
-do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.lua ]]
+-- do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.lua ]]
 
-end
+-- end
 
-do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.xml ]]
+-- do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.xml ]]
 
-end
+-- end
 
 function private.AddOns.Blizzard_HousingDashboard()
 _G.print("Skinning Blizzard_HousingDashboard")

@@ -88,7 +88,7 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         end,
         function(element) -- 2: OngoingEvent
             if not EventsFrameHookedElements[element] then
-                hooksecurefunc(element.Background, "SetAtlas", EventsFrameBackgroundNormal)
+                _G.hooksecurefunc(element.Background, "SetAtlas", EventsFrameBackgroundNormal)
                 EventsFrameHookedElements[element] = element.Background
             end
         end,

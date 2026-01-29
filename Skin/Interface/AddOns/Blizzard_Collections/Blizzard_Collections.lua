@@ -785,8 +785,8 @@ function private.AddOns.Blizzard_Collections()
     DetailsFrame.ModelFadeTexture:Hide()
     Skin.DropdownButton(DetailsFrame.VariantSetsDropdown)
 
-    local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
-    -- FIXMELATER 
+    -- FIXMELATER
+    -- local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
     -- Util.Mixin(SetsCollectionFrame, Hook.WardrobeSetsTransmogMixin)
     -- Skin.CollectionsBackgroundTemplate(SetsCollectionFrame)
     -- Skin.CollectionsPagingFrameTemplate(SetsCollectionFrame.PagingFrame)
@@ -797,7 +797,7 @@ function private.AddOns.Blizzard_Collections()
     -------------------
     -- WardrobeFrame --
     -------------------
-    -- FIXMELATER 
+    -- FIXMELATER
     -- WardrobeCollectionFrame.ItemsCollectionFrame
     -- FIX WardrobeCollectionFrame
     -- local WardrobeFrame = _G.WardrobeFrame
