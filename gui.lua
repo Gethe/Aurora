@@ -225,7 +225,7 @@ local gui = _G.CreateFrame("Frame", "AuroraOptions", _G.UIParent)
 gui.name = "Aurora"
 
 -- add the settings canvas to the addons settings
-local category, layout = _G.Settings.RegisterCanvasLayoutCategory(gui, "Aurora", "Aurora")
+local category, _ = _G.Settings.RegisterCanvasLayoutCategory(gui, "Aurora", "Aurora")
 Aurora.category = category
 _G.Settings.RegisterAddOnCategory(category)
 

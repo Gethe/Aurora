@@ -1564,7 +1564,7 @@ function commands.test()
                             desc = "PVPReadyPopup",
                             type = "execute",
                             func = function()
-                                _G.PVPReadyPopup:OnEvent("PVP_ROLE_POPUP_SHOW", {
+                                _G.StaticPopupSpecial_Show(_G.PVPReadyPopup):OnEvent("PVP_ROLE_POPUP_SHOW", {
                                     PvpRoles.GUIDE,
                                     PvpRoles.TANK,
                                     PvpRoles.HEALER,
