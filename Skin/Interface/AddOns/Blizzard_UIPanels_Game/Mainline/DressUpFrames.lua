@@ -46,10 +46,10 @@ function private.FrameXML.DressUpFrames()
     -- DressUpFrame --
     ------------------
     local DressUpFrame = _G.DressUpFrame
-    -- FIXBETA
-    if private.isMidnight then return end
+    local DressUpFrameCustomSetDropdown = _G.DressUpFrameCustomSetDropdown
+
     Skin.ButtonFrameTemplateMinimizable(DressUpFrame)
-    Skin.DropdownButton(DressUpFrame.OutfitDropdown)
+    Skin.DropdownButton(DressUpFrameCustomSetDropdown)
     Skin.MaximizeMinimizeButtonFrameTemplate(DressUpFrame.MaxMinButtonFrame)
     Skin.UIPanelButtonTemplate(_G.DressUpFrameCancelButton)
 
@@ -57,13 +57,13 @@ function private.FrameXML.DressUpFrames()
     ModelScene:SetPoint("TOPLEFT", 0, -private.FRAME_TITLE_HEIGHT)
     ModelScene:SetPoint("BOTTOMRIGHT")
 
-    local detailsButton = DressUpFrame.ToggleOutfitDetailsButton
+    local detailsButton = DressUpFrame.ToggleCustomSetDetailsButton
     Base.CropIcon(detailsButton:GetNormalTexture())
     Base.CropIcon(detailsButton:GetPushedTexture())
 
     local settings = private.CLASS_BACKGROUND_SETTINGS[private.charClass.token] or private.CLASS_BACKGROUND_SETTINGS["DEFAULT"];
-    local OutfitDetailsPanel = DressUpFrame.OutfitDetailsPanel
-    local blackBG, classBG, frameBG = OutfitDetailsPanel:GetRegions()
+    local CustomSetDetailsPanel = DressUpFrame.CustomSetDetailsPanel
+    local blackBG, classBG, frameBG = CustomSetDetailsPanel:GetRegions()
     blackBG:SetPoint("TOPLEFT", 10, -19)
     classBG:SetPoint("TOPLEFT", blackBG, 1, -1)
     classBG:SetPoint("BOTTOMRIGHT", blackBG, -1, 1)
@@ -86,10 +86,10 @@ function private.FrameXML.DressUpFrames()
 
     -- Raise the frame level of interactable child frames above the model frame.
     local newFrameLevel = ModelScene:GetFrameLevel() + 1
-    DressUpFrame.OutfitDropdown:SetFrameLevel(newFrameLevel)
+    DressUpFrameCustomSetDropdown:SetFrameLevel(newFrameLevel)
     DressUpFrame.MaximizeMinimizeFrame:SetFrameLevel(newFrameLevel)
     _G.DressUpFrameCancelButton:SetFrameLevel(newFrameLevel)
-    DressUpFrame.ToggleOutfitDetailsButton:SetFrameLevel(newFrameLevel)
+    DressUpFrame.ToggleCustomSetDetailsButton:SetFrameLevel(newFrameLevel)
     DressUpFrame.ResetButton:SetFrameLevel(newFrameLevel)
     DressUpFrame.LinkButton:SetFrameLevel(newFrameLevel)
 end

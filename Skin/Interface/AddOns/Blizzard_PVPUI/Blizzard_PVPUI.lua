@@ -36,6 +36,27 @@ do --[[ AddOns\Blizzard_PVPUI.lua ]]
 
         Hook.NewPvpSeasonMixin.OnShow(_G.PVPQueueFrame.NewSeasonPopup, true)
     end
+
+    function Hook.PVPUIScrollBoxUpdate(Frame)
+        for _, child in next, { Frame.ScrollTarget:GetChildren() } do
+            local Button = child.Button
+            if Button and not Button._auroraSkinned then
+                    Skin.PVPUIScrollBoxUpdateTemplate(Button)
+                    Button._auroraSkinned = true
+            end
+        end
+    end
+    function Skin.PVPUIScrollBoxUpdateTemplate(Button)
+        Base.SetBackdrop(Button, Color.button)
+        Button.Background:Hide()
+        Button.Label:SetPoint("BOTTOMLEFT", 6, 0)
+        Button.Label:SetPoint("TOPRIGHT")
+        Button.Label:SetJustifyV("MIDDLE")
+        local r, g, b = Color.highlight:GetRGB()
+        local highlight = Button:GetHighlightTexture()
+        highlight:SetColorTexture(r, g, b, 0.5)
+        highlight:SetPoint("BOTTOMRIGHT")
+    end
 end
 
 do --[[ AddOns\Blizzard_PVPUI.xml ]]
@@ -165,9 +186,9 @@ function private.AddOns.Blizzard_PVPUI()
 
     Skin.PVPConquestBarTemplate(HonorFrame.ConquestBar)
     Skin.InsetFrameTemplate(HonorFrame.Inset)
-    Skin.LFGRoleButtonTemplate(HonorFrame.TankIcon)
-    Skin.LFGRoleButtonTemplate(HonorFrame.HealerIcon)
-    Skin.LFGRoleButtonTemplate(HonorFrame.DPSIcon)
+    Skin.LFGRoleButtonTemplate(HonorFrame.RoleList.TankIcon)
+    Skin.LFGRoleButtonTemplate(HonorFrame.RoleList.HealerIcon)
+    Skin.LFGRoleButtonTemplate(HonorFrame.RoleList.DPSIcon)
     Skin.DropdownButton(HonorFrame.TypeDropdown)
     -- FIXMELATER -- This causes a taint error when the JoinButton is clicked.
     --  Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
@@ -185,8 +206,6 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.MagicButtonTemplate(HonorFrame.QueueButton)
     HonorFrame.QueueButton:SetPoint("BOTTOM", 0, 5)
 
-
-
     -----------
     -- Rated --
     -----------
@@ -197,9 +216,9 @@ function private.AddOns.Blizzard_PVPUI()
     ConquestFrame.RatedBGTexture:Hide()
     Skin.PVPConquestBarTemplate(ConquestFrame.ConquestBar)
     Skin.InsetFrameTemplate(ConquestFrame.Inset)
-    Skin.LFGRoleButtonTemplate(ConquestFrame.TankIcon)
-    Skin.LFGRoleButtonTemplate(ConquestFrame.HealerIcon)
-    Skin.LFGRoleButtonTemplate(ConquestFrame.DPSIcon)
+    Skin.LFGRoleButtonTemplate(ConquestFrame.RoleList.TankIcon)
+    Skin.LFGRoleButtonTemplate(ConquestFrame.RoleList.HealerIcon)
+    Skin.LFGRoleButtonTemplate(ConquestFrame.RoleList.DPSIcon)
 
     Skin.PVPRatedActivityButtonTemplate(ConquestFrame.RatedSoloShuffle)
     Skin.PVPRatedActivityButtonTemplate(ConquestFrame.RatedBGBlitz)
@@ -242,4 +261,21 @@ function private.AddOns.Blizzard_PVPUI()
     NewSeasonPopup:SetPoint("BOTTOMRIGHT", 0, 0)
     NewSeasonPopup.SeasonRewardText:SetTextColor(Color.grayLight:GetRGB())
     Skin.SeasonRewardFrameTemplate(NewSeasonPopup.SeasonRewardFrame)
+
+    --------------------------
+    -- TrainingGroundsFrame --
+    --------------------------
+    local TrainingGroundsFrame = _G.TrainingGroundsFrame
+    Skin.InsetFrameTemplate(TrainingGroundsFrame.Inset)
+    Skin.LFGRoleButtonTemplate(TrainingGroundsFrame.RoleList.TankIcon)
+    Skin.LFGRoleButtonTemplate(TrainingGroundsFrame.RoleList.HealerIcon)
+    Skin.LFGRoleButtonTemplate(TrainingGroundsFrame.RoleList.DPSIcon)
+    TrainingGroundsFrame.BonusTrainingGroundList.ShadowOverlay:Hide()
+    Skin.MagicButtonTemplate(TrainingGroundsFrame.QueueButton)
+	for _, i in pairs({"RandomTrainingGroundButton"}) do
+        local button = TrainingGroundsFrame.BonusTrainingGroundList[i]
+        Skin.PVPCasualStandardButtonTemplate(button)
+    end
+    Skin.DropdownButton(_G.TrainingGroundsFrameTypeDropdown)
+    _G.hooksecurefunc(TrainingGroundsFrame.SpecificTrainingGroundList.ScrollBox, "Update", Hook.PVPUIScrollBoxUpdate)
 end

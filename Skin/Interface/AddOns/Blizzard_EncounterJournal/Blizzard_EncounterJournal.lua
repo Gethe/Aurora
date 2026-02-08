@@ -404,11 +404,11 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.MinimalScrollBar(MonthlyActivitiesFrame.ScrollBar)
     Skin.WowScrollBoxList(MonthlyActivitiesFrame.ScrollBox)
 
-
     --------------------
     -- InstanceSelect --
     --------------------
-    local instanceSelect = EncounterJournal.instanceSelect
+    local instanceSelect = _G.EncounterJournalInstanceSelect
+    instanceSelect.evergreenBg:SetAlpha(0)
     instanceSelect.bg:SetAlpha(0)
     Skin.DropdownButton(instanceSelect.ExpansionDropdown)
     Skin.WowScrollBoxList(instanceSelect.ScrollBox)
@@ -538,18 +538,20 @@ function private.AddOns.Blizzard_EncounterJournal()
     ------------------
     -- Tab Frames --
     ------------------
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.MonthlyActivitiesTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.suggestTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.dungeonsTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.raidsTab)
-    Skin.BottomEncounterTierTabTemplate(EncounterJournal.LootJournalTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalMonthlyActivitiesTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalSuggestTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalDungeonTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalRaidTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalLootJournalTab)
+    Skin.BottomEncounterTierTabTemplate(_G.EncounterJournalJourneysTab)
     Skin.BottomEncounterTierTabTemplate(EncounterJournal.TutorialsTab)
     Util.PositionRelative("TOPLEFT", EncounterJournal, "BOTTOMLEFT", 20, -1, 1, "Right", {
-        EncounterJournal.MonthlyActivitiesTab,
-        EncounterJournal.suggestTab,
-        EncounterJournal.dungeonsTab,
-        EncounterJournal.raidsTab,
-        EncounterJournal.LootJournalTab,
+        _G.EncounterJournalJourneysTab,
+        _G.EncounterJournalMonthlyActivitiesTab,
+        _G.EncounterJournalSuggestTab,
+        _G.EncounterJournalDungeonTab,
+        _G.EncounterJournalRaidTab,
+        _G.EncounterJournalLootJournalTab,
         EncounterJournal.TutorialsTab,
     })
 
@@ -576,9 +578,21 @@ function private.AddOns.Blizzard_EncounterJournal()
         tooltip.Item2._auroraIconBorder = tooltip.Item2
     end
 
-    ----====####$$$$%%%%$$$$####====----
-    --      Blizzard_LootJournal      --
-    ----====####$$$$%%%%$$$$####====----
+
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    --     EncounterJournalEncounterFrame     --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    Skin.MinimalScrollBar(_G.EncounterJournalEncounterFrameInstanceFrame.LoreScrollBar)
+    Skin.MinimalScrollBar(_G.EncounterJournalEncounterFrameInfo.LootContainer.ScrollBar)
+	Skin.MinimalScrollBar(_G.EncounterJournalEncounterFrameInfoDetailsScrollFrame.ScrollBar)
+	Skin.MinimalScrollBar(_G.EncounterJournalEncounterFrameInfoOverviewScrollFrame.ScrollBar)
+
+
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    --      EncounterJournal.LootJournal      --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
     local LootJournal = EncounterJournal.LootJournal
     local ItemSetsFrame = EncounterJournal.LootJournalItems.ItemSetsFrame
     LootJournal:GetRegions():Hide()
@@ -588,7 +602,13 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     Skin.DropdownButton(LootJournal.RuneforgePowerDropdown)
     Skin.WowScrollBoxList(LootJournal.ScrollBox)
-    Skin.MinimalScrollBar(LootJournal.ScrollBar)
+
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    --      EncounterJournalJourneysFrame      --
+    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    local EncounterJournalJourneysFrame = _G.EncounterJournalJourneysFrame
+    Skin.MinimalScrollBar(EncounterJournalJourneysFrame.ScrollBar)
+
 
     ----====####$$$$%%%%$$$$####====----
     --       Blizzard_Tutorials       --
@@ -596,6 +616,8 @@ function private.AddOns.Blizzard_EncounterJournal()
     -- FIXMELATER
     -- Not sure what to expect here ..
     local TutorialsTab = EncounterJournal.TutorialsTab
-    -- local TutorialsFrame = EncounterJournal.TutorialsFrame
+    local TutorialsFrame = EncounterJournal.TutorialsFrame
+    Skin.UIPanelButtonTemplate(TutorialsFrame.Contents.StartButton)
     TutorialsTab:GetRegions():Hide()
+
 end

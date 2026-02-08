@@ -89,7 +89,7 @@ do -- Button
             if highlight then
                 highlight:Hide()
             end
-        else
+        elseif Button.SetNormalTexture then
             Button:SetNormalTexture("")
             Button:SetPushedTexture("")
             Button:SetHighlightTexture("")
