@@ -568,10 +568,30 @@ function private.FrameXML.Blizzard_ActionBarController()
     --         MultiActionBars         --
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar and private.isClassic then
-        Skin.HorizontalMultiBar1(_G.MultiBarBottomLeft)
-        Skin.HorizontalMultiBar2(_G.MultiBarBottomRight)
-        Skin.VerticalMultiBar3(_G.MultiBarRight)
-        Skin.VerticalMultiBar4(_G.MultiBarLeft)
+        local function ApplyMultiActionBarSkins()
+            if not _G.MultiBarBottomLeft then
+                return
+            end
+
+            Skin.HorizontalMultiBar1(_G.MultiBarBottomLeft)
+            Skin.HorizontalMultiBar2(_G.MultiBarBottomRight)
+            Skin.VerticalMultiBar3(_G.MultiBarRight)
+            Skin.VerticalMultiBar4(_G.MultiBarLeft)
+        end
+
+        if _G.RealUI and _G.RealUI.TryInCombat then
+            _G.RealUI.TryInCombat(ApplyMultiActionBarSkins, false)
+        elseif _G.InCombatLockdown and _G.InCombatLockdown() then
+            local deferred = _G.CreateFrame("Frame")
+            deferred:RegisterEvent("PLAYER_REGEN_ENABLED")
+            deferred:SetScript("OnEvent", function(self)
+                self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+                self:SetScript("OnEvent", nil)
+                ApplyMultiActionBarSkins()
+            end)
+        else
+            ApplyMultiActionBarSkins()
+        end
     end
 
 
