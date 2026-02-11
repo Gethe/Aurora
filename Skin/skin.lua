@@ -168,8 +168,18 @@ do -- StatusBar
             self.__SetStatusBarTexture = nil
             return
         end
-        local color = private.assetColors[asset]
-        local color2 = private.assetColors[asset .. "_2"]
+        local ok, color = _G.pcall(function()
+            return private.assetColors[asset]
+        end)
+        if not ok then
+            color = nil
+        end
+        local ok2, color2 = _G.pcall(function()
+            return private.assetColors[asset .. "_2"]
+        end)
+        if not ok2 then
+            color2 = nil
+        end
 
         if color then
             local texture = self:GetStatusBarTexture()
