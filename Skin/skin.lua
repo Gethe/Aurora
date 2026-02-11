@@ -164,6 +164,10 @@ do -- StatusBar
             return
         end
         self.__SetStatusBarTexture = true
+        if type(asset) ~= "string" then
+            self.__SetStatusBarTexture = nil
+            return
+        end
         local color = private.assetColors[asset]
         local color2 = private.assetColors[asset .. "_2"]
 
@@ -229,7 +233,18 @@ do -- StatusBar
         end
 
         Base.SetTexture(tex, "gradientUp")
-        if asset and private.assetColors[asset] then
+
+        local assetColor
+        if type(asset) == "string" then
+            local ok, value = _G.pcall(function()
+                return private.assetColors[asset]
+            end)
+            if ok then
+                assetColor = value
+            end
+        end
+
+        if assetColor then
             Hook_SetStatusBarTexture(StatusBar, asset)
         else
             Hook_SetStatusBarColor(StatusBar, red, green, blue)

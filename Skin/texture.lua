@@ -85,9 +85,34 @@ do -- gradients
     local min, max = 0.3, 0.7
     local hookedTexture = {}
 
+    local function TryScaleColors(r, g, b, a, minScale, maxScale)
+        if not r or not g or not b then
+            return nil
+        end
+
+        local ok, minColor, maxColor = _G.pcall(function()
+            return Color.Create(r * minScale, g * minScale, b * minScale, a),
+                Color.Create(r * maxScale, g * maxScale, b * maxScale, a)
+        end)
+
+        if not ok then
+            return nil
+        end
+
+        return minColor, maxColor
+    end
+
     local function SetVertexColorMinMax(texture, r, g, b, a)
-        local minColor = Color.Create(r * min, g * min, b * min, a)
-        local maxColor = Color.Create(r * max, g * max, b * max, a)
+        local minColor, maxColor = TryScaleColors(r, g, b, a, min, max)
+        if not minColor then
+            local alpha = a or 1
+            if texture.SetGradientAlpha then
+                texture:SetGradientAlpha(hookedTexture[texture], min, min, min, alpha, max, max, max, alpha)
+            else
+                texture:SetGradient(hookedTexture[texture], Color.Create(min, min, min, a), Color.Create(max, max, max, a))
+            end
+            return
+        end
 
         if texture.SetGradientAlpha then
             texture:SetGradientAlpha(hookedTexture[texture], minColor.r, minColor.g, minColor.b, minColor.a, maxColor.r, maxColor.g, maxColor.b, maxColor.a)
@@ -106,12 +131,10 @@ do -- gradients
             end
         else
             local minColor, maxColor
-            if r and a then
-                minColor = Color.Create(r * min, g * min, b * min, a)
-                maxColor = Color.Create(r * max, g * max, b * max, a)
-            else
-                minColor = Color.Create(min, min, min)
-                maxColor = Color.Create(max, max, max)
+            minColor, maxColor = TryScaleColors(r, g, b, a, min, max)
+            if not minColor then
+                minColor = Color.Create(min, min, min, a)
+                maxColor = Color.Create(max, max, max, a)
             end
 
             texture:SetGradient(orientation, minColor, maxColor)
@@ -123,8 +146,16 @@ do -- gradients
     end
 
     local function SetVertexColorMaxMin(texture, r, g, b, a)
-        local minColor = Color.Create(r * max, g * max, b * max, a)
-        local maxColor = Color.Create(r * min, g * min, b * min, a)
+        local minColor, maxColor = TryScaleColors(r, g, b, a, max, min)
+        if not minColor then
+            local alpha = a or 1
+            if texture.SetGradientAlpha then
+                texture:SetGradientAlpha(hookedTexture[texture], max, max, max, alpha, min, min, min, alpha)
+            else
+                texture:SetGradient(hookedTexture[texture], Color.Create(max, max, max, a), Color.Create(min, min, min, a))
+            end
+            return
+        end
 
         if texture.SetGradientAlpha then
             texture:SetGradientAlpha(hookedTexture[texture], minColor.r, minColor.g, minColor.b, minColor.a, maxColor.r, maxColor.g, maxColor.b, maxColor.a)
@@ -143,12 +174,10 @@ do -- gradients
             end
         else
             local minColor, maxColor
-            if r and a then
-                minColor = Color.Create(r * max, g * max, b * max, a)
-                maxColor = Color.Create(r * min, g * min, b * min, a)
-            else
-                minColor = Color.Create(max, max, max)
-                maxColor = Color.Create(min, min, min)
+            minColor, maxColor = TryScaleColors(r, g, b, a, max, min)
+            if not minColor then
+                minColor = Color.Create(max, max, max, a)
+                maxColor = Color.Create(min, min, min, a)
             end
 
             texture:SetGradient(orientation, minColor, maxColor)
