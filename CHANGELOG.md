@@ -1,4 +1,10 @@
-﻿## [12.0.0.2] ##
+﻿## [12.0.1.0] ##
+### Fixed ###
+  * chg: Hook_SetStatusBarTexture now uses pcall when indexing private.assetColors (prevents protected/secret-index error)
+  * chg: fix 12.0.1 tables now being secret
+  * chg: combat-safeMultiActionBar skinning so the action bar buttons are only skinned out of combat
+
+## [12.0.0.2] ##
 ### Fixed ###
   * chg: fix hooking of SetPortraitToTexture and BuildIconArray if they exist
   * chg: avoid passing secret widgetSizeSetting into SetWidth.
