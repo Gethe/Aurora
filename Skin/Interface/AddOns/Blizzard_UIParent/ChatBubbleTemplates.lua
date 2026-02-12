@@ -8,6 +8,30 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 
+local function GetSafeSenderName(sender)
+    if _G.issecretvalue(sender) or _G.issecrettable(sender) then
+        return ""
+    end
+
+    if _G.type(sender) ~= "string" or sender == "" then
+        return ""
+    end
+
+    return _G.Ambiguate(sender, "none")
+end
+
+local function GetSafeMessageText(message)
+    if _G.issecretvalue(message) or _G.issecrettable(message) then
+        return nil
+    end
+
+    if _G.type(message) ~= "string" or message == "" then
+        return nil
+    end
+
+    return message
+end
+
 local chatBubbleEvents = {
     CHAT_MSG_SAY = "chatBubbles",
     CHAT_MSG_YELL = "chatBubbles",
@@ -22,6 +46,11 @@ local chatBubbleEvents = {
 do --[[ FrameXML\Backdrop.lua ]]
     local defaultColor = "ffffffff"
     local function FindChatBubble(msg)
+        msg = GetSafeMessageText(msg)
+        if not msg then
+            return
+        end
+
         local chatbubble
         local chatbubbles = _G.C_ChatBubbles.GetAllChatBubbles()
         for index = 1, #chatbubbles do
@@ -31,7 +60,8 @@ do --[[ FrameXML\Backdrop.lua ]]
                 Skin.ChatBubbleTemplate(chatbubble)
             end
 
-            if chatbubble.String:GetText() == msg then
+            local bubbleText = GetSafeMessageText(chatbubble.String:GetText())
+            if bubbleText and bubbleText == msg then
                 return chatbubble
             end
         end
@@ -50,8 +80,8 @@ do --[[ FrameXML\Backdrop.lua ]]
     function Hook.ChatBubble_OnEvent(self, event, msg, sender, _, _, _, _, _, _, _, _, _, guid)
         if _G.GetCVarBool(chatBubbleEvents[event]) then
             self.elapsed = 0
-            self.msg = msg
-            self.sender = _G.Ambiguate(sender, "none") -- Only show realm if it's not yours
+            self.msg = GetSafeMessageText(msg)
+            self.sender = GetSafeSenderName(sender) -- Only show realm if it's not yours
             self.guid = guid
             self:Show()
         end

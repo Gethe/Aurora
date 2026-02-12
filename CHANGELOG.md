@@ -35,6 +35,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.9]: https://github.com/Haleth/Aurora/compare/12.0.0.2...12.0.1.0
 [12.0.0.2]: https://github.com/Haleth/Aurora/compare/12.0.0.1...12.0.0.2
 [12.0.0.1]: https://github.com/Haleth/Aurora/compare/12.0.0.0...12.0.0.1
 [12.0.0.0]: https://github.com/Haleth/Aurora/compare/11.2.7.2...12.0.0.0
