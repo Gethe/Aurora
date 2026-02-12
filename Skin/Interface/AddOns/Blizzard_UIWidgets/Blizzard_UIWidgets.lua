@@ -27,6 +27,28 @@ local function SafeNumber(value, fallback)
     return value
 end
 
+local function SafeDebugName(frame)
+    if not frame then
+        return "<nil>"
+    end
+
+    local ok, debugName = _G.pcall(function()
+        return frame:GetDebugName()
+    end)
+    if ok and type(debugName) == "string" and debugName ~= "" then
+        return debugName
+    end
+
+    local okName, name = _G.pcall(function()
+        return frame.GetName and frame:GetName()
+    end)
+    if okName and type(name) == "string" and name ~= "" then
+        return name
+    end
+
+    return "<frame>"
+end
+
 do --[[ AddOns\Blizzard_UIWidgets.lua ]]
     do --[[ Blizzard_UIWidgetManager ]]
         Hook.UIWidgetContainerMixin = {}
@@ -40,13 +62,13 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
             end
             local template = widgetTypeInfo.templateInfo.frameTemplate
             if Skin[template] then
-                private.debug("Skinning template for UIWidgetContainerMixin", widgetFrame:GetDebugName(), template)
+                private.debug("Skinning template for UIWidgetContainerMixin", SafeDebugName(widgetFrame), template)
                 if not widgetFrame._auroraSkinned then
                     Skin[template](widgetFrame)
                     widgetFrame._auroraSkinned = true
                 end
             else
-                private.debug("Missing template for UIWidgetContainerMixin", widgetFrame:GetDebugName(), template)
+                private.debug("Missing template for UIWidgetContainerMixin", SafeDebugName(widgetFrame), template)
             end
         end
 
@@ -71,7 +93,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
     do --[[ Blizzard_UIWidgetBelowMinimapFrame ]]
         Hook.UIWidgetBelowMinimapContainerMixin = {}
         function Hook.UIWidgetBelowMinimapContainerMixin:OnLoad()
-            _G.print("UIWidgetBelowMinimapContainerMixin:OnLoad", self:GetDebugName())
+            _G.print("UIWidgetBelowMinimapContainerMixin:OnLoad", SafeDebugName(self))
             -- Util.Mixin(self, Hook.UIWidgetContainerMixin)
         end
     end
@@ -141,7 +163,7 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
     end
     do --[[ Blizzard_UIWidgetBelowMinimapContainerFrame ]]
         function Skin.UIWidgetBelowMinimapContainerFrame(Frame)
-            _G.print("Skin.UIWidgetBelowMinimapContainerFrame", Frame:GetDebugName())
+            _G.print("Skin.UIWidgetBelowMinimapContainerFrame", SafeDebugName(Frame))
         end
     end
 end
