@@ -9,9 +9,24 @@ local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
+local function IsSecret(value)
+    return (_G.issecretvalue and _G.issecretvalue(value)) or (_G.issecrettable and _G.issecrettable(value))
+end
+
+local function SafeString(value, fallback)
+    if IsSecret(value) then
+        return fallback or ""
+    end
+    if type(value) ~= "string" then
+        return fallback or ""
+    end
+    return value
+end
+
 local function SafeAmbiguate(name, context)
-    if type(name) ~= "string" then
-        return name
+    name = SafeString(name, "")
+    if name == "" then
+        return ""
     end
     if not _G.Ambiguate then
         return name
@@ -19,9 +34,9 @@ local function SafeAmbiguate(name, context)
 
     local ok, result = pcall(_G.Ambiguate, name, context)
     if ok then
-        return result
+        return SafeString(result, name)
     end
-    return name
+    return ""
 end
 
 do --[[ SharedXML\ChatFrame.lua ]]
@@ -118,11 +133,7 @@ function private.SharedXML.ChatFrame()
             end
 
             local chatTypeInfo = _G.ChatTypeInfo[chatType]
-            local decoratedPlayerName = senderName
-
-            if type(decoratedPlayerName) ~= "string" then
-                decoratedPlayerName = ""
-            end
+            local decoratedPlayerName = SafeString(senderName, "")
 
             if _G.Ambiguate then
                 if chatType == "GUILD" then
