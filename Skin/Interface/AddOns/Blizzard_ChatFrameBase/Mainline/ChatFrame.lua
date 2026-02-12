@@ -2,42 +2,12 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals _G pcall type next
+-- luacheck: globals _G
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
-
-local function IsSecret(value)
-    return (_G.issecretvalue and _G.issecretvalue(value)) or (_G.issecrettable and _G.issecrettable(value))
-end
-
-local function SafeString(value, fallback)
-    if IsSecret(value) then
-        return fallback or ""
-    end
-    if type(value) ~= "string" then
-        return fallback or ""
-    end
-    return value
-end
-
-local function SafeAmbiguate(name, context)
-    name = SafeString(name, "")
-    if name == "" then
-        return ""
-    end
-    if not _G.Ambiguate then
-        return name
-    end
-
-    local ok, result = pcall(_G.Ambiguate, name, context)
-    if ok then
-        return SafeString(result, name)
-    end
-    return ""
-end
 
 do --[[ SharedXML\ChatFrame.lua ]]
     function Hook.ChatFrameEditBoxMixinUpdateHeader(editBox)
@@ -57,37 +27,6 @@ do --[[ SharedXML\ChatFrame.lua ]]
         end
 
         editBox:SetBackdropBorderColor(info.r, info.g, info.b)
-    end
-
-    function Hook.GetColoredName(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
-        local chatType = event:sub(10)
-        if ( chatType:sub(1, 7) == "WHISPER" ) then
-            chatType = "WHISPER"
-        end
-        if ( chatType:sub(1, 7) == "CHANNEL" ) then
-            chatType = "CHANNEL"..arg8
-        end
-
-        --ambiguate guild chat names
-        if (chatType == "GUILD") then
-            arg2 = SafeAmbiguate(arg2, "guild")
-        else
-            arg2 = SafeAmbiguate(arg2, "none")
-        end
-
-        local info = _G.ChatTypeInfo[chatType]
-        if arg12 and info and _G.Chat_ShouldColorChatByClass(info) then
-            local _, classToken = _G.GetPlayerInfoByGUID(arg12)
-
-            if classToken then
-                local color = _G.CUSTOM_CLASS_COLORS[classToken]
-                if color then
-                    return ("|c%s%s|r"):format(color.colorStr, arg2)
-                end
-            end
-        end
-
-        return arg2
     end
 end
 
@@ -116,53 +55,6 @@ end
 function private.SharedXML.ChatFrame()
     if private.disabled.chat then return end
     _G.hooksecurefunc("ChatEdit_UpdateHeader", Hook.ChatFrameEditBoxMixinUpdateHeader)
-
-    _G.GetColoredName = Hook.GetColoredName
-
-    if _G.ChatFrameUtil and _G.ChatFrameUtil.GetDecoratedSenderName then
-        _G.ChatFrameUtil.GetDecoratedSenderName = function(event, ...)
-            local _, senderName, _, _, _, _, _, channelIndex, _, _, _, senderGUID, _, _ = ...
-            local chatType = event:sub(10)
-
-            if chatType:find("^WHISPER") then
-                chatType = "WHISPER"
-            end
-
-            if chatType:find("^CHANNEL") then
-                chatType = "CHANNEL" .. channelIndex
-            end
-
-            local chatTypeInfo = _G.ChatTypeInfo[chatType]
-            local decoratedPlayerName = SafeString(senderName, "")
-
-            if _G.Ambiguate then
-                if chatType == "GUILD" then
-                    decoratedPlayerName = SafeAmbiguate(decoratedPlayerName, "guild")
-                else
-                    decoratedPlayerName = SafeAmbiguate(decoratedPlayerName, "none")
-                end
-            end
-
-            if senderGUID and _G.C_ChatInfo.IsTimerunningPlayer(senderGUID) then
-                decoratedPlayerName = _G.TimerunningUtil.AddSmallIcon(decoratedPlayerName)
-            end
-
-            if senderGUID and chatTypeInfo and _G.ChatFrameUtil.ShouldColorChatByClass(chatTypeInfo) and _G.GetPlayerInfoByGUID ~= nil then
-                local _, englishClass = _G.GetPlayerInfoByGUID(senderGUID)
-
-                if englishClass then
-                    local classColor = _G.RAID_CLASS_COLORS[englishClass]
-
-                    if classColor then
-                        decoratedPlayerName = classColor:WrapTextInColorCode(decoratedPlayerName)
-                    end
-                end
-            end
-
-            decoratedPlayerName = _G.ChatFrameUtil.ProcessSenderNameFilters(event, decoratedPlayerName, ...)
-            return decoratedPlayerName
-        end
-    end
 
     --[[
     local AddMessage = {}
