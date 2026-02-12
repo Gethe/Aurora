@@ -100,7 +100,14 @@ end
 
 do --[[ FrameXML\ChatBubbleTemplates.xml ]]
     function Skin.ChatBubbleTemplate(Frame)
-        Skin.FrameTypeFrame(Frame)
+        if not Frame._auroraBG then
+            local bg = Frame:CreateTexture(nil, "BACKGROUND", nil, -1)
+            bg:SetColorTexture(0, 0, 0, 0.85)
+            bg:SetPoint("TOPLEFT", 1, -1)
+            bg:SetPoint("BOTTOMRIGHT", -1, 1)
+            Frame._auroraBG = bg
+        end
+
         Frame:SetScale(_G.UIParent:GetScale())
 
         local tail = Frame.Tail
