@@ -1,4 +1,17 @@
-﻿## [12.0.1.0] ##
+﻿## [12.0.1.1] ##
+### Fixed ###
+  * fix: Added a nil check to the CropIcon function in api.lua. Gethe/Aurora#145
+  * chg: prevents Aurora from interfering with Chonky Character Sheet's modifications to the character frame Gethe/Aurora#142
+  * Merge branch 'develop' of github.com:Gethe/Aurora into develop
+  * fix(aurora): apply proper Aurora styling to game menu buttons Gethe/Aurora#143
+  * fix(aurora): apply proper Aurora styling to game menu buttons
+  * chg: Cleaned up ChatFrame
+  * fix(aurora): sanitize chat sender names to avoid secret-string taint
+  * fix(aurora): guard UIWidget debug name calls against tainted frames
+  * fix: crash path in the chat bubble skin.
+  * fix: prevents secret-value violations in chatbubbles
+
+## [12.0.1.0] ##
 ### Fixed ###
   * chg: Hook_SetStatusBarTexture now uses pcall when indexing private.assetColors (prevents protected/secret-index error)
   * chg: fix 12.0.1 tables now being secret
@@ -35,7 +48,8 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
-[12.0.1.9]: https://github.com/Haleth/Aurora/compare/12.0.0.2...12.0.1.0
+[12.0.1.1]: https://github.com/Haleth/Aurora/compare/12.0.1.0...12.0.1.1
+[12.0.1.0]: https://github.com/Haleth/Aurora/compare/12.0.0.2...12.0.1.0
 [12.0.0.2]: https://github.com/Haleth/Aurora/compare/12.0.0.1...12.0.0.2
 [12.0.0.1]: https://github.com/Haleth/Aurora/compare/12.0.0.0...12.0.0.1
 [12.0.0.0]: https://github.com/Haleth/Aurora/compare/11.2.7.2...12.0.0.0
