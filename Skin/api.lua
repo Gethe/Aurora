@@ -80,6 +80,7 @@ created at a black background for the icon.
 * `iconBorder` - _optional_ a black texture behind the icon to act as a border _(Texture)_
 --]]
 function Base.CropIcon(texture, parent)
+    if not texture then return end
     texture:SetTexCoord(.08, .92, .08, .92)
     if parent then
         local layer, subLevel = texture:GetDrawLayer()
