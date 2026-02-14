@@ -115,7 +115,12 @@ local debug do
                     local arg = select(i, ...)
                     text = text .. "     " .. tostring(arg)
                 end
-                debugger:AddLine(text)
+                -- Use pcall to safely handle tainted/secret strings
+                local success, err = pcall(debugger.AddLine, debugger, text)
+                if not success and not err:match("secret string") then
+                    -- Only report non-taint related errors
+                    _G.print("Aurora debug error:", err)
+                end
             end
         else
             debug = private.nop
