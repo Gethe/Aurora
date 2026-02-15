@@ -417,6 +417,13 @@ private.commands = {}
 _G.SLASH_AURORA1 = "/aurora"
 _G.SlashCmdList.AURORA = function(msg, editBox)
     private.debug("/aurora", msg)
+    
+    -- Check for combat lockdown
+    if _G.InCombatLockdown() then
+        _G.print("|cff00a0ffAurora:|r Cannot open configuration during combat.")
+        return
+    end
+    
     if msg == "debug" then
         local debugger = private.debugger
         if debugger then
@@ -430,9 +437,18 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
         else
             _G.print("LibTextDump is not available.")
         end
+    elseif msg == "help" then
+        _G.print("|cff00a0ffAurora Commands:|r")
+        _G.print("  /aurora - Open configuration panel")
+        _G.print("  /aurora help - Show this help message")
+        _G.print("  /aurora debug - Display debug information")
     elseif private.commands[msg] then
         private.commands[msg]()
-    else
+    elseif msg == "" then
+        -- Open settings panel
         _G.Settings.OpenToCategory(Aurora.category:GetID())
+    else
+        -- Invalid command
+        _G.print("|cff00a0ffAurora:|r Unknown command '" .. msg .. "'. Type '/aurora help' for available commands.")
     end
 end
