@@ -9,6 +9,8 @@ private.wago = wago
 local Aurora = private.Aurora
 local _, C = _G.unpack(Aurora)
 local Config = private.Config
+local Analytics = private.Analytics
+local Compatibility = private.Compatibility
 
 -- [[ Constants and settings ]]
 local AuroraConfig
@@ -20,6 +22,12 @@ C.defaults = Config.defaults
 function private.OnLoad()
     -- Load and initialize configuration using the Config module
     AuroraConfig = Config.load(wago)
+    
+    -- Initialize compatibility system
+    Compatibility.initialize(AuroraConfig)
+    
+    -- Initialize analytics system with user consent
+    Analytics.initialize(wago, AuroraConfig)
     
     -- Check if configuration needs recovery
     local needsRecovery, reason = Config.needsRecovery(AuroraConfig)

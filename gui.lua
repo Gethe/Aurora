@@ -10,6 +10,8 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Util = Aurora.Util
 local Config = private.Config
+local Analytics = private.Analytics
+local Compatibility = private.Compatibility
 local _, C = _G.unpack(Aurora)
 
 -- [[ Splash screen ]]
@@ -104,6 +106,9 @@ local createToggleBox do
     local function toggle(self)
         _G.AuroraConfig[self.value] = self:GetChecked()
         wago:Switch(self.value, self:GetChecked())
+        
+        -- Track configuration change via Analytics module
+        Analytics.trackConfigChange(self.value, self:GetChecked())
     end
 
     function createToggleBox(parent, value, text)
@@ -182,6 +187,10 @@ local createSlider do
     local function OnValueChanged(self, value)
         _G.AuroraConfig[self.value] = value
         wago:SetCounter(self.value, value)
+        
+        -- Track configuration change via Analytics module
+        Analytics.trackConfigChange(self.value, value)
+        
         if self.update then
             self.update()
         end
@@ -287,6 +296,9 @@ highlightBox:SetScript("OnClick", function(dialog)
     local isChecked = dialog:GetChecked()
     _G.AuroraConfig.customHighlight.enabled = isChecked
     wago:Switch(dialog.value, isChecked)
+    
+    -- Track configuration change via Analytics module
+    Analytics.trackConfigChange(dialog.value, _G.AuroraConfig.customHighlight)
 
     if isChecked then
         highlightButton:Enable()
@@ -306,9 +318,58 @@ alphaSlider:SetPoint("TOPLEFT", buttonsHaveGradientBox, "BOTTOMLEFT", 0, -40)
 alphaSlider.update = updateFrames
 
 --[[ Misc ]]--
+local misc = addSubCategory(gui, "Privacy")
+misc:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -210)
+
+local analyticsBox = createToggleBox(gui, "hasAnalytics", "Share anonymous usage data")
+analyticsBox:SetPoint("TOPLEFT", misc, "BOTTOMLEFT", 10, -20)
+
+analyticsBox:SetScript("OnClick", function(dialog)
+    local isChecked = dialog:GetChecked()
+    _G.AuroraConfig.hasAnalytics = isChecked
+    
+    -- Enable or disable analytics based on user choice
+    if isChecked then
+        Analytics.enable(_G.AuroraConfig)
+    else
+        Analytics.disable(_G.AuroraConfig)
+    end
+end)
+
+local analyticsHelp = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+analyticsHelp:SetPoint("TOPLEFT", analyticsBox, "BOTTOMLEFT", 25, -5)
+analyticsHelp:SetWidth(400)
+analyticsHelp:SetJustifyH("LEFT")
+analyticsHelp:SetText("Helps improve Aurora by sharing anonymous usage statistics. No personal data is collected.")
+
+-- Compatibility status display
+local compatStatus = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+compatStatus:SetPoint("TOPLEFT", analyticsHelp, "BOTTOMLEFT", 0, -15)
+compatStatus:SetWidth(400)
+compatStatus:SetJustifyH("LEFT")
+
+local function updateCompatibilityStatus()
+    local status = Compatibility.getStatus()
+    if status.hasIssues then
+        local text = "|cffffcc00Compatibility:|r "
+        if #status.conflicts > 0 then
+            text = text .. #status.conflicts .. " potential conflict(s) detected. "
+        end
+        if #status.missingDependencies > 0 then
+            text = text .. #status.missingDependencies .. " missing dependenc(ies). "
+        end
+        if status.safeMode then
+            text = text .. "|cffff0000Safe mode active.|r"
+        end
+        compatStatus:SetText(text)
+    else
+        compatStatus:SetText("|cff00ff00No compatibility issues detected.|r")
+    end
+end
+
 local line = gui:CreateTexture(nil, "ARTWORK")
 line:SetSize(600, 1)
-line:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -210)
+line:SetPoint("TOPLEFT", misc, "BOTTOMLEFT", 0, -110)
 line:SetColorTexture(1, 1, 1, .2)
 
 local credits = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
@@ -372,6 +433,9 @@ gui.refresh = function()
         classColor:SetFormattedText("|c%s%s|r", color.colorStr, className)
         classColor:SetBackdropColor(color.r, color.g, color.b)
     end
+    
+    -- Update compatibility status
+    updateCompatibilityStatus()
 end
 
 gui.okay = function()
