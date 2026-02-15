@@ -30,7 +30,12 @@ function private.OnLoad()
 
     -- Setup colors
     local Color, Util = Aurora.Color, Aurora.Util
+    local Theme = Aurora.Theme
     local customClassColors = AuroraConfig.customClassColors
+
+    -- Initialize theme engine
+    Theme.Initialize()
+    Theme.InitializeAlpha(AuroraConfig)
 
     function private.updateHighlightColor()
         --print("updateHighlightColor override")
