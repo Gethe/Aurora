@@ -28,10 +28,11 @@ Thank you for using Aurora!
 
 Type |cff00a0ff/aurora|r at any time to access Aurora's options.
 
-There, you can customize the addon's appearance.
+There, you can customize the addon's appearance and behavior.
 
-You can also turn off optional features such as bags and tooltips if they are incompatible with your other addons.
+You can also turn off optional features such as bags and tooltips if they conflict with your other addons.
 
+|cffffcc00Tip:|r Use |cff00a0ff/aurora help|r to see all available commands.
 
 
 Enjoy!
@@ -54,6 +55,9 @@ Enjoy!
     okayButton:SetScript("OnClick", function()
         splash:Hide()
         _G.AuroraConfig.acknowledgedSplashScreen = true
+        
+        -- Show helpful message
+        _G.print("|cff00a0ffAurora:|r Type |cffffffff/aurora|r to open configuration, or |cffffffff/aurora help|r for commands.")
     end)
 
     splash.okayButton = okayButton
@@ -249,6 +253,16 @@ features:SetPoint("TOPLEFT", 16, -80)
 
 local bagsBox = createToggleBox(gui, "bags", "Bags")
 bagsBox:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 10, -20)
+bagsBox:SetScript("OnEnter", function(self)
+    _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    _G.GameTooltip:SetText("Bags Theming", 1, 1, 1)
+    _G.GameTooltip:AddLine("Apply Aurora's theme to bag frames.", nil, nil, nil, true)
+    _G.GameTooltip:AddLine("Disable if using bag addons like Bagnon or AdiBags.", 0.7, 0.7, 0.7, true)
+    _G.GameTooltip:Show()
+end)
+bagsBox:SetScript("OnLeave", function(self)
+    _G.GameTooltip:Hide()
+end)
 
 local lootBox = createToggleBox(gui, "loot", "Loot")
 lootBox:SetPoint("LEFT", bagsBox, "RIGHT", 105, 0)
@@ -278,6 +292,16 @@ chatBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 105, 0)
 
 local tooltipsBox = createToggleBox(gui, "tooltips", "Tooltips")
 tooltipsBox:SetPoint("LEFT", chatBox, "RIGHT", 105, 0)
+tooltipsBox:SetScript("OnEnter", function(self)
+    _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    _G.GameTooltip:SetText("Tooltip Theming", 1, 1, 1)
+    _G.GameTooltip:AddLine("Apply Aurora's theme to tooltips.", nil, nil, nil, true)
+    _G.GameTooltip:AddLine("Disable if using tooltip addons like TipTac.", 0.7, 0.7, 0.7, true)
+    _G.GameTooltip:Show()
+end)
+tooltipsBox:SetScript("OnLeave", function(self)
+    _G.GameTooltip:Hide()
+end)
 
 --[[ Appearance ]]--
 local appearance = addSubCategory(gui, "Appearance")
@@ -316,6 +340,17 @@ buttonsHaveGradientBox:SetPoint("TOPLEFT", highlightBox, "BOTTOMLEFT", 0, -15)
 local alphaSlider = createSlider(gui, "alpha", "Backdrop opacity *")
 alphaSlider:SetPoint("TOPLEFT", buttonsHaveGradientBox, "BOTTOMLEFT", 0, -40)
 alphaSlider.update = updateFrames
+alphaSlider:SetScript("OnEnter", function(self)
+    _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    _G.GameTooltip:SetText("Backdrop Opacity", 1, 1, 1)
+    _G.GameTooltip:AddLine("Control the transparency of themed UI elements.", nil, nil, nil, true)
+    _G.GameTooltip:AddLine("Lower values make frames more transparent.", 0.7, 0.7, 0.7, true)
+    _G.GameTooltip:AddLine("Changes apply immediately without reload.", 0.5, 1, 0.5, true)
+    _G.GameTooltip:Show()
+end)
+alphaSlider:SetScript("OnLeave", function(self)
+    _G.GameTooltip:Hide()
+end)
 
 --[[ Misc ]]--
 local misc = addSubCategory(gui, "Privacy")
@@ -385,9 +420,23 @@ local reloadText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 reloadText:SetPoint("BOTTOMLEFT", 20, 26)
 reloadText:SetText("* Does not require a Reload UI.")
 
+local helpText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+helpText:SetPoint("BOTTOMLEFT", 20, 10)
+helpText:SetText("|cff00a0ffTip:|r Type |cffffffff/aurora help|r for commands, or |cffffffff/aurora status|r for system info.")
+
 local reloadButton = createButton(gui, _G.C_UI.Reload, _G.RELOADUI)
 reloadButton:SetPoint("BOTTOMRIGHT", -20, 20)
 reloadButton:SetWidth(100)
+reloadButton:SetScript("OnEnter", function(self)
+    _G.GameTooltip:SetOwner(self, "ANCHOR_TOP")
+    _G.GameTooltip:SetText("Reload UI", 1, 1, 1)
+    _G.GameTooltip:AddLine("Reload the user interface to apply changes that require it.", nil, nil, nil, true)
+    _G.GameTooltip:AddLine("Most Aurora settings apply immediately.", 0.7, 0.7, 0.7, true)
+    _G.GameTooltip:Show()
+end)
+reloadButton:SetScript("OnLeave", function(self)
+    _G.GameTooltip:Hide()
+end)
 
 
 local classColors = {}
@@ -413,29 +462,43 @@ resetButton:SetWidth(50)
 
 gui.refresh = function()
     --print("gui refresh")
-    alphaSlider:SetValue(_G.AuroraConfig.alpha)
-
-    for i = 1, #checkboxes do
-        checkboxes[i]:SetChecked(_G.AuroraConfig[checkboxes[i].value] == true)
-    end
-
-    local customHighlight = _G.AuroraConfig.customHighlight
-    highlightBox:SetChecked(_G.AuroraConfig.customHighlight.enabled == true)
-    highlightButton:SetBackdropColor(customHighlight.r, customHighlight.g, customHighlight.b)
-    if not highlightBox:GetChecked() then
-        highlightButton:Disable()
-        highlightButton:SetAlpha(.7)
-    end
-
-    for i, classColor in ipairs(classColors) do
-        local color = _G.AuroraConfig.customClassColors[classColor.class]
-        local className = _G.LOCALIZED_CLASS_NAMES_MALE[classColor.class]
-        classColor:SetFormattedText("|c%s%s|r", color.colorStr, className)
-        classColor:SetBackdropColor(color.r, color.g, color.b)
-    end
     
-    -- Update compatibility status
-    updateCompatibilityStatus()
+    -- Safely refresh with error handling
+    local success, err = pcall(function()
+        alphaSlider:SetValue(_G.AuroraConfig.alpha)
+
+        for i = 1, #checkboxes do
+            checkboxes[i]:SetChecked(_G.AuroraConfig[checkboxes[i].value] == true)
+        end
+
+        local customHighlight = _G.AuroraConfig.customHighlight
+        highlightBox:SetChecked(_G.AuroraConfig.customHighlight.enabled == true)
+        highlightButton:SetBackdropColor(customHighlight.r, customHighlight.g, customHighlight.b)
+        if not highlightBox:GetChecked() then
+            highlightButton:Disable()
+            highlightButton:SetAlpha(.7)
+        end
+
+        for i, classColor in ipairs(classColors) do
+            local color = _G.AuroraConfig.customClassColors[classColor.class]
+            local className = _G.LOCALIZED_CLASS_NAMES_MALE[classColor.class]
+            classColor:SetFormattedText("|c%s%s|r", color.colorStr, className)
+            classColor:SetBackdropColor(color.r, color.g, color.b)
+        end
+        
+        -- Update compatibility status
+        updateCompatibilityStatus()
+    end)
+    
+    if not success then
+        _G.print("|cffff0000Aurora:|r Failed to refresh configuration interface.")
+        _G.print("|cff00a0ffError:|r " .. tostring(err))
+        
+        -- Log error if integration is available
+        if Integration then
+            Integration.HandleError("GUI", err, {phase = "refresh", recoverable = false})
+        end
+    end
 end
 
 gui.okay = function()
@@ -450,14 +513,46 @@ gui.cancel = function()
 end
 
 gui.default = function()
-    -- Use Config.reset to properly reset configuration
-    Config.reset(true) -- preserve splash screen acknowledgment
+    -- Use Config.reset to properly reset configuration with error handling
+    local success, err = pcall(function()
+        Config.reset(true) -- preserve splash screen acknowledgment
+        
+        updateFrames()
+        gui.refresh()
+    end)
     
-    updateFrames()
-    gui.refresh()
+    if not success then
+        _G.print("|cffff0000Aurora:|r Failed to reset configuration to defaults.")
+        _G.print("|cff00a0ffError:|r " .. tostring(err))
+        _G.print("|cff00a0ffTip:|r Try reloading your UI with /reload")
+        
+        -- Log error if integration is available
+        if Integration then
+            Integration.HandleError("GUI", err, {phase = "reset", recoverable = true})
+        end
+    else
+        _G.print("|cff00a0ffAurora:|r Configuration reset to defaults.")
+    end
 end
 
 function private.SetupGUI()
+    -- Validate configuration before setting up GUI
+    if _G.AuroraConfig then
+        local valid, errors = Config.validateConfig(_G.AuroraConfig)
+        if not valid then
+            _G.print("|cffffcc00Aurora:|r Configuration validation found issues:")
+            for _, err in pairs(errors) do
+                _G.print("  |cffff0000-|r " .. err.error)
+            end
+            _G.print("|cff00a0ffTip:|r Configuration will be sanitized automatically.")
+            
+            -- Sanitize invalid values
+            for _, err in pairs(errors) do
+                _G.AuroraConfig[err.key] = Config.sanitizeValue(err.key, _G.AuroraConfig[err.key])
+            end
+        end
+    end
+    
     -- fill 'old' table
     copyTable(_G.AuroraConfig, old)
 
@@ -482,9 +577,10 @@ _G.SLASH_AURORA1 = "/aurora"
 _G.SlashCmdList.AURORA = function(msg, editBox)
     private.debug("/aurora", msg)
     
-    -- Check for combat lockdown
+    -- Check for combat lockdown with user-friendly message
     if _G.InCombatLockdown() then
-        _G.print("|cff00a0ffAurora:|r Cannot open configuration during combat.")
+        _G.print("|cffff0000Aurora:|r Cannot open configuration during combat.")
+        _G.print("|cff00a0ffTip:|r Try again after leaving combat.")
         return
     end
     
@@ -499,20 +595,70 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
             end
             debugger:Display()
         else
-            _G.print("LibTextDump is not available.")
+            _G.print("|cffff0000Aurora:|r LibTextDump is not available.")
+            _G.print("|cff00a0ffTip:|r Install LibTextDump to enable debug output.")
         end
     elseif msg == "help" then
         _G.print("|cff00a0ffAurora Commands:|r")
-        _G.print("  /aurora - Open configuration panel")
-        _G.print("  /aurora help - Show this help message")
-        _G.print("  /aurora debug - Display debug information")
+        _G.print("  |cffffffff/aurora|r - Open configuration panel")
+        _G.print("  |cffffffff/aurora help|r - Show this help message")
+        _G.print("  |cffffffff/aurora debug|r - Display debug information")
+        _G.print("  |cffffffff/aurora status|r - Show system status")
+    elseif msg == "status" then
+        -- Display system status
+        _G.print("|cff00a0ffAurora System Status:|r")
+        
+        -- Configuration status
+        if _G.AuroraConfig then
+            _G.print("  |cff00ff00Configuration:|r Loaded")
+            local needsRecovery, reason = Config.needsRecovery(_G.AuroraConfig)
+            if needsRecovery then
+                _G.print("    |cffffcc00Warning:|r " .. reason)
+            end
+        else
+            _G.print("  |cffff0000Configuration:|r Not loaded")
+        end
+        
+        -- Compatibility status
+        if Compatibility then
+            local status = Compatibility.getStatus()
+            if status.hasIssues then
+                _G.print("  |cffffcc00Compatibility:|r " .. #status.conflicts .. " conflict(s), " .. #status.missingDependencies .. " missing dependenc(ies)")
+            else
+                _G.print("  |cff00ff00Compatibility:|r No issues")
+            end
+        end
+        
+        -- Analytics status
+        if Analytics then
+            if Analytics.hasConsent() then
+                _G.print("  |cff00ff00Analytics:|r Enabled (with consent)")
+            else
+                _G.print("  |cffccccccAnalytics:|r Disabled")
+            end
+        end
+        
+        -- Integration status
+        if Integration then
+            local intStatus = Integration.GetStatus()
+            _G.print("  |cff00ff00Integration:|r " .. intStatus.errorCount .. " error(s) logged")
+        end
     elseif private.commands[msg] then
         private.commands[msg]()
     elseif msg == "" then
-        -- Open settings panel
-        _G.Settings.OpenToCategory(Aurora.category:GetID())
+        -- Open settings panel with error handling
+        local success, err = pcall(function()
+            _G.Settings.OpenToCategory(Aurora.category:GetID())
+        end)
+        
+        if not success then
+            _G.print("|cffff0000Aurora:|r Failed to open configuration panel.")
+            _G.print("|cff00a0ffError:|r " .. tostring(err))
+            _G.print("|cff00a0ffTip:|r Try reloading your UI with /reload")
+        end
     else
-        -- Invalid command
-        _G.print("|cff00a0ffAurora:|r Unknown command '" .. msg .. "'. Type '/aurora help' for available commands.")
+        -- Invalid command with helpful suggestion
+        _G.print("|cffff0000Aurora:|r Unknown command '" .. msg .. "'.")
+        _G.print("|cff00a0ffTip:|r Type |cffffffff/aurora help|r for available commands.")
     end
 end

@@ -11,6 +11,7 @@ local _, C = _G.unpack(Aurora)
 local Config = private.Config
 local Analytics = private.Analytics
 local Compatibility = private.Compatibility
+local Integration = private.Integration
 
 -- [[ Constants and settings ]]
 local AuroraConfig
@@ -20,20 +21,43 @@ C.frames = {}
 C.defaults = Config.defaults
 
 function private.OnLoad()
-    -- Load and initialize configuration using the Config module
-    AuroraConfig = Config.load(wago)
+    -- Initialize integration system first
+    Integration.Initialize()
     
-    -- Initialize compatibility system
-    Compatibility.initialize(AuroraConfig)
+    -- Load and initialize configuration using the Config module with error handling
+    local configSuccess, configResult = pcall(function()
+        return Config.load(wago)
+    end)
     
-    -- Initialize analytics system with user consent
-    Analytics.initialize(wago, AuroraConfig)
+    if configSuccess then
+        AuroraConfig = configResult
+    else
+        Integration.HandleError("Config", configResult, {phase = "load", recoverable = true})
+        AuroraConfig = Config.defaults
+    end
+    
+    -- Initialize compatibility system with error handling
+    local compatSuccess, compatErr = pcall(Compatibility.initialize, AuroraConfig)
+    if not compatSuccess then
+        Integration.HandleError("Compatibility", compatErr, {phase = "initialize", recoverable = false})
+    end
+    
+    -- Initialize analytics system with user consent and error handling
+    local analyticsSuccess, analyticsErr = pcall(Analytics.initialize, wago, AuroraConfig)
+    if not analyticsSuccess then
+        Integration.HandleError("Analytics", analyticsErr, {phase = "initialize", recoverable = false})
+    end
     
     -- Check if configuration needs recovery
     local needsRecovery, reason = Config.needsRecovery(AuroraConfig)
     if needsRecovery then
         private.debug("Config", "Recovery needed:", reason)
-        AuroraConfig = Config.recover()
+        local recoverSuccess, recoverResult = pcall(Config.recover)
+        if recoverSuccess then
+            AuroraConfig = recoverResult
+        else
+            Integration.HandleError("Config", recoverResult, {phase = "recovery", recoverable = false})
+        end
     end
 
     -- Setup colors

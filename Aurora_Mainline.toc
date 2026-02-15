@@ -21,6 +21,7 @@ Skin\Interface\AddOns\AddOns_Mainline.xml
 config.lua
 analytics.lua
 compatibility.lua
+integration.lua
 aurora.lua
 gui.lua
 

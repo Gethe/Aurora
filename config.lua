@@ -106,7 +106,7 @@ Config.validationRules = {
 -- @param key string The configuration key
 -- @param value any The value to validate
 -- @return boolean success Whether validation passed
--- @return string error Optional error message
+-- @return string error Optional user-friendly error message
 function Config.validateValue(key, value)
     local rule = Config.validationRules[key]
     
@@ -118,19 +118,19 @@ function Config.validateValue(key, value)
     if type(rule) == "string" then
         -- Simple type check
         if type(value) ~= rule then
-            return false, ("Expected %s for %s, got %s"):format(rule, key, type(value))
+            return false, ("Setting '%s' must be a %s, but got %s"):format(key, rule, type(value))
         end
         return true
     elseif type(rule) == "table" then
         -- Complex validation with constraints
         if type(value) ~= rule.type then
-            return false, ("Expected %s for %s, got %s"):format(rule.type, key, type(value))
+            return false, ("Setting '%s' must be a %s, but got %s"):format(key, rule.type, type(value))
         end
         if rule.min and value < rule.min then
-            return false, ("%s value %s is below minimum %s"):format(key, value, rule.min)
+            return false, ("Setting '%s' value %.2f is below minimum %.2f"):format(key, value, rule.min)
         end
         if rule.max and value > rule.max then
-            return false, ("%s value %s is above maximum %s"):format(key, value, rule.max)
+            return false, ("Setting '%s' value %.2f is above maximum %.2f"):format(key, value, rule.max)
         end
         return true
     elseif type(rule) == "function" then
@@ -395,23 +395,27 @@ end
 -- @param value any The value to set
 -- @param config table Optional config table (uses global if not provided)
 -- @return boolean success Whether the value was set successfully
+-- @return string error Optional error message if failed
 function Config.set(key, value, config)
     config = config or _G.AuroraConfig
     
     if not config then
-        private.debug("Config", "No configuration available")
-        return false
+        return false, "No configuration available"
     end
     
     -- Validate the value
     local valid, err = Config.validateValue(key, value)
     if not valid then
-        private.debug("Config", "Cannot set", key, ":", err)
-        return false
+        return false, err
     end
     
     -- Set the value
     config[key] = value
+    
+    -- Dispatch configuration change event if integration is available
+    if private.Integration and private.Integration.DispatchEvent then
+        private.Integration.DispatchEvent("CONFIG_CHANGED", key, value)
+    end
     
     private.debug("Config", "Set", key, "to", value)
     return true
