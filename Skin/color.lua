@@ -267,6 +267,168 @@ private.COVENANT_COLORS = {
     Maw = Color.Create(0.302, 0.525, 0.553),
 }
 
+--[[ Color Management System
+Core color management functionality for Aurora theme system.
+Provides RGB handling, class color integration, and custom color overrides.
+--]]
+
+-- Color validation and sanitization
+function Color.ValidateRGB(r, g, b)
+    if type(r) ~= "number" or type(g) ~= "number" or type(b) ~= "number" then
+        return false, "RGB values must be numbers"
+    end
+    if r < 0 or r > 1 or g < 0 or g > 1 or b < 0 or b > 1 then
+        return false, "RGB values must be between 0 and 1"
+    end
+    return true
+end
+
+function Color.SanitizeRGB(r, g, b)
+    r = type(r) == "number" and Clamp(r, 0, 1) or 0
+    g = type(g) == "number" and Clamp(g, 0, 1) or 0
+    b = type(b) == "number" and Clamp(b, 0, 1) or 0
+    return r, g, b
+end
+
+-- Get class color from CUSTOM_CLASS_COLORS
+function Color.GetClassColor(classToken)
+    if not classToken then
+        classToken = private.charClass.token
+    end
+    
+    if _G.CUSTOM_CLASS_COLORS and _G.CUSTOM_CLASS_COLORS[classToken] then
+        return _G.CUSTOM_CLASS_COLORS[classToken]:GetRGB()
+    end
+    
+    -- Fallback to default class color
+    return 0.5, 0.5, 0.5
+end
+
+-- Apply custom color override or use class color
+function Color.GetHighlightColor(config)
+    config = config or _G.AuroraConfig
+    
+    if not config then
+        return Color.GetClassColor()
+    end
+    
+    if config.customHighlight and config.customHighlight.enabled then
+        local r, g, b = config.customHighlight.r, config.customHighlight.g, config.customHighlight.b
+        return Color.SanitizeRGB(r, g, b)
+    end
+    
+    return Color.GetClassColor()
+end
+
+-- Set highlight color from configuration
+function Color.UpdateHighlightColor(config)
+    local r, g, b = Color.GetHighlightColor(config)
+    Color.highlight:SetRGB(r, g, b)
+    return r, g, b
+end
+
+-- Highlight Color Application System
+-- Tracks all themed elements that use highlight colors for dynamic updates
+
+local highlightedElements = {}
+
+-- Register an element that uses highlight color
+function Color.RegisterHighlightElement(element, updateFunc)
+    if not element then return end
+    
+    local key = element
+    if type(element) == "table" and element.GetName then
+        key = element:GetName() or element
+    end
+    
+    highlightedElements[key] = {
+        element = element,
+        updateFunc = updateFunc
+    }
+end
+
+-- Unregister an element from highlight tracking
+function Color.UnregisterHighlightElement(element)
+    if not element then return end
+    
+    local key = element
+    if type(element) == "table" and element.GetName then
+        key = element:GetName() or element
+    end
+    
+    highlightedElements[key] = nil
+end
+
+-- Apply highlight color to all registered elements
+function Color.ApplyHighlightToAll()
+    local r, g, b = Color.highlight:GetRGB()
+    
+    for key, data in next, highlightedElements do
+        if data.element and data.updateFunc then
+            local success, err = pcall(data.updateFunc, data.element, r, g, b)
+            if not success then
+                private.debug("Color", "Failed to update element", key, ":", err)
+            end
+        end
+    end
+end
+
+-- Update highlight color and apply to all elements
+function Color.RefreshHighlightColor(config)
+    Color.UpdateHighlightColor(config)
+    Color.ApplyHighlightToAll()
+end
+
+-- Color consistency enforcement
+-- Ensures all themed elements maintain consistent color application
+
+local colorConsistencyRules = {
+    -- Rule: All highlight colors should match the configured highlight
+    highlight = function(element)
+        if element.SetBackdropBorderColor then
+            element:SetBackdropBorderColor(Color.highlight:GetRGB())
+        end
+    end,
+    
+    -- Rule: All frame backgrounds should use frame color
+    frame = function(element)
+        if element.SetBackdropColor then
+            element:SetBackdropColor(Color.frame:GetRGB())
+        end
+    end,
+    
+    -- Rule: All buttons should use button color
+    button = function(element)
+        if element.SetBackdropColor then
+            element:SetBackdropColor(Color.button:GetRGB())
+        end
+    end,
+}
+
+-- Apply color consistency rule to an element
+function Color.EnforceConsistency(element, ruleType)
+    if not element or not ruleType then return end
+    
+    local rule = colorConsistencyRules[ruleType]
+    if rule then
+        local success, err = pcall(rule, element)
+        if not success then
+            private.debug("Color", "Failed to enforce consistency for", ruleType, ":", err)
+        end
+    end
+end
+
+-- Preview color change without saving
+function Color.PreviewHighlightColor(r, g, b)
+    if not Color.ValidateRGB(r, g, b) then
+        return false
+    end
+    
+    Color.highlight:SetRGB(r, g, b)
+    Color.ApplyHighlightToAll()
+    return true
+end
+
 if _G.CUSTOM_CLASS_COLORS then return end
 --[[ CUSTOM_CLASS_COLORS:header
 This is a community developed standard, and is intended to be a drop-in

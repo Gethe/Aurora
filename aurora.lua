@@ -34,18 +34,15 @@ function private.OnLoad()
 
     function private.updateHighlightColor()
         --print("updateHighlightColor override")
-        local r, g, b
-        if AuroraConfig.customHighlight.enabled then
-            r, g, b = AuroraConfig.customHighlight.r, AuroraConfig.customHighlight.g, AuroraConfig.customHighlight.b
-        else
-            r, g, b = _G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB()
-        end
-
-        C.r, C.g, C.b = r, g, b -- deprecated
-        Color.highlight:SetRGB(r, g, b)
+        -- Use the enhanced color management system with dynamic updates
+        Color.RefreshHighlightColor(AuroraConfig)
+        
+        -- Update deprecated references
+        C.r, C.g, C.b = Color.highlight:GetRGB()
     end
     _G.CUSTOM_CLASS_COLORS:RegisterCallback(function()
         --print("aurora CCC:RegisterCallback")
+        private.updateHighlightColor()
         _G.AuroraOptions.refresh()
     end)
     private.setColorCache(customClassColors)
