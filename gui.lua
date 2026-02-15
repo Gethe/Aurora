@@ -9,6 +9,7 @@ local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata
 local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Util = Aurora.Util
+local Config = private.Config
 local _, C = _G.unpack(Aurora)
 
 -- [[ Splash screen ]]
@@ -385,8 +386,9 @@ gui.cancel = function()
 end
 
 gui.default = function()
-    copyTable(C.defaults, _G.AuroraConfig)
-
+    -- Use Config.reset to properly reset configuration
+    Config.reset(true) -- preserve splash screen acknowledgment
+    
     updateFrames()
     gui.refresh()
 end

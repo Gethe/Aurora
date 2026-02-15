@@ -8,86 +8,24 @@ private.wago = wago
 -- [[ Core ]]
 local Aurora = private.Aurora
 local _, C = _G.unpack(Aurora)
+local Config = private.Config
 
 -- [[ Constants and settings ]]
 local AuroraConfig
 
 C.frames = {}
-C.defaults = {
-    acknowledgedSplashScreen = false,
-
-    bags = true,
-    chat = true,
-    loot = true,
-    mainmenubar = false,
-    fonts = true,
-    tooltips = true,
-    chatBubbles = true,
-        chatBubbleNames = true,
-
-    buttonsHaveGradient = true,
-    customHighlight = {enabled = false, r = 0.243, g = 0.570, b = 1},
-    alpha = 0.5,
-    hasAnalytics = true,
-    --[[
-        TODO: colorize - generate a monochrome color palette using the highlight
-            color which overrides the default frame, button, and font colors
-    ]]
-
-    customClassColors = {},
-}
+-- Maintain C.defaults for backward compatibility
+C.defaults = Config.defaults
 
 function private.OnLoad()
-    -- Load Variables
-    _G.AuroraConfig = _G.AuroraConfig or {}
-    AuroraConfig = _G.AuroraConfig
-
-    if AuroraConfig.useButtonGradientColour ~= nil then
-        AuroraConfig.buttonsHaveGradient = AuroraConfig.useButtonGradientColour
-    end
-    if AuroraConfig.enableFont ~= nil then
-        AuroraConfig.fonts = AuroraConfig.enableFont
-    end
-    if AuroraConfig.customColour ~= nil then
-        AuroraConfig.customHighlight = AuroraConfig.customColour
-        if AuroraConfig.useCustomColour ~= nil then
-            AuroraConfig.customHighlight.enabled = AuroraConfig.useCustomColour
-        end
-    end
-
-    -- Remove deprecated or corrupt variables
-    for key, value in next, AuroraConfig do
-        if C.defaults[key] == nil then
-            AuroraConfig[key] = nil
-        end
-
-        if AuroraConfig.hasAnalytics == nil then
-            if key ~= "acknowledgedSplashScreen" then
-                if key == "customHighlight" then
-                    wago:Switch(key, value.enabled)
-                elseif key == "alpha" then
-                    wago:SetCounter(key, value)
-                else
-                    wago:Switch(key, value)
-                end
-            end
-        end
-    end
-
-    -- Load or init variables
-    for key, value in next, C.defaults do
-        if AuroraConfig[key] == nil then
-
-
-            if _G.type(value) == "table" then
-                AuroraConfig[key] = {}
-                for k in next, value do
-                    AuroraConfig[key][k] = value[k]
-                end
-            else
-                AuroraConfig[key] = value
-            end
-        end
+    -- Load and initialize configuration using the Config module
+    AuroraConfig = Config.load(wago)
+    
+    -- Check if configuration needs recovery
+    local needsRecovery, reason = Config.needsRecovery(AuroraConfig)
+    if needsRecovery then
+        private.debug("Config", "Recovery needed:", reason)
+        AuroraConfig = Config.recover()
     end
 
     -- Setup colors
