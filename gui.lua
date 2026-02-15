@@ -243,16 +243,76 @@ local category, _ = _G.Settings.RegisterCanvasLayoutCategory(gui, "Aurora", "Aur
 Aurora.category = category
 _G.Settings.RegisterAddOnCategory(category)
 
+-- Create subcategory panels
+local featuresPanel = _G.CreateFrame("Frame", "AuroraOptionsFeatures", _G.UIParent)
+featuresPanel.name = "Features"
+featuresPanel.parent = "Aurora"
+
+local appearancePanel = _G.CreateFrame("Frame", "AuroraOptionsAppearance", _G.UIParent)
+appearancePanel.name = "Appearance"
+appearancePanel.parent = "Aurora"
+
+local privacyPanel = _G.CreateFrame("Frame", "AuroraOptionsPrivacy", _G.UIParent)
+privacyPanel.name = "Privacy"
+privacyPanel.parent = "Aurora"
+
+-- Register subcategories
+local featuresCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, featuresPanel, "Features")
+local appearanceCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, appearancePanel, "Appearance")
+local privacyCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, privacyPanel, "Privacy")
+
+--[[ Main Panel ]]--
 local title = gui:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-title:SetPoint("TOP", -30, -26)
+title:SetPoint("TOP", 0, -26)
 title:SetText("Aurora " .. GetAddOnMetadata("Aurora", "Version"))
 
---[[ Features ]]--
-local features = addSubCategory(gui, "Features")
-features:SetPoint("TOPLEFT", 16, -80)
+local mainDesc = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+mainDesc:SetPoint("TOPLEFT", 16, -80)
+mainDesc:SetWidth(600)
+mainDesc:SetJustifyH("LEFT")
+mainDesc:SetText([[
+Thank you for using Aurora!
 
-local bagsBox = createToggleBox(gui, "bags", "Bags")
-bagsBox:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 10, -20)
+Aurora themes the default World of Warcraft interface with a sleek, modern appearance.
+
+Use the subcategories on the left to configure:
+  • |cff00a0ffFeatures|r - Enable/disable themed UI components
+  • |cff00a0ffAppearance|r - Customize colors, fonts, and visual style
+  • |cff00a0ffPrivacy|r - Manage analytics and data sharing
+
+Type |cffffffff/aurora help|r in chat for available commands.
+]])
+
+local line = gui:CreateTexture(nil, "ARTWORK")
+line:SetSize(600, 1)
+line:SetPoint("TOPLEFT", mainDesc, "BOTTOMLEFT", 0, -30)
+line:SetColorTexture(1, 1, 1, .2)
+
+local credits = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+credits:SetText([[
+Aurora by Lightsword @ Argent Dawn - EU / Haleth on wowinterface.com
+
+Maintained by Gethe (2016-2023) and Hanshi/arnvid (2023-)
+]])
+credits:SetPoint("TOP", line, "BOTTOM", 0, -20)
+
+local helpText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+helpText:SetPoint("BOTTOMLEFT", 20, 10)
+helpText:SetText("|cff00a0ffTip:|r Type |cffffffff/aurora help|r for commands, or |cffffffff/aurora status|r for system info.")
+
+--[[ Features Panel ]]--
+local featuresTitle = featuresPanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+featuresTitle:SetPoint("TOP", 0, -26)
+featuresTitle:SetText("Features")
+
+local featuresDesc = featuresPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+featuresDesc:SetPoint("TOPLEFT", 16, -60)
+featuresDesc:SetWidth(600)
+featuresDesc:SetJustifyH("LEFT")
+featuresDesc:SetText("Enable or disable Aurora theming for specific UI components. Disable features that conflict with other addons.")
+
+local bagsBox = createToggleBox(featuresPanel, "bags", "Bags")
+bagsBox:SetPoint("TOPLEFT", featuresDesc, "BOTTOMLEFT", 0, -20)
 bagsBox:SetScript("OnEnter", function(self)
     _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
     _G.GameTooltip:SetText("Bags Theming", 1, 1, 1)
@@ -264,16 +324,16 @@ bagsBox:SetScript("OnLeave", function(self)
     _G.GameTooltip:Hide()
 end)
 
-local lootBox = createToggleBox(gui, "loot", "Loot")
-lootBox:SetPoint("LEFT", bagsBox, "RIGHT", 105, 0)
+local lootBox = createToggleBox(featuresPanel, "loot", "Loot")
+lootBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -15)
 
-local mainmenubarBox = createToggleBox(gui, "mainmenubar", "Main Menu Bar")
-mainmenubarBox:SetPoint("LEFT", lootBox, "RIGHT", 105, 0)
+local mainmenubarBox = createToggleBox(featuresPanel, "mainmenubar", "Main Menu Bar")
+mainmenubarBox:SetPoint("TOPLEFT", lootBox, "BOTTOMLEFT", 0, -15)
 
-local chatBubbleBox = createToggleBox(gui, "chatBubbles", "Chat bubbles")
-chatBubbleBox:SetPoint("TOPLEFT", bagsBox, "BOTTOMLEFT", 0, -15)
+local chatBubbleBox = createToggleBox(featuresPanel, "chatBubbles", "Chat bubbles")
+chatBubbleBox:SetPoint("TOPLEFT", mainmenubarBox, "BOTTOMLEFT", 0, -15)
 
-local chatBubbleNamesBox = createToggleBox(gui, "chatBubbleNames", "Show names")
+local chatBubbleNamesBox = createToggleBox(featuresPanel, "chatBubbleNames", "Show names")
 chatBubbleNamesBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMRIGHT", -3, 3)
 chatBubbleNamesBox:SetSize(20, 20)
 
@@ -287,11 +347,11 @@ chatBubbleBox:SetScript("OnClick", function(dialog)
     end
 end)
 
-local chatBox = createToggleBox(gui, "chat", "Chat Frames")
-chatBox:SetPoint("LEFT", chatBubbleBox, "RIGHT", 105, 0)
+local chatBox = createToggleBox(featuresPanel, "chat", "Chat Frames")
+chatBox:SetPoint("TOPLEFT", chatBubbleBox, "BOTTOMLEFT", 0, -15)
 
-local tooltipsBox = createToggleBox(gui, "tooltips", "Tooltips")
-tooltipsBox:SetPoint("LEFT", chatBox, "RIGHT", 105, 0)
+local tooltipsBox = createToggleBox(featuresPanel, "tooltips", "Tooltips")
+tooltipsBox:SetPoint("TOPLEFT", chatBox, "BOTTOMLEFT", 0, -15)
 tooltipsBox:SetScript("OnEnter", function(self)
     _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
     _G.GameTooltip:SetText("Tooltip Theming", 1, 1, 1)
@@ -303,17 +363,56 @@ tooltipsBox:SetScript("OnLeave", function(self)
     _G.GameTooltip:Hide()
 end)
 
---[[ Appearance ]]--
-local appearance = addSubCategory(gui, "Appearance")
-appearance:SetPoint("TOPLEFT", features, "BOTTOMLEFT", 0, -110)
+local featuresNote = featuresPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+featuresNote:SetPoint("TOPLEFT", tooltipsBox, "BOTTOMLEFT", 0, -30)
+featuresNote:SetWidth(600)
+featuresNote:SetJustifyH("LEFT")
+featuresNote:SetTextColor(1, 0.82, 0)
+featuresNote:SetText("Note: Changes to these settings require a UI reload to take effect.")
 
-local fontBox = createToggleBox(gui, "fonts", "Replace default game fonts")
-fontBox:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 10, -20)
+local featuresReloadButton = createButton(featuresPanel, _G.C_UI.Reload, _G.RELOADUI)
+featuresReloadButton:SetPoint("TOPLEFT", featuresNote, "BOTTOMLEFT", 0, -15)
+featuresReloadButton:SetWidth(120)
 
-local highlightBox = createToggleBox(gui, "customHighlight", "Custom highlight color")
-highlightBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
+--[[ Appearance Panel ]]--
+local appearanceTitle = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+appearanceTitle:SetPoint("TOP", 0, -26)
+appearanceTitle:SetText("Appearance")
 
-local highlightButton = createColorSwatch(gui, "customHighlight")
+local appearanceDesc = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+appearanceDesc:SetPoint("TOPLEFT", 16, -60)
+appearanceDesc:SetWidth(600)
+appearanceDesc:SetJustifyH("LEFT")
+appearanceDesc:SetText("Customize the visual appearance of Aurora's themed interface.")
+
+local fontBox = createToggleBox(appearancePanel, "fonts", "Replace default game fonts")
+fontBox:SetPoint("TOPLEFT", appearanceDesc, "BOTTOMLEFT", 0, -20)
+
+local buttonsHaveGradientBox = createToggleBox(appearancePanel, "buttonsHaveGradient", "Gradient button style")
+buttonsHaveGradientBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
+
+local alphaSlider = createSlider(appearancePanel, "alpha", "Backdrop opacity *")
+alphaSlider:SetPoint("TOPLEFT", buttonsHaveGradientBox, "BOTTOMLEFT", 0, -40)
+alphaSlider.update = updateFrames
+alphaSlider:SetScript("OnEnter", function(self)
+    _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    _G.GameTooltip:SetText("Backdrop Opacity", 1, 1, 1)
+    _G.GameTooltip:AddLine("Control the transparency of themed UI elements.", nil, nil, nil, true)
+    _G.GameTooltip:AddLine("Lower values make frames more transparent.", 0.7, 0.7, 0.7, true)
+    _G.GameTooltip:AddLine("Changes apply immediately without reload.", 0.5, 1, 0.5, true)
+    _G.GameTooltip:Show()
+end)
+alphaSlider:SetScript("OnLeave", function(self)
+    _G.GameTooltip:Hide()
+end)
+
+local colorHeader = addSubCategory(appearancePanel, "Colors")
+colorHeader:SetPoint("TOPLEFT", alphaSlider, "BOTTOMLEFT", 0, -50)
+
+local highlightBox = createToggleBox(appearancePanel, "customHighlight", "Custom highlight color")
+highlightBox:SetPoint("TOPLEFT", colorHeader, "BOTTOMLEFT", 10, -20)
+
+local highlightButton = createColorSwatch(appearancePanel, "customHighlight")
 highlightButton:SetPoint("LEFT", highlightBox, "RIGHT", 150, 0)
 
 highlightBox:SetScript("OnClick", function(dialog)
@@ -334,30 +433,54 @@ highlightBox:SetScript("OnClick", function(dialog)
     private.updateHighlightColor()
 end)
 
-local buttonsHaveGradientBox = createToggleBox(gui, "buttonsHaveGradient", "Gradient button style")
-buttonsHaveGradientBox:SetPoint("TOPLEFT", highlightBox, "BOTTOMLEFT", 0, -15)
+local classColorsHeader = addSubCategory(appearancePanel, "Class Colors")
+classColorsHeader:SetPoint("TOPLEFT", highlightBox, "BOTTOMLEFT", -10, -50)
 
-local alphaSlider = createSlider(gui, "alpha", "Backdrop opacity *")
-alphaSlider:SetPoint("TOPLEFT", buttonsHaveGradientBox, "BOTTOMLEFT", 0, -40)
-alphaSlider.update = updateFrames
-alphaSlider:SetScript("OnEnter", function(self)
-    _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-    _G.GameTooltip:SetText("Backdrop Opacity", 1, 1, 1)
-    _G.GameTooltip:AddLine("Control the transparency of themed UI elements.", nil, nil, nil, true)
-    _G.GameTooltip:AddLine("Lower values make frames more transparent.", 0.7, 0.7, 0.7, true)
-    _G.GameTooltip:AddLine("Changes apply immediately without reload.", 0.5, 1, 0.5, true)
-    _G.GameTooltip:Show()
-end)
-alphaSlider:SetScript("OnLeave", function(self)
-    _G.GameTooltip:Hide()
-end)
+local classColors = {}
+for i, classToken in ipairs(_G.CLASS_SORT_ORDER) do
+    local classColor = createColorSwatch(appearancePanel, "customClassColors", classToken)
+    classColor.class = classToken
+    classColors[i] = classColor
 
---[[ Misc ]]--
-local misc = addSubCategory(gui, "Privacy")
-misc:SetPoint("TOPLEFT", appearance, "BOTTOMLEFT", 0, -210)
+    if i == 1 then
+        classColor:SetPoint("TOPLEFT", classColorsHeader, "BOTTOMLEFT", 10, -20)
+    elseif i % 4 == 1 then
+        classColor:SetPoint("TOPLEFT", classColors[i - 4], "BOTTOMLEFT", 0, -10)
+    else
+        classColor:SetPoint("LEFT", classColors[i - 1], "RIGHT", 120, 0)
+    end
+end
 
-local analyticsBox = createToggleBox(gui, "hasAnalytics", "Share anonymous usage data")
-analyticsBox:SetPoint("TOPLEFT", misc, "BOTTOMLEFT", 10, -20)
+local resetButton = createButton(appearancePanel, function()
+    private.classColorsReset(_G.CUSTOM_CLASS_COLORS, _G.RAID_CLASS_COLORS)
+end, _G.RESET)
+-- Position reset button below the last row of class colors
+local lastRowStart = classColors[#classColors - (#classColors % 4)]
+resetButton:SetPoint("TOPLEFT", lastRowStart, "BOTTOMLEFT", 0, -15)
+resetButton:SetWidth(100)
+
+local appearanceNote = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+appearanceNote:SetPoint("BOTTOMLEFT", 16, 10)
+appearanceNote:SetWidth(600)
+appearanceNote:SetJustifyH("LEFT")
+appearanceNote:SetText("* Does not require a Reload UI.")
+
+--[[ Privacy Panel ]]--
+local privacyTitle = privacyPanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+privacyTitle:SetPoint("TOP", 0, -26)
+privacyTitle:SetText("Privacy & Analytics")
+
+local privacyDesc = privacyPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+privacyDesc:SetPoint("TOPLEFT", 16, -60)
+privacyDesc:SetWidth(600)
+privacyDesc:SetJustifyH("LEFT")
+privacyDesc:SetText("Manage data collection and analytics preferences.")
+
+local analyticsHeader = addSubCategory(privacyPanel, "Wago Analytics")
+analyticsHeader:SetPoint("TOPLEFT", privacyDesc, "BOTTOMLEFT", 0, -20)
+
+local analyticsBox = createToggleBox(privacyPanel, "hasAnalytics", "Share anonymous usage data with Wago")
+analyticsBox:SetPoint("TOPLEFT", analyticsHeader, "BOTTOMLEFT", 10, -20)
 
 analyticsBox:SetScript("OnClick", function(dialog)
     local isChecked = dialog:GetChecked()
@@ -371,30 +494,45 @@ analyticsBox:SetScript("OnClick", function(dialog)
     end
 end)
 
-local analyticsHelp = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+local analyticsHelp = privacyPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 analyticsHelp:SetPoint("TOPLEFT", analyticsBox, "BOTTOMLEFT", 25, -5)
-analyticsHelp:SetWidth(400)
+analyticsHelp:SetWidth(550)
 analyticsHelp:SetJustifyH("LEFT")
-analyticsHelp:SetText("Helps improve Aurora by sharing anonymous usage statistics. No personal data is collected.")
+analyticsHelp:SetText([[Aurora uses Wago Analytics to collect anonymous usage statistics to help improve the addon.
+
+|cff00ff00What is collected:|r
+  • Which Aurora features you enable/disable
+  • UI customization preferences (colors, opacity, etc.)
+  • Addon version and game version
+
+|cffff8800What is NOT collected:|r
+  • Character names, realm names, or account information
+  • Chat messages or any personal data
+  • Gameplay data or combat logs
+
+Data is sent to Wago's analytics service and helps the developers understand which features are most used and identify potential issues. You can opt out at any time by unchecking the box above.]])
 
 -- Compatibility status display
-local compatStatus = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-compatStatus:SetPoint("TOPLEFT", analyticsHelp, "BOTTOMLEFT", 0, -15)
-compatStatus:SetWidth(400)
+local compatHeader = addSubCategory(privacyPanel, "Compatibility Status")
+compatHeader:SetPoint("TOPLEFT", analyticsHelp, "BOTTOMLEFT", -10, -30)
+
+local compatStatus = privacyPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+compatStatus:SetPoint("TOPLEFT", compatHeader, "BOTTOMLEFT", 10, -15)
+compatStatus:SetWidth(550)
 compatStatus:SetJustifyH("LEFT")
 
 local function updateCompatibilityStatus()
     local status = Compatibility.getStatus()
     if status.hasIssues then
-        local text = "|cffffcc00Compatibility:|r "
+        local text = ""
         if #status.conflicts > 0 then
-            text = text .. #status.conflicts .. " potential conflict(s) detected. "
+            text = text .. "|cffffcc00" .. #status.conflicts .. " potential conflict(s) detected.|r "
         end
         if #status.missingDependencies > 0 then
-            text = text .. #status.missingDependencies .. " missing dependenc(ies). "
+            text = text .. "|cffffcc00" .. #status.missingDependencies .. " missing dependenc(ies).|r "
         end
         if status.safeMode then
-            text = text .. "|cffff0000Safe mode active.|r"
+            text = text .. "\n|cffff0000Safe mode is active.|r"
         end
         compatStatus:SetText(text)
     else
@@ -402,64 +540,26 @@ local function updateCompatibilityStatus()
     end
 end
 
-local line = gui:CreateTexture(nil, "ARTWORK")
-line:SetSize(600, 1)
-line:SetPoint("TOPLEFT", misc, "BOTTOMLEFT", 0, -110)
-line:SetColorTexture(1, 1, 1, .2)
+local privacyLine = privacyPanel:CreateTexture(nil, "ARTWORK")
+privacyLine:SetSize(600, 1)
+privacyLine:SetPoint("TOPLEFT", compatStatus, "BOTTOMLEFT", 0, -30)
+privacyLine:SetColorTexture(1, 1, 1, .2)
 
-local credits = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-credits:SetText([[
-Aurora by Lightsword @ Argent Dawn - EU / Haleth on wowinterface.com
-
-Maintained by Gethe (2016-2023) and Hanshi/arnvid (2023-)
-
-]])
-credits:SetPoint("TOP", line, "BOTTOM", 0, -20)
-
-local reloadText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-reloadText:SetPoint("BOTTOMLEFT", 20, 26)
-reloadText:SetText("* Does not require a Reload UI.")
-
-local helpText = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-helpText:SetPoint("BOTTOMLEFT", 20, 10)
-helpText:SetText("|cff00a0ffTip:|r Type |cffffffff/aurora help|r for commands, or |cffffffff/aurora status|r for system info.")
-
-local reloadButton = createButton(gui, _G.C_UI.Reload, _G.RELOADUI)
-reloadButton:SetPoint("BOTTOMRIGHT", -20, 20)
-reloadButton:SetWidth(100)
-reloadButton:SetScript("OnEnter", function(self)
+local privacyReloadButton = createButton(privacyPanel, _G.C_UI.Reload, _G.RELOADUI)
+privacyReloadButton:SetPoint("TOPLEFT", privacyLine, "BOTTOMLEFT", 0, -20)
+privacyReloadButton:SetWidth(120)
+privacyReloadButton:SetScript("OnEnter", function(self)
     _G.GameTooltip:SetOwner(self, "ANCHOR_TOP")
     _G.GameTooltip:SetText("Reload UI", 1, 1, 1)
     _G.GameTooltip:AddLine("Reload the user interface to apply changes that require it.", nil, nil, nil, true)
     _G.GameTooltip:AddLine("Most Aurora settings apply immediately.", 0.7, 0.7, 0.7, true)
     _G.GameTooltip:Show()
 end)
-reloadButton:SetScript("OnLeave", function(self)
+privacyReloadButton:SetScript("OnLeave", function(self)
     _G.GameTooltip:Hide()
 end)
 
-
-local classColors = {}
-for i, classToken in ipairs(_G.CLASS_SORT_ORDER) do
-    local classColor = createColorSwatch(gui, "customClassColors", classToken)
-    classColor.class = classToken
-    classColors[i] = classColor
-
-    if i == 1 then
-        classColor:SetPoint("TOPLEFT", gui, "TOPRIGHT", -130, -105)
-    else
-        classColor:SetPoint("TOPLEFT", classColors[i - 1], "BOTTOMLEFT", 0, -10)
-    end
-end
-
-local resetButton = createButton(gui, function()
-    --print("reset button press")
-    private.classColorsReset(_G.CUSTOM_CLASS_COLORS, _G.RAID_CLASS_COLORS)
-end, _G.RESET)
-resetButton:SetPoint("RIGHT", classColors[1], "LEFT", -10, 0)
-resetButton:SetWidth(50)
-
-
+--[[ Refresh and callbacks ]]--
 gui.refresh = function()
     --print("gui refresh")
     
@@ -500,6 +600,11 @@ gui.refresh = function()
         end
     end
 end
+
+-- Copy refresh to all panels
+featuresPanel.refresh = gui.refresh
+appearancePanel.refresh = gui.refresh
+privacyPanel.refresh = gui.refresh
 
 gui.okay = function()
     copyTable(_G.AuroraConfig, old)
@@ -565,7 +670,8 @@ function private.SetupGUI()
         Skin.UICheckButtonTemplate(checkboxes[i])
     end
 
-    Skin.UIPanelButtonTemplate(reloadButton)
+    Skin.UIPanelButtonTemplate(featuresReloadButton)
+    Skin.UIPanelButtonTemplate(privacyReloadButton)
     Skin.UIPanelButtonTemplate(resetButton)
 
     gui.refresh()
@@ -604,6 +710,13 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
         _G.print("  |cffffffff/aurora help|r - Show this help message")
         _G.print("  |cffffffff/aurora debug|r - Display debug information")
         _G.print("  |cffffffff/aurora status|r - Show system status")
+        _G.print("  |cffffffff/aurora reset|r - Reset configuration to defaults and reload UI")
+    elseif msg == "reset" then
+        -- Reset configuration to defaults and reload UI
+        _G.print("|cff00a0ffAurora:|r Resetting configuration to defaults...")
+        Config.reset(false) -- Don't preserve splash screen acknowledgment
+        _G.print("|cff00ff00Aurora:|r Configuration reset complete.")
+        _G.print("|cffffcc00Please type |r|cffffffff/reload|r|cffffcc00 to apply changes.|r")
     elseif msg == "status" then
         -- Display system status
         _G.print("|cff00a0ffAurora System Status:|r")
