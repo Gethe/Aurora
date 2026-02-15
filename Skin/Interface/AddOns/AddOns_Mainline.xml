@@ -407,29 +407,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_PetBattleUI\Blizzard_PetBattleUI.lua"/>
     <!--Script file="Blizzard_PingUI\Blizzard_PingUI.lua"/-->
     <Script file="Blizzard_PlayerChoice\Blizzard_PlayerChoice.lua"/>
-    <!-- This section is added for Blizzard_PlayerSpells by the Aurora XML Updater -->
-    <!--Script file="Blizzard_PlayerSpells\.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassSpecializations/Blizzard_ClassSpecializationsFrame.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentUtil.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentLoadoutDialogTemplates.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentImportExport.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentLoadoutImportDialog.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentLoadoutEditDialog.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentLoadoutCreateDialog.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentButtonTemplates.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentEdgeTemplates.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_HeroTalentsSelectionDialog.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_HeroTalentsContainer.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentSearch.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\ClassTalents/Blizzard_ClassTalentsFrame.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\PvPTalents/Blizzard_PvPTalentListTemplates.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\PvPTalents/Blizzard_PvPTalentSlotTemplates.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\PvPTalents/Blizzard_WarmodeButtonTemplate.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookTemplates.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookItem.lua"/-->
-    <!--Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookSearch.lua"/-->
-    <Script file="Blizzard_PlayerSpells\SpellBook/Blizzard_SpellBookFrame.lua"/>
-    <Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpellsFrame.lua"/>
+    <Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpells.lua"/>
     <!--Script file="Blizzard_PlayerSpells\Blizzard_PlayerSpellsRegistration.lua"/-->
     <!-- End of section added for Blizzard_PlayerSpells by the Aurora XML Updater -->
     <!--Script file="Blizzard_PlunderstormBasics\Blizzard_PlunderstormBasics.lua"/-->
