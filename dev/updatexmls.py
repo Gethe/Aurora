@@ -12,7 +12,7 @@ wou_ui_sources = '../../wow-ui-source/Interface/AddOns'
 aurora_specials = []
 aurora_addons = ['Blizzard_FrameXML', 'Blizzard_FrameXMLBase', 'Blizzard_SharedXML', 'Blizzard_SharedXMLBase',
                  'Blizzard_UIPanels_Game', 'Blizzard_UnitPopup', 'Blizzard_UIParent', 'Blizzard_StaticPopup_Frame',
-                 'Blizzard_PlayerSpells', 'Blizzard_GroupFinder', 'Blizzard_QuickJoin', 'Blizzard_ActionBar',
+                 'Blizzard_GroupFinder', 'Blizzard_QuickJoin', 'Blizzard_ActionBar',
                  'Blizzard_MoneyFrame','Blizzard_UIPanelTemplates','Blizzard_GarrisonBase', 'Blizzard_ChatFrame',
                  'Blizzard_StaticPopup_Game', 'Blizzard_ActionBar', 'Blizzard_Menu','Blizzard_ChatFrameBase',
                  'Blizzard_UIMenu'
