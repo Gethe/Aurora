@@ -49,8 +49,19 @@ function private.AddOns.Blizzard_DeathRecap()
     DeathRecapFrame.CloseXButton:SetPoint("TOPRIGHT", 5, 5)
     DeathRecapFrame.DragButton:SetAllPoints(titleText)
 
-    for i = 1, _G.NUM_DEATH_RECAP_EVENTS do
-        Skin.DeathRecapEntryTemplate(DeathRecapFrame.DeathRecapEntry[i])
+    -- Hook the ScrollBox element initializer to skin frames as they're created
+    if DeathRecapFrame.ScrollBox then
+        local function SkinDeathRecapEntry(frame, elementData)
+            if not frame.auroraSkinned then
+                Skin.DeathRecapEntryTemplate(frame)
+                frame.auroraSkinned = true
+            end
+        end
+        
+        _G.hooksecurefunc(DeathRecapFrame.ScrollBox, "Update", function(self)
+            self:ForEachFrame(SkinDeathRecapEntry)
+        end)
     end
+    
     Skin.UIPanelButtonTemplate(DeathRecapFrame.CloseButton)
 end
