@@ -1,10 +1,23 @@
-﻿## [12.0.1.1] ##
+﻿## [12.0.1.2] ##
+### Fixed ###
+  * fix: Protect from calling GetStatusBarTexture on invalid objects
+  * fix(aurora): guard backdrop setup on forbidden/invalid frames to prevent NineSlice CreateTexture crashes in UIWidgets/nameplates
+  * fix: Updated DeathRecap skin for WoW 12 API changes
+  * fix: Wrapped debug name handling to safely process tainted/secret strings from WoW API values
+
+### Changed ###
+  * chg: Added Blizzard_PlayerSpells skinning and follow-up cleanup
+  * chg: Updated Aurora options menu
+  * chg: Updated updatexmls.py for WoW 12 XML changes
+  * chg: Added configuration management system, color/highlight management, theme/frame processing, and configuration UI
+  * chg: Integrated analytics/external systems and finalized integration polish
+  * chore: linting updates
+
+## [12.0.1.1] ##
 ### Fixed ###
   * fix: Added a nil check to the CropIcon function in api.lua. Gethe/Aurora#145
   * chg: prevents Aurora from interfering with Chonky Character Sheet's modifications to the character frame Gethe/Aurora#142
-  * Merge branch 'develop' of github.com:Gethe/Aurora into develop
   * fix(aurora): apply proper Aurora styling to game menu buttons Gethe/Aurora#143
-  * fix(aurora): apply proper Aurora styling to game menu buttons
   * chg: Cleaned up ChatFrame
   * fix(aurora): sanitize chat sender names to avoid secret-string taint
   * fix(aurora): guard UIWidget debug name calls against tainted frames
@@ -48,6 +61,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.2]: https://github.com/Haleth/Aurora/compare/12.0.1.1...12.0.1.2
 [12.0.1.1]: https://github.com/Haleth/Aurora/compare/12.0.1.0...12.0.1.1
 [12.0.1.0]: https://github.com/Haleth/Aurora/compare/12.0.0.2...12.0.1.0
 [12.0.0.2]: https://github.com/Haleth/Aurora/compare/12.0.0.1...12.0.0.2
