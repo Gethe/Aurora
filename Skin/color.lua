@@ -295,11 +295,11 @@ function Color.GetClassColor(classToken)
     if not classToken then
         classToken = private.charClass.token
     end
-    
+
     if _G.CUSTOM_CLASS_COLORS and _G.CUSTOM_CLASS_COLORS[classToken] then
         return _G.CUSTOM_CLASS_COLORS[classToken]:GetRGB()
     end
-    
+
     -- Fallback to default class color
     return 0.5, 0.5, 0.5
 end
@@ -307,16 +307,16 @@ end
 -- Apply custom color override or use class color
 function Color.GetHighlightColor(config)
     config = config or _G.AuroraConfig
-    
+
     if not config then
         return Color.GetClassColor()
     end
-    
+
     if config.customHighlight and config.customHighlight.enabled then
         local r, g, b = config.customHighlight.r, config.customHighlight.g, config.customHighlight.b
         return Color.SanitizeRGB(r, g, b)
     end
-    
+
     return Color.GetClassColor()
 end
 
@@ -335,12 +335,12 @@ local highlightedElements = {}
 -- Register an element that uses highlight color
 function Color.RegisterHighlightElement(element, updateFunc)
     if not element then return end
-    
+
     local key = element
     if type(element) == "table" and element.GetName then
         key = element:GetName() or element
     end
-    
+
     highlightedElements[key] = {
         element = element,
         updateFunc = updateFunc
@@ -350,19 +350,19 @@ end
 -- Unregister an element from highlight tracking
 function Color.UnregisterHighlightElement(element)
     if not element then return end
-    
+
     local key = element
     if type(element) == "table" and element.GetName then
         key = element:GetName() or element
     end
-    
+
     highlightedElements[key] = nil
 end
 
 -- Apply highlight color to all registered elements
 function Color.ApplyHighlightToAll()
     local r, g, b = Color.highlight:GetRGB()
-    
+
     for key, data in next, highlightedElements do
         if data.element and data.updateFunc then
             local success, err = pcall(data.updateFunc, data.element, r, g, b)
@@ -389,14 +389,14 @@ local colorConsistencyRules = {
             element:SetBackdropBorderColor(Color.highlight:GetRGB())
         end
     end,
-    
+
     -- Rule: All frame backgrounds should use frame color
     frame = function(element)
         if element.SetBackdropColor then
             element:SetBackdropColor(Color.frame:GetRGB())
         end
     end,
-    
+
     -- Rule: All buttons should use button color
     button = function(element)
         if element.SetBackdropColor then
@@ -408,7 +408,7 @@ local colorConsistencyRules = {
 -- Apply color consistency rule to an element
 function Color.EnforceConsistency(element, ruleType)
     if not element or not ruleType then return end
-    
+
     local rule = colorConsistencyRules[ruleType]
     if rule then
         local success, err = pcall(rule, element)
@@ -423,7 +423,7 @@ function Color.PreviewHighlightColor(r, g, b)
     if not Color.ValidateRGB(r, g, b) then
         return false
     end
-    
+
     Color.highlight:SetRGB(r, g, b)
     Color.ApplyHighlightToAll()
     return true

@@ -19,21 +19,21 @@ do  -- PlayerSpellsFrame.SpecFrame
         DAMAGER = "groupfinder-icon-role-micro-dps",
         DPS = "groupfinder-icon-role-micro-dps",
     }
-    
+
     function Hook.SkinSpellBookItem(frame)
         if not frame.Button then return end
-        
+
         local button = frame.Button
-        
+
         -- Mark as skinned first to prevent re-entry
         if button._auroraSkinned then return end
         button._auroraSkinned = true
-        
+
         -- Hide the Backplate that creates the dark bar behind text
         if frame.Backplate then
             frame.Backplate:Hide()
         end
-        
+
         -- Hide text container background if it exists
         if frame.TextContainer then
             for _, region in pairs({frame.TextContainer:GetRegions()}) do
@@ -42,13 +42,13 @@ do  -- PlayerSpellsFrame.SpecFrame
                 end
             end
         end
-        
+
         -- Hide the FxModelScene that creates animated effects
         if button.FxModelScene then
             button.FxModelScene:Hide()
             button.FxModelScene:SetAlpha(0)
         end
-        
+
         -- Aggressively hide the border - it keeps getting reset
         if button.Border then
             button.Border:SetTexture(nil)
@@ -66,7 +66,7 @@ do  -- PlayerSpellsFrame.SpecFrame
                 self:SetAlpha(0)
             end)
         end
-        
+
         if button.TrainableShadow then
             button.TrainableShadow:Hide()
         end
@@ -79,11 +79,11 @@ do  -- PlayerSpellsFrame.SpecFrame
         if button.BorderSheenMask then
             button.BorderSheenMask:Hide()
         end
-        
+
         -- Crop and position the icon - make it sharper
         Base.CropIcon(button.Icon, button)
         button.Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-        
+
         -- Create Aurora backdrop on the button
         Base.CreateBackdrop(button, {
             bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
@@ -98,14 +98,14 @@ do  -- PlayerSpellsFrame.SpecFrame
         button:SetBackdropColor(1, 1, 1, 0.75)
         button:SetBackdropBorderColor(Color.frame, 1)
         Base.CropIcon(button:GetBackdropTexture("bg"))
-        
+
         -- Handle various overlay textures
         if button.IconHighlight then
             button.IconHighlight:ClearAllPoints()
             button.IconHighlight:SetPoint("TOPLEFT", button.Icon)
             button.IconHighlight:SetPoint("BOTTOMRIGHT", button.Icon)
         end
-        
+
         -- Handle AutoCast overlay
         if button.AutoCastOverlay then
             local overlay = button.AutoCastOverlay
@@ -113,7 +113,7 @@ do  -- PlayerSpellsFrame.SpecFrame
                 overlay.Corners:SetAlpha(0)
             end
         end
-        
+
         -- Hook the button's UpdateVisuals to maintain skinning and update text colors
         if button.UpdateVisuals then
             _G.hooksecurefunc(button, "UpdateVisuals", function(self)
@@ -130,7 +130,7 @@ do  -- PlayerSpellsFrame.SpecFrame
                 end
             end)
         end
-        
+
         -- Hook text alpha setting to override Blizzard's values
         if frame.Name and not frame.Name._auroraAlphaHooked then
             _G.hooksecurefunc(frame.Name, "SetAlpha", function(self, alpha)
@@ -141,7 +141,7 @@ do  -- PlayerSpellsFrame.SpecFrame
             end)
             frame.Name._auroraAlphaHooked = true
         end
-        
+
         if frame.SubName and not frame.SubName._auroraAlphaHooked then
             _G.hooksecurefunc(frame.SubName, "SetAlpha", function(self, alpha)
                 -- Always force full alpha for better visibility
@@ -151,13 +151,13 @@ do  -- PlayerSpellsFrame.SpecFrame
             end)
             frame.SubName._auroraAlphaHooked = true
         end
-        
+
         -- Hook UpdateVisuals on the parent frame to handle text coloring
         if not frame._auroraTextColorHooked then
             -- Hook into the frame's property changes to update text colors
             _G.hooksecurefunc(frame, "UpdateSpellData", function(self)
                 if not self.TextContainer then return end
-                
+
                 -- Apply colors immediately after Blizzard's update
                 if self.isTrainable then
                     -- Trainable spells get bright yellow text
@@ -193,13 +193,13 @@ do  -- PlayerSpellsFrame.SpecFrame
             end)
             frame._auroraTextColorHooked = true
         end
-        
+
         frame._auroraSkinned = true
     end
-    
+
     -- Create a mixin to hook into SpellBookFrame's methods
     Hook.SpellBookFrameMixin = {}
-    
+
     function Hook.SpellBookFrameMixin:OnLoad()
         -- Called when the frame is first loaded
         -- This may have already been called before we mixin, so we also manually trigger skinning
@@ -213,7 +213,7 @@ do  -- PlayerSpellsFrame.SpecFrame
             end
         end)
     end
-    
+
     function Hook.SpellBookFrameMixin:OnShow()
         -- Called when the frame is shown
         -- Skin all spell items with multiple attempts to catch them when ready
@@ -241,7 +241,7 @@ do  -- PlayerSpellsFrame.SpecFrame
             end
         end)
     end
-    
+
     function Hook.SpellBookFrameMixin:UpdateDisplayedSpells()
         -- Skin all spell items after Blizzard updates them
         _G.C_Timer.After(0.1, function()
@@ -252,7 +252,7 @@ do  -- PlayerSpellsFrame.SpecFrame
             end
         end)
     end
-    
+
     function Hook.SpellBookFrameMixin:OnPagedSpellsUpdate()
         -- Skin all spell items when page updates
         _G.C_Timer.After(0.1, function()
@@ -263,7 +263,7 @@ do  -- PlayerSpellsFrame.SpecFrame
             end
         end)
     end
-    
+
     function Hook.SpellBookFrameMixin:UpdateAllSpellData()
         -- Skin all spell items when all data is updated (initial load)
         _G.C_Timer.After(0.2, function()
@@ -321,7 +321,7 @@ do  -- PlayerSpellsFrame.SpecFrame
 end
 
 do -- PlayerSpellsFrame.TalentsFrame
-    
+
 end
 function private.AddOns.Blizzard_PlayerSpells()
     local PlayerSpellsFrame = _G.PlayerSpellsFrame
@@ -341,13 +341,13 @@ function private.AddOns.Blizzard_PlayerSpells()
     if PlayerSpellsFrame.PortraitContainer then
         PlayerSpellsFrame.PortraitContainer:Hide()
     end
-    
+
     -- Skin tabs
     for i = 1, 3 do
         local tab = select(i, PlayerSpellsFrame.TabSystem:GetChildren())
         Skin.PlayerSpellsFrameTabTemplate(tab)
     end
-    
+
     Skin.UIPanelCloseButton(_G.PlayerSpellsFrameCloseButton)
     Skin.MaximizeMinimizeButtonFrameTemplate(PlayerSpellsFrame.MaxMinButtonFrame)
 
@@ -364,7 +364,7 @@ function private.AddOns.Blizzard_PlayerSpells()
 
     -- SpellBookFrame
     local SpellBookFrame = PlayerSpellsFrame.SpellBookFrame
-    
+
     -- Mix in our hooks to the SpellBookFrame
     Util.Mixin(SpellBookFrame, Hook.SpellBookFrameMixin)
 
@@ -387,7 +387,7 @@ function private.AddOns.Blizzard_PlayerSpells()
             end
         end)
     end
-    
+
     -- Create a solid black background for the SpellBookFrame to cover any Blizzard textures
     if not SpellBookFrame._auroraBackground then
         local bg = SpellBookFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
@@ -395,7 +395,7 @@ function private.AddOns.Blizzard_PlayerSpells()
         bg:SetAllPoints(SpellBookFrame)
         SpellBookFrame._auroraBackground = bg
     end
-    
+
     -- Function to hide all book backgrounds
     local function HideSpellBookBackgrounds()
         -- Hide all the book texture layers
@@ -405,7 +405,7 @@ function private.AddOns.Blizzard_PlayerSpells()
         if SpellBookFrame.BookBGRight then SpellBookFrame.BookBGRight:SetAlpha(0) end
         if SpellBookFrame.BookCornerFlipbook then SpellBookFrame.BookCornerFlipbook:SetAlpha(0) end
         if SpellBookFrame.Bookmark then SpellBookFrame.Bookmark:SetAlpha(0) end
-        
+
         -- Also try to hide any regions that might be the stripes
         for _, region in pairs({SpellBookFrame:GetRegions()}) do
             if region:IsObjectType("Texture") and region:GetDrawLayer() == "BACKGROUND" then
@@ -417,11 +417,11 @@ function private.AddOns.Blizzard_PlayerSpells()
             end
         end
     end
-    
+
     -- Get references to paging controls
     local PagedSpellsFrame = SpellBookFrame.PagedSpellsFrame
     local PagingControls = PagedSpellsFrame.PagingControls
-    
+
     -- Function to hide all background effects
     local function HidePagedSpellsBackgrounds()
         -- Hide any background effects on the PagedSpellsFrame and its views
@@ -442,7 +442,7 @@ function private.AddOns.Blizzard_PlayerSpells()
                 end
             end
         end
-        
+
         -- Also hide textures on the PagedSpellsFrame itself
         for _, region in pairs({PagedSpellsFrame:GetRegions()}) do
             if region:IsObjectType("Texture") and region:GetDrawLayer() == "BACKGROUND" then
@@ -450,11 +450,11 @@ function private.AddOns.Blizzard_PlayerSpells()
             end
         end
     end
-    
+
     -- Function to skin all visible spell book items
     local function SkinAllSpellBookItems()
         if not PagedSpellsFrame then return end
-        
+
         local frameCount = 0
         for _, frame in PagedSpellsFrame:EnumerateFrames() do
             frameCount = frameCount + 1
@@ -469,23 +469,23 @@ function private.AddOns.Blizzard_PlayerSpells()
                 end
             end
         end
-        
+
         -- Debug: if no frames found, try again later
         if frameCount == 0 then
             _G.C_Timer.After(0.2, SkinAllSpellBookItems)
         end
     end
-    
+
     -- Hide backgrounds initially
     HideSpellBookBackgrounds()
-    
+
     -- Hook SetMinimized to re-hide backgrounds when frame is resized
     _G.hooksecurefunc(SpellBookFrame, "SetMinimized", function(self)
         HideSpellBookBackgrounds()
         -- Re-skin all items after layout change
         _G.C_Timer.After(0.1, function() SkinAllSpellBookItems() end)
     end)
-    
+
     -- Hook the parent frame's SetMinimized as well
     _G.hooksecurefunc(PlayerSpellsFrame, "SetMinimized", function(self)
         HideSpellBookBackgrounds()
@@ -493,20 +493,20 @@ function private.AddOns.Blizzard_PlayerSpells()
         -- Re-skin all items after layout change
         _G.C_Timer.After(0.1, function() SkinAllSpellBookItems() end)
     end)
-    
+
     -- Hide help button
     if SpellBookFrame.HelpPlateButton then SpellBookFrame.HelpPlateButton:Hide() end
-    
+
     Skin.SearchBoxTemplate(SpellBookFrame.SearchBox)
     Skin.DropdownButton(SpellBookFrame.SettingsDropdown)
-    
+
     for i = 1, 3 do
         local tab = select(i, SpellBookFrame.CategoryTabSystem:GetChildren())
         Skin.PlayerSpellsFrameTabTemplate(tab)
     end
-    
+
     Skin.PlayerSpellsButtonTemplate(SpellBookFrame.AssistedCombatRotationSpellFrame.Button)
-    
+
     -- Skin SpellBookItem frames as they're created/updated
     _G.hooksecurefunc(SpellBookFrame.PagedSpellsFrame, "SetDataProvider", function()
         _G.C_Timer.After(0.05, function() SkinAllSpellBookItems() end)
@@ -520,10 +520,10 @@ function private.AddOns.Blizzard_PlayerSpells()
     _G.hooksecurefunc(SpellBookFrame, "UpdateAllSpellData", function()
         _G.C_Timer.After(0.1, function() SkinAllSpellBookItems() end)
     end)
-    
+
     -- Hide backgrounds initially
     HidePagedSpellsBackgrounds()
-    
+
     -- Hook the paging controls to re-skin when pages change
     _G.hooksecurefunc(PagingControls, "SetCurrentPage", function()
         _G.C_Timer.After(0.1, function()
@@ -531,7 +531,7 @@ function private.AddOns.Blizzard_PlayerSpells()
             HidePagedSpellsBackgrounds()
         end)
     end)
-    
+
     -- Hook the frame show to ensure skinning persists
     SpellBookFrame:HookScript("OnShow", function()
         HideSpellBookBackgrounds()
@@ -541,7 +541,7 @@ function private.AddOns.Blizzard_PlayerSpells()
         _G.C_Timer.After(0.3, function() SkinAllSpellBookItems() end)
         _G.C_Timer.After(0.5, function() SkinAllSpellBookItems() end)
     end)
-    
+
     -- Skin immediately on load if the frame is already visible
     if SpellBookFrame:IsVisible() then
         HideSpellBookBackgrounds()
@@ -549,19 +549,19 @@ function private.AddOns.Blizzard_PlayerSpells()
         _G.C_Timer.After(0.2, function() SkinAllSpellBookItems() end)
         _G.C_Timer.After(0.4, function() SkinAllSpellBookItems() end)
     end
-    
+
     -- Create a continuous monitor to keep hiding the stripes and ensure skinning
     SpellBookFrame:HookScript("OnUpdate", function(self, elapsed)
         if not self._auroraUpdateTimer then
             self._auroraUpdateTimer = 0
         end
         self._auroraUpdateTimer = self._auroraUpdateTimer + elapsed
-        
+
         -- Check every 0.5 seconds
         if self._auroraUpdateTimer >= 0.5 then
             self._auroraUpdateTimer = 0
             HidePagedSpellsBackgrounds()
-            
+
             -- Also check if any frames need skinning
             for _, frame in PagedSpellsFrame:EnumerateFrames() do
                 if frame.Button then
@@ -572,7 +572,7 @@ function private.AddOns.Blizzard_PlayerSpells()
                         frame._auroraSkinned = nil
                         Hook.SkinSpellBookItem(frame)
                     end
-                    
+
                     -- Always re-hide these elements
                     if button.BorderSheen then
                         button.BorderSheen:Hide()

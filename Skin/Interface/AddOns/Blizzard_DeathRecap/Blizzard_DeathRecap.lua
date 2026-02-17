@@ -57,11 +57,11 @@ function private.AddOns.Blizzard_DeathRecap()
                 frame.auroraSkinned = true
             end
         end
-        
+
         _G.hooksecurefunc(DeathRecapFrame.ScrollBox, "Update", function(self)
             self:ForEachFrame(SkinDeathRecapEntry)
         end)
     end
-    
+
     Skin.UIPanelButtonTemplate(DeathRecapFrame.CloseButton)
 end
