@@ -12,6 +12,7 @@ local Util = Aurora.Util
 local Config = private.Config
 local Analytics = private.Analytics
 local Compatibility = private.Compatibility
+local Integration = private.Integration
 local _, C = _G.unpack(Aurora)
 
 -- [[ Splash screen ]]

@@ -95,7 +95,7 @@ function Integration.AttemptRecovery(moduleName, error, context)
     if moduleName == "Config" then
         local Config = private.Config
         if Config and Config.recover then
-            local success, result = pcall(Config.recover)
+            local success, _ = pcall(Config.recover)
             if success then
                 private.debug("Integration", "Config recovery successful")
                 return true

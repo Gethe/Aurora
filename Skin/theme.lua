@@ -5,9 +5,9 @@ local _, private = ...
 
 -- [[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
+local Base = Aurora.Base -- luacheck: ignore
 local Skin = Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Color, Util = Aurora.Color, Aurora.Util  -- luacheck: ignore
 
 -- Theme Engine Module
 -- Handles frame detection, processing pipeline, and style application coordination
@@ -1072,8 +1072,8 @@ function Theme.GetPerformanceStats()
     end
 
     local elapsed = debugprofilestop() - performanceMonitor.startTime
-    local avgTime = performanceMonitor.frameCount > 0 
-        and (performanceMonitor.totalTime / performanceMonitor.frameCount) 
+    local avgTime = performanceMonitor.frameCount > 0
+        and (performanceMonitor.totalTime / performanceMonitor.frameCount)
         or 0
 
     return {
