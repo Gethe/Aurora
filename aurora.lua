@@ -23,31 +23,31 @@ C.defaults = Config.defaults
 function private.OnLoad()
     -- Initialize integration system first
     Integration.Initialize()
-    
+
     -- Load and initialize configuration using the Config module with error handling
     local configSuccess, configResult = pcall(function()
         return Config.load(wago)
     end)
-    
+
     if configSuccess then
         AuroraConfig = configResult
     else
         Integration.HandleError("Config", configResult, {phase = "load", recoverable = true})
         AuroraConfig = Config.defaults
     end
-    
+
     -- Initialize compatibility system with error handling
     local compatSuccess, compatErr = pcall(Compatibility.initialize, AuroraConfig)
     if not compatSuccess then
         Integration.HandleError("Compatibility", compatErr, {phase = "initialize", recoverable = false})
     end
-    
+
     -- Initialize analytics system with user consent and error handling
     local analyticsSuccess, analyticsErr = pcall(Analytics.initialize, wago, AuroraConfig)
     if not analyticsSuccess then
         Integration.HandleError("Analytics", analyticsErr, {phase = "initialize", recoverable = false})
     end
-    
+
     -- Check if configuration needs recovery
     local needsRecovery, reason = Config.needsRecovery(AuroraConfig)
     if needsRecovery then
@@ -73,7 +73,7 @@ function private.OnLoad()
         --print("updateHighlightColor override")
         -- Use the enhanced color management system with dynamic updates
         Color.RefreshHighlightColor(AuroraConfig)
-        
+
         -- Update deprecated references
         C.r, C.g, C.b = Color.highlight:GetRGB()
     end
