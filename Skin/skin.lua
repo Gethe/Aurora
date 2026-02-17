@@ -160,6 +160,9 @@ end
 
 do -- StatusBar
     local function Hook_SetStatusBarTexture(self, asset)
+        if type(self) ~= "table" or type(self.GetObjectType) ~= "function" or not self:IsObjectType("StatusBar") then
+            return
+        end
         if self.__SetStatusBarTexture then
             return
         end
@@ -182,7 +185,11 @@ do -- StatusBar
         end
 
         if color then
-            local texture = self:GetStatusBarTexture()
+            local ok3, texture = _G.pcall(self.GetStatusBarTexture, self)
+            if not ok3 or not texture then
+                self.__SetStatusBarTexture = nil
+                return
+            end
             texture:SetTexture(private.textures.plain)
             if color2 then
                 if texture.SetGradientAlpha then
@@ -196,17 +203,20 @@ do -- StatusBar
                 texture:SetVertexColor(color:GetRGB())
             end
         else
-            private.debug("Missing color for status bar asset:", asset, self:GetDebugName())
+            local ok4, name = _G.pcall(self.GetDebugName, self)
+            private.debug("Missing color for status bar asset:", asset, ok4 and name or "unknown")
         end
 
         self.__SetStatusBarTexture = nil
     end
     local function Hook_SetStatusBarColor(self, r, g, b)
-        if not self.GetStatusBarTexture then
-            -- some new status bars don't have a texture?
+        if type(self) ~= "table" or type(self.GetObjectType) ~= "function" or not self:IsObjectType("StatusBar") then
             return
         end
-        local texture = self:GetStatusBarTexture()
+        local ok, texture = _G.pcall(self.GetStatusBarTexture, self)
+        if not ok or not texture then
+            return
+        end
         texture:SetVertexColor(r, g, b)
     end
     function Skin.FrameTypeStatusBar(StatusBar)
