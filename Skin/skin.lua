@@ -210,6 +210,10 @@ do -- StatusBar
         texture:SetVertexColor(r, g, b)
     end
     function Skin.FrameTypeStatusBar(StatusBar)
+        if StatusBar.IsForbidden and StatusBar:IsForbidden() then
+            return
+        end
+
         if StatusBar.SetStatusBarAtlas then
             _G.hooksecurefunc(StatusBar, "SetStatusBarAtlas", Hook_SetStatusBarTexture)
         else

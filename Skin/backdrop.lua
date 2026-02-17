@@ -88,6 +88,39 @@ for new, old in next, Util.NineSliceTextures do
     bgTextures[old] = new
 end
 
+local function IsForbiddenFrame(frame)
+    if not frame or not frame.IsForbidden then
+        return false
+    end
+
+    local ok, isForbidden = _G.pcall(function()
+        return frame:IsForbidden()
+    end)
+    return ok and isForbidden
+end
+
+local function SafeFrameName(frame)
+    if not frame then
+        return "<nil>"
+    end
+
+    local ok, debugName = _G.pcall(function()
+        return frame.GetDebugName and frame:GetDebugName()
+    end)
+    if ok and type(debugName) == "string" and debugName ~= "" then
+        return debugName
+    end
+
+    local okName, name = _G.pcall(function()
+        return frame.GetName and frame:GetName()
+    end)
+    if okName and type(name) == "string" and name ~= "" then
+        return name
+    end
+
+    return "<frame>"
+end
+
 
 -- Blizzard methods
 local BackdropMixin do
@@ -249,6 +282,10 @@ local BackdropMixin do
             _G.print("BackdropMixin:SetBackdrop", self.debug, backdropInfo, self.backdropInfo, self._backdropInfo)
         end
 
+        if IsForbiddenFrame(self) then
+            return
+        end
+
         if backdropInfo == true then
             backdropInfo = self._backdropInfo
         end
@@ -271,7 +308,12 @@ local BackdropMixin do
             end
         end
 
-        return _G.BackdropTemplateMixin.SetBackdrop(self, backdropInfo)
+        local ok, result = _G.pcall(_G.BackdropTemplateMixin.SetBackdrop, self, backdropInfo)
+        if not ok then
+            private.debug("BackdropMixin:SetBackdrop failed", SafeFrameName(self), result)
+            return
+        end
+        return result
     end
     function BackdropMixin:SetBackdropColor(red, green, blue, alpha)
         if not self.backdropInfo then return end
@@ -373,6 +415,10 @@ local BackdropMixin do
 end
 
 function Base.CreateBackdrop(frame, options, textures)
+    if not frame or IsForbiddenFrame(frame) then
+        return
+    end
+
     for name, func in next, BackdropMixin do
         frame[name] = func
     end
