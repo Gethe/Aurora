@@ -29,10 +29,10 @@ function Integration.RegisterErrorHandler(moduleName, handler)
     if not moduleName or type(handler) ~= "function" then
         return false
     end
-    
+
     Integration.errorHandlers = Integration.errorHandlers or {}
     Integration.errorHandlers[moduleName] = handler
-    
+
     private.debug("Integration", "Registered error handler for", moduleName)
     return true
 end
@@ -56,11 +56,11 @@ function Integration.HandleError(moduleName, error, context)
         context = context or {},
         timestamp = _G.time(),
     }
-    
+
     Integration.errorLog[#Integration.errorLog + 1] = errorEntry
-    
+
     private.debug("Integration", "Error in", moduleName, ":", error)
-    
+
     -- Try module-specific error handler
     if Integration.errorHandlers and Integration.errorHandlers[moduleName] then
         local success, recovered = pcall(Integration.errorHandlers[moduleName], error, context)
@@ -69,13 +69,13 @@ function Integration.HandleError(moduleName, error, context)
             return true
         end
     end
-    
+
     -- Generic recovery attempts
     if context and context.recoverable then
         private.debug("Integration", "Attempting generic recovery")
         return Integration.AttemptRecovery(moduleName, error, context)
     end
-    
+
     return false
 end
 
@@ -102,7 +102,7 @@ function Integration.AttemptRecovery(moduleName, error, context)
             end
         end
     end
-    
+
     -- Attempt to reinitialize module
     if private[moduleName] and private[moduleName].initialize then
         local success = pcall(private[moduleName].initialize)
@@ -111,7 +111,7 @@ function Integration.AttemptRecovery(moduleName, error, context)
             return true
         end
     end
-    
+
     return false
 end
 
@@ -147,13 +147,13 @@ function Integration.RegisterEventHandler(event, moduleName, handler)
     if not event or not moduleName or type(handler) ~= "function" then
         return false
     end
-    
+
     if not Integration.eventHandlers[event] then
         Integration.eventHandlers[event] = {}
     end
-    
+
     Integration.eventHandlers[event][moduleName] = handler
-    
+
     private.debug("Integration", "Registered event handler:", event, "for", moduleName)
     return true
 end
@@ -188,15 +188,15 @@ function Integration.DispatchEvent(event, ...)
     if not Integration.eventHandlers[event] then
         return 0, 0
     end
-    
+
     local handled = 0
     local failed = 0
-    
+
     for moduleName, handler in pairs(Integration.eventHandlers[event]) do
         local success, err = xpcall(handler, function(msg)
             return msg .. "\n" .. _G.debugstack(2)
         end, ...)
-        
+
         if success then
             handled = handled + 1
         else
@@ -207,7 +207,7 @@ function Integration.DispatchEvent(event, ...)
             })
         end
     end
-    
+
     return handled, failed
 end
 
@@ -224,14 +224,14 @@ Start tracking performance for an operation.
 --]]
 function Integration.StartPerformanceTracking(operation)
     local trackingId = _G.debugprofilestop()
-    
+
     Integration.performanceMetrics[trackingId] = {
         operation = operation,
         startTime = trackingId,
         endTime = nil,
         duration = nil,
     }
-    
+
     return trackingId
 end
 
@@ -249,12 +249,12 @@ function Integration.EndPerformanceTracking(trackingId)
     if not metric then
         return nil
     end
-    
+
     metric.endTime = _G.debugprofilestop()
     metric.duration = metric.endTime - metric.startTime
-    
+
     private.debug("Integration", "Performance:", metric.operation, "took", metric.duration, "ms")
-    
+
     return metric.duration
 end
 
@@ -266,7 +266,7 @@ Get all performance metrics.
 --]]
 function Integration.GetPerformanceMetrics()
     local metrics = {}
-    
+
     for _, metric in pairs(Integration.performanceMetrics) do
         if metric.duration then
             metrics[#metrics + 1] = {
@@ -275,7 +275,7 @@ function Integration.GetPerformanceMetrics()
             }
         end
     end
-    
+
     return metrics
 end
 
@@ -287,7 +287,7 @@ Optimize memory usage by cleaning up unused resources.
 --]]
 function Integration.OptimizeMemoryUsage()
     local beforeMemory = _G.collectgarbage("count")
-    
+
     -- Clear old error log entries (keep last 100)
     if #Integration.errorLog > 100 then
         local newLog = {}
@@ -296,7 +296,7 @@ function Integration.OptimizeMemoryUsage()
         end
         Integration.errorLog = newLog
     end
-    
+
     -- Clear old performance metrics (keep last 50)
     local metricsArray = {}
     for id, metric in pairs(Integration.performanceMetrics) do
@@ -304,28 +304,28 @@ function Integration.OptimizeMemoryUsage()
             metricsArray[#metricsArray + 1] = {id = id, metric = metric}
         end
     end
-    
+
     if #metricsArray > 50 then
         -- Sort by end time and keep most recent
         table.sort(metricsArray, function(a, b)
             return (a.metric.endTime or 0) > (b.metric.endTime or 0)
         end)
-        
+
         local newMetrics = {}
         for i = 1, 50 do
             newMetrics[metricsArray[i].id] = metricsArray[i].metric
         end
         Integration.performanceMetrics = newMetrics
     end
-    
+
     -- Run garbage collection
     _G.collectgarbage("collect")
-    
+
     local afterMemory = _G.collectgarbage("count")
     local freed = beforeMemory - afterMemory
-    
+
     private.debug("Integration", "Memory optimization freed", freed, "KB")
-    
+
     return freed
 end
 
@@ -342,9 +342,9 @@ function Integration.RegisterModule(moduleName, module)
     if not moduleName or not module then
         return false
     end
-    
+
     Integration.modules[moduleName] = module
-    
+
     private.debug("Integration", "Registered module:", moduleName)
     return true
 end
@@ -372,7 +372,7 @@ Initialize all registered modules in proper order.
 function Integration.InitializeAllModules()
     local initialized = 0
     local failed = 0
-    
+
     -- Define initialization order
     local initOrder = {
         "Config",
@@ -380,18 +380,18 @@ function Integration.InitializeAllModules()
         "Compatibility",
         "Theme",
     }
-    
+
     for _, moduleName in pairs(initOrder) do
         local module = Integration.modules[moduleName]
         if module and module.initialize then
             local trackingId = Integration.StartPerformanceTracking("Initialize " .. moduleName)
-            
+
             local success, err = xpcall(module.initialize, function(msg)
                 return msg .. "\n" .. _G.debugstack(2)
             end)
-            
+
             Integration.EndPerformanceTracking(trackingId)
-            
+
             if success then
                 initialized = initialized + 1
                 private.debug("Integration", "Initialized module:", moduleName)
@@ -404,7 +404,7 @@ function Integration.InitializeAllModules()
             end
         end
     end
-    
+
     return initialized, failed
 end
 
@@ -416,7 +416,7 @@ Wire all modules together with proper event handling.
 --]]
 function Integration.WireModules()
     private.debug("Integration", "Wiring modules together")
-    
+
     -- Register Config module events
     Integration.RegisterEventHandler("CONFIG_CHANGED", "Theme", function(key, value)
         local Aurora = private.Aurora
@@ -425,14 +425,14 @@ function Integration.WireModules()
             if key == "alpha" and Aurora.Theme.SetGlobalAlpha then
                 Aurora.Theme.SetGlobalAlpha(value)
             end
-            
+
             -- Handle color changes
             if key == "customHighlight" and private.updateHighlightColor then
                 private.updateHighlightColor()
             end
         end
     end)
-    
+
     -- Register Analytics events
     Integration.RegisterEventHandler("CONFIG_CHANGED", "Analytics", function(key, value)
         local Analytics = private.Analytics
@@ -440,7 +440,7 @@ function Integration.WireModules()
             Analytics.trackConfigChange(key, value)
         end
     end)
-    
+
     -- Register Compatibility events
     Integration.RegisterEventHandler("ADDON_LOADED", "Compatibility", function(addonName)
         local Compatibility = private.Compatibility
@@ -448,7 +448,7 @@ function Integration.WireModules()
             Compatibility.checkConflicts()
         end
     end)
-    
+
     private.debug("Integration", "Module wiring complete")
     return true
 end
@@ -463,32 +463,32 @@ function Integration.Initialize()
     if Integration.initialized then
         return true
     end
-    
+
     private.debug("Integration", "Initializing integration system")
-    
+
     -- Register core modules
     Integration.RegisterModule("Config", private.Config)
     Integration.RegisterModule("Analytics", private.Analytics)
     Integration.RegisterModule("Compatibility", private.Compatibility)
     Integration.RegisterModule("Theme", private.Aurora and private.Aurora.Theme)
-    
+
     -- Wire modules together
     Integration.WireModules()
-    
+
     -- Set up periodic optimization
     _G.C_Timer.NewTicker(300, function() -- Every 5 minutes
         Integration.OptimizeMemoryUsage()
-        
+
         -- Optimize theme engine if available
         local Aurora = private.Aurora
         if Aurora and Aurora.Theme and Aurora.Theme.OptimizeFrameProcessing then
             Aurora.Theme.OptimizeFrameProcessing()
         end
     end)
-    
+
     Integration.initialized = true
     private.debug("Integration", "Integration system initialized")
-    
+
     return true
 end
 

@@ -69,10 +69,10 @@ Config.validationRules = {
     chatBubbleNames = "boolean",
     buttonsHaveGradient = "boolean",
     hasAnalytics = "boolean",
-    
+
     -- Number settings with ranges
     alpha = {type = "number", min = 0, max = 1},
-    
+
     -- Complex object validation
     customHighlight = function(value)
         if type(value) ~= "table" then
@@ -92,7 +92,7 @@ Config.validationRules = {
         end
         return true
     end,
-    
+
     customClassColors = function(value)
         if type(value) ~= "table" then
             return false, "customClassColors must be a table"
@@ -109,12 +109,12 @@ Config.validationRules = {
 -- @return string error Optional user-friendly error message
 function Config.validateValue(key, value)
     local rule = Config.validationRules[key]
-    
+
     if not rule then
         -- No validation rule means any value is acceptable
         return true
     end
-    
+
     if type(rule) == "string" then
         -- Simple type check
         if type(value) ~= rule then
@@ -137,7 +137,7 @@ function Config.validateValue(key, value)
         -- Custom validation function
         return rule(value)
     end
-    
+
     return true
 end
 
@@ -147,12 +147,12 @@ end
 -- @return any The sanitized value (or default if invalid)
 function Config.sanitizeValue(key, value)
     local valid, err = Config.validateValue(key, value)
-    
+
     if not valid then
         private.debug("Config", "Invalid value for", key, ":", err, "- using default")
         return Config.defaults[key]
     end
-    
+
     return value
 end
 
@@ -161,7 +161,7 @@ end
 -- @return boolean changed Whether any migrations were performed
 function Config.migrateDeprecatedSettings(config)
     local changed = false
-    
+
     for oldKey, migration in pairs(Config.deprecatedSettings) do
         if config[oldKey] ~= nil then
             if type(migration) == "string" then
@@ -180,7 +180,7 @@ function Config.migrateDeprecatedSettings(config)
             end
         end
     end
-    
+
     return changed
 end
 
@@ -189,7 +189,7 @@ end
 -- @return boolean changed Whether any settings were removed
 function Config.removeInvalidSettings(config)
     local changed = false
-    
+
     for key in pairs(config) do
         if Config.defaults[key] == nil then
             config[key] = nil
@@ -197,7 +197,7 @@ function Config.removeInvalidSettings(config)
             private.debug("Config", "Removed invalid setting:", key)
         end
     end
-    
+
     return changed
 end
 
@@ -208,7 +208,7 @@ local function deepCopy(value)
     if type(value) ~= "table" then
         return value
     end
-    
+
     local copy = {}
     for k, v in pairs(value) do
         copy[k] = deepCopy(v)
@@ -221,7 +221,7 @@ end
 -- @return boolean changed Whether any defaults were applied
 function Config.applyDefaults(config)
     local changed = false
-    
+
     for key, defaultValue in pairs(Config.defaults) do
         if config[key] == nil then
             config[key] = deepCopy(defaultValue)
@@ -229,7 +229,7 @@ function Config.applyDefaults(config)
             private.debug("Config", "Applied default for:", key)
         end
     end
-    
+
     return changed
 end
 
@@ -239,14 +239,14 @@ end
 -- @return table errors List of validation errors
 function Config.validateConfig(config)
     local errors = {}
-    
+
     for key, value in pairs(config) do
         local valid, err = Config.validateValue(key, value)
         if not valid then
             errors[#errors + 1] = {key = key, error = err}
         end
     end
-    
+
     return #errors == 0, errors
 end
 
@@ -255,11 +255,11 @@ end
 -- @return table The sanitized configuration
 function Config.sanitizeConfig(config)
     local sanitized = {}
-    
+
     for key, value in pairs(config) do
         sanitized[key] = Config.sanitizeValue(key, value)
     end
-    
+
     return sanitized
 end
 
@@ -273,13 +273,13 @@ function Config.load(wago)
     -- Initialize or get existing SavedVariables
     _G.AuroraConfig = _G.AuroraConfig or {}
     local config = _G.AuroraConfig
-    
+
     -- Step 1: Migrate deprecated settings
     local migrated = Config.migrateDeprecatedSettings(config)
-    
+
     -- Step 2: Remove invalid/unknown settings
     local cleaned = Config.removeInvalidSettings(config)
-    
+
     -- Step 3: Track analytics for existing settings (before applying defaults)
     if wago and config.hasAnalytics == nil then
         for key, value in pairs(config) do
@@ -294,10 +294,10 @@ function Config.load(wago)
             end
         end
     end
-    
+
     -- Step 4: Apply defaults for missing keys
     local defaultsApplied = Config.applyDefaults(config)
-    
+
     -- Step 5: Validate and sanitize all values
     local valid, errors = Config.validateConfig(config)
     if not valid then
@@ -310,11 +310,11 @@ function Config.load(wago)
             config[err.key] = Config.sanitizeValue(err.key, config[err.key])
         end
     end
-    
+
     if migrated or cleaned or defaultsApplied then
         private.debug("Config", "Configuration updated during load")
     end
-    
+
     return config
 end
 
@@ -322,12 +322,12 @@ end
 -- @param config table The configuration to save (optional, uses global if not provided)
 function Config.save(config)
     config = config or _G.AuroraConfig
-    
+
     if not config then
         private.debug("Config", "No configuration to save")
         return
     end
-    
+
     -- Validate before saving
     local valid, errors = Config.validateConfig(config)
     if not valid then
@@ -337,11 +337,11 @@ function Config.save(config)
         end
         return false
     end
-    
+
     -- SavedVariables are automatically persisted by WoW
     -- We just need to ensure the global reference is correct
     _G.AuroraConfig = config
-    
+
     private.debug("Config", "Configuration saved")
     return true
 end
@@ -351,27 +351,27 @@ end
 -- @return table The reset configuration
 function Config.reset(preserveAcknowledgment)
     local config = _G.AuroraConfig or {}
-    
+
     -- Preserve splash screen acknowledgment if requested
     local acknowledged = preserveAcknowledgment and config.acknowledgedSplashScreen
-    
+
     -- Clear all settings
     for key in pairs(config) do
         config[key] = nil
     end
-    
+
     -- Apply all defaults
     for key, value in pairs(Config.defaults) do
         config[key] = deepCopy(value)
     end
-    
+
     -- Restore acknowledgment if needed
     if acknowledged then
         config.acknowledgedSplashScreen = true
     end
-    
+
     _G.AuroraConfig = config
-    
+
     private.debug("Config", "Configuration reset to defaults")
     return config
 end
@@ -382,11 +382,11 @@ end
 -- @return any The configuration value
 function Config.get(key, config)
     config = config or _G.AuroraConfig
-    
+
     if config and config[key] ~= nil then
         return config[key]
     end
-    
+
     return Config.defaults[key]
 end
 
@@ -398,25 +398,25 @@ end
 -- @return string error Optional error message if failed
 function Config.set(key, value, config)
     config = config or _G.AuroraConfig
-    
+
     if not config then
         return false, "No configuration available"
     end
-    
+
     -- Validate the value
     local valid, err = Config.validateValue(key, value)
     if not valid then
         return false, err
     end
-    
+
     -- Set the value
     config[key] = value
-    
+
     -- Dispatch configuration change event if integration is available
     if private.Integration and private.Integration.DispatchEvent then
         private.Integration.DispatchEvent("CONFIG_CHANGED", key, value)
     end
-    
+
     private.debug("Config", "Set", key, "to", value)
     return true
 end
@@ -429,11 +429,11 @@ function Config.needsRecovery(config)
     if not config then
         return true, "Configuration is nil"
     end
-    
+
     if type(config) ~= "table" then
         return true, "Configuration is not a table"
     end
-    
+
     -- Check if critical settings are present
     local criticalSettings = {"bags", "chat", "tooltips", "alpha"}
     for _, key in pairs(criticalSettings) do
@@ -441,7 +441,7 @@ function Config.needsRecovery(config)
             return true, "Missing critical setting: " .. key
         end
     end
-    
+
     return false, nil
 end
 
@@ -449,10 +449,10 @@ end
 -- @return table The recovered configuration
 function Config.recover()
     private.debug("Config", "Attempting configuration recovery")
-    
+
     local oldConfig = _G.AuroraConfig
     local config = {}
-    
+
     -- Try to salvage valid settings from old config
     if type(oldConfig) == "table" then
         for key, value in pairs(oldConfig) do
@@ -464,12 +464,12 @@ function Config.recover()
             end
         end
     end
-    
+
     -- Apply defaults for missing keys
     Config.applyDefaults(config)
-    
+
     _G.AuroraConfig = config
-    
+
     private.debug("Config", "Configuration recovered")
     return config
 end

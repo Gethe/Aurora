@@ -27,14 +27,14 @@ Compatibility.conflicts = {
         severity = "warning",
         message = "ArkInventory detected. Consider disabling Aurora's bag theming to avoid conflicts."
     },
-    
+
     -- Tooltip addons
     ["TipTac"] = {
         component = "tooltips",
         severity = "warning",
         message = "TipTac detected. Consider disabling Aurora's tooltip theming to avoid conflicts."
     },
-    
+
     -- Chat addons
     ["Prat"] = {
         component = "chat",
@@ -46,7 +46,7 @@ Compatibility.conflicts = {
         severity = "warning",
         message = "Chatter detected. Consider disabling Aurora's chat theming to avoid conflicts."
     },
-    
+
     -- Action bar addons
     ["Bartender4"] = {
         component = "mainmenubar",
@@ -89,7 +89,7 @@ end
 -- @return table List of detected conflicts
 function Compatibility.checkConflicts()
     local conflicts = {}
-    
+
     for addonName, conflictInfo in pairs(Compatibility.conflicts) do
         if isAddonLoaded(addonName) then
             conflicts[#conflicts + 1] = {
@@ -101,7 +101,7 @@ function Compatibility.checkConflicts()
             private.debug("Compatibility", "Conflict detected:", addonName)
         end
     end
-    
+
     Compatibility.detectedConflicts = conflicts
     return conflicts
 end
@@ -110,7 +110,7 @@ end
 -- @return table List of missing dependencies
 function Compatibility.checkDependencies()
     local missing = {}
-    
+
     for depName, depInfo in pairs(Compatibility.dependencies) do
         if depInfo.required and not isAddonLoaded(depName) then
             missing[#missing + 1] = {
@@ -120,7 +120,7 @@ function Compatibility.checkDependencies()
             private.debug("Compatibility", "Missing dependency:", depName)
         end
     end
-    
+
     Compatibility.missingDependencies = missing
     return missing
 end
@@ -144,7 +144,7 @@ function Compatibility.applyAdjustments(config)
     if not config then
         return
     end
-    
+
     -- Auto-disable conflicting components if in safe mode
     if Compatibility.safeMode then
         for _, conflict in pairs(Compatibility.detectedConflicts) do
@@ -160,7 +160,7 @@ end
 function Compatibility.reportIssues()
     local conflicts = Compatibility.detectedConflicts
     local missing = Compatibility.missingDependencies
-    
+
     -- Report missing dependencies (critical)
     if #missing > 0 then
         _G.print("|cffff0000Aurora:|r Critical dependency issues detected:")
@@ -168,7 +168,7 @@ function Compatibility.reportIssues()
             _G.print("  - " .. dep.message)
         end
     end
-    
+
     -- Report conflicts (warnings)
     if #conflicts > 0 then
         local hasWarnings = false
@@ -178,7 +178,7 @@ function Compatibility.reportIssues()
                 break
             end
         end
-        
+
         if hasWarnings then
             _G.print("|cff00a0ffAurora:|r Potential addon conflicts detected:")
             for _, conflict in pairs(conflicts) do
@@ -195,27 +195,27 @@ end
 -- @return boolean success Whether initialization succeeded
 function Compatibility.initialize(config)
     private.debug("Compatibility", "Initializing compatibility checks")
-    
+
     -- Check for missing dependencies
     local missing = Compatibility.checkDependencies()
-    
+
     -- Check for conflicting addons
     local conflicts = Compatibility.checkConflicts()
-    
+
     -- Enable safe mode if critical issues detected
     if #missing > 0 then
         Compatibility.enableSafeMode()
         private.debug("Compatibility", "Safe mode enabled due to missing dependencies")
     end
-    
+
     -- Apply compatibility adjustments
     Compatibility.applyAdjustments(config)
-    
+
     -- Report issues to user (delayed to avoid spam during loading)
     _G.C_Timer.After(2, function()
         Compatibility.reportIssues()
     end)
-    
+
     return #missing == 0
 end
 

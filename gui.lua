@@ -55,7 +55,7 @@ Enjoy!
     okayButton:SetScript("OnClick", function()
         splash:Hide()
         _G.AuroraConfig.acknowledgedSplashScreen = true
-        
+
         -- Show helpful message
         _G.print("|cff00a0ffAurora:|r Type |cffffffff/aurora|r to open configuration, or |cffffffff/aurora help|r for commands.")
     end)
@@ -110,7 +110,7 @@ local createToggleBox do
     local function toggle(self)
         _G.AuroraConfig[self.value] = self:GetChecked()
         wago:Switch(self.value, self:GetChecked())
-        
+
         -- Track configuration change via Analytics module
         Analytics.trackConfigChange(self.value, self:GetChecked())
     end
@@ -191,10 +191,10 @@ local createSlider do
     local function OnValueChanged(self, value)
         _G.AuroraConfig[self.value] = value
         wago:SetCounter(self.value, value)
-        
+
         -- Track configuration change via Analytics module
         Analytics.trackConfigChange(self.value, value)
-        
+
         if self.update then
             self.update()
         end
@@ -419,7 +419,7 @@ highlightBox:SetScript("OnClick", function(dialog)
     local isChecked = dialog:GetChecked()
     _G.AuroraConfig.customHighlight.enabled = isChecked
     wago:Switch(dialog.value, isChecked)
-    
+
     -- Track configuration change via Analytics module
     Analytics.trackConfigChange(dialog.value, _G.AuroraConfig.customHighlight)
 
@@ -485,7 +485,7 @@ analyticsBox:SetPoint("TOPLEFT", analyticsHeader, "BOTTOMLEFT", 10, -20)
 analyticsBox:SetScript("OnClick", function(dialog)
     local isChecked = dialog:GetChecked()
     _G.AuroraConfig.hasAnalytics = isChecked
-    
+
     -- Enable or disable analytics based on user choice
     if isChecked then
         Analytics.enable(_G.AuroraConfig)
@@ -562,7 +562,7 @@ end)
 --[[ Refresh and callbacks ]]--
 gui.refresh = function()
     --print("gui refresh")
-    
+
     -- Safely refresh with error handling
     local success, err = pcall(function()
         alphaSlider:SetValue(_G.AuroraConfig.alpha)
@@ -585,15 +585,15 @@ gui.refresh = function()
             classColor:SetFormattedText("|c%s%s|r", color.colorStr, className)
             classColor:SetBackdropColor(color.r, color.g, color.b)
         end
-        
+
         -- Update compatibility status
         updateCompatibilityStatus()
     end)
-    
+
     if not success then
         _G.print("|cffff0000Aurora:|r Failed to refresh configuration interface.")
         _G.print("|cff00a0ffError:|r " .. tostring(err))
-        
+
         -- Log error if integration is available
         if Integration then
             Integration.HandleError("GUI", err, {phase = "refresh", recoverable = false})
@@ -621,16 +621,16 @@ gui.default = function()
     -- Use Config.reset to properly reset configuration with error handling
     local success, err = pcall(function()
         Config.reset(true) -- preserve splash screen acknowledgment
-        
+
         updateFrames()
         gui.refresh()
     end)
-    
+
     if not success then
         _G.print("|cffff0000Aurora:|r Failed to reset configuration to defaults.")
         _G.print("|cff00a0ffError:|r " .. tostring(err))
         _G.print("|cff00a0ffTip:|r Try reloading your UI with /reload")
-        
+
         -- Log error if integration is available
         if Integration then
             Integration.HandleError("GUI", err, {phase = "reset", recoverable = true})
@@ -650,14 +650,14 @@ function private.SetupGUI()
                 _G.print("  |cffff0000-|r " .. err.error)
             end
             _G.print("|cff00a0ffTip:|r Configuration will be sanitized automatically.")
-            
+
             -- Sanitize invalid values
             for _, err in pairs(errors) do
                 _G.AuroraConfig[err.key] = Config.sanitizeValue(err.key, _G.AuroraConfig[err.key])
             end
         end
     end
-    
+
     -- fill 'old' table
     copyTable(_G.AuroraConfig, old)
 
@@ -682,14 +682,14 @@ private.commands = {}
 _G.SLASH_AURORA1 = "/aurora"
 _G.SlashCmdList.AURORA = function(msg, editBox)
     private.debug("/aurora", msg)
-    
+
     -- Check for combat lockdown with user-friendly message
     if _G.InCombatLockdown() then
         _G.print("|cffff0000Aurora:|r Cannot open configuration during combat.")
         _G.print("|cff00a0ffTip:|r Try again after leaving combat.")
         return
     end
-    
+
     if msg == "debug" then
         local debugger = private.debugger
         if debugger then
@@ -720,7 +720,7 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
     elseif msg == "status" then
         -- Display system status
         _G.print("|cff00a0ffAurora System Status:|r")
-        
+
         -- Configuration status
         if _G.AuroraConfig then
             _G.print("  |cff00ff00Configuration:|r Loaded")
@@ -731,7 +731,7 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
         else
             _G.print("  |cffff0000Configuration:|r Not loaded")
         end
-        
+
         -- Compatibility status
         if Compatibility then
             local status = Compatibility.getStatus()
@@ -741,7 +741,7 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
                 _G.print("  |cff00ff00Compatibility:|r No issues")
             end
         end
-        
+
         -- Analytics status
         if Analytics then
             if Analytics.hasConsent() then
@@ -750,7 +750,7 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
                 _G.print("  |cffccccccAnalytics:|r Disabled")
             end
         end
-        
+
         -- Integration status
         if Integration then
             local intStatus = Integration.GetStatus()
@@ -763,7 +763,7 @@ _G.SlashCmdList.AURORA = function(msg, editBox)
         local success, err = pcall(function()
             _G.Settings.OpenToCategory(Aurora.category:GetID())
         end)
-        
+
         if not success then
             _G.print("|cffff0000Aurora:|r Failed to open configuration panel.")
             _G.print("|cff00a0ffError:|r " .. tostring(err))

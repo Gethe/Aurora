@@ -49,17 +49,17 @@ function Theme.RegisterFrame(frame, handler)
         private.debug("Theme", "Cannot register nil frame")
         return false
     end
-    
+
     local frameName = frame:GetName() or tostring(frame)
-    
+
     if processedFrames[frame] then
         private.debug("Theme", "Frame already processed:", frameName)
         return false
     end
-    
+
     pendingFrames[frame] = handler
     tinsert(frameQueue, frame)
-    
+
     return true
 end
 
@@ -89,15 +89,15 @@ function Theme.DetectFrameType(frame)
     if not frame or not frame.GetObjectType then
         return nil
     end
-    
+
     local frameType = frame:GetObjectType()
     local handlerName = "FrameType" .. frameType
-    
+
     -- Check if we have a skin handler for this type
     if Skin[handlerName] then
         return handlerName
     end
-    
+
     -- Try pattern matching on frame name
     local frameName = frame:GetName()
     if frameName then
@@ -109,7 +109,7 @@ function Theme.DetectFrameType(frame)
             end
         end
     end
-    
+
     return nil
 end
 
@@ -128,23 +128,23 @@ function Theme.ProcessFrame(frame, handler)
     if not frame then
         return false, "Frame is nil"
     end
-    
+
     local frameName = frame:GetName() or tostring(frame)
-    
+
     -- Check if already processed
     if processedFrames[frame] then
         return true, "Already processed"
     end
-    
+
     -- Auto-detect handler if not provided
     if not handler then
         handler = Theme.DetectFrameType(frame)
     end
-    
+
     if not handler then
         return false, "No handler found for frame type"
     end
-    
+
     -- Resolve handler function
     local handlerFunc
     if type(handler) == "string" then
@@ -157,12 +157,12 @@ function Theme.ProcessFrame(frame, handler)
     else
         return false, "Invalid handler type"
     end
-    
+
     -- Apply theming with error handling
     local success, err = pcall(function()
         handlerFunc(frame)
     end)
-    
+
     if success then
         processedFrames[frame] = true
         processingStats.framesProcessed = processingStats.framesProcessed + 1
@@ -185,11 +185,11 @@ Process all frames in the pending queue.
 function Theme.ProcessQueue()
     local processed = 0
     local failed = 0
-    
+
     while #frameQueue > 0 do
         local frame = tremove(frameQueue, 1)
         local handler = pendingFrames[frame]
-        
+
         if frame and handler then
             local success = Theme.ProcessFrame(frame, handler)
             if success then
@@ -197,11 +197,11 @@ function Theme.ProcessQueue()
             else
                 failed = failed + 1
             end
-            
+
             pendingFrames[frame] = nil
         end
     end
-    
+
     return processed, failed
 end
 
@@ -219,10 +219,10 @@ function Theme.ProcessChildren(parent, recursive)
     if not parent or not parent.GetChildren then
         return 0
     end
-    
+
     local processed = 0
     local children = {parent:GetChildren()}
-    
+
     for _, child in ipairs(children) do
         if child and not processedFrames[child] then
             local handler = Theme.DetectFrameType(child)
@@ -232,14 +232,14 @@ function Theme.ProcessChildren(parent, recursive)
                     processed = processed + 1
                 end
             end
-            
+
             -- Recursively process children if requested
             if recursive then
                 processed = processed + Theme.ProcessChildren(child, true)
             end
         end
     end
-    
+
     return processed
 end
 
@@ -256,14 +256,14 @@ function Theme.ProcessRegions(parent)
     if not parent or not parent.GetRegions then
         return 0
     end
-    
+
     local processed = 0
     local regions = {parent:GetRegions()}
-    
+
     for _, region in ipairs(regions) do
         if region and region.GetObjectType then
             local regionType = region:GetObjectType()
-            
+
             -- Process textures and font strings as needed
             if regionType == "Texture" then
                 -- Texture processing handled by individual skin modules
@@ -274,7 +274,7 @@ function Theme.ProcessRegions(parent)
             end
         end
     end
-    
+
     return processed
 end
 
@@ -330,12 +330,12 @@ function Theme.RegisterDynamicHandler(pattern, handler)
         private.debug("Theme", "Invalid dynamic handler registration")
         return false
     end
-    
+
     tinsert(dynamicHandlers, {
         pattern = pattern,
         handler = handler
     })
-    
+
     private.debug("Theme", "Registered dynamic handler for pattern:", pattern)
     return true
 end
@@ -353,12 +353,12 @@ function Theme.CheckDynamicFrame(frame)
     if not frame or processedFrames[frame] then
         return false
     end
-    
+
     local frameName = frame:GetName()
     if not frameName then
         return false
     end
-    
+
     for _, entry in ipairs(dynamicHandlers) do
         if frameName:match(entry.pattern) then
             local success = Theme.ProcessFrame(frame, entry.handler)
@@ -368,7 +368,7 @@ function Theme.CheckDynamicFrame(frame)
             end
         end
     end
-    
+
     return false
 end
 
@@ -382,10 +382,10 @@ end
 -- Initialize theme engine
 function Theme.Initialize()
     private.debug("Theme", "Theme engine initialized")
-    
+
     -- Hook into common frame creation events
     -- This will be expanded as needed for specific UI components
-    
+
     return true
 end
 
@@ -411,21 +411,21 @@ function Theme.SetGlobalAlpha(alpha)
         private.debug("Theme", "Alpha must be a number")
         return false
     end
-    
+
     if alpha < 0 or alpha > 1 then
         private.debug("Theme", "Alpha must be between 0 and 1")
         return false
     end
-    
+
     local oldAlpha = currentAlpha
     currentAlpha = alpha
-    
+
     -- Update Util module's frame alpha
     Util.SetFrameAlpha(alpha)
-    
+
     -- Trigger callbacks for immediate updates
     Theme.UpdateAllFrameAlpha()
-    
+
     private.debug("Theme", "Global alpha changed from", oldAlpha, "to", alpha)
     return true
 end
@@ -454,10 +454,10 @@ function Theme.RegisterAlphaCallback(callback)
         private.debug("Theme", "Callback must be a function")
         return nil
     end
-    
+
     local id = #alphaCallbacks + 1
     alphaCallbacks[id] = callback
-    
+
     return id
 end
 
@@ -486,12 +486,12 @@ function Theme.RegisterFrameAlpha(frame, alphaFunc)
     if not frame then
         return false
     end
-    
+
     if type(alphaFunc) ~= "function" then
         private.debug("Theme", "Alpha function must be a function")
         return false
     end
-    
+
     framedAlphaRegistry[frame] = alphaFunc
     return true
 end
@@ -524,9 +524,9 @@ function Theme.UpdateFrameAlpha(frame, alpha)
     if not frame then
         return false
     end
-    
+
     alpha = alpha or currentAlpha
-    
+
     -- Use custom alpha function if registered
     if framedAlphaRegistry[frame] then
         local success, err = pcall(framedAlphaRegistry[frame], frame, alpha)
@@ -536,20 +536,20 @@ function Theme.UpdateFrameAlpha(frame, alpha)
         end
         return true
     end
-    
+
     -- Default alpha update for frames with backdrop
     if frame.SetBackdropColor then
         local r, g, b = frame:GetBackdropColor()
         frame:SetBackdropColor(r, g, b, alpha)
         return true
     end
-    
+
     -- Fallback to SetAlpha for frames without backdrop
     if frame.SetAlpha then
         frame:SetAlpha(alpha)
         return true
     end
-    
+
     return false
 end
 
@@ -561,7 +561,7 @@ Update alpha for all processed frames.
 --]]
 function Theme.UpdateAllFrameAlpha()
     local updated = 0
-    
+
     -- Update all processed frames
     for frame in pairs(processedFrames) do
         if frame and frame:IsShown() then
@@ -570,7 +570,7 @@ function Theme.UpdateAllFrameAlpha()
             end
         end
     end
-    
+
     -- Call registered callbacks
     for _, callback in pairs(alphaCallbacks) do
         local success, err = pcall(callback, currentAlpha)
@@ -578,7 +578,7 @@ function Theme.UpdateAllFrameAlpha()
             private.debug("Theme", "Alpha callback failed:", err)
         end
     end
-    
+
     private.debug("Theme", "Updated alpha for", updated, "frames")
     return updated
 end
@@ -596,10 +596,10 @@ function Theme.EnsureTextReadability(frame)
     if not frame or not frame.GetRegions then
         return false
     end
-    
+
     local adjusted = false
     local regions = {frame:GetRegions()}
-    
+
     for _, region in ipairs(regions) do
         if region and region.GetObjectType and region:GetObjectType() == "FontString" then
             -- Ensure font strings have sufficient alpha for readability
@@ -611,7 +611,7 @@ function Theme.EnsureTextReadability(frame)
                     adjusted = true
                 end
             end
-            
+
             -- Ensure text has sufficient contrast
             if region.SetShadowColor then
                 -- Add shadow for better readability at low alpha
@@ -621,7 +621,7 @@ function Theme.EnsureTextReadability(frame)
             end
         end
     end
-    
+
     return adjusted
 end
 
@@ -639,17 +639,17 @@ function Theme.ApplyAlphaToFrame(frame, alpha)
     if not frame then
         return false
     end
-    
+
     alpha = alpha or currentAlpha
-    
+
     -- Update frame alpha
     local success = Theme.UpdateFrameAlpha(frame, alpha)
-    
+
     -- Ensure text readability
     if success then
         Theme.EnsureTextReadability(frame)
     end
-    
+
     return success
 end
 
@@ -658,7 +658,7 @@ function Theme.InitializeAlpha(config)
     if config and config.alpha then
         Theme.SetGlobalAlpha(config.alpha)
     end
-    
+
     private.debug("Theme", "Alpha system initialized with alpha:", currentAlpha)
 end
 
@@ -690,23 +690,23 @@ function Theme.RegisterModule(name, config)
         private.debug("Theme", "Module name must be a string")
         return false
     end
-    
+
     if skinModules[name] then
         private.debug("Theme", "Module already registered:", name)
         return false
     end
-    
+
     if not config or type(config) ~= "table" then
         private.debug("Theme", "Module config must be a table")
         return false
     end
-    
+
     -- Validate required functions
     if config.init and type(config.init) ~= "function" then
         private.debug("Theme", "Module init must be a function")
         return false
     end
-    
+
     skinModules[name] = {
         name = name,
         init = config.init,
@@ -716,12 +716,12 @@ function Theme.RegisterModule(name, config)
         dependencies = config.dependencies or {},
         initialized = false,
     }
-    
+
     moduleStates[name] = false -- Disabled by default
-    
+
     -- Add to load order
     tinsert(moduleLoadOrder, name)
-    
+
     private.debug("Theme", "Registered module:", name)
     return true
 end
@@ -739,13 +739,13 @@ function Theme.UnregisterModule(name)
     if not skinModules[name] then
         return false
     end
-    
+
     -- Disable module first
     Theme.DisableModule(name)
-    
+
     skinModules[name] = nil
     moduleStates[name] = nil
-    
+
     -- Remove from load order
     for i, moduleName in ipairs(moduleLoadOrder) do
         if moduleName == name then
@@ -753,7 +753,7 @@ function Theme.UnregisterModule(name)
             break
         end
     end
-    
+
     private.debug("Theme", "Unregistered module:", name)
     return true
 end
@@ -770,15 +770,15 @@ Initialize a skin module.
 --]]
 function Theme.InitializeModule(name)
     local module = skinModules[name]
-    
+
     if not module then
         return false, "Module not found: " .. name
     end
-    
+
     if module.initialized then
         return true, "Already initialized"
     end
-    
+
     -- Check dependencies
     for _, depName in ipairs(module.dependencies) do
         local depModule = skinModules[depName]
@@ -792,7 +792,7 @@ function Theme.InitializeModule(name)
             end
         end
     end
-    
+
     -- Initialize module
     if module.init then
         local success, err = pcall(module.init)
@@ -800,10 +800,10 @@ function Theme.InitializeModule(name)
             return false, "Initialization failed: " .. (err or "unknown error")
         end
     end
-    
+
     module.initialized = true
     private.debug("Theme", "Initialized module:", name)
-    
+
     return true
 end
 
@@ -819,15 +819,15 @@ Enable a skin module.
 --]]
 function Theme.EnableModule(name)
     local module = skinModules[name]
-    
+
     if not module then
         return false, "Module not found: " .. name
     end
-    
+
     if moduleStates[name] then
         return true, "Already enabled"
     end
-    
+
     -- Initialize if not already done
     if not module.initialized then
         local success, err = Theme.InitializeModule(name)
@@ -835,7 +835,7 @@ function Theme.EnableModule(name)
             return false, err
         end
     end
-    
+
     -- Enable module
     if module.enable then
         local success, err = pcall(module.enable)
@@ -843,10 +843,10 @@ function Theme.EnableModule(name)
             return false, "Enable failed: " .. (err or "unknown error")
         end
     end
-    
+
     moduleStates[name] = true
     private.debug("Theme", "Enabled module:", name)
-    
+
     return true
 end
 
@@ -862,15 +862,15 @@ Disable a skin module.
 --]]
 function Theme.DisableModule(name)
     local module = skinModules[name]
-    
+
     if not module then
         return false, "Module not found: " .. name
     end
-    
+
     if not moduleStates[name] then
         return true, "Already disabled"
     end
-    
+
     -- Disable module
     if module.disable then
         local success, err = pcall(module.disable)
@@ -878,10 +878,10 @@ function Theme.DisableModule(name)
             return false, "Disable failed: " .. (err or "unknown error")
         end
     end
-    
+
     moduleStates[name] = false
     private.debug("Theme", "Disabled module:", name)
-    
+
     return true
 end
 
@@ -912,7 +912,7 @@ function Theme.GetModuleState(name)
     if not module then
         return nil
     end
-    
+
     return {
         name = name,
         enabled = moduleStates[name],
@@ -930,11 +930,11 @@ Get all registered modules.
 --]]
 function Theme.GetAllModules()
     local modules = {}
-    
+
     for name in pairs(skinModules) do
         modules[name] = Theme.GetModuleState(name)
     end
-    
+
     return modules
 end
 
@@ -952,31 +952,31 @@ function Theme.LoadModulesFromConfig(config)
     if not config then
         return 0, 0
     end
-    
+
     local loaded = 0
     local failed = 0
-    
+
     -- Sort modules by priority
     local sortedModules = {}
     for _, name in ipairs(moduleLoadOrder) do
         tinsert(sortedModules, {name = name, priority = skinModules[name].priority})
     end
     table.sort(sortedModules, function(a, b) return a.priority < b.priority end)
-    
+
     -- Load modules in priority order
     for _, entry in ipairs(sortedModules) do
         local name = entry.name
         local module = skinModules[name]
-        
+
         -- Check if module should be enabled based on config
         local shouldEnable = false
-        
+
         -- Map module names to config keys
         local configKey = name:lower()
         if config[configKey] ~= nil then
             shouldEnable = config[configKey]
         end
-        
+
         if shouldEnable then
             local success, err = Theme.EnableModule(name)
             if success then
@@ -987,7 +987,7 @@ function Theme.LoadModulesFromConfig(config)
             end
         end
     end
-    
+
     private.debug("Theme", "Loaded", loaded, "modules,", failed, "failed")
     return loaded, failed
 end
@@ -1000,7 +1000,7 @@ Optimize frame processing for better performance.
 --]]
 function Theme.OptimizeFrameProcessing()
     local optimizations = 0
-    
+
     -- Clear processed frames that no longer exist
     for frame in pairs(processedFrames) do
         if not frame or not frame.GetName then
@@ -1008,7 +1008,7 @@ function Theme.OptimizeFrameProcessing()
             optimizations = optimizations + 1
         end
     end
-    
+
     -- Clear pending frames that no longer exist
     for frame in pairs(pendingFrames) do
         if not frame or not frame.GetName then
@@ -1016,7 +1016,7 @@ function Theme.OptimizeFrameProcessing()
             optimizations = optimizations + 1
         end
     end
-    
+
     -- Clear alpha registry for non-existent frames
     for frame in pairs(framedAlphaRegistry) do
         if not frame or not frame.GetName then
@@ -1024,11 +1024,11 @@ function Theme.OptimizeFrameProcessing()
             optimizations = optimizations + 1
         end
     end
-    
+
     if optimizations > 0 then
         private.debug("Theme", "Applied", optimizations, "frame processing optimizations")
     end
-    
+
     return optimizations
 end
 
@@ -1048,7 +1048,7 @@ function Theme.EnablePerformanceMonitoring()
     performanceMonitor.startTime = debugprofilestop()
     performanceMonitor.frameCount = 0
     performanceMonitor.totalTime = 0
-    
+
     private.debug("Theme", "Performance monitoring enabled")
 end
 
@@ -1070,12 +1070,12 @@ function Theme.GetPerformanceStats()
     if not performanceMonitor.enabled then
         return nil
     end
-    
+
     local elapsed = debugprofilestop() - performanceMonitor.startTime
     local avgTime = performanceMonitor.frameCount > 0 
         and (performanceMonitor.totalTime / performanceMonitor.frameCount) 
         or 0
-    
+
     return {
         enabled = performanceMonitor.enabled,
         elapsedTime = elapsed,

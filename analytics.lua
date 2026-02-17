@@ -19,11 +19,11 @@ Analytics.consentGiven = nil
 -- @param config table The configuration object
 function Analytics.initialize(wago, config)
     Analytics.wago = wago
-    
+
     -- Check if user has given consent (hasAnalytics setting)
     Analytics.consentGiven = config.hasAnalytics
     Analytics.enabled = Analytics.consentGiven and wago ~= nil
-    
+
     if Analytics.enabled then
         private.debug("Analytics", "Initialized with user consent")
     else
@@ -38,12 +38,12 @@ function Analytics.trackConfigChange(key, value)
     if not Analytics.enabled or not Analytics.wago then
         return
     end
-    
+
     -- Skip tracking for privacy-sensitive settings
     if key == "acknowledgedSplashScreen" or key == "hasAnalytics" then
         return
     end
-    
+
     -- Track based on value type
     if key == "customHighlight" then
         -- Track custom highlight enable/disable
@@ -59,7 +59,7 @@ function Analytics.trackConfigChange(key, value)
         -- Track boolean toggles
         Analytics.wago:Switch(key, value)
     end
-    
+
     private.debug("Analytics", "Tracked config change:", key, "=", value)
 end
 
@@ -70,11 +70,11 @@ function Analytics.enable(config)
         private.debug("Analytics", "Cannot enable - WagoAnalytics not available")
         return false
     end
-    
+
     config.hasAnalytics = true
     Analytics.consentGiven = true
     Analytics.enabled = true
-    
+
     private.debug("Analytics", "Enabled with user consent")
     return true
 end
@@ -85,7 +85,7 @@ function Analytics.disable(config)
     config.hasAnalytics = false
     Analytics.consentGiven = false
     Analytics.enabled = false
-    
+
     private.debug("Analytics", "Disabled by user")
     return true
 end
@@ -108,13 +108,13 @@ function Analytics.trackInitialState(config)
     if not Analytics.enabled or not Analytics.wago then
         return
     end
-    
+
     -- Track all non-sensitive settings
     for key, value in pairs(config) do
         if key ~= "acknowledgedSplashScreen" and key ~= "hasAnalytics" and key ~= "customClassColors" then
             Analytics.trackConfigChange(key, value)
         end
     end
-    
+
     private.debug("Analytics", "Tracked initial configuration state")
 end
