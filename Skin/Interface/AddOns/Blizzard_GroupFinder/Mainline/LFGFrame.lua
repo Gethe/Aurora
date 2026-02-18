@@ -125,9 +125,6 @@ end
 do
     --[[ FrameXML\LFGFrame.xml ]]
     function Skin.LFGRoleButtonTemplate(Button)
-        -- if not private.isPatch then
-        --     Button.cover:SetColorTexture(0, 0, 0, 0.75)
-        -- end
         -- This is a fail-safe for when the role is not ENUM but a string
         if not Button then
             if private.isDev then
@@ -219,9 +216,6 @@ function private.AddOns.LFGFrame()
     LFGDungeonReadyDialog.background:SetPoint("TOPLEFT", 6, -6)
     LFGDungeonReadyDialog.background:SetPoint("BOTTOMRIGHT", -6, 64)
 
-    -- if not private.isPatch then
-    --     LFGDungeonReadyDialog.filigree:Hide()
-    -- end
     LFGDungeonReadyDialog.bottomArt:Hide()
 
     Skin.DialogBorderTranslucentTemplate(LFGDungeonReadyDialog.Border)

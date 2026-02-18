@@ -12,9 +12,9 @@ private.isWrath = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_WRATH_CLASSIC or 11)
 private.isCata = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_CATACLYSM_CLASSIC or 14)
 
 private.isClassic = not private.isRetail
-private.isPatch = private.isRetail and select(4, _G.GetBuildInfo()) >= 110105
-private.isMidnight = private.isRetail and select(4, _G.GetBuildInfo()) >= 120000
-private.isBetaBuild = private.isRetail and select(4, _G.GetBuildInfo()) == 120001
+private.isMidnight = private.isRetail and select(4, _G.GetBuildInfo()) >= 120001
+private.isBetaBuild = private.isRetail and select(4, _G.GetBuildInfo()) >= 120001
+
 
 local debugProjectID = {
     [0] = private.isRetail,
@@ -184,10 +184,6 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
                 local file = private.fileOrder[i]
                 file.list[file.name]()
             end
-
-            --if not private.isPatch then
-                -- run deprecated files
-            --end
 
             -- Skin prior loaded AddOns
             for addon, func in _G.next, private.AddOns do
