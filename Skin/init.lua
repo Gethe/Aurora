@@ -12,7 +12,7 @@ private.isWrath = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_WRATH_CLASSIC or 11)
 private.isCata = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_CATACLYSM_CLASSIC or 14)
 
 private.isClassic = not private.isRetail
-private.isMidnight = private.isRetail and select(4, _G.GetBuildInfo()) >= 120001
+private.isMidnight = private.isRetail and select(4, _G.GetBuildInfo()) >= 120000
 private.isBetaBuild = private.isRetail and select(4, _G.GetBuildInfo()) >= 120001
 
 
@@ -166,9 +166,6 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
             _G.print(("%s v%s loaded."):format(ADDON_NAME, private.API_MAJOR + private.API_MINOR / 100))
             _G.print(("Blizzard World of Warcraft - %s (%s)"):format(select(1, _G.GetBuildInfo()),select(2, _G.GetBuildInfo())))
             _G.print(("Running on %s - UI Scale: %.2f"):format(_G.GetCVar("gxWindowedResolution"), _G.UIParent:GetScale()))
-            if private.isBetaBuild then
-                _G.print("Aurora is running in a Beta Build of World of Warcraft. Some features may not work as intended.")
-            end
             -- Setup function for the host addon
             private.OnLoad()
             private.UpdateUIScale()
