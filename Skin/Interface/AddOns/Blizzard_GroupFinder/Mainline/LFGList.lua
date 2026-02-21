@@ -189,9 +189,6 @@ do --[[ FrameXML\LFGList.xml ]]
         Skin.UIMenuButtonStretchTemplate(Button.InviteButton)
     end
     function Skin.LFGListRoleButtonTemplate(Button)
-        -- if not private.isPatch then
-        --     Button.cover:SetColorTexture(0, 0, 0, 0.75)
-        -- end
         Base.SetTexture(Button:GetNormalTexture(), "icon"..Button.role)
         Skin.UICheckButtonTemplate(Button.CheckButton)
     end
@@ -330,7 +327,7 @@ function private.FrameXML.LFGList()
 
     -- ApplicationViewer --
     local ApplicationViewer = LFGListFrame.ApplicationViewer
-    ApplicationViewer.InfoBackground:Hide()
+    ApplicationViewer.InfoBackground:SetAlpha(0) -- Don't use Hide() - other elements anchor to this texture's size (useAtlasSize)
     Skin.LFGListGroupDataDisplayTemplate(ApplicationViewer.DataDisplay)
     Skin.UICheckButtonTemplate(ApplicationViewer.AutoAcceptButton) -- BlizzWTF: This doesn't use the template, but it should
     --  /run C_LFGList.CanActiveEntryUseAutoAccept = function() return true end
