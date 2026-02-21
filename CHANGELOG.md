@@ -1,4 +1,4 @@
-﻿## [12.0.1.3] ##
+﻿## [12.0.1.4] ##
 ### Fixed ###
   * fix: use SetAlpha(0) instead of Hide() on LFG InfoBackground
   * fix: Lua error ui widget [#146]
@@ -10,6 +10,9 @@
 ### Changed ###
   * chg: remove isPatch as it is no longer used
 
+## [12.0.1.3] ##
+
+** wrongly tagged **
 
 ## [12.0.1.2] ##
 ### Fixed ###
