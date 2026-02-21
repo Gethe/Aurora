@@ -379,7 +379,9 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetTemplateTextWithStateMixin and _G.UIWidgetTemplateTextWithStateMixin.Setup then
         local OriginalTextWithStateSetup = _G.UIWidgetTemplateTextWithStateMixin.Setup
         _G.UIWidgetTemplateTextWithStateMixin.Setup = function(self, widgetInfo, widgetContainer)
-            if IsSecret(widgetInfo) or IsSecret(widgetInfo and widgetInfo.widgetSizeSetting) then
+            -- Also check if self.Text is already tainted from a previous Aurora invocation;
+            -- if so, keep using the safe path to avoid arithmetic-on-secret-value in Blizzard code.
+            if IsSecret(widgetInfo) or IsSecret(widgetInfo and widgetInfo.widgetSizeSetting) or IsSecret(self.Text:GetStringHeight()) then
                 if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
                     _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
                 end
@@ -409,9 +411,9 @@ function private.AddOns.Blizzard_UIWidgets()
 
                 self:SetWidth(self.Text:GetStringWidth())
 
-                local textHeight = self.Text:GetStringHeight()
+                local textHeight = SafeNumber(self.Text:GetStringHeight(), 0)
                 local bottomPadding = SafeNumber(widgetInfo and widgetInfo.bottomPadding, 0)
-                if _G.Clamp then
+                if _G.Clamp and textHeight > 0 then
                     bottomPadding = _G.Clamp(bottomPadding, 0, textHeight - 1)
                 end
                 self:SetHeight(textHeight + bottomPadding)
