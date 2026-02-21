@@ -350,10 +350,68 @@ function private.AddOns.Blizzard_PlayerSpells()
 
     -- SpecFrame
     local SpecFrame = PlayerSpellsFrame.SpecFrame
+    -- Solid Aurora background sitting below all Blizzard layers
+    if not SpecFrame._auroraBackground then
+        local bg = SpecFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
+        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetAllPoints(SpecFrame)
+        SpecFrame._auroraBackground = bg
+    end
+    -- Hide the parchment atlas and the solid black underlay — the Aurora frame background shows through
+    if SpecFrame.Background then SpecFrame.Background:Hide() end
+    if SpecFrame.BlackBG then SpecFrame.BlackBG:Hide() end
     _G.hooksecurefunc(SpecFrame, "UpdateSpecFrame", Hook.UpdatePlayeerSpecFrame)
 
     -- TalentsFrame
     local TalentsFrame = PlayerSpellsFrame.TalentsFrame
+
+    -- Solid Aurora background sitting below all Blizzard layers
+    if not TalentsFrame._auroraBackground then
+        local bg = TalentsFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
+        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetAllPoints(TalentsFrame)
+        TalentsFrame._auroraBackground = bg
+    end
+
+    -- Hide static background layers (parchment + solid black underlay + gold bottom bar)
+    if TalentsFrame.BlackBG then TalentsFrame.BlackBG:Hide() end
+    if TalentsFrame.BottomBar then TalentsFrame.BottomBar:Hide() end
+
+    -- Zero all spec-specific art textures. UpdateSpecBackground runs on OnShow and spec change,
+    -- so hook it to suppress the background every time Blizzard sets it.
+    local function HideTalentsBackground(frame)
+        if frame.Background then frame.Background:SetAlpha(0) end
+        if frame.BackgroundFlash then frame.BackgroundFlash:SetAlpha(0) end
+        if frame.OverlayBackgroundRight then frame.OverlayBackgroundRight:SetAlpha(0) end
+        if frame.OverlayBackgroundMid then frame.OverlayBackgroundMid:SetAlpha(0) end
+        if frame.Clouds1 then frame.Clouds1:SetAlpha(0) end
+        if frame.Clouds2 then frame.Clouds2:SetAlpha(0) end
+    end
+    _G.hooksecurefunc(TalentsFrame, "UpdateSpecBackground", function(self)
+        HideTalentsBackground(self)
+    end)
+    -- Also stop background cloud/particle animations after Blizzard starts them on OnShow
+    _G.hooksecurefunc(TalentsFrame, "SetBackgroundAnimationsPlaying", function(self)
+        if self.backgroundAnims then
+            for _, animGroup in ipairs(self.backgroundAnims) do
+                animGroup:Stop()
+            end
+        end
+    end)
+    -- Run immediately in case the frame was already shown before we ran
+    HideTalentsBackground(TalentsFrame)
+
+    -- Talent node buttons — hook the global mixin so every button (pooled or not) is covered
+    -- instantly when Blizzard updates its visual state, without needing to iterate the pool.
+    -- UpdateStateBorder fires on every rank/state change and controls BorderSheen visibility.
+    _G.hooksecurefunc(_G.ClassTalentButtonArtMixin, "UpdateStateBorder", function(self)
+        -- Suppress the rotating gold sheen atlas — visually noisy on a dark Aurora background
+        if self.BorderSheen then
+            self.BorderSheen:SetAlpha(0)
+            self.BorderSheen:Hide()
+        end
+    end)
+
     Skin.UIPanelButtonTemplate(TalentsFrame.ApplyButton)
     Skin.UIPanelButtonTemplate(TalentsFrame.InspectCopyButton)
     Skin.SearchBoxTemplate(TalentsFrame.SearchBox)
