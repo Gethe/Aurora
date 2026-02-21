@@ -20,6 +20,12 @@ local function IsSecret(value)
     return false
 end
 
+local function SafeSetAlpha(obj, alpha)
+    if obj then
+        _G.pcall(obj.SetAlpha, obj, alpha)
+    end
+end
+
 local function SafeNumber(value, fallback)
     if type(value) ~= "number" or IsSecret(value) then
         return fallback
@@ -64,7 +70,10 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
             if Skin[template] then
                 private.debug("Skinning template for UIWidgetContainerMixin", SafeDebugName(widgetFrame), template)
                 if not widgetFrame._auroraSkinned then
-                    Skin[template](widgetFrame)
+                    local ok, err = _G.pcall(Skin[template], widgetFrame)
+                    if not ok then
+                        private.debug("Error skinning template", template, SafeDebugName(widgetFrame), err)
+                    end
                     widgetFrame._auroraSkinned = true
                 end
             else
@@ -107,11 +116,11 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
         function Skin.UIWidgetBaseSpellTemplate(Frame)
             Base.CropIcon(Frame.Icon, Frame)
 
-            Frame.Border:SetAlpha(0)
-            Frame.DebuffBorder:SetAlpha(0)
+            SafeSetAlpha(Frame.Border, 0)
+            SafeSetAlpha(Frame.DebuffBorder, 0)
         end
         function Skin.UIWidgetBaseScenarioHeaderTemplate(Frame)
-            Frame.Frame:SetAlpha(0)
+            SafeSetAlpha(Frame.Frame, 0)
         end
     end
     do --[[ Blizzard_UIWidgetTemplateIconAndText ]]
@@ -121,27 +130,29 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
         function Skin.UIWidgetTemplateStatusBar(Frame)
             local StatusBar = Frame.Bar
             Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
-            StatusBar.BGLeft:SetAlpha(0)
-            StatusBar.BGRight:SetAlpha(0)
-            StatusBar.BGCenter:SetAlpha(0)
-            StatusBar.BorderLeft:SetAlpha(0)
-            StatusBar.BorderRight:SetAlpha(0)
-            StatusBar.BorderCenter:SetAlpha(0)
-            StatusBar.Spark:SetAlpha(0)
+            SafeSetAlpha(StatusBar.BGLeft, 0)
+            SafeSetAlpha(StatusBar.BGRight, 0)
+            SafeSetAlpha(StatusBar.BGCenter, 0)
+            SafeSetAlpha(StatusBar.BorderLeft, 0)
+            SafeSetAlpha(StatusBar.BorderRight, 0)
+            SafeSetAlpha(StatusBar.BorderCenter, 0)
+            SafeSetAlpha(StatusBar.Spark, 0)
         end
     end
     do --[[ Blizzard_UIWidgetTemplateDoubleStatusBar ]]
         function Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(StatusBar)
             Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
 
-            StatusBar.BG:SetAlpha(0)
-            StatusBar.BorderLeft:SetAlpha(0)
-            StatusBar.BorderRight:SetAlpha(0)
-            StatusBar.BorderCenter:SetAlpha(0)
-            StatusBar.Spark:SetAlpha(0)
-            StatusBar.SparkGlow:SetAlpha(0)
-            StatusBar.BorderGlow:SetAllPoints(StatusBar)
-            StatusBar.BorderGlow:SetTexCoord(0.025, 0.975, 0.19354838709677, 0.80645161290323)
+            SafeSetAlpha(StatusBar.BG, 0)
+            SafeSetAlpha(StatusBar.BorderLeft, 0)
+            SafeSetAlpha(StatusBar.BorderRight, 0)
+            SafeSetAlpha(StatusBar.BorderCenter, 0)
+            SafeSetAlpha(StatusBar.Spark, 0)
+            SafeSetAlpha(StatusBar.SparkGlow, 0)
+            if StatusBar.BorderGlow then
+                StatusBar.BorderGlow:SetAllPoints(StatusBar)
+                StatusBar.BorderGlow:SetTexCoord(0.025, 0.975, 0.19354838709677, 0.80645161290323)
+            end
         end
         function Skin.UIWidgetTemplateDoubleStatusBar(Frame)
             Skin.UIWidgetTemplateDoubleStatusBar_StatusBarTemplate(Frame.LeftBar)
