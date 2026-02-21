@@ -327,9 +327,9 @@ function private.AddOns.Blizzard_PlayerSpells()
     Skin.NineSlicePanelTemplate(PlayerSpellsFrame.NineSlice)
     PlayerSpellsFrame.NineSlice:SetFrameLevel(1)
 
-    -- Make the background solid black like Collections frame
+    -- Give the outer frame a dark-grey background (not pure black)
     if PlayerSpellsFrame.NineSlice.Bg then
-        PlayerSpellsFrame.NineSlice.Bg:SetColorTexture(0, 0, 0, 1)
+        PlayerSpellsFrame.NineSlice.Bg:SetColorTexture(0.08, 0.08, 0.08, 1)
         PlayerSpellsFrame.NineSlice.Bg:SetAllPoints(PlayerSpellsFrame.NineSlice)
         PlayerSpellsFrame.NineSlice.Bg:Show()
     end
@@ -365,6 +365,31 @@ function private.AddOns.Blizzard_PlayerSpells()
     -- Mix in our hooks to the SpellBookFrame
     Util.Mixin(SpellBookFrame, Hook.SpellBookFrameMixin)
 
+    -- Global mixin hooks: fire immediately when any pool frame is populated, eliminating
+    -- the orange-text flicker that occurs before our delayed SkinAllSpellBookItems runs.
+    _G.hooksecurefunc(_G.SpellBookItemMixin, "UpdateVisuals", function(self)
+        -- Override SPELLBOOK_FONT_COLOR (golden/amber) with Aurora white text
+        if self.isTrainable then
+            self.Name:SetTextColor(Color.yellow:GetRGB())
+            if self.SubName:IsShown() then self.SubName:SetTextColor(Color.yellow:GetRGB()) end
+        elseif self.isUnlearned then
+            self.Name:SetTextColor(0.6, 0.6, 0.6)
+            if self.SubName:IsShown() then self.SubName:SetTextColor(0.5, 0.5, 0.5) end
+        else
+            self.Name:SetTextColor(1, 1, 1)
+            if self.SubName:IsShown() then self.SubName:SetTextColor(0.9, 0.9, 0.9) end
+        end
+        -- Hide the per-item amber banner backplate immediately
+        if self.Backplate then self.Backplate:SetAlpha(0) end
+    end)
+
+    _G.hooksecurefunc(_G.SpellBookHeaderMixin, "Init", function(self)
+        -- Override SPELLBOOK_FONT_COLOR on section headers ("Demon Hunter", "Havoc", etc.)
+        if self.Text then self.Text:SetTextColor(1, 1, 1) end
+        if self.Backplate then self.Backplate:SetAlpha(0) end
+        if self.Border then self.Border:SetAlpha(0) end
+    end)
+
     -- Immediately try to skin if the frame is already shown
     if SpellBookFrame:IsShown() then
         _G.C_Timer.After(0.5, function()
@@ -385,10 +410,10 @@ function private.AddOns.Blizzard_PlayerSpells()
         end)
     end
 
-    -- Create a solid black background for the SpellBookFrame to cover any Blizzard textures
+    -- Create a dark-grey background for the SpellBookFrame to cover Blizzard parchment textures
     if not SpellBookFrame._auroraBackground then
         local bg = SpellBookFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
-        bg:SetColorTexture(0, 0, 0, 1)
+        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
         bg:SetAllPoints(SpellBookFrame)
         SpellBookFrame._auroraBackground = bg
     end
@@ -464,10 +489,16 @@ function private.AddOns.Blizzard_PlayerSpells()
                     frame._auroraSkinned = nil
                     Hook.SkinSpellBookItem(frame)
                 end
+            elseif frame.Backplate and frame.Text and not frame._auroraHeaderSkinned then
+                -- SpellBookHeaderTemplate (section group headers: "Demon Hunter", "Havoc", etc.)
+                frame.Backplate:SetAlpha(0)  -- hide the rusty brown banner
+                if frame.Border then frame.Border:SetAlpha(0) end  -- hide the spellbook-divider line
+                frame.Text:SetTextColor(1, 1, 1)  -- white instead of SPELLBOOK_FONT_COLOR golden
+                frame._auroraHeaderSkinned = true
             end
         end
 
-        -- Debug: if no frames found, try again later
+        -- If no frames found yet, retry after the pool populates
         if frameCount == 0 then
             _G.C_Timer.After(0.2, SkinAllSpellBookItems)
         end
@@ -589,4 +620,6 @@ function private.AddOns.Blizzard_PlayerSpells()
 
     Skin.NavButtonPrevious(PagingControls.PrevPageButton)
     Skin.NavButtonNext(PagingControls.NextPageButton)
+    -- Override SPELLBOOK_FONT_COLOR (amber) set by PagingControlsMixin:OnLoad
+    PagingControls.PageText:SetTextColor(Color.white:GetRGB())
 end
