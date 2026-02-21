@@ -179,7 +179,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
             SafeSetAlpha(Frame and Frame.Glow2, 0)
             SafeSetAlpha(Frame and Frame.Glow3, 0)
         end
-    
+
         Hook.UIWidgetBelowMinimapContainerMixin = {}
         function Hook.UIWidgetBelowMinimapContainerMixin:RegisterForWidgetSet(widgetSetID)
                 if IsBelowMinimapContainer(self) then
