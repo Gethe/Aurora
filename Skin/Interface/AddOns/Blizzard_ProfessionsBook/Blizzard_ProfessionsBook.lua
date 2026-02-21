@@ -19,12 +19,7 @@ do --[[ AddOns\Blizzard_ProfessionsBook ]]
         Base.CropIcon(CheckButton.IconTexture, CheckButton)
 
         local nameFrame = _G[CheckButton:GetName().."NameFrame"]
-        nameFrame:SetTexture([[Interface\Spellbook\Spellbook-Parts]])
-        nameFrame:SetTexCoord(0.31250000, 0.96484375, 0.37109375, 0.52343750)
-        nameFrame:SetDesaturated(true)
-        nameFrame:SetAlpha(1)
-        nameFrame:SetSize(167, 39)
-        nameFrame:SetPoint("LEFT", CheckButton.iconTexture, "RIGHT", -2, 0)
+        nameFrame:Hide()
 
         Base.CropIcon(CheckButton:GetPushedTexture())
         Base.CropIcon(CheckButton:GetHighlightTexture())
@@ -87,13 +82,34 @@ function private.AddOns.Blizzard_ProfessionsBook()
     local ProfessionsBookFrame = _G.ProfessionsBookFrame
     Skin.NineSlicePanelTemplate(ProfessionsBookFrame.NineSlice)
     ProfessionsBookFrame.NineSlice:SetFrameLevel(1)
+
+    -- Give the outer frame a dark-grey background (not pure black)
+    if ProfessionsBookFrame.NineSlice.Bg then
+        ProfessionsBookFrame.NineSlice.Bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        ProfessionsBookFrame.NineSlice.Bg:SetAllPoints(ProfessionsBookFrame.NineSlice)
+        ProfessionsBookFrame.NineSlice.Bg:Show()
+    end
+
+    -- Hide portrait but keep the frame background
+    if ProfessionsBookFrame.PortraitContainer then
+        ProfessionsBookFrame.PortraitContainer:Hide()
+    end
+
     Skin.UIPanelCloseButton(ProfessionsBookFrame.CloseButton)
     _G.ProfessionsBookFrameTutorialButton:Hide()
-    -- local bg = ProfessionsBookFrame.Bg
-    -- local titleText = ProfessionsBookFrame.TitleContainer
-    -- titleText:ClearAllPoints()
-    -- titleText:SetPoint("TOPLEFT", bg)
-    -- titleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
+
+    -- Hide the left/right parchment page backgrounds
+    _G.ProfessionsBookPage1:Hide()
+    _G.ProfessionsBookPage2:Hide()
+
+    -- Dark background for the content area
+    local ProfessionsContentFrame = _G.ProfessionsContentFrame
+    if ProfessionsContentFrame and not ProfessionsContentFrame._auroraBackground then
+        local bg = ProfessionsContentFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
+        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetAllPoints(ProfessionsContentFrame)
+        ProfessionsContentFrame._auroraBackground = bg
+    end
 
     local ProfessionsBookFrameInset = _G.ProfessionsBookFrameInset
     Skin.NineSlicePanelTemplate(ProfessionsBookFrameInset.NineSlice)
