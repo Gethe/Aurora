@@ -1,4 +1,17 @@
-﻿## [12.0.1.2] ##
+﻿## [12.0.1.3] ##
+### Fixed ###
+  * fix: use SetAlpha(0) instead of Hide() on LFG InfoBackground
+  * fix: Lua error ui widget [#146]
+  * fix: Error on certain mouseovers that impacts mouseover tooltips afterwards [#147]
+  * fix: quit catch-up button doesn't show up [#148]
+  * fix: fixed error "calling 'SetAlpha' on bad self" when nameplate widget containers are registered with pooled/recycled frames (Blizzard_UIWidgets) [#139]
+  * fix: isMidnight starts with 12.0.0
+
+### Changed ###
+  * chg: remove isPatch as it is no longer used
+
+
+## [12.0.1.2] ##
 ### Fixed ###
   * fix: Protect from calling GetStatusBarTexture on invalid objects
   * fix(aurora): guard backdrop setup on forbidden/invalid frames to prevent NineSlice CreateTexture crashes in UIWidgets/nameplates
@@ -61,6 +74,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.3]: https://github.com/Haleth/Aurora/compare/12.0.1.2...12.0.1.3
 [12.0.1.2]: https://github.com/Haleth/Aurora/compare/12.0.1.1...12.0.1.2
 [12.0.1.1]: https://github.com/Haleth/Aurora/compare/12.0.1.0...12.0.1.1
 [12.0.1.0]: https://github.com/Haleth/Aurora/compare/12.0.0.2...12.0.1.0
