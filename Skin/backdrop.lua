@@ -12,7 +12,8 @@ local Color, Util = Aurora.Color, Aurora.Util
 local backdrop = {
     -- Blizzard options
     bgFile = private.textures.plain,
-    tile = true,
+    tile = false,
+    tileEdge = false,
     insets = {
         left = 0,
         right = 0,
@@ -48,6 +49,7 @@ local function CopyBackdrop(bdOptions)
     return {
         bgFile = bdOptions.bgFile,
         tile = bdOptions.tile,
+        tileEdge = bdOptions.tileEdge,
         insets = {
             left = bdOptions.insets.left,
             right = bdOptions.insets.right,
@@ -249,6 +251,10 @@ local BackdropMixin do
                     piece:SetDrawLayer(pieceLayout.layer, pieceLayout.subLevel)
                 end
 
+                -- Blizzard's NineSlice SetupEdge hardcodes tileHorizontal/tileVertical=true
+                -- on edge pieces; disable it to prevent seam lines at non-integer UI scales.
+                piece:SetHorizTile(false)
+                piece:SetVertTile(false)
                 piece:Show()
             end
         end

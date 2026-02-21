@@ -13,21 +13,13 @@ do --[[ AddOns\Blizzard_PlayerChoice.lua ]]
     do -- Blizzard_PlayerChoice
         Hook.PlayerChoiceFrameMixin = {}
         function Hook.PlayerChoiceFrameMixin:SetupFrame()
-            -- Blizzard re-textures the NineSlice each time SetupFrame runs via
-            -- ApplyUniqueCornersLayout / ApplyIdenticalCornersLayout, which the
-            -- Aurora NineSlice hook (BasicFrame) intercepts but only sets a
-            -- backdrop — it does NOT blank the individual piece textures.
-            -- Blank them explicitly here so no kit artwork bleeds through.
-            local nineSlicePieces = {
-                "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
-                "TopEdge", "BottomEdge", "LeftEdge", "RightEdge", "Center",
-            }
-            for _, pieceName in next, nineSlicePieces do
-                local piece = self.NineSlice[pieceName]
-                if piece then piece:SetTexture("") end
-            end
-            self.NineSlice:Show()
-            self.NineSlice:SetFrameLevel(1)
+            -- Blizzard re-textures the NineSlice via ApplyIdenticalCornersLayout /
+            -- ApplyUniqueCornersLayout on each SetupFrame call, which applies atlas
+            -- textures (SetAtlas) to the pieces.  SetTexture("") does NOT clear atlas
+            -- mode, so the kit art would still render.  Hiding the whole NineSlice
+            -- child frame avoids all of this; Aurora's own backdrop (applied directly
+            -- to PlayerChoiceFrame by Skin.FrameTypeFrame) provides the background.
+            self.NineSlice:Hide()
             -- Hide the new single-atlas overlay introduced for kits without useOldNineSlice
             if self.BorderOverlay then
                 self.BorderOverlay:SetAlpha(0)
@@ -35,8 +27,17 @@ do --[[ AddOns\Blizzard_PlayerChoice.lua ]]
             if self.BlackBackground then
                 self.BlackBackground:SetAlpha(0)
             end
-            -- Blizzard re-shows Background and re-textures BackgroundTile each call;
-            -- hide it and let Aurora's FrameTypeFrame backdrop show through instead.
+            -- 3-D border model scene (renders at BORDER draw layer over entire frame)
+            if self.BorderLayerModelScene then
+                self.BorderLayerModelScene:SetAlpha(0)
+                self.BorderLayerModelScene:Hide()
+            end
+            -- Blizzard re-shows Background (a child Frame) and sets BackgroundTile each call;
+            -- zero the tile texture and hide the whole frame so nothing bleeds through.
+            if self.Background.BackgroundTile then
+                self.Background.BackgroundTile:SetTexture("")
+                self.Background.BackgroundTile:SetAlpha(0)
+            end
             self.Background:Hide()
             if self.Header then
                 self.Header.Texture:SetAlpha(0)
@@ -195,7 +196,33 @@ function private.AddOns.Blizzard_PlayerChoice()
     Util.Mixin(PlayerChoiceFrame, Hook.PlayerChoiceFrameMixin)
     Skin.FrameTypeFrame(PlayerChoiceFrame)
     Skin.NineSlicePanelTemplate(PlayerChoiceFrame.NineSlice)
+    PlayerChoiceFrame.NineSlice:SetFrameLevel(1)
     Skin.UIPanelCloseButton(PlayerChoiceFrame.CloseButton)
+
+    -- Solid Aurora background sitting below all Blizzard layers (Background tile,
+    -- BorderOverlay, etc.) — mirrors the treatment on PlayerSpellsFrame sub-frames.
+    if not PlayerChoiceFrame._auroraBackground then
+        local bg = PlayerChoiceFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
+        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetAllPoints(PlayerChoiceFrame)
+        PlayerChoiceFrame._auroraBackground = bg
+    end
+
+    -- 3-D border model scene covers the entire frame at BORDER draw layer
+    if PlayerChoiceFrame.BorderLayerModelScene then
+        PlayerChoiceFrame.BorderLayerModelScene:SetAlpha(0)
+        PlayerChoiceFrame.BorderLayerModelScene:Hide()
+    end
+
+    -- Background is a child Frame (not a texture) so it always renders above parent
+    -- textures regardless of sub-level. Blizzard calls Show() on it inside SetupFrame,
+    -- so hook OnShow to permanently suppress it.
+    if PlayerChoiceFrame.Background.BackgroundTile then
+        PlayerChoiceFrame.Background.BackgroundTile:SetTexture("")
+        PlayerChoiceFrame.Background.BackgroundTile:SetAlpha(0)
+    end
+    PlayerChoiceFrame.Background:Hide()
+    PlayerChoiceFrame.Background:HookScript("OnShow", function(self) self:Hide() end)
 
     ----====####$$$$%%%%%%%$$$$####====----
     -- Blizzard_PlayerChoiceToggleButton --
