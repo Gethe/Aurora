@@ -43,14 +43,14 @@ local function SafeDebugName(frame)
     local ok, debugName = _G.pcall(function()
         return frame:GetDebugName()
     end)
-    if ok and type(debugName) == "string" and debugName ~= "" then
+    if ok and type(debugName) == "string" and not IsSecret(debugName) and debugName ~= "" then
         return debugName
     end
 
     local okName, name = _G.pcall(function()
         return frame.GetName and frame:GetName()
     end)
-    if okName and type(name) == "string" and name ~= "" then
+    if okName and type(name) == "string" and not IsSecret(name) and name ~= "" then
         return name
     end
 
