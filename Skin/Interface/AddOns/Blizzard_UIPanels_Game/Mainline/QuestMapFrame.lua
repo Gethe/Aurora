@@ -201,15 +201,11 @@ function private.FrameXML.QuestMapFrame()
     Base.SetBackdrop(ShowMapButton, Color.button)
     Base.SetHighlight(ShowMapButton)
 
-    -- FIXLATER
-
-    -- Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.AbandonButton)
+    Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.AbandonButton)
     QuestLogPopupDetailFrame.AbandonButton:SetPoint("BOTTOMLEFT", 5, 5)
-    -- FIXLATER
-    -- Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.TrackButton)
+    Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.TrackButton)
     QuestLogPopupDetailFrame.TrackButton:SetPoint("BOTTOMRIGHT", -5, 5)
-    -- FIXLATER
-    -- Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.ShareButton)
+    Skin.UIPanelButtonTemplate(QuestLogPopupDetailFrame.ShareButton)
     QuestLogPopupDetailFrame.ShareButton:SetPoint("LEFT", QuestLogPopupDetailFrame.AbandonButton, "RIGHT", 1, 0)
     QuestLogPopupDetailFrame.ShareButton:SetPoint("RIGHT", QuestLogPopupDetailFrame.TrackButton, "LEFT", -1, 0)
 
@@ -243,12 +239,8 @@ function private.FrameXML.QuestMapFrame()
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
-    -- FIXLATER
-    -- Util.Mixin(QuestsFrame.titleFramePool, Hook.ObjectPoolMixin)
-    -- Util.Mixin(QuestsFrame.objectiveFramePool, Hook.ObjectPoolMixin)
-    -- Util.Mixin(QuestsFrame.headerFramePool, Hook.ObjectPoolMixin)
-    -- Util.Mixin(QuestsFrame.campaignHeaderFramePool, Hook.ObjectPoolMixin)
-    -- Util.Mixin(QuestsFrame.covenantCallingsHeaderFramePool, Hook.ObjectPoolMixin)
+    -- Pools moved to QuestScrollFrame (e.g. QuestScrollFrame.titleFramePool) in 11.0.0;
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API). No replacement.
 
     QuestsFrame.ScrollFrame.Contents.Separator:SetSize(260, 10)
     QuestsFrame.ScrollFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
@@ -276,8 +268,8 @@ function private.FrameXML.QuestMapFrame()
         QuestsFrame.DetailFrame.BottomDetail:Hide()
         QuestsFrame.DetailFrame.TopDetail:Hide()
     end
-    -- FIXLATER --broken in 11.1.0
-    -- Skin.FrameTypeFrame(QuestsFrame.StoryTooltip)
+    -- StoryTooltip moved to QuestScrollFrame.StoryTooltip in 11.1.0, inherits TooltipBackdropTemplate
+    -- Skin.FrameTypeFrame(QuestScrollFrame.StoryTooltip)
 
     do -- QuestSessionManagement
         local QuestSessionManagement = QuestMapFrame.QuestSessionManagement
