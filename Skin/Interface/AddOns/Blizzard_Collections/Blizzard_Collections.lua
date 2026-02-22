@@ -169,29 +169,6 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
             Hook.SetItemButtonQuality(itemFrame, quality, itemFrame.sourceID)
         end
 
-        Hook.WardrobeSetsTransmogMixin = {}
-        function Hook.WardrobeSetsTransmogMixin:UpdateSets()
-            for i = 1, self.PAGE_SIZE do
-                local model = self.Models[i]
-                if model.setID then
-                    local borderColor
-                    if model.TransmogStateTexture:IsShown() then
-                        borderColor = _G.TRANSMOGRIFY_FONT_COLOR
-                        model.TransmogStateTexture:Hide()
-
-                        self.PendingTransmogFrame:SetPoint("TOPLEFT", model, 2, -3)
-                        self.PendingTransmogFrame:SetPoint("BOTTOMRIGHT", model, -1, 2)
-                        self.PendingTransmogFrame.TransmogSelectedAnim2:Stop()
-                    end
-
-                    if borderColor then
-                        model._auroraBD:SetBackdropBorderColor(borderColor)
-                    else
-                        model._auroraBD:SetBackdropBorderColor(Color.button)
-                    end
-                end
-            end
-        end
     end
 end
 
@@ -443,21 +420,6 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             highlight:SetPoint("TOPLEFT", 0, 0)
             highlight:SetPoint("BOTTOMRIGHT", 1, -1)
         end
-        function Skin.WardrobeSetsTransmogModelTemplate(DressUpModel)
-            local bg, _, _, highlight = DressUpModel:GetRegions()
-            bg:Hide()
-            DressUpModel.Border:Hide()
-
-            local bd = _G.CreateFrame("Frame", nil, DressUpModel)
-            bd:SetPoint("TOPLEFT")
-            bd:SetPoint("BOTTOMRIGHT", 2, -2)
-            Base.SetBackdrop(bd, Color.button, 0.3)
-            DressUpModel._auroraBD = bd
-
-            highlight:SetTexCoord(0.02272727272727, 0.97727272727273, 0.01595744680851, 0.98404255319149)
-            highlight:SetPoint("TOPLEFT", 0, 0)
-            highlight:SetPoint("BOTTOMRIGHT", 1, -1)
-        end
         function Skin.WardrobeSetsScrollFrameButtonTemplate(Frame)
             Frame.Background:Hide()
             Base.SetBackdrop(Frame, Color.frame)
@@ -468,7 +430,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
                 bottom = 1,
             })
 
-            Base.CropIcon(Frame.Icon, Frame)
+            Base.CropIcon(Frame.IconFrame.Icon, Frame.IconFrame)
 
             local bg = Frame:GetBackdropTexture("bg")
             Frame.SelectedTexture:SetTexCoord(0.00956937799043, 0.99043062200957, 0.04347826086957, 0.95652173913043)
@@ -480,6 +442,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Frame.HighlightTexture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
         end
         function Skin.WardrobeSetsDetailsItemFrameTemplate(Frame)
+            Frame.IconBorder:Hide()
             Base.CropIcon(Frame.Icon)
 
             local bg = _G.CreateFrame("Frame", nil, Frame)
@@ -488,22 +451,6 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
             Base.SetBackdrop(bg, Color.black, 0.3)
             Frame._auroraIconBorder = bg
-        end
-        function Skin.WardrobeTransmogButtonTemplate(Button)
-            Base.CropIcon(Button.Icon, Button)
-            Button.Border:Hide()
-
-            local highlight = Button:GetHighlightTexture()
-            Base.CropIcon(highlight)
-            highlight:SetAllPoints(Button.Icon)
-        end
-        function Skin.WardrobeTransmogEnchantButtonTemplate(Button)
-            Base.CropIcon(Button.Icon, Button)
-            Button.Border:Hide()
-
-            local highlight = Button:GetHighlightTexture()
-            Base.CropIcon(highlight)
-            highlight:SetAllPoints(Button.Icon)
         end
     end
 
@@ -784,50 +731,6 @@ function private.AddOns.Blizzard_Collections()
     local DetailsFrame = SetsCollectionFrame.DetailsFrame
     DetailsFrame.ModelFadeTexture:Hide()
     Skin.DropdownButton(DetailsFrame.VariantSetsDropdown)
-    -- FIXMELATER
-    -- local SetsCollectionFrame = WardrobeCollectionFrame.SetsCollectionFrame
-    -- Util.Mixin(SetsCollectionFrame, Hook.WardrobeSetsTransmogMixin)
-    -- Skin.CollectionsBackgroundTemplate(SetsCollectionFrame)
-    -- Skin.CollectionsPagingFrameTemplate(SetsCollectionFrame.PagingFrame)
-    -- for i = 1, #SetsCollectionFrame.Models do
-    --    Skin.WardrobeSetsTransmogModelTemplate(SetsCollectionFrame.Models[i])
-    -- end
-
-    -------------------
-    -- WardrobeFrame --
-    -------------------
-    -- FIXMELATER
-    -- WardrobeCollectionFrame.ItemsCollectionFrame
-    -- FIX WardrobeCollectionFrame
-    -- local WardrobeFrame = _G.WardrobeFrame
-    -- Skin.PortraitFrameTemplate(WardrobeFrame)
-
-    -- local WardrobeTransmogFrame = _G.WardrobeTransmogFrame
-    -- WardrobeTransmogFrame.MoneyLeft:Hide()
-    -- WardrobeTransmogFrame.MoneyMiddle:Hide()
-    -- WardrobeTransmogFrame.MoneyRight:Hide()
-
-    -- Skin.InsetFrameTemplate(WardrobeTransmogFrame.Inset)
-    -- WardrobeTransmogFrame.Inset.BG:Hide()
-
-    -- Skin.DropdownButton(WardrobeTransmogFrame.OutfitDropdown)
-
-    -- local ModelScene = WardrobeTransmogFrame.ModelScene
-    -- Skin.UIMenuButtonStretchTemplate(ModelScene.ClearAllPendingButton)
-
-    -- local SlotButtons = WardrobeTransmogFrame.SlotButtons
-    -- for i = 1, #SlotButtons do
-    --     if i > 13 then
-    --         Skin.WardrobeTransmogEnchantButtonTemplate(SlotButtons[i])
-    --     else
-    --         Skin.WardrobeTransmogButtonTemplate(SlotButtons[i])
-    --     end
-    -- end
-
-    -- Skin.SmallMoneyFrameTemplate(WardrobeTransmogFrame.MoneyFrame)
-    -- Skin.UIPanelButtonTemplate(WardrobeTransmogFrame.ApplyButton)
-    -- FIXLATER
-    -- Skin.UIMenuButtonStretchTemplate(WardrobeTransmogFrame.SpecButton)
 
     ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
     --        Blizzard_WarbandSceneCollection        --
