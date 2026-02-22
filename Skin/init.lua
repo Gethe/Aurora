@@ -13,7 +13,7 @@ private.isCata = _G.WOW_PROJECT_ID == (_G.WOW_PROJECT_CATACLYSM_CLASSIC or 14)
 
 private.isClassic = not private.isRetail
 private.isMidnight = private.isRetail and select(4, _G.GetBuildInfo()) >= 120000
-private.isBetaBuild = private.isRetail and select(4, _G.GetBuildInfo()) >= 120001
+private.isBetaBuild = private.isRetail and select(4, _G.GetBuildInfo()) >= 130000
 
 
 local debugProjectID = {
