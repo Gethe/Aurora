@@ -313,8 +313,10 @@ function Util.Mixin(table, ...)
     wipe(tempMixin)
     for i = 1, select("#", ...) do
         local hook = select(i, ...)
-        for name, func in next, hook do
-            tempMixin[name] = func
+        if hook then
+            for name, func in next, hook do
+                tempMixin[name] = func
+            end
         end
     end
     -- if not table then
