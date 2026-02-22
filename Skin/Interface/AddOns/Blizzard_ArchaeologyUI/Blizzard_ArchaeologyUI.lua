@@ -1,9 +1,6 @@
 local _, private = ...
 if private.shouldSkip() then return end
 
---[[ Lua Globals ]]
--- luacheck: globals select floor
-
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
@@ -200,13 +197,9 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     _G.ArchaeologyFrameHelpPageHelpScrollHelpText:SetTextColor(r, g, b)
 
 
-
     ----====####$$$$%%%%%$$$$####====----
     -- Blizzard_ArchaeologyProgressBar --
     ----====####$$$$%%%%%$$$$####====----
-    -- FIXMELATER
-    -- _G.hooksecurefunc("ArcheologyDigsiteProgressBar_OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
-
     local ArcheologyDigsiteProgressBar = _G.ArcheologyDigsiteProgressBar
     ArcheologyDigsiteProgressBar:HookScript("OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
     ArcheologyDigsiteProgressBar.Shadow:Hide()
