@@ -1,4 +1,22 @@
-﻿## [12.0.1.4] ##
+﻿## [12.0.1.5] ##
+### Added ###
+  * add: skinning Blizzard_Professions
+  * add: skinning of all Blizzard_PlayerSpells panels
+  * add: skinning of PlayerChoice
+
+### Fixed ###
+  * fix: arrow down on dropdown buttons
+  * fix: skinned Blizzard_ProffesionsBook
+  * fix: don't skin CommunitiesList ScrollBox to prevent SetAvatarTexture taint
+  * fix: backdrops and playchoice fixes
+  * fix: skinning of all Blizzard_PlayerSpells panels
+  * fix: SpellBookFrame skinned properly
+  * fix: skinning of PlayerChoice
+
+### Removed ###
+  * removed: Blizzard_PlayerSpellsFrame.lua duplicates Blizzard_PlayerSpells.lua
+
+## [12.0.1.4] ##
 ### Fixed ###
   * fix: use SetAlpha(0) instead of Hide() on LFG InfoBackground
   * fix: Lua error ui widget [#146]
@@ -77,6 +95,8 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.5]: https://github.com/Haleth/Aurora/compare/12.0.1.4...12.0.1.5
+[12.0.1.4]: https://github.com/Haleth/Aurora/compare/12.0.1.3...12.0.1.4
 [12.0.1.3]: https://github.com/Haleth/Aurora/compare/12.0.1.2...12.0.1.3
 [12.0.1.2]: https://github.com/Haleth/Aurora/compare/12.0.1.1...12.0.1.2
 [12.0.1.1]: https://github.com/Haleth/Aurora/compare/12.0.1.0...12.0.1.1
