@@ -8,9 +8,6 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
--- FIXME -- move to others..
-local F, C = _G.unpack(private.Aurora)
-
 function private.AddOns.Blizzard_TimeManager()
     _G.TimeManagerGlobe:Hide()
     _G.StopwatchFrameBackgroundLeft:Hide()
@@ -19,16 +16,14 @@ function private.AddOns.Blizzard_TimeManager()
     _G.StopwatchTabFrameMiddle:Hide()
     _G.StopwatchTabFrameRight:Hide()
 
-    _G.TimeManagerStopwatchCheck:GetNormalTexture():SetTexCoord(.08, .92, .08, .92)
-    _G.TimeManagerStopwatchCheck:SetCheckedTexture(C.media.checked)
-    F.CreateBG(_G.TimeManagerStopwatchCheck)
+    Skin.UICheckButtonTemplate(_G.TimeManagerStopwatchCheck)
 
     _G.TimeManagerFrame.AlarmTimeFrame.HourDropdown:SetWidth(80)
     _G.TimeManagerFrame.AlarmTimeFrame.MinuteDropdown:SetWidth(80)
     _G.TimeManagerFrame.AlarmTimeFrame.AMPMDropdown:SetWidth(90)
 
-    F.ReskinPortraitFrame(_G.TimeManagerFrame, true)
-    F.CreateBD(_G.StopwatchFrame)
+    Skin.ButtonFrameTemplate(_G.TimeManagerFrame)
+    Skin.FrameTypeFrame(_G.StopwatchFrame)
     Skin.DropdownButton(_G.TimeManagerFrame.AlarmTimeFrame.HourDropdown)
     Skin.DropdownButton(_G.TimeManagerFrame.AlarmTimeFrame.MinuteDropdown)
     Skin.DropdownButton(_G.TimeManagerFrame.AlarmTimeFrame.AMPMDropdown)
