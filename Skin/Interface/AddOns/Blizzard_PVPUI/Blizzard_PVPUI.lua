@@ -190,8 +190,13 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(HonorFrame.RoleList.HealerIcon)
     Skin.LFGRoleButtonTemplate(HonorFrame.RoleList.DPSIcon)
     Skin.DropdownButton(HonorFrame.TypeDropdown)
-    -- FIXMELATER -- This causes a taint error when the JoinButton is clicked.
-    --  Skin.WowScrollBoxList(HonorFrame.SpecificScrollBox)
+    -- Avoid tainting SpecificScrollBox directly — JoinButton reads .selectionID from it
+    -- in a protected call (C_PvP.JoinBattlefield), so writing to its table would taint it.
+    -- Instead, add the backdrop on a separate sibling frame positioned behind it.
+    local scrollBoxBG = _G.CreateFrame("Frame", nil, HonorFrame.SpecificScrollBox:GetParent())
+    scrollBoxBG:SetAllPoints(HonorFrame.SpecificScrollBox)
+    scrollBoxBG:SetFrameLevel(HonorFrame.SpecificScrollBox:GetFrameLevel() - 1)
+    Base.SetBackdrop(scrollBoxBG, Color.frame)
     Skin.MinimalScrollBar(HonorFrame.SpecificScrollBar)
 
     local BonusFrame = HonorFrame.BonusFrame
