@@ -128,7 +128,6 @@ do
         -- This is a fail-safe for when the role is not ENUM but a string
         if not Button then
             if private.isDev then
-                -- FIXMELATER
                 _G.print("[Aurora-Dev]: Button is nil in LFGRoleButtonTemplate - Report to Aurora developers.")
             end
             return
