@@ -149,17 +149,12 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.Bg:Hide()
             Frame.TopFiligree:Hide()
             Frame.BottomFiligree:Hide()
-
-            -- NOTE: Do NOT skin Frame.ScrollBox here. The CommunitiesList ScrollBox
-            -- hosts entry initializers (CommunitiesListEntryMixin:Init) that call the
-            -- protected function C_Club.SetAvatarTexture via secureexecuterange.
-            -- Applying Base.SetBackdrop to the ScrollBox directly injects addon-tainted
-            -- methods onto that frame object, which taints the entire secure call chain
-            -- and causes an ADDON_ACTION_BLOCKED error attributed to RealUI_Skins.
-            -- Skin.WowScrollBox(Frame.ScrollBox)
-            Skin.MinimalScrollBar(Frame.ScrollBar)
             Frame.FilligreeOverlay:Hide()
-            Skin.InsetFrameTemplate(Frame.InsetFrame)
+            -- NOTE: Do NOT skin anything that participates in the secure call chain here.
+            -- Skin.InsetFrameTemplate(Frame.InsetFrame)
+            -- Skin.WowScrollBox(Frame.ScrollBox)
+            -- Skin.MinimalScrollBar(Frame.ScrollBar)
+            -- Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
 
         function Skin.CommunitiesListDropDownMenuTemplate(Frame)
