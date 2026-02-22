@@ -6,6 +6,8 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
+local Color = Aurora.Color
 local Skin = Aurora.Skin
 
 function private.AddOns.Blizzard_TimeManager()
@@ -32,7 +34,34 @@ function private.AddOns.Blizzard_TimeManager()
     Skin.UICheckButtonTemplate(_G.TimeManagerMilitaryTimeCheck)
     Skin.UICheckButtonTemplate(_G.TimeManagerLocalTimeCheck)
     Skin.UIPanelCloseButton(_G.StopwatchCloseButton) -- , "TOPRIGHT", _G.StopwatchFrame, "TOPRIGHT", -2, -2)
-    -- FIXMELATER
-    -- StopwatchPlayPauseButton
-	-- StopwatchResetButton
+
+    local resetBtn = _G.StopwatchResetButton
+    local playBtn = _G.StopwatchPlayPauseButton
+
+    local function SkinStopwatchButton(Button)
+        Button:SetSize(16, 16)
+        Button:ClearHighlightTexture()
+        Base.SetBackdrop(Button, Color.button)
+        Base.SetHighlight(Button)
+        local icon = Button:GetNormalTexture()
+        if icon then
+            Base.CropIcon(icon, Button) -- creates the black border bg once
+            icon:SetTexCoord(.25, .75, .25, .75)
+        end
+    end
+
+    SkinStopwatchButton(resetBtn)
+    SkinStopwatchButton(playBtn)
+
+    -- Re-anchor with proper gap at the new size
+    resetBtn:ClearAllPoints()
+    resetBtn:SetPoint("BOTTOMRIGHT", _G.StopwatchFrame, "BOTTOMRIGHT", -4, 4)
+    playBtn:ClearAllPoints()
+    playBtn:SetPoint("RIGHT", resetBtn, "LEFT", -2, 0)
+
+    -- Reapply crop after Blizzard swaps the play/pause texture on click
+    _G.hooksecurefunc(playBtn, "SetNormalTexture", function(self)
+        local icon = self:GetNormalTexture()
+        if icon then icon:SetTexCoord(.25, .75, .25, .75) end
+    end)
 end
