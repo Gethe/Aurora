@@ -76,5 +76,5 @@ function private.FrameXML.QueueStatusFrame()
 
     local QueueStatusFrame = _G.QueueStatusFrame
     Skin.TooltipBackdropTemplate(QueueStatusFrame)
-    Util.Mixin(QueueStatusFrame.statusEntriesPool, Hook.ObjectPoolMixin)
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API). No replacement.
 end
