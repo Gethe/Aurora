@@ -61,8 +61,14 @@ function private.FrameXML.RecruitAFriendFrame()
     RecruitAFriendRewardsFrame.Background:SetTexture(nil)
     RecruitAFriendRewardsFrame.Background:SetColorTexture(Color.black.r, Color.black.g, Color.black.b, 0.75)
 
-    Util.Mixin(RecruitAFriendRewardsFrame.rewardPool, Hook.ObjectPoolMixin)
-    Hook.ObjectPoolMixin.Acquire(RecruitAFriendRewardsFrame.rewardPool)
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API).
+    -- RecruitAFriendRewardMixin:Setup is called on every Acquire, so hook it
+    -- to skin frames on first creation (when _auroraBorder doesn't exist yet).
+    _G.hooksecurefunc(_G.RecruitAFriendRewardMixin, "Setup", function(frame)
+        if not frame.Button._auroraBorder then
+            Skin.RecruitAFriendRewardTemplate(frame)
+        end
+    end)
 
     Skin.DialogBorderNoCenterTemplate(RecruitAFriendRewardsFrame.Border)
     RecruitAFriendRewardsFrame.Border:SetBackdropOption("offsets", {
