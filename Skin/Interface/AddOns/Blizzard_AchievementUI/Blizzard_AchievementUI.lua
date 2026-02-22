@@ -132,13 +132,69 @@ end
 do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     Hook.AchievementTemplateMixin = {}
     function Hook.AchievementTemplateMixin:Init(elementData)
-        self.index = elementData.index;
-        self.id = elementData.id;
-        -- local category = elementData.category;
-        -- for key, value in pairs(elementData) do
-        --     print(key, value)
-        -- end
-     end
+        -- Re-apply icon skinning since Blizzard's Init restores Icon.frame texture/visibility each call
+        if self.Icon then
+            Skin.AchievementIconFrameTemplate(self.Icon)
+        end
+        -- Re-apply TitleBar colour. On pool re-use Saturate/Desaturate already runs via our
+        -- hooksecurefunc, but guard anyway so we only touch frames that are fully skinned
+        -- (NineSlice backdrop set up). First-creation case is handled in Hook.AchievementFrameAchievements.
+        if self._auroraSkinned then
+            if self.completed then
+                Hook.AchievementButton_Saturate(self)
+            else
+                Hook.AchievementButton_Desaturate(self)
+            end
+        end
+    end
+
+    do -- AchievementsObjectivesMixin hooks (expanded achievement criteria/objectives)
+        Hook.AchievementsObjectivesMixin = {}
+        function Hook.AchievementsObjectivesMixin:GetCriteria(index)
+            local criteria = self.criterias[index]
+            if criteria and not criteria._auroraSkinned then
+                Skin.AchievementCriteriaTemplate(criteria)
+                criteria._auroraSkinned = true
+            end
+        end
+        function Hook.AchievementsObjectivesMixin:GetProgressBar(index)
+            local bar = self.progressBars[index]
+            if bar and not bar._auroraSkinned then
+                Skin.AchievementProgressBarTemplate(bar)
+                bar._auroraSkinned = true
+            end
+        end
+        function Hook.AchievementsObjectivesMixin:GetMiniAchievement(index)
+            -- Note: Blizzard typo in the field name ("Achivements" not "Achievements")
+            local mini = self.miniAchivements[index]
+            if mini and not mini._auroraSkinned then
+                Skin.MiniAchievementTemplate(mini)
+                mini._auroraSkinned = true
+            end
+        end
+        function Hook.AchievementsObjectivesMixin:GetMeta(index)
+            local meta = self.metas[index]
+            if meta then
+                if not meta._auroraSkinned then
+                    Skin.MetaCriteriaTemplate(meta)
+                    meta._auroraSkinned = true
+                else
+                    -- GetMeta resets Border texture on every call; re-hide it
+                    meta.Border:Hide()
+                end
+            end
+        end
+    end
+
+    function Hook.AchievementFrameSummary_Refresh()
+        for i = 1, _G.ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
+            local button = _G["AchievementFrameSummaryAchievement"..i]
+            if button and button.Icon then
+                Skin.AchievementIconFrameTemplate(button.Icon)
+            end
+        end
+    end
+
     function Skin.AchievementSearchPreviewButton(Button)
         Button.SelectedTexture:SetPoint("TOPLEFT", 1, -1)
         Button.SelectedTexture:SetPoint("BOTTOMRIGHT", -1, 1)
@@ -164,6 +220,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     end
     function Skin.AchievementFrameSummaryCategoryTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
+        StatusBar:SetStatusBarColor(0.5, 0.5, 0.5)
 
         local name = StatusBar:GetName()
         StatusBar.Label:SetPoint("LEFT", 6, 0)
@@ -223,6 +280,12 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
         Button._auroraTabResize = true
     end
+    function Skin.AchievementCriteriaTemplate(Frame)
+        -- Check texture (gold checkmark) is shown/hidden by Blizzard to indicate completion.
+        -- Desaturate and tint it to match Aurora's style.
+        Frame.Check:SetDesaturated(true)
+        Frame.Check:SetVertexColor(Color.highlight:GetRGB())
+    end
     function Skin.MiniAchievementTemplate(Frame)
         Base.CropIcon(Frame.Icon, Frame)
         Frame.Border:Hide()
@@ -233,6 +296,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     end
     function Skin.AchievementProgressBarTemplate(StatusBar)
         Skin.FrameTypeStatusBar(StatusBar)
+        StatusBar:SetStatusBarColor(0.5, 0.5, 0.5)
 
         local bg, _, left, right, center = StatusBar:GetRegions()
         bg:Hide()
@@ -253,6 +317,13 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
             if not child._auroraSkinned then
                 Skin.AchievementFrameAchievements(child)
                 child._auroraSkinned = true
+                -- Saturate/Desaturate ran before Skin.AchievementTemplate added the hooksecurefunc.
+                -- Re-apply Aurora colour now that the NineSlice backdrop is set up.
+                if child.completed then
+                    Hook.AchievementButton_Saturate(child)
+                else
+                    Hook.AchievementButton_Desaturate(child)
+                end
             end
         end
     end
@@ -405,6 +476,7 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.hooksecurefunc("AchievementFrame_RefreshView", Hook.AchievementFrame_RefreshView)
     _G.hooksecurefunc("AchievementFrame_ShowSearchPreviewResults", Hook.AchievementFrame_ShowSearchPreviewResults)
     _G.hooksecurefunc("AchievementFrameSummary_UpdateAchievements", Hook.AchievementFrameSummary_UpdateAchievements)
+    _G.hooksecurefunc("AchievementFrameSummary_Refresh", Hook.AchievementFrameSummary_Refresh)
 
     ----------------------
     -- AchievementFrame --
@@ -442,7 +514,8 @@ function private.AddOns.Blizzard_AchievementUI()
     -- Header --
     ------------
     local Header = AchievementFrame.Header
-    Header:Hide()
+    -- Header frame is kept visible (but transparent) so DragMeAll can use it as a drag handle.
+    -- All visual children are hidden individually below.
     Header.Left:Hide()
     Header.Right:Hide()
 
@@ -456,11 +529,8 @@ function private.AddOns.Blizzard_AchievementUI()
     Header.Shield:SetParent(AchievementFrame)
 
     -- FIXMELATER
-    -- AchievementFrame_HideFilterDropdown(AchievementFrame);
-    -- AchievementFrame_TryShowFilterDropdown(AchievementFrame);
-    -- -	AchievementFrameFilterDropdown:Hide();
-    -- -	AchievementFrame.Header.LeftDDLInset:Hide();
-    -- +	AchievementFrame_HideFilterDropdown(AchievementFrame);
+    AchievementFrame_HideFilterDropdown(AchievementFrame);
+    AchievementFrame_TryShowFilterDropdown(AchievementFrame);
 
     ----------------
     -- Categories --
@@ -483,6 +553,7 @@ function private.AddOns.Blizzard_AchievementUI()
     select(3, Achievements:GetChildren()):Hide()
     Util.Mixin(_G.AchievementTemplateMixin, Hook.AchievementTemplateMixin)
     _G.hooksecurefunc(Achievements.ScrollBox, 'Update', Hook.AchievementFrameAchievements)
+    Util.Mixin(_G.AchievementFrameAchievementsObjectives, Hook.AchievementsObjectivesMixin)
 
     -----------
     -- Stats --
@@ -507,6 +578,7 @@ function private.AddOns.Blizzard_AchievementUI()
     _G.AchievementFrameSummaryCategoriesHeaderTexture:Hide()
 
     Skin.FrameTypeStatusBar(_G.AchievementFrameSummaryCategoriesStatusBar)
+    _G.AchievementFrameSummaryCategoriesStatusBar:SetStatusBarColor(0.5, 0.5, 0.5)
     _G.AchievementFrameSummaryCategoriesStatusBarTitle:SetPoint("LEFT", 6, 0)
     _G.AchievementFrameSummaryCategoriesStatusBarText:SetPoint("RIGHT", -6, 0)
     _G.AchievementFrameSummaryCategoriesStatusBarLeft:Hide()
