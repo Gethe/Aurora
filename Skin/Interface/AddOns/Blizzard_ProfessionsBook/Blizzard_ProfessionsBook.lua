@@ -10,10 +10,6 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
--- FIXME -- move to others..
--- local F, C = _G.unpack(private.Aurora)
-
-
 do --[[ AddOns\Blizzard_ProfessionsBook ]]
     function Skin.ProfessionButtonTemplate(CheckButton)
         Base.CropIcon(CheckButton.IconTexture, CheckButton)
@@ -77,8 +73,6 @@ do --[[ AddOns\Blizzard_ProfessionsBook ]]
 end
 
 function private.AddOns.Blizzard_ProfessionsBook()
-    -- local ProfessionsContentFrame = _G.ProfessionsContentFrame
-    -- Skin.ProfessionsContentFrameTemplate(ProfessionsContentFrame)
     local ProfessionsBookFrame = _G.ProfessionsBookFrame
     Skin.NineSlicePanelTemplate(ProfessionsBookFrame.NineSlice)
     ProfessionsBookFrame.NineSlice:SetFrameLevel(1)
