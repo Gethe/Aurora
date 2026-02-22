@@ -155,7 +155,7 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton5)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton6)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton7)
-    Util.Mixin(ChatConfigFrame.ChatTabManager.tabPool, Hook.ObjectPoolMixin)
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API). No replacement.
     Skin.ChatConfigBoxTemplate(_G.ChatConfigBackgroundFrame)
 
     local divider = _G.ChatConfigFrame:CreateTexture()
