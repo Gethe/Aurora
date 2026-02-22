@@ -63,17 +63,17 @@ function private.FrameXML.PVEFrame()
     _G.PVEFrameBottomFiligree:SetAlpha(0)
 
     Skin.InsetFrameTemplate(PVEFrame.Inset)
-    Skin.PanelTabButtonTemplate(PVEFrame.tab1)
-    Skin.PanelTabButtonTemplate(PVEFrame.tab2)
-    Skin.PanelTabButtonTemplate(PVEFrame.tab3)
-    -- FIXBETA
-    -- Skin.PanelTabButtonTemplate(PVEFrame.tab4)
-    Util.PositionRelative("TOPLEFT", PVEFrame, "BOTTOMLEFT", 20, -1, 1, "Right", {
-        PVEFrame.tab1,
-        PVEFrame.tab2,
-        PVEFrame.tab3,
-        PVEFrame.tab4,
-    })
+    local tabs = {}
+    for i = 1, 4 do
+        local tab = PVEFrame["tab"..i]
+        if tab then
+            Skin.PanelTabButtonTemplate(tab)
+            tabs[#tabs + 1] = tab
+        end
+    end
+    if #tabs > 0 then
+        Util.PositionRelative("TOPLEFT", PVEFrame, "BOTTOMLEFT", 20, -1, 1, "Right", tabs)
+    end
 
     local GroupFinderFrame = _G.GroupFinderFrame
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton1)
@@ -86,6 +86,10 @@ function private.FrameXML.PVEFrame()
     Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton3)
     GroupFinderFrame.groupButton3:SetPoint("LEFT", GroupFinderFrame.groupButton2)
     GroupFinderFrame.groupButton3.icon:SetTexture([[Interface\Icons\INV_Helmet_06]])
+
+    if GroupFinderFrame.groupButton4 then
+        Skin.GroupFinderGroupButtonTemplate(GroupFinderFrame.groupButton4)
+    end
 
     _G.LFGListPVEStub:SetWidth(339)
     PVEFrame.shadows:SetAlpha(0)
