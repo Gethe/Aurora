@@ -31,6 +31,7 @@ end
 private.uiScale = 1
 private.disabled = {
     bags = false,
+    banks = false,
     chat = false,
     fonts = false,
     tooltips = false,

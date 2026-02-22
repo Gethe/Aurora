@@ -162,6 +162,7 @@ function private.OnLoad()
 
     -- Disable skins as per user settings
     private.disabled.bags = not AuroraConfig.bags
+    private.disabled.banks = not AuroraConfig.banks
     private.disabled.chat = not AuroraConfig.chat
     private.disabled.fonts = not AuroraConfig.fonts
     private.disabled.tooltips = not AuroraConfig.tooltips

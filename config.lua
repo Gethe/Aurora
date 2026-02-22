@@ -15,6 +15,7 @@ Config.defaults = {
 
     -- Component toggles
     bags = true,
+    banks = true,
     chat = true,
     loot = true,
     mainmenubar = false,
@@ -60,6 +61,7 @@ Config.validationRules = {
     -- Boolean settings
     acknowledgedSplashScreen = "boolean",
     bags = "boolean",
+    banks = "boolean",
     chat = "boolean",
     loot = "boolean",
     mainmenubar = "boolean",
@@ -435,7 +437,7 @@ function Config.needsRecovery(config)
     end
 
     -- Check if critical settings are present
-    local criticalSettings = {"bags", "chat", "tooltips", "alpha"}
+    local criticalSettings = {"bags", "banks", "chat", "tooltips", "alpha"}
     for _, key in pairs(criticalSettings) do
         if config[key] == nil then
             return true, "Missing critical setting: " .. key
