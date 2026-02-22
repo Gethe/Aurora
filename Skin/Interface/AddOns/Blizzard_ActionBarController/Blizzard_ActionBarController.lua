@@ -720,14 +720,4 @@ function private.FrameXML.Blizzard_ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     --       ActionBarController       --
     ----====####$$$$%%%%%$$$$####====----
-    --- FIXBETA - why is this here?
-    --- Bartender4 workaround!
-    --- If Bartender4 is loaded, the end caps and border art are not hidden properly.
-    --- This is fixed in newer versions of Bartender4, but keeping this for older versions.
-    local LeftEndCap = _G.MainActionBar.EndCaps.LeftEndCap
-    local RightEndCap = _G.MainActionBar.EndCaps.RightEndCap
-    local BoarderArt = _G.MainActionBar.BorderArt
-    BoarderArt:SetAlpha(0)
-    LeftEndCap:SetAlpha(0)
-    RightEndCap:SetAlpha(0)
 end

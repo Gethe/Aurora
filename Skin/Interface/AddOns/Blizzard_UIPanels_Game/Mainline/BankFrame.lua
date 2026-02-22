@@ -49,11 +49,8 @@ end
 
 function private.FrameXML.BankFrame()
     if private.disabled.banks then return end
-    _G.print("Skinning BankFrame...")
-
     if private.isRetail then
         --[[ BankFrame (11.2+) ]]--
-        _G.print("Got Bank 11.2+..")
         local BankFrame = _G.BankFrame
         Skin.PortraitFrameTemplate(BankFrame)
         if BankFrame.Background then BankFrame.Background:Hide() end

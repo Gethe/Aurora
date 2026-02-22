@@ -147,7 +147,7 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 end
 
 function private.FrameXML.ContainerFrame()
-
+    _G.print("Applying ContainerFrame skins")
     if private.disabled.bags then return end
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
 
