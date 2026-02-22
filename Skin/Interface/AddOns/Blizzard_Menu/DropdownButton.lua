@@ -20,9 +20,8 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
                 if private.isDev then
                     -- FIXLATER
                     _G.print("Skin.DropdownButton - Frame is nil. This is likely a bug. You shoould not see this message.")
-                else
-                    return
                 end
+                return
             end
             if Frame._auroraSkinned then
                 return
