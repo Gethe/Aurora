@@ -34,8 +34,6 @@ do --[[ FrameXML\LFDFrame.xml ]]
 end
 
 function private.FrameXML.LFDFrame()
-    -- FIXBETA
-    if private.isMidnight then return end
     _G.hooksecurefunc("LFDQueueFrameRandomCooldownFrame_Update", Hook.LFDQueueFrameRandomCooldownFrame_Update)
 
     -----------------------
@@ -56,20 +54,6 @@ function private.FrameXML.LFDFrame()
         _G.LFDRoleCheckPopupDeclineButton,
     })
 
-
-    ------------------------
-    -- LFDReadyCheckPopup --
-    ------------------------
-    local LFDReadyCheckPopup = _G.LFDReadyCheckPopup
-    Skin.DialogBorderTemplate(LFDReadyCheckPopup.Border)
-    Skin.UIPanelButtonTemplate(LFDReadyCheckPopup.YesButton)
-    Skin.UIPanelButtonTemplate(LFDReadyCheckPopup.NoButton)
-    Util.PositionRelative("BOTTOMLEFT", LFDReadyCheckPopup, "BOTTOMLEFT", 32, 15, 5, "Right", {
-        LFDReadyCheckPopup.YesButton,
-        LFDReadyCheckPopup.NoButton,
-    })
-
-
     --------------------
     -- LFDParentFrame --
     --------------------
@@ -88,6 +72,9 @@ function private.FrameXML.LFDFrame()
     Skin.LFDRoleButtonTemplate(_G.LFDQueueFrameRoleButtonDPS)
     Skin.LFGRoleButtonTemplate(_G.LFDQueueFrameRoleButtonLeader)
     Skin.DropdownButton(_G.LFDQueueFrameTypeDropdown)
+    _G.LFDQueueFrameTypeDropdown:ClearAllPoints()
+    _G.LFDQueueFrameTypeDropdown:SetPoint("BOTTOMLEFT", LFDQueueFrame, "BOTTOMLEFT", 131, 287)
+    _G.LFDQueueFrameTypeDropdown:SetPoint("BOTTOMRIGHT", LFDQueueFrame, "BOTTOMRIGHT", -30, 287)
     Skin.ScrollFrameTemplate(_G.LFDQueueFrameRandomScrollFrame)
     Skin.LFGRewardFrameTemplate(_G.LFDQueueFrameRandomScrollFrameChildFrame)
 

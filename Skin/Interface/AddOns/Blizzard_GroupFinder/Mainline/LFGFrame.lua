@@ -231,6 +231,18 @@ function private.AddOns.LFGFrame()
     Skin.LFGDungeonReadyRewardTemplate(_G.LFGDungeonReadyDialogRewardsFrame.Rewards[1])
     Skin.LFGDungeonReadyRewardTemplate(_G.LFGDungeonReadyDialogRewardsFrame.Rewards[2])
 
+    ------------------------
+    -- LFGReadyCheckPopup --
+    ------------------------
+    local LFGReadyCheckPopup = _G.LFGReadyCheckPopup
+    Skin.DialogBorderTemplate(LFGReadyCheckPopup.Border)
+    Skin.UIPanelButtonTemplate(LFGReadyCheckPopup.YesButton)
+    Skin.UIPanelButtonTemplate(LFGReadyCheckPopup.NoButton)
+    Util.PositionRelative("BOTTOMLEFT", LFGReadyCheckPopup, "BOTTOMLEFT", 32, 15, 5, "Right", {
+        LFGReadyCheckPopup.YesButton,
+        LFGReadyCheckPopup.NoButton,
+    })
+
     --------------------
     -- LFGInvitePopup --
     --------------------
