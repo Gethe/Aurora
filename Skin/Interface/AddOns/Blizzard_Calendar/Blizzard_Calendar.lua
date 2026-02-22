@@ -180,27 +180,14 @@ function private.AddOns.Blizzard_Calendar()
     Skin.NavButtonNext(_G.CalendarNextMonthButton)
 
     do -- Filter button
-        -- CalendarFilterFrame removed in 11.0.0 replaced with FilterButton
-        -- Base.SetBackdrop(_G.CalendarFilterFrame, Color.button)
-        -- _G.CalendarFilterFrame:SetPoint("TOPRIGHT", -80, -13)
-
-        -- _G.CalendarFilterFrameLeft:SetAlpha(0)
-        -- _G.CalendarFilterFrameMiddle:SetAlpha(0)
-        -- _G.CalendarFilterFrameRight:SetAlpha(0)
-
         local button = _G.CalendarFrame.FilterButton
         Skin.FilterButton(button)
         button:ClearAllPoints()
         button:SetPoint("TOPRIGHT", -80, -13)
-
     end
 
     Skin.UIPanelCloseButton(_G.CalendarCloseButton)
     _G.CalendarCloseButton:SetPoint("TOPRIGHT", calenderBG, -5, -5)
-
-    -- FIXMELATER - replaced
-    -- Skin.UIMenuTemplate(_G.CalendarContextMenu)
-    -- Skin.UIMenuTemplate(_G.CalendarInviteStatusContextMenu)
     Skin.CalendarModalEventOverlayTemplate(_G.CalendarFrameModalOverlay)
 
     for i = 1, CALENDAR_MAX_DAYS_PER_MONTH do
