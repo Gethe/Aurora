@@ -82,11 +82,23 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
                 Frame:SetFrameLevel(Frame:GetFrameLevel() + 2)
                 Frame.Arrow:SetAlpha(0)
             end
-            -- if Frame.TabHighlight then Frame.TabHighlight:SetAlpha(0) end
-            -- local tex = Frame:CreateTexture(nil, "ARTWORK")
-            -- tex:SetPoint("RIGHT", Frame, -3, 0)
-            -- tex:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
-            -- tex:SetSize(13,13)
+            if Frame.TabHighlight then Frame.TabHighlight:SetAlpha(0) end
+            -- Texture child is an atlas-based arrow (e.g. ProfessionsRankBarDropdownMixin).
+            -- Replace the atlas with Aurora's arrow BLP and hook OnButtonStateChanged
+            -- so the atlas cannot be re-applied on every hover/click state change.
+            if Frame.Texture then
+                local function setArrow(btn)
+                    btn.Texture:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
+                    btn.Texture:SetSize(8, 8)
+                    btn.Texture:ClearAllPoints()
+                    btn.Texture:SetPoint("CENTER")
+                    btn.Texture:Show()
+                end
+                setArrow(Frame)
+                if Frame.OnButtonStateChanged then
+                    _G.hooksecurefunc(Frame, "OnButtonStateChanged", setArrow)
+                end
+            end
         end
         function Skin.FilterButton(Frame, Width)
             -- local rightOfs = -105
@@ -138,8 +150,8 @@ do --[[ Blizzard_Menu\DropdownButton.lua ]]
             -- if Frame.TabHighlight then Frame.TabHighlight:SetAlpha(0) end
             -- local tex = Frame:CreateTexture(nil, "ARTWORK")
             -- tex:SetPoint("RIGHT", Frame, -3, 0)
-            -- tex:SetTexture([[Interface\AddOns\Aurora\media\-active]])
-            -- tex:SetSize(13,13)
+            -- tex:SetTexture([[Interface\AddOns\Aurora\media\arrow-down-active]])
+            -- tex:SetSize(8,8)
         end
     end
 end
