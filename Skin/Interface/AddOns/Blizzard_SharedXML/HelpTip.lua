@@ -47,13 +47,19 @@ end
 function private.FrameXML.HelpTip()
     Util.Mixin(_G.HelpTipTemplateMixin, Hook.HelpTipTemplateMixin)
 
-    -- FIXLATER - Broken in 11.0.0
-    -- Not sure how to find the non active objects in the pool at this time.
-    Util.Mixin(_G.HelpTip.framePool, Hook.ObjectPoolMixin)
-    -- for _, frame in _G.HelpTip.framePool:EnumerateInactive() do
-    --     Skin.HelpTipTemplate(frame)
-    --     Util.Mixin(frame, Hook.HelpTipTemplateMixin)
-	-- end
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API).
+    -- Wrap the pool's Acquire method to skin and mixin frames when first created.
+    do
+        local poolAcquire = _G.HelpTip.framePool.Acquire
+        _G.HelpTip.framePool.Acquire = function(pool, ...)
+            local frame, isNew = poolAcquire(pool, ...)
+            if isNew then
+                Skin.HelpTipTemplate(frame)
+                Util.Mixin(frame, Hook.HelpTipTemplateMixin)
+            end
+            return frame, isNew
+        end
+    end
 	for frame in _G.HelpTip.framePool:EnumerateActive() do
         Skin.HelpTipTemplate(frame)
         Util.Mixin(frame, Hook.HelpTipTemplateMixin)

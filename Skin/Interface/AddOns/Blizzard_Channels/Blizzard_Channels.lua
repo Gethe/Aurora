@@ -92,7 +92,18 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     end
     do --[[ ChannelList.xml ]]
         function Skin.ChannelListTemplate(ScrollFrame)
-            Util.Mixin(ScrollFrame.headerButtonPool, Hook.ObjectPoolMixin)
+            -- Hook.ObjectPoolMixin removed in 11.0.0 (private API).
+            -- Wrap the pool's Acquire method to skin frames when first created.
+            do
+                local poolAcquire = ScrollFrame.headerButtonPool.Acquire
+                ScrollFrame.headerButtonPool.Acquire = function(pool, ...)
+                    local frame, isNew = poolAcquire(pool, ...)
+                    if isNew then
+                        Skin.ChannelButtonHeaderTemplate(frame)
+                    end
+                    return frame, isNew
+                end
+            end
             if private.isRetail then
                 Skin.ScrollFrameTemplate(ScrollFrame)
             else

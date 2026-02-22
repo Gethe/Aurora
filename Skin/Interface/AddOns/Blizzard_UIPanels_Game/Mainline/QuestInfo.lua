@@ -266,9 +266,32 @@ function private.FrameXML.QuestInfo()
         bottom = 17,
     })
 
-    Util.Mixin(QuestInfoRewardsFrame.spellRewardPool, Hook.ObjectPoolMixin)
-    Util.Mixin(QuestInfoRewardsFrame.followerRewardPool, Hook.ObjectPoolMixin)
-    Util.Mixin(QuestInfoRewardsFrame.spellHeaderPool, Hook.ObjectPoolMixin)
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API).
+    -- Wrap each pool's Acquire method to skin frames when first created.
+    do
+        local poolAcquire = QuestInfoRewardsFrame.spellRewardPool.Acquire
+        QuestInfoRewardsFrame.spellRewardPool.Acquire = function(pool, ...)
+            local frame, isNew = poolAcquire(pool, ...)
+            if isNew then Skin.QuestSpellTemplate(frame) end
+            return frame, isNew
+        end
+    end
+    do
+        local poolAcquire = QuestInfoRewardsFrame.followerRewardPool.Acquire
+        QuestInfoRewardsFrame.followerRewardPool.Acquire = function(pool, ...)
+            local frame, isNew = poolAcquire(pool, ...)
+            if isNew then Skin.LargeQuestInfoRewardFollowerTemplate(frame) end
+            return frame, isNew
+        end
+    end
+    do
+        local poolAcquire = QuestInfoRewardsFrame.spellHeaderPool.Acquire
+        QuestInfoRewardsFrame.spellHeaderPool.Acquire = function(pool, ...)
+            local fontString, isNew = poolAcquire(pool, ...)
+            if isNew then Skin.QuestInfoSpellHeaderTemplate(fontString) end
+            return fontString, isNew
+        end
+    end
 
     ------------------------------
     -- MapQuestInfoRewardsFrame --
@@ -282,9 +305,31 @@ function private.FrameXML.QuestInfo()
     Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.SkillPointFrame)
     Skin.SmallItemButtonTemplate(MapQuestInfoRewardsFrame.TitleFrame)
 
-    Util.Mixin(MapQuestInfoRewardsFrame.spellRewardPool, Hook.ObjectPoolMixin)
-    Util.Mixin(MapQuestInfoRewardsFrame.followerRewardPool, Hook.ObjectPoolMixin)
-    Util.Mixin(MapQuestInfoRewardsFrame.spellHeaderPool, Hook.ObjectPoolMixin)
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API).
+    do
+        local poolAcquire = MapQuestInfoRewardsFrame.spellRewardPool.Acquire
+        MapQuestInfoRewardsFrame.spellRewardPool.Acquire = function(pool, ...)
+            local frame, isNew = poolAcquire(pool, ...)
+            if isNew then Skin.SmallItemButtonTemplate(frame) end
+            return frame, isNew
+        end
+    end
+    do
+        local poolAcquire = MapQuestInfoRewardsFrame.followerRewardPool.Acquire
+        MapQuestInfoRewardsFrame.followerRewardPool.Acquire = function(pool, ...)
+            local frame, isNew = poolAcquire(pool, ...)
+            if isNew then Skin.SmallQuestInfoRewardFollowerTemplate(frame) end
+            return frame, isNew
+        end
+    end
+    do
+        local poolAcquire = MapQuestInfoRewardsFrame.spellHeaderPool.Acquire
+        MapQuestInfoRewardsFrame.spellHeaderPool.Acquire = function(pool, ...)
+            local fontString, isNew = poolAcquire(pool, ...)
+            if isNew then Skin.QuestInfoSpellHeaderTemplate(fontString) end
+            return fontString, isNew
+        end
+    end
 
     --------------------
     -- QuestInfoFrame --

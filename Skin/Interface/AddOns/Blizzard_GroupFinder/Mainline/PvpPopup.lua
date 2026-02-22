@@ -60,7 +60,18 @@ function private.AddOns.PvpPopup()
 
     local PVPReadyPopup = _G.PVPReadyPopup
     Util.Mixin(PVPReadyPopup, Hook.PVPReadyPopupMixin)
-    Util.Mixin(PVPReadyPopup.RolePool, Hook.ObjectPoolMixin)
+    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API).
+    -- Wrap the pool's Acquire method to skin frames when first created.
+    do
+        local poolAcquire = PVPReadyPopup.RolePool.Acquire
+        PVPReadyPopup.RolePool.Acquire = function(pool, ...)
+            local frame, isNew = poolAcquire(pool, ...)
+            if isNew then
+                Skin.PvpRoleButtonWithCountTemplate(frame)
+            end
+            return frame, isNew
+        end
+    end
 
     local ReadyStatus = _G.ReadyStatus
     Skin.DialogBorderTemplate(ReadyStatus.Border)
