@@ -11,14 +11,9 @@ local Util = Aurora.Util
 -- local Color = Aurora.Color
 
 
--- FIXMELATER - No Longer used
 do --[[ AddOns\AddonList.xml ]]
     function Skin.AddonListEntryTemplate(Button)
-        if private.isRetail then
-            Skin.UICheckButtonTemplate(Button.Enabled) -- BlizzWTF: Doesn't use a template, but it should
-        else
-            Skin.UICheckButtonTemplate(_G[Button:GetName().."Enabled"]) -- BlizzWTF: Doesn't use a template, but it should
-        end
+        Skin.UICheckButtonTemplate(Button.Enabled) -- BlizzWTF: Uses MinimalCheckboxArtTemplate, not UICheckButtonTemplate
         Skin.UIPanelButtonTemplate(Button.LoadAddonButton)
     end
 end
@@ -58,5 +53,15 @@ function private.AddOns.Blizzard_AddOnList()
     Skin.WowScrollBoxList(AddonList.ScrollBox)
     Skin.MinimalScrollBar(AddonList.ScrollBar)
     AddonList.ScrollBox:SetPoint("BOTTOMRIGHT", AddonList.CancelButton, "TOPRIGHT", -21, 5)
-    AddonList.ScrollBox:SetPoint("TOPLEFT", 5, -120)
+    AddonList.ScrollBox:SetPoint("TOPLEFT", AddonList.Performance, "BOTTOMLEFT", -2, 0)
+    _G.hooksecurefunc(AddonList.ScrollBox, "Update", function(self)
+        self:ForEachFrame(function(frame)
+            if not frame.auroraSkinned then
+                if frame.Enabled then
+                    Skin.AddonListEntryTemplate(frame)
+                end
+                frame.auroraSkinned = true
+            end
+        end)
+    end)
 end
