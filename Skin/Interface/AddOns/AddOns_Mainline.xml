@@ -641,7 +641,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_SharedXMLBase\FrameFactory.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\SecureTypes.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\ProxyUtil.lua"/-->
-    <Script file="Blizzard_SharedXMLBase\Pools.lua"/>
+    <!--Script file="Blizzard_SharedXMLBase\Pools.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\ButtonStateBehavior.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\EnvironmentUtil.lua"/-->
     <!--Script file="Blizzard_SharedXMLBase\Color.lua"/-->
