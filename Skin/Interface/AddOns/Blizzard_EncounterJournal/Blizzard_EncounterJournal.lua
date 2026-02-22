@@ -104,6 +104,11 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
                 --end
             end
         end
+        function Hook.EncounterJournal_DisplayInstance()
+            local icon = _G.EncounterJournal.encounter.info.instanceButton.icon
+            icon:SetMask("")
+            icon:SetTexCoord(.08, .92, .08, .92)
+        end
     end
     do --[[ Blizzard_EncounterJournal ]]
         Hook.RuneforgeLegendaryPowerLootJournalMixin = {}
@@ -356,6 +361,7 @@ function private.AddOns.Blizzard_EncounterJournal()
     _G.hooksecurefunc("EncounterJournal_UpdateFilterString", Hook.EncounterJournal_UpdateFilterString)
     _G.hooksecurefunc("EJSuggestFrame_UpdateRewards", Hook.EJSuggestFrame_UpdateRewards)
     _G.hooksecurefunc("EJSuggestFrame_RefreshDisplay", Hook.EJSuggestFrame_RefreshDisplay)
+    _G.hooksecurefunc("EncounterJournal_DisplayInstance", Hook.EncounterJournal_DisplayInstance)
 
     local EncounterJournal = _G.EncounterJournal
     Skin.PortraitFrameTemplate(EncounterJournal)
@@ -448,9 +454,7 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     info.encounterTitle:SetTextColor(Color.white:GetRGB())
     info.instanceTitle:SetTextColor(Color.white:GetRGB())
-    -- This one gets garbled by DropIcon
-    -- FIXMELATER
-    -- Base.CropIcon(info.instanceButton.icon, info.instanceButton)
+    Base.CropIcon(info.instanceButton.icon)
     info.instanceButton:ClearNormalTexture()
     info.instanceButton:GetHighlightTexture():Hide()
 
@@ -613,7 +617,6 @@ function private.AddOns.Blizzard_EncounterJournal()
     ----====####$$$$%%%%$$$$####====----
     --       Blizzard_Tutorials       --
     ----====####$$$$%%%%$$$$####====----
-    -- FIXMELATER
     -- Not sure what to expect here ..
     local TutorialsTab = EncounterJournal.TutorialsTab
     local TutorialsFrame = EncounterJournal.TutorialsFrame
