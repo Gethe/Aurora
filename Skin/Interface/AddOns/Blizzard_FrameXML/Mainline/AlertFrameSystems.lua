@@ -381,44 +381,252 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame._auroraTemplate = "HonorAwardedAlertFrameTemplate"
         end
     end
+
+    -- Garrison: Building and Talent share the same layout (Garr_Toast bg + Icon + Title + Name)
+    function Skin.GarrisonBuildingAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            select(1, frame:GetRegions()):SetTexture("") -- Garr_Toast background
+            Base.CropIcon(frame.Icon, frame)
+            frame._auroraTemplate = "GarrisonBuildingAlertFrameTemplate"
+        end
+    end
+    Skin.GarrisonTalentAlertFrameTemplate = Skin.GarrisonBuildingAlertFrameTemplate
+
+    -- Garrison: Mission (no background atlas on frame itself, just MissionType icon + text)
+    function Skin.GarrisonMissionAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame._auroraTemplate = "GarrisonMissionAlertFrameTemplate"
+        end
+    end
+    Skin.GarrisonRandomMissionAlertFrameTemplate = Skin.GarrisonMissionAlertFrameTemplate
+
+    -- Garrison: Follower (FollowerBG shown/hidden dynamically per quality; always hide it in Aurora)
+    function Skin.GarrisonFollowerAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.FollowerBG:Hide()
+            frame._auroraTemplate = "GarrisonFollowerAlertFrameTemplate"
+        else
+            frame.FollowerBG:Hide()
+        end
+    end
+    Skin.GarrisonStandardFollowerAlertFrameTemplate = Skin.GarrisonFollowerAlertFrameTemplate
+    Skin.GarrisonShipFollowerAlertFrameTemplate = Skin.GarrisonFollowerAlertFrameTemplate
+
+    -- Digsite: archeology toast bg (no parentKey, region 1) + DigsiteTypeTexture icon
+    function Skin.DigsiteCompleteToastFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            select(1, frame:GetRegions()):SetTexture("") -- Archaeology toast background
+            Base.CropIcon(frame.DigsiteTypeTexture, frame)
+            frame._auroraTemplate = "DigsiteCompleteToastFrameTemplate"
+        end
+    end
+
+    -- Entitlement / RAF Reward: store/raf background + Icon
+    function Skin.EntitlementDeliveredAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.Background:Hide()
+            Base.CropIcon(frame.Icon, frame)
+            frame._auroraTemplate = "EntitlementDeliveredAlertFrameTemplate"
+        else
+            frame.Background:Hide()
+        end
+    end
+    function Skin.RafRewardDeliveredAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.StandardBackground:Hide()
+            frame.FancyBackground:Hide()
+            Base.CropIcon(frame.Icon, frame)
+            frame._auroraTemplate = "RafRewardDeliveredAlertFrameTemplate"
+        else
+            -- SetUp shows one of these each call
+            frame.StandardBackground:Hide()
+            frame.FancyBackground:Hide()
+        end
+    end
+
+    -- LootWon: multiple conditional backgrounds shown by SetUp; hide them all after
+    function Skin.LootWonAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame._auroraTemplate = "LootWonAlertFrameTemplate"
+        end
+        -- These are toggled by SetUp every call, so always re-hide
+        frame.Background:Hide()
+        frame.PvPBackground:Hide()
+        frame.RatedPvPBackground:Hide()
+        frame.BGAtlas:Hide()
+    end
+
+    -- LootUpgrade: quality-coloured bg + item borders
+    function Skin.LootUpgradeFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.Background:Hide()
+            frame._auroraTemplate = "LootUpgradeFrameTemplate"
+        end
+        -- Borders are re-set via SetAtlas each call
+        frame.BaseQualityBorder:Hide()
+        frame.UpgradeQualityBorder:Hide()
+    end
+
+    -- WorldQuestComplete: lfg dungeon-toast bg + QuestTexture icon
+    function Skin.WorldQuestCompleteAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.ToastBackground:Hide()
+            Base.CropIcon(frame.QuestTexture, frame)
+            frame._auroraTemplate = "WorldQuestCompleteAlertFrameTemplate"
+        end
+        -- RewardFrames are created/shown dynamically; skin each unskinned one
+        if frame.RewardFrames then
+            for _, button in next, frame.RewardFrames do
+                if button:IsShown() and not button._auroraSkinned then
+                    Skin.WorldQuestFrameRewardTemplate(button)
+                    button._auroraSkinned = true
+                end
+            end
+        end
+    end
+
+    -- LegendaryItem: particle/ring textures + Icon
+    function Skin.LegendaryItemAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.Background:Hide()
+            frame.Ring1:Hide()
+            frame.Starglow:Hide()
+            frame.Particles1:Hide()
+            frame.Particles2:Hide()
+            frame.Particles3:Hide()
+            Base.CropIcon(frame.Icon, frame)
+            frame._auroraTemplate = "LegendaryItemAlertFrameTemplate"
+        end
+    end
+
+    -- ItemAlertFrameTemplate base (Pet / Mount / Toy / Warband / Runforge / Cosmetic)
+    -- Each subtype only adds a Background atlas on top of this
+    function Skin.ItemAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            if frame.Background then frame.Background:Hide() end
+            frame.IconBorder:Hide()
+            Base.CropIcon(frame.Icon, frame)
+            frame._auroraTemplate = "ItemAlertFrameTemplate"
+        else
+            if frame.Background then frame.Background:Hide() end
+        end
+    end
+    Skin.NewPetAlertFrameTemplate          = Skin.ItemAlertFrameTemplate
+    Skin.NewMountAlertFrameTemplate        = Skin.ItemAlertFrameTemplate
+    Skin.NewToyAlertFrameTemplate          = Skin.ItemAlertFrameTemplate
+    Skin.NewWarbandSceneAlertFrameTemplate = Skin.ItemAlertFrameTemplate
+    Skin.NewRuneforgePowerAlertFrameTemplate = Skin.ItemAlertFrameTemplate
+    Skin.NewCosmeticAlertFrameTemplate     = Skin.ItemAlertFrameTemplate
+
+    -- NewRecipeLearned / SkillLineSpecsUnlocked: recipetoast-bg (no parentKey, region 1) + Icon
+    -- Note: SetUp applies SetMask and SetTexture to Icon each call; CropIcon coexists fine.
+    function Skin.NewRecipeLearnedAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            select(1, frame:GetRegions()):SetTexture("") -- recipetoast-bg
+            Base.CropIcon(frame.Icon, frame)
+            frame._auroraTemplate = "NewRecipeLearnedAlertFrameTemplate"
+        end
+    end
+    Skin.SkillLineSpecsUnlockedAlertFrameTemplate = Skin.NewRecipeLearnedAlertFrameTemplate
+
+    -- MonthlyActivity: achievement-mini bg + Icon.Texture/Overlay (same structure as CriteriaAlertFrame)
+    function Skin.MonthlyActivityFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.Background:Hide()
+            frame.Icon.Overlay:Hide()
+            frame.Icon.Bling:Hide()
+            Base.CropIcon(frame.Icon.Texture, frame)
+            frame._auroraTemplate = "MonthlyActivityFrameTemplate"
+        end
+    end
+
+    -- HousingItemEarned: decorative housing frame with leaves + Icon
+    function Skin.HousingItemEarnedAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.Background:Hide()
+            frame.Border:Hide()
+            frame.LeafTL:Hide()
+            frame.LeafL:Hide()
+            frame.LeafBL:Hide()
+            frame.LeafTR:Hide()
+            frame.LeafBR:Hide()
+            Base.CropIcon(frame.Icon, frame)
+            frame._auroraTemplate = "HousingItemEarnedAlertFrameTemplate"
+        end
+    end
+
+    -- InitiativeTaskComplete: same housing-style decorative frame, no icon to crop
+    function Skin.InitiativeTaskCompleteAlertFrameTemplate(frame)
+        if not frame._auroraTemplate then
+            Skin.FrameTypeFrame(frame)
+            frame.Background:Hide()
+            frame.Border:Hide()
+            frame.LeafTL:Hide()
+            frame.LeafL:Hide()
+            frame.LeafBL:Hide()
+            frame.LeafTR:Hide()
+            frame.LeafBR:Hide()
+            frame._auroraTemplate = "InitiativeTaskCompleteAlertFrameTemplate"
+        end
+    end
 end
 
 function private.FrameXML.AlertFrameSystems()
+    -- Hook each alert system's SetUp function to apply the skin when a frame is acquired.
+    -- setUpFunction(frame, ...) is called every time an alert is shown (first create and reuse),
+    -- which is the correct replacement for the removed Hook.ObjectPoolMixin:Acquire hook.
+
     -- Simple Alerts
-    Util.Mixin(_G.GuildChallengeAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.DungeonCompletionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.ScenarioAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.InvasionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.DigsiteCompleteAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.EntitlementDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.RafRewardDeliveredAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    _G.hooksecurefunc("GuildChallengeAlertFrame_SetUp",             function(frame) Skin.GuildChallengeAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("DungeonCompletionAlertFrame_SetUp",          function(frame) Skin.DungeonCompletionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("ScenarioAlertFrame_SetUp",                   function(frame) Skin.ScenarioAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("ScenarioLegionInvasionAlertFrame_SetUp",     function(frame) Skin.ScenarioLegionInvasionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("GarrisonBuildingAlertFrame_SetUp",           function(frame) Skin.GarrisonBuildingAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("GarrisonMissionAlertFrame_SetUp",            function(frame) Skin.GarrisonMissionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("GarrisonRandomMissionAlertFrame_SetUp",      function(frame) Skin.GarrisonRandomMissionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("GarrisonFollowerAlertFrame_SetUp",           function(frame) Skin.GarrisonStandardFollowerAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("GarrisonShipFollowerAlertFrame_SetUp",       function(frame) Skin.GarrisonShipFollowerAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("GarrisonTalentAlertFrame_SetUp",             function(frame) Skin.GarrisonTalentAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("DigsiteCompleteToastFrame_SetUp",            function(frame) Skin.DigsiteCompleteToastFrameTemplate(frame) end)
+    _G.hooksecurefunc("EntitlementDeliveredAlertFrame_SetUp",       function(frame) Skin.EntitlementDeliveredAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("RafRewardDeliveredAlertFrame_SetUp",         function(frame) Skin.RafRewardDeliveredAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("WorldQuestCompleteAlertFrame_SetUp",         function(frame) Skin.WorldQuestCompleteAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("LegendaryItemAlertFrame_SetUp",              function(frame) Skin.LegendaryItemAlertFrameTemplate(frame) end)
 
-    Util.Mixin(_G.GarrisonBuildingAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.GarrisonMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.GarrisonShipMissionAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.GarrisonFollowerAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.GarrisonShipFollowerAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.GarrisonTalentAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.WorldQuestCompleteAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.LegendaryItemAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-
-    Util.Mixin(_G.NewPetAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.NewMountAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.NewToyAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.NewWarbandSceneAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
+    -- Queued Alerts
+    _G.hooksecurefunc("AchievementAlertFrame_SetUp",                function(frame) Skin.AchievementAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("CriteriaAlertFrame_SetUp",                   function(frame) Skin.CriteriaAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("LootWonAlertFrame_SetUp",                    function(frame) Skin.LootWonAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("LootUpgradeFrame_SetUp",                     function(frame) Skin.LootUpgradeFrameTemplate(frame) end)
+    _G.hooksecurefunc("MoneyWonAlertFrame_SetUp",                   function(frame) Skin.MoneyWonAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("HonorAwardedAlertFrame_SetUp",               function(frame) Skin.HonorAwardedAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("NewRecipeLearnedAlertFrame_SetUp",           function(frame) Skin.NewRecipeLearnedAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("NewPetAlertFrame_SetUp",                     function(frame) Skin.NewPetAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("NewMountAlertFrame_SetUp",                   function(frame) Skin.NewMountAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("NewToyAlertFrame_SetUp",                     function(frame) Skin.NewToyAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("NewWarbandSceneAlertFrame_SetUp",            function(frame) Skin.NewWarbandSceneAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("NewRuneforgePowerAlertSystem_SetUp",         function(frame) Skin.NewRuneforgePowerAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("NewCosmeticAlertFrameSystem_SetUp",          function(frame) Skin.NewCosmeticAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("MonthlyActivityAlertFrame_SetUp",            function(frame) Skin.MonthlyActivityFrameTemplate(frame) end)
+    _G.hooksecurefunc("HousingItemEarnedAlertFrameSystem_SetUp",    function(frame) Skin.HousingItemEarnedAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc("InitiativeTaskCompleteAlertFrameSystem_SetUp", function(frame) Skin.InitiativeTaskCompleteAlertFrameTemplate(frame) end)
 
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardMoney", Hook.DungeonCompletionAlertFrameReward_SetRewardMoney)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardXP", Hook.DungeonCompletionAlertFrameReward_SetRewardXP)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardItem", Hook.DungeonCompletionAlertFrameReward_SetRewardItem)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetReward", Hook.DungeonCompletionAlertFrameReward_SetReward)
-
-
-    -- Queued Alerts
-    Util.Mixin(_G.AchievementAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.CriteriaAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.LootAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.LootUpgradeAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.MoneyWonAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.HonorAwardedAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
-    Util.Mixin(_G.NewRecipeLearnedAlertSystem.alertFramePool, Hook.ObjectPoolMixin)
 end
