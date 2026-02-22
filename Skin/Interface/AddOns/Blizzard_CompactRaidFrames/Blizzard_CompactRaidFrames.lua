@@ -118,10 +118,8 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     end
 
     Skin.CRFManagerTooltipTemplate(displayFrame.editMode)
+    Skin.CRFManagerTooltipTemplate(displayFrame.settings)
     Skin.CRFManagerTooltipTemplate(displayFrame.hiddenModeToggle)
-    -- FIXMELATER
-    -- Skin.CRFManagerTooltipTemplate(displayFrame.convertToGroup)
-    -- Skin.CRFManagerTooltipTemplate(displayFrame.convertToRaid)
 
     local icons = {displayFrame.raidMarkers:GetChildren()}
     for i, icon in next, icons do
