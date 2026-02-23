@@ -2,13 +2,49 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals select next ipairs
+-- luacheck: globals select next ipairs pairs string
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
+
+-- Helper to hide all decorative textures on a frame by matching atlas names
+local decorativeAtlases = {
+    ["housing-dashboard-filigree"] = true,
+    ["house-upgrade-radial-leaf"] = true,
+    ["house-upgrade-radial-windowframe"] = true,
+    ["house-upgrade-bg-radial-glow"] = true,
+    ["house-upgrade-shadow-corbel"] = true,
+    ["housing-dashboard-woodsign"] = true,
+    ["housing-dashboard-foliage"] = true,
+    ["housing-foliage"] = true,
+    ["catalog-corbel"] = true,
+    ["house-chest-nav-top-corbels"] = true,
+}
+
+local function IsDecorativeAtlas(atlasName)
+    if not atlasName then return false end
+    for prefix in next, decorativeAtlases do
+        if string.find(atlasName, prefix, 1, true) then
+            return true
+        end
+    end
+    return false
+end
+
+local function HideDecorativeRegions(frame)
+    if not frame then return end
+    for _, region in pairs({frame:GetRegions()}) do
+        if region:IsObjectType("Texture") then
+            local atlas = region:GetAtlas()
+            if IsDecorativeAtlas(atlas) then
+                region:SetAlpha(0)
+            end
+        end
+    end
+end
 
 do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.lua ]]
     Hook.HousingDashboardFrameMixin = {}
@@ -27,24 +63,18 @@ do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.lua ]]
 
     Hook.HousingUpgradeFrameMixin = {}
     function Hook.HousingUpgradeFrameMixin:OnHouseSelected(houseInfoID)
-        if self.Background then
-            self.Background:SetAlpha(0)
-        end
-        -- Hide filigree art
-        if self.FiligreeTL then self.FiligreeTL:SetAlpha(0) end
-        if self.FiligreeTR then self.FiligreeTR:SetAlpha(0) end
-        if self.FiligreeBL then self.FiligreeBL:SetAlpha(0) end
-        if self.FiligreeBR then self.FiligreeBR:SetAlpha(0) end
+        if self.Background then self.Background:SetAlpha(0) end
+        -- Hide anonymous filigree corners and other decorative regions
+        HideDecorativeRegions(self)
     end
 
     Hook.InitiativesTabMixin = {}
     function Hook.InitiativesTabMixin:RefreshInitiativeTab()
-        -- Hide initiative art backgrounds
+        -- Hide initiative art backgrounds and corners
         if self.InitiativesArt then
-            for _, region in pairs({self.InitiativesArt:GetRegions()}) do
-                if region:IsObjectType("Texture") then
-                    region:SetAlpha(0)
-                end
+            HideDecorativeRegions(self.InitiativesArt)
+            if self.InitiativesArt.BorderArt then
+                HideDecorativeRegions(self.InitiativesArt.BorderArt)
             end
         end
     end
@@ -152,22 +182,28 @@ function private.AddOns.Blizzard_HousingDashboard()
             -- Initiative Set Frame
             local InitiativeSetFrame = InitiativesFrame.InitiativeSetFrame
             if InitiativeSetFrame then
-                -- Task list scroll
+                -- Task list
                 if InitiativeSetFrame.InitiativeTasks then
                     local TaskList = InitiativeSetFrame.InitiativeTasks
                     if TaskList.ScrollBox then Skin.WowScrollBoxList(TaskList.ScrollBox) end
                     if TaskList.ScrollBar then Skin.MinimalScrollBar(TaskList.ScrollBar) end
-                    -- Hide decorative art on task list
-                    if TaskList.TitleArt then TaskList.TitleArt:SetAlpha(0) end
-                    if TaskList.TitleArtLeft then TaskList.TitleArtLeft:SetAlpha(0) end
-                    if TaskList.TitleArtRight then TaskList.TitleArtRight:SetAlpha(0) end
+                    -- Hide decorative art: filigree corners, wood signs, foliage
+                    HideDecorativeRegions(TaskList)
+                    if TaskList.TaskListTitleContainer then
+                        HideDecorativeRegions(TaskList.TaskListTitleContainer)
+                    end
                 end
 
-                -- Activity log scroll
+                -- Activity log
                 if InitiativeSetFrame.InitiativeActivity then
                     local ActivityLog = InitiativeSetFrame.InitiativeActivity
                     if ActivityLog.ScrollBox then Skin.WowScrollBoxList(ActivityLog.ScrollBox) end
                     if ActivityLog.ScrollBar then Skin.MinimalScrollBar(ActivityLog.ScrollBar) end
+                    -- Hide decorative art: filigree corners, wood signs, foliage
+                    HideDecorativeRegions(ActivityLog)
+                    if ActivityLog.ActivityLogTitleContainer then
+                        HideDecorativeRegions(ActivityLog.ActivityLogTitleContainer)
+                    end
                 end
             end
         end
@@ -179,12 +215,33 @@ function private.AddOns.Blizzard_HousingDashboard()
         if HouseUpgradeFrame then
             Util.Mixin(HouseUpgradeFrame, Hook.HousingUpgradeFrameMixin)
 
-            -- Hide background and filigree art
+            -- Hide background and all decorative art (filigree corners, etc.)
             if HouseUpgradeFrame.Background then HouseUpgradeFrame.Background:SetAlpha(0) end
-            if HouseUpgradeFrame.FiligreeTL then HouseUpgradeFrame.FiligreeTL:SetAlpha(0) end
-            if HouseUpgradeFrame.FiligreeTR then HouseUpgradeFrame.FiligreeTR:SetAlpha(0) end
-            if HouseUpgradeFrame.FiligreeBL then HouseUpgradeFrame.FiligreeBL:SetAlpha(0) end
-            if HouseUpgradeFrame.FiligreeBR then HouseUpgradeFrame.FiligreeBR:SetAlpha(0) end
+            HideDecorativeRegions(HouseUpgradeFrame)
+
+            -- CurrentLevelFrame: hide radial window frame and leaves
+            local CurrentLevelFrame = HouseUpgradeFrame.CurrentLevelFrame
+            if CurrentLevelFrame then
+                local OuterBarFrame = CurrentLevelFrame.HouseBarFrame
+                if OuterBarFrame then
+                    -- Hide the ornate radial window frame (on outer HouseBarFrame)
+                    if OuterBarFrame.frame then OuterBarFrame.frame:SetAlpha(0) end
+                    -- Hide decorative leaves (on nested inner HouseBarFrame)
+                    local InnerBarFrame = OuterBarFrame.HouseBarFrame
+                    if InnerBarFrame then
+                        for i = 1, 6 do
+                            local leaf = InnerBarFrame["leaf" .. i]
+                            if leaf then leaf:SetAlpha(0) end
+                        end
+                    end
+                end
+            end
+
+            -- TrackFrame: hide glow and corbels
+            local TrackFrame = HouseUpgradeFrame.TrackFrame
+            if TrackFrame then
+                HideDecorativeRegions(TrackFrame)
+            end
 
             -- Watch Favor Button (checkbox)
             if HouseUpgradeFrame.WatchFavorButton then
@@ -226,6 +283,18 @@ function private.AddOns.Blizzard_HousingDashboard()
             local Categories = CatalogContent.Categories
             if Categories.ScrollBox then Skin.WowScrollBoxList(Categories.ScrollBox) end
             if Categories.ScrollBar then Skin.MinimalScrollBar(Categories.ScrollBar) end
+            -- Hide decorative corbel and nav background
+            if Categories.TopBorder then Categories.TopBorder:SetAlpha(0) end
+            if Categories.Background then Categories.Background:SetAlpha(0) end
+            if Categories.SubcategoriesDivider then Categories.SubcategoriesDivider:SetAlpha(0) end
+        end
+
+        -- Preview frame: hide corner brackets with vines
+        if CatalogContent.PreviewFrame then
+            local PreviewFrame = CatalogContent.PreviewFrame
+            if PreviewFrame.PreviewBackground then PreviewFrame.PreviewBackground:SetAlpha(0) end
+            if PreviewFrame.PreviewCornerLeft then PreviewFrame.PreviewCornerLeft:SetAlpha(0) end
+            if PreviewFrame.PreviewCornerRight then PreviewFrame.PreviewCornerRight:SetAlpha(0) end
         end
     end
 end
