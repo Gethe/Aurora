@@ -687,11 +687,10 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --         CommunitiesList         --
     ----====####$$$$%%%%%$$$$####====----
-    -- Issue: Mixin doesn't seem to work with this mixin for some reason
-    -- FIXLATER
-    -- Util.Mixin(_G.CommunitiesListEntryMixin, Hook.CommunitiesListEntryMixin)
-    -- _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetClubInfo", Hook.CommunitiesListEntryMixin.SetClubInfo)
-    -- _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetAddCommunity", Hook.CommunitiesListEntryMixin.SetAddCommunity)
+    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "Init", Hook.CommunitiesListEntryMixin.Init)
+    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetAddCommunity", Hook.CommunitiesListEntryMixin.SetAddCommunity)
+    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetFindCommunity", Hook.CommunitiesListEntryMixin.SetFindCommunity)
+    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetGuildFinder", Hook.CommunitiesListEntryMixin.SetGuildFinder)
     ----====####$$$$%%%%%$$$$####====----
     --      CommunitiesMemberList      --
     ----====####$$$$%%%%%$$$$####====----

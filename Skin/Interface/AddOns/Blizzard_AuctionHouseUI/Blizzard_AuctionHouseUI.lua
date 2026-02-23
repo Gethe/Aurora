@@ -304,7 +304,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
 
             Skin.AuctionHouseAlignedQuantityInputFrameTemplate(Frame.QuantityInput)
             Skin.AuctionHouseAlignedPriceInputFrameTemplate(Frame.PriceInput)
-            Skin.AuctionHouseAlignedDurationDropDownTemplate(Frame.DurationDropDown)
+            Skin.AuctionHouseAlignedDurationDropDownTemplate(Frame.Duration)
             Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame.Deposit)
             Skin.UIPanelButtonTemplate(Frame.PostButton)
         end
