@@ -481,16 +481,25 @@ function private.AddOns.Blizzard_Collections()
     --    Blizzard_MountCollection    --
     ----====####$$$$%%%%$$$$####====----
     local MountJournal = _G.MountJournal
-    -- local DynamicFlightFlyoutPopup = MountJournal.DynamicFlightFlyoutPopup
 
     Skin.UIPanelSpellButtonFrameTemplate(MountJournal.SummonRandomFavoriteSpellFrame.Button)
-    -- MountJournal.SummonRandomFavoriteSpellFrame.Button:SetSize(38, 38)
-    -- TODO: Skin ToggleDynamicFlightFlyoutButton once Blizzard_Flyout is ready
-    -- Util.Mixin(MountJournal.ToggleDynamicFlightFlyoutButton, Hook.FlyoutButtonMixin)
-    -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame.Button, MountJournal.SummonRandomFavoriteSpellFrame)
-    -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:PushedTexture())
-    -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:HighlightTexture())
-    -- MountJournal.SummonRandomFavoriteSpellFrame:Hide()
+
+    local ToggleFlyoutButton = MountJournal.ToggleDynamicFlightFlyoutButton
+    Skin.FrameTypeButton(ToggleFlyoutButton)
+    ToggleFlyoutButton.Border:SetAlpha(0)
+    _G.hooksecurefunc(ToggleFlyoutButton, "UpdateBorderShadow", function(self)
+        self.BorderShadow:Hide()
+    end)
+    _G.hooksecurefunc(ToggleFlyoutButton, "UpdateArrowShown", function(self)
+        self.Arrow:Hide()
+    end)
+
+    local DynamicFlightFlyoutPopup = MountJournal.DynamicFlightFlyoutPopup
+    Skin.FrameTypeFrame(DynamicFlightFlyoutPopup)
+    DynamicFlightFlyoutPopup.Background:Hide()
+    Skin.FrameTypeButton(DynamicFlightFlyoutPopup.OpenDynamicFlightSkillTreeButton)
+    Skin.FrameTypeButton(DynamicFlightFlyoutPopup.DynamicFlightModeButton)
+    Base.CropIcon(DynamicFlightFlyoutPopup.DynamicFlightModeButton.texture, DynamicFlightFlyoutPopup.DynamicFlightModeButton)
 
     Skin.InsetFrameTemplate(MountJournal.LeftInset)
 
