@@ -245,7 +245,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_FrameXML\TalentFrameTemplates.lua"/>
     <Script file="Blizzard_FrameXML\MovieFrame.lua"/>
     <Script file="Blizzard_FrameXML\BossBannerToast.lua"/>
-    <!--Script file="Blizzard_FrameXML\EventToastManager.lua"/-->
+    <Script file="Blizzard_FrameXML\EventToastManager.lua"/>
     <!--Script file="Blizzard_FrameXML\EquipmentManager.lua"/-->
     <!--Script file="Blizzard_FrameXML\Shared\EquipmentManager.lua"/-->
     <Script file="Blizzard_FrameXML\RolePoll.lua"/>
