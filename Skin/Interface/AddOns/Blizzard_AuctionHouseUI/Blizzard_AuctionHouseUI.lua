@@ -221,9 +221,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
                 Button.Icon:SetSize(5, 10)
                 Base.SetTexture(Button.Icon, "arrowRight")
             end
-            -- FIXLATER
-            -- Skin.UIMenuButtonStretchTemplate(Button)
-            -- Skin.AuctionHouseLevelRangeFrameTemplate(Button.LevelRangeFrame)
+            Skin.DropdownButton(Button)
         end
         function Skin.AuctionHouseFilterDropDownMenuTemplate(Frame)
             Skin.DropdownButton(Frame)
@@ -283,8 +281,7 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
         end
         function Skin.AuctionHouseAlignedDurationDropDownTemplate(Frame)
             Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
-            -- FIXLATER
-            -- Skin.LargeUIDropDownMenuTemplate(Frame.DropDown)
+            Skin.DropdownButton(Frame.Dropdown)
         end
         function Skin.AuctionHouseAlignedPriceDisplayTemplate(Frame)
             Skin.AuctionHouseSellFrameAlignedControlTemplate(Frame)
