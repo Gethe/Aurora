@@ -148,6 +148,10 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
         else
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
 
+            -- Re-hide textures that Blizzard's SetUp re-applies via SetAtlas
+            ContainedAlertFrame.Background:Hide()
+            ContainedAlertFrame.Icon.Overlay:Hide()
+
             ContainedAlertFrame.Unlocked:SetPoint("RIGHT", ContainedAlertFrame.Shield.Icon, "LEFT", -5, 0)
             ContainedAlertFrame.Name:ClearAllPoints()
             ContainedAlertFrame.Name:SetPoint("TOP", ContainedAlertFrame.Unlocked, "BOTTOM", -2, 0)
@@ -214,6 +218,10 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame.Icon.Texture:SetSize(40, 40)
             ContainedAlertFrame.Icon.Overlay:Hide()
             ContainedAlertFrame._auroraTemplate = "CriteriaAlertFrameTemplate"
+        else
+            -- Re-hide textures that Blizzard's SetUp re-applies
+            ContainedAlertFrame.Background:Hide()
+            ContainedAlertFrame.Icon.Overlay:Hide()
         end
     end
     function Skin.GuildChallengeAlertFrameTemplate(ContainedAlertFrame)
@@ -586,45 +594,50 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
 end
 
 function private.FrameXML.AlertFrameSystems()
-    -- Hook each alert system's SetUp function to apply the skin when a frame is acquired.
-    -- setUpFunction(frame, ...) is called every time an alert is shown (first create and reuse),
-    -- which is the correct replacement for the removed Hook.ObjectPoolMixin:Acquire hook.
+    -- Hook each alert system's setUpFunction on the subsystem object directly.
+    -- Blizzard stores direct function references in subsystem.setUpFunction before
+    -- addons load, so hooksecurefunc on the global function name never fires
+    -- (the call goes through the stored reference, bypassing the global wrapper).
+    -- By hooking the table entry on the subsystem itself, self.setUpFunction
+    -- resolves to the wrapper and the hook fires reliably.
 
     -- Simple Alerts
-    _G.hooksecurefunc("GuildChallengeAlertFrame_SetUp",             function(frame) Skin.GuildChallengeAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("DungeonCompletionAlertFrame_SetUp",          function(frame) Skin.DungeonCompletionAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("ScenarioAlertFrame_SetUp",                   function(frame) Skin.ScenarioAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("ScenarioLegionInvasionAlertFrame_SetUp",     function(frame) Skin.ScenarioLegionInvasionAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("GarrisonBuildingAlertFrame_SetUp",           function(frame) Skin.GarrisonBuildingAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("GarrisonMissionAlertFrame_SetUp",            function(frame) Skin.GarrisonMissionAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("GarrisonRandomMissionAlertFrame_SetUp",      function(frame) Skin.GarrisonRandomMissionAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("GarrisonFollowerAlertFrame_SetUp",           function(frame) Skin.GarrisonStandardFollowerAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("GarrisonShipFollowerAlertFrame_SetUp",       function(frame) Skin.GarrisonShipFollowerAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("GarrisonTalentAlertFrame_SetUp",             function(frame) Skin.GarrisonTalentAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("DigsiteCompleteToastFrame_SetUp",            function(frame) Skin.DigsiteCompleteToastFrameTemplate(frame) end)
-    _G.hooksecurefunc("EntitlementDeliveredAlertFrame_SetUp",       function(frame) Skin.EntitlementDeliveredAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("RafRewardDeliveredAlertFrame_SetUp",         function(frame) Skin.RafRewardDeliveredAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("WorldQuestCompleteAlertFrame_SetUp",         function(frame) Skin.WorldQuestCompleteAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("LegendaryItemAlertFrame_SetUp",              function(frame) Skin.LegendaryItemAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GuildChallengeAlertSystem, "setUpFunction",              function(frame) Skin.GuildChallengeAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.DungeonCompletionAlertSystem, "setUpFunction",           function(frame) Skin.DungeonCompletionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.ScenarioAlertSystem, "setUpFunction",                    function(frame) Skin.ScenarioAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.InvasionAlertSystem, "setUpFunction",                    function(frame) Skin.ScenarioLegionInvasionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GarrisonBuildingAlertSystem, "setUpFunction",            function(frame) Skin.GarrisonBuildingAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GarrisonMissionAlertSystem, "setUpFunction",             function(frame) Skin.GarrisonMissionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GarrisonShipMissionAlertSystem, "setUpFunction",         function(frame) Skin.GarrisonMissionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GarrisonRandomMissionAlertSystem, "setUpFunction",       function(frame) Skin.GarrisonRandomMissionAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GarrisonFollowerAlertSystem, "setUpFunction",            function(frame) Skin.GarrisonStandardFollowerAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GarrisonShipFollowerAlertSystem, "setUpFunction",        function(frame) Skin.GarrisonShipFollowerAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.GarrisonTalentAlertSystem, "setUpFunction",              function(frame) Skin.GarrisonTalentAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.DigsiteCompleteAlertSystem, "setUpFunction",             function(frame) Skin.DigsiteCompleteToastFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.EntitlementDeliveredAlertSystem, "setUpFunction",        function(frame) Skin.EntitlementDeliveredAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.RafRewardDeliveredAlertSystem, "setUpFunction",          function(frame) Skin.RafRewardDeliveredAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.WorldQuestCompleteAlertSystem, "setUpFunction",          function(frame) Skin.WorldQuestCompleteAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.LegendaryItemAlertSystem, "setUpFunction",               function(frame) Skin.LegendaryItemAlertFrameTemplate(frame) end)
 
     -- Queued Alerts
-    _G.hooksecurefunc("AchievementAlertFrame_SetUp",                function(frame) Skin.AchievementAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("CriteriaAlertFrame_SetUp",                   function(frame) Skin.CriteriaAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("LootWonAlertFrame_SetUp",                    function(frame) Skin.LootWonAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("LootUpgradeFrame_SetUp",                     function(frame) Skin.LootUpgradeFrameTemplate(frame) end)
-    _G.hooksecurefunc("MoneyWonAlertFrame_SetUp",                   function(frame) Skin.MoneyWonAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("HonorAwardedAlertFrame_SetUp",               function(frame) Skin.HonorAwardedAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("NewRecipeLearnedAlertFrame_SetUp",           function(frame) Skin.NewRecipeLearnedAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("NewPetAlertFrame_SetUp",                     function(frame) Skin.NewPetAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("NewMountAlertFrame_SetUp",                   function(frame) Skin.NewMountAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("NewToyAlertFrame_SetUp",                     function(frame) Skin.NewToyAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("NewWarbandSceneAlertFrame_SetUp",            function(frame) Skin.NewWarbandSceneAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("NewRuneforgePowerAlertSystem_SetUp",         function(frame) Skin.NewRuneforgePowerAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("NewCosmeticAlertFrameSystem_SetUp",          function(frame) Skin.NewCosmeticAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("MonthlyActivityAlertFrame_SetUp",            function(frame) Skin.MonthlyActivityFrameTemplate(frame) end)
-    _G.hooksecurefunc("HousingItemEarnedAlertFrameSystem_SetUp",    function(frame) Skin.HousingItemEarnedAlertFrameTemplate(frame) end)
-    _G.hooksecurefunc("InitiativeTaskCompleteAlertFrameSystem_SetUp", function(frame) Skin.InitiativeTaskCompleteAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.AchievementAlertSystem, "setUpFunction",                 function(frame) Skin.AchievementAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.CriteriaAlertSystem, "setUpFunction",                    function(frame) Skin.CriteriaAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.LootAlertSystem, "setUpFunction",                        function(frame) Skin.LootWonAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.LootUpgradeAlertSystem, "setUpFunction",                 function(frame) Skin.LootUpgradeFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.MoneyWonAlertSystem, "setUpFunction",                    function(frame) Skin.MoneyWonAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.HonorAwardedAlertSystem, "setUpFunction",                function(frame) Skin.HonorAwardedAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.NewRecipeLearnedAlertSystem, "setUpFunction",            function(frame) Skin.NewRecipeLearnedAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.NewPetAlertSystem, "setUpFunction",                      function(frame) Skin.NewPetAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.NewMountAlertSystem, "setUpFunction",                    function(frame) Skin.NewMountAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.NewToyAlertSystem, "setUpFunction",                      function(frame) Skin.NewToyAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.NewWarbandSceneAlertSystem, "setUpFunction",             function(frame) Skin.NewWarbandSceneAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.NewRuneforgePowerAlertSystem, "setUpFunction",           function(frame) Skin.NewRuneforgePowerAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.NewCosmeticAlertFrameSystem, "setUpFunction",            function(frame) Skin.NewCosmeticAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.MonthlyActivityAlertSystem, "setUpFunction",             function(frame) Skin.MonthlyActivityFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.HousingItemEarnedAlertFrameSystem, "setUpFunction",      function(frame) Skin.HousingItemEarnedAlertFrameTemplate(frame) end)
+    _G.hooksecurefunc(_G.InitiativeTaskCompleteAlertFrameSystem, "setUpFunction", function(frame) Skin.InitiativeTaskCompleteAlertFrameTemplate(frame) end)
 
+    -- DungeonCompletion reward hooks (called via global lookup from within SetUp, so global hook works)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardMoney", Hook.DungeonCompletionAlertFrameReward_SetRewardMoney)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardXP", Hook.DungeonCompletionAlertFrameReward_SetRewardXP)
     _G.hooksecurefunc("DungeonCompletionAlertFrameReward_SetRewardItem", Hook.DungeonCompletionAlertFrameReward_SetRewardItem)
