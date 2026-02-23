@@ -7,20 +7,8 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Skin = Aurora.Skin
 -- local Util = Aurora.Util
-
-do --[[ AddOns\Blizzard_CompactRaidFrames.lua ]]
-    do --[[ Blizzard_CompactRaidFrameManager ]]
-        function Hook.CompactRaidFrameManager_Toggle(self)
-            if self.collapsed then
-                Base.SetTexture(self.toggleButton:GetNormalTexture(), "arrowRight")
-            else
-                Base.SetTexture(self.toggleButton:GetNormalTexture(), "arrowLeft")
-            end
-         end
-    end
-end
 
 do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
     function Skin.CRFManagerFilterButtonTemplate(Button)
@@ -74,8 +62,6 @@ function private.AddOns.Blizzard_CompactRaidFrames()
     ----====####$$$$%%%%%%$$$$####====----
     -- Blizzard_CompactRaidFrameManager --
     ----====####$$$$%%%%%%$$$$####====----
-    _G.hooksecurefunc("CompactRaidFrameManager_Toggle", Hook.CompactRaidFrameManager_Toggle)
-
     local CompactRaidFrameManager = _G.CompactRaidFrameManager
     CompactRaidFrameManager:DisableDrawLayer("ARTWORK")
     Skin.FrameTypeFrame(CompactRaidFrameManager)
