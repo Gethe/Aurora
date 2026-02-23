@@ -1,4 +1,46 @@
-﻿## [12.0.1.5] ##
+﻿## [12.0.1.6] ##
+### Fixed ###
+  * fix: skinning of BankFrame
+  * fix: skins for PVEFrame tabs
+  * fix: Blizzard_AddOnList - skinning AddonList entries
+  * fix: skin - replace removed convertToGroup/convertToRaid with new settings button in CompactRaidFrameManager
+  * fix: removed dead code from GossipFrame
+  * fix: AlertFrameSystem - updated to cover all 31 alert systems (up from 8)
+  * fix: safeguard Util.Mixin
+  * fix: RecruitAFriendRewardsFrame.rewardPool can no longer use ObjectPoolMixin
+  * fix: ZoneAbilityFrameTemplate
+  * fix: replacement of dead Hook.ObjectPoolMixin with proper acquires
+  * fix: removed deprecated Wardrobe code from Collections
+  * fix: ArchaeologyUI fixes
+  * fix: skinning of AchievementUI was incomplete
+  * fix: cleaned up deprecated code in Blizzard_ArchaeologyUI
+  * fix: Blizzard_TimeManager to no longer use deprecated APIs
+  * fix: skin StopwatchResetButton/StopwatchPlayPauseButton from Blizzard_TimeManager
+  * fix: SpecificScrollBox taint
+  * fix: LFD/LFG/LFR fixes for Frames/RaidFinder
+  * fix: partly fixed taint bug in the Blizzard_Communities - Guild Finder
+  * fix: instanceButton gets garbled by DropIcon
+  * fix: updated ObjectiveTracker for WOW11+
+  * fix: Blizzard_StaticPopup_Game_GameDialog updated for WOW12
+  * fix: Blizzard_ActionBarController updated for wow12
+  * fix: updated OrderHallUI for wow12
+  * fix: Blizzard_AuctionHouseUI for wow12
+  * fix: updated Blizzard_Collections for wow12
+  * fix: updated Blizzard_Collections ToggleDynamicFlightFlyoutButton
+  * fix: LFGList menus
+  * fix: added fixes to FriendsFrame
+
+### Changed ###
+  * chg: update for wow12 compatibility
+  * chg: cleanup deprecated compatibility API from deprecated.lua
+  * chg: cleaned up Blizzard_UIPanels_Game QuestMapFrame
+
+### Removed ###
+  * removed: Hook.ObjectPoolMixin removed in 11.0.0 (private API), no replacement
+  * removed: Blizzard_SharedXMLBase\Pools.lua - dead code
+  * removed: unused and outdated code from Blizzard_Calendar
+
+## [12.0.1.5] ##
 ### Added ###
   * add: skinning Blizzard_Professions
   * add: skinning of all Blizzard_PlayerSpells panels
@@ -95,6 +137,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.6]: https://github.com/Haleth/Aurora/compare/12.0.1.5...12.0.1.6
 [12.0.1.5]: https://github.com/Haleth/Aurora/compare/12.0.1.4...12.0.1.5
 [12.0.1.4]: https://github.com/Haleth/Aurora/compare/12.0.1.3...12.0.1.4
 [12.0.1.3]: https://github.com/Haleth/Aurora/compare/12.0.1.2...12.0.1.3
