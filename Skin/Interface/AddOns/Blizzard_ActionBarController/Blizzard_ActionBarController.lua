@@ -181,11 +181,12 @@ do --[[ FrameXML\ActionBarController.xml ]]
     end
     do --[[ StatusTrackingBarTemplate.xml ]]
         local statusBarMap = {
-            "ReputationStatusBarTemplate",
-            "HonorStatusBarTemplate",
-            "ArtifactStatusBarTemplate",
-            "ExpStatusBarTemplate",
-            "AzeriteBarTemplate",
+            "ReputationStatusBarTemplate",   -- [1] Reputation
+            "HonorStatusBarTemplate",        -- [2] Honor
+            "ArtifactStatusBarTemplate",     -- [3] Artifact
+            "ExpStatusBarTemplate",          -- [4] Experience
+            "AzeriteBarTemplate",            -- [5] Azerite
+            "HouseFavorBarTemplate",         -- [6] HouseFavor
         }
         function Skin.StatusTrackingBarTemplate(Frame)
             _G.hooksecurefunc(Frame, "Hide", function(dialog)
@@ -202,8 +203,11 @@ do --[[ FrameXML\ActionBarController.xml ]]
         end
         function Skin.StatusTrackingBarContainerTemplate(Frame)
             Frame.BarFrameTexture:Hide()
-            for i, bar in ipairs(Frame.bars) do
-                Skin[statusBarMap[i]](bar)
+            for i, bar in pairs(Frame.bars) do
+                local skinName = statusBarMap[i]
+                if skinName and Skin[skinName] then
+                    Skin[skinName](bar)
+                end
             end
         end
     end
@@ -252,6 +256,11 @@ do --[[ FrameXML\ActionBarController.xml ]]
     end
     do --[[ HonorBar.xml ]]
         function Skin.HonorStatusBarTemplate(Frame)
+            Skin.StatusTrackingBarTemplate(Frame)
+        end
+    end
+    do --[[ HouseFavorBar.xml ]]
+        function Skin.HouseFavorBarTemplate(Frame)
             Skin.StatusTrackingBarTemplate(Frame)
         end
     end
@@ -683,9 +692,8 @@ function private.FrameXML.Blizzard_ActionBarController()
     ----====####$$$$%%%%%$$$$####====----
     if not private.disabled.mainmenubar and private.isRetail then
         Util.Mixin(_G.StatusTrackingBarManager, Hook.StatusTrackingManagerMixin)
-        -- FIXLATER -- this is now a Mixin, so we need to hook the :New method to apply the mixin to new bars
-        -- Skin.StatusTrackingBarContainerTemplate(_G.MainStatusTrackingBarContainer)
-        -- Skin.StatusTrackingBarContainerTemplate(_G.SecondaryStatusTrackingBarContainer)
+        Skin.StatusTrackingBarContainerTemplate(_G.MainStatusTrackingBarContainer)
+        Skin.StatusTrackingBarContainerTemplate(_G.SecondaryStatusTrackingBarContainer)
     end
 
 
