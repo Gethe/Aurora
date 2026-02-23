@@ -18,24 +18,23 @@ do --[[ AddOns\Blizzard_OrderHallUI.lua ]]
             self.Background:SetPoint("BOTTOMRIGHT")
         end
         function Hook.OrderHallTalentFrameMixin:RefreshAllData()
-            -- FIXLATER
-            -- for choiceBackground in self.choiceTrackTexturePool:EnumerateActive() do
-            --     if choiceBackground:GetAtlas():find("-on") then
-            --         choiceBackground._auroraLeft:Hide()
-            --         choiceBackground._auroraRight:Hide()
-            --     else
-            --         choiceBackground._auroraLeft:Show()
-            --         choiceBackground._auroraRight:Show()
-            --     end
-            -- end
-            -- for _, pulsingArrows in self.arrowTexturePool:EnumerateInactive() do
-            --     pulsingArrows._auroraLeft:Hide()
-            --     pulsingArrows._auroraRight:Hide()
-            -- end
-            -- for pulsingArrows in self.arrowTexturePool:EnumerateActive() do
-            --     pulsingArrows._auroraLeft:Show()
-            --     pulsingArrows._auroraRight:Show()
-            -- end
+            for choiceBackground in self.choiceTrackTexturePool:EnumerateActive() do
+                if choiceBackground:GetAtlas():find("-on") then
+                    choiceBackground._auroraLeft:Hide()
+                    choiceBackground._auroraRight:Hide()
+                else
+                    choiceBackground._auroraLeft:Show()
+                    choiceBackground._auroraRight:Show()
+                end
+            end
+            for _, pulsingArrows in ipairs(self.arrowTexturePool.inactiveObjects) do
+                pulsingArrows._auroraLeft:Hide()
+                pulsingArrows._auroraRight:Hide()
+            end
+            for pulsingArrows in self.arrowTexturePool:EnumerateActive() do
+                pulsingArrows._auroraLeft:Show()
+                pulsingArrows._auroraRight:Show()
+            end
 
             for talentFrame in self.buttonPool:EnumerateActive() do
                 if talentFrame._auroraIconBorder then
@@ -57,7 +56,6 @@ do --[[ AddOns\Blizzard_OrderHallUI.lua ]]
 
         Hook.GarrisonTalentButtonMixin = {}
         function Hook.GarrisonTalentButtonMixin:SetBorder(borderAtlas)
-            -- FIXLATER
             if self._auroraIconBorder then
                 if borderAtlas then
                     self._auroraIconBorder:SetColorTexture(Color.yellow:GetRGB())
@@ -140,9 +138,6 @@ function private.AddOns.Blizzard_OrderHallUI()
     ----====####$$$$%%%%%$$$$####====----
     local OrderHallTalentFrame = _G.OrderHallTalentFrame
     Util.Mixin(OrderHallTalentFrame, Hook.OrderHallTalentFrameMixin)
-    -- Util.Mixin(Button, Hook.GarrisonTalentButtonMixin)
-    -- FIXLATER
-    -- Util.Mixin(OrderHallTalentFrame, Hook.GarrisonTalentButtonMixin)
 
     Skin.PortraitFrameTemplate(OrderHallTalentFrame)
     OrderHallTalentFrame.CurrencyBG:SetAlpha(0)
@@ -150,7 +145,6 @@ function private.AddOns.Blizzard_OrderHallUI()
     Base.CropIcon(OrderHallTalentFrame.Currency.Icon, OrderHallTalentFrame.Currency)
     Skin.InsetFrameTemplate(OrderHallTalentFrame.Inset)
     Skin.UIPanelButtonTemplate(OrderHallTalentFrame.BackButton)
-    -- Skin.GarrisonTalentButtonTemplate(OrderHallTalentFrame.buttonPool)
 
     OrderHallTalentFrame.Background:SetAlpha(0.5)
     OrderHallTalentFrame.Background:SetPoint("BOTTOMRIGHT")
