@@ -1,4 +1,19 @@
-﻿## [12.0.1.6] ##
+﻿## [12.0.1.7] ##
+### Added ###
+  * add: Blizzard_HousingDashboard skin
+  * add: skin for EventToastManager
+
+### Fixed ###
+  * fix: another tain in UIWidgets
+  * fix: hooking of alerts
+  * fix: for uiscale
+  * fix: random taints
+  * fix: uiScale taints
+  * fix: error in Blizzard_CompactRaidFrames
+  * fix: updates to Blizzard_HousingDashboard
+
+
+## [12.0.1.6] ##
 ### Fixed ###
   * fix: skinning of BankFrame
   * fix: skins for PVEFrame tabs
@@ -70,6 +85,7 @@
 ### Changed ###
   * chg: remove isPatch as it is no longer used
 
+
 ## [12.0.1.3] ##
 
 ** wrongly tagged **
@@ -81,6 +97,7 @@
   * fix: Updated DeathRecap skin for WoW 12 API changes
   * fix: Wrapped debug name handling to safely process tainted/secret strings from WoW API values
 
+
 ### Changed ###
   * chg: Added Blizzard_PlayerSpells skinning and follow-up cleanup
   * chg: Updated Aurora options menu
@@ -88,6 +105,7 @@
   * chg: Added configuration management system, color/highlight management, theme/frame processing, and configuration UI
   * chg: Integrated analytics/external systems and finalized integration polish
   * chore: linting updates
+
 
 ## [12.0.1.1] ##
 ### Fixed ###
@@ -100,17 +118,20 @@
   * fix: crash path in the chat bubble skin.
   * fix: prevents secret-value violations in chatbubbles
 
+
 ## [12.0.1.0] ##
 ### Fixed ###
   * chg: Hook_SetStatusBarTexture now uses pcall when indexing private.assetColors (prevents protected/secret-index error)
   * chg: fix 12.0.1 tables now being secret
   * chg: combat-safeMultiActionBar skinning so the action bar buttons are only skinned out of combat
 
+
 ## [12.0.0.2] ##
 ### Fixed ###
   * chg: fix hooking of SetPortraitToTexture and BuildIconArray if they exist
   * chg: avoid passing secret widgetSizeSetting into SetWidth.
   * fix: chatframe errors in raid
+
 
 ## [12.0.0.1] ##
 ### Fixed ###
@@ -122,6 +143,7 @@
   * chg: skin EncounterJournalJourneysTab
   * fix: DressUpFrame fixes for wow12
   * chg: skin TutorialsFrame.Contents.StartButton
+
 
 ## [12.0.0.0] ##
 ### Fixed ###
@@ -137,6 +159,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.7]: https://github.com/Haleth/Aurora/compare/12.0.1.6...12.0.1.7
 [12.0.1.6]: https://github.com/Haleth/Aurora/compare/12.0.1.5...12.0.1.6
 [12.0.1.5]: https://github.com/Haleth/Aurora/compare/12.0.1.4...12.0.1.5
 [12.0.1.4]: https://github.com/Haleth/Aurora/compare/12.0.1.3...12.0.1.4
