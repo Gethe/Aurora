@@ -200,8 +200,7 @@ function private.FrameXML.FriendsFrame()
     local FriendsListFrame = _G.FriendsListFrame
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameAddFriendButton)
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameSendMessageButton)
-    -- FIXLATER
-    --- Skin.WowStyle1FilterDropdownTemplate(FriendsListFrame.FilterDropdown)
+    Skin.DropdownButton(FriendsListFrame.FilterDropdown)
     Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
     Skin.WowScrollBoxList(FriendsListFrame.ScrollBox)
     Skin.MinimalScrollBar(FriendsListFrame.ScrollBar)
@@ -235,9 +234,7 @@ function private.FrameXML.FriendsFrame()
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader1)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader2)
 
-    -- FIXLATER
     Skin.DropdownButton(_G.WhoFrameDropdown)
-    -- _G.WhoFrameDropdownHighlightTexture:SetAlpha(0)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader3)
     Skin.WhoFrameColumnHeaderTemplate(_G.WhoFrameColumnHeader4)
 
@@ -305,9 +302,7 @@ function private.FrameXML.FriendsFrame()
     -------------------------
     local FriendsFriendsFrame = _G.FriendsFriendsFrame
     Skin.DialogBorderTemplate(FriendsFriendsFrame.Border)
-    -- FIXLATER
-    -- FriendsFriendsFrameDropdown:Enable(); FriendsFriendsFrameDropdown:GenerateMenu();
-    -- Skin.DropdownButton(_G.FriendsFriendsFrameDropdown)
+    Skin.DropdownButton(_G.FriendsFriendsFrameDropdown)
     Util.HideNineSlice(FriendsFriendsFrame.ScrollFrameBorder)
     Skin.WowScrollBoxList(FriendsFriendsFrame.ScrollBox)
     Skin.MinimalScrollBar(FriendsFriendsFrame.ScrollBar)
