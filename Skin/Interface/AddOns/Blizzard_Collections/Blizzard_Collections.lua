@@ -53,32 +53,7 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
         end
     end
     do --[[ Blizzard_HeirloomCollection ]]
-        -- local NO_CLASS_FILTER = 0
-        -- local NO_SPEC_FILTER = 0
-
         Hook.HeirloomsMixin = {}
-        -- FIXLATER ?? this has been removed
-        -- function Hook.HeirloomsMixin:UpdateClassFilterDropDownText()
-        --     local text
-        --     local classFilter, specFilter = _G.C_Heirloom.GetClassAndSpecFilters()
-        --    	if classFilter == UNSPECIFIED_CLASS_FILTER and specFilter == UNSPECIFIED_SPEC_FILTER then
-        --         text = _G.ALL_CLASSES
-        --     else
-        --         local classInfo = _G.C_CreatureInfo.GetClassInfo(classFilter)
-        --         if not classInfo then
-        --             return
-        --         end
-
-        --         local classColorStr = _G.CUSTOM_CLASS_COLORS[classInfo.classFile].colorStr
-        --         if specFilter == NO_SPEC_FILTER then
-        --             text = _G.HEIRLOOMS_CLASS_FILTER_FORMAT:format(classColorStr, classInfo.className)
-        --         else
-        --             local specName = _G.GetSpecializationNameForSpecID(specFilter)
-        --             text = _G.HEIRLOOMS_CLASS_SPEC_FILTER_FORMAT:format(classColorStr, classInfo.className, specName)
-        --         end
-        --     end
-        --     _G.UIDropDownMenu_SetText(self.classDropDown, text)
-        -- end
         function Hook.HeirloomsMixin:UpdateButton(button)
             if not button._auroraSkinned then
                 Skin.HeirloomSpellButtonTemplate(button)
@@ -510,12 +485,8 @@ function private.AddOns.Blizzard_Collections()
 
     Skin.UIPanelSpellButtonFrameTemplate(MountJournal.SummonRandomFavoriteSpellFrame.Button)
     -- MountJournal.SummonRandomFavoriteSpellFrame.Button:SetSize(38, 38)
-    -- FIXLATER
-    -- Util.Mixin(MountJournal.ToggleDynamicFlightFlyoutPopupButton, Hook.FlyoutButtonMixin)
-    -- MountJournal.DynamicFlightFlyoutPopup.Button:SetSize(38, 38)
-    -- DynamicFlightFlyoutPopup.OpenDynamicFlightSkillTreeButton:SetSize(38, 38)
-
-
+    -- TODO: Skin ToggleDynamicFlightFlyoutButton once Blizzard_Flyout is ready
+    -- Util.Mixin(MountJournal.ToggleDynamicFlightFlyoutButton, Hook.FlyoutButtonMixin)
     -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame.Button, MountJournal.SummonRandomFavoriteSpellFrame)
     -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:PushedTexture())
     -- Base.CropIcon(MountJournal.SummonRandomFavoriteSpellFrame:HighlightTexture())
@@ -561,18 +532,8 @@ function private.AddOns.Blizzard_Collections()
     Skin.MainHelpPlateButton(PetJournal.MainHelpButton)
     PetJournal.MainHelpButton:SetPoint("TOPLEFT", PetJournal, "TOPLEFT", -15, 15)
 
-    -- FIXLATER
-    -- replaced by HealPetSpellFrame
-    -- Base.CropIcon(PetJournal.HealPetSpellFrame.texture, PetJournal.HealPetButton)
-    -- Base.CropIcon(PetJournal.HealPetSpellFrame:GetPushedTexture())
-    -- Base.CropIcon(PetJournal.HealPetSpellFrame:GetHighlightTexture())
-    -- _G.PetJournalHealPetButtonBorder:Hide()
-
-    -- FIXLATER replaced by SummonRandomPetSpellFrame
-    -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton.texture, PetJournal.SummonRandomFavoritePetButton)
-    -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetPushedTexture())
-    -- Base.CropIcon(PetJournal.SummonRandomFavoritePetButton:GetHighlightTexture())
-    -- _G.PetJournalSummonRandomFavoritePetButtonBorder:Hide()
+    Skin.UIPanelSpellButtonFrameTemplate(PetJournal.HealPetSpellFrame.Button)
+    Skin.UIPanelSpellButtonFrameTemplate(PetJournal.SummonRandomPetSpellFrame.Button)
 
     Skin.InsetFrameTemplate(PetJournal.LeftInset)
     Skin.InsetFrameTemplate(PetJournal.PetCardInset)
