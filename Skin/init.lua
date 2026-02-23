@@ -56,26 +56,33 @@ function private.UpdateUIScale()
             return
         end
         uiScaleChanging = true
-        -- Set Scale (WoW CVar can't go below .64)
-        if cvarScale ~= pixelScale then
-            --[[ Setting the `uiScale` cvar will taint the ObjectiveTracker, and by extention the
-                WorldMap and map action button. As such, we only use that if we absolutly have to.]]
-            _G.SetCVar("uiScale", _G.max(pixelScale, 0.64))
-        end
+        --[[ UIParent:SetScale() from addon code taints C_ActionBar.GetActionBarPage() and related
+            action bar page APIs, causing ADDON_ACTION_BLOCKED errors on MultiBar:ShowBase() during
+            combat. Prefer SetCVar("uiScale") which lets the engine apply the scale securely.
+            SetCVar has a minimum of 0.64, so UIParent:SetScale() is only used as a fallback for
+            sub-0.64 scales. SetCVar may taint the ObjectiveTracker but that is far less disruptive
+            than broken action bars in combat. ]]
         if parentScale ~= pixelScale then
-            --[[ Calling UIParent:SetScale() from addon (insecure) code taints C_ActionBar.GetActionBarPage()
-                and related action bar page APIs. This causes "attempt to compare a secret number value"
-                errors in ActionBarActionButtonMixin:UpdatePressAndHoldAction(). Defer if in combat. ]]
-            if _G.InCombatLockdown() then
-                local deferFrame = _G.CreateFrame("Frame")
-                deferFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-                deferFrame:SetScript("OnEvent", function(self)
-                    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-                    self:SetScript("OnEvent", nil)
-                    _G.UIParent:SetScale(pixelScale)
-                end)
+            if pixelScale >= 0.64 then
+                if cvarScale ~= pixelScale then
+                    _G.SetCVar("uiScale", pixelScale)
+                end
             else
-                _G.UIParent:SetScale(pixelScale)
+                -- Scale is below CVar minimum; set CVar as close as possible, then SetScale
+                if cvarScale ~= 0.64 then
+                    _G.SetCVar("uiScale", 0.64)
+                end
+                if _G.InCombatLockdown() then
+                    local deferFrame = _G.CreateFrame("Frame")
+                    deferFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+                    deferFrame:SetScript("OnEvent", function(self)
+                        self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+                        self:SetScript("OnEvent", nil)
+                        _G.UIParent:SetScale(pixelScale)
+                    end)
+                else
+                    _G.UIParent:SetScale(pixelScale)
+                end
             end
         end
         uiScaleChanging = false
