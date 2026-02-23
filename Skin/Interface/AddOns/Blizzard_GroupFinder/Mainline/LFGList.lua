@@ -269,9 +269,6 @@ function private.FrameXML.LFGList()
     ------------------
     local LFGListFrame =_G.LFGListFrame
 
-    -- FIXLATER - removed/replaced -LFGListSearchEntry_CreateContextMenu
-    -- Skin.DropdownButton(_G.LFGListFrameDropDown)
-
     -- CategorySelection --
     local CategorySelection = LFGListFrame.CategorySelection
     Skin.InsetFrameTemplate(CategorySelection.Inset)
