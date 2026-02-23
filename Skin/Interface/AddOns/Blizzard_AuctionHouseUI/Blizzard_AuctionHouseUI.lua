@@ -235,7 +235,6 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseFavoritesSearchButtonTemplate(Frame.FavoritesSearchButton)
             Skin.AuctionHouseSearchBoxTemplate(Frame.SearchBox)
             Skin.AuctionHouseSearchButtonTemplate(Frame.SearchButton)
-            -- FIXLATER
             Skin.AuctionHouseFilterButtonTemplate(Frame.FilterButton)
         end
     end
