@@ -6,9 +6,9 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
--- local Base = Aurora.Base
+local Base = Aurora.Base
 local Skin = Aurora.Skin
--- local Color = Aurora.Color
+local Color = Aurora.Color
 
 --do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 --end
@@ -18,34 +18,11 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
         Skin.FrameTypeButton(Button)
     end
 
-    -- local function CloseButton_SetNormalTexture(Button, texture)
-    --     if Button._setNormal then return end
-    --     Button._setNormal = true
-    --     Button:ClearNormalTexture()
-    --     if texture:find("Hide") then
-    --         Button._auroraTextures[1]:Hide()
-    --         Button._auroraTextures[2]:Hide()
-    --         Button._auroraTextures[3]:Show()
-    --     else
-    --         Button._auroraTextures[1]:Show()
-    --         Button._auroraTextures[2]:Show()
-    --         Button._auroraTextures[3]:Hide()
-    --     end
-    --     Button._setNormal = nil
-    -- end
-
-    -- local function CloseButton_SetPushedTexture(Button, texture)
-    --     if Button._setPushed then return end
-    --     Button._setPushed = true
-    --     Button:ClearPushedTexture()
-    --     Button._setPushed = nil
-    -- end
     function Skin.StaticPopupTemplate(Frame)
         if ((not Frame) and private.isDev) then
             _G.print("ReportError: Frame is nil in StaticPopupTemplate - Report to Aurora developers.")
             return
         end
-        -- FIXLATER?
         local background = Frame.BG -- did 11.2.7 remove BG from StaticPopupTemplate??
         background.Top:SetTexture("")
         -- background.Bottom:SetTexture("")
@@ -65,12 +42,11 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
             Skin.StaticPopupButtonTemplate(Buttons[i])
         end
 
-        -- FIXLATER
-        -- local EditBox = _G[name .. "EditBox"]
-        -- EditBox.Left = _G[name .. "EditBoxLeft"]
-        -- EditBox.Right = _G[name .. "EditBoxRight"]
-        -- EditBox.Middle = _G[name .. "EditBoxMid"]
-        -- Skin.InputBoxTemplate(EditBox) -- BlizzWTF: this should use InputBoxTemplate
+        -- EditBox now uses parentKey (not global string lookup) and TooltipBackdropTemplate
+        -- (no Left/Right/Middle textures), so FrameTypeEditBox handles it directly.
+        if Frame.EditBox then
+            Skin.FrameTypeEditBox(Frame.EditBox)
+        end
 
         Skin.SmallMoneyFrameTemplate(Frame.MoneyFrame)
         Skin.MoneyInputFrameTemplate(Frame.MoneyInputFrame)
@@ -82,12 +58,12 @@ do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
 
         Skin.FrameTypeItemButton(ItemFrame.Item)
         ItemFrame.Item.IconBorder:Hide()
-        -- FIXLATER
-        -- local nameBG = _G.CreateFrame("Frame", nil, ItemFrame)
-        -- nameBG:SetPoint("TOPLEFT", ItemFrame.icon, "TOPRIGHT", 2, 1)
-        -- nameBG:SetPoint("BOTTOMLEFT", ItemFrame.icon, "BOTTOMRIGHT", 2, -1)
-        -- nameBG:SetPoint("RIGHT", 120, 0)
-        -- Base.SetBackdrop(nameBG, Color.frame)
+        -- ItemFrame.icon → ItemFrame.Item (ItemButton) in WoW 11
+        local nameBG = _G.CreateFrame("Frame", nil, ItemFrame)
+        nameBG:SetPoint("TOPLEFT", ItemFrame.Item, "TOPRIGHT", 2, 1)
+        nameBG:SetPoint("BOTTOMLEFT", ItemFrame.Item, "BOTTOMRIGHT", 2, -1)
+        nameBG:SetPoint("RIGHT", -4, 0)
+        Base.SetBackdrop(nameBG, Color.frame)
     end
 end
 
@@ -97,4 +73,3 @@ function private.FrameXML.Blizzard_StaticPopup_Game_GameDialog()
     Skin.StaticPopupTemplate(_G.StaticPopup3)
     Skin.StaticPopupTemplate(_G.StaticPopup4)
 end
-
