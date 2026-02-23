@@ -432,7 +432,149 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
     -- Blizzard_UIWidgetTemplateHorizontalCurrencies --
     ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Mirrors Blizzard's local GetTextColorForEnabledState
+    local function SafeGetTextColorForEnabledState(enabledState, overrideNormalFontColor)
+        if enabledState == _G.Enum.WidgetEnabledState.Disabled then
+            return _G.DISABLED_FONT_COLOR
+        elseif enabledState == _G.Enum.WidgetEnabledState.Red then
+            return _G.RED_FONT_COLOR
+        elseif enabledState == _G.Enum.WidgetEnabledState.White then
+            return _G.HIGHLIGHT_FONT_COLOR
+        elseif enabledState == _G.Enum.WidgetEnabledState.Green then
+            return _G.GREEN_FONT_COLOR
+        elseif enabledState == _G.Enum.WidgetEnabledState.Artifact then
+            return _G.ARTIFACT_GOLD_COLOR
+        elseif enabledState == _G.Enum.WidgetEnabledState.Black then
+            return _G.BLACK_FONT_COLOR
+        elseif enabledState == _G.Enum.WidgetEnabledState.BrightBlue then
+            return _G.BRIGHTBLUE_FONT_COLOR
+        else
+            return overrideNormalFontColor or _G.NORMAL_FONT_COLOR
+        end
+    end
 
+    -- Mirrors Blizzard's local currencyIconSizes / GetCurrencyIconSize
+    local currencyIconSizeLookup = {
+        [_G.Enum.WidgetIconSizeType.Small]    = 16,
+        [_G.Enum.WidgetIconSizeType.Medium]   = 20,
+        [_G.Enum.WidgetIconSizeType.Large]    = 22,
+        [_G.Enum.WidgetIconSizeType.Standard] = 18,
+    }
+    local function SafeGetCurrencyIconSize(iconSizeType)
+        return currencyIconSizeLookup[iconSizeType] or currencyIconSizeLookup[_G.Enum.WidgetIconSizeType.Small]
+    end
+
+    -- Replace UIWidgetBaseCurrencyTemplateMixin.Setup to avoid taint: font objects
+    -- modified by Aurora cause GetWidth()/GetHeight() to return secret numbers,
+    -- breaking arithmetic in the original Blizzard code.
+    if _G.UIWidgetBaseCurrencyTemplateMixin and _G.UIWidgetBaseCurrencyTemplateMixin.Setup then
+        _G.UIWidgetBaseCurrencyTemplateMixin.Setup = function(self, widgetContainer, currencyInfo, enabledState, tooltipEnabledState, hideIcon, customFont, overrideFontColor, tooltipLoc)
+            if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
+                _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
+            end
+            self:SetOverrideNormalFontColor(overrideFontColor)
+
+            local function SetUpFontString(fontstring, text)
+                if customFont then
+                    fontstring:SetText(text)
+                    fontstring:SetFontObject(customFont)
+                else
+                    local hAlignType = _G.Enum.WidgetTextHorizontalAlignmentType.Left
+                    fontstring:Setup(text, currencyInfo.textFontType, currencyInfo.textSizeType, enabledState, hAlignType)
+                end
+            end
+
+            _G.WidgetUtil.UpdateTextWithAnimation(self, _G.GenerateClosure(SetUpFontString, self.Text), currencyInfo.updateAnimType, currencyInfo.text)
+
+            local tooltip = currencyInfo.tooltip
+            if IsSecret(tooltip) then tooltip = "" end
+            self:SetTooltip(tooltip, SafeGetTextColorForEnabledState(tooltipEnabledState or enabledState))
+
+            self.Icon:SetTexture(currencyInfo.iconFileID)
+            self.Icon:SetDesaturated(enabledState == _G.Enum.WidgetEnabledState.Disabled)
+
+            local iconSize = SafeGetCurrencyIconSize(currencyInfo.iconSizeType)
+            self.Icon:SetSize(iconSize, iconSize)
+
+            self:SetEnabledState(enabledState)
+
+            local totalWidth = SafeNumber(self.Text:GetWidth(), 0)
+            local widgetHeight = SafeNumber(self.Text:GetHeight(), 0)
+
+            if currencyInfo.leadingText ~= "" then
+                SetUpFontString(self.LeadingText, currencyInfo.leadingText)
+
+                self.LeadingText:Show()
+                self.Icon:SetPoint("LEFT", self.LeadingText, "RIGHT", 5, 0)
+                totalWidth = totalWidth + SafeNumber(self.LeadingText:GetWidth(), 0) + 5
+                widgetHeight = _G.math.max(widgetHeight, SafeNumber(self.LeadingText:GetHeight(), 0))
+            else
+                self.LeadingText:Hide()
+                self.Icon:SetPoint("LEFT", self, "LEFT", 0, 0)
+            end
+
+            if hideIcon then
+                self.Icon:Hide()
+                self.Text:SetPoint("LEFT", self.Icon, "LEFT", 0, 0)
+            else
+                self.Icon:Show()
+                self.Text:SetPoint("LEFT", self.Icon, "RIGHT", 5, 0)
+                totalWidth = totalWidth + SafeNumber(self.Icon:GetWidth(), 0) + 5
+            end
+
+            self:SetWidth(totalWidth)
+            self:SetHeight(widgetHeight)
+        end
+    end
+
+    -- Replace UIWidgetTemplateHorizontalCurrenciesMixin.Setup to avoid taint:
+    -- currency frame dimensions (set by the replaced Setup above) return secret
+    -- numbers, breaking comparisons and arithmetic in the original Blizzard code.
+    if _G.UIWidgetTemplateHorizontalCurrenciesMixin and _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup then
+        _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup = function(self, widgetInfo, widgetContainer)
+            if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
+                _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
+            end
+            self.currencyPool:ReleaseAll()
+
+            local previousCurrencyFrame
+            local biggestHeight = 0
+            local totalWidth = 0
+
+            for index, currencyInfo in _G.ipairs(widgetInfo.currencies) do
+                local currencyFrame = self.currencyPool:Acquire()
+                currencyFrame:Show()
+
+                local tooltipEnabledState = currencyInfo.isCurrencyMaxed and _G.Enum.WidgetEnabledState.Red or _G.Enum.WidgetEnabledState.White
+
+                currencyFrame:Setup(widgetContainer, currencyInfo, _G.Enum.WidgetEnabledState.Yellow, tooltipEnabledState, nil, nil, nil, widgetInfo.tooltipLoc)
+
+                if previousCurrencyFrame then
+                    currencyFrame:SetPoint("TOPLEFT", previousCurrencyFrame, "TOPRIGHT", 10, 0)
+                    totalWidth = totalWidth + SafeNumber(currencyFrame:GetWidth(), 0) + 10
+                else
+                    currencyFrame:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 0)
+                    totalWidth = SafeNumber(currencyFrame:GetWidth(), 0)
+                end
+
+                currencyFrame:SetOverrideNormalFontColor(self.fontColor)
+
+                previousCurrencyFrame = currencyFrame
+
+                local currencyHeight = SafeNumber(currencyFrame:GetHeight(), 0)
+                if currencyHeight > biggestHeight then
+                    biggestHeight = currencyHeight
+                end
+            end
+
+            local widgetSizeSetting = SafeNumber(widgetInfo.widgetSizeSetting, 0)
+            local useSizeSetting = widgetSizeSetting > totalWidth
+
+            local width = useSizeSetting and (totalWidth + ((widgetSizeSetting - totalWidth) / 2)) or totalWidth
+            self:SetWidth(width)
+            self:SetHeight(biggestHeight)
+        end
+    end
 
     ----====####$$$$%%%%%%%%%%%%%$$$$####====----
     -- Blizzard_UIWidgetTemplateBulletTextList --
