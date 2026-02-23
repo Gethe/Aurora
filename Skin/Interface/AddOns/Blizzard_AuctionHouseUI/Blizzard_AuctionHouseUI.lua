@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals select ipairs min
+-- luacheck: globals
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -54,68 +54,21 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
             end
         end
     end
-    do --[[ Blizzard_AuctionHouseItemList ]]
-        Hook.AuctionHouseItemListMixin = {}
-        -- FIXLATER
-        -- function Hook.AuctionHouseItemListMixin:OnScrollBoxRangeChanged(sortPending)
-        --     if not self.hideStripes then
-        --         local index = self.ScrollBox:GetDataIndexBegin()
-        --         self.ScrollBox:ForEachFrame(function(button)
-        --             local oddRow = (index % 2) == 1
-        --             button.NormalTexture:SetColorTexture(Color.white:GetRGB())
-        --             button.NormalTexture:SetAlpha(oddRow and 0.05 or 0.0)
-        --         end)
-        --     end
-        -- end
-        -- function Hook.AuctionHouseItemListMixin:UpdateSelectionHighlights()
-        --     self.ScrollBox:ForEachFrame(function(button)
-        --         if self.highlightCallback then
-        --             local currentRowData = button.rowData
-        --             local quantity = min(self.quantitySelected or 0, currentRowData.quantity)
-        --             local highlightAlpha = _G.Lerp(0.2, 0.8, quantity / currentRowData.quantity)
-
-        --             button.SelectedHighlight:SetAlpha(highlightAlpha)
-        --         end
-        --     end)
-        -- end
-    end
     do --[[ Blizzard_AuctionHouseCategoriesList ]]
         function Hook.AuctionHouseFilterButton_SetUp(button, info)
             if info.type == "subSubCategory" then
-                button:SetBackdrop(false)
-
                 button.SelectedTexture:SetColorTexture(Color.highlight:GetRGB())
                 button.SelectedTexture:SetAlpha(0.5)
 
                 button.HighlightTexture:SetColorTexture(Color.highlight:GetRGB())
                 button.HighlightTexture:SetAlpha(0.5)
             else
-                -- FIXLATER
-                -- button:SetBackdrop(true)
+                -- Blizzard sets NormalTexture to an atlas; hide it so Aurora styling takes effect
+                button.NormalTexture:SetAlpha(0)
                 button.HighlightTexture:SetAlpha(0)
-                button.SelectedTexture:SetAlpha(0)
 
-                if info.selected then
-                    button:LockHighlight()
-                else
-                    button:UnlockHighlight()
-                end
-                -- FIXLATER
-                -- if info.type == "category" then
-                --     button:SetBackdropOption("offsets", {
-                --         left = 1,
-                --         right = 1,
-                --         top = 1,
-                --         bottom = 1,
-                --     })
-                -- elseif info.type == "subCategory" then
-                --     button:SetBackdropOption("offsets", {
-                --         left = 11,
-                --         right = 1,
-                --         top = 1,
-                --         bottom = 1,
-                --     })
-                -- end
+                button.SelectedTexture:SetColorTexture(Color.highlight:GetRGB())
+                button.SelectedTexture:SetAlpha(info.selected and 0.5 or 0)
             end
         end
     end
@@ -224,8 +177,6 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.AuctionHouseItemListLineTemplate(Button)
         end
         function Skin.AuctionHouseItemListTemplate(Frame)
-            Util.Mixin(Frame, Hook.AuctionHouseItemListMixin)
-
             Skin.AuctionHouseBackgroundTemplate(Frame)
             Skin.AuctionHouseRefreshFrameTemplate(Frame.RefreshFrame)
             --Skin.AuctionHouseItemListHeadersTemplate(Frame.HeaderContainer)
@@ -516,12 +467,6 @@ function private.AddOns.Blizzard_AuctionHouseUI()
     ----====####$$$$%%%%$$$$####====----
     --    Blizzard_AuctionHouseTab    --
     ----====####$$$$%%%%$$$$####====----
-
-
-    ----====####$$$$%%%%%$$$$####====----
-    --  Blizzard_AuctionHouseItemList  --
-    ----====####$$$$%%%%%$$$$####====----
-    --Util.Mixin(_G.AuctionHouseItemListMixin, Hook.AuctionHouseItemListMixin)
 
 
     ----====####$$$$%%%%%%%%%$$$$####====----
