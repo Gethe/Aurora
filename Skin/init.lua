@@ -63,7 +63,20 @@ function private.UpdateUIScale()
             _G.SetCVar("uiScale", _G.max(pixelScale, 0.64))
         end
         if parentScale ~= pixelScale then
-            _G.UIParent:SetScale(pixelScale)
+            --[[ Calling UIParent:SetScale() from addon (insecure) code taints C_ActionBar.GetActionBarPage()
+                and related action bar page APIs. This causes "attempt to compare a secret number value"
+                errors in ActionBarActionButtonMixin:UpdatePressAndHoldAction(). Defer if in combat. ]]
+            if _G.InCombatLockdown() then
+                local deferFrame = _G.CreateFrame("Frame")
+                deferFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+                deferFrame:SetScript("OnEvent", function(self)
+                    self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+                    self:SetScript("OnEvent", nil)
+                    _G.UIParent:SetScale(pixelScale)
+                end)
+            else
+                _G.UIParent:SetScale(pixelScale)
+            end
         end
         uiScaleChanging = false
     end
