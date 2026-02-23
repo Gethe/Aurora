@@ -334,7 +334,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_HousingControls\Blizzard_HousingControls.lua"/-->
     <!--Script file="Blizzard_HousingCornerstone\Blizzard_HousingCornerstone.lua"/-->
     <!--Script file="Blizzard_HousingCreateNeighborhood\Blizzard_HousingCreateNeighborhood.lua"/-->
-    <!--Script file="Blizzard_HousingDashboard\Blizzard_HousingDashboard.lua"/-->
+    <Script file="Blizzard_HousingDashboard\Blizzard_HousingDashboard.lua"/>
     <!--Script file="Blizzard_HousingEventHandler\Blizzard_HousingEventHandler.lua"/-->
     <!--Script file="Blizzard_HousingHouseFinder\Blizzard_HousingHouseFinder.lua"/-->
     <!--Script file="Blizzard_HousingHouseSettings\Blizzard_HousingHouseSettings.lua"/-->
