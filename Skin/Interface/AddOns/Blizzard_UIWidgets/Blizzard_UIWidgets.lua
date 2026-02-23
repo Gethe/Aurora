@@ -377,50 +377,54 @@ function private.AddOns.Blizzard_UIWidgets()
     -- Blizzard_UIWidgetTemplateTextWithState --
     ----====####$$$$%%%%%%%%%%%%$$$$####====----
     if _G.UIWidgetTemplateTextWithStateMixin and _G.UIWidgetTemplateTextWithStateMixin.Setup then
-        local OriginalTextWithStateSetup = _G.UIWidgetTemplateTextWithStateMixin.Setup
+        -- Fully replace Setup to avoid taint: calling the original from addon context
+        -- taints GetStringHeight(), causing "secret number" errors in Blizzard code.
         _G.UIWidgetTemplateTextWithStateMixin.Setup = function(self, widgetInfo, widgetContainer)
-            -- Also check if self.Text is already tainted from a previous Aurora invocation;
-            -- if so, keep using the safe path to avoid arithmetic-on-secret-value in Blizzard code.
-            if IsSecret(widgetInfo) or IsSecret(widgetInfo and widgetInfo.widgetSizeSetting) or IsSecret(self.Text:GetStringHeight()) then
-                if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
-                    _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
-                end
-
-                local tooltip = widgetInfo and widgetInfo.tooltip
-                if IsSecret(tooltip) then
-                    tooltip = ""
-                end
-                self:SetTooltip(tooltip)
-
-                local text = widgetInfo and widgetInfo.text
-                if IsSecret(text) or type(text) ~= "string" then
-                    text = ""
-                end
-
-                local fontType = SafeNumber(widgetInfo and widgetInfo.fontType, 0)
-                local textSizeType = SafeNumber(widgetInfo and widgetInfo.textSizeType, 0)
-                local enabledState = SafeNumber(widgetInfo and widgetInfo.enabledState, 0)
-                local hAlign = SafeNumber(widgetInfo and widgetInfo.hAlign, 0)
-
-                self.Text:SetWidth(0)
-                self.Text:Setup(text, fontType, textSizeType, enabledState, hAlign)
-
-                if self.fontColor then
-                    self.Text:SetTextColor(self.fontColor:GetRGB())
-                end
-
-                self:SetWidth(self.Text:GetStringWidth())
-
-                local textHeight = SafeNumber(self.Text:GetStringHeight(), 0)
-                local bottomPadding = SafeNumber(widgetInfo and widgetInfo.bottomPadding, 0)
-                if _G.Clamp and textHeight > 0 then
-                    bottomPadding = _G.Clamp(bottomPadding, 0, textHeight - 1)
-                end
-                self:SetHeight(textHeight + bottomPadding)
-                return
+            if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
+                _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
             end
 
-            return OriginalTextWithStateSetup(self, widgetInfo, widgetContainer)
+            local tooltip = widgetInfo and widgetInfo.tooltip
+            if IsSecret(tooltip) then
+                tooltip = ""
+            end
+            self:SetTooltip(tooltip)
+
+            local text = widgetInfo and widgetInfo.text
+            if IsSecret(text) or type(text) ~= "string" then
+                text = ""
+            end
+
+            local fontType = SafeNumber(widgetInfo and widgetInfo.fontType, 0)
+            local textSizeType = SafeNumber(widgetInfo and widgetInfo.textSizeType, 0)
+            local enabledState = SafeNumber(widgetInfo and widgetInfo.enabledState, 0)
+            local hAlign = SafeNumber(widgetInfo and widgetInfo.hAlign, 0)
+            local widgetSizeSetting = SafeNumber(widgetInfo and widgetInfo.widgetSizeSetting, 0)
+
+            if widgetSizeSetting > 0 then
+                self.Text:SetWidth(widgetSizeSetting)
+            else
+                self.Text:SetWidth(0)
+            end
+
+            self.Text:Setup(text, fontType, textSizeType, enabledState, hAlign)
+
+            if self.fontColor then
+                self.Text:SetTextColor(self.fontColor:GetRGB())
+            end
+
+            if widgetSizeSetting > 0 then
+                self:SetWidth(widgetSizeSetting)
+            else
+                self:SetWidth(self.Text:GetStringWidth())
+            end
+
+            local textHeight = SafeNumber(self.Text:GetStringHeight(), 0)
+            local bottomPadding = SafeNumber(widgetInfo and widgetInfo.bottomPadding, 0)
+            if _G.Clamp and textHeight > 0 then
+                bottomPadding = _G.Clamp(bottomPadding, 0, textHeight - 1)
+            end
+            self:SetHeight(textHeight + bottomPadding)
         end
     end
 

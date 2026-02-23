@@ -11,16 +11,20 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.EmbeddedItemTooltip_Clear(self)
-        if not self._auroraIconBorder then
-            Skin.InternalEmbeddedItemTooltipTemplate(self)
-        end
+        -- Don't lazily skin frames here; doing so during the tooltip display
+        -- flow taints the layout and causes "secret number" errors in
+        -- EmbeddedItemTooltip_UpdateSize. Only act on frames that were
+        -- explicitly skinned at init time.
+        if not self._auroraIconBorder then return end
         self._auroraIconBorder:SetBackdropBorderColor(0, 0, 0)
         self._auroraIconBorder:Hide()
     end
     function Hook.EmbeddedItemTooltip_PrepareForItem(self)
+        if not self._auroraIconBorder then return end
         self._auroraIconBorder:Show()
     end
     function Hook.EmbeddedItemTooltip_PrepareForSpell(self)
+        if not self._auroraIconBorder then return end
         self._auroraIconBorder:Show()
     end
 end
@@ -43,7 +47,12 @@ do --[[ FrameXML\GameTooltip.xml ]]
         bg:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
         bg:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
         Base.SetBackdrop(bg, Color.black, 0)
-        Frame._auroraIconBorder = bg
+        -- Do NOT store as _auroraIconBorder: the SetItemButtonQuality,
+        -- EmbeddedItemTooltip_Clear, and EmbeddedItemTooltip_Prepare*
+        -- hooks would then modify this frame during the secure tooltip
+        -- display flow, tainting layout values that
+        -- EmbeddedItemTooltip_UpdateSize reads immediately afterward.
+        bg:Show()
 
         if private.isRetail then
             Skin.GarrisonFollowerTooltipContentsTemplate(Frame.FollowerTooltip)
