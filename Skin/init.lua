@@ -181,15 +181,30 @@ eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("UI_SCALE_CHANGED")
 eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
     if event == "UI_SCALE_CHANGED" then
-        private.UpdateUIScale()
+        -- Defer to a new execution context so that SetCVar("uiScale") taint
+        -- does not propagate through Blizzard event handlers, which would cause
+        -- ADDON_ACTION_BLOCKED for protected functions like SetPassThroughButtons
+        -- when opening the WorldMap.
+        _G.C_Timer.After(0, function()
+            private.UpdateUIScale()
+        end)
     else
         if addonName == ADDON_NAME then
+            local phyScreenWidth, phyScreenHeight = _G.GetPhysicalScreenSize()
             _G.print(("%s v%s loaded."):format(ADDON_NAME, private.API_MAJOR + private.API_MINOR / 100))
             _G.print(("Blizzard World of Warcraft - %s (%s)"):format(select(1, _G.GetBuildInfo()),select(2, _G.GetBuildInfo())))
-            _G.print(("Running on %s - UI Scale: %.2f"):format(_G.GetCVar("gxWindowedResolution"), _G.UIParent:GetScale()))
+            _G.print(("Running on %sx%s - UI Scale: %.2f"):format(phyScreenWidth, phyScreenHeight, _G.UIParent:GetScale()))
             -- Setup function for the host addon
             private.OnLoad()
-            private.UpdateUIScale()
+            -- Defer scale update to a new execution context so that
+            -- SetCVar("uiScale") / UIParent:SetScale() taint does not
+            -- contaminate the ADDON_LOADED processing chain and propagate
+            -- to UIParentPanelManager, which causes ADDON_ACTION_BLOCKED
+            -- errors for protected functions (e.g. SetPassThroughButtons)
+            -- when frames like WorldMapFrame are opened via ShowUIPanel.
+            _G.C_Timer.After(0, function()
+                private.UpdateUIScale()
+            end)
             if (tonumber(_G.GetCVar("questTextContrast")) ~= 4) then
                 _G.SetCVar("questTextContrast", 4);
             end
