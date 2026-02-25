@@ -1189,27 +1189,26 @@ function commands.test()
                             set = function(info, value)
                                 numLootItems = value
                                 if _G.LootFrame:IsShown() then
-                                    _G.LootFrame_Show(_G.LootFrame)
+                                    _G.LootFrame:Open()
                                 end
                             end,
                             order = 1,
                         },
                         show = {
                             name = "Show Loot",
-                            desc = "LootFrame_Show",
+                            desc = "LootFrame:Open",
                             type = "execute",
                             func = function(info, value)
-                                _G.LootFrame.page = 1
-                                _G.LootFrame_Show(_G.LootFrame)
+                                _G.LootFrame:Open()
                             end,
                             order = 1,
                         },
                         roll = {
                             name = "Roll Loot",
-                            desc = "GroupLootFrame_OpenNewFrame",
+                            desc = "GroupLootContainer_OpenNewFrame",
                             type = "execute",
                             func = function(info, value)
-                                _G.GroupLootFrame_OpenNewFrame(random(1, #lootInfo), 20)
+                                _G.GroupLootContainer_OpenNewFrame(random(1, #lootInfo), 20)
                             end,
                             order = 1,
                         },
