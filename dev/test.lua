@@ -1139,7 +1139,7 @@ function commands.test()
                     return item.texture, item.name, item.count, item.currencyID, item.quality, item.locked, item.isQuestItem, item.questId, item.isActive
                 end
                 function _G.GetLootSlotType(slot)
-                    return lootInfo[slot].currencyID and _G.LOOT_SLOT_CURRENCY or _G.LOOT_SLOT_ITEM
+                    return lootInfo[slot].currencyID and _G.Enum.LootSlotType.Currency or _G.Enum.LootSlotType.Item
                 end
                 function _G.LootSlotHasItem(slot)
                     return not not lootInfo[slot]
@@ -1201,7 +1201,7 @@ function commands.test()
                             func = function(info, value)
                                 _G.LootFrame:Open()
                             end,
-                            order = 1,
+                            order = 2,
                         },
                         roll = {
                             name = "Roll Loot",
