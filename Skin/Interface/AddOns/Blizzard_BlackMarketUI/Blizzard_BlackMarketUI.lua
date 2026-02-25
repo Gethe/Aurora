@@ -6,11 +6,11 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Color = Aurora.Color
 local Skin = Aurora.Skin
 local F, C = _G.unpack(Aurora)
 
 function private.AddOns.Blizzard_BlackMarketUI()
-    local r, g, b = C.r, C.g, C.b
 
     local BlackMarketFrame = _G.BlackMarketFrame
     BlackMarketFrame:DisableDrawLayer("BACKGROUND")
@@ -48,48 +48,44 @@ function private.AddOns.Blizzard_BlackMarketUI()
     Skin.ThinGoldEdgeTemplate(BlackMarketFrame.MoneyFrameBorder)
     Skin.SmallMoneyFrameTemplate(_G.BlackMarketMoneyFrame)
 
-    _G.hooksecurefunc("BlackMarketScrollFrame_Update", function()
-        local buttons = _G.BlackMarketScrollFrame.buttons
-        for i = 1, #buttons do
-            local bu = buttons[i]
+    _G.hooksecurefunc(_G.BlackMarketItemMixin, "Init", function(bu)
+        if not bu.reskinned then
+            local r, g, b = Color.highlight:GetRGB()
 
-            --bu.Item.IconTexture:SetTexCoord(.08, .92, .08, .92)
-            if not bu.reskinned then
-                bu.Left:Hide()
-                bu.Right:Hide()
-                select(3, bu:GetRegions()):Hide()
+            bu.Left:Hide()
+            bu.Right:Hide()
+            select(3, bu:GetRegions()):Hide()
 
-                bu.Item:ClearNormalTexture()
-                bu.Item:ClearPushedTexture()
-                bu.Item._auroraIconBorder = F.ReskinIcon(bu.Item.IconTexture)
+            bu.Item:ClearNormalTexture()
+            bu.Item:ClearPushedTexture()
+            bu.Item._auroraIconBorder = F.ReskinIcon(bu.Item.IconTexture)
 
-                local bg = _G.CreateFrame("Frame", nil, bu)
-                bg:SetPoint("TOPLEFT")
-                bg:SetPoint("BOTTOMRIGHT", 0, 5)
-                bg:SetFrameLevel(bu:GetFrameLevel()-1)
-                F.CreateBD(bg, 0)
+            local bg = _G.CreateFrame("Frame", nil, bu)
+            bg:SetPoint("TOPLEFT")
+            bg:SetPoint("BOTTOMRIGHT", 0, 5)
+            bg:SetFrameLevel(bu:GetFrameLevel()-1)
+            F.CreateBD(bg, 0)
 
-                local tex = bu:CreateTexture(nil, "BACKGROUND")
-                tex:SetPoint("TOPLEFT")
-                tex:SetPoint("BOTTOMRIGHT", 0, 5)
-                tex:SetColorTexture(0, 0, 0, .25)
+            local tex = bu:CreateTexture(nil, "BACKGROUND")
+            tex:SetPoint("TOPLEFT")
+            tex:SetPoint("BOTTOMRIGHT", 0, 5)
+            tex:SetColorTexture(0, 0, 0, .25)
 
-                bu:SetHighlightTexture(C.media.backdrop)
-                local hl = bu:GetHighlightTexture()
-                hl:SetVertexColor(r, g, b, .2)
-                hl.SetAlpha = F.dummy
-                hl:ClearAllPoints()
-                hl:SetPoint("TOPLEFT", 0, -1)
-                hl:SetPoint("BOTTOMRIGHT", -1, 6)
+            bu:SetHighlightTexture(C.media.backdrop)
+            local hl = bu:GetHighlightTexture()
+            hl:SetVertexColor(r, g, b, .2)
+            hl.SetAlpha = F.dummy
+            hl:ClearAllPoints()
+            hl:SetPoint("TOPLEFT", 0, -1)
+            hl:SetPoint("BOTTOMRIGHT", -1, 6)
 
-                bu.Selection:ClearAllPoints()
-                bu.Selection:SetPoint("TOPLEFT", 0, -1)
-                bu.Selection:SetPoint("BOTTOMRIGHT", -1, 6)
-                bu.Selection:SetTexture(C.media.backdrop)
-                bu.Selection:SetVertexColor(r, g, b, .1)
+            bu.Selection:ClearAllPoints()
+            bu.Selection:SetPoint("TOPLEFT", 0, -1)
+            bu.Selection:SetPoint("BOTTOMRIGHT", -1, 6)
+            bu.Selection:SetTexture(C.media.backdrop)
+            bu.Selection:SetVertexColor(r, g, b, .1)
 
-                bu.reskinned = true
-            end
+            bu.reskinned = true
         end
     end)
 end
