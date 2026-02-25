@@ -1159,6 +1159,7 @@ function commands.test()
                 end
                 function _G.GetLootRollItemInfo(rollID)
                     local canNeed, canGreed, canDisenchant = GetBoolen(), GetBoolen(), GetBoolen()
+                    local canTransmog = GetBoolen()
 
                     local reasonNeed, reasonGreed, reasonDisenchant, deSkillRequired
                     if not canNeed then
@@ -1173,9 +1174,88 @@ function commands.test()
                     end
 
                     local info = lootInfo[rollID]                           -- bindOnPickUp
-                    return info.texture, info.item, info.quantity, info.quality, false, canNeed, canGreed, canDisenchant, reasonNeed, reasonGreed, reasonDisenchant, deSkillRequired
+                    return info.texture, info.name, info.count, info.quality, false, canNeed, canGreed, canDisenchant, reasonNeed, reasonGreed, reasonDisenchant, deSkillRequired, canTransmog
+                end
+                function _G.GetLootRollTimeLeft(rollID)
+                    return 10
+                end
+                function _G.GetLootRollItemLink(rollID)
+                    local info = lootInfo[rollID]
+                    return info and info.link
                 end
 
+                -- Hook OnShow for GroupLootFrame1-4 since the Blizzard OnShow
+                -- calls the C GetLootRollItemInfo which can't be overridden.
+                for i = 1, 4 do
+                    local frame = _G["GroupLootFrame"..i]
+                    frame:SetScript("OnShow", function(self)
+                        local info = lootInfo[self.rollID]
+                        if not info or not info.name then
+                            _G.GroupLootContainer_RemoveFrame(_G.GroupLootContainer, self)
+                            return
+                        end
+
+                        local canNeed, canGreed, canDisenchant = GetBoolen(), GetBoolen(), GetBoolen()
+                        local canTransmog = GetBoolen()
+
+                        self.IconFrame.Icon:SetTexture(info.texture)
+                        self.IconFrame.Border:SetAtlas(_G.ITEM_QUALITY_COLORS[info.quality].atlasName or "loottoast-itemborder-green")
+                        self.Name:SetText(info.name)
+
+                        local color = _G.ITEM_QUALITY_COLORS[info.quality]
+                        if color then
+                            self.Name:SetVertexColor(color.r, color.g, color.b)
+                            self.Border:SetVertexColor(color.r, color.g, color.b)
+                        end
+
+                        if info.count > 1 then
+                            self.IconFrame.Count:SetText(info.count)
+                            self.IconFrame.Count:Show()
+                        else
+                            self.IconFrame.Count:Hide()
+                        end
+
+                        if canNeed then
+                            _G.GroupLootFrame_EnableLootButton(self.NeedButton)
+                            self.NeedButton.reason = nil
+                        else
+                            _G.GroupLootFrame_DisableLootButton(self.NeedButton)
+                            self.NeedButton.reason = _G.LOOT_ROLL_INELIGIBLE_REASON5
+                        end
+
+                        if canTransmog then
+                            self.TransmogButton:Show()
+                            self.GreedButton:Hide()
+                        else
+                            self.TransmogButton:Hide()
+                            self.GreedButton:Show()
+                            if canGreed then
+                                _G.GroupLootFrame_EnableLootButton(self.GreedButton)
+                                self.GreedButton.reason = nil
+                            else
+                                _G.GroupLootFrame_DisableLootButton(self.GreedButton)
+                                self.GreedButton.reason = _G.LOOT_ROLL_INELIGIBLE_REASON2
+                            end
+                        end
+
+                        self.Timer:SetFrameLevel(self:GetFrameLevel() - 1)
+                        _G.FrameUtil.RegisterFrameForEvents(self, {"CANCEL_LOOT_ROLL", "CANCEL_ALL_LOOT_ROLLS", "MAIN_SPEC_NEED_ROLL"})
+                    end)
+                end
+
+                -- Override OnUpdate timer since the C GetLootRollTimeLeft won't work
+                for i = 1, 4 do
+                    local frame = _G["GroupLootFrame"..i]
+                    frame:SetScript("OnUpdate", function(self, elapsed)
+                        if self.NeedRollAnim and self.NeedRollAnim.Animation:IsPlaying() then
+                            return
+                        end
+                        local left = math.max(0, self.rollTime - (_G.GetTime() - (self.startTime or _G.GetTime())))
+                        self.Timer:SetValue(left)
+                    end)
+                end
+
+                local numNonCurrencyItems = 8
                 test.args.loot = {
                     name = "Loot",
                     type = "group",
@@ -1208,9 +1288,23 @@ function commands.test()
                             desc = "GroupLootContainer_OpenNewFrame",
                             type = "execute",
                             func = function(info, value)
-                                _G.GroupLootContainer_OpenNewFrame(random(1, #lootInfo), 20)
+                                local rollID = random(1, numNonCurrencyItems)
+                                local itemData = lootInfo[rollID]
+                                if not itemData.name then
+                                    _G.print("|cffff0000Roll Loot:|r Item", rollID, "not loaded yet")
+                                    return
+                                end
+                                -- Set start time for timer display
+                                for fi = 1, 4 do
+                                    local f = _G["GroupLootFrame"..fi]
+                                    if not f:IsShown() then
+                                        f.startTime = _G.GetTime()
+                                        break
+                                    end
+                                end
+                                _G.GroupLootContainer_OpenNewFrame(rollID, 20)
                             end,
-                            order = 1,
+                            order = 3,
                         },
                     }
                 }
