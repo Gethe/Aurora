@@ -1,4 +1,13 @@
-﻿## [12.0.1.7] ##
+﻿## [12.0.1.8] ##
+### Fixed ###
+  * fix: possible "Texture:SetTextCoord(): Cannot set tex coords when texture has mask" error
+  * fix: Aurora.test loot windows and roll behavior
+  * fix: additional Aurora Test Loot fixes
+  * fix: update "Running on" UI information
+  * fix: Blizzard_BlackMarketUI and gfx crash
+
+
+## [12.0.1.7] ##
 ### Added ###
   * add: Blizzard_HousingDashboard skin
   * add: skin for EventToastManager
@@ -159,6 +168,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.8]: https://github.com/Haleth/Aurora/compare/12.0.1.7...12.0.1.8
 [12.0.1.7]: https://github.com/Haleth/Aurora/compare/12.0.1.6...12.0.1.7
 [12.0.1.6]: https://github.com/Haleth/Aurora/compare/12.0.1.5...12.0.1.6
 [12.0.1.5]: https://github.com/Haleth/Aurora/compare/12.0.1.4...12.0.1.5
