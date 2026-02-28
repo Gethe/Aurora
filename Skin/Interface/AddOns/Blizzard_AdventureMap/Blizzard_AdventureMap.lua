@@ -56,10 +56,10 @@ function private.AddOns.Blizzard_AdventureMap()
 
     local ScrollBar = AdventureMapQuestChoiceDialog.Details.ScrollBar
     Skin.FrameTypeScrollBar(ScrollBar)
-    ScrollBar.Top:Hide()
-    ScrollBar.Bottom:Hide()
-    ScrollBar.Middle:Hide()
-    ScrollBar.Background:Hide()
+    if ScrollBar.Top then ScrollBar.Top:Hide() end
+    if ScrollBar.Bottom then ScrollBar.Bottom:Hide() end
+    if ScrollBar.Middle then ScrollBar.Middle:Hide() end
+    if ScrollBar.Background then ScrollBar.Background:Hide() end
 
     Skin.UIPanelButtonTemplate(AdventureMapQuestChoiceDialog.DeclineButton)
     Skin.UIPanelButtonTemplate(AdventureMapQuestChoiceDialog.AcceptButton)
