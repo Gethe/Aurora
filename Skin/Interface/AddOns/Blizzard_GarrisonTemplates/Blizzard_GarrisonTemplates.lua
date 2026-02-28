@@ -372,9 +372,9 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
             trackBG:Hide()
             trackBackplate:Hide()
 
-            Skin.OribosScrollUpButtonTemplate(Slider.UpButton)
-            Skin.OribosScrollDownButtonTemplate(Slider.DownButton)
-            Skin.HybridScrollBarButton(Slider.thumbTexture)
+            -- Use the unified scrollbar skin which handles up/down buttons and thumb
+            Skin.FrameTypeScrollBar(Slider)
+            Skin.ScrollBarThumb(Slider.thumbTexture)
         end
         function Skin.CovenantListWideFrameTemplate(Frame)
             Skin.CovenantMissionBaseFrameTemplate(Frame)

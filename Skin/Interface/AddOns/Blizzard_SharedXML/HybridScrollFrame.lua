@@ -41,14 +41,10 @@ do --[[ SharedXML\HybridScrollFrame.xml ]]
         Slider.Bottom:Hide()
         Slider.Middle:Hide()
 
-        local upButton = Slider.UpButton
-        upButton:SetPoint("BOTTOM", Slider, "TOP")
-        Skin.UIPanelScrollUpButtonTemplate(upButton)
-
-        local downButton = Slider.DownButton
-        downButton:SetPoint("TOP", Slider, "BOTTOM")
-        Skin.UIPanelScrollDownButtonTemplate(downButton)
-
+        -- Use the unified scrollbar skin which handles buttons and thumb
+        Skin.FrameTypeScrollBar(Slider)
+        Slider.UpButton:SetPoint("BOTTOM", Slider, "TOP")
+        Slider.DownButton:SetPoint("TOP", Slider, "BOTTOM")
         Skin.ScrollBarThumb(Slider.thumbTexture)
     end
     function Skin.MinimalHybridScrollBarTemplate(Slider)
