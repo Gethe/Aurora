@@ -55,9 +55,7 @@ function private.AddOns.Blizzard_AdventureMap()
     Skin.UIPanelCloseButton(AdventureMapQuestChoiceDialog.CloseButton)
 
     local ScrollBar = AdventureMapQuestChoiceDialog.Details.ScrollBar
-    Skin.UIPanelScrollUpButtonTemplate(ScrollBar.ScrollUpButton)
-    Skin.UIPanelScrollUpButtonTemplate(ScrollBar.ScrollDownButton)
-    Skin.ScrollBarThumb(ScrollBar.ThumbTexture)
+    Skin.FrameTypeScrollBar(ScrollBar)
     ScrollBar.Top:Hide()
     ScrollBar.Bottom:Hide()
     ScrollBar.Middle:Hide()
