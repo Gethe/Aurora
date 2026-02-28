@@ -81,7 +81,10 @@ created at a black background for the icon.
 --]]
 function Base.CropIcon(texture, parent)
     if not texture then return end
-    texture:SetTexCoord(.08, .92, .08, .92)
+    -- Some textures may have a mask; calling SetTexCoord on a masked
+    -- texture errors in the client (see: "Cannot set tex coords when texture has mask").
+    -- Use a protected call to avoid throwing an error for those textures.
+    pcall(texture.SetTexCoord, texture, .08, .92, .08, .92)
     if parent then
         local layer, subLevel = texture:GetDrawLayer()
         local iconBorder = parent:CreateTexture(nil, layer, nil, subLevel - 1)
