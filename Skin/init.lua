@@ -65,12 +65,34 @@ function private.UpdateUIScale()
         if parentScale ~= pixelScale then
             if pixelScale >= 0.64 then
                 if cvarScale ~= pixelScale then
-                    _G.SetCVar("uiScale", pixelScale)
+                    if _G.InCombatLockdown() then
+                        local deferCVar = _G.CreateFrame("Frame")
+                        deferCVar:RegisterEvent("PLAYER_REGEN_ENABLED")
+                        deferCVar:SetScript("OnEvent", function(self)
+                            self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+                            self:SetScript("OnEvent", nil)
+                            _G.SetCVar("uiScale", pixelScale)
+                        end)
+                    else
+                        _G.C_Timer.After(0, function()
+                            _G.SetCVar("uiScale", pixelScale)
+                        end)
+                    end
                 end
             else
                 -- Scale is below CVar minimum; set CVar as close as possible, then SetScale
                 if cvarScale ~= 0.64 then
-                    _G.SetCVar("uiScale", 0.64)
+                    if _G.InCombatLockdown() then
+                        local deferCVar = _G.CreateFrame("Frame")
+                        deferCVar:RegisterEvent("PLAYER_REGEN_ENABLED")
+                        deferCVar:SetScript("OnEvent", function(self)
+                            self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+                            self:SetScript("OnEvent", nil)
+                            _G.SetCVar("uiScale", 0.64)
+                        end)
+                    else
+                        _G.SetCVar("uiScale", 0.64)
+                    end
                 end
                 if _G.InCombatLockdown() then
                     local deferFrame = _G.CreateFrame("Frame")
