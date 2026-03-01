@@ -1,4 +1,21 @@
-﻿## [12.0.1.8] ##
+﻿## [12.0.1.9] ##
+### Added ###
+  * add: skin for Blizzard_Transmog
+  * add: three new reusable Skin.* functions to SharedUIPanelTemplates.lua: Skin.InputBoxNineSliceTemplate, Skin.InputBoxInstructionsNineSliceTemplate and Skin.SearchBoxNineSliceTemplate
+
+### Changed ###
+  * chg: cleaned up Blizzard_Communities
+  * chg: Replaced deprecated calls with current API in AdventureMap skin.
+
+### Fixed ###
+  * fix: another taint in communitiesListScrollBox
+  * fix: only hide ScrollBar borders when they exist
+  * fix: safeguarding possible taints from in-combat issues
+  * fix: replacing more out of date calls
+  * fix: deprecated ui calls
+
+
+## [12.0.1.8] ##
 ### Fixed ###
   * fix: possible "Texture:SetTextCoord(): Cannot set tex coords when texture has mask" error
   * fix: Aurora.test loot windows and roll behavior
@@ -168,6 +185,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.9]: https://github.com/Haleth/Aurora/compare/12.0.1.8...12.0.1.9
 [12.0.1.8]: https://github.com/Haleth/Aurora/compare/12.0.1.7...12.0.1.8
 [12.0.1.7]: https://github.com/Haleth/Aurora/compare/12.0.1.6...12.0.1.7
 [12.0.1.6]: https://github.com/Haleth/Aurora/compare/12.0.1.5...12.0.1.6
