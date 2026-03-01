@@ -134,7 +134,6 @@ function private.FrameXML.ReputationFrame()
     local ReputationDetailFrame = ReputationFrame.ReputationDetailFrame
     Skin.DialogBorderTemplate(ReputationDetailFrame.Border)
     local repDetailBG = ReputationDetailFrame.Border:GetBackdropTexture("bg")
-    -- FIXLATER -- remove backdrop texture
     ReputationDetailFrame.Title:SetPoint("TOPLEFT", repDetailBG, 10, -8)
     ReputationDetailFrame.Title:SetPoint("BOTTOMRIGHT", repDetailBG, "TOPRIGHT", -10, -26)
     ReputationDetailFrame.ScrollingDescription:SetPoint("TOPLEFT", ReputationDetailFrame.Title, "BOTTOMLEFT", 0, -5)

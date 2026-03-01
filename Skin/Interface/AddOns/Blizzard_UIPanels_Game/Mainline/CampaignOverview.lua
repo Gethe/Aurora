@@ -12,8 +12,6 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ FrameXML\CampaignOverview.lua ]]
     Hook.CampaignOverviewMixin = {}
     function Hook.CampaignOverviewMixin:SetCampaign(campaignID)
-        -- FIXME ? introduced in 11.0.0
-        -- local campaignBorderFrame = self.campaignBorderFrame
         local campaignHeader = self.Header
         local campaign = campaignHeader.campaign
         if campaign then
