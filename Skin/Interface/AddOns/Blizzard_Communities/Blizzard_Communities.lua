@@ -131,9 +131,11 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             Button.Selection:SetAllPoints(bg)
 
-            Button._iconBG = Button:CreateTexture(nil, "BACKGROUND", nil, 5)
-            Button._iconBG:SetPoint("TOPLEFT", bg, 1, -1)
-            Button._iconBG:SetPoint("BOTTOM", bg, 0, 1)
+            if not Button._iconBG then
+                Button._iconBG = Button:CreateTexture(nil, "BACKGROUND", nil, 5)
+                Button._iconBG:SetPoint("TOPLEFT", bg, 1, -1)
+                Button._iconBG:SetPoint("BOTTOM", bg, 0, 1)
+            end
 
             Button.CircleMask:Hide()
 
@@ -687,10 +689,12 @@ function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
     --         CommunitiesList         --
     ----====####$$$$%%%%%$$$$####====----
-    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "Init", Hook.CommunitiesListEntryMixin.Init)
-    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetAddCommunity", Hook.CommunitiesListEntryMixin.SetAddCommunity)
-    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetFindCommunity", Hook.CommunitiesListEntryMixin.SetFindCommunity)
-    _G.hooksecurefunc(_G.CommunitiesListEntryMixin, "SetGuildFinder", Hook.CommunitiesListEntryMixin.SetGuildFinder)
+    -- NOTE: Do NOT use hooksecurefunc on CommunitiesListEntryMixin methods,
+    -- nor RegisterCallback on the ScrollBox. Both introduce taint into the
+    -- secureexecuterange context that dispatches initializers/callbacks,
+    -- which blocks the protected C_Club.SetAvatarTexture() call.
+    -- Skinning is applied via hooksecurefunc on ScrollBox:Update() with
+    -- C_Timer.After(0) deferral (see below near CommunitiesFrame setup).
     ----====####$$$$%%%%%$$$$####====----
     --      CommunitiesMemberList      --
     ----====####$$$$%%%%%$$$$####====----
@@ -872,6 +876,41 @@ function private.AddOns.Blizzard_Communities()
     end)
 
     Skin.CommunitiesListFrameTemplate(CommunitiesFrame.CommunitiesList)
+
+    -- Apply CommunitiesList skins completely outside the secure call chain.
+    -- RegisterCallback taints the CallbackRegistry's internal tables (iterated
+    -- via secureexecuterange in TriggerEvent), so we use hooksecurefunc on the
+    -- ScrollBox's Update method instead. hooksecurefunc creates a secure wrapper
+    -- that does NOT participate in CallbackRegistry dispatch, avoiding taint.
+    -- The actual skinning is deferred via C_Timer.After(0) so it runs on the
+    -- next frame, fully outside any ScrollBox/CallbackRegistry execution context.
+    do
+        local communitiesListScrollBox = CommunitiesFrame.CommunitiesList.ScrollBox
+        local skinPending = false
+        local function SkinVisibleEntries()
+            skinPending = false
+            if not communitiesListScrollBox:IsVisible() then return end
+            communitiesListScrollBox:ForEachFrame(function(button)
+                local elementData = button:GetElementData()
+                if not elementData then return end
+                if elementData.setJoinCommunity then
+                    Hook.CommunitiesListEntryMixin.SetAddCommunity(button)
+                elseif elementData.setFindCommunity then
+                    Hook.CommunitiesListEntryMixin.SetFindCommunity(button)
+                elseif elementData.setGuildFinder then
+                    Hook.CommunitiesListEntryMixin.SetGuildFinder(button)
+                elseif elementData.clubInfo then
+                    Hook.CommunitiesListEntryMixin.Init(button, elementData)
+                end
+            end)
+        end
+        _G.hooksecurefunc(communitiesListScrollBox, "Update", function()
+            if not skinPending then
+                skinPending = true
+                _G.C_Timer.After(0, SkinVisibleEntries)
+            end
+        end)
+    end
 
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.ChatTab)
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.RosterTab)
