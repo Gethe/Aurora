@@ -749,6 +749,47 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         EditBox.Instructions:SetTextColor(Color.gray:GetRGB())
         EditBox.searchIcon:SetPoint("LEFT", 3, -1)
     end
+
+    -- NineSlice variants (Blizzard_SharedXML/Shared/InputBox/InputBoxTemplates.xml)
+    local nineSlicePieces = {
+        "TopLeftCorner", "TopRightCorner",
+        "BottomLeftCorner", "BottomRightCorner",
+        "TopEdge", "BottomEdge",
+        "LeftEdge", "RightEdge",
+        "Center",
+    }
+    function Skin.InputBoxNineSliceTemplate(EditBox)
+        Skin.FrameTypeEditBox(EditBox)
+
+        local yOfs = _G.math.floor(EditBox:GetHeight() / 2 + .5) - 10
+        EditBox:SetBackdropOption("offsets", {
+            left = -4,
+            right = 1,
+            top = yOfs,
+            bottom = yOfs,
+        })
+
+        for _, pieceName in _G.ipairs(nineSlicePieces) do
+            local piece = Util.GetNineSlicePiece(EditBox, pieceName)
+            if piece then
+                piece:Hide()
+            end
+        end
+    end
+    function Skin.InputBoxInstructionsNineSliceTemplate(EditBox)
+        Skin.InputBoxNineSliceTemplate(EditBox)
+    end
+    function Skin.SearchBoxNineSliceTemplate(EditBox)
+        Skin.InputBoxInstructionsNineSliceTemplate(EditBox)
+        if EditBox.Background then EditBox.Background:Hide() end
+        if EditBox.Instructions then
+            EditBox.Instructions:SetTextColor(Color.gray:GetRGB())
+        end
+        if EditBox.searchIcon then
+            EditBox.searchIcon:SetPoint("LEFT", 3, -1)
+        end
+    end
+
     function Skin.PanelTabButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
         Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
