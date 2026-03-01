@@ -18,15 +18,9 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
-            -- self.Icon:ClearAllPoints()
-            -- self.Icon:SetPoint("CENTER")
-            -- self.Name:SetPoint("LEFT", self.Icon, "RIGHT", 11, 0)
-            -- self.Icon:Show()
-            -- self.Icon:SetColorTexture(Color.black:GetRGB())
         end
         function Hook.CommunitiesListEntryMixin:Init(elementData)
             local clubInfo = elementData.clubInfo
-            -- self._iconBG:SetWidth(self._iconBG:GetHeight())
             Skin.CommunitiesListEntryTemplate(self)
             if clubInfo and self._iconBG then
                 local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
@@ -37,33 +31,19 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 end
                 self.CircleMask:Hide()
                 Base.CropIcon(self.Icon)
-                -- self.Icon:SetAllPoints(self._iconBG)
-                -- self._iconBG:Hide()
             end
         end
         function Hook.CommunitiesListEntryMixin:SetFindCommunity()
             Skin.CommunitiesListEntryTemplate(self)
             self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
             self.CircleMask:Hide()
-            -- self.Icon:SetTexCoord(0, 1, 0, 1)
-            -- self.Icon:ClearAllPoints()
-            -- self.Icon:SetSize(34, 34)
-            -- self.Icon:SetPoint("CENTER" )
-            -- self.Name:SetPoint("LEFT", self.Icon, "RIGHT", 11, 0)
-            -- self.Icon:Show()
             Base.CropIcon(self.Icon)
-            -- self.Icon:SetColorTexture(Color.black:GetRGB())
         end
         function Hook.CommunitiesListEntryMixin:SetGuildFinder()
             Skin.CommunitiesListEntryTemplate(self)
             self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
             self.CircleMask:Hide()
             Base.CropIcon(self.Icon)
-            -- self.Icon:SetTexCoord(0, 1, 0, 1)
-            -- self.Icon:ClearAllPoints()
-            -- self.Icon:SetSize(40, 40)
-            -- self.Icon:SetPoint("CENTER", self.GuildTabardBackground, 0, 4)
-            -- self._iconBG:Hide()
         end
     end
     do --[[ CommunitiesMemberList ]]
@@ -687,34 +667,9 @@ end
 
 function private.AddOns.Blizzard_Communities()
     ----====####$$$$%%%%%$$$$####====----
-    --         CommunitiesList         --
-    ----====####$$$$%%%%%$$$$####====----
-    -- NOTE: Do NOT use hooksecurefunc on CommunitiesListEntryMixin methods,
-    -- nor RegisterCallback on the ScrollBox. Both introduce taint into the
-    -- secureexecuterange context that dispatches initializers/callbacks,
-    -- which blocks the protected C_Club.SetAvatarTexture() call.
-    -- Skinning is applied via hooksecurefunc on ScrollBox:Update() with
-    -- C_Timer.After(0) deferral (see below near CommunitiesFrame setup).
-    ----====####$$$$%%%%%$$$$####====----
     --      CommunitiesMemberList      --
     ----====####$$$$%%%%%$$$$####====----
     Util.Mixin(_G.CommunitiesMemberListEntryMixin, Hook.CommunitiesMemberListEntryMixin)
-
-    ----====####$$$$%%%%$$$$####====----
-    --      CommunitiesChatFrame      --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --   CommunitiesInvitationFrame   --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --   CommunitiesGuildFinderFrame   --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --       CommunitiesStreams       --
-    ----====####$$$$%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
     --  CommunitiesAvatarPickerDialog  --
@@ -727,30 +682,6 @@ function private.AddOns.Blizzard_Communities()
     Skin.SelectionFrameTemplate(CommunitiesAvatarPickerDialog.Selector)
     Skin.WowScrollBox(CommunitiesAvatarPickerDialog.ScrollBox)
     Skin.MinimalScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
-
-    ----====####$$$$%%%%$$$$####====----
-    --  CommunitiesAddDialogInsecure  --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --      CommunitiesAddDialog      --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --  CommunitiesAddDialogOutbound  --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --         CommunitiesTabs         --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --     ClubFinderApplicantList     --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --           ClubFinder           --
-    ----====####$$$$%%%%$$$$####====----
 
     ----====####$$$$%%%%%$$$$####====----
     --       CommunitiesSettings       --
@@ -820,18 +751,6 @@ function private.AddOns.Blizzard_Communities()
     Skin.CommunitiesTicketManagerScrollFrameTemplate(CommunitiesTicketManagerDialog.InviteManager)
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.Close)
 
-    ----====####$$$$%%%%%$$$$####====----
-    --       CommunitiesCalendar       --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --          GuildRewards          --
-    ----====####$$$$%%%%$$$$####====----
-
-    ----====####$$$$%%%%$$$$####====----
-    --           GuildPerks           --
-    ----====####$$$$%%%%$$$$####====----
-
     if private.isRetail then
         ----====####$$$$%%%%%$$$$####====----
         --            GuildInfo            --
@@ -854,14 +773,6 @@ function private.AddOns.Blizzard_Communities()
         end
     end
 
-    ----====####$$$$%%%%%$$$$####====----
-    --           GuildRoster           --
-    ----====####$$$$%%%%%$$$$####====----
-
-    ----====####$$$$%%%%%$$$$####====----
-    --         GuildNameChange         --
-    ----====####$$$$%%%%%$$$$####====----
-
     ----====####$$$$%%%%$$$$####====----
     --        CommunitiesFrame        --
     ----====####$$$$%%%%$$$$####====----
@@ -877,13 +788,11 @@ function private.AddOns.Blizzard_Communities()
 
     Skin.CommunitiesListFrameTemplate(CommunitiesFrame.CommunitiesList)
 
-    -- Apply CommunitiesList skins completely outside the secure call chain.
-    -- RegisterCallback taints the CallbackRegistry's internal tables (iterated
-    -- via secureexecuterange in TriggerEvent), so we use hooksecurefunc on the
-    -- ScrollBox's Update method instead. hooksecurefunc creates a secure wrapper
-    -- that does NOT participate in CallbackRegistry dispatch, avoiding taint.
-    -- The actual skinning is deferred via C_Timer.After(0) so it runs on the
-    -- next frame, fully outside any ScrollBox/CallbackRegistry execution context.
+    -- CommunitiesList skinning must run completely outside the secure call chain.
+    -- C_Club.SetAvatarTexture() is a protected API called inside secureexecuterange
+    -- during ScrollBox initializer dispatch. Both hooksecurefunc on Mixin methods and
+    -- RegisterCallback on the ScrollBox introduce taint into that context.
+    -- Instead: hooksecurefunc on ScrollBox:Update() + C_Timer.After(0) deferral.
     do
         local communitiesListScrollBox = CommunitiesFrame.CommunitiesList.ScrollBox
         local skinPending = false
