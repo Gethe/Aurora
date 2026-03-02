@@ -1,4 +1,9 @@
-﻿## [12.0.1.9] ##
+﻿## [12.0.1.10] ##
+### Fixed ###
+  * fix: Protect GetUnscaledFrameRect against secret (tainted) values from GetScaledRect.
+  * fix: ADDON_LOADED contaminates the execution context that feeds into the action bar initialization chain.
+
+## [12.0.1.9] ##
 ### Added ###
   * add: skin for Blizzard_Transmog
   * add: three new reusable Skin.* functions to SharedUIPanelTemplates.lua: Skin.InputBoxNineSliceTemplate, Skin.InputBoxInstructionsNineSliceTemplate and Skin.SearchBoxNineSliceTemplate
