@@ -57,6 +57,30 @@ local function SafeDebugName(frame)
     return "<frame>"
 end
 
+-- Protect GetUnscaledFrameRect against secret (tainted) values from GetScaledRect.
+-- Aurora's font modifications cause widget frame dimensions to become tainted,
+-- which propagates through the layout chain via the replaced mixin Setup functions.
+-- The original GetUnscaledFrameRect only checks for nil returns from GetScaledRect,
+-- but tainted values are non-nil secret numbers that error when used in arithmetic.
+-- This replacement catches secret values and returns defaulted (1,1,1,1) just like
+-- the nil case, preventing "attempt to perform arithmetic on secret number" errors.
+if _G.GetUnscaledFrameRect then
+    _G.GetUnscaledFrameRect = function(frame, scale)
+        local frameLeft, frameBottom, frameWidth, frameHeight = frame:GetScaledRect()
+        if frameLeft == nil then
+            local defaulted = true
+            return 1, 1, 1, 1, defaulted
+        end
+
+        if IsSecret(frameLeft) or IsSecret(frameBottom) or IsSecret(frameWidth) or IsSecret(frameHeight) or IsSecret(scale) then
+            local defaulted = true
+            return 1, 1, 1, 1, defaulted
+        end
+
+        return frameLeft / scale, frameBottom / scale, frameWidth / scale, frameHeight / scale
+    end
+end
+
 local function IsBelowMinimapContainer(container)
     return container == _G.UIWidgetBelowMinimapContainerFrame
 end
@@ -425,6 +449,174 @@ function private.AddOns.Blizzard_UIWidgets()
                 bottomPadding = _G.Clamp(bottomPadding, 0, textHeight - 1)
             end
             self:SetHeight(textHeight + bottomPadding)
+        end
+    end
+
+
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    -- Blizzard_UIWidgetTemplateItemDisplay --
+    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    -- Mirrors Blizzard's local iconSizes / GetWidgetIconSize
+    local widgetIconSizeLookup = {
+        [_G.Enum.WidgetIconSizeType.Small]    = 24,
+        [_G.Enum.WidgetIconSizeType.Medium]   = 30,
+        [_G.Enum.WidgetIconSizeType.Large]    = 36,
+        [_G.Enum.WidgetIconSizeType.Standard] = 28,
+    }
+    local function SafeGetWidgetIconSize(iconSizeType)
+        return widgetIconSizeLookup[iconSizeType] or widgetIconSizeLookup[_G.Enum.WidgetIconSizeType.Small]
+    end
+
+    -- Mirrors Blizzard's local stackCountTextFontSizes / GetItemCountTextSizeFont
+    local stackCountTextFontSizes = {
+        [_G.Enum.WidgetIconSizeType.Small]    = "NumberFontNormalSmall",
+        [_G.Enum.WidgetIconSizeType.Medium]   = "NumberFontNormal",
+        [_G.Enum.WidgetIconSizeType.Large]    = "NumberFontNormal",
+        [_G.Enum.WidgetIconSizeType.Standard] = "NumberFontNormalSmall",
+    }
+    local function SafeGetItemCountTextSizeFont(iconSizeType)
+        return stackCountTextFontSizes[iconSizeType] or stackCountTextFontSizes[_G.Enum.WidgetIconSizeType.Small]
+    end
+
+    -- Mirrors Blizzard's local earnedCheckSizes / GetEarnedCheckSize
+    local earnedCheckSizeLookup = {
+        [_G.Enum.WidgetIconSizeType.Small]    = 12,
+        [_G.Enum.WidgetIconSizeType.Medium]   = 15,
+        [_G.Enum.WidgetIconSizeType.Large]    = 18,
+        [_G.Enum.WidgetIconSizeType.Standard] = 14,
+    }
+    local function SafeGetEarnedCheckSize(iconSizeType)
+        return earnedCheckSizeLookup[iconSizeType] or earnedCheckSizeLookup[_G.Enum.WidgetIconSizeType.Small]
+    end
+
+    -- Mirrors Blizzard's local helpers
+    local function SafeIsOverrideStateActive(overrideState)
+        return overrideState == _G.Enum.UIWidgetOverrideState.Active
+    end
+    local function SafeGetOverrideValueIfActive(overrideState, overrideValue)
+        if SafeIsOverrideStateActive(overrideState) then
+            return overrideValue
+        end
+        return nil
+    end
+
+    -- Replace UIWidgetBaseItemTemplateMixin.Setup to avoid taint: Aurora's font
+    -- modifications cause GetWidth()/GetHeight() on ItemName/InfoText to return
+    -- secret numbers, breaking arithmetic at Blizzard_UIWidgetTemplateBase.lua:1694.
+    if _G.UIWidgetBaseItemTemplateMixin and _G.UIWidgetBaseItemTemplateMixin.Setup then
+        _G.UIWidgetBaseItemTemplateMixin.Setup = function(self, widgetContainer, itemInfo, widgetSizeSetting, tooltipLoc)
+            if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
+                _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
+            end
+
+            self.itemID = itemInfo.itemID
+            self.tooltipEnabled = itemInfo.tooltipEnabled
+            local itemName, _, quality, _, _, _, _, _, _, itemTexture = _G.C_Item.GetItemInfo(self.itemID)
+            self.quality = quality
+            local iconSize = SafeGetWidgetIconSize(itemInfo.iconSizeType)
+
+            self.Icon:SetSize(iconSize, iconSize)
+            self.IconBorder:SetSize(iconSize, iconSize)
+            self.IconOverlay:SetSize(iconSize, iconSize)
+            self.IconOverlay2:SetSize(iconSize, iconSize)
+
+            local earnedCheckSize = SafeGetEarnedCheckSize(itemInfo.iconSizeType)
+            self.EarnedCheck:SetSize(earnedCheckSize, earnedCheckSize)
+            self.EarnedCheck:SetShown(itemInfo.showAsEarned)
+
+            self.Count:SetFontObject(SafeGetItemCountTextSizeFont(itemInfo.iconSizeType))
+
+            self.Icon:SetTexture(itemTexture)
+            _G.SetItemButtonCount(self, itemInfo.stackCount or 1)
+            self:SetDisplayColor()
+
+            local itemNameEnabledState = SafeGetOverrideValueIfActive(itemInfo.itemNameCustomColorOverrideState, itemInfo.itemNameCustomColor)
+            local LEFT_ALIGN = _G.Enum.WidgetTextHorizontalAlignmentType.Left
+            local widgetWidth, widgetHeight
+
+            if itemInfo.textDisplayStyle == _G.Enum.ItemDisplayTextDisplayStyle.WorldQuestReward then
+                self.ItemName:Hide()
+                self.InfoText:Hide()
+                self.NameFrame:Hide()
+
+                self:ShowEmbeddedTooltip(self.itemID)
+
+                widgetWidth = iconSize + SafeNumber(self.Tooltip:GetWidth(), 0) + 10
+                widgetHeight = _G.math.max(iconSize, SafeNumber(self.Tooltip:GetHeight(), 0))
+
+            elseif itemInfo.textDisplayStyle == _G.Enum.ItemDisplayTextDisplayStyle.PlayerChoiceReward then
+                self:HideEmbeddedTooltip()
+                self.InfoText:Hide()
+
+                local minNameFrameWidth = 100
+                local maxNameFrameWidth = 209
+
+                widgetSizeSetting = SafeNumber(widgetSizeSetting, 0)
+                local desiredNameFrameWidth = (widgetSizeSetting > 0) and (widgetSizeSetting - (iconSize + 2)) or maxNameFrameWidth
+                local nameFrameWidth = _G.Clamp(desiredNameFrameWidth, minNameFrameWidth, maxNameFrameWidth)
+                self.NameFrame:SetSize(nameFrameWidth, iconSize)
+                self.NameFrame:Show()
+
+                self.ItemName:ClearAllPoints()
+                self.ItemName:SetPoint("TOPLEFT", self.NameFrame, "TOPLEFT", 4, -2)
+                self.ItemName:SetPoint("BOTTOMRIGHT", self.NameFrame, "BOTTOMRIGHT", -4, 2)
+                self.ItemName:Setup(itemInfo.overrideItemName or itemName, itemInfo.itemNameTextFontType, itemInfo.itemNameTextSizeType, itemNameEnabledState, LEFT_ALIGN)
+                self.ItemName:Show()
+
+                widgetWidth = iconSize + nameFrameWidth + 2
+                widgetHeight = iconSize
+
+            elseif itemInfo.textDisplayStyle == _G.Enum.ItemDisplayTextDisplayStyle.ItemNameOnlyCentered then
+                self:HideEmbeddedTooltip()
+                self.NameFrame:Hide()
+                self.InfoText:Hide()
+
+                widgetSizeSetting = SafeNumber(widgetSizeSetting, 0)
+                local desiredItemNameWidth = (widgetSizeSetting > 0) and (widgetSizeSetting - (iconSize + 10)) or 0
+                local itemNameWidth = _G.math.max(desiredItemNameWidth, 0)
+
+                self.ItemName:ClearAllPoints()
+                self.ItemName:SetPoint("TOPLEFT", self.Icon, "TOPRIGHT", 10, 0)
+                self.ItemName:SetSize(itemNameWidth, iconSize)
+                self.ItemName:Setup(itemInfo.overrideItemName or itemName, itemInfo.itemNameTextFontType, itemInfo.itemNameTextSizeType, itemNameEnabledState, LEFT_ALIGN)
+                self.ItemName:Show()
+
+                widgetWidth = iconSize + SafeNumber(self.ItemName:GetWidth(), 0) + 10
+                widgetHeight = iconSize
+
+            else
+                self:HideEmbeddedTooltip()
+                self.NameFrame:Hide()
+
+                widgetSizeSetting = SafeNumber(widgetSizeSetting, 0)
+                local desiredTextWidth = (widgetSizeSetting > 0) and (widgetSizeSetting - (iconSize + 10)) or 0
+                local textWidth = _G.math.max(desiredTextWidth, 0)
+
+                self.ItemName:ClearAllPoints()
+                self.ItemName:SetPoint("TOPLEFT", self.Icon, "TOPRIGHT", 10, 0)
+                self.ItemName:SetSize(textWidth, 0)
+                self.ItemName:Setup(itemInfo.overrideItemName or itemName, itemInfo.itemNameTextFontType, itemInfo.itemNameTextSizeType, itemNameEnabledState, LEFT_ALIGN)
+                self.ItemName:Show()
+
+                if itemInfo.infoText then
+                    self.InfoText:SetSize(textWidth, 0)
+                    self.InfoText:Setup(itemInfo.infoText, itemInfo.infoTextFontType, itemInfo.infoTextSizeType, itemInfo.infoTextEnabledState, LEFT_ALIGN)
+                    self.InfoText:Show()
+
+                    widgetWidth = iconSize + SafeNumber(self.InfoText:GetWidth(), 0) + 10
+                    widgetHeight = _G.math.max(iconSize, SafeNumber(self.ItemName:GetHeight(), 0) + SafeNumber(self.InfoText:GetHeight(), 0) + 2)
+                else
+                    self.InfoText:Hide()
+                    widgetWidth = iconSize + SafeNumber(self.ItemName:GetWidth(), 0) + 10
+                    widgetHeight = _G.math.max(iconSize, SafeNumber(self.ItemName:GetHeight(), 0))
+                end
+            end
+
+            self:SetTooltip(itemInfo.overrideTooltip)
+            self:SetWidth(widgetWidth)
+            self:SetHeight(widgetHeight)
+
+            _G.EventRegistry:RegisterCallback("ColorManager.OnColorDataUpdated", self.SetDisplayColor, self)
         end
     end
 
