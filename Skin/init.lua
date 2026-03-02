@@ -180,21 +180,22 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
             local phyScreenWidth, phyScreenHeight = _G.GetPhysicalScreenSize()
             _G.print(("%s v%s loaded."):format(ADDON_NAME, private.API_MAJOR + private.API_MINOR / 100))
             _G.print(("Blizzard World of Warcraft - %s (%s)"):format(select(1, _G.GetBuildInfo()),select(2, _G.GetBuildInfo())))
-            _G.print(("Running on %sx%s - UI Scale: %.2f"):format(phyScreenWidth, phyScreenHeight, _G.UIParent:GetScale()))
             -- Setup function for the host addon
             private.OnLoad()
-            -- Defer scale update to a new execution context so that
-            -- SetCVar("uiScale") / UIParent:SetScale() taint does not
-            -- contaminate the ADDON_LOADED processing chain and propagate
-            -- to UIParentPanelManager, which causes ADDON_ACTION_BLOCKED
-            -- errors for protected functions (e.g. SetPassThroughButtons)
-            -- when frames like WorldMapFrame are opened via ShowUIPanel.
+            -- Defer scale-related reads and CVar writes to a new execution
+            -- context so addon code does not contaminate the ADDON_LOADED
+            -- processing chain. Reading UIParent:GetScale() or calling
+            -- SetCVar during ADDON_LOADED can propagate taint to
+            -- C_ActionBar / UIParentPanelManager, which causes
+            -- ADDON_ACTION_BLOCKED errors for protected functions like
+            -- MultiBar:ShowBase() and SetPassThroughButtons.
             _G.C_Timer.After(0, function()
+                _G.print(("Running on %sx%s - UI Scale: %.2f"):format(phyScreenWidth, phyScreenHeight, _G.UIParent:GetScale()))
                 private.UpdateUIScale()
+                if (tonumber(_G.GetCVar("questTextContrast")) ~= 4) then
+                    _G.SetCVar("questTextContrast", 4)
+                end
             end)
-            if (tonumber(_G.GetCVar("questTextContrast")) ~= 4) then
-                _G.SetCVar("questTextContrast", 4);
-            end
 
             if _G.AuroraConfig then
                 Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient
