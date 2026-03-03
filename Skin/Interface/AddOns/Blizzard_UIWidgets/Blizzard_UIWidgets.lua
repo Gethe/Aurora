@@ -57,29 +57,12 @@ local function SafeDebugName(frame)
     return "<frame>"
 end
 
--- Protect GetUnscaledFrameRect against secret (tainted) values from GetScaledRect.
--- Aurora's font modifications cause widget frame dimensions to become tainted,
--- which propagates through the layout chain via the replaced mixin Setup functions.
--- The original GetUnscaledFrameRect only checks for nil returns from GetScaledRect,
--- but tainted values are non-nil secret numbers that error when used in arithmetic.
--- This replacement catches secret values and returns defaulted (1,1,1,1) just like
--- the nil case, preventing "attempt to perform arithmetic on secret number" errors.
-if _G.GetUnscaledFrameRect then
-    _G.GetUnscaledFrameRect = function(frame, scale)
-        local frameLeft, frameBottom, frameWidth, frameHeight = frame:GetScaledRect()
-        if frameLeft == nil then
-            local defaulted = true
-            return 1, 1, 1, 1, defaulted
-        end
-
-        if IsSecret(frameLeft) or IsSecret(frameBottom) or IsSecret(frameWidth) or IsSecret(frameHeight) or IsSecret(scale) then
-            local defaulted = true
-            return 1, 1, 1, 1, defaulted
-        end
-
-        return frameLeft / scale, frameBottom / scale, frameWidth / scale, frameHeight / scale
-    end
-end
+-- NOTE: Do NOT replace _G.GetUnscaledFrameRect here. Overwriting a global
+-- function from addon code taints the global itself, which propagates taint
+-- through every LayoutFrame:GetExtents() → Layout() call chain. This caused
+-- massive CooldownViewer combat taint (all viewer frames, UIParentBottomManagedFrameContainer,
+-- UIParentRightManagedFrameContainer blocked in combat). The original Blizzard
+-- function in FrameUtil.lua is secure and should remain untouched.
 
 local function IsBelowMinimapContainer(container)
     return container == _G.UIWidgetBelowMinimapContainerFrame
