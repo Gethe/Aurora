@@ -1,4 +1,8 @@
-﻿## [12.0.1.10] ##
+﻿## [12.0.1.11] ##
+### Fixed ###
+  * fix: Revert GetUnscaledFrameRect global replacement — overwriting this global taints every LayoutFrame call, causing massive CooldownViewer combat taint.
+
+## [12.0.1.10] ##
 ### Fixed ###
   * fix: Protect GetUnscaledFrameRect against secret (tainted) values from GetScaledRect.
   * fix: ADDON_LOADED contaminates the execution context that feeds into the action bar initialization chain.
@@ -190,6 +194,8 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.11]: https://github.com/Haleth/Aurora/compare/12.0.1.10...12.0.1.11
+[12.0.1.10]: https://github.com/Haleth/Aurora/compare/12.0.1.9...12.0.1.10
 [12.0.1.9]: https://github.com/Haleth/Aurora/compare/12.0.1.8...12.0.1.9
 [12.0.1.8]: https://github.com/Haleth/Aurora/compare/12.0.1.7...12.0.1.8
 [12.0.1.7]: https://github.com/Haleth/Aurora/compare/12.0.1.6...12.0.1.7
