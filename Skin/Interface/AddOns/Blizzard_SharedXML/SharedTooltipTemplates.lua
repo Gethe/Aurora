@@ -10,8 +10,18 @@ local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\SharedTooltipTemplates.lua ]]
+    -- Tooltips skinned via the taint-safe path (NineSlice border pieces
+    -- hidden with SetAlpha(0), no _auroraNineSlice flag) must not have
+    -- their NineSlice touched from addon context during display, or the
+    -- "secret number" taint propagates to child widgets.
+    local taintSafeTooltips = {}
+    function Hook.SetTaintSafe(tooltip)
+        taintSafeTooltips[tooltip] = true
+    end
+
     function Hook.SharedTooltip_SetBackdropStyle(self, style, embedded)
         if self:IsForbidden() then return end
+        if taintSafeTooltips[self] then return end
         if not (embedded or self.IsEmbedded) then
             local r, g, b = Color.frame:GetRGB()
             local a = Util.GetFrameAlpha()
