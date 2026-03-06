@@ -221,21 +221,15 @@ function private.FrameXML.QuestMapFrame()
     end
     QuestMapFrame.VerticalSeparator:Hide()
 
-    -- SET UP TABS
-    local QuestsTab = QuestMapFrame.QuestsTab
-    Skin.QuestMapFrameTabTemplate(QuestsTab)
-
-    local MapLegendTab = QuestMapFrame.MapLegendTab
-    Skin.QuestMapFrameTabTemplate(MapLegendTab)
-
-    local EventsTab = QuestMapFrame.EventsTab
-    Skin.QuestMapFrameTabTemplate(EventsTab)
-
-    Util.PositionRelative("TOPLEFT", QuestMapFrame, "TOPRIGHT", 1, -40, 1, "Down", {
-        QuestsTab,
-        MapLegendTab,
-        EventsTab,
-    })
+    -- SET UP TABS — skin only, do NOT reposition.  Blizzard's XML anchors
+    -- QuestsTab → TOPLEFT of parent TOPRIGHT, EventsTab → below QuestsTab,
+    -- MapLegendTab → below EventsTab.  ValidateTabs() dynamically re-anchors
+    -- MapLegendTab when EventsTab is hidden/shown.  Aurora's old
+    -- Util.PositionRelative call broke this chain and caused a circular
+    -- anchor dependency (SetPoint error on MapLegendTab/EventsTab).
+    Skin.QuestMapFrameTabTemplate(QuestMapFrame.QuestsTab)
+    Skin.QuestMapFrameTabTemplate(QuestMapFrame.MapLegendTab)
+    Skin.QuestMapFrameTabTemplate(QuestMapFrame.EventsTab)
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
