@@ -68,6 +68,25 @@ local function IsBelowMinimapContainer(container)
     return container == _G.UIWidgetBelowMinimapContainerFrame
 end
 
+-- Widget containers parented to a GameTooltip must NOT be skinned.
+-- Skinning writes to frame tables and creates textures, tainting the widget
+-- frames' geometry.  The tainted GetHeight() return values propagate back
+-- through GameTooltip_AddWidgetSet → AreaPoiUtil.TryShowTooltip, poisoning
+-- the execution context so that subsequent SetPoint calls (inside
+-- AddSuppressedPinsToTooltip) produce secret anchor values.  When
+-- ResizeLayoutMixin:Layout() later compares GetNumPoints(), the comparison
+-- fails with "attempt to compare a secret number value".
+local function IsTooltipWidgetContainer(container)
+    local ok, parent = _G.pcall(container.GetParent, container)
+    if ok and parent then
+        local okType, isTooltip = _G.pcall(parent.IsObjectType, parent, "GameTooltip")
+        if okType and isTooltip then
+            return true
+        end
+    end
+    return false
+end
+
 local function DebugBelowMinimap(...)
     if not private.isDev and not FORCE_WIDGET_CHAT_DEBUG then
         return
@@ -122,6 +141,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
     do --[[ Blizzard_UIWidgetManager ]]
         Hook.UIWidgetContainerMixin = {}
         function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
+            if IsTooltipWidgetContainer(self) then return end
             local widgetFrame = self.widgetFrames[widgetID]
             if not widgetFrame then
                 -- if private.isDev then
@@ -157,6 +177,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
 
         Hook.UIWidgetManagerMixin = {}
         function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
+            if IsTooltipWidgetContainer(widgetContainer) then return end
             local setWidgets = _G.C_UIWidgetManager.GetAllWidgetsBySetID(widgetContainer.widgetSetID)
             if IsBelowMinimapContainer(widgetContainer) then
                 DebugBelowMinimap("OnWidgetContainerRegistered", SafeDebugName(widgetContainer), "widgetSetID", widgetContainer.widgetSetID, "count", #setWidgets)
