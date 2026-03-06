@@ -1,6 +1,6 @@
 ﻿## [12.0.1.12] ##
 ### Fixed ###
-  * chg: somewhat taint safe Blizzard_WorldMap -- until we allow it to be moved...
+  * fix: Widget containers parented to a GameTooltip must NOT be skinned.
   * chg: somewhat taint safe Blizzard_WorldMap -- until we allow it to be moved...
   * fix: QuestMapFrame Tabs to be skinned and not repositioned..
   * fix: more taint fixes for tooltips
