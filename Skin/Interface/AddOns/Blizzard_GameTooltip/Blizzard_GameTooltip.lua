@@ -99,7 +99,43 @@ function private.FrameXML.GameTooltip()
 
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)
-    Skin.GameTooltipTemplate(_G.GameTooltip)
+
+    -- Taint-safe GameTooltip skin: the standard Skin.GameTooltipTemplate
+    -- calls Skin.NineSlicePanelTemplate (sets _auroraNineSlice, enabling
+    -- the NineSliceUtil.ApplyLayout hook that runs Base.SetBackdrop on
+    -- EVERY backdrop style change—writing BackdropMixin methods to the
+    -- NineSlice table and creating textures), plus Base.SetBackdrop /
+    -- SetPoint / SetHeight on the StatusBar.  These operations mark
+    -- GameTooltip's child hierarchy as addon-modified, causing
+    -- GetWidth/GetScaledRect to return "secret number" values that break
+    -- widget set processing in GameTooltip_AddWidgetSet (AreaPOI tooltips).
+    do
+        local ns = _G.GameTooltip.NineSlice
+        -- Hide border pieces; keep Center visible for backdrop color.
+        -- SetAlpha does not get reset by NineSliceUtil.ApplyLayout.
+        local borderPieces = {
+            "TopLeftCorner", "TopRightCorner",
+            "BottomLeftCorner", "BottomRightCorner",
+            "TopEdge", "BottomEdge", "LeftEdge", "RightEdge",
+        }
+        for _, name in next, borderPieces do
+            local piece = ns[name]
+            if piece then
+                piece:SetAlpha(0)
+            end
+        end
+        local r, g, b = Color.frame:GetRGB()
+        ns:SetCenterColor(r, g, b, Util.GetFrameAlpha())
+        -- Do NOT set ns._auroraNineSlice — this would enable the heavy
+        -- NineSlice hook (Base.SetBackdrop) on every tooltip display.
+        -- Do NOT skin GameTooltipStatusBar — Base.SetBackdrop creates
+        -- textures/writes methods, and SetPoint creates a tainted anchor.
+        -- Tell the SharedTooltip_SetBackdropStyle hook to skip this tooltip
+        -- so it doesn't call NineSlice:SetCenterColor from addon context
+        -- during the tooltip display flow.
+        Hook.SetTaintSafe(_G.GameTooltip)
+    end
+
     Skin.GameTooltipTemplate(_G.EmbeddedItemTooltip)
     Skin.InternalEmbeddedItemTooltipTemplate(_G.EmbeddedItemTooltip.ItemTooltip)
 end
