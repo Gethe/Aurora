@@ -1,4 +1,13 @@
-﻿## [12.0.1.11] ##
+﻿## [12.0.1.12] ##
+### Fixed ###
+  * chg: somewhat taint safe Blizzard_WorldMap -- until we allow it to be moved...
+  * chg: somewhat taint safe Blizzard_WorldMap -- until we allow it to be moved...
+  * fix: QuestMapFrame Tabs to be skinned and not repositioned..
+  * fix: more taint fixes for tooltips
+  * fix: trying to make GameTooltip taint safe
+
+
+## [12.0.1.11] ##
 ### Fixed ###
   * fix: Revert GetUnscaledFrameRect global replacement — overwriting this global taints every LayoutFrame call, causing massive CooldownViewer combat taint.
 
@@ -194,6 +203,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.12]: https://github.com/Haleth/Aurora/compare/12.0.1.11...12.0.1.12
 [12.0.1.11]: https://github.com/Haleth/Aurora/compare/12.0.1.10...12.0.1.11
 [12.0.1.10]: https://github.com/Haleth/Aurora/compare/12.0.1.9...12.0.1.10
 [12.0.1.9]: https://github.com/Haleth/Aurora/compare/12.0.1.8...12.0.1.9
