@@ -51,6 +51,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_ActionBar\Shared\SpellFlyout.lua"/-->
     <!--Script file="Blizzard_ActionBar\WoWLabs\KeybindReminder.lua"/-->
     <!--Script file="Blizzard_ActionBar\Shared\Localization.lua"/-->
+    <Script file="Blizzard_ActionBar\Shared\VehicleLeaveButton.lua"/>
     <!-- End of section added for Blizzard_ActionBar by the Aurora XML Updater -->
     <Script file="Blizzard_ActionBarController\Blizzard_ActionBarController.lua"/>
     <!--Script file="Blizzard_ActionStatus\Blizzard_ActionStatus.lua"/-->
