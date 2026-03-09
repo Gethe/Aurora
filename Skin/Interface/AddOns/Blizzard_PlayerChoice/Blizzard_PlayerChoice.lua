@@ -48,6 +48,13 @@ do --[[ AddOns\Blizzard_PlayerChoice.lua ]]
                 if self.Title.Right then self.Title.Right:Hide() end
                 if self.Title.Middle then self.Title.Middle:Hide() end
             end
+
+            -- Fix positioning for Worldsoul/TWW panels: Aurora's skinning changes the layout.
+            -- Position lower on screen to prevent covering too much UI space.
+            if self.uiTextureKit == "thewarwithin" or self.uiTextureKit == "midnight" then
+                self:ClearAllPoints()
+                self:SetPoint("CENTER", 0, -600)
+            end
         end
 
         function Hook.PlayerChoiceFrameMixin:SetupOptions()
