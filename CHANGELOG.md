@@ -1,4 +1,15 @@
-﻿## [12.0.1.12] ##
+﻿## [12.0.1.13] ##
+### Added ###
+  * add: skinning of VehicleLeaveButton [#125]
+
+### Fixed ###
+  * fix: PlayerChoice frames being too high (Worldsoul Memories) [#156]
+  * fix: Tradeskills screen with addon TradeSkillFluxCapacitor buttons out of bonds [#154]
+  * fix: skin of custom tabs in QuestMapFrame.... and removed border from Tabs
+  * fix: VehicleLeaveButton skinning [#125]
+
+
+## [12.0.1.12] ##
 ### Fixed ###
   * fix: Widget containers parented to a GameTooltip must NOT be skinned.
   * chg: somewhat taint safe Blizzard_WorldMap -- until we allow it to be moved...
@@ -203,6 +214,7 @@
   * chore: toc update for beta
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.13]: https://github.com/Haleth/Aurora/compare/12.0.1.12...12.0.1.13
 [12.0.1.12]: https://github.com/Haleth/Aurora/compare/12.0.1.11...12.0.1.12
 [12.0.1.11]: https://github.com/Haleth/Aurora/compare/12.0.1.10...12.0.1.11
 [12.0.1.10]: https://github.com/Haleth/Aurora/compare/12.0.1.9...12.0.1.10
