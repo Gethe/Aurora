@@ -400,11 +400,27 @@ function private.AddOns.Blizzard_Professions()
         if BrowseFrame.SearchButton then Skin.UIPanelButtonTemplate(BrowseFrame.SearchButton) end
         if BrowseFrame.BackButton then Skin.UIPanelButtonTemplate(BrowseFrame.BackButton) end
 
-        local function SkinOrderTypeTab(tab)
-            if tab._auroraSkinned then return end
-            tab._auroraSkinned = true
-            Skin.TabSystemButtonTemplate(tab)
+        local function HideOrderTypeTabLayers(tab)
             if tab.Glow then tab.Glow:SetAlpha(0) end
+            if tab.LeftActive then tab.LeftActive:SetAlpha(0) end
+            if tab.MiddleActive then tab.MiddleActive:SetAlpha(0) end
+            if tab.RightActive then tab.RightActive:SetAlpha(0) end
+            if tab.LeftHighlight then tab.LeftHighlight:SetAlpha(0) end
+            if tab.MiddleHighlight then tab.MiddleHighlight:SetAlpha(0) end
+            if tab.RightHighlight then tab.RightHighlight:SetAlpha(0) end
+        end
+
+        local function SkinOrderTypeTab(tab)
+            if not tab._auroraSkinned then
+                tab._auroraSkinned = true
+                Skin.TabSystemButtonTemplate(tab)
+
+                if tab.SetTabSelected then
+                    _G.hooksecurefunc(tab, "SetTabSelected", HideOrderTypeTabLayers)
+                end
+            end
+
+            HideOrderTypeTabLayers(tab)
         end
         for _, tab in ipairs({
             BrowseFrame.PublicOrdersButton,
