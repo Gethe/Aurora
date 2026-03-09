@@ -12,7 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\QuestMapFrame.lua ]]
     -- /dump C_CampaignInfo.GetCampaignInfo(C_CampaignInfo.GetCurrentCampaignID())
-    function Hook.QuestLogQuests_Update(poiTable)
+    function Hook.QuestLogQuests_Update(_poiTable)
         local kit, overlay
         for campaignHeader in _G.QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
             local campaign = campaignHeader:GetCampaign()
@@ -68,14 +68,14 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         self.ExecuteSessionCommand:ClearPushedTexture()
         self.ExecuteSessionCommand:ClearDisabledTexture()
 
-        local atlas = sessionCommandToButtonAtlas[command];
+        local atlas = sessionCommandToButtonAtlas[command]
         if atlas then
             self.ExecuteSessionCommand._auroraIcon:SetAtlas(atlas)
         end
     end
 
     local EventsFrameHookedElements = {}
-    local function EventsFrameBackgroundNormal(element, texture)
+    local function EventsFrameBackgroundNormal(element, _texture)
         -- _G.print(texture)
         -- FIXLATER
     end
@@ -109,6 +109,53 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
         if func then
             func(frame)
         end
+    end
+
+    local function SkinIfExists(tab, stripShapedArt)
+        if tab and not tab._auroraSkinnedQuestMapTab then
+            Skin.QuestMapFrameTabTemplate(tab, stripShapedArt)
+        end
+    end
+
+    local function IsTabLikeButton(frame)
+        if not frame or frame._auroraSkinnedQuestMapTab or not frame.GetObjectType then
+            return false
+        end
+
+        local objectType = frame:GetObjectType()
+        if objectType ~= "Button" and objectType ~= "CheckButton" then
+            return false
+        end
+
+        local name = frame.GetName and frame:GetName()
+        local hasTabName = name and name:find("Tab")
+        local checkedTexture = frame.GetCheckedTexture and frame:GetCheckedTexture()
+        local hasTabTraits = frame.Background or frame.SelectedTexture or checkedTexture
+        local hasIcon = frame.IconTexture or frame.Icon or (frame.GetNormalTexture and frame:GetNormalTexture())
+
+        return hasIcon and (hasTabName or hasTabTraits)
+    end
+
+    local function SkinTabChildren(parent)
+        for _, child in next, {parent:GetChildren()} do
+            if IsTabLikeButton(child) then
+                SkinIfExists(child)
+            end
+
+            if child and child.GetNumChildren and child:GetNumChildren() > 0 then
+                SkinTabChildren(child)
+            end
+        end
+    end
+
+    function Skin.SkinQuestMapFrameTabs(QuestMapFrame)
+        -- Always skin Blizzard's built-in tabs first.
+        SkinIfExists(QuestMapFrame.QuestsTab, true)
+        SkinIfExists(QuestMapFrame.MapLegendTab, true)
+        SkinIfExists(QuestMapFrame.EventsTab, true)
+
+        -- Then skin any tab-like descendants (including addon-added tabs).
+        SkinTabChildren(QuestMapFrame)
     end
 end
 
@@ -149,21 +196,181 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
     end
     function Skin.QuestLogObjectiveTemplate(Button)
     end
-    function Skin.QuestMapFrameTabTemplate(Button)
-        Button:GetRegions():Hide()
-        -- local CheckButton = Button.Button or Button
-        local icon = Button.IconTexture
-        if icon then
-            Button:ClearNormalTexture()
-            Base.CropIcon(Button:GetPushedTexture())
-        else
-            icon = Button.Icon or Button:GetNormalTexture()
+    function Skin.QuestMapFrameTabTemplate(Button, stripShapedArt)
+        local CheckButton = Button.Button or Button
+
+        local function HideAndLockTextureRegion(region)
+            if not region then return end
+
+            if region.SetTexture then
+                region:SetTexture("")
+            end
+            if region.SetAtlas then
+                region:SetAtlas("")
+            end
+            region:Hide()
+
+            if not region._auroraHideLocked then
+                _G.hooksecurefunc(region, "Show", region.Hide)
+                region._auroraHideLocked = true
+            end
         end
-        Button._auroraIconBG = Base.CropIcon(icon, Button)
-        -- Base.CropIcon(Button:GetHighlightTexture())
-        -- Base.CropIcon(Button:GetCheckedTexture())
-        Button.Background:SetTexture("")
-        Button.SelectedTexture:SetTexture("")
+
+        local function StripNonIconTextures(frame, iconTexture)
+            if not iconTexture then return end
+
+            for _, region in next, {frame:GetRegions()} do
+                if region and region.GetObjectType and region:GetObjectType() == "Texture" and region ~= iconTexture then
+                    region:SetTexture("")
+                    region:Hide()
+                end
+            end
+        end
+
+        local hasCustomIcon = Button.CustomIcon or CheckButton.CustomIcon
+        local icon = hasCustomIcon or Button.IconTexture or CheckButton.IconTexture
+        if not icon then
+            icon = Button.Icon or CheckButton.Icon or (CheckButton.GetNormalTexture and CheckButton:GetNormalTexture())
+        end
+
+        -- If addon provides a dedicated custom icon, force-hide Blizzard fallback
+        -- icon textures so their beveled frame art can't bleed through.
+        if hasCustomIcon and icon then
+            if Button.Icon and Button.Icon ~= icon then Button.Icon:Hide() end
+            if Button.IconTexture and Button.IconTexture ~= icon then Button.IconTexture:Hide() end
+            if CheckButton.Icon and CheckButton.Icon ~= icon then CheckButton.Icon:Hide() end
+            if CheckButton.IconTexture and CheckButton.IconTexture ~= icon then CheckButton.IconTexture:Hide() end
+        end
+
+        if icon then
+            if stripShapedArt then
+                if CheckButton.ClearNormalTexture and CheckButton.ClearPushedTexture and CheckButton.ClearHighlightTexture and CheckButton.ClearDisabledTexture then
+                    CheckButton:ClearNormalTexture()
+                    CheckButton:ClearPushedTexture()
+                    CheckButton:ClearHighlightTexture()
+                    CheckButton:ClearDisabledTexture()
+                elseif CheckButton.SetNormalTexture and CheckButton.SetPushedTexture and CheckButton.SetHighlightTexture and CheckButton.SetDisabledTexture then
+                    CheckButton:SetNormalTexture("")
+                    CheckButton:SetPushedTexture("")
+                    CheckButton:SetHighlightTexture("")
+                    CheckButton:SetDisabledTexture("")
+                end
+
+                StripNonIconTextures(CheckButton, icon)
+            else
+                -- Preserve addon icon sources, but suppress odd state-only art.
+                local highlightTexture = CheckButton.GetHighlightTexture and CheckButton:GetHighlightTexture()
+                if highlightTexture and highlightTexture ~= icon then
+                    highlightTexture:SetTexture("")
+                    highlightTexture:Hide()
+                end
+
+                local pushedTexture = CheckButton.GetPushedTexture and CheckButton:GetPushedTexture()
+                if pushedTexture and pushedTexture ~= icon then
+                    pushedTexture:SetTexture("")
+                    pushedTexture:Hide()
+                end
+
+                local checkedTexture = CheckButton.GetCheckedTexture and CheckButton:GetCheckedTexture()
+                if checkedTexture and checkedTexture ~= icon then
+                    checkedTexture:SetTexture("")
+                    checkedTexture:Hide()
+                end
+
+                -- Some custom tabs keep additional unnamed texture regions for
+                -- selected/hover states. Hide any non-icon texture regions.
+                for _, region in next, {Button:GetRegions()} do
+                    if region and region.GetObjectType and region:GetObjectType() == "Texture"
+                        and region ~= icon
+                        and region ~= Button._auroraHoverTex
+                        and region ~= Button._auroraCheckedTex
+                        and region ~= Button._auroraIconBG
+                    then
+                        HideAndLockTextureRegion(region)
+                    end
+                end
+                if CheckButton ~= Button then
+                    for _, region in next, {CheckButton:GetRegions()} do
+                        if region and region.GetObjectType and region:GetObjectType() == "Texture"
+                            and region ~= icon
+                            and region ~= Button._auroraHoverTex
+                            and region ~= Button._auroraCheckedTex
+                            and region ~= Button._auroraIconBG
+                        then
+                            HideAndLockTextureRegion(region)
+                        end
+                    end
+                end
+            end
+
+            if hasCustomIcon then
+                -- Keep custom addon icon size consistent with Blizzard tabs.
+                -- Prefer anchoring to the original icon region geometry.
+                local fallbackIcon = (Button.Icon and Button.Icon ~= icon and Button.Icon)
+                    or (Button.IconTexture and Button.IconTexture ~= icon and Button.IconTexture)
+                    or (CheckButton.Icon and CheckButton.Icon ~= icon and CheckButton.Icon)
+                    or (CheckButton.IconTexture and CheckButton.IconTexture ~= icon and CheckButton.IconTexture)
+
+                icon:ClearAllPoints()
+                if fallbackIcon then
+                    icon:SetAllPoints(fallbackIcon)
+                else
+                    icon:SetPoint("TOPLEFT", Button, 8, -8)
+                    icon:SetPoint("BOTTOMRIGHT", Button, -8, 8)
+                end
+            end
+
+            Button._auroraIconBG = Base.CropIcon(icon, Button)
+
+            if not Button._auroraHoverTex then
+                local hover = Button:CreateTexture(nil, "OVERLAY")
+                hover:SetPoint("TOPLEFT", icon, -1, 1)
+                hover:SetPoint("BOTTOMRIGHT", icon, 1, -1)
+                hover:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, 0.18)
+                hover:Hide()
+                Button._auroraHoverTex = hover
+
+                Button:HookScript("OnEnter", function()
+                    if Button._auroraHoverTex then
+                        Button._auroraHoverTex:Show()
+                    end
+                end)
+                Button:HookScript("OnLeave", function()
+                    if Button._auroraHoverTex then
+                        Button._auroraHoverTex:Hide()
+                    end
+                end)
+            end
+
+            -- Ensure the hover border doesn't stay visible between updates.
+            Button._auroraHoverTex:Hide()
+
+            if CheckButton.GetChecked and not Button._auroraCheckedTex then
+                local checked = Button:CreateTexture(nil, "ARTWORK")
+                checked:SetPoint("TOPLEFT", icon, -1, 1)
+                checked:SetPoint("BOTTOMRIGHT", icon, 1, -1)
+                checked:SetColorTexture(1, 0.85, 0, 0.2)
+                checked:SetShown(CheckButton:GetChecked())
+                Button._auroraCheckedTex = checked
+
+                CheckButton:HookScript("OnClick", function(self)
+                    Button._auroraCheckedTex:SetShown(self:GetChecked())
+                end)
+            end
+
+            icon:Show()
+        end
+
+        if CheckButton.SetCheckedTexture then
+            CheckButton:SetCheckedTexture("")
+        end
+
+        HideAndLockTextureRegion(Button.Background)
+        HideAndLockTextureRegion(Button.SelectedTexture)
+        HideAndLockTextureRegion(CheckButton.Background)
+        HideAndLockTextureRegion(CheckButton.SelectedTexture)
+
+        Button._auroraSkinnedQuestMapTab = true
     end
 end
 
@@ -221,15 +428,11 @@ function private.FrameXML.QuestMapFrame()
     end
     QuestMapFrame.VerticalSeparator:Hide()
 
-    -- SET UP TABS — skin only, do NOT reposition.  Blizzard's XML anchors
-    -- QuestsTab → TOPLEFT of parent TOPRIGHT, EventsTab → below QuestsTab,
-    -- MapLegendTab → below EventsTab.  ValidateTabs() dynamically re-anchors
-    -- MapLegendTab when EventsTab is hidden/shown.  Aurora's old
-    -- Util.PositionRelative call broke this chain and caused a circular
-    -- anchor dependency (SetPoint error on MapLegendTab/EventsTab).
-    Skin.QuestMapFrameTabTemplate(QuestMapFrame.QuestsTab)
-    Skin.QuestMapFrameTabTemplate(QuestMapFrame.MapLegendTab)
-    Skin.QuestMapFrameTabTemplate(QuestMapFrame.EventsTab)
+    Skin.SkinQuestMapFrameTabs(QuestMapFrame)
+    QuestMapFrame:HookScript("OnShow", Skin.SkinQuestMapFrameTabs)
+    if QuestMapFrame.ValidateTabs then
+        _G.hooksecurefunc(QuestMapFrame, "ValidateTabs", Skin.SkinQuestMapFrameTabs)
+    end
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
