@@ -419,40 +419,55 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetTemplateTextWithStateMixin and _G.UIWidgetTemplateTextWithStateMixin.Setup then
         local origTextWithStateSetup = _G.UIWidgetTemplateTextWithStateMixin.Setup
 
-        -- Keep Blizzard's secure implementation for geometry math. Running the
-        -- original via securecallfunction prevents "secret number" failures
-        -- when tooltip widgets are built from protected widgetInfo values.
+        -- Replacing the mixin Setup taints the table slot, so even
+        -- securecallfunction cannot restore a fully secure context.
+        -- Re-implement the geometry with SafeNumber to avoid secret
+        -- number arithmetic in every call path.
         _G.UIWidgetTemplateTextWithStateMixin.Setup = function(self, widgetInfo, widgetContainer)
-            if _G.securecallfunction then
-                _G.securecallfunction(origTextWithStateSetup, self, widgetInfo, widgetContainer)
-                return
-            end
-
-            -- Conservative fallback: avoid passing potentially secret values to
-            -- protected width/height APIs when securecallfunction is unavailable.
             if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
-                _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
+                _G.pcall(_G.UIWidgetBaseTemplateMixin.Setup, self, widgetInfo, widgetContainer)
             end
 
             local tooltip = widgetInfo and widgetInfo.tooltip
             if IsSecret(tooltip) then
                 tooltip = ""
             end
-            self:SetTooltip(tooltip)
+            _G.pcall(self.SetTooltip, self, tooltip)
+
+            local widgetSizeSetting = widgetInfo and widgetInfo.widgetSizeSetting
+            widgetSizeSetting = SafeNumber(widgetSizeSetting, 0)
+
+            if widgetSizeSetting > 0 then
+                self.Text:SetWidth(widgetSizeSetting)
+            else
+                self.Text:SetWidth(0)
+            end
 
             local text = widgetInfo and widgetInfo.text
             if IsSecret(text) or type(text) ~= "string" then
                 text = ""
             end
+            local fontType = SafeNumber(widgetInfo and widgetInfo.fontType, 0)
+            local textSizeType = SafeNumber(widgetInfo and widgetInfo.textSizeType, 0)
+            local enabledState = SafeNumber(widgetInfo and widgetInfo.enabledState, 0)
+            local hAlign = SafeNumber(widgetInfo and widgetInfo.hAlign, 0)
 
-            self.Text:SetWidth(0)
-            self.Text:Setup(text, 0, 0, 0, 1)
+            self.Text:Setup(text, fontType, textSizeType, enabledState, hAlign)
+
             if self.fontColor then
                 self.Text:SetTextColor(self.fontColor:GetRGB())
             end
 
-            self:SetWidth(1)
-            self:SetHeight(SafeNumber(self.Text:GetStringHeight(), 0))
+            if widgetSizeSetting > 0 then
+                self:SetWidth(widgetSizeSetting)
+            else
+                self:SetWidth(SafeNumber(self.Text:GetStringWidth(), 1))
+            end
+
+            local textHeight = SafeNumber(self.Text:GetStringHeight(), 0)
+            local bottomPadding = SafeNumber(widgetInfo and widgetInfo.bottomPadding, 0)
+            bottomPadding = _G.Clamp(bottomPadding, 0, _G.math.max(textHeight - 1, 0))
+            self:SetHeight(textHeight + bottomPadding)
         end
     end
 
@@ -510,9 +525,6 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetBaseItemTemplateMixin and _G.UIWidgetBaseItemTemplateMixin.Setup then
         local origBaseItemSetup = _G.UIWidgetBaseItemTemplateMixin.Setup
         _G.UIWidgetBaseItemTemplateMixin.Setup = function(self, widgetContainer, itemInfo, widgetSizeSetting, tooltipLoc)
-            if widgetContainer and IsTooltipWidgetContainer(widgetContainer) then
-                return RunOriginalWidgetSetup(origBaseItemSetup, self, widgetContainer, itemInfo, widgetSizeSetting, tooltipLoc)
-            end
 
             if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
                 _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
@@ -671,9 +683,6 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetBaseCurrencyTemplateMixin and _G.UIWidgetBaseCurrencyTemplateMixin.Setup then
         local origBaseCurrencySetup = _G.UIWidgetBaseCurrencyTemplateMixin.Setup
         _G.UIWidgetBaseCurrencyTemplateMixin.Setup = function(self, widgetContainer, currencyInfo, enabledState, tooltipEnabledState, hideIcon, customFont, overrideFontColor, tooltipLoc)
-            if widgetContainer and IsTooltipWidgetContainer(widgetContainer) then
-                return RunOriginalWidgetSetup(origBaseCurrencySetup, self, widgetContainer, currencyInfo, enabledState, tooltipEnabledState, hideIcon, customFont, overrideFontColor, tooltipLoc)
-            end
 
             if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
                 _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
@@ -739,9 +748,6 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetTemplateHorizontalCurrenciesMixin and _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup then
         local origHorizontalCurrenciesSetup = _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup
         _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup = function(self, widgetInfo, widgetContainer)
-            if widgetContainer and IsTooltipWidgetContainer(widgetContainer) then
-                return RunOriginalWidgetSetup(origHorizontalCurrenciesSetup, self, widgetInfo, widgetContainer)
-            end
 
             if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
                 _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
