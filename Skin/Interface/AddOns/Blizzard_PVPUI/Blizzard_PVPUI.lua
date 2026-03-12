@@ -129,7 +129,16 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Base.CropIcon(Button.Icon)
     end
     function Skin.PVPCasualActivityButton(Button)
-        Skin.FrameTypeButton(Button)
+        -- Taint-safe: Do NOT call Skin.FrameTypeButton here.
+        -- These buttons become HonorFrame.BonusFrame.selectedButton, and Blizzard
+        -- reads .bgID/.arenaID/.queueID/.isBrawl from them in the protected
+        -- HonorFrame_Queue() → C_PvP.JoinBattlefield() call chain.
+        -- Writing to the button table (SetBackdrop, hooksecurefunc, SetButtonColor)
+        -- taints it, causing ADDON_ACTION_FORBIDDEN on JoinBattlefield().
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+        Button:SetHighlightTexture("")
+        Button:SetDisabledTexture("")
 
         Button.SelectedTexture:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         Button.SelectedTexture:ClearAllPoints()
@@ -145,7 +154,13 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Skin.PVPAchievementRewardTemplate(Button.Reward)
     end
     function Skin.PVPRatedActivityButtonTemplate(Button)
-        Skin.FrameTypeButton(Button)
+        -- Taint-safe: Do NOT call Skin.FrameTypeButton here.
+        -- These buttons become ConquestFrame.selectedButton, and Blizzard reads
+        -- .id from them in the protected ConquestFrameJoinButton_OnClick() path.
+        Button:SetNormalTexture("")
+        Button:SetPushedTexture("")
+        Button:SetHighlightTexture("")
+        Button:SetDisabledTexture("")
 
         Button.SelectedTexture:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
         Button.SelectedTexture:ClearAllPoints()
