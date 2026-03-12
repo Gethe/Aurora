@@ -22,7 +22,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
         function Hook.CommunitiesListEntryMixin:Init(elementData)
             local clubInfo = elementData.clubInfo
             Skin.CommunitiesListEntryTemplate(self)
-            if clubInfo and self._iconBG then
+            if clubInfo then
                 local isGuild = clubInfo.clubType == _G.Enum.ClubType.Guild
                 if isGuild then
                     self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
@@ -49,6 +49,10 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
     do --[[ CommunitiesMemberList ]]
         Hook.CommunitiesMemberListEntryMixin = {}
         function Hook.CommunitiesMemberListEntryMixin:UpdatePresence()
+            -- During combat, secureexecuterange taints the context and memberInfo
+            -- fields become secret numbers. The Blizzard original already handled
+            -- coloring, so skip the re-color in combat.
+            if _G.InCombatLockdown() then return end
             local memberInfo = self:GetMemberInfo();
             if memberInfo then
                 if memberInfo.presence ~= _G.Enum.ClubMemberPresence.Offline then
@@ -94,28 +98,14 @@ end
 do --[[ AddOns\Blizzard_Communities.xml ]]
     do --[[ CommunitiesList ]]
         function Skin.CommunitiesListEntryTemplate(Button)
-            Skin.FrameTypeButton(Button)
-            Button:SetBackdropOption("offsets", {
-                left = 7,
-                right = 10,
-                top = 8,
-                bottom = 8,
-            })
-
-            local bg = Button:GetBackdropTexture("bg")
+            -- Taint-safe: avoid Skin.FrameTypeButton, Base.SetBackdrop, CreateTexture.
+            -- These mark buttons as addon-modified, causing SetAvatarTexture() to be
+            -- blocked and stream.streamId to become secret inside secureexecuterange.
             Button.Background:Hide()
 
             Button.GuildTabardBackground:SetSize(60, 60)
-            Button.GuildTabardBackground:SetPoint("TOPLEFT", bg, -1, 1)
 
             Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            Button.Selection:SetAllPoints(bg)
-
-            if not Button._iconBG then
-                Button._iconBG = Button:CreateTexture(nil, "BACKGROUND", nil, 5)
-                Button._iconBG:SetPoint("TOPLEFT", bg, 1, -1)
-                Button._iconBG:SetPoint("BOTTOM", bg, 0, 1)
-            end
 
             Button.CircleMask:Hide()
 
@@ -157,9 +147,13 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ColumnDisplay.InsetBorderTop:Hide()
             Frame.ColumnDisplay.InsetBorderLeft:Hide()
 
-            Skin.WowScrollBox(Frame.ScrollBox)
-            Skin.MinimalScrollBar(Frame.ScrollBar)
-            Skin.InsetFrameTemplate(Frame.InsetFrame)
+            -- NOTE: Do NOT skin anything that participates in the secure call chain.
+            -- Base.SetBackdrop on the ScrollBox marks it as addon-modified, causing
+            -- memberInfo.presence to become a secret number in UpdatePresence hooks
+            -- during secureexecuterange in combat.
+            -- Skin.WowScrollBox(Frame.ScrollBox)
+            -- Skin.MinimalScrollBar(Frame.ScrollBar)
+            -- Skin.InsetFrameTemplate(Frame.InsetFrame)
         end
         function Skin.CommunitiesFrameMemberListDropDownMenuTemplate(Frame)
             Skin.DropdownButton(Frame)
