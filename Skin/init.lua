@@ -163,15 +163,82 @@ do -- set up file order
 end
 
 
--- Tune Lua's incremental GC for smoother frame times at high memory usage.
--- Default WoW GC settings allow large sweeps that cause 30-80ms stalls at
--- 200MB+ heap sizes. These Lua 5.1 compatible settings make the collector
--- do smaller, more frequent passes:
---   setpause(110)  = run GC when memory grows 10% over last sweep (default 200)
---   setstepmul(200) = collector runs at 2x allocation speed (default 200)
--- This trades ~1-2% average CPU for eliminating the large GC stutter spikes.
-_G.collectgarbage("setpause", 110)
-_G.collectgarbage("setstepmul", 200)
+-- GC Tuning System
+-- Provides three modes for Lua's garbage collector:
+--   "smooth"  — aggressive incremental: smaller, more frequent GC passes (setpause 110)
+--   "default" — Lua defaults: let the engine handle it (setpause 200, setstepmul 200)
+--   "combat"  — pause GC during combat, restart after (zero in-combat GC stutter)
+--
+-- Applied early with "smooth" as default; re-applied from AuroraConfig in ADDON_LOADED.
+local GC_MODES = {
+    smooth  = function()
+        _G.collectgarbage("restart")
+        _G.collectgarbage("setpause", 110)
+        _G.collectgarbage("setstepmul", 200)
+    end,
+    default = function()
+        _G.collectgarbage("restart")
+        _G.collectgarbage("setpause", 200)
+        _G.collectgarbage("setstepmul", 200)
+    end,
+    combat  = function()
+        -- Start with smooth tuning; combat events toggle stop/restart
+        _G.collectgarbage("restart")
+        _G.collectgarbage("setpause", 110)
+        _G.collectgarbage("setstepmul", 200)
+    end,
+}
+
+local activeGCMode = "smooth"
+local combatFrame -- created lazily for "combat" mode
+
+local function ApplyGCMode(mode)
+    if not GC_MODES[mode] then mode = "smooth" end
+
+    -- Tear down combat frame if switching away from combat mode
+    if activeGCMode == "combat" and combatFrame then
+        combatFrame:UnregisterAllEvents()
+    end
+
+    activeGCMode = mode
+    GC_MODES[mode]()
+
+    -- Set up combat frame if entering combat mode
+    if mode == "combat" then
+        if not combatFrame then
+            combatFrame = _G.CreateFrame("Frame")
+            combatFrame:SetScript("OnEvent", function(_, event)
+                if event == "PLAYER_REGEN_DISABLED" then
+                    _G.collectgarbage("stop")
+                else
+                    _G.collectgarbage("restart")
+                    _G.collectgarbage("setpause", 110)
+                    _G.collectgarbage("setstepmul", 200)
+                end
+            end)
+        end
+        combatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+        combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    end
+end
+
+-- Expose so RealUI_Config can change the mode live via _G.Aurora
+function private.ApplyGCMode(mode)
+    ApplyGCMode(mode)
+end
+function private.GetGCMode()
+    return activeGCMode
+end
+-- Also expose on the global Aurora table for cross-addon access
+Aurora.ApplyGCMode = function(mode)
+    ApplyGCMode(mode)
+end
+Aurora.GetGCMode = function()
+    return activeGCMode
+end
+
+-- Apply default mode immediately at file load (before SavedVariables are available)
+ApplyGCMode("smooth")
 
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
@@ -209,6 +276,10 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
 
             if _G.AuroraConfig then
                 Aurora[2].buttonsHaveGradient = _G.AuroraConfig.buttonsHaveGradient
+                -- Apply user's chosen GC mode from saved variables
+                if _G.AuroraConfig.gcMode then
+                    ApplyGCMode(_G.AuroraConfig.gcMode)
+                end
             end
 
             for i = 1, #private.fileOrder do

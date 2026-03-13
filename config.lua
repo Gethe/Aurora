@@ -37,6 +37,9 @@ Config.defaults = {
     -- System flags
     hasAnalytics = true,
     customClassColors = {},
+
+    -- GC tuning mode: "smooth" (aggressive incremental), "default" (Lua defaults), "combat" (pause in combat)
+    gcMode = "smooth",
 }
 
 -- Deprecated settings mapping for migration
@@ -98,6 +101,17 @@ Config.validationRules = {
     customClassColors = function(value)
         if type(value) ~= "table" then
             return false, "customClassColors must be a table"
+        end
+        return true
+    end,
+
+    gcMode = function(value)
+        if type(value) ~= "string" then
+            return false, "gcMode must be a string"
+        end
+        local valid = { smooth = true, default = true, combat = true }
+        if not valid[value] then
+            return false, "gcMode must be 'smooth', 'default', or 'combat'"
         end
         return true
     end,

@@ -573,6 +573,93 @@ privacyReloadButton:SetScript("OnLeave", function(self)
     _G.GameTooltip:Hide()
 end)
 
+--[[ Performance Panel ]]--
+local performancePanel = _G.CreateFrame("Frame", "AuroraOptionsPerformance", _G.UIParent)
+performancePanel.name = "Performance"
+performancePanel.parent = "Aurora"
+local performanceCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, performancePanel, "Performance")
+
+local perfTitle = performancePanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+perfTitle:SetPoint("TOP", 0, -26)
+perfTitle:SetText("Performance")
+
+local perfDesc = performancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+perfDesc:SetPoint("TOPLEFT", 16, -60)
+perfDesc:SetWidth(600)
+perfDesc:SetJustifyH("LEFT")
+perfDesc:SetText("Configure garbage collection behavior to reduce microstutter. Changes apply immediately.")
+
+local gcHeader = addSubCategory(performancePanel, "Garbage Collection Mode")
+gcHeader:SetPoint("TOPLEFT", perfDesc, "BOTTOMLEFT", 0, -20)
+
+local gcModes = {
+    { key = "smooth",  label = "Smooth (recommended)", desc = "Frequent small GC passes. Reduces large stutter spikes at the cost of ~1-2% average CPU." },
+    { key = "default", label = "Default", desc = "Standard Lua GC behavior. May cause occasional 30-80ms pauses at high addon memory." },
+    { key = "combat",  label = "Combat Pause", desc = "Disables GC during combat entirely. Zero in-combat GC stutter, but memory grows unchecked. Risky above 500MB." },
+}
+
+local gcRadioButtons = {}
+local function UpdateGCRadios()
+    local current = _G.AuroraConfig and _G.AuroraConfig.gcMode or "smooth"
+    for _, radio in ipairs(gcRadioButtons) do
+        radio:SetChecked(radio.gcKey == current)
+    end
+end
+
+local function OnGCRadioClick(self)
+    if _G.AuroraConfig then
+        _G.AuroraConfig.gcMode = self.gcKey
+    end
+    if _G.Aurora and _G.Aurora.ApplyGCMode then
+        _G.Aurora.ApplyGCMode(self.gcKey)
+    end
+    UpdateGCRadios()
+end
+
+local lastAnchor = gcHeader
+for i, mode in ipairs(gcModes) do
+    local radio = _G.CreateFrame("CheckButton", "AuroraGCMode" .. i, performancePanel, "UIRadioButtonTemplate")
+    radio:SetPoint("TOPLEFT", lastAnchor, "BOTTOMLEFT", i == 1 and 10 or 0, i == 1 and -15 or -8)
+    radio.gcKey = mode.key
+    radio:SetScript("OnClick", OnGCRadioClick)
+
+    local label = radio:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+    label:SetPoint("LEFT", radio, "RIGHT", 5, 0)
+    label:SetText(mode.label)
+
+    local desc = performancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+    desc:SetPoint("TOPLEFT", radio, "BOTTOMLEFT", 22, -2)
+    desc:SetWidth(550)
+    desc:SetJustifyH("LEFT")
+    desc:SetTextColor(0.7, 0.7, 0.7)
+    desc:SetText(mode.desc)
+
+    _G.tinsert(gcRadioButtons, radio)
+    lastAnchor = desc
+end
+
+local gcMemInfo = performancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+gcMemInfo:SetPoint("TOPLEFT", lastAnchor, "BOTTOMLEFT", -32, -20)
+gcMemInfo:SetWidth(550)
+gcMemInfo:SetJustifyH("LEFT")
+
+local function UpdateGCMemInfo()
+    local mem = _G.collectgarbage("count")
+    gcMemInfo:SetText(("Current addon memory: |cffffffff%.1f MB|r"):format(mem / 1024))
+end
+
+local gcNote = performancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+gcNote:SetPoint("TOPLEFT", gcMemInfo, "BOTTOMLEFT", 0, -10)
+gcNote:SetWidth(550)
+gcNote:SetJustifyH("LEFT")
+gcNote:SetTextColor(1, 0.82, 0)
+gcNote:SetText("Note: If you use many addons (500MB+), 'Smooth' is recommended. 'Combat Pause' can cause a large stutter when combat ends as all deferred garbage is collected at once. Changes apply immediately without reload.")
+
+performancePanel.refresh = function()
+    UpdateGCRadios()
+    UpdateGCMemInfo()
+end
+
 --[[ Refresh and callbacks ]]--
 gui.refresh = function()
     --print("gui refresh")
@@ -602,6 +689,10 @@ gui.refresh = function()
 
         -- Update compatibility status
         updateCompatibilityStatus()
+
+        -- Update performance panel
+        UpdateGCRadios()
+        UpdateGCMemInfo()
     end)
 
     if not success then
