@@ -37,39 +37,88 @@ local backdrop = {
 }
 private.backdrop = backdrop
 
+-- Reusable Color cache for SetBackdropColor / SetBackdropBorderColor.
+-- These two functions are called frequently (every color change on every
+-- skinned frame) and previously created a brand-new Color object each time
+-- via Color.Create(). Since the Color is immediately stored on backdropInfo
+-- and the old one becomes garbage, we can reuse a small pool of Color
+-- objects and just update their RGBA values in-place.
+local colorPool = {}
+local colorPoolSize = 0
+local COLOR_POOL_MAX = 8 -- more than enough; only 2 are typically in-flight
+
 local function GetColor(red, green, blue, alpha)
     local a
     if type(red) == "table" then
         a = green
         red, green, blue, alpha = red:GetRGBA()
     end
-    return Color.Create(red, green, blue, a or alpha)
-end
-local function CopyBackdrop(bdOptions)
-    -- Reuse sub-tables by building the copy with direct field assignment
-    -- instead of creating nested table literals. The insets/offsets tables
-    -- are still new per-copy (they get stored on frames and mutated), but
-    -- we avoid the overhead of the table constructor syntax creating
-    -- intermediate garbage.
-    local copy = {
-        bgFile = bdOptions.bgFile,
-        tile = bdOptions.tile,
-        tileEdge = bdOptions.tileEdge,
-        edgeFile = bdOptions.edgeFile,
-        edgeSize = bdOptions.edgeSize,
-        backdropLayer = bdOptions.backdropLayer,
-        backdropSubLevel = bdOptions.backdropSubLevel,
-        backdropBorderLayer = bdOptions.backdropBorderLayer,
-        backdropBorderSubLevel = bdOptions.backdropBorderSubLevel,
-    }
-    -- Shallow-copy insets and offsets (these get stored per-frame so must be unique)
-    local si, di = bdOptions.insets, {}
-    di.left, di.right, di.top, di.bottom = si.left, si.right, si.top, si.bottom
-    copy.insets = di
+    alpha = a or alpha
 
-    local so, do_ = bdOptions.offsets, {}
+    -- Try to reuse a pooled Color object instead of allocating a new one
+    if colorPoolSize > 0 then
+        local color = colorPool[colorPoolSize]
+        colorPool[colorPoolSize] = nil
+        colorPoolSize = colorPoolSize - 1
+        color:SetRGBA(red, green, blue, alpha or 1)
+        return color
+    end
+
+    return Color.Create(red, green, blue, alpha)
+end
+
+-- Return a Color object to the pool for reuse. Called when a frame's
+-- backdropColor/backdropBorderColor is about to be replaced.
+local function RecycleColor(color)
+    if color and colorPoolSize < COLOR_POOL_MAX then
+        colorPoolSize = colorPoolSize + 1
+        colorPool[colorPoolSize] = color
+    end
+end
+-- Table pool for CopyBackdrop — avoids creating 3 tables (copy + insets + offsets)
+-- per Base.CreateBackdrop call. Frames that get re-skinned return their old
+-- backdropInfo to the pool via Base.CreateBackdrop.
+local bdPool = {}
+local bdPoolSize = 0
+local BD_POOL_MAX = 16
+
+local function AcquireBackdropTable()
+    if bdPoolSize > 0 then
+        local t = bdPool[bdPoolSize]
+        bdPool[bdPoolSize] = nil
+        bdPoolSize = bdPoolSize - 1
+        return t
+    end
+    return { insets = {}, offsets = {} }
+end
+
+local function ReleaseBackdropTable(t)
+    if t and bdPoolSize < BD_POOL_MAX then
+        bdPoolSize = bdPoolSize + 1
+        bdPool[bdPoolSize] = t
+    end
+end
+
+local function CopyBackdrop(bdOptions)
+    local copy = AcquireBackdropTable()
+
+    copy.bgFile = bdOptions.bgFile
+    copy.tile = bdOptions.tile
+    copy.tileEdge = bdOptions.tileEdge
+    copy.edgeFile = bdOptions.edgeFile
+    copy.edgeSize = bdOptions.edgeSize
+    copy.backdropLayer = bdOptions.backdropLayer
+    copy.backdropSubLevel = bdOptions.backdropSubLevel
+    copy.backdropBorderLayer = bdOptions.backdropBorderLayer
+    copy.backdropBorderSubLevel = bdOptions.backdropBorderSubLevel
+
+    local si = bdOptions.insets
+    local di = copy.insets
+    di.left, di.right, di.top, di.bottom = si.left, si.right, si.top, si.bottom
+
+    local so = bdOptions.offsets
+    local do_ = copy.offsets
     do_.left, do_.right, do_.top, do_.bottom = so.left, so.right, so.top, so.bottom
-    copy.offsets = do_
 
     return copy
 end
@@ -334,6 +383,7 @@ local BackdropMixin do
     end
     function BackdropMixin:SetBackdropColor(red, green, blue, alpha)
         if not self.backdropInfo then return end
+        RecycleColor(self.backdropInfo.backdropColor)
         self.backdropInfo.backdropColor = GetColor(red, green, blue, alpha)
 
         local center = Util.GetNineSlicePiece(self, "Center")
@@ -349,6 +399,7 @@ local BackdropMixin do
     function BackdropMixin:SetBackdropBorderColor(red, green, blue, alpha)
         if not self.backdropInfo then return end
 
+        RecycleColor(self.backdropInfo.backdropBorderColor)
         local backdropBorderColor = GetColor(red, green, blue, alpha)
         for _, pieceName in next, bgTextures do
             if pieceName ~= "Center" then
@@ -372,6 +423,7 @@ local BackdropMixin do
         if not self.backdropInfo then return end
 
         if red then
+            RecycleColor(self.backdropInfo.backdropColor)
             self.backdropInfo.backdropColor = GetColor(red, green, blue, alpha)
         end
         self:SetBackdropOption("bgFile", "gradientUp")
@@ -438,6 +490,16 @@ function Base.CreateBackdrop(frame, options, textures)
 
     for name, func in next, BackdropMixin do
         frame[name] = func
+    end
+
+    -- Recycle the old backdrop table and its Color objects before replacing
+    local oldInfo = frame._backdropInfo
+    if oldInfo then
+        RecycleColor(oldInfo.backdropColor)
+        RecycleColor(oldInfo.backdropBorderColor)
+        oldInfo.backdropColor = nil
+        oldInfo.backdropBorderColor = nil
+        ReleaseBackdropTable(oldInfo)
     end
 
     local backdropInfo
