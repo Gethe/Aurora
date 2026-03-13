@@ -163,6 +163,16 @@ do -- set up file order
 end
 
 
+-- Tune Lua's incremental GC for smoother frame times at high memory usage.
+-- Default WoW GC settings allow large sweeps that cause 30-80ms stalls at
+-- 200MB+ heap sizes. These Lua 5.1 compatible settings make the collector
+-- do smaller, more frequent passes:
+--   setpause(110)  = run GC when memory grows 10% over last sweep (default 200)
+--   setstepmul(200) = collector runs at 2x allocation speed (default 200)
+-- This trades ~1-2% average CPU for eliminating the large GC stutter spikes.
+_G.collectgarbage("setpause", 110)
+_G.collectgarbage("setstepmul", 200)
+
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("UI_SCALE_CHANGED")

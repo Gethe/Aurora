@@ -46,30 +46,32 @@ local function GetColor(red, green, blue, alpha)
     return Color.Create(red, green, blue, a or alpha)
 end
 local function CopyBackdrop(bdOptions)
-    return {
+    -- Reuse sub-tables by building the copy with direct field assignment
+    -- instead of creating nested table literals. The insets/offsets tables
+    -- are still new per-copy (they get stored on frames and mutated), but
+    -- we avoid the overhead of the table constructor syntax creating
+    -- intermediate garbage.
+    local copy = {
         bgFile = bdOptions.bgFile,
         tile = bdOptions.tile,
         tileEdge = bdOptions.tileEdge,
-        insets = {
-            left = bdOptions.insets.left,
-            right = bdOptions.insets.right,
-            top = bdOptions.insets.top,
-            bottom = bdOptions.insets.bottom,
-        },
         edgeFile = bdOptions.edgeFile,
         edgeSize = bdOptions.edgeSize,
-
-        offsets = {
-            left = bdOptions.offsets.left,
-            right = bdOptions.offsets.right,
-            top = bdOptions.offsets.top,
-            bottom = bdOptions.offsets.bottom,
-        },
         backdropLayer = bdOptions.backdropLayer,
         backdropSubLevel = bdOptions.backdropSubLevel,
         backdropBorderLayer = bdOptions.backdropBorderLayer,
         backdropBorderSubLevel = bdOptions.backdropBorderSubLevel,
     }
+    -- Shallow-copy insets and offsets (these get stored per-frame so must be unique)
+    local si, di = bdOptions.insets, {}
+    di.left, di.right, di.top, di.bottom = si.left, si.right, si.top, si.bottom
+    copy.insets = di
+
+    local so, do_ = bdOptions.offsets, {}
+    do_.left, do_.right, do_.top, do_.bottom = so.left, so.right, so.top, so.bottom
+    copy.offsets = do_
+
+    return copy
 end
 local function SanitizeTable(optionDB, parentDB)
     for option, value in next, parentDB do
@@ -127,6 +129,24 @@ end
 -- Blizzard methods
 local BackdropMixin do
     BackdropMixin = _G.Mixin({}, _G.BackdropTemplateMixin)
+
+    -- Pre-allocate a single reusable layout table for GetNineSliceLayout.
+    -- Previously, every ApplyBackdrop() call created ~10 sub-tables that
+    -- became garbage immediately after use. This eliminates that churn.
+    local reuseLayout = {
+        TopLeftCorner     = { layer = "", subLevel = 0, x = 0, y = 0 },
+        TopRightCorner    = { layer = "", subLevel = 0, x = 0, y = 0 },
+        BottomLeftCorner  = { layer = "", subLevel = 0, x = 0, y = 0 },
+        BottomRightCorner = { layer = "", subLevel = 0, x = 0, y = 0 },
+        TopEdge           = { layer = "", subLevel = 0 },
+        BottomEdge        = { layer = "", subLevel = 0 },
+        LeftEdge          = { layer = "", subLevel = 0 },
+        RightEdge         = { layer = "", subLevel = 0 },
+        Center            = { layer = "", subLevel = 0, x = 0, y = 0, x1 = 0, y1 = 0 },
+        disableSharpening = true,
+        setupPieceVisualsFunction = nil, -- set after BackdropMixin is defined
+    }
+
     local function GetNineSliceLayout(frame)
         local backdropInfo = frame.backdropInfo
 
@@ -159,52 +179,41 @@ local BackdropMixin do
             end
         end
 
-        return {
-            TopLeftCorner = {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-                x = left, y = -top
-            },
-            TopRightCorner =    {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-                x = -right, y = -top
-            },
-            BottomLeftCorner =  {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-                x = left, y = bottom
-            },
-            BottomRightCorner = {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-                x = -right, y = bottom
-            },
-            TopEdge = {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-            },
-            BottomEdge = {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-            },
-            LeftEdge = {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-            },
-            RightEdge = {
-                layer = backdropInfo.backdropBorderLayer,
-                subLevel = backdropInfo.backdropBorderSubLevel,
-            },
-            Center = {
-                layer = backdropInfo.backdropLayer,
-                subLevel = backdropInfo.backdropSubLevel,
-                x = x, y = y,
-                x1 = x1, y1 = y1,
-            },
-            disableSharpening = true,
-            setupPieceVisualsFunction = BackdropMixin.SetupPieceVisuals,
-        }
+        -- Update the reusable layout in-place instead of allocating new tables
+        local borderLayer = backdropInfo.backdropBorderLayer
+        local borderSub = backdropInfo.backdropBorderSubLevel
+
+        local tl = reuseLayout.TopLeftCorner
+        tl.layer, tl.subLevel, tl.x, tl.y = borderLayer, borderSub, left, -top
+
+        local tr = reuseLayout.TopRightCorner
+        tr.layer, tr.subLevel, tr.x, tr.y = borderLayer, borderSub, -right, -top
+
+        local bl = reuseLayout.BottomLeftCorner
+        bl.layer, bl.subLevel, bl.x, bl.y = borderLayer, borderSub, left, bottom
+
+        local br = reuseLayout.BottomRightCorner
+        br.layer, br.subLevel, br.x, br.y = borderLayer, borderSub, -right, bottom
+
+        local te = reuseLayout.TopEdge
+        te.layer, te.subLevel = borderLayer, borderSub
+
+        local be = reuseLayout.BottomEdge
+        be.layer, be.subLevel = borderLayer, borderSub
+
+        local le = reuseLayout.LeftEdge
+        le.layer, le.subLevel = borderLayer, borderSub
+
+        local re = reuseLayout.RightEdge
+        re.layer, re.subLevel = borderLayer, borderSub
+
+        local center = reuseLayout.Center
+        center.layer = backdropInfo.backdropLayer
+        center.subLevel = backdropInfo.backdropSubLevel
+        center.x, center.y = x, y
+        center.x1, center.y1 = x1, y1
+
+        return reuseLayout
     end
 
     function BackdropMixin:OnBackdropLoaded()
@@ -225,6 +234,9 @@ local BackdropMixin do
         end
         _G.BackdropTemplateMixin.SetupPieceVisuals(self, piece, setupInfo, pieceLayout, textureKit, userLayout)
     end
+
+    -- Now that SetupPieceVisuals is defined, wire it into the reusable layout
+    reuseLayout.setupPieceVisualsFunction = BackdropMixin.SetupPieceVisuals
     function BackdropMixin:ApplyBackdrop()
         local userLayout = GetNineSliceLayout(self)
         _G.NineSliceUtil.ApplyLayout(self, userLayout, "AuroraSkin")

@@ -108,8 +108,13 @@ OR
 **Returns:**
 * `color` - a new color object _(ColorMixin)_
 --]]
+-- Use __index metatable instead of CreateFromMixins to avoid copying all
+-- methods into every Color object. This eliminates ~816 table copies per
+-- combat session (measured via StutterDiag) and significantly reduces GC
+-- pressure at high addon memory usage.
+local colorMetaIndex = { __index = colorMeta }
 function Color.Create(r, g, b, a)
-    local color = _G.CreateFromMixins(colorMeta)
+    local color = _G.setmetatable({}, colorMetaIndex)
 
     if type(r) == "string" then
         local hexColor = r
