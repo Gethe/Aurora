@@ -1,4 +1,12 @@
-﻿## [12.0.1.14] ##
+﻿## [12.0.1.15] ##
+### Fixed ###
+  * fix: attempt to fix potentional stutter issues when using large amount of memory.. GC is an issue
+  * fix: taint safe skinning of  LFGPVP Join Battle button..
+  * fix: taint-safe Blizzard_Communities skin — remove FrameTypeButton/CreateTexture/SetBackdrop from list entries and ScrollBox, guard UpdatePresence with InCombatLockdown()
+  * fix: more attempts of fixing taints in tables for widgets
+
+
+## [12.0.1.14] ##
 ### Fixed ###
   * fix: attempt to fix [#149]
   * fix: another attempt on uiwidgets fixes
@@ -221,6 +229,7 @@
 
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.15]: https://github.com/Gethe/Aurora/compare/12.0.1.14...12.0.1.15
 [12.0.1.14]: https://github.com/Gethe/Aurora/compare/12.0.1.13...12.0.1.14
 [12.0.1.13]: https://github.com/Gethe/Aurora/compare/12.0.1.12...12.0.1.13
 [12.0.1.12]: https://github.com/Gethe/Aurora/compare/12.0.1.11...12.0.1.12
