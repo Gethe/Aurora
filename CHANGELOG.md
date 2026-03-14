@@ -1,4 +1,11 @@
-﻿## [12.0.1.15] ##
+﻿## [12.0.1.16] ##
+### Added ###
+  * add: configurable GC tuning modes (smooth / default / combat-pause) to reduce microstutter — selectable in Aurora settings UI
+  * add: object pooling for Color objects and backdrop tables, plus a reusable NineSlice layout, to eliminate per-frame table allocations feeding GC pressure
+  * add: GC settings UI available in both Aurora standalone config and when used with other addons
+
+
+## [12.0.1.15] ##
 ### Fixed ###
   * fix: attempt to fix potentional stutter issues when using large amount of memory.. GC is an issue
   * fix: taint safe skinning of  LFGPVP Join Battle button..
@@ -229,6 +236,7 @@
 
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.16]: https://github.com/Gethe/Aurora/compare/12.0.1.15...12.0.1.16
 [12.0.1.15]: https://github.com/Gethe/Aurora/compare/12.0.1.14...12.0.1.15
 [12.0.1.14]: https://github.com/Gethe/Aurora/compare/12.0.1.13...12.0.1.14
 [12.0.1.13]: https://github.com/Gethe/Aurora/compare/12.0.1.12...12.0.1.13
