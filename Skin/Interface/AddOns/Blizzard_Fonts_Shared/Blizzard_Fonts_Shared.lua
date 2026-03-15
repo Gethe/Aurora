@@ -40,9 +40,9 @@ function private.FrameXML.Fonts()
     local yellow = Color.yellow
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --           SharedFonts           --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     Base.SetFont("SystemFont_Tiny2",                NORMAL, 8)
     Base.SetFont("SystemFont_Tiny",                 NORMAL, 9)
     Base.SetFont("SystemFont_Shadow_Small",         NORMAL, 10, nil, nil, black, 1, -1)
@@ -87,9 +87,9 @@ function private.FrameXML.Fonts()
     Base.SetFont("Game30Font", NORMAL, 30)
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --              Fonts              --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     Base.SetFont("SystemFont_Outline_Small",       NORMAL, 10, "OUTLINE")
     Base.SetFont("SystemFont_Outline",             NORMAL, 13, "OUTLINE")
     Base.SetFont("SystemFont_InverseShadow_Small", NORMAL, 10, nil, nil, gray, 1, -1)
@@ -185,15 +185,15 @@ function private.FrameXML.Fonts()
     Base.SetFont("SystemFont_LargeNamePlate",      NORMAL, 12)
     Base.SetFont("SystemFont_NamePlateCastBar",    NORMAL, 10)
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --        SharedFontStyles        --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     _G.GameFontBlackMedium:SetTextColor(white:GetRGB())
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --           FontStyles           --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     _G.QuestTitleFont:SetTextColor(white:GetRGB())
     _G.QuestFont:SetTextColor(white:GetRGB())
     _G.MailTextFontNormal:SetTextColor(white:GetRGB())

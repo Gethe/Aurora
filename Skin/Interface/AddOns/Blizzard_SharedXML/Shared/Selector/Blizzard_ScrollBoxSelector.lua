@@ -20,9 +20,9 @@ do --[[ SharedXML\Selector\Blizzard_ScrollBoxSelector.xml ]]
 end
 
 function private.SharedXML.Blizzard_ScrollBoxSelector()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --              Selector\Blizzard_ScrollBoxSelector              --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
     -------------
     -- Section --

@@ -100,9 +100,9 @@ end
 
 function private.AddOns.Blizzard_InspectUI()
     local InspectFrame = _G.InspectFrame
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --       Blizzard_InspectUI       --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     Skin.ButtonFrameTemplate(InspectFrame)
     Skin.PanelTabButtonTemplate(_G.InspectFrameTab1)
     Skin.PanelTabButtonTemplate(_G.InspectFrameTab2)
@@ -113,9 +113,9 @@ function private.AddOns.Blizzard_InspectUI()
         _G.InspectFrameTab3,
     })
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --      InspectPaperDollFrame      --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     _G.hooksecurefunc("InspectPaperDollFrame_OnShow", Hook.InspectPaperDollFrame_OnShow)
 
     local InspectPaperDollFrame = _G.InspectPaperDollFrame
@@ -187,9 +187,9 @@ function private.AddOns.Blizzard_InspectUI()
         Skin.InspectPaperDollItemSlotButtonBottomTemplate(button)
     end
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --         InspectPVPFrame         --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local InspectPVPFrame = _G.InspectPVPFrame
     InspectPVPFrame.BG:SetTexCoord(0.00390625, 0.3115234375, 0.34375, 0.87890625)
     InspectPVPFrame.BG:SetDesaturated(true)
@@ -202,9 +202,9 @@ function private.AddOns.Blizzard_InspectUI()
         Skin.InspectPvpTalentSlotTemplate(InspectPVPFrame.Slots[i])
     end
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --       InspectTalentFrame       --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     -- _G.hooksecurefunc("InspectTalentFrameSpec_OnShow", Hook.InspectTalentFrameSpec_OnShow)
 
     -- local InspectTalentFrame = _G.InspectTalentFrame
@@ -226,9 +226,9 @@ function private.AddOns.Blizzard_InspectUI()
     -- Skin.InspectTalentRowTemplate(InspectTalents.tier6)
     -- Skin.InspectTalentRowTemplate(InspectTalents.tier7)
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --        InspectGuildFrame        --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --local InspectGuildFrame = _G.InspectGuildFrame
     _G.InspectGuildFrameBG:Hide()
 end

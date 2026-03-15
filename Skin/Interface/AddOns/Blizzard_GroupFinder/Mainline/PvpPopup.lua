@@ -53,9 +53,9 @@ do --[[ FrameXML\PvpPopup.xml ]]
 end
 
 function private.AddOns.PvpPopup()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --              PvpPopup              --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     Util.Mixin(_G.PvpRoleButtonWithCountMixin, Hook.PvpRoleButtonWithCountMixin)
 
     local PVPReadyPopup = _G.PVPReadyPopup

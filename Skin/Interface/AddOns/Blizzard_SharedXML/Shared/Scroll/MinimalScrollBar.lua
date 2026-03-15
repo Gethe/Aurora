@@ -18,9 +18,9 @@ do --[[ SharedXML\MinimalScrollBar.xml ]]
 end
 
 function private.SharedXML.MinimalScrollBar()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --              MinimalScrollBar              --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
     -------------
     -- Section --

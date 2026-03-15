@@ -660,14 +660,14 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 end
 
 function private.AddOns.Blizzard_Communities()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --      CommunitiesMemberList      --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     Util.Mixin(_G.CommunitiesMemberListEntryMixin, Hook.CommunitiesMemberListEntryMixin)
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --  CommunitiesAvatarPickerDialog  --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local CommunitiesAvatarPickerDialog = _G.CommunitiesAvatarPickerDialog
     CommunitiesAvatarPickerDialog:ClearAllPoints()
     CommunitiesAvatarPickerDialog:SetPoint("TOP", 0, -140)
@@ -677,9 +677,9 @@ function private.AddOns.Blizzard_Communities()
     Skin.WowScrollBox(CommunitiesAvatarPickerDialog.ScrollBox)
     Skin.MinimalScrollBar(CommunitiesAvatarPickerDialog.ScrollBar)
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --       CommunitiesSettings       --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local CommunitiesSettingsDialog = _G.CommunitiesSettingsDialog
     _G.hooksecurefunc(CommunitiesSettingsDialog, "SetClubId", Hook.CommunitiesSettingsDialogMixin.SetClubId)
     if private.isRetail then
@@ -719,9 +719,9 @@ function private.AddOns.Blizzard_Communities()
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Accept)
     Skin.UIPanelButtonTemplate(CommunitiesSettingsDialog.Cancel)
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     -- CommunitiesTicketManagerDialog --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local CommunitiesTicketManagerDialog = _G.CommunitiesTicketManagerDialog
     _G.hooksecurefunc(CommunitiesTicketManagerDialog, "SetClubId", Hook.CommunitiesTicketManagerDialogMixin.SetClubId)
 
@@ -746,9 +746,9 @@ function private.AddOns.Blizzard_Communities()
     Skin.UIPanelButtonTemplate(CommunitiesTicketManagerDialog.Close)
 
     if private.isRetail then
-        ----====####$$$$%%%%%$$$$####====----
+        ----====#####################====----
         --            GuildInfo            --
-        ----====####$$$$%%%%%$$$$####====----
+        ----====#####################====----
         Skin.TranslucentFrameTemplate(_G.CommunitiesGuildLogFrame)
         local close1, container, close2 = _G.CommunitiesGuildLogFrame:GetChildren()
         Skin.UIPanelCloseButton(close1) -- BlizzWTF: close1 and close2 have the same global name
@@ -756,9 +756,9 @@ function private.AddOns.Blizzard_Communities()
         Skin.ScrollFrameTemplate(container.ScrollFrame)
         Skin.UIPanelButtonTemplate(close2)
 
-        ----====####$$$$%%%%%$$$$####====----
+        ----====#####################====----
         --            GuildNews            --
-        ----====####$$$$%%%%%$$$$####====----
+        ----====#####################====----
         local CommunitiesGuildNewsFiltersFrame = _G.CommunitiesGuildNewsFiltersFrame
         Skin.TranslucentFrameTemplate(CommunitiesGuildNewsFiltersFrame)
         Skin.UIPanelCloseButton(CommunitiesGuildNewsFiltersFrame.CloseButton)
@@ -767,9 +767,9 @@ function private.AddOns.Blizzard_Communities()
         end
     end
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --        CommunitiesFrame        --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local CommunitiesFrame = _G.CommunitiesFrame
 
     Skin.ButtonFrameTemplateMinimizable(CommunitiesFrame)

@@ -448,14 +448,14 @@ end
 function private.AddOns.Blizzard_Collections()
     --local r, g, b = C.r, C.g, C.b
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --  Blizzard_CollectionTemplates  --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --      Blizzard_Collections      --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local CollectionsJournal = _G.CollectionsJournal
     Skin.PortraitFrameTemplate(CollectionsJournal)
 
@@ -477,9 +477,9 @@ function private.AddOns.Blizzard_Collections()
         _G.CollectionsJournalTab5,
         _G.CollectionsJournalTab6,
     })
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --    Blizzard_MountCollection    --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local MountJournal = _G.MountJournal
 
     Skin.UIPanelSpellButtonFrameTemplate(MountJournal.SummonRandomFavoriteSpellFrame.Button)
@@ -530,9 +530,9 @@ function private.AddOns.Blizzard_Collections()
     Skin.MagicButtonTemplate(MountJournal.MountButton)
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --     Blizzard_PetCollection     --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local PetJournal = _G.PetJournal
     _G.hooksecurefunc("PetJournal_UpdatePetLoadOut", Hook.PetJournal_UpdatePetLoadOut)
     _G.hooksecurefunc("PetJournal_UpdatePetCard", Hook.PetJournal_UpdatePetCard)
@@ -626,9 +626,9 @@ function private.AddOns.Blizzard_Collections()
     end
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --         Blizzard_ToyBox         --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local ToyBox = _G.ToyBox
 
     Skin.CollectionsProgressBarTemplate(ToyBox.progressBar)
@@ -645,9 +645,9 @@ function private.AddOns.Blizzard_Collections()
     Skin.CollectionsPagingFrameTemplate(ToyBox.PagingFrame)
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --   Blizzard_HeirloomCollection   --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local HeirloomsJournal = _G.HeirloomsJournal
     Util.Mixin(HeirloomsJournal, Hook.HeirloomsMixin)
 
@@ -660,9 +660,9 @@ function private.AddOns.Blizzard_Collections()
     Skin.CollectionsPagingFrameTemplate(HeirloomsJournal.PagingFrame)
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --        Blizzard_Wardrobe        --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
     -----------------------------
     -- WardrobeCollectionFrame --
@@ -702,9 +702,9 @@ function private.AddOns.Blizzard_Collections()
     DetailsFrame.ModelFadeTexture:Hide()
     Skin.DropdownButton(DetailsFrame.VariantSetsDropdown)
 
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====########################%%%########====----
     --        Blizzard_WarbandSceneCollection        --
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====########################%%%########====----
 
     local WarbandSceneJournal = _G.WarbandSceneJournal
     Util.Mixin(WarbandSceneJournal, Hook.WarbandSceneJounalMixin)

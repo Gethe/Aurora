@@ -43,9 +43,9 @@ do --[[ AddOns\Blizzard_ArchaeologyUI.xml ]]
 end
 
 function private.AddOns.Blizzard_ArchaeologyUI()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --     Blizzard_ArchaeologyUI     --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local ArchaeologyFrame = _G.ArchaeologyFrame
     Skin.ButtonFrameTemplate(ArchaeologyFrame)
 
@@ -197,9 +197,9 @@ function private.AddOns.Blizzard_ArchaeologyUI()
     _G.ArchaeologyFrameHelpPageHelpScrollHelpText:SetTextColor(r, g, b)
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     -- Blizzard_ArchaeologyProgressBar --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local ArcheologyDigsiteProgressBar = _G.ArcheologyDigsiteProgressBar
     ArcheologyDigsiteProgressBar:HookScript("OnEvent", Hook.ArcheologyDigsiteProgressBar_OnEvent)
     ArcheologyDigsiteProgressBar.Shadow:Hide()

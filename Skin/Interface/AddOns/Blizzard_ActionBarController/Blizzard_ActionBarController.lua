@@ -423,9 +423,9 @@ do --[[ FrameXML\ActionBarController.xml ]]
 end
 
 function private.FrameXML.Blizzard_ActionBarController()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --     MainMenuBarMicroButtons     --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     if not private.disabled.mainmenubar and private.isClassic then
         _G.hooksecurefunc("UpdateMicroButtons", Hook.UpdateMicroButtons)
         _G.hooksecurefunc("MoveMicroButtons", Hook.MoveMicroButtons)
@@ -487,45 +487,45 @@ function private.FrameXML.Blizzard_ActionBarController()
     end
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --    StatusTrackingBarTemplate    --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --             ExpBar             --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --          ReputationBar          --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --           AzeriteBar           --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --           ArtifactBar           --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --            HonorBar            --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --       ActionBarConstants       --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --          ActionButton          --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --      ActionButtonOverrides      --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --      ActionButtonTemplate      --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     if not private.disabled.mainmenubar and private.isClassic then
         for i = 1, 12 do
             Skin.ActionBarButtonTemplate(_G["ActionButton"..i])
@@ -569,13 +569,13 @@ function private.FrameXML.Blizzard_ActionBarController()
     end
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --        ActionBarTemplate        --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --         MultiActionBars         --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     if not private.disabled.mainmenubar and private.isClassic then
         local function ApplyMultiActionBarSkins()
             if not _G.MultiBarBottomLeft then
@@ -604,9 +604,9 @@ function private.FrameXML.Blizzard_ActionBarController()
     end
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --           MainActionBar           --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     if not private.disabled.mainmenubar then
         if private.isRetail then
             local MainActionBar = _G.MainActionBar
@@ -683,13 +683,13 @@ function private.FrameXML.Blizzard_ActionBarController()
         end
     end
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --     CustomActionBarOverlays     --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --        StatusTrackingBar        --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     if not private.disabled.mainmenubar and private.isRetail then
         Util.Mixin(_G.StatusTrackingBarManager, Hook.StatusTrackingManagerMixin)
         Skin.StatusTrackingBarContainerTemplate(_G.MainStatusTrackingBarContainer)
@@ -697,13 +697,13 @@ function private.FrameXML.Blizzard_ActionBarController()
     end
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --        OverrideActionBar        --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --            StanceBar            --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     if not private.disabled.mainmenubar and private.isClassic then
         _G.StanceBarLeft:SetAlpha(0)
         _G.StanceBarMiddle:SetAlpha(0)
@@ -714,18 +714,18 @@ function private.FrameXML.Blizzard_ActionBarController()
         end
     end
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --         ExtraActionBar         --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     if private.isRetail then
         Skin.ExtraActionButtonTemplate(_G.ExtraActionButton1)
     end
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --        PossessActionBar        --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --       ActionBarController       --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 end

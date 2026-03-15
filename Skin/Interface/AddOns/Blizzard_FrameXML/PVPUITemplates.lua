@@ -38,9 +38,9 @@ do --[[ FrameXML\PVPUITemplates.xml ]]
 end
 
 function private.FrameXML.PVPUITemplates()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --         PVPUITemplates         --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     Util.Mixin(_G.PVPConquestRewardMixin, Hook.PVPConquestRewardMixin)
 
     -------------

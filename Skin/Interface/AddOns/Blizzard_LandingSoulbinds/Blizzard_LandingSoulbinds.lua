@@ -196,18 +196,18 @@ do --[[ AddOns\Blizzard_LandingSoulbinds.xml ]]
 end
 
 function private.AddOns.Blizzard_LandingSoulbinds()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     -- Blizzard_LandingSoulbindButton --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     Util.Mixin(_G.LandingPageSoulbindButtonMixin, Hook.LandingPageSoulbindButtonMixin)
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     -- Blizzard_LandingRenownButton --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     Util.Mixin(_G.LandingPageRenownButtonMixin, Hook.LandingPageRenownButtonMixin)
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --  Blizzard_LandingSoulbindPanel  --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     _G.hooksecurefunc(_G.LandingSoulbind, "Create", Hook.LandingSoulbind_Create)
 end

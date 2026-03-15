@@ -21,9 +21,9 @@ do --[[ FrameXML\ScrollingFlatPanel.xml ]]
 end
 
 function private.FrameXML.ScrollingFlatPanel()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --              ScrollingFlatPanel              --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
     -------------
     -- Section --

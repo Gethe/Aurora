@@ -413,9 +413,9 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
 end
 
 function private.AddOns.Blizzard_GarrisonTemplates()
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
     -- Blizzard_GarrisonSharedTemplates --
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
     _G.hooksecurefunc("GarrisonFollowerButton_SetCounterButton", Hook.GarrisonFollowerButton_SetCounterButton)
     _G.hooksecurefunc("GarrisonFollowerButton_AddAbility", Hook.GarrisonFollowerButton_AddAbility)
 
@@ -423,9 +423,9 @@ function private.AddOns.Blizzard_GarrisonTemplates()
     -- Section --
     -------------
 
-    ----====####$$$$%%%%%%%$$$$####====----
+    ----====############%%%########====----
     -- Blizzard_GarrisonMissionTemplates --
-    ----====####$$$$%%%%%%%$$$$####====----
+    ----====############%%%########====----
     _G.hooksecurefunc(_G.GarrisonMission, "RemoveFollowerFromMission", Hook.GarrisonMission_RemoveFollowerFromMission)
     _G.hooksecurefunc("GarrisonMissionFrame_SetItemRewardDetails", Hook.GarrisonMissionFrame_SetItemRewardDetails)
 

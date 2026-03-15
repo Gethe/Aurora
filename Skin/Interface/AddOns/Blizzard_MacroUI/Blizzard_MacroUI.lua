@@ -23,9 +23,9 @@ do --[[ AddOns\Blizzard_MacroUI.xml ]]
 end
 
 function private.AddOns.Blizzard_MacroUI()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --        Blizzard_MacroUI        --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local MacroFrame = _G.MacroFrame
     --MacroFrame:HookScript("OnShow", Hook.MacroFrame_OnShow)
 
@@ -87,9 +87,9 @@ function private.AddOns.Blizzard_MacroUI()
         _G.MacroNewButton,
     })
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --   Blizzard_MacroIconSelector   --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local MacroPopupFrame = _G.MacroPopupFrame
     Skin.IconSelectorPopupFrameTemplate(MacroPopupFrame)
 end

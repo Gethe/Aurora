@@ -51,17 +51,17 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
 end
 
 function private.AddOns.Blizzard_CompactRaidFrames()
-    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====#################################====----
     -- Blizzard_CompactRaidFrameReservationManager --
-    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====#################################====----
 
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
     -- Blizzard_CompactRaidFrameContainer --
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
 
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
     -- Blizzard_CompactRaidFrameManager --
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
     local CompactRaidFrameManager = _G.CompactRaidFrameManager
     CompactRaidFrameManager:DisableDrawLayer("ARTWORK")
     Skin.FrameTypeFrame(CompactRaidFrameManager)

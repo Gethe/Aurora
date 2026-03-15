@@ -63,9 +63,9 @@ do --[[ FrameXML\CampaignOverview.xml ]]
 end
 
 function private.FrameXML.CampaignOverview()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --              CampaignOverview              --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
     -------------
     -- Section --

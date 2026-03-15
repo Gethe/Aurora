@@ -45,9 +45,9 @@ do --[[ SharedXML\Selector\Blizzard_SelectorUI.xml ]]
 end
 
 function private.SharedXML.Blizzard_SelectorUI()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --              File              --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
     -------------
     -- Section --

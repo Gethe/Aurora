@@ -133,9 +133,9 @@ do --[[ AddOns\Blizzard_OrderHallUI.xml ]]
 end
 
 function private.AddOns.Blizzard_OrderHallUI()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --    Blizzard_OrderHallTalents    --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local OrderHallTalentFrame = _G.OrderHallTalentFrame
     Util.Mixin(OrderHallTalentFrame, Hook.OrderHallTalentFrameMixin)
 
@@ -149,7 +149,7 @@ function private.AddOns.Blizzard_OrderHallUI()
     OrderHallTalentFrame.Background:SetAlpha(0.5)
     OrderHallTalentFrame.Background:SetPoint("BOTTOMRIGHT")
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --  Blizzard_OrderHallCommandBar  --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 end

@@ -107,9 +107,9 @@ do --[[ AddOns\Blizzard_WorldMap.xml ]]
 end
 
 function private.AddOns.Blizzard_WorldMap()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --        Blizzard_WorldMap        --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     -- TAINT-SAFE version: WorldMapFrame's OnShow runs in a secure context
     -- from the TOGGLEWORLDMAP keybinding.  Any addon-created children
     -- (CreateTexture/CreateLine/CreateFrame), direct Lua table writes

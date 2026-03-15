@@ -452,16 +452,16 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
 end
 
 function private.AddOns.Blizzard_GarrisonUI()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --   Blizzard_GarrisonBuildingUI   --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     if not private.disabled.tooltips then
         Skin.TooltipBorderedFrameTemplate(_G.GarrisonBuildingFrame.BuildingLevelTooltip)
     end
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --   Blizzard_GarrisonMissionUI   --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     _G.hooksecurefunc("GarrisonMissionButton_SetReward", Hook.GarrisonMissionButton_SetReward)
 
     local GarrisonMissionFrame = _G.GarrisonMissionFrame
@@ -517,9 +517,9 @@ function private.AddOns.Blizzard_GarrisonUI()
     -- BlizzWTF: This should be flagged as hidden in XML
     _G.GarrisonMissionListTooltipThreatsFrame:Hide()
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --   Blizzard_GarrisonShipyardUI   --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local GarrisonShipyardFrame = _G.GarrisonShipyardFrame
     Skin.GarrisonMissionFrameTemplate(GarrisonShipyardFrame)
 
@@ -559,9 +559,9 @@ function private.AddOns.Blizzard_GarrisonUI()
         Skin.GarrisonBonusEffectFrameTemplate(_G.GarrisonShipyardMapMissionTooltip.BonusReward)
     end
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --  Blizzard_GarrisonLandingPage  --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local GarrisonLandingPage = _G.GarrisonLandingPage
     local bg, tl, tr, bl, br, t, b, l, r = GarrisonLandingPage:GetRegions()
     Base.CreateBackdrop(GarrisonLandingPage, private.backdrop, {
@@ -613,9 +613,9 @@ function private.AddOns.Blizzard_GarrisonUI()
 
     Skin.BaseLandingPageFollowerListTemplate(GarrisonLandingPage.ShipFollowerList)
 
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
     -- Blizzard_GarrisonCapacitiveDisplay --
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
     local GarrisonCapacitiveDisplayFrame = _G.GarrisonCapacitiveDisplayFrame
     Skin.ButtonFrameTemplate(GarrisonCapacitiveDisplayFrame)
 
@@ -636,17 +636,17 @@ function private.AddOns.Blizzard_GarrisonUI()
     GarrisonCapacitiveDisplayFrame.Count:SetPoint("BOTTOM", -10, 4)
     Skin.GarrisonCapacitiveInputSpinner(GarrisonCapacitiveDisplayFrame.Count)
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --   Blizzard_GarrisonMonumentUI   --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --  Blizzard_GarrisonRecruiterUI  --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --   Blizzard_OrderHallMissionUI   --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local OrderHallMissionFrame = _G.OrderHallMissionFrame
     Util.Mixin(OrderHallMissionFrame, Hook.OrderHallMission)
     OrderHallMissionFrame.Center = OrderHallMissionFrame.BackgroundTile
@@ -746,9 +746,9 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonFollowerMissionRewardsFrameTemplate(OrderHallMissionComplete.BonusRewards)
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --      Blizzard_BFAMissionUI      --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local BFAMissionFrame = _G.BFAMissionFrame
     Util.Mixin(BFAMissionFrame, Hook.BFAMission)
     BFAMissionFrame.Center = BFAMissionFrame.BackgroundTile
@@ -805,34 +805,34 @@ function private.AddOns.Blizzard_GarrisonUI()
     Skin.GarrisonMissionBonusRewardsTemplate(BFAMissionComplete.BonusRewards)
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --  Blizzard_AdventuresCombatLog  --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
 
-    ----====####$$$$%%%%%%%$$$$####====----
+    ----====############%%%########====----
     -- Blizzard_AdventuresCompleteScreen --
-    ----====####$$$$%%%%%%%$$$$####====----
+    ----====############%%%########====----
 
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --     Blizzard_AdventuresPuck     --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --    Blizzard_AdventuresBoard    --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
 
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
     -- Blizzard_AdventuresRewardsScreen --
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --   Blizzard_CovenantMissionUI   --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local CovenantMissionFrame = _G.CovenantMissionFrame
     Util.Mixin(CovenantMissionFrame, Hook.CovenantMission)
     CovenantMissionFrame.Center = CovenantMissionFrame.BackgroundTile

@@ -32,9 +32,9 @@ end
 --end
 
 function private.AddOns.Blizzard_CovenantSanctum()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --    Blizzard_CovenantSanctum    --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local CovenantSanctumFrame = _G.CovenantSanctumFrame
     Util.Mixin(CovenantSanctumFrame, Hook.CovenantSanctumMixin)
 
@@ -43,9 +43,9 @@ function private.AddOns.Blizzard_CovenantSanctum()
 
     Skin.UIPanelCloseButton(CovenantSanctumFrame.CloseButton)
 
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
     -- Blizzard_CovenantSanctumUpgrades --
-    ----====####$$$$%%%%%%$$$$####====----
+    ----====############%%########====----
     local UpgradesTab = CovenantSanctumFrame.UpgradesTab
 
     UpgradesTab.Background:SetPoint("TOPLEFT", 13, -9)

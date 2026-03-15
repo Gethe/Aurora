@@ -350,9 +350,9 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
 end
 
 function private.AddOns.Blizzard_EncounterJournal()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --    Blizzard_EncounterJournal    --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     _G.hooksecurefunc("EncounterJournal_ShowCreatures", Hook.EncounterJournal_ShowCreatures)
     _G.hooksecurefunc("EncounterJournal_UpdateButtonState", Hook.EncounterJournal_UpdateButtonState)
     _G.hooksecurefunc("EncounterJournal_SetBullets", Hook.EncounterJournal_SetBullets)
@@ -584,9 +584,9 @@ function private.AddOns.Blizzard_EncounterJournal()
 
 
 
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     --     EncounterJournalEncounterFrame     --
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     Skin.MinimalScrollBar(_G.EncounterJournalEncounterFrameInstanceFrame.LoreScrollBar)
     Skin.MinimalScrollBar(_G.EncounterJournalEncounterFrameInfo.LootContainer.ScrollBar)
 	Skin.MinimalScrollBar(_G.EncounterJournalEncounterFrameInfoDetailsScrollFrame.ScrollBar)
@@ -594,9 +594,9 @@ function private.AddOns.Blizzard_EncounterJournal()
 
 
 
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     --      EncounterJournal.LootJournal      --
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     local LootJournal = EncounterJournal.LootJournal
     local ItemSetsFrame = EncounterJournal.LootJournalItems.ItemSetsFrame
     LootJournal:GetRegions():Hide()
@@ -607,16 +607,16 @@ function private.AddOns.Blizzard_EncounterJournal()
     Skin.DropdownButton(LootJournal.RuneforgePowerDropdown)
     Skin.WowScrollBoxList(LootJournal.ScrollBox)
 
-    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    ----====#############################====----
     --      EncounterJournalJourneysFrame      --
-    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    ----====#############################====----
     local EncounterJournalJourneysFrame = _G.EncounterJournalJourneysFrame
     Skin.MinimalScrollBar(EncounterJournalJourneysFrame.ScrollBar)
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --       Blizzard_Tutorials       --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     -- Not sure what to expect here ..
     local TutorialsTab = EncounterJournal.TutorialsTab
     local TutorialsFrame = EncounterJournal.TutorialsFrame

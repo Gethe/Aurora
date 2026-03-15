@@ -49,9 +49,9 @@ do --[[ FrameXML\AdventuresFollowerTooltip.xml ]]
 end
 
 function private.FrameXML.AdventuresFollowerTooltip()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --              AdventuresFollowerTooltip              --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
     -------------
     -- Section --

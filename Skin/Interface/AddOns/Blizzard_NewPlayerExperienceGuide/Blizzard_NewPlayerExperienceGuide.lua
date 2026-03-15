@@ -15,13 +15,13 @@ local Skin = Aurora.Skin
 --end
 
 function private.AddOns.Blizzard_NewPlayerExperienceGuide()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --       GuideCriteriaFrame       --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --           GuideFrame           --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local GuideFrame = _G.GuideFrame
     Skin.PortraitFrameTemplate(GuideFrame)
     GuideFrame.Background:Hide()

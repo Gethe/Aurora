@@ -35,9 +35,9 @@ do --[[ AddOns\Blizzard_PVPMatch.xml ]]
 end
 
 function private.AddOns.Blizzard_PVPMatch()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --         PVPMatchResults         --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local PVPMatchResults = _G.PVPMatchResults
     Skin.UIPanelCloseButton(PVPMatchResults.CloseButton)
     PVPMatchResults.CloseButton.Border:Hide()
@@ -74,9 +74,9 @@ function private.AddOns.Blizzard_PVPMatch()
     PVPMatchResults:GetRegions():Hide() -- groupfinder-background
 
 
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --       PVPMatchScoreboard       --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     local PVPMatchScoreboard = _G.PVPMatchScoreboard
     Skin.UIPanelCloseButton(PVPMatchScoreboard.CloseButton)
 

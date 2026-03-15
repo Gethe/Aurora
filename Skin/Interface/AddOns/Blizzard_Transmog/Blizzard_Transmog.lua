@@ -20,9 +20,9 @@ do --[[ AddOns\Blizzard_Transmog.lua ]]
 end
 
 function private.AddOns.Blizzard_Transmog()
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --          TransmogFrame           --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local TransmogFrame = _G.TransmogFrame
 
     Skin.PortraitFrameTemplate(TransmogFrame)
@@ -32,9 +32,9 @@ function private.AddOns.Blizzard_Transmog()
         Skin.MainHelpPlateButton(TransmogFrame.HelpPlateButton)
     end
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --       OutfitCollection           --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local OutfitCollection = TransmogFrame.OutfitCollection
     if OutfitCollection then
         -- Hide decorative backgrounds and gradients
@@ -73,16 +73,16 @@ function private.AddOns.Blizzard_Transmog()
         end
     end
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --   OutfitPopup (IconSelector)     --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     if TransmogFrame.OutfitPopup then
         Skin.IconSelectorPopupFrameTemplate(TransmogFrame.OutfitPopup)
     end
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --       CharacterPreview           --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local CharacterPreview = TransmogFrame.CharacterPreview
     if CharacterPreview then
         -- Hide the location background art
@@ -119,9 +119,9 @@ function private.AddOns.Blizzard_Transmog()
         end
     end
 
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     --      WardrobeCollection          --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     local WardrobeCollection = TransmogFrame.WardrobeCollection
     if WardrobeCollection then
         -- Hide the wardrobe background
