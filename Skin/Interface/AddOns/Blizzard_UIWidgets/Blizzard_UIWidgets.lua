@@ -363,59 +363,78 @@ do --[[ AddOns\Blizzard_UIWidgets.xml ]]
 end
 
 function private.AddOns.Blizzard_UIWidgets()
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     --    Blizzard_UIWidgetManager    --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetManagerMixin)
 
-    ----====####$$$$%%%%%$$$$####====----
+    -- Hook RegisterForWidgetSet so tooltip widget containers use a safe layout
+    -- function.  DefaultWidgetLayout ends with Layout() which calls
+    -- ResizeLayoutMixin:Layout() -> GetExtents() -> GetUnscaledFrameRect().
+    -- GetScaledRect() on tainted child frames returns secret numbers, causing
+    -- "attempt to perform arithmetic on a secret number" in FrameUtil.lua:211.
+    -- For tooltip containers we call DefaultWidgetLayout with skipContainerLayout
+    -- = true, then pcall the container's Layout separately.
+    if _G.UIWidgetContainerMixin and _G.UIWidgetContainerMixin.RegisterForWidgetSet then
+        _G.hooksecurefunc(_G.UIWidgetContainerMixin, "RegisterForWidgetSet", function(self, widgetSetID, widgetLayoutFunction)
+            if widgetSetID and IsTooltipWidgetContainer(self) then
+                local baseLayout = widgetLayoutFunction or _G.DefaultWidgetLayout
+                self.layoutFunc = function(container, sortedWidgets)
+                    baseLayout(container, sortedWidgets, true) -- skipContainerLayout = true
+                    _G.pcall(container.Layout, container)
+                end
+            end
+        end)
+    end
+
+    ----====#####################====----
     --  Blizzard_UIWidgetTemplateBase  --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
 
 
-    ----====####$$$$%%%%%%%%%%$$$$####====----
+    ----====################%%########====----
     -- Blizzard_UIWidgetTemplateIconAndText --
-    ----====####$$$$%%%%%%%%%%$$$$####====----
+    ----====################%%########====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====####################################====----
     -- Blizzard_UIWidgetTemplateIconTextAndBackground --
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====####################################====----
 
 
-    ----====####$$$$%%%%%%%%%$$$$####====----
+    ----====#########################====----
     -- Blizzard_UIWidgetTemplateCaptureBar --
-    ----====####$$$$%%%%%%%%%$$$$####====----
+    ----====#########################====----
 
 
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
     -- Blizzard_UIWidgetTemplateStatusBar --
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%$$$$####====----
+    ----====####################%%########====----
     -- Blizzard_UIWidgetTemplateDoubleStatusBar --
-    ----====####$$$$%%%%%%%%%%%%%%$$$$####====----
+    ----====####################%%########====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    ----====################################====----
     -- Blizzard_UIWidgetTemplateDoubleIconAndText --
-    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    ----====################################====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====#####################################====----
     -- Blizzard_UIWidgetTemplateStackedResourceTracker --
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====#####################################====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====####################################====----
     -- Blizzard_UIWidgetTemplateIconTextAndCurrencies --
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====####################################====----
 
 
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     -- Blizzard_UIWidgetTemplateTextWithState --
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     if _G.UIWidgetTemplateTextWithStateMixin and _G.UIWidgetTemplateTextWithStateMixin.Setup then
         local origTextWithStateSetup = _G.UIWidgetTemplateTextWithStateMixin.Setup
 
@@ -472,9 +491,9 @@ function private.AddOns.Blizzard_UIWidgets()
     end
 
 
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     -- Blizzard_UIWidgetTemplateItemDisplay --
-    ----====####$$$$%%%%%%%%%%%%$$$$####====----
+    ----====############################====----
     -- Mirrors Blizzard's local iconSizes / GetWidgetIconSize
     local widgetIconSizeLookup = {
         [_G.Enum.WidgetIconSizeType.Small]    = 24,
@@ -525,7 +544,6 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetBaseItemTemplateMixin and _G.UIWidgetBaseItemTemplateMixin.Setup then
         local origBaseItemSetup = _G.UIWidgetBaseItemTemplateMixin.Setup
         _G.UIWidgetBaseItemTemplateMixin.Setup = function(self, widgetContainer, itemInfo, widgetSizeSetting, tooltipLoc)
-
             if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
                 _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
             end
@@ -642,9 +660,44 @@ function private.AddOns.Blizzard_UIWidgets()
     end
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+    -- Replace UIWidgetTemplateItemDisplayMixin.Setup to avoid taint: the
+    -- ContinueOnLoad callback calls self.Item:GetWidth()/GetHeight() which
+    -- return secret numbers because the item sub-frame inherits tainted font
+    -- geometry.  Also wraps UIWidgetBaseTemplateMixin.Setup in pcall and
+    -- MarkDirtyLayout in pcall to prevent propagation.
+    if _G.UIWidgetTemplateItemDisplayMixin and _G.UIWidgetTemplateItemDisplayMixin.Setup then
+        _G.UIWidgetTemplateItemDisplayMixin.Setup = function(self, widgetInfo, widgetContainer)
+            if self.continuableContainer then
+                self.continuableContainer:Cancel()
+            end
+
+            self.continuableContainer = _G.ContinuableContainer:Create()
+
+            self:SetSize(1, 1)
+
+            local item = _G.Item:CreateFromItemID(widgetInfo.itemInfo.itemID)
+            self.continuableContainer:AddContinuable(item)
+
+            self.continuableContainer:ContinueOnLoad(function()
+                if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
+                    _G.pcall(_G.UIWidgetBaseTemplateMixin.Setup, self, widgetInfo, widgetContainer)
+                end
+
+                self.Item:Setup(widgetContainer, widgetInfo.itemInfo, widgetInfo.widgetSizeSetting, widgetInfo.tooltipLoc)
+
+                local itemWidth = SafeNumber(self.Item:GetWidth(), 1)
+                local itemHeight = SafeNumber(self.Item:GetHeight(), 1)
+                self:SetWidth(itemWidth)
+                self:SetHeight(itemHeight)
+
+                _G.pcall(widgetContainer.MarkDirtyLayout, widgetContainer)
+            end)
+        end
+    end
+
+    ----====########################%%%########====----
     -- Blizzard_UIWidgetTemplateHorizontalCurrencies --
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====########################%%%########====----
     -- Mirrors Blizzard's local GetTextColorForEnabledState
     local function SafeGetTextColorForEnabledState(enabledState, overrideNormalFontColor)
         if enabledState == _G.Enum.WidgetEnabledState.Disabled then
@@ -683,7 +736,6 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetBaseCurrencyTemplateMixin and _G.UIWidgetBaseCurrencyTemplateMixin.Setup then
         local origBaseCurrencySetup = _G.UIWidgetBaseCurrencyTemplateMixin.Setup
         _G.UIWidgetBaseCurrencyTemplateMixin.Setup = function(self, widgetContainer, currencyInfo, enabledState, tooltipEnabledState, hideIcon, customFont, overrideFontColor, tooltipLoc)
-
             if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
                 _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
             end
@@ -748,7 +800,6 @@ function private.AddOns.Blizzard_UIWidgets()
     if _G.UIWidgetTemplateHorizontalCurrenciesMixin and _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup then
         local origHorizontalCurrenciesSetup = _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup
         _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup = function(self, widgetInfo, widgetContainer)
-
             if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
                 _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
             end
@@ -793,61 +844,61 @@ function private.AddOns.Blizzard_UIWidgets()
         end
     end
 
-    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    ----====#############################====----
     -- Blizzard_UIWidgetTemplateBulletTextList --
-    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    ----====#############################====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====####################################################====----
     -- Blizzard_UIWidgetTemplateScenarioHeaderCurrenciesAndBackground --
-    ----====####$$$$%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====####################################################====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    ----====#############################====----
     -- Blizzard_UIWidgetTemplateTextureAndText --
-    ----====####$$$$%%%%%%%%%%%%%$$$$####====----
+    ----====#############################====----
 
 
-    ----====####$$$$%%%%%%%%%%%$$$$####====----
+    ----====################%%%########====----
     -- Blizzard_UIWidgetTemplateSpellDisplay --
-    ----====####$$$$%%%%%%%%%%%$$$$####====----
+    ----====################%%%########====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====#################################====----
     -- Blizzard_UIWidgetTemplateDoubleStateIconRow --
-    ----====####$$$$%%%%%%%%%%%%%%%%%$$$$####====----
+    ----====#################################====----
 
 
-    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    ----====################################====----
     -- Blizzard_UIWidgetTemplateTextureAndTextRow --
-    ----====####$$$$%%%%%%%%%%%%%%%%$$$$####====----
+    ----====################################====----
 
 
-    ----====####$$$$%%%%%%%%%%$$$$####====----
+    ----====################%%########====----
     -- Blizzard_UIWidgetTemplateZoneControl --
-    ----====####$$$$%%%%%%%%%%$$$$####====----
+    ----====################%%########====----
 
 
-    ----====####$$$$%%%%%%%%%%$$$$####====----
+    ----====################%%########====----
     -- Blizzard_UIWidgetTemplateCaptureZone --
-    ----====####$$$$%%%%%%%%%%$$$$####====----
+    ----====################%%########====----
 
 
-    --====####$$$$%%%%%$$$$####====----
+    --====#####################====----
     -- Blizzard_UIWidgetTopCenterFrame --
-    ----====####$$$$%%%%%$$$$####====----
+    ----====#####################====----
     Util.Mixin(_G.UIWidgetTopCenterContainerFrame, Hook.UIWidgetContainerMixin)
 
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
     -- Blizzard_UIWidgetBelowMinimapFrame --
-    ----====####$$$$%%%%%%%%$$$$####====----
+    ----====########################====----
     local BelowMinimapFrame = _G.UIWidgetBelowMinimapContainerFrame
     DebugBelowMinimap("Setup hooks", SafeDebugName(BelowMinimapFrame))
     Skin.UIWidgetBelowMinimapContainerFrame(BelowMinimapFrame)
     Util.Mixin(BelowMinimapFrame, Hook.UIWidgetContainerMixin, Hook.UIWidgetBelowMinimapContainerMixin)
     BootstrapWidgetContainer(BelowMinimapFrame)
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
     -- Blizzard_UIWidgetPowerBarFrame --
-    ----====####$$$$%%%%$$$$####====----
+    ----====####################====----
 
 end
