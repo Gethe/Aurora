@@ -1,4 +1,9 @@
-﻿## [12.0.1.17] ##
+﻿## [12.0.1.18] ##
+### Changed ###
+  * chg: stop aroura from doing any scaling when a host addon is handling scaling..
+
+
+## [12.0.1.17] ##
 ### Fixed ###
   * fix: UIWidgetContainerMixin is tainting again
   * fix: replace GameTooltip_InsertFrame to avoid taint
@@ -243,6 +248,7 @@
 
 
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.18]: https://github.com/Gethe/Aurora/compare/12.0.1.17...12.0.1.18
 [12.0.1.17]: https://github.com/Gethe/Aurora/compare/12.0.1.16...12.0.1.17
 [12.0.1.16]: https://github.com/Gethe/Aurora/compare/12.0.1.15...12.0.1.16
 [12.0.1.15]: https://github.com/Gethe/Aurora/compare/12.0.1.14...12.0.1.15
