@@ -44,33 +44,24 @@ private.textures = {
 
 local pixelScale, uiScaleChanging = false, false
 function private.UpdateUIScale()
+    -- When a host addon (e.g. RealUI_Skins) replaces this function,
+    -- this original version should never run. Guard just in case.
+    if private.scaleReported then return end
     if uiScaleChanging then return end
     local _, pysHeight = _G.GetPhysicalScreenSize()
 
     if not private.disabled.pixelScale then
-        -- Calculate current UI scale
+        -- Standalone Aurora: apply pixel-perfect scale once at login
         pixelScale = 768 / pysHeight
-        local cvarScale, parentScale = _G.tonumber(_G.GetCVar("uiscale")), floor(_G.UIParent:GetScale() * 100 + 0.5) / 100
-        private.debug("scale", pixelScale, cvarScale, parentScale)
-        if parentScale == 1 then -- bail if UIParent is scaled to 1... we don't want to mess with that
+        local parentScale = floor(_G.UIParent:GetScale() * 100 + 0.5) / 100
+        private.debug("scale", pixelScale, parentScale)
+        if parentScale == 1 then
             return
         end
         uiScaleChanging = true
-        --[[ UIParent:SetScale() from addon code taints C_ActionBar.GetActionBarPage() and related
-            action bar page APIs, causing ADDON_ACTION_BLOCKED errors on MultiBar:ShowBase() during
-            combat. Prefer SetCVar("uiScale") which lets the engine apply the scale securely.
-            SetCVar has a minimum of 0.64, so UIParent:SetScale() is only used as a fallback for
-            sub-0.64 scales. SetCVar may taint the ObjectiveTracker but that is far less disruptive
-            than broken action bars in combat. ]]
         if parentScale ~= pixelScale then
-            private.debug("Skipping engine UI scale change to avoid taint; desired pixelScale:", pixelScale)
-            -- Store the desired engine UI scale instead of changing it here. Changing
-            -- the `uiScale` CVar or calling `UIParent:SetScale` from addon code can
-            -- taint protected Blizzard frame behavior (ObjectiveTracker / WorldMap)
-            -- and lead to ADDON_ACTION_BLOCKED for protected functions like
-            -- SetPassThroughButtons. Leave the global scale unchanged and only
-            -- apply per-frame scaling via host addon integration.
-            private.desiredUIScale = pixelScale
+            private.debug("Setting UIParent:SetScale to", pixelScale)
+            _G.UIParent:SetScale(pixelScale)
         end
         uiScaleChanging = false
     end
@@ -267,8 +258,11 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
             -- ADDON_ACTION_BLOCKED errors for protected functions like
             -- MultiBar:ShowBase() and SetPassThroughButtons.
             _G.C_Timer.After(0, function()
-                _G.print(("Running on %sx%s - UI Scale: %.2f"):format(phyScreenWidth, phyScreenHeight, _G.UIParent:GetScale()))
                 private.UpdateUIScale()
+                if not private.scaleReported then
+                    -- Standalone Aurora: just report the raw engine scale
+                    _G.print(("Running on %sx%s - UI Scale: %.2f"):format(phyScreenWidth, phyScreenHeight, _G.UIParent:GetScale()))
+                end
                 if (tonumber(_G.GetCVar("questTextContrast")) ~= 4) then
                     _G.SetCVar("questTextContrast", 4)
                 end
