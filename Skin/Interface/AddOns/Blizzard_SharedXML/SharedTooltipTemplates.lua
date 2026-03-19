@@ -67,15 +67,39 @@ function private.SharedXML.SharedTooltipTemplates()
 
     _G.hooksecurefunc("SharedTooltip_SetBackdropStyle", Hook.SharedTooltip_SetBackdropStyle)
 
+    -- Shared helper: coerce secret/tainted numbers to safe fallbacks so
+    -- arithmetic in Blizzard code doesn't error on addon-tainted values.
+    local function SafeNumber(value, fallback)
+        if type(value) ~= "number" then return fallback end
+        if _G.issecretvalue and _G.issecretvalue(value) then return fallback end
+        return value
+    end
+
+    -- Replace GetUnscaledFrameRect to avoid taint: Aurora's NineSlice
+    -- skinning taints frame geometry, and Layout() → GetExtents() calls
+    -- GetUnscaledFrameRect which does arithmetic on the tainted values.
+    -- (FrameUtil.lua:211 — "attempt to perform arithmetic on local
+    -- 'frameLeft' (a secret number value tainted by 'Aurora')")
+    if _G.GetUnscaledFrameRect then
+        _G.GetUnscaledFrameRect = function(frame, scale)
+            local frameLeft, frameBottom, frameWidth, frameHeight = frame:GetScaledRect()
+            if frameLeft == nil then
+                local defaulted = true
+                return 1, 1, 1, 1, defaulted
+            end
+            frameLeft = SafeNumber(frameLeft, 1)
+            frameBottom = SafeNumber(frameBottom, 1)
+            frameWidth = SafeNumber(frameWidth, 1)
+            frameHeight = SafeNumber(frameHeight, 1)
+            scale = SafeNumber(scale, 1)
+            return frameLeft / scale, frameBottom / scale, frameWidth / scale, frameHeight / scale
+        end
+    end
+
     -- Replace GameTooltip_InsertFrame to avoid taint: Aurora's font
     -- modifications cause GetLineHeight() and GetHeight() to return secret
     -- numbers, breaking Round() arithmetic at SharedTooltipTemplates.lua:202.
     if _G.GameTooltip_InsertFrame then
-        local function SafeNumber(value, fallback)
-            if type(value) ~= "number" then return fallback end
-            if _G.issecretvalue and _G.issecretvalue(value) then return fallback end
-            return value
-        end
 
         _G.GameTooltip_InsertFrame = function(tooltipFrame, frame, verticalPadding)
             verticalPadding = verticalPadding or 0
