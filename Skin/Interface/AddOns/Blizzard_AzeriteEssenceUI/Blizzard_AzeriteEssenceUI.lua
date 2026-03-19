@@ -45,14 +45,19 @@ end
 
 function private.AddOns.Blizzard_AzeriteEssenceUI()
     local AzeriteEssenceUI = _G.AzeriteEssenceUI
-    Skin.PortraitFrameTemplate(AzeriteEssenceUI)
+
+    -- TAINT-SAFE: AzeriteEssenceUI calls protected C_AzeriteEssence.ActivateEssence()
+    -- and UnlockMilestone().  Use taint-safe portrait frame skin.
+    Skin.TaintSafePortraitFrameTemplate(AzeriteEssenceUI)
 
     AzeriteEssenceUI.PowerLevelBadgeFrame:SetPoint("TOPLEFT", 0, 0)
     AzeriteEssenceUI.PowerLevelBadgeFrame.Ring:Hide()
     AzeriteEssenceUI.PowerLevelBadgeFrame.BackgroundBlack:Hide()
 
-    Skin.InsetFrameTemplate(AzeriteEssenceUI.LeftInset)
-    Skin.InsetFrameTemplate(AzeriteEssenceUI.RightInset)
+    -- TAINT-SAFE: Use taint-safe inset skin instead of InsetFrameTemplate
+    -- which calls NineSlicePanelTemplate (direct writes + Base.SetBackdrop).
+    Skin.TaintSafeInsetFrameTemplate(AzeriteEssenceUI.LeftInset)
+    Skin.TaintSafeInsetFrameTemplate(AzeriteEssenceUI.RightInset)
     AzeriteEssenceUI.RightInset.Background:Hide()
 
     AzeriteEssenceUI.ItemModelScene:SetPoint("TOPLEFT", AzeriteEssenceUI.LeftInset, -3, -5)

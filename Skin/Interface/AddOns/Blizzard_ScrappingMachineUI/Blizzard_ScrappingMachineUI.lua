@@ -45,13 +45,11 @@ end
 
 function private.AddOns.Blizzard_ScrappingMachineUI()
     local ScrappingMachineFrame = _G.ScrappingMachineFrame
-    Skin.ButtonFrameTemplate(ScrappingMachineFrame)
-    ScrappingMachineFrame.NineSlice:SetBackdropOption("offsets", {
-        left = 4,
-        right = 4,
-        top = 20,
-        bottom = 0,
-    })
+
+    -- TAINT-SAFE: ScrappingMachineFrame calls protected C_Scrapping.ScrapItems().
+    -- The old Skin.ButtonFrameTemplate path tainted the frame hierarchy via
+    -- BackdropMixin writes + NineSlicePanelTemplate + FrameTypeButton.
+    Skin.TaintSafeButtonFrameTemplate(ScrappingMachineFrame)
 
     ScrappingMachineFrame.ItemSlots:GetRegions():Hide()
     ScrappingMachineFrame.ItemSlots:ClearAllPoints()
@@ -60,5 +58,6 @@ function private.AddOns.Blizzard_ScrappingMachineUI()
         Skin.ScrappingMachineItemSlot(button)
     end
 
-    Skin.MagicButtonTemplate(ScrappingMachineFrame.ScrapButton)
+    -- TAINT-SAFE: ScrapButton triggers the protected scrap path
+    Skin.TaintSafeUIPanelButtonTemplate(ScrappingMachineFrame.ScrapButton)
 end

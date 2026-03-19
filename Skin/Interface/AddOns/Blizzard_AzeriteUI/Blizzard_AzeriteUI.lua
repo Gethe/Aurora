@@ -30,10 +30,13 @@ do --[[ AddOns\Blizzard_AzeriteUI.xml ]]
         function Skin.AzeriteEmpoweredItemUITemplate(Frame)
             Util.Mixin(Frame, Hook.AzeriteEmpoweredItemUIMixin)
 
-            Skin.PortraitFrameTemplate(Frame.BorderFrame)
-            local shadow = Frame.BorderFrame:CreateTexture(nil, "ARTWORK")
-            shadow:SetAllPoints(Frame.BorderFrame.TitleText)
-            shadow:SetAtlas("Azerite-TopShadow")
+            -- TAINT-SAFE: AzeriteEmpoweredItemUI calls protected
+            -- C_AzeriteEmpoweredItem.SelectPower().  Use taint-safe skin
+            -- on BorderFrame to avoid tainting the frame hierarchy.
+            Skin.TaintSafePortraitFrameTemplate(Frame.BorderFrame)
+            -- Skip CreateTexture for the shadow — it marks the frame tree
+            -- as addon-modified.  The Azerite top shadow atlas is cosmetic
+            -- and not worth the taint risk.
 
             Frame.ClipFrame:SetPoint("TOPLEFT")
             Frame.ClipFrame:SetPoint("BOTTOMRIGHT")

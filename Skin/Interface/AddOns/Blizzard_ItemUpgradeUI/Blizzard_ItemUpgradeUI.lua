@@ -41,7 +41,13 @@ end
 function private.AddOns.Blizzard_ItemUpgradeUI()
     local ItemUpgradeFrame = _G.ItemUpgradeFrame
     Util.Mixin(ItemUpgradeFrame, Hook.ItemUpgradeMixin)
-    Skin.PortraitFrameTemplate(ItemUpgradeFrame)
+
+    -- TAINT-SAFE: ItemUpgradeFrame.OnConfirm() calls the protected
+    -- C_ItemUpgrade.UpgradeItem().  The old Skin.PortraitFrameTemplate path
+    -- wrote BackdropMixin methods + _auroraNineSlice + SetButtonColor/
+    -- GetButtonColor directly into the frame table hierarchy, tainting it.
+    -- Use the taint-safe version that only calls widget API.
+    Skin.TaintSafePortraitFrameTemplate(ItemUpgradeFrame)
 
     ItemUpgradeFrame.BottomBG:Hide()
 
@@ -62,7 +68,10 @@ function private.AddOns.Blizzard_ItemUpgradeUI()
     Skin.ItemUpgradePreviewTemplate(ItemUpgradeFrame.LeftItemPreviewFrame)
     Skin.ItemUpgradePreviewTemplate(ItemUpgradeFrame.RightItemPreviewFrame)
 
-    Skin.UIPanelButtonTemplate(ItemUpgradeFrame.UpgradeButton)
+    -- TAINT-SAFE: The UpgradeButton triggers the CONFIRM_UPGRADE_ITEM
+    -- static popup which calls ItemUpgradeFrame:OnConfirm() →
+    -- C_ItemUpgrade.UpgradeItem() (protected).  Use taint-safe button skin.
+    Skin.TaintSafeUIPanelButtonTemplate(ItemUpgradeFrame.UpgradeButton)
     local glow = ItemUpgradeFrame.UpgradeButton.GlowAnim:GetAnimations()
     glow:SetFromAlpha(0.0)
     glow:SetToAlpha(0.2)

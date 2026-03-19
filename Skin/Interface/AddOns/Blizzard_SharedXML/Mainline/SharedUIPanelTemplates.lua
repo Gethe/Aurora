@@ -552,6 +552,210 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Skin.FlatPanelBackgroundTemplate(Frame.Bg)
     end
 
+    --[[ Taint-Safe Skinning Functions
+        These alternatives avoid ALL operations that mark a frame hierarchy
+        as addon-modified at the C level:
+          FORBIDDEN: Base.SetBackdrop / Base.CreateBackdrop (mass table writes
+            of BackdropMixin methods), Skin.FrameTypeFrame, Skin.FrameTypeButton
+            (SetButtonColor/GetButtonColor table writes + Base.SetHighlight →
+            HookScript), CreateTexture, CreateLine, CreateFrame, frame[key]=value,
+            HookScript, Skin.NineSlicePanelTemplate (_auroraNineSlice write +
+            Base.SetBackdrop).
+          SAFE: hooksecurefunc (via Util.Mixin), Hide, SetAlpha, SetTexture,
+            SetColorTexture, SetPoint, SetSize, SetFrameLevel, ClearAllPoints,
+            SetNormalTexture, SetPushedTexture, SetHighlightTexture,
+            SetDisabledTexture, SetText, SetNormalFontObject, GetRegions, etc.
+        Reference: Blizzard_WorldMap.lua taint-safe reimplementation.
+    ]]
+
+    -- Helper: style a button as a dark square with a text glyph.
+    -- Uses only widget API — no table writes, no CreateTexture/CreateLine,
+    -- no HookScript, no Base.SetBackdrop.
+    local function TaintSafeStyleButton(btn, text)
+        if not btn then return end
+        btn:SetSize(22, 22)
+        btn:SetNormalTexture("Interface\\Buttons\\White8x8")
+        btn:GetNormalTexture():SetVertexColor(Color.button:GetRGB())
+        btn:SetPushedTexture("Interface\\Buttons\\White8x8")
+        btn:GetPushedTexture():SetVertexColor(0.15, 0.15, 0.15)
+        btn:SetDisabledTexture("Interface\\Buttons\\White8x8")
+        btn:GetDisabledTexture():SetVertexColor(0.15, 0.15, 0.15, 0.5)
+        btn:SetHighlightTexture("Interface\\Buttons\\White8x8", "ADD")
+        btn:GetHighlightTexture():SetVertexColor(1, 1, 1)
+        btn:GetHighlightTexture():SetAlpha(0.25)
+        if text then
+            btn:SetNormalFontObject("GameFontHighlightLarge")
+            btn:SetHighlightFontObject("GameFontHighlightLarge")
+            btn:SetDisabledFontObject("GameFontDisableLarge")
+            btn:SetText(text)
+            btn:SetPushedTextOffset(1, -1)
+        end
+        if btn.Border then btn.Border:SetAlpha(0) end
+    end
+
+    -- Helper: hide all regions on a NineSlice frame via SetAlpha(0).
+    -- Replaces Skin.NineSlicePanelTemplate which writes _auroraNineSlice
+    -- and calls Base.SetBackdrop (mass table writes + CreateTexture).
+    local function TaintSafeHideNineSlice(nineSlice)
+        if not nineSlice then return end
+        for _, region in next, {nineSlice:GetRegions()} do
+            region:SetAlpha(0)
+        end
+    end
+
+    -- Helper: darken an existing Bg texture to serve as frame backdrop.
+    -- Replaces Base.SetBackdrop which creates BackdropMixin table writes.
+    local function TaintSafeSetBackground(bg, parent)
+        if not bg then return end
+        bg:ClearAllPoints()
+        bg:SetAllPoints(parent or bg:GetParent())
+        local r, g, b = Color.frame:GetRGB()
+        bg:SetColorTexture(r, g, b, Util.GetFrameAlpha())
+    end
+
+    -- Helper: hide all regions on an Inset's NineSlice and its Bg.
+    -- Replaces Skin.InsetFrameTemplate which calls NineSlicePanelTemplate.
+    local function TaintSafeHideInset(inset)
+        if not inset then return end
+        if inset.NineSlice then
+            TaintSafeHideNineSlice(inset.NineSlice)
+        end
+        if inset.Bg then
+            inset.Bg:Hide()
+        end
+    end
+
+    -- Taint-safe close button: dark square with × glyph.
+    -- Replaces Skin.UIPanelCloseButton which calls FrameTypeButton
+    -- (SetButtonColor/GetButtonColor writes + Base.SetHighlight → HookScript)
+    -- and CreateLine for the X cross.
+    function Skin.TaintSafeUIPanelCloseButton(Button)
+        if not Button then return end
+        TaintSafeStyleButton(Button, "\195\151")  -- × (U+00D7)
+    end
+    function Skin.TaintSafeUIPanelCloseButtonDefaultAnchors(Button)
+        Skin.TaintSafeUIPanelCloseButton(Button)
+        if Button then
+            Button:SetPoint("TOPRIGHT", 1.2, 0)
+        end
+    end
+
+    -- Taint-safe action button (e.g. "Upgrade" button).
+    -- Replaces Skin.UIPanelButtonTemplate → UIPanelButtonNoTooltipTemplate
+    -- → FrameTypeButton which writes SetButtonColor/GetButtonColor to the
+    -- button table and calls Base.SetHighlight (HookScript).
+    function Skin.TaintSafeUIPanelButtonTemplate(Button)
+        if not Button then return end
+        -- Clear stock textures via widget API (safe)
+        if Button.ClearNormalTexture then
+            Button:ClearNormalTexture()
+            Button:ClearPushedTexture()
+            Button:ClearDisabledTexture()
+            local hl = Button:GetHighlightTexture()
+            if hl then hl:Hide() end
+        elseif Button.SetNormalTexture then
+            Button:SetNormalTexture("")
+            Button:SetPushedTexture("")
+            Button:SetHighlightTexture("")
+            Button:SetDisabledTexture("")
+        end
+        -- Hide Blizzard border pieces if present
+        if Button.Left then Button.Left:SetAlpha(0) end
+        if Button.Right then Button.Right:SetAlpha(0) end
+        if Button.Middle then Button.Middle:SetAlpha(0) end
+        if Button.TopLeftCorner then Button.TopLeftCorner:SetAlpha(0) end
+        if Button.TopRightCorner then Button.TopRightCorner:Hide() end
+        if Button.LeftEdge then Button.LeftEdge:SetAlpha(0) end
+        if Button.RightEdge then Button.RightEdge:Hide() end
+        if Button.BottomLeftCorner then Button.BottomLeftCorner:SetAlpha(0) end
+        if Button.BottomRightCorner then Button.BottomRightCorner:Hide() end
+        if Button.TopEdge then Button.TopEdge:SetAlpha(0) end
+        if Button.BottomEdge then Button.BottomEdge:Hide() end
+        -- Style as a simple dark rectangle with highlight
+        Button:SetNormalTexture("Interface\\Buttons\\White8x8")
+        Button:GetNormalTexture():SetVertexColor(Color.button:GetRGB())
+        Button:SetPushedTexture("Interface\\Buttons\\White8x8")
+        Button:GetPushedTexture():SetVertexColor(0.15, 0.15, 0.15)
+        Button:SetDisabledTexture("Interface\\Buttons\\White8x8")
+        Button:GetDisabledTexture():SetVertexColor(0.15, 0.15, 0.15, 0.5)
+        Button:SetHighlightTexture("Interface\\Buttons\\White8x8", "ADD")
+        Button:GetHighlightTexture():SetVertexColor(1, 1, 1)
+        Button:GetHighlightTexture():SetAlpha(0.25)
+        -- Separators
+        if Button.LeftSeparator then Button.LeftSeparator:Hide() end
+        if Button.RightSeparator then Button.RightSeparator:Hide() end
+    end
+
+    -- Taint-safe PortraitFrameTemplate.
+    -- Replaces the chain: PortraitFrameTemplate → PortraitFrameTexturedBase →
+    -- PortraitFrameBase → NineSlicePanelTemplate → Base.SetBackdrop (taint)
+    -- and UIPanelCloseButton → FrameTypeButton (taint).
+    function Skin.TaintSafePortraitFrameTemplate(Frame)
+        if not Frame then return end
+        -- Hook mixin via hooksecurefunc (safe)
+        Util.Mixin(Frame, Hook.PortraitFrameMixin)
+
+        -- NineSlice: hide all ornate border textures
+        local ns = Frame.NineSlice
+        if ns then
+            ns:SetFrameLevel(Frame:GetFrameLevel() + 1)
+            TaintSafeHideNineSlice(ns)
+        end
+
+        -- Background: recolor existing Bg texture
+        if Frame.Bg then
+            TaintSafeSetBackground(Frame.Bg, Frame)
+        end
+
+        -- Portrait: hide
+        if Frame.PortraitContainer then
+            Frame.PortraitContainer:Hide()
+        end
+
+        -- Title bar
+        if Frame.TitleContainer then
+            Frame.TitleContainer:SetHeight(private.FRAME_TITLE_HEIGHT)
+            Frame.TitleContainer:SetPoint("TOPLEFT", 24, -1)
+            local titleText = Frame.TitleContainer.TitleText
+            if titleText then
+                titleText:ClearAllPoints()
+                titleText:SetPoint("TOPLEFT", Frame.TitleContainer)
+                titleText:SetPoint("BOTTOMRIGHT", Frame.TitleContainer)
+            end
+        end
+
+        -- Top streaks
+        if Frame.TopTileStreaks then
+            Frame.TopTileStreaks:SetTexture("")
+        end
+
+        -- Close button: taint-safe style
+        Skin.TaintSafeUIPanelCloseButton(Frame.CloseButton)
+    end
+
+    -- Taint-safe ButtonFrameTemplate.
+    -- Replaces ButtonFrameTemplate which calls PortraitFrameBaseTemplate +
+    -- InsetFrameTemplate (both taint via NineSlicePanelTemplate).
+    function Skin.TaintSafeButtonFrameTemplate(Frame)
+        if not Frame then return end
+        -- Core portrait frame skin (taint-safe)
+        Skin.TaintSafePortraitFrameTemplate(Frame)
+        -- Override close button anchors for ButtonFrame style
+        if Frame.CloseButton then
+            Frame.CloseButton:SetPoint("TOPRIGHT", 1.2, 0)
+        end
+        -- Inset: hide decorations without NineSlicePanelTemplate
+        if Frame.Inset then
+            TaintSafeHideInset(Frame.Inset)
+        end
+    end
+
+    -- Taint-safe InsetFrameTemplate (standalone, for skins that need it).
+    function Skin.TaintSafeInsetFrameTemplate(Frame)
+        if not Frame then return end
+        TaintSafeHideInset(Frame)
+    end
+
     function Skin.PortraitFrameBaseTemplate(Frame)
         Util.Mixin(Frame, Hook.PortraitFrameMixin)
         if not Frame then

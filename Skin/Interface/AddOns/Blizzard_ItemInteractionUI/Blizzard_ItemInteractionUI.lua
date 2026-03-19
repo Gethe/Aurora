@@ -17,7 +17,9 @@ do --[[ AddOns\Blizzard_ItemInteractionUI.lua ]]
         local costsCurrency = self:CostsCurrency()
         local hasPrice = costsMoney or costsCurrency
         local buttonFrame = self.ButtonFrame
-        local bg = self.NineSlice:GetBackdropTexture("bg")
+        -- Use Bg directly instead of NineSlice:GetBackdropTexture("bg")
+        -- since we no longer install BackdropMixin on the NineSlice.
+        local bg = self.Bg
 
         if not hasPrice then
             buttonFrame.ActionButton:SetPoint("BOTTOM", bg, 0, 5)
@@ -33,20 +35,24 @@ end
 function private.AddOns.Blizzard_ItemInteractionUI()
     local ItemInteractionFrame = _G.ItemInteractionFrame
     Util.Mixin(ItemInteractionFrame, Hook.ItemInteractionMixin)
-    Skin.PortraitFrameTemplate(ItemInteractionFrame)
-    ItemInteractionFrame.NineSlice:SetBackdropOption("offsets", {
-        left = 2,
-        right = 2,
-        top = 20,
-        bottom = 0,
-    })
 
-    local bg = ItemInteractionFrame.NineSlice:GetBackdropTexture("bg")
+    -- TAINT-SAFE: ItemInteractionFrame calls protected functions
+    -- C_ItemInteraction.PerformItemInteraction() and InitializeFrame().
+    -- The old Skin.PortraitFrameTemplate path tainted the frame hierarchy
+    -- via BackdropMixin writes + NineSlicePanelTemplate + FrameTypeButton.
+    Skin.TaintSafePortraitFrameTemplate(ItemInteractionFrame)
+
+    -- The hook UpdateCostFrame references NineSlice:GetBackdropTexture("bg")
+    -- which requires BackdropMixin.  Since we no longer install BackdropMixin,
+    -- use the Bg texture directly as the anchor reference instead.
+    local bg = ItemInteractionFrame.Bg
     local titleText = ItemInteractionFrame.TitleContainer
     titleText:ClearAllPoints()
     titleText:SetPoint("TOPLEFT", bg)
     titleText:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-    ItemInteractionFrame.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
+    if ItemInteractionFrame.CloseButton then
+        ItemInteractionFrame.CloseButton:SetPoint("TOPRIGHT", bg, 5.6, 5)
+    end
 
     do -- ItemSlot
         local ItemSlot = ItemInteractionFrame.ItemSlot
@@ -77,7 +83,8 @@ function private.AddOns.Blizzard_ItemInteractionUI()
     end
 
     local ButtonFrame = ItemInteractionFrame.ButtonFrame
-    Skin.MagicButtonTemplate(ButtonFrame.ActionButton)
+    -- TAINT-SAFE: ActionButton triggers the protected interaction path
+    Skin.TaintSafeUIPanelButtonTemplate(ButtonFrame.ActionButton)
     Skin.ThinGoldEdgeTemplate(ButtonFrame.MoneyFrameEdge)
     ButtonFrame.MoneyFrameEdge:ClearAllPoints()
     ButtonFrame.MoneyFrameEdge:SetPoint("BOTTOMLEFT", bg, 5, 5)
