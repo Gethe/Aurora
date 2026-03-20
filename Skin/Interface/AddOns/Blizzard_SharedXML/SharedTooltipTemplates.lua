@@ -128,4 +128,43 @@ function private.SharedXML.SharedTooltipTemplates()
             return (numLinesNeeded * textHeight) + (numLinesNeeded - 1) * textSpacing
         end
     end
+
+    -- Replace GameTooltip_AddWidgetSet to avoid taint: after calling
+    -- GameTooltip_InsertFrame, the original does arithmetic on
+    -- self.widgetContainer:GetHeight() which can return a secret number
+    -- when the tooltip hierarchy is tainted by Aurora's skinning.
+    -- (GameTooltip.lua:593 — "attempt to perform arithmetic on a secret
+    -- number value tainted by 'RealUI_Skins'")
+    if _G.GameTooltip_AddWidgetSet then
+        local WidgetLayout = function(widgetContainer, sortedWidgets)
+            _G.DefaultWidgetLayout(widgetContainer, sortedWidgets)
+            widgetContainer.shownWidgetCount = #sortedWidgets
+        end
+
+        _G.GameTooltip_AddWidgetSet = function(self, widgetSetID, verticalPadding)
+            if not widgetSetID then
+                return
+            end
+
+            if not self.widgetContainer then
+                self.widgetContainer = _G.CreateFrame("FRAME", nil, self, "UIWidgetContainerTemplate")
+                self.widgetContainer.verticalAnchorPoint = "TOPLEFT"
+                self.widgetContainer.verticalRelativePoint = "BOTTOMLEFT"
+                self.widgetContainer.showAndHideOnWidgetSetRegistration = false
+                self.widgetContainer.disableWidgetTooltips = true
+                self.widgetContainer:Hide()
+            end
+
+            self.widgetContainer:RegisterForWidgetSet(widgetSetID, WidgetLayout)
+
+            if self.widgetContainer.shownWidgetCount > 0 then
+                local heightUsed = _G.GameTooltip_InsertFrame(self, self.widgetContainer, verticalPadding)
+                -- overflow — use SafeNumber to avoid tainted arithmetic
+                local rawHeight = self.widgetContainer:GetHeight()
+                local widgetHeight = SafeNumber(rawHeight, 0) + (verticalPadding or 0)
+                heightUsed = SafeNumber(heightUsed, 0)
+                return heightUsed - widgetHeight
+            end
+        end
+    end
 end
