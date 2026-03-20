@@ -260,8 +260,14 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
             _G.C_Timer.After(0, function()
                 private.UpdateUIScale()
                 if not private.scaleReported then
-                    -- Standalone Aurora: just report the raw engine scale
-                    _G.print(("Running on %sx%s - UI Scale: %.2f"):format(phyScreenWidth, phyScreenHeight, _G.UIParent:GetScale()))
+                    -- Standalone Aurora: just report the raw engine scale.
+                    -- When a host addon (e.g. RealUI_Skins) is active, it sets
+                    -- private.scaleReported = true to suppress this message.
+                    -- In dev mode Aurora may load as a separate addon; check the
+                    -- global flag set by the host addon's UpdateUIScale.
+                    if not _G.AURORA_SCALE_REPORTED then
+                        _G.print(("Running on %sx%s - UI Scale: %.2f"):format(phyScreenWidth, phyScreenHeight, _G.UIParent:GetScale()))
+                    end
                 end
                 if (tonumber(_G.GetCVar("questTextContrast")) ~= 4) then
                     _G.SetCVar("questTextContrast", 4)
