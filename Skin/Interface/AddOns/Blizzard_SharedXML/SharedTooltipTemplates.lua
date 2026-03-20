@@ -75,26 +75,10 @@ function private.SharedXML.SharedTooltipTemplates()
         return value
     end
 
-    -- Replace GetUnscaledFrameRect to avoid taint: Aurora's NineSlice
-    -- skinning taints frame geometry, and Layout() → GetExtents() calls
-    -- GetUnscaledFrameRect which does arithmetic on the tainted values.
-    -- (FrameUtil.lua:211 — "attempt to perform arithmetic on local
-    -- 'frameLeft' (a secret number value tainted by 'Aurora')")
-    if _G.GetUnscaledFrameRect then
-        _G.GetUnscaledFrameRect = function(frame, scale)
-            local frameLeft, frameBottom, frameWidth, frameHeight = frame:GetScaledRect()
-            if frameLeft == nil then
-                local defaulted = true
-                return 1, 1, 1, 1, defaulted
-            end
-            frameLeft = SafeNumber(frameLeft, 1)
-            frameBottom = SafeNumber(frameBottom, 1)
-            frameWidth = SafeNumber(frameWidth, 1)
-            frameHeight = SafeNumber(frameHeight, 1)
-            scale = SafeNumber(scale, 1)
-            return frameLeft / scale, frameBottom / scale, frameWidth / scale, frameHeight / scale
-        end
-    end
+    -- NOTE: Do NOT replace _G.GetUnscaledFrameRect here.
+    -- Overwriting that global with an addon-owned function taints it,
+    -- which propagates through layout paths into the GameMenu secure
+    -- execution and causes ADDON_ACTION_FORBIDDEN on Logout/Quit.
 
     -- Replace GameTooltip_InsertFrame to avoid taint: Aurora's font
     -- modifications cause GetLineHeight() and GetHeight() to return secret
