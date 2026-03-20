@@ -6,17 +6,38 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
 
 --do --[[ FrameXML\CastingBarFrame.lua ]]
 --end
 
 do --[[ FrameXML\CastingBarFrame.xml ]]
+    -- TAINT-SAFE: The original Skin.CastingBarFrameTemplate called
+    -- Skin.FrameTypeStatusBar → Base.SetBackdrop → Base.CreateBackdrop
+    -- which writes BackdropMixin methods directly onto the StatusBar
+    -- frame table.  OverlayPlayerCastingBarFrame lives in the secure
+    -- action bar hierarchy; tainting it propagates "secret number"
+    -- errors to ActionButton.lua:609 (pressAndHoldAction comparison)
+    -- and CastingBarFrame.lua:212 (forbidden table index).
+    --
+    -- The safe approach: only use widget API calls (SetStatusBarTexture,
+    -- SetStatusBarColor, Hide, SetAlpha) that don't write addon-owned
+    -- state onto the frame.
+    local function TaintSafeSkinStatusBar(StatusBar)
+        -- Replace the status bar texture with a flat color
+        StatusBar:SetStatusBarTexture(private.textures.plain)
+        local tex = StatusBar:GetStatusBarTexture()
+        if tex then
+            tex:SetDrawLayer("BORDER")
+        end
+        -- Hide Blizzard border/background textures
+        if StatusBar.Background then StatusBar.Background:Hide() end
+        if StatusBar.Border then StatusBar.Border:SetAlpha(0) end
+        if StatusBar.BorderShield then StatusBar.BorderShield:SetAlpha(0) end
+    end
+
     function Skin.CastingBarFrameTemplate(StatusBar)
-        Skin.FrameTypeStatusBar(StatusBar)
-        Base.SetBackdropColor(StatusBar, Color.frame)
+        TaintSafeSkinStatusBar(StatusBar)
 
         StatusBar:GetRegions():Hide()
         StatusBar.Border:Hide()
@@ -28,7 +49,7 @@ do --[[ FrameXML\CastingBarFrame.xml ]]
         StatusBar.Flash:SetColorTexture(1, 1, 1)
     end
     function Skin.SmallCastingBarFrameTemplate(StatusBar)
-        Skin.FrameTypeStatusBar(StatusBar)
+        TaintSafeSkinStatusBar(StatusBar)
 
         StatusBar:GetRegions():Hide()
         StatusBar.Border:Hide()
