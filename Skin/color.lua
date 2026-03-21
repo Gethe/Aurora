@@ -434,7 +434,6 @@ function Color.PreviewHighlightColor(r, g, b)
     return true
 end
 
-if _G.CUSTOM_CLASS_COLORS then return end
 --[[ CUSTOM_CLASS_COLORS:header
 This is a community developed standard, and is intended to be a drop-in
 replacement for Blizzard's RAID_CLASS_COLORS. It's purpose is to allow
@@ -603,6 +602,10 @@ function private.updateHighlightColor()
     Color.highlight:SetRGB(_G.CUSTOM_CLASS_COLORS[private.charClass.token]:GetRGB())
 end
 
+
+-- If another addon (e.g. ClassColors) already defined CUSTOM_CLASS_COLORS,
+-- skip creating our own implementation but keep the helper functions above.
+if _G.CUSTOM_CLASS_COLORS then return end
 
 _G.CUSTOM_CLASS_COLORS = {}
 _G.setmetatable(_G.CUSTOM_CLASS_COLORS, {__index = meta}) do
