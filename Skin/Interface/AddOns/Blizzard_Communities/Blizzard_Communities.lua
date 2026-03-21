@@ -359,7 +359,10 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
         }
         function Skin.ClubFinderRoleTemplate(Frame)
             local atlas = Frame.Icon:GetAtlas()
-            Base.SetTexture(Frame.Icon, roleIcons[atlas])
+            local texName = roleIcons[atlas]
+            if texName then
+                Base.SetTexture(Frame.Icon, texName)
+            end
             Skin.ClubFinderCheckboxTemplate(Frame.Checkbox)
         end
         function Skin.ClubFinderCommunitiesCardTemplate(Button)

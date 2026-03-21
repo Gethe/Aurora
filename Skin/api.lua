@@ -292,7 +292,7 @@ do -- Base.SetTexture
         _G.assert(texture:GetObjectType() == "Texture", "texture widget expected, got "..texture:GetObjectType())
 
         local snapshot = snapshots[textureName]
-        _G.assert(snapshot, textureName .. " is not a registered texture.")
+        _G.assert(snapshot, (textureName or "nil") .. " is not a registered texture.")
 
         snapshot(texture:GetParent(), texture)
     end
