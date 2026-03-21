@@ -1,4 +1,18 @@
-﻿## [12.0.1.18] ##
+﻿## [12.0.1.19] ##
+### Changed ###
+  * chg: Add taint-safe frame skinning for high-risk protected-function frames (ItemUpgrade, ItemInteraction, Scrapping, AzeriteEssence, AzeriteUI)
+  * chg: call Base.CropIcon(texture) without the parent argument to avoid tainting button geometry
+
+### Fixed ###
+  * fix: nil texture name crash in ClubFinder role icons and SetTexture assertion
+  * fix: move CUSTOM_CLASS_COLORS early-return guard below private definitions so they're always available to host addons
+  * fix: duplicate scale message on login in dev mode
+  * fix: remove GetUnscaledFrameRect override that tainted GameMenu secure callback path [#166]
+  * fix: taint-safe replacement for GameTooltip_AddWidgetSet in SharedTooltipTemplates.lua
+  * fix: taint-safe status bar skinning to prevent OverlayPlayerCastingBarFrame taint propagating into action bar secure execution path
+
+
+## [12.0.1.18] ##
 ### Changed ###
   * chg: stop aroura from doing any scaling when a host addon is handling scaling..
 
@@ -247,7 +261,9 @@
   * chore: toc update for beta
 
 
+## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.19]: https://github.com/Gethe/Aurora/compare/12.0.1.18...12.0.1.19
 [12.0.1.18]: https://github.com/Gethe/Aurora/compare/12.0.1.17...12.0.1.18
 [12.0.1.17]: https://github.com/Gethe/Aurora/compare/12.0.1.16...12.0.1.17
 [12.0.1.16]: https://github.com/Gethe/Aurora/compare/12.0.1.15...12.0.1.16
