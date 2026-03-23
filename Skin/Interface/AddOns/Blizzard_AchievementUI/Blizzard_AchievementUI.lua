@@ -483,6 +483,12 @@ function private.AddOns.Blizzard_AchievementUI()
     ----------------------
     local AchievementFrame = _G.AchievementFrame
     Skin.FrameTypeFrame(AchievementFrame)
+    AchievementFrame:SetBackdropOption("offsets", {
+        left = 2,
+        right = 2,
+        top = 2,
+        bottom = 2,
+    })
     AchievementFrame.Background:Hide()
     AchievementFrame.BackgroundBlackCover:Hide()
     local bg = AchievementFrame:GetBackdropTexture("bg")

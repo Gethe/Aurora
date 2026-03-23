@@ -118,6 +118,12 @@ function private.FrameXML.LootFrame()
     local LootFrame = _G.LootFrame
     if private.isRetail then
         Skin.ScrollingFlatPanelTemplate(LootFrame)
+        LootFrame.NineSlice:SetBackdropOption("offsets", {
+            left = 2,
+            right = 2,
+            top = 2,
+            bottom = 2,
+        })
     else
         Skin.ButtonFrameTemplate(LootFrame)
         _G.LootFramePortraitOverlay:Hide()
