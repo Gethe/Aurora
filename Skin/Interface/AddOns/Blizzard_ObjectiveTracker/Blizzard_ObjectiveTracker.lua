@@ -274,6 +274,8 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
 end
 
 function private.AddOns.Blizzard_ObjectiveTracker()
+    if not _G.AuroraConfig.objectiveTracker then return end
+
     Util.Mixin(_G.ObjectiveTrackerFrameMixin, Hook.ObjectiveTrackerFrameMixin)
     Util.Mixin(_G.ObjectiveTrackerBlockMixin, Hook.ObjectiveTrackerBlockMixin)
     Util.Mixin(_G.ObjectiveTrackerContainerHeaderMixin, Hook.ObjectiveTrackerContainerHeaderMixin)
