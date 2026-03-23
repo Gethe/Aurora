@@ -25,7 +25,7 @@ Config.defaults = {
     chatBubbleNames = true,
     characterSheet = true,
     objectiveTracker = true,
-    talentArtBackground = false,
+    talentArtBackground = true,
 
     -- Visual customization
     buttonsHaveGradient = true,
