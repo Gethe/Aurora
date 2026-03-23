@@ -58,6 +58,20 @@ Compatibility.conflicts = {
         severity = "info",
         message = "Dominos detected. Aurora's main menu bar theming may not be needed."
     },
+
+    -- Character sheet addons
+    ["ChonkyCharacterSheet"] = {
+        component = "characterSheet",
+        severity = "warning",
+        message = "ChonkyCharacterSheet detected. Consider disabling Aurora's character sheet theming to avoid conflicts."
+    },
+
+    -- Professions addons
+    ["CraftSim"] = {
+        component = "professions",
+        severity = "warning",
+        message = "CraftSim detected. Crafting order tabs may need size adjustments."
+    },
 }
 
 -- Required dependencies

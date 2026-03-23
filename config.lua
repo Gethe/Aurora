@@ -23,6 +23,9 @@ Config.defaults = {
     tooltips = true,
     chatBubbles = true,
     chatBubbleNames = true,
+    characterSheet = true,
+    objectiveTracker = true,
+    talentArtBackground = false,
 
     -- Visual customization
     buttonsHaveGradient = true,
@@ -74,6 +77,9 @@ Config.validationRules = {
     chatBubbleNames = "boolean",
     buttonsHaveGradient = "boolean",
     hasAnalytics = "boolean",
+    characterSheet = "boolean",
+    objectiveTracker = "boolean",
+    talentArtBackground = "boolean",
 
     -- Number settings with ranges
     alpha = {type = "number", min = 0, max = 1},
