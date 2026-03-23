@@ -107,7 +107,7 @@ function private.OnLoad()
     end)
 
     -- Skip CharacterFrame modifications if Chonky Character Sheet is loaded
-    if not _G.C_AddOns.IsAddOnLoaded("ChonkyCharacterSheet") then
+    if AuroraConfig.characterSheet and not _G.C_AddOns.IsAddOnLoaded("ChonkyCharacterSheet") then
         _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
             _G.CharacterStatsPane.ItemLevelFrame:SetPoint("TOP", 0, -12)
             _G.CharacterStatsPane.ItemLevelFrame.Background:Hide()
