@@ -13,6 +13,9 @@ do --[[ AddOns\Blizzard_PlayerChoice.lua ]]
     do -- Blizzard_PlayerChoice
         Hook.PlayerChoiceFrameMixin = {}
         function Hook.PlayerChoiceFrameMixin:SetupFrame()
+            -- Store pre-hide dimensions to detect layout recalculation
+            local preW, preH = self:GetWidth(), self:GetHeight()
+
             -- Blizzard re-textures the NineSlice via ApplyIdenticalCornersLayout /
             -- ApplyUniqueCornersLayout on each SetupFrame call, which applies atlas
             -- textures (SetAtlas) to the pieces.  SetTexture("") does NOT clear atlas
@@ -48,6 +51,17 @@ do --[[ AddOns\Blizzard_PlayerChoice.lua ]]
                 if self.Title.Right then self.Title.Right:Hide() end
                 if self.Title.Middle then self.Title.Middle:Hide() end
             end
+
+            -- Restore dimensions if hiding NineSlice triggered a layout recalculation
+            if self:GetWidth() ~= preW or self:GetHeight() ~= preH then
+                self:SetSize(preW, preH)
+            end
+
+            -- Constrain frame to screen-safe dimensions
+            local maxWidth = _G.GetScreenWidth() * 0.9
+            local maxHeight = _G.GetScreenHeight() * 0.85
+            if maxWidth > 0 and self:GetWidth() > maxWidth then self:SetWidth(maxWidth) end
+            if maxHeight > 0 and self:GetHeight() > maxHeight then self:SetHeight(maxHeight) end
 
             -- Fix positioning for Worldsoul/TWW panels: Aurora's skinning changes the layout.
             -- Position lower on screen to prevent covering too much UI space.
@@ -210,7 +224,7 @@ function private.AddOns.Blizzard_PlayerChoice()
     -- BorderOverlay, etc.) — mirrors the treatment on PlayerSpellsFrame sub-frames.
     if not PlayerChoiceFrame._auroraBackground then
         local bg = PlayerChoiceFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
-        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetColorTexture(Color.panelBg:GetRGB())
         bg:SetAllPoints(PlayerChoiceFrame)
         PlayerChoiceFrame._auroraBackground = bg
     end

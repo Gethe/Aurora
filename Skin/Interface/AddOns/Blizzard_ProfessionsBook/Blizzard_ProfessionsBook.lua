@@ -79,7 +79,7 @@ function private.AddOns.Blizzard_ProfessionsBook()
 
     -- Give the outer frame a dark-grey background (not pure black)
     if ProfessionsBookFrame.NineSlice.Bg then
-        ProfessionsBookFrame.NineSlice.Bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        ProfessionsBookFrame.NineSlice.Bg:SetColorTexture(Color.panelBg:GetRGB())
         ProfessionsBookFrame.NineSlice.Bg:SetAllPoints(ProfessionsBookFrame.NineSlice)
         ProfessionsBookFrame.NineSlice.Bg:Show()
     end
@@ -100,7 +100,7 @@ function private.AddOns.Blizzard_ProfessionsBook()
     local ProfessionsContentFrame = _G.ProfessionsContentFrame
     if ProfessionsContentFrame and not ProfessionsContentFrame._auroraBackground then
         local bg = ProfessionsContentFrame:CreateTexture(nil, "BACKGROUND", nil, -8)
-        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetColorTexture(Color.panelBg:GetRGB())
         bg:SetAllPoints(ProfessionsContentFrame)
         ProfessionsContentFrame._auroraBackground = bg
     end

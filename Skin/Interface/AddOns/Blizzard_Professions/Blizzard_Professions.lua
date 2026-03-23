@@ -67,7 +67,7 @@ function private.AddOns.Blizzard_Professions()
     Skin.PortraitFrameTemplateNoCloseButton(ProfessionsFrame)
 
     if ProfessionsFrame.Bg then
-        ProfessionsFrame.Bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        ProfessionsFrame.Bg:SetColorTexture(Color.panelBg:GetRGB())
         ProfessionsFrame.Bg:SetAllPoints(ProfessionsFrame.NineSlice)
         ProfessionsFrame.Bg:Show()
     end
@@ -87,7 +87,7 @@ function private.AddOns.Blizzard_Professions()
 
     if not CraftingPage._auroraBackground then
         local bg = CraftingPage:CreateTexture(nil, "BACKGROUND", nil, -8)
-        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetColorTexture(Color.panelBg:GetRGB())
         bg:SetAllPoints(CraftingPage)
         CraftingPage._auroraBackground = bg
     end
@@ -289,7 +289,7 @@ function private.AddOns.Blizzard_Professions()
 
     if not SpecPage._auroraBackground then
         local bg = SpecPage:CreateTexture(nil, "BACKGROUND", nil, -8)
-        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetColorTexture(Color.panelBg:GetRGB())
         bg:SetAllPoints(SpecPage)
         SpecPage._auroraBackground = bg
     end
@@ -329,7 +329,7 @@ function private.AddOns.Blizzard_Professions()
 
     local TreePreview = SpecPage.TreePreview
     if TreePreview and TreePreview.Background then
-        TreePreview.Background:SetColorTexture(0.08, 0.08, 0.08, 1)
+        TreePreview.Background:SetColorTexture(Color.panelBg:GetRGB())
     end
 
     local DetailedView = SpecPage.DetailedView
@@ -374,7 +374,7 @@ function private.AddOns.Blizzard_Professions()
 
     if not OrdersPage._auroraBackground then
         local bg = OrdersPage:CreateTexture(nil, "BACKGROUND", nil, -8)
-        bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        bg:SetColorTexture(Color.panelBg:GetRGB())
         bg:SetAllPoints(OrdersPage)
         OrdersPage._auroraBackground = bg
     end
@@ -414,6 +414,16 @@ function private.AddOns.Blizzard_Professions()
             if not tab._auroraSkinned then
                 tab._auroraSkinned = true
                 Skin.TabSystemButtonTemplate(tab)
+
+                -- Store Aurora's intended size for CraftSim resilience
+                tab._auroraTabWidth, tab._auroraTabHeight = tab:GetSize()
+
+                -- Clamp back if another addon oversizes the tab (>150% of Aurora's values)
+                _G.hooksecurefunc(tab, "SetSize", function(self, newW, newH)
+                    if self._auroraTabWidth and (newW > self._auroraTabWidth * 1.5 or newH > self._auroraTabHeight * 1.5) then
+                        self:SetSize(self._auroraTabWidth, self._auroraTabHeight)
+                    end
+                end)
 
                 if tab.SetTabSelected then
                     _G.hooksecurefunc(tab, "SetTabSelected", HideOrderTypeTabLayers)
