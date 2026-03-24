@@ -1,4 +1,20 @@
-﻿## [12.0.1.19] ##
+﻿## [12.0.1.20] ##
+### Added ###
+  * add: GUI toggles for character sheet, objective tracker, and talent background skins ([#151], [#158], [#160])
+  * add: Color.panelBg constant and unified panel background colors ([#155])
+  * add: SetSize clamping hook to crafting order tabs ([#167])
+  * add: config and compatibility foundations ([#151], [#158], [#160], [#167])
+
+### Changed ###
+  * chg: gate character sheet skin on config toggle ([#151])
+  * chg: gate objective tracker skin on config toggle ([#158])
+  * chg: gate talent background hiding on config toggle ([#160])
+  * chg: clamp PlayerChoice frame to screen bounds ([#164])
+  * chg: reduce border width on Achievement and Loot frames ([#157])
+  * chg: talentArtBackground defaults to true
+
+
+## [12.0.1.19] ##
 ### Changed ###
   * chg: Add taint-safe frame skinning for high-risk protected-function frames (ItemUpgrade, ItemInteraction, Scrapping, AzeriteEssence, AzeriteUI)
   * chg: call Base.CropIcon(texture) without the parent argument to avoid tainting button geometry
@@ -263,6 +279,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.20]: https://github.com/Gethe/Aurora/compare/12.0.1.19...12.0.1.20
 [12.0.1.19]: https://github.com/Gethe/Aurora/compare/12.0.1.18...12.0.1.19
 [12.0.1.18]: https://github.com/Gethe/Aurora/compare/12.0.1.17...12.0.1.18
 [12.0.1.17]: https://github.com/Gethe/Aurora/compare/12.0.1.16...12.0.1.17
