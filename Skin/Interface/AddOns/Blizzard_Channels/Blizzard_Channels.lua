@@ -113,10 +113,13 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
     end
     do --[[ ChannelRoster.xml ]]
         function Skin.ChannelRosterTemplate(Frame)
-            if private.isRetail then
-                Skin.WowScrollBoxList(Frame.ScrollBox)
-                Skin.MinimalScrollBar(Frame.ScrollBar)
-            else
+            -- WowScrollBoxList (Base.SetBackdrop) and MinimalScrollBar
+            -- (CreateTexture/CreateFrame) are taint-unsafe: roster buttons
+            -- inside the ScrollBox call VoiceActivityManager:
+            -- RegisterFrameForVoiceActivityNotifications(), and storing
+            -- values in a tainted context produces secret numbers that
+            -- break MatchesUser() comparisons.
+            if not private.isRetail then
                 Skin.HybridScrollBarTemplate(Frame.ScrollFrame.scrollBar)
             end
         end
@@ -202,8 +205,8 @@ function private.AddOns.Blizzard_Channels()
     ChannelFrame.ChannelRoster:SetPoint("TOPRIGHT", -20, -(private.FRAME_TITLE_HEIGHT + 20))
     ChannelFrame.ChannelRoster:SetPoint("BOTTOMRIGHT", -20, 28)
     Skin.InsetFrameTemplate(ChannelFrame.RightInset)
-    Skin.WowScrollBoxList(ChannelFrame.ChannelRoster.ScrollBox)
-    Skin.MinimalScrollBar(ChannelFrame.ChannelRoster.ScrollBar)
+    -- ChannelRoster ScrollBox/ScrollBar skinning removed: taint-unsafe
+    -- (see Skin.ChannelRosterTemplate comment above).
 
     -- Skin.WowScrollBoxList(ChannelFrame.ChannelList.ScrollBox)
     Skin.MinimalScrollBar(ChannelFrame.ChannelList.ScrollBar)
