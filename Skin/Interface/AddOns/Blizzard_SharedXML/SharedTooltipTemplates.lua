@@ -151,4 +151,40 @@ function private.SharedXML.SharedTooltipTemplates()
             end
         end
     end
+
+    -- Replace SetTooltipMoney to avoid taint: Aurora's GameTooltip
+    -- skinning marks the tooltip hierarchy as addon-modified, causing
+    -- GetTextWidth() on MoneyFrame buttons to return secret numbers.
+    -- MoneyFrame_Update then does arithmetic on these secret values and
+    -- errors with "attempt to perform arithmetic on a secret number
+    -- value (tainted by 'RealUI_Skins')".
+    -- WoWUIBugs #801 — acknowledged by Blizzard, tracked internally.
+    -- Workaround: render tooltip money as an inline coin-textured string
+    -- via GetCoinTextureString, bypassing MoneyFrame_Update entirely.
+    if _G.SetTooltipMoney then
+        local origClearMoney = _G.GameTooltip_ClearMoney
+
+        _G.SetTooltipMoney = function(frame, money, type, prefixText, suffixText)
+            -- Hide any previously shown money frames (from before this
+            -- replacement took effect or from a prior tooltip cycle).
+            if origClearMoney and frame.shownMoneyFrames then
+                origClearMoney(frame)
+            end
+
+            local coinText = _G.C_CurrencyInfo.GetCoinTextureString(money)
+            if coinText then
+                local line = ""
+                if prefixText and prefixText ~= "" then
+                    line = prefixText .. " "
+                end
+                line = line .. coinText
+                if suffixText and suffixText ~= "" then
+                    line = line .. " " .. suffixText
+                end
+                _G.GameTooltip_AddBlankLinesToTooltip(frame, 1)
+                frame:AddLine(line, 1, 1, 1)
+            end
+            frame.hasMoney = 1
+        end
+    end
 end
