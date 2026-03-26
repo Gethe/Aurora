@@ -121,7 +121,13 @@ function private.SharedXML.SharedTooltipTemplates()
     -- number value tainted by 'RealUI_Skins'")
     if _G.GameTooltip_AddWidgetSet then
         local WidgetLayout = function(widgetContainer, sortedWidgets)
-            _G.DefaultWidgetLayout(widgetContainer, sortedWidgets)
+            -- Run DefaultWidgetLayout in untainted context via
+            -- securecallfunction so that secret-valued frame measurements
+            -- (GetEffectiveScale, GetExtents) inside
+            -- ResizeLayoutMixin:Layout() can be compared without error.
+            -- Without this, LayoutFrame.lua:491 errors with "attempt to
+            -- compare a secret number value" (WoWUIBugs #811).
+            _G.securecallfunction(_G.DefaultWidgetLayout, widgetContainer, sortedWidgets)
             widgetContainer.shownWidgetCount = #sortedWidgets
         end
 
