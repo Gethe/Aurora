@@ -14,8 +14,13 @@ local Color = Aurora.Color
 --end
 
 do --[[ AddOns\Blizzard_StaticPopup_Game\GameDialog.lua ]]
+    -- TAINT-SAFE: StaticPopup buttons trigger protected functions in
+    -- OnAccept callbacks (e.g. UpgradeItem, JoinBattlefield).
+    -- FrameTypeButton writes SetButtonColor/GetButtonColor + calls
+    -- Base.SetBackdrop directly onto button tables, marking them as
+    -- addon-modified → taint propagates through the callback chain.
     function Skin.StaticPopupButtonTemplate(Button)
-        Skin.FrameTypeButton(Button)
+        Skin.TaintSafeUIPanelButtonTemplate(Button)
     end
 
     function Skin.StaticPopupTemplate(Frame)
