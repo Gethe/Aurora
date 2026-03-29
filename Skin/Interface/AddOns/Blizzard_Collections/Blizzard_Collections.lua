@@ -137,6 +137,10 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
 
         Hook.WardrobeSetsCollectionMixin = {}
         function Hook.WardrobeSetsCollectionMixin:SetItemFrameQuality(itemFrame)
+            if not itemFrame._auroraIconBorder then
+                Skin.WardrobeSetsDetailsItemFrameTemplate(itemFrame)
+            end
+
             local quality
             if itemFrame.collected then
                 quality = _G.C_TransmogCollection.GetSourceInfo(itemFrame.sourceID).quality
