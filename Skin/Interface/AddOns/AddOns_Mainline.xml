@@ -218,7 +218,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_FrameXML\AzeriteAnimationTemplates.lua"/-->
     <!--Script file="Blizzard_FrameXML\QuestNPCModelFrameMixin.lua"/-->
     <!--Script file="Blizzard_FrameXML\TabardModelFrameMixin.lua"/-->
-    <Script file="Blizzard_FrameXML\WardrobeOutfits.lua"/>
+    <Script file="Blizzard_FrameXML\WardrobeCustomSets.lua"/>
     <Script file="Blizzard_FrameXML\Mainline\NavigationBar.lua"/>
     <!--Script file="Blizzard_FrameXML\UIErrorsFrame.lua"/-->
     <Script file="Blizzard_FrameXML\DeprecatedTemplates.lua"/>
