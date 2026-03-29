@@ -10,6 +10,33 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
+local function WrapPoolAcquire(pool, template)
+    if not pool or pool._auroraAcquireWrapped or not Skin[template] then
+        return
+    end
+
+    local poolAcquire = pool.Acquire
+    pool.Acquire = function(framePool, ...)
+        local frame, isNew = poolAcquire(framePool, ...)
+        if isNew and not frame._auroraSkinned then
+            Skin[template](frame)
+            frame._auroraSkinned = true
+        end
+        return frame, isNew
+    end
+
+    if pool.EnumerateActive then
+        for frame in pool:EnumerateActive() do
+            if not frame._auroraSkinned then
+                Skin[template](frame)
+                frame._auroraSkinned = true
+            end
+        end
+    end
+
+    pool._auroraAcquireWrapped = true
+end
+
 do --[[ FrameXML\QuestMapFrame.lua ]]
     -- /dump C_CampaignInfo.GetCampaignInfo(C_CampaignInfo.GetCurrentCampaignID())
     function Hook.QuestLogQuests_Update(_poiTable)
@@ -436,8 +463,15 @@ function private.FrameXML.QuestMapFrame()
 
     local QuestsFrame = QuestMapFrame.QuestsFrame
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
-    -- Pools moved to QuestScrollFrame (e.g. QuestScrollFrame.titleFramePool) in 11.0.0;
-    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API). No replacement.
+    do
+        local QuestScrollFrame = _G.QuestScrollFrame
+        WrapPoolAcquire(QuestScrollFrame.titleFramePool, "QuestLogTitleTemplate")
+        WrapPoolAcquire(QuestScrollFrame.objectiveFramePool, "QuestLogObjectiveTemplate")
+        WrapPoolAcquire(QuestScrollFrame.headerFramePool, "QuestLogHeaderTemplate")
+        WrapPoolAcquire(QuestScrollFrame.campaignHeaderFramePool, "CampaignHeaderTemplate")
+        WrapPoolAcquire(QuestScrollFrame.campaignHeaderMinimalFramePool, "CampaignHeaderMinimalTemplate")
+        WrapPoolAcquire(QuestScrollFrame.covenantCallingsHeaderFramePool, "CovenantCallingsHeaderTemplate")
+    end
 
     QuestsFrame.ScrollFrame.Contents.Separator:SetSize(260, 10)
     QuestsFrame.ScrollFrame.Contents.Separator.Divider:SetPoint("TOP", 0, 0)
