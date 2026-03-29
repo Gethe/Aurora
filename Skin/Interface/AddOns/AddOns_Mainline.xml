@@ -166,7 +166,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_DeclensionFrameGlue\Blizzard_DeclensionFrameGlue.lua"/-->
     <!--Script file="Blizzard_DelvesCompanionConfiguration\Blizzard_DelvesCompanionConfiguration.lua"/-->
     <!--Script file="Blizzard_DelvesDashboardUI\Blizzard_DelvesDashboardUI.lua"/-->
-    <!--Script file="Blizzard_DelvesDifficultyPicker\Blizzard_DelvesDifficultyPicker.lua"/-->
+    <Script file="Blizzard_DelvesDifficultyPicker\Blizzard_DelvesDifficultyPicker.lua"/>
     <!--Script file="Blizzard_DelvesToast\Blizzard_DelvesToast.lua"/-->
     <!--Script file="Blizzard_Deprecated\Blizzard_Deprecated.lua"/-->
     <!--Script file="Blizzard_DeprecatedChatInfo\Blizzard_DeprecatedChatInfo.lua"/-->
