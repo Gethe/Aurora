@@ -12,7 +12,36 @@ local Skin = Aurora.Skin
 local Color = Aurora.Color
 -- local Util =  Aurora.Util
 
+local wrappedPools = setmetatable({}, {__mode = "k"})
+
+local function WrapPoolAcquire(pool, skinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        skinFunc(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    for frame in pool:EnumerateActive() do
+        skinFunc(frame)
+    end
+end
+
 do
+    Hook.WeeklyRewardConfirmSelectionMixin = {}
+    function Hook.WeeklyRewardConfirmSelectionMixin:RefreshRewards()
+        local alsoItemsFrame = self.AlsoItemsFrame
+        if alsoItemsFrame then
+            WrapPoolAcquire(alsoItemsFrame.pool, Skin.WeeklyRewardAlsoItemTemplate)
+        end
+    end
+
     function Hook.UpdateRewardSelection(frame)
         if not frame._auroraBG then
             return
@@ -59,11 +88,16 @@ do
         Base.SetBackdrop(frameBG, Color.frame)
         Frame._auroraBG = frameBG
     end
+
+    function Skin.WeeklyRewardAlsoItemTemplate(Frame)
+        Base.CropIcon(Frame.Icon)
+    end
 end
 
 
 function private.AddOns.Blizzard_WeeklyRewards()
     local WeeklyRewardsFrame = _G.WeeklyRewardsFrame
+    _G.hooksecurefunc(_G.WeeklyRewardConfirmSelectionMixin, "RefreshRewards", Hook.WeeklyRewardConfirmSelectionMixin.RefreshRewards)
 
     local HeaderFrame = WeeklyRewardsFrame.HeaderFrame
     if HeaderFrame then
