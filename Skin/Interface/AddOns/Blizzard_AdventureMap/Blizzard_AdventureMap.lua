@@ -2,13 +2,40 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals _G
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
+
+local function WrapPoolAcquire(pool, template)
+    if not pool or pool._auroraAcquireWrapped or not Skin[template] then
+        return
+    end
+
+    local poolAcquire = pool.Acquire
+    pool.Acquire = function(framePool, ...)
+        local frame, isNew = poolAcquire(framePool, ...)
+        if isNew and not frame._auroraSkinned then
+            Skin[template](frame)
+            frame._auroraSkinned = true
+        end
+        return frame, isNew
+    end
+
+    if pool.EnumerateActive then
+        for frame in pool:EnumerateActive() do
+            if not frame._auroraSkinned then
+                Skin[template](frame)
+                frame._auroraSkinned = true
+            end
+        end
+    end
+
+    pool._auroraAcquireWrapped = true
+end
 
 --[[ do AddOns\Blizzard_AdventureMap.lua
 end ]]
@@ -22,6 +49,11 @@ do --[[ AddOns\Blizzard_AdventureMap.xml ]]
         nameBG:SetPoint("TOPLEFT", Button.Icon, "TOPRIGHT", 2, 1)
         nameBG:SetPoint("BOTTOMRIGHT")
         Base.SetBackdrop(nameBG, Color.frame)
+    end
+    function Skin.AdventureMapInsetTemplate(Frame)
+        Frame.ExpandedFrame.Border:Hide()
+        Frame.CollapsedFrame.TextBackground:SetAlpha(0)
+        Skin.UIPanelCloseButton(Frame.ExpandedFrame.CloseButton)
     end
 end
 
@@ -40,6 +72,10 @@ function private.AddOns.Blizzard_AdventureMap()
     --         AM_QuestDialog         --
     ----====####################====----
     local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
+    local AdventureMapFrame = _G.AdventureMapFrame
+
+    WrapPoolAcquire(AdventureMapQuestChoiceDialog.rewardPool, "AdventureMapQuestRewardTemplate")
+    WrapPoolAcquire(AdventureMapFrame.GetMapInsetPool and AdventureMapFrame:GetMapInsetPool(), "AdventureMapInsetTemplate")
 
     AdventureMapQuestChoiceDialog.Rewards:SetAlpha(0)
     AdventureMapQuestChoiceDialog.Background:Hide()
