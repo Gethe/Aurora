@@ -6,7 +6,30 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Base = Aurora.Base
 local Skin = Aurora.Skin
+local Color = Aurora.Color
+
+local wrappedPools = setmetatable({}, {__mode = "k"})
+
+local function WrapPoolAcquire(pool, skinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        skinFunc(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    for frame in pool:EnumerateActive() do
+        skinFunc(frame)
+    end
+end
 
 do --[[ AddOns\Blizzard_Transmog.lua ]]
     -- Skin template for the wardrobe collection tabs (Items / Sets / Custom Sets / Situations)
@@ -15,6 +38,42 @@ do --[[ AddOns\Blizzard_Transmog.lua ]]
         if Button.SelectedHighlight then
             Button.SelectedHighlight:SetAlpha(0)
         end
+    end
+
+    function Skin.TransmogAppearanceSlotTemplate(Button)
+        if Button._auroraSkinned then
+            return
+        end
+
+        Button._auroraSkinned = true
+
+        Base.SetBackdrop(Button, Color.button)
+        Button:SetBackdropOption("offsets", {
+            left = 7,
+            right = 7,
+            top = 7,
+            bottom = 7,
+        })
+
+        Button.Border:SetAlpha(0)
+    end
+
+    function Skin.TransmogIllusionSlotTemplate(Button)
+        if Button._auroraSkinned then
+            return
+        end
+
+        Button._auroraSkinned = true
+
+        Base.SetBackdrop(Button, Color.button)
+        Button:SetBackdropOption("offsets", {
+            left = 6,
+            right = 6,
+            top = 6,
+            bottom = 6,
+        })
+
+        Button.Border:SetAlpha(0)
     end
 end
 
@@ -110,6 +169,13 @@ function private.AddOns.Blizzard_Transmog()
         if CharacterPreview.ModelScene and CharacterPreview.ModelScene.ControlFrame then
             Skin.ModelSceneControlFrameTemplateLeftButtonTemplate(CharacterPreview.ModelScene.ControlFrame.rotateLeftButton)
             Skin.ModelSceneControlFrameTemplateRightButtonTemplate(CharacterPreview.ModelScene.ControlFrame.rotateRightButton)
+        end
+
+        if CharacterPreview.CharacterAppearanceSlotFramePool then
+            WrapPoolAcquire(CharacterPreview.CharacterAppearanceSlotFramePool, Skin.TransmogAppearanceSlotTemplate)
+        end
+        if CharacterPreview.CharacterIllusionSlotFramePool then
+            WrapPoolAcquire(CharacterPreview.CharacterIllusionSlotFramePool, Skin.TransmogIllusionSlotTemplate)
         end
 
         -- "Hide Unassigned Slots" checkbox
