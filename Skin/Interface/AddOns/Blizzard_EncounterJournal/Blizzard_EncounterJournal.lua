@@ -10,6 +10,27 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
+local wrappedPools = setmetatable({}, {__mode = "k"})
+
+local function WrapPoolAcquire(pool, skinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        skinFunc(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    for frame in pool:EnumerateActive() do
+        skinFunc(frame)
+    end
+end
+
 
 local function SkinSearchButton(button)
     button:ClearNormalTexture()
@@ -108,6 +129,16 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
             local icon = _G.EncounterJournal.encounter.info.instanceButton.icon
             icon:SetMask("")
             icon:SetTexCoord(.08, .92, .08, .92)
+        end
+
+        Hook.JourneyProgressFrameMixin = {}
+        function Hook.JourneyProgressFrameMixin:OnLoad()
+            WrapPoolAcquire(self.rewardPool, Skin.JourneyProgressRewardCardTemplate)
+        end
+
+        Hook.JourneyOverviewHighlightsFrameMixin = {}
+        function Hook.JourneyOverviewHighlightsFrameMixin:OnLoad()
+            WrapPoolAcquire(self.highlightPool, Skin.JourneyOverviewHighlightTemplate)
         end
     end
     do --[[ Blizzard_EncounterJournal ]]
@@ -329,6 +360,37 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
                 end
             end)
         end
+        function Skin.JourneyOverviewHighlightTemplate(Frame)
+            if Frame._auroraSkinned then
+                return
+            end
+
+            Frame._auroraSkinned = true
+
+            if Frame.Background then
+                Frame.Background:SetAlpha(0)
+            end
+            Base.SetBackdrop(Frame, Color.frame, Color.frame.a)
+
+            Frame.HighlightTitle:SetTextColor(Color.white:GetRGB())
+            Frame.HighlightLevel:SetTextColor(Color.grayLight:GetRGB())
+            Frame.HighlightDescription:SetTextColor(Color.grayLight:GetRGB())
+        end
+        function Skin.JourneyProgressRewardCardTemplate(Frame)
+            if Frame._auroraSkinned then
+                return
+            end
+
+            Frame._auroraSkinned = true
+
+            if Frame.RewardCardBG then
+                Frame.RewardCardBG:SetAlpha(0)
+            end
+            Base.SetBackdrop(Frame, Color.frame, Color.frame.a)
+            Base.CropIcon(Frame.RewardCardIcon, Frame)
+            Frame.RewardCardIconBorderDefault:SetAlpha(0)
+            Frame.RewardCardName:SetTextColor(Color.white:GetRGB())
+        end
     end
     do --[[ Blizzard_LootJournal ]]
         function Skin.RuneforgeLegendaryPowerLootJournalTemplate(Button)
@@ -362,6 +424,8 @@ function private.AddOns.Blizzard_EncounterJournal()
     _G.hooksecurefunc("EJSuggestFrame_UpdateRewards", Hook.EJSuggestFrame_UpdateRewards)
     _G.hooksecurefunc("EJSuggestFrame_RefreshDisplay", Hook.EJSuggestFrame_RefreshDisplay)
     _G.hooksecurefunc("EncounterJournal_DisplayInstance", Hook.EncounterJournal_DisplayInstance)
+    _G.hooksecurefunc(_G.JourneyProgressFrameMixin, "OnLoad", Hook.JourneyProgressFrameMixin.OnLoad)
+    _G.hooksecurefunc(_G.JourneyOverviewHighlightsFrameMixin, "OnLoad", Hook.JourneyOverviewHighlightsFrameMixin.OnLoad)
 
     local EncounterJournal = _G.EncounterJournal
     Skin.PortraitFrameTemplate(EncounterJournal)
@@ -612,6 +676,8 @@ function private.AddOns.Blizzard_EncounterJournal()
     ----====#############################====----
     local EncounterJournalJourneysFrame = _G.EncounterJournalJourneysFrame
     Skin.MinimalScrollBar(EncounterJournalJourneysFrame.ScrollBar)
+    WrapPoolAcquire(EncounterJournalJourneysFrame.JourneyProgress.rewardPool, Skin.JourneyProgressRewardCardTemplate)
+    WrapPoolAcquire(EncounterJournalJourneysFrame.JourneyOverview.Highlights.highlightPool, Skin.JourneyOverviewHighlightTemplate)
 
 
     ----====####################====----

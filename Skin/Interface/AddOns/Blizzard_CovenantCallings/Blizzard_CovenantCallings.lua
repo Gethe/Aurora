@@ -1,0 +1,71 @@
+local _, private = ...
+if private.shouldSkip() then return end
+
+local Aurora = private.Aurora
+local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+
+local wrappedPools = setmetatable({}, {__mode = "k"})
+
+local function WrapPoolAcquire(pool, skinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        skinFunc(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    for frame in pool:EnumerateActive() do
+        skinFunc(frame)
+    end
+end
+
+do
+    Hook.GarrisonLandingPageMixin = {}
+    function Hook.GarrisonLandingPageMixin:SetupCovenantCallings()
+        local callingsFrame = self.CovenantCallings
+        if not callingsFrame then
+            return
+        end
+
+        Skin.CovenantCallingsTemplate(callingsFrame)
+        WrapPoolAcquire(callingsFrame.pool, Skin.CovenantCallingQuestTemplate)
+    end
+
+    function Skin.CovenantCallingQuestTemplate(Frame)
+        if Frame._auroraSkinned then
+            return
+        end
+
+        Frame._auroraSkinned = true
+        Frame._auroraIconBorder = Base.CropIcon(Frame.Icon, Frame)
+    end
+
+    function Skin.CovenantCallingsTemplate(Frame)
+        if Frame._auroraSkinned then
+            return
+        end
+
+        Frame._auroraSkinned = true
+
+        if Frame.Background then
+            Frame.Background:SetAlpha(0)
+        end
+        if Frame.Decor then
+            Frame.Decor:SetAlpha(0)
+        end
+    end
+end
+
+function private.AddOns.Blizzard_CovenantCallings()
+    _G.hooksecurefunc(_G.GarrisonLandingPageMixin, "SetupCovenantCallings", Hook.GarrisonLandingPageMixin.SetupCovenantCallings)
+
+    if _G.GarrisonLandingPage and _G.GarrisonLandingPage.CovenantCallings then
+        Hook.GarrisonLandingPageMixin.SetupCovenantCallings(_G.GarrisonLandingPage)
+    end
+end

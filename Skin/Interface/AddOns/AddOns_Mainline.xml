@@ -153,7 +153,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <!--Script file="Blizzard_ContentTracking\Blizzard_ContentTracking.lua"/-->
     <Script file="Blizzard_Contribution\Blizzard_Contribution.lua"/>
     <!--Script file="Blizzard_CooldownViewer\Blizzard_CooldownViewer.lua"/-->
-    <!--Script file="Blizzard_CovenantCallings\Blizzard_CovenantCallings.lua"/-->
+    <Script file="Blizzard_CovenantCallings\Blizzard_CovenantCallings.lua"/>
     <Script file="Blizzard_CovenantPreviewUI\Blizzard_CovenantPreviewUI.lua"/>
     <Script file="Blizzard_CovenantRenown\Blizzard_CovenantRenown.lua"/>
     <Script file="Blizzard_CovenantSanctum\Blizzard_CovenantSanctum.lua"/>
