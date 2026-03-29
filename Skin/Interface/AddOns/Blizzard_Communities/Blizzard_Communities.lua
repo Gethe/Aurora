@@ -785,38 +785,10 @@ function private.AddOns.Blizzard_Communities()
 
     Skin.CommunitiesListFrameTemplate(CommunitiesFrame.CommunitiesList)
 
-    -- CommunitiesList skinning must run completely outside the secure call chain.
-    -- C_Club.SetAvatarTexture() is a protected API called inside secureexecuterange
-    -- during ScrollBox initializer dispatch. Both hooksecurefunc on Mixin methods and
-    -- RegisterCallback on the ScrollBox introduce taint into that context.
-    -- Instead: hooksecurefunc on ScrollBox:Update() + C_Timer.After(0) deferral.
-    do
-        local communitiesListScrollBox = CommunitiesFrame.CommunitiesList.ScrollBox
-        local skinPending = false
-        local function SkinVisibleEntries()
-            skinPending = false
-            if not communitiesListScrollBox:IsVisible() then return end
-            communitiesListScrollBox:ForEachFrame(function(button)
-                local elementData = button:GetElementData()
-                if not elementData then return end
-                if elementData.setJoinCommunity then
-                    Hook.CommunitiesListEntryMixin.SetAddCommunity(button)
-                elseif elementData.setFindCommunity then
-                    Hook.CommunitiesListEntryMixin.SetFindCommunity(button)
-                elseif elementData.setGuildFinder then
-                    Hook.CommunitiesListEntryMixin.SetGuildFinder(button)
-                elseif elementData.clubInfo then
-                    Hook.CommunitiesListEntryMixin.Init(button, elementData)
-                end
-            end)
-        end
-        _G.hooksecurefunc(communitiesListScrollBox, "Update", function()
-            if not skinPending then
-                skinPending = true
-                _G.C_Timer.After(0, SkinVisibleEntries)
-            end
-        end)
-    end
+    -- Do not touch CommunitiesListEntryTemplate buttons at runtime.
+    -- Even deferred restyling leaves reused ScrollBox entries tainted on the
+    -- current client, which then blocks C_Club.SetAvatarTexture() inside the
+    -- secure initializer path.
 
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.ChatTab)
     Skin.CommunitiesFrameTabTemplate(CommunitiesFrame.RosterTab)
