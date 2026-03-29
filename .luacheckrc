@@ -11,3 +11,19 @@ exclude_files = {
 globals = {
     "_G"
 }
+
+files["Skin/Interface/AddOns/Blizzard_HousingDashboard/Blizzard_HousingDashboard.lua"] = {
+    max_cyclomatic_complexity = false,
+}
+
+files["Skin/Interface/AddOns/Blizzard_Professions/Blizzard_Professions.lua"] = {
+    max_cyclomatic_complexity = false,
+}
+
+files["Skin/Interface/AddOns/Blizzard_Transmog/Blizzard_Transmog.lua"] = {
+    max_cyclomatic_complexity = false,
+}
+
+files["Skin/Interface/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua"] = {
+    max_cyclomatic_complexity = false,
+}
