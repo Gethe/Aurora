@@ -2,11 +2,11 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals _G
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base = Aurora.Base
+local Color = Aurora.Color
 local Skin = Aurora.Skin
 
 --do --[[ FrameXML\VehicleLeaveButton.lua ]]
@@ -16,32 +16,28 @@ do --[[ FrameXML\VehicleLeaveButton.xml ]]
     function Skin.VehicleLeaveButton(Button)
         if not Button then return end
 
-        -- Set up Aurora-style backdrop (grey background with border)
-        Base.SetBackdrop(Button, Aurora.Color.button, Aurora.Color.frame.a)
-
-        -- Hide the original wooden background textures completely
         local normalTex = Button:GetNormalTexture()
         if normalTex then
-            normalTex:Hide()
+            normalTex:SetVertexColor(Color.button:GetRGB())
         end
 
         local pushedTex = Button:GetPushedTexture()
         if pushedTex then
-            pushedTex:Hide()
+            pushedTex:SetVertexColor(0.7, 0.7, 0.7)
         end
 
-        -- Create a simple text-based icon
-        if not Button._auroraIconText then
-            Button._auroraIconText = Button:CreateFontString(nil, "ARTWORK")
-            Button._auroraIconText:SetFont([[Fonts\FRIZQT__.TTF]], 18, "OUTLINE")
-            Button._auroraIconText:SetText("X")  -- Exit symbol
-            Button._auroraIconText:SetTextColor(1, 0, 0)  -- Red color
-            Button._auroraIconText:SetPoint("CENTER", Button, "CENTER", 0, 0)
+        local disabledTex = Button:GetDisabledTexture()
+        if disabledTex then
+            disabledTex:SetVertexColor(0.4, 0.4, 0.4, 0.75)
         end
 
-        -- Crop the highlight texture
-        if Button.Highlight then
-            Base.CropIcon(Button.Highlight)
+        -- Keep this protected button taint-safe by only restyling Blizzard's
+        -- existing texture regions.
+        local highlight = Button.Highlight or Button:GetHighlightTexture()
+        if highlight then
+            highlight:ClearAllPoints()
+            highlight:SetAllPoints(Button)
+            highlight:SetAlpha(0.2)
         end
     end
 end
