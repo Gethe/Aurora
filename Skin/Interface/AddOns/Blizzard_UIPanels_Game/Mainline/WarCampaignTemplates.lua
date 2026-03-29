@@ -7,6 +7,7 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 local Util = Aurora.Util
 
 do --[[ FrameXML\WarCampaignTemplates.lua ]]
@@ -59,6 +60,24 @@ do --[[ FrameXML\WarCampaignTemplates.xml ]]
             bottom = 3,
         })
         Util.Mixin(Frame.CollapseButton, Hook.CampaignCollapseButtonMixin)
+    end
+    function Skin.CampaignHeaderMinimalTemplate(Button)
+        Skin.ExpandOrCollapse(Button.CollapseButton)
+        Button.CollapseButton:SetBackdropOption("offsets", {
+            left = 3,
+            right = 3,
+            top = 3,
+            bottom = 3,
+        })
+
+        if Button.Background then
+            Button.Background:SetAlpha(0)
+        end
+        if Button.Highlight then
+            Button.Highlight:SetColorTexture(1, 1, 1, Color.frame.a)
+        end
+
+        Util.Mixin(Button.CollapseButton, Hook.CampaignCollapseButtonMixin)
     end
 end
 
