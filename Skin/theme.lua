@@ -372,13 +372,6 @@ function Theme.CheckDynamicFrame(frame)
     return false
 end
 
--- Hook into frame creation to catch dynamic elements
-local function OnFrameCreated(frame)
-    if frame and not processedFrames[frame] then
-        Theme.CheckDynamicFrame(frame)
-    end
-end
-
 -- Initialize theme engine
 function Theme.Initialize()
     private.debug("Theme", "Theme engine initialized")
@@ -966,7 +959,6 @@ function Theme.LoadModulesFromConfig(config)
     -- Load modules in priority order
     for _, entry in ipairs(sortedModules) do
         local name = entry.name
-        local module = skinModules[name]
 
         -- Check if module should be enabled based on config
         local shouldEnable = false

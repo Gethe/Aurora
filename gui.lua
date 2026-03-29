@@ -258,9 +258,9 @@ privacyPanel.name = "Privacy"
 privacyPanel.parent = "Aurora"
 
 -- Register subcategories
-local featuresCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, featuresPanel, "Features")
-local appearanceCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, appearancePanel, "Appearance")
-local privacyCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, privacyPanel, "Privacy")
+_G.Settings.RegisterCanvasLayoutSubcategory(category, featuresPanel, "Features")
+_G.Settings.RegisterCanvasLayoutSubcategory(category, appearancePanel, "Appearance")
+_G.Settings.RegisterCanvasLayoutSubcategory(category, privacyPanel, "Privacy")
 
 --[[ Main Panel ]]--
 local title = gui:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -616,7 +616,7 @@ end)
 local performancePanel = _G.CreateFrame("Frame", "AuroraOptionsPerformance", _G.UIParent)
 performancePanel.name = "Performance"
 performancePanel.parent = "Aurora"
-local performanceCategory = _G.Settings.RegisterCanvasLayoutSubcategory(category, performancePanel, "Performance")
+_G.Settings.RegisterCanvasLayoutSubcategory(category, performancePanel, "Performance")
 
 local perfTitle = performancePanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 perfTitle:SetPoint("TOP", 0, -26)

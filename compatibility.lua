@@ -214,7 +214,7 @@ function Compatibility.initialize(config)
     local missing = Compatibility.checkDependencies()
 
     -- Check for conflicting addons
-    local conflicts = Compatibility.checkConflicts()
+    Compatibility.checkConflicts()
 
     -- Enable safe mode if critical issues detected
     if #missing > 0 then

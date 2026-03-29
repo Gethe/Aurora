@@ -419,9 +419,6 @@ do --[[ AddOns\Blizzard_GarrisonUI.xml ]]
             local clmf = Frame.CombatLogMessageFrame
             if clmf and clmf.ScrollBar then
                 Skin.FrameTypeScrollBar(clmf.ScrollBar)
-            elseif clmf and clmf.thumbTexture then
-                -- fallback: try to skin thumbTexture if scroll bar frame is absent
-                -- Skin.HybridScrollBarButton(clmf.thumbTexture)
             end
             Frame.ElevatedFrame:Hide()
         end

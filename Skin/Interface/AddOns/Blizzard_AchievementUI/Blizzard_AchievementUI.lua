@@ -534,8 +534,8 @@ function private.AddOns.Blizzard_AchievementUI()
     Header.Points:SetPoint("BOTTOM", bg, "TOP", 0, -private.FRAME_TITLE_HEIGHT)
     Header.Shield:SetParent(AchievementFrame)
 
-    AchievementFrame_HideFilterDropdown(AchievementFrame);
-    AchievementFrame_TryShowFilterDropdown(AchievementFrame);
+    _G.AchievementFrame_HideFilterDropdown(AchievementFrame)
+    _G.AchievementFrame_TryShowFilterDropdown(AchievementFrame)
 
     ----------------
     -- Categories --

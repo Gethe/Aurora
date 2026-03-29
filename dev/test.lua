@@ -1195,7 +1195,8 @@ function commands.test()
                             return
                         end
 
-                        local canNeed, canGreed, canDisenchant = GetBoolen(), GetBoolen(), GetBoolen()
+                        local canNeed, canGreed = GetBoolen(), GetBoolen()
+                        GetBoolen()
                         local canTransmog = GetBoolen()
 
                         self.IconFrame.Icon:SetTexture(info.texture)

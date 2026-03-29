@@ -6,8 +6,7 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Skin = Aurora.Skin
 
 do --[[ AddOns\Blizzard_Transmog.lua ]]
     -- Skin template for the wardrobe collection tabs (Items / Sets / Custom Sets / Situations)
