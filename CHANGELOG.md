@@ -1,4 +1,21 @@
-﻿## [12.0.1.20] ##
+﻿## [12.0.1.21] ##
+### Added ###
+  * add: skins for Blizzard_CovenantCallings, Blizzard_DelvesDifficultyPicker, Blizzard_HousingControls, Blizzard_HousingTemplates, and PVP match results
+
+### Changed ###
+  * chg: expand pooled-frame skinning across housing dashboard rewards, weekly rewards extra items, adventure map widgets, quest map frames, queue status entries, chat config tabs, campaign headers, and transmog collection/set buttons
+  * chg: consolidate pooled frame acquisition helpers into Util.WrapPoolAcquire and remove the obsolete WardrobeOutfits shim
+  * chg: stop touching CommunitiesListEntryTemplate buttons at runtime to keep Communities skinning combat-safe
+
+### Fixed ###
+  * fix: taint-safe tooltip status/progress bar skinning and securecallfunction wrapping for DefaultWidgetLayout to avoid UIWidget secret-number layout errors (WoWUIBugs[#811])
+  * fix: replace SetTooltipMoney with GetCoinTextureString to avoid MoneyFrame secret-number taint in tooltips (WoWUIBugs[#801])
+  * fix: remove taint-unsafe ChannelRoster skinning that could break voice activity notifications
+  * fix: make VehicleLeaveButton and TaintSafeUIPanelButtonTemplate skinning safe, and align auxiliary/zone ability cooldown overlays
+  * fix: follow wardrobe custom set renames and guard campaign header/map canvas edge cases
+
+
+## [12.0.1.20] ##
 ### Added ###
   * add: GUI toggles for character sheet, objective tracker, and talent background skins ([#151], [#158], [#160])
   * add: Color.panelBg constant and unified panel background colors ([#155])
@@ -279,6 +296,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.21]: https://github.com/Gethe/Aurora/compare/12.0.1.20...12.0.1.21
 [12.0.1.20]: https://github.com/Gethe/Aurora/compare/12.0.1.19...12.0.1.20
 [12.0.1.19]: https://github.com/Gethe/Aurora/compare/12.0.1.18...12.0.1.19
 [12.0.1.18]: https://github.com/Gethe/Aurora/compare/12.0.1.17...12.0.1.18
