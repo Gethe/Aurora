@@ -2,13 +2,40 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals ipairs type select
+-- luacheck: globals _G ipairs type select
 
 --[[ Core ]]
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
+
+local function WrapPoolAcquire(pool, template)
+    if not pool or pool._auroraAcquireWrapped or not Skin[template] then
+        return
+    end
+
+    local poolAcquire = pool.Acquire
+    pool.Acquire = function(framePool, ...)
+        local frame, isNew = poolAcquire(framePool, ...)
+        if isNew and not frame._auroraSkinned then
+            Skin[template](frame)
+            frame._auroraSkinned = true
+        end
+        return frame, isNew
+    end
+
+    if pool.EnumerateActive then
+        for frame in pool:EnumerateActive() do
+            if not frame._auroraSkinned then
+                Skin[template](frame)
+                frame._auroraSkinned = true
+            end
+        end
+    end
+
+    pool._auroraAcquireWrapped = true
+end
 
 do --[[ FrameXML\ChatConfigFrame.lua ]]
     function Hook.ChatConfig_CreateCheckboxes(frame, checkBoxTable, checkBoxTemplate, title)
@@ -155,7 +182,7 @@ function private.FrameXML.ChatConfigFrame()
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton5)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton6)
     Skin.ConfigCategoryButtonTemplate(_G.ChatConfigCategoryFrameButton7)
-    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API). No replacement.
+    WrapPoolAcquire(ChatConfigFrame.ChatTabManager and ChatConfigFrame.ChatTabManager.tabPool, "ChatWindowTab")
     Skin.ChatConfigBoxTemplate(_G.ChatConfigBackgroundFrame)
 
     local divider = _G.ChatConfigFrame:CreateTexture()
