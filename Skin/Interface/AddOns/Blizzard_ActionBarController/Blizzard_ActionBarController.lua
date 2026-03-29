@@ -268,6 +268,22 @@ do --[[ FrameXML\ActionBarController.xml ]]
         function Skin.ActionButtonTemplate(CheckButton)
             Base.CropIcon(CheckButton.icon)
 
+            if CheckButton.cooldown then
+                CheckButton.cooldown:ClearAllPoints()
+                CheckButton.cooldown:SetPoint("TOPLEFT", CheckButton.icon, 3, -3)
+                CheckButton.cooldown:SetPoint("BOTTOMRIGHT", CheckButton.icon, -3, 3)
+            end
+            if CheckButton.lossOfControlCooldown then
+                CheckButton.lossOfControlCooldown:ClearAllPoints()
+                CheckButton.lossOfControlCooldown:SetPoint("TOPLEFT", CheckButton.icon, 3, -3)
+                CheckButton.lossOfControlCooldown:SetPoint("BOTTOMRIGHT", CheckButton.icon, -3, 3)
+            end
+            if CheckButton.chargeCooldown then
+                CheckButton.chargeCooldown:ClearAllPoints()
+                CheckButton.chargeCooldown:SetPoint("TOPLEFT", CheckButton.icon, 2, -2)
+                CheckButton.chargeCooldown:SetPoint("BOTTOMRIGHT", CheckButton.icon, -2, 2)
+            end
+
             CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5)
             CheckButton.NewActionTexture:SetAllPoints()
             CheckButton.NewActionTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
