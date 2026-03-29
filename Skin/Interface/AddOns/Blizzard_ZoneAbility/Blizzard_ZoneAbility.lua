@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals _G
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -23,8 +23,15 @@ do --[[ FrameXML\ZoneAbility.xml ]]
         Base.CropIcon(Button.Icon, Button)
 
         Button.Count:SetPoint("TOPLEFT", -5, 5)
-        Button.Cooldown:SetPoint("TOPLEFT")
-        Button.Cooldown:SetPoint("BOTTOMRIGHT")
+        Button.Cooldown:ClearAllPoints()
+        Button.Cooldown:SetPoint("TOPLEFT", Button.Icon, 2, -2)
+        Button.Cooldown:SetPoint("BOTTOMRIGHT", Button.Icon, -2, 2)
+
+        if Button.ChargeCooldown then
+            Button.ChargeCooldown:ClearAllPoints()
+            Button.ChargeCooldown:SetPoint("TOPLEFT", Button.Icon, 2, -2)
+            Button.ChargeCooldown:SetPoint("BOTTOMRIGHT", Button.Icon, -2, 2)
+        end
 
         Button.NormalTexture:SetTexture("")
         Base.CropIcon(Button:GetHighlightTexture())
