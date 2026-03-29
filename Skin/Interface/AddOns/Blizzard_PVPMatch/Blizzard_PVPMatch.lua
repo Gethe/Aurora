@@ -6,11 +6,38 @@ if private.shouldSkip() then return end
 
 --[[ Core ]]
 local Aurora = private.Aurora
+local Hook = Aurora.Hook
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
+local wrappedPools = setmetatable({}, {__mode = "k"})
+
+local function WrapPoolAcquire(pool, skinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        skinFunc(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    for frame in pool:EnumerateActive() do
+        skinFunc(frame)
+    end
+end
+
 --do --[[ AddOns\Blizzard_PVPMatch.lua ]]
---end
+do
+    Hook.PVPMatchResultsMixin = {}
+    function Hook.PVPMatchResultsMixin:OnLoad()
+        WrapPoolAcquire(self.itemPool, Skin.PVPMatchResultsLoot)
+    end
+end
 
 do --[[ AddOns\Blizzard_PVPMatch.xml ]]
     do --[[ PVPMatchTable.xml ]]
@@ -31,6 +58,18 @@ do --[[ AddOns\Blizzard_PVPMatch.xml ]]
             Frame.backgroundCenter:SetHeight(15)
             Frame.backgroundCenter:SetAlpha(0.5)
         end
+        function Skin.PVPMatchResultsLoot(Button)
+            if Button._auroraSkinned then
+                return
+            end
+
+            Button._auroraSkinned = true
+            Skin.LargeItemButtonTemplate(Button)
+
+            if Button.IconBorder then
+                Button.IconBorder:SetAlpha(0)
+            end
+        end
     end
 end
 
@@ -39,8 +78,10 @@ function private.AddOns.Blizzard_PVPMatch()
     --         PVPMatchResults         --
     ----====#####################====----
     local PVPMatchResults = _G.PVPMatchResults
+    _G.hooksecurefunc(_G.PVPMatchResultsMixin, "OnLoad", Hook.PVPMatchResultsMixin.OnLoad)
     Skin.UIPanelCloseButton(PVPMatchResults.CloseButton)
     PVPMatchResults.CloseButton.Border:Hide()
+    WrapPoolAcquire(PVPMatchResults.itemPool, Skin.PVPMatchResultsLoot)
 
     local resultsContent = PVPMatchResults.content
     resultsContent.background:Hide()
