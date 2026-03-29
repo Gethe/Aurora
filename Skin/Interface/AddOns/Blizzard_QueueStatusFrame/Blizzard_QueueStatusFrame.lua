@@ -9,6 +9,33 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
+
+local function WrapPoolAcquire(pool, template)
+    if not pool or pool._auroraAcquireWrapped or not Skin[template] then
+        return
+    end
+
+    local poolAcquire = pool.Acquire
+    pool.Acquire = function(framePool, ...)
+        local frame, isNew = poolAcquire(framePool, ...)
+        if isNew and not frame._auroraSkinned then
+            Skin[template](frame)
+            frame._auroraSkinned = true
+        end
+        return frame, isNew
+    end
+
+    if pool.EnumerateActive then
+        for frame in pool:EnumerateActive() do
+            if not frame._auroraSkinned then
+                Skin[template](frame)
+                frame._auroraSkinned = true
+            end
+        end
+    end
+
+    pool._auroraAcquireWrapped = true
+end
 do --[[ AddOns\Blizzard_QueueStatusFrame\Blizzard_QueueStatusFrame.lua ]]
     function Hook.QueueStatusEntry_SetFullDisplay(entry, title, queuedTime, myWait, isTank, isHealer, isDPS, totalTanks, totalHealers, totalDPS, tankNeeds, healerNeeds, dpsNeeds, subTitle, extraText)
         local nextRoleIcon = 1
@@ -76,5 +103,5 @@ function private.FrameXML.QueueStatusFrame()
 
     local QueueStatusFrame = _G.QueueStatusFrame
     Skin.TooltipBackdropTemplate(QueueStatusFrame)
-    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API). No replacement.
+    WrapPoolAcquire(QueueStatusFrame.statusEntriesPool, "QueueStatusEntryTemplate")
 end
