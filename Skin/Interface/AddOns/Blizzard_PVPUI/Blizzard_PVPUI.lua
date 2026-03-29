@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals ipairs select
+-- luacheck: globals _G ipairs next pairs select
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -25,16 +25,27 @@ do --[[ AddOns\Blizzard_PVPUI.lua ]]
         end
     end
     function Hook.PVPQueueFrame_SelectButton(index)
-        for i = 1, 4 do
-            local button = _G.PVPQueueFrame["CategoryButton"..i]
-            if i == index then
-                button.Background:Show()
-            else
-                button.Background:Hide()
+        local buttons = _G.PVPQueueFrame.CategoryButtons
+        if buttons then
+            for buttonIndex, button in ipairs(buttons) do
+                if buttonIndex == index then
+                    button.Background:Show()
+                else
+                    button.Background:Hide()
+                end
+            end
+        else
+            for i = 1, 4 do
+                local button = _G.PVPQueueFrame["CategoryButton"..i]
+                if i == index then
+                    button.Background:Show()
+                else
+                    button.Background:Hide()
+                end
             end
         end
 
-        Hook.NewPvpSeasonMixin.OnShow(_G.PVPQueueFrame.NewSeasonPopup, true)
+        Hook.NewPvpSeasonMixin.OnShow(_G.PVPQueueFrame.NewSeasonPopup)
     end
 
     function Hook.PVPUIScrollBoxUpdate(Frame)
@@ -178,20 +189,18 @@ function private.AddOns.Blizzard_PVPUI()
     _G.hooksecurefunc("PVPQueueFrame_SelectButton", Hook.PVPQueueFrame_SelectButton)
 
     local PVPQueueFrame = _G.PVPQueueFrame
-    Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton1)
-    PVPQueueFrame.CategoryButton1.Icon:SetTexture([[Interface\Icons\Achievement_BG_WinWSG]])
-
-    Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton2)
-    PVPQueueFrame.CategoryButton2:SetPoint("LEFT", PVPQueueFrame.CategoryButton1)
-    PVPQueueFrame.CategoryButton2.Icon:SetTexture([[Interface\Icons\Achievement_BG_KillXEnemies_GeneralsRoom]])
-
-    Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton3)
-    PVPQueueFrame.CategoryButton3:SetPoint("LEFT", PVPQueueFrame.CategoryButton2)
-    PVPQueueFrame.CategoryButton3.Icon:SetTexture([[Interface\Icons\Ability_Warrior_OffensiveStance]])
-
-    Skin.PVPQueueFrameButtonTemplate(PVPQueueFrame.CategoryButton4)
-    PVPQueueFrame.CategoryButton4:SetPoint("LEFT", PVPQueueFrame.CategoryButton3)
-    PVPQueueFrame.CategoryButton4.Icon:SetTexture([[Interface\Icons\Ability_Warrior_OffensiveStance]])
+    local categoryButtons = PVPQueueFrame.CategoryButtons or {
+        PVPQueueFrame.CategoryButton1,
+        PVPQueueFrame.CategoryButton2,
+        PVPQueueFrame.CategoryButton3,
+        PVPQueueFrame.CategoryButton4,
+        PVPQueueFrame.CategoryButton5,
+    }
+    for _, button in ipairs(categoryButtons) do
+        if button then
+            Skin.PVPQueueFrameButtonTemplate(button)
+        end
+    end
 
     ------------
     -- Casual --
