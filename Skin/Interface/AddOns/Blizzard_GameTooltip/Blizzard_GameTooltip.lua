@@ -9,33 +9,12 @@ local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-local wrappedPools = setmetatable({}, {__mode = "k"})
-
-local function WrapPoolAcquire(pool, skinFunc)
-    if not pool or wrappedPools[pool] then
-        return
-    end
-
-    local acquire = pool.Acquire
-    pool.Acquire = function(self, ...)
-        local frame, isNew = acquire(self, ...)
-        skinFunc(frame)
-        return frame, isNew
-    end
-
-    wrappedPools[pool] = true
-
-    for frame in pool:EnumerateActive() do
-        skinFunc(frame)
-    end
-end
-
 do --[[ FrameXML\GameTooltip.lua ]]
     function Hook.GameTooltip_ShowStatusBar(self)
-        WrapPoolAcquire(self.statusBarPool, Skin.TooltipStatusBarTemplate)
+        Util.WrapPoolAcquire(self.statusBarPool, Skin.TooltipStatusBarTemplate)
     end
     function Hook.GameTooltip_ShowProgressBar(self)
-        WrapPoolAcquire(self.progressBarPool, Skin.TooltipProgressBarTemplate)
+        Util.WrapPoolAcquire(self.progressBarPool, Skin.TooltipProgressBarTemplate)
     end
 
     function Hook.EmbeddedItemTooltip_Clear(self)

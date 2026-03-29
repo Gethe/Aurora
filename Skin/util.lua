@@ -3,6 +3,8 @@ local _, private = ...
 --[[ Lua Globals ]]
 -- luacheck: globals wipe select next type floor tinsert xpcall
 
+local setmetatable = setmetatable
+
 --[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
@@ -324,6 +326,58 @@ function Util.Mixin(table, ...)
     -- end
     for name, func in next, tempMixin do
         _G.hooksecurefunc(table, name, func)
+    end
+end
+
+local wrappedPools = setmetatable({}, {__mode = "k"})
+function Util.WrapPoolAcquire(pool, templateOrSkinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local skinFunc
+    local isTemplate = type(templateOrSkinFunc) == "string"
+    if isTemplate then
+        skinFunc = Skin[templateOrSkinFunc]
+        if not skinFunc then
+            return
+        end
+    elseif type(templateOrSkinFunc) == "function" then
+        skinFunc = templateOrSkinFunc
+    else
+        return
+    end
+
+    local function Apply(frame)
+        if not frame then
+            return
+        end
+
+        if isTemplate then
+            if frame._auroraSkinned then
+                return
+            end
+
+            skinFunc(frame)
+            frame._auroraSkinned = true
+        else
+            skinFunc(frame)
+        end
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        Apply(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    if pool.EnumerateActive then
+        for frame in pool:EnumerateActive() do
+            Apply(frame)
+        end
     end
 end
 

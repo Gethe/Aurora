@@ -10,32 +10,11 @@ local Hook = Aurora.Hook
 local Skin = Aurora.Skin
 local Util = Aurora.Util
 
-local wrappedPools = setmetatable({}, {__mode = "k"})
-
-local function WrapPoolAcquire(pool, skinFunc)
-    if not pool or wrappedPools[pool] then
-        return
-    end
-
-    local acquire = pool.Acquire
-    pool.Acquire = function(self, ...)
-        local frame, isNew = acquire(self, ...)
-        skinFunc(frame)
-        return frame, isNew
-    end
-
-    wrappedPools[pool] = true
-
-    for frame in pool:EnumerateActive() do
-        skinFunc(frame)
-    end
-end
-
 --do --[[ AddOns\Blizzard_PVPMatch.lua ]]
 do
     Hook.PVPMatchResultsMixin = {}
     function Hook.PVPMatchResultsMixin:OnLoad()
-        WrapPoolAcquire(self.itemPool, Skin.PVPMatchResultsLoot)
+        Util.WrapPoolAcquire(self.itemPool, Skin.PVPMatchResultsLoot)
     end
 end
 
@@ -81,7 +60,7 @@ function private.AddOns.Blizzard_PVPMatch()
     _G.hooksecurefunc(_G.PVPMatchResultsMixin, "OnLoad", Hook.PVPMatchResultsMixin.OnLoad)
     Skin.UIPanelCloseButton(PVPMatchResults.CloseButton)
     PVPMatchResults.CloseButton.Border:Hide()
-    WrapPoolAcquire(PVPMatchResults.itemPool, Skin.PVPMatchResultsLoot)
+    Util.WrapPoolAcquire(PVPMatchResults.itemPool, Skin.PVPMatchResultsLoot)
 
     local resultsContent = PVPMatchResults.content
     resultsContent.background:Hide()

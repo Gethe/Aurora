@@ -8,34 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
-
-local function WrapPoolAcquire(pool, template)
-    if not pool or pool._auroraAcquireWrapped or not Skin[template] then
-        return
-    end
-
-    local poolAcquire = pool.Acquire
-    pool.Acquire = function(framePool, ...)
-        local frame, isNew = poolAcquire(framePool, ...)
-        if isNew and not frame._auroraSkinned then
-            Skin[template](frame)
-            frame._auroraSkinned = true
-        end
-        return frame, isNew
-    end
-
-    if pool.EnumerateActive then
-        for frame in pool:EnumerateActive() do
-            if not frame._auroraSkinned then
-                Skin[template](frame)
-                frame._auroraSkinned = true
-            end
-        end
-    end
-
-    pool._auroraAcquireWrapped = true
-end
+local Color, Util = Aurora.Color, Aurora.Util
 
 --[[ do AddOns\Blizzard_AdventureMap.lua
 end ]]
@@ -74,8 +47,8 @@ function private.AddOns.Blizzard_AdventureMap()
     local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
     local AdventureMapFrame = _G.AdventureMapFrame
 
-    WrapPoolAcquire(AdventureMapQuestChoiceDialog.rewardPool, "AdventureMapQuestRewardTemplate")
-    WrapPoolAcquire(AdventureMapFrame.GetMapInsetPool and AdventureMapFrame:GetMapInsetPool(), "AdventureMapInsetTemplate")
+    Util.WrapPoolAcquire(AdventureMapQuestChoiceDialog.rewardPool, "AdventureMapQuestRewardTemplate")
+    Util.WrapPoolAcquire(AdventureMapFrame.GetMapInsetPool and AdventureMapFrame:GetMapInsetPool(), "AdventureMapInsetTemplate")
 
     AdventureMapQuestChoiceDialog.Rewards:SetAlpha(0)
     AdventureMapQuestChoiceDialog.Background:Hide()

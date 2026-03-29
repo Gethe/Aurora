@@ -10,35 +10,14 @@ local Base = Aurora.Base
 local Hook = Aurora.Hook
 local Skin = Aurora.Skin
 local Color = Aurora.Color
--- local Util =  Aurora.Util
-
-local wrappedPools = setmetatable({}, {__mode = "k"})
-
-local function WrapPoolAcquire(pool, skinFunc)
-    if not pool or wrappedPools[pool] then
-        return
-    end
-
-    local acquire = pool.Acquire
-    pool.Acquire = function(self, ...)
-        local frame, isNew = acquire(self, ...)
-        skinFunc(frame)
-        return frame, isNew
-    end
-
-    wrappedPools[pool] = true
-
-    for frame in pool:EnumerateActive() do
-        skinFunc(frame)
-    end
-end
+local Util = Aurora.Util
 
 do
     Hook.WeeklyRewardConfirmSelectionMixin = {}
     function Hook.WeeklyRewardConfirmSelectionMixin:RefreshRewards()
         local alsoItemsFrame = self.AlsoItemsFrame
         if alsoItemsFrame then
-            WrapPoolAcquire(alsoItemsFrame.pool, Skin.WeeklyRewardAlsoItemTemplate)
+            Util.WrapPoolAcquire(alsoItemsFrame.pool, Skin.WeeklyRewardAlsoItemTemplate)
         end
     end
 

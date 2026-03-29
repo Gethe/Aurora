@@ -8,28 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
-
-local wrappedPools = setmetatable({}, {__mode = "k"})
-
-local function WrapPoolAcquire(pool, skinFunc)
-    if not pool or wrappedPools[pool] then
-        return
-    end
-
-    local acquire = pool.Acquire
-    pool.Acquire = function(self, ...)
-        local frame, isNew = acquire(self, ...)
-        skinFunc(frame)
-        return frame, isNew
-    end
-
-    wrappedPools[pool] = true
-
-    for frame in pool:EnumerateActive() do
-        skinFunc(frame)
-    end
-end
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_Transmog.lua ]]
     -- Skin template for the wardrobe collection tabs (Items / Sets / Custom Sets / Situations)
@@ -172,10 +151,10 @@ function private.AddOns.Blizzard_Transmog()
         end
 
         if CharacterPreview.CharacterAppearanceSlotFramePool then
-            WrapPoolAcquire(CharacterPreview.CharacterAppearanceSlotFramePool, Skin.TransmogAppearanceSlotTemplate)
+            Util.WrapPoolAcquire(CharacterPreview.CharacterAppearanceSlotFramePool, Skin.TransmogAppearanceSlotTemplate)
         end
         if CharacterPreview.CharacterIllusionSlotFramePool then
-            WrapPoolAcquire(CharacterPreview.CharacterIllusionSlotFramePool, Skin.TransmogIllusionSlotTemplate)
+            Util.WrapPoolAcquire(CharacterPreview.CharacterIllusionSlotFramePool, Skin.TransmogIllusionSlotTemplate)
         end
 
         -- "Hide Unassigned Slots" checkbox

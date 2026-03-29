@@ -3,27 +3,7 @@ if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
-
-local wrappedPools = setmetatable({}, {__mode = "k"})
-
-local function WrapPoolAcquire(pool, skinFunc)
-    if not pool or wrappedPools[pool] then
-        return
-    end
-
-    local acquire = pool.Acquire
-    pool.Acquire = function(self, ...)
-        local frame, isNew = acquire(self, ...)
-        skinFunc(frame)
-        return frame, isNew
-    end
-
-    wrappedPools[pool] = true
-
-    for frame in pool:EnumerateActive() do
-        skinFunc(frame)
-    end
-end
+local Util = Aurora.Util
 
 function private.AddOns.Blizzard_DelvesDifficultyPicker()
     local DelvesDifficultyPickerFrame = _G.DelvesDifficultyPickerFrame
@@ -43,6 +23,6 @@ function private.AddOns.Blizzard_DelvesDifficultyPicker()
             Skin.MinimalScrollBar(rewardsFrame.ScrollBar)
         end
 
-        WrapPoolAcquire(rewardsFrame.rewardPool, Skin.LargeItemButtonTemplate)
+        Util.WrapPoolAcquire(rewardsFrame.rewardPool, Skin.LargeItemButtonTemplate)
     end
 end

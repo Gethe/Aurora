@@ -9,27 +9,6 @@ local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-local wrappedPools = setmetatable({}, {__mode = "k"})
-
-local function WrapPoolAcquire(pool, skinFunc)
-    if not pool or wrappedPools[pool] then
-        return
-    end
-
-    local acquire = pool.Acquire
-    pool.Acquire = function(self, ...)
-        local frame, isNew = acquire(self, ...)
-        skinFunc(frame)
-        return frame, isNew
-    end
-
-    wrappedPools[pool] = true
-
-    for frame in pool:EnumerateActive() do
-        skinFunc(frame)
-    end
-end
-
 
 -- Helper to hide all decorative textures on a frame by matching atlas names
 local decorativeAtlases = {
@@ -264,8 +243,8 @@ function private.AddOns.Blizzard_HousingDashboard()
         local HouseUpgradeFrame = ContentFrame.HouseUpgradeFrame
         if HouseUpgradeFrame then
             Util.Mixin(HouseUpgradeFrame, Hook.HousingUpgradeFrameMixin)
-            WrapPoolAcquire(HouseUpgradeFrame.rewardPoolLarge, Skin.HouseUpgradeRewardFrameTemplate)
-            WrapPoolAcquire(HouseUpgradeFrame.rewardPoolSmall, Skin.HouseUpgradeRewardFrameTemplate)
+            Util.WrapPoolAcquire(HouseUpgradeFrame.rewardPoolLarge, Skin.HouseUpgradeRewardFrameTemplate)
+            Util.WrapPoolAcquire(HouseUpgradeFrame.rewardPoolSmall, Skin.HouseUpgradeRewardFrameTemplate)
 
             -- Hide background and all decorative art (filigree corners, etc.)
             if HouseUpgradeFrame.Background then HouseUpgradeFrame.Background:SetAlpha(0) end

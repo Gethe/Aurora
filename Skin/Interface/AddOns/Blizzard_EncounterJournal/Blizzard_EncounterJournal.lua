@@ -10,27 +10,6 @@ local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
-local wrappedPools = setmetatable({}, {__mode = "k"})
-
-local function WrapPoolAcquire(pool, skinFunc)
-    if not pool or wrappedPools[pool] then
-        return
-    end
-
-    local acquire = pool.Acquire
-    pool.Acquire = function(self, ...)
-        local frame, isNew = acquire(self, ...)
-        skinFunc(frame)
-        return frame, isNew
-    end
-
-    wrappedPools[pool] = true
-
-    for frame in pool:EnumerateActive() do
-        skinFunc(frame)
-    end
-end
-
 
 local function SkinSearchButton(button)
     button:ClearNormalTexture()
@@ -133,12 +112,12 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
 
         Hook.JourneyProgressFrameMixin = {}
         function Hook.JourneyProgressFrameMixin:OnLoad()
-            WrapPoolAcquire(self.rewardPool, Skin.JourneyProgressRewardCardTemplate)
+            Util.WrapPoolAcquire(self.rewardPool, Skin.JourneyProgressRewardCardTemplate)
         end
 
         Hook.JourneyOverviewHighlightsFrameMixin = {}
         function Hook.JourneyOverviewHighlightsFrameMixin:OnLoad()
-            WrapPoolAcquire(self.highlightPool, Skin.JourneyOverviewHighlightTemplate)
+            Util.WrapPoolAcquire(self.highlightPool, Skin.JourneyOverviewHighlightTemplate)
         end
     end
     do --[[ Blizzard_EncounterJournal ]]
@@ -676,8 +655,8 @@ function private.AddOns.Blizzard_EncounterJournal()
     ----====#############################====----
     local EncounterJournalJourneysFrame = _G.EncounterJournalJourneysFrame
     Skin.MinimalScrollBar(EncounterJournalJourneysFrame.ScrollBar)
-    WrapPoolAcquire(EncounterJournalJourneysFrame.JourneyProgress.rewardPool, Skin.JourneyProgressRewardCardTemplate)
-    WrapPoolAcquire(EncounterJournalJourneysFrame.JourneyOverview.Highlights.highlightPool, Skin.JourneyOverviewHighlightTemplate)
+    Util.WrapPoolAcquire(EncounterJournalJourneysFrame.JourneyProgress.rewardPool, Skin.JourneyProgressRewardCardTemplate)
+    Util.WrapPoolAcquire(EncounterJournalJourneysFrame.JourneyOverview.Highlights.highlightPool, Skin.JourneyOverviewHighlightTemplate)
 
 
     ----====####################====----
