@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 --[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals CreateFrame
 
 --[[ Core ]]
 local Aurora = private.Aurora
@@ -12,7 +12,7 @@ local Util = Aurora.Util
 
 do --[[ FrameXML\WarCampaignTemplates.lua ]]
     Hook.CampaignCollapseButtonMixin = {}
-    function Hook.CampaignCollapseButtonMixin:UpdateState(isCollapsed)
+    function Hook.CampaignCollapseButtonMixin:UpdateCollapsedState(isCollapsed)
         if isCollapsed then
             self:SetNormalTexture("Plus")
         else
@@ -29,7 +29,8 @@ do --[[ FrameXML\WarCampaignTemplates.xml ]]
         Skin.InternalEmbeddedItemTooltipTemplate(Frame.ItemTooltip)
     end
     function Skin.CampaignHeaderDisplayTemplate(Frame)
-        local clipFrame = _G.CreateFrame("Frame", nil, Frame)
+        ---@diagnostic disable-next-line: undefined-global
+        local clipFrame = CreateFrame("Frame", nil, Frame)
         clipFrame:SetFrameLevel(Frame:GetFrameLevel())
         clipFrame:SetPoint("TOPLEFT", 6, 0)
         clipFrame:SetPoint("TOPRIGHT", -5, 0)
@@ -60,6 +61,7 @@ do --[[ FrameXML\WarCampaignTemplates.xml ]]
             bottom = 3,
         })
         Util.Mixin(Frame.CollapseButton, Hook.CampaignCollapseButtonMixin)
+        Frame.CollapseButton:UpdateCollapsedState(Frame:IsCollapsed())
     end
     function Skin.CampaignHeaderMinimalTemplate(Button)
         Skin.ExpandOrCollapse(Button.CollapseButton)
@@ -78,6 +80,7 @@ do --[[ FrameXML\WarCampaignTemplates.xml ]]
         end
 
         Util.Mixin(Button.CollapseButton, Hook.CampaignCollapseButtonMixin)
+        Button.CollapseButton:UpdateCollapsedState(Button:IsCollapsed())
     end
 end
 
