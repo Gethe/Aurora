@@ -9,6 +9,27 @@ local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
+local wrappedPools = setmetatable({}, {__mode = "k"})
+
+local function WrapPoolAcquire(pool, skinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        skinFunc(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    for frame in pool:EnumerateActive() do
+        skinFunc(frame)
+    end
+end
+
 
 -- Helper to hide all decorative textures on a frame by matching atlas names
 local decorativeAtlases = {
@@ -81,6 +102,35 @@ do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.lua ]]
 end
 
 do --[[ AddOns\Blizzard_HousingDashboard\Blizzard_HousingDashboard.xml ]]
+    function Skin.HouseUpgradeRewardFrameTemplate(Frame)
+        if Frame._auroraSkinned then
+            return
+        end
+
+        Frame._auroraSkinned = true
+
+        if Frame.Background then
+            Frame.Background:SetAlpha(0)
+        end
+        Base.SetBackdrop(Frame, Color.frame)
+
+        local PortraitFrame = Frame.PortraitFrame
+        if PortraitFrame then
+            if PortraitFrame.Background then
+                PortraitFrame.Background:SetAlpha(0)
+            end
+            Base.SetBackdrop(PortraitFrame, Color.button)
+
+            if PortraitFrame.Portrait then
+                Base.CropIcon(PortraitFrame.Portrait, PortraitFrame)
+            end
+        end
+
+        if Frame.ValueIncreaseReward and Frame.ValueIncreaseReward.Divider then
+            Frame.ValueIncreaseReward.Divider:SetAlpha(0)
+        end
+    end
+
     function Skin.HousingDashboardSideTabTemplate(TabButton)
         -- Hide the highlight atlas
         if TabButton.Highlight then TabButton.Highlight:SetAlpha(0) end
@@ -214,6 +264,8 @@ function private.AddOns.Blizzard_HousingDashboard()
         local HouseUpgradeFrame = ContentFrame.HouseUpgradeFrame
         if HouseUpgradeFrame then
             Util.Mixin(HouseUpgradeFrame, Hook.HousingUpgradeFrameMixin)
+            WrapPoolAcquire(HouseUpgradeFrame.rewardPoolLarge, Skin.HouseUpgradeRewardFrameTemplate)
+            WrapPoolAcquire(HouseUpgradeFrame.rewardPoolSmall, Skin.HouseUpgradeRewardFrameTemplate)
 
             -- Hide background and all decorative art (filigree corners, etc.)
             if HouseUpgradeFrame.Background then HouseUpgradeFrame.Background:SetAlpha(0) end
