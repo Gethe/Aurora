@@ -9,7 +9,35 @@ local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
 
+local wrappedPools = setmetatable({}, {__mode = "k"})
+
+local function WrapPoolAcquire(pool, skinFunc)
+    if not pool or wrappedPools[pool] then
+        return
+    end
+
+    local acquire = pool.Acquire
+    pool.Acquire = function(self, ...)
+        local frame, isNew = acquire(self, ...)
+        skinFunc(frame)
+        return frame, isNew
+    end
+
+    wrappedPools[pool] = true
+
+    for frame in pool:EnumerateActive() do
+        skinFunc(frame)
+    end
+end
+
 do --[[ FrameXML\GameTooltip.lua ]]
+    function Hook.GameTooltip_ShowStatusBar(self)
+        WrapPoolAcquire(self.statusBarPool, Skin.TooltipStatusBarTemplate)
+    end
+    function Hook.GameTooltip_ShowProgressBar(self)
+        WrapPoolAcquire(self.progressBarPool, Skin.TooltipProgressBarTemplate)
+    end
+
     function Hook.EmbeddedItemTooltip_Clear(self)
         -- Don't lazily skin frames here; doing so during the tooltip display
         -- flow taints the layout and causes "secret number" errors in
@@ -63,30 +91,54 @@ do --[[ FrameXML\GameTooltip.xml ]]
         Skin.SharedTooltipTemplate(GameTooltip)
     end
     function Skin.TooltipStatusBarTemplate(StatusBar)
-        Skin.FrameTypeStatusBar(StatusBar)
         local _, border = StatusBar:GetRegions()
-        border:Hide()
+        if border then
+            border:Hide()
+        end
+
+        local texture = StatusBar:GetStatusBarTexture()
+        if texture then
+            texture:SetTexture("Interface\\TargetingFrame\\UI-StatusBar")
+        end
+
+        local r, g, b = Color.highlight:GetRGB()
+        StatusBar:SetStatusBarColor(r, g, b)
     end
     function Skin.TooltipProgressBarTemplate(Frame)
         local bar = Frame.Bar
-        Skin.FrameTypeStatusBar(bar)
+        if not bar then
+            return
+        end
 
-        bar:GetStatusBarTexture():SetDrawLayer("BORDER")
-        bar.BorderLeft:Hide()
-        bar.BorderRight:Hide()
-        bar.BorderMid:Hide()
+        local texture = bar:GetStatusBarTexture()
+        if texture then
+            texture:SetTexture("Interface\\TargetingFrame\\UI-StatusBar")
+            texture:SetDrawLayer("BORDER")
+        end
+
+        local r, g, b = Color.highlight:GetRGB()
+        bar:SetStatusBarColor(r, g, b)
+
+        if bar.BorderLeft then bar.BorderLeft:Hide() end
+        if bar.BorderRight then bar.BorderRight:Hide() end
+        if bar.BorderMid then bar.BorderMid:Hide() end
 
         local LeftDivider = bar.LeftDivider
-        LeftDivider:SetColorTexture(Color.button:GetRGB())
-        LeftDivider:SetSize(1, 15)
-        LeftDivider:SetPoint("LEFT", 73, 0)
+        if LeftDivider then
+            LeftDivider:SetColorTexture(Color.button:GetRGB())
+            LeftDivider:SetSize(1, 15)
+        end
 
         local RightDivider = bar.RightDivider
-        RightDivider:SetColorTexture(Color.button:GetRGB())
-        RightDivider:SetSize(1, 15)
-        RightDivider:SetPoint("RIGHT", -73, 0)
+        if RightDivider then
+            RightDivider:SetColorTexture(Color.button:GetRGB())
+            RightDivider:SetSize(1, 15)
+        end
 
-        _G.select(7, bar:GetRegions()):Hide()
+        local background = _G.select(7, bar:GetRegions())
+        if background then
+            background:Hide()
+        end
     end
 end
 
@@ -96,6 +148,8 @@ function private.FrameXML.GameTooltip()
     _G.hooksecurefunc("EmbeddedItemTooltip_Clear", Hook.EmbeddedItemTooltip_Clear)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForItem", Hook.EmbeddedItemTooltip_PrepareForItem)
     _G.hooksecurefunc("EmbeddedItemTooltip_PrepareForSpell", Hook.EmbeddedItemTooltip_PrepareForSpell)
+    _G.hooksecurefunc("GameTooltip_ShowStatusBar", Hook.GameTooltip_ShowStatusBar)
+    _G.hooksecurefunc("GameTooltip_ShowProgressBar", Hook.GameTooltip_ShowProgressBar)
 
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip1)
     Skin.ShoppingTooltipTemplate(_G.ShoppingTooltip2)
