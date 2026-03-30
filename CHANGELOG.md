@@ -1,4 +1,10 @@
-﻿## [12.0.1.21] ##
+﻿## [12.0.1.22] ##
+### Fixed ###
+  * fix: race condition in VisitHouse
+  * fix: protect against AuroraConfig being nil on embedded Aurora
+
+
+## [12.0.1.21] ##
 ### Added ###
   * add: skins for Blizzard_CovenantCallings, Blizzard_DelvesDifficultyPicker, Blizzard_HousingControls, Blizzard_HousingTemplates, and PVP match results
 
@@ -296,6 +302,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.22]: https://github.com/Gethe/Aurora/compare/12.0.1.21...12.0.1.22
 [12.0.1.21]: https://github.com/Gethe/Aurora/compare/12.0.1.20...12.0.1.21
 [12.0.1.20]: https://github.com/Gethe/Aurora/compare/12.0.1.19...12.0.1.20
 [12.0.1.19]: https://github.com/Gethe/Aurora/compare/12.0.1.18...12.0.1.19
