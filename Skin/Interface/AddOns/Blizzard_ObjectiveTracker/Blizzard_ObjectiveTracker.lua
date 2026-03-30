@@ -9,6 +9,12 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
 local Color, Util = Aurora.Color, Aurora.Util
+local Config = private.Config
+
+local function IsConfigEnabled(optionKey)
+    local auroraConfig = _G.AuroraConfig or Config and Config.defaults
+    return auroraConfig == nil or auroraConfig[optionKey] ~= false
+end
 
 do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
     Hook.ObjectiveTrackerFrameMixin = {}
@@ -274,7 +280,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.xml ]]
 end
 
 function private.AddOns.Blizzard_ObjectiveTracker()
-    if not _G.AuroraConfig.objectiveTracker then return end
+    if not IsConfigEnabled("objectiveTracker") then return end
 
     Util.Mixin(_G.ObjectiveTrackerFrameMixin, Hook.ObjectiveTrackerFrameMixin)
     Util.Mixin(_G.ObjectiveTrackerBlockMixin, Hook.ObjectiveTrackerBlockMixin)

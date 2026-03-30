@@ -11,6 +11,12 @@ local Hook = Aurora.Hook
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 local Util = Aurora.Util
+local Config = private.Config
+
+local function IsConfigEnabled(optionKey)
+    local auroraConfig = _G.AuroraConfig or Config and Config.defaults
+    return auroraConfig == nil or auroraConfig[optionKey] ~= false
+end
 
 do  -- PlayerSpellsFrame.SpecFrame
     local RoleIcons = {
@@ -379,7 +385,7 @@ function private.AddOns.Blizzard_PlayerSpells()
 
     -- When talentArtBackground is false (default), zero all spec-specific art textures.
     -- When true, skip these hooks so Blizzard's class-specific artwork shows through.
-    if not _G.AuroraConfig.talentArtBackground then
+    if not IsConfigEnabled("talentArtBackground") then
         local function HideTalentsBackground(frame)
             if frame.Background then frame.Background:SetAlpha(0) end
             if frame.BackgroundFlash then frame.BackgroundFlash:SetAlpha(0) end
