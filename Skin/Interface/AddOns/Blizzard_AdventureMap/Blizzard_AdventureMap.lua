@@ -45,10 +45,14 @@ function private.AddOns.Blizzard_AdventureMap()
     --         AM_QuestDialog         --
     ----====####################====----
     local AdventureMapQuestChoiceDialog = _G.AdventureMapQuestChoiceDialog
-    local AdventureMapFrame = _G.AdventureMapFrame
 
     Util.WrapPoolAcquire(AdventureMapQuestChoiceDialog.rewardPool, "AdventureMapQuestRewardTemplate")
-    Util.WrapPoolAcquire(AdventureMapFrame.GetMapInsetPool and AdventureMapFrame:GetMapInsetPool(), "AdventureMapInsetTemplate")
+
+    -- AdventureMapFrame is no longer a named global; the pool is created inside
+    -- AdventureMapMixin:OnLoad, so hook the mixin to wrap it after it is set up.
+    _G.hooksecurefunc(_G.AdventureMapMixin, "OnLoad", function(self)
+        Util.WrapPoolAcquire(self:GetMapInsetPool(), "AdventureMapInsetTemplate")
+    end)
 
     AdventureMapQuestChoiceDialog.Rewards:SetAlpha(0)
     AdventureMapQuestChoiceDialog.Background:Hide()
