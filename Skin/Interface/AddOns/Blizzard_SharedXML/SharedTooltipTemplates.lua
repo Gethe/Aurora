@@ -119,42 +119,28 @@ function private.SharedXML.SharedTooltipTemplates()
     -- when the tooltip hierarchy is tainted by Aurora's skinning.
     -- (GameTooltip.lua:593 — "attempt to perform arithmetic on a secret
     -- number value tainted by 'RealUI_Skins'")
+    --
+    -- The previous approach created self.widgetContainer in addon (tainted)
+    -- context, which caused all widget events on that container to run in
+    -- tainted context.  Blizzard widget Setup() calls
+    -- C_UIWidgetManager.GetXxxVisualizationInfo() in tainted context,
+    -- returning a secret widgetInfo.layoutIndex.  Stored secret layoutIndex
+    -- values then cause LayoutFrame.lua:491 "attempt to compare a secret
+    -- number value (tainted by 'RealUI_Skins')" in LayoutIndexComparator
+    -- during GameTooltip_ClearWidgetSet (e.g. when mousing over delve POIs).
+    --
+    -- Fix: call the original Blizzard GameTooltip_AddWidgetSet via
+    -- securecallfunction so that:
+    --   • CreateFrame runs in secure context → widgetContainer gets secure
+    --     event handlers → widget Setup() calls run securely.
+    --   • GetXxxVisualizationInfo returns real (non-secret) numbers →
+    --     layoutIndex stored as real → LayoutIndexComparator succeeds.
+    --   • GetHeight() arithmetic (GameTooltip.lua:593) runs in the secure
+    --     call frame → no secret-number arithmetic error.
     if _G.GameTooltip_AddWidgetSet then
-        local WidgetLayout = function(widgetContainer, sortedWidgets)
-            -- Run DefaultWidgetLayout in untainted context via
-            -- securecallfunction so that secret-valued frame measurements
-            -- (GetEffectiveScale, GetExtents) inside
-            -- ResizeLayoutMixin:Layout() can be compared without error.
-            -- Without this, LayoutFrame.lua:491 errors with "attempt to
-            -- compare a secret number value" (WoWUIBugs #811).
-            _G.securecallfunction(_G.DefaultWidgetLayout, widgetContainer, sortedWidgets)
-            widgetContainer.shownWidgetCount = #sortedWidgets
-        end
-
+        local origAddWidgetSet = _G.GameTooltip_AddWidgetSet
         _G.GameTooltip_AddWidgetSet = function(self, widgetSetID, verticalPadding)
-            if not widgetSetID then
-                return
-            end
-
-            if not self.widgetContainer then
-                self.widgetContainer = _G.CreateFrame("FRAME", nil, self, "UIWidgetContainerTemplate")
-                self.widgetContainer.verticalAnchorPoint = "TOPLEFT"
-                self.widgetContainer.verticalRelativePoint = "BOTTOMLEFT"
-                self.widgetContainer.showAndHideOnWidgetSetRegistration = false
-                self.widgetContainer.disableWidgetTooltips = true
-                self.widgetContainer:Hide()
-            end
-
-            self.widgetContainer:RegisterForWidgetSet(widgetSetID, WidgetLayout)
-
-            if self.widgetContainer.shownWidgetCount > 0 then
-                local heightUsed = _G.GameTooltip_InsertFrame(self, self.widgetContainer, verticalPadding)
-                -- overflow — use SafeNumber to avoid tainted arithmetic
-                local rawHeight = self.widgetContainer:GetHeight()
-                local widgetHeight = SafeNumber(rawHeight, 0) + (verticalPadding or 0)
-                heightUsed = SafeNumber(heightUsed, 0)
-                return heightUsed - widgetHeight
-            end
+            return _G.securecallfunction(origAddWidgetSet, self, widgetSetID, verticalPadding)
         end
     end
 

@@ -356,24 +356,19 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####################====----
     Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetManagerMixin)
 
-    -- Hook RegisterForWidgetSet so tooltip widget containers use a safe layout
-    -- function.  DefaultWidgetLayout ends with Layout() which calls
-    -- ResizeLayoutMixin:Layout() -> GetExtents() -> GetUnscaledFrameRect().
-    -- GetScaledRect() on tainted child frames returns secret numbers, causing
-    -- "attempt to perform arithmetic on a secret number" in FrameUtil.lua:211.
-    -- For tooltip containers we call DefaultWidgetLayout with skipContainerLayout
-    -- = true, then pcall the container's Layout separately.
-    if _G.UIWidgetContainerMixin and _G.UIWidgetContainerMixin.RegisterForWidgetSet then
-        _G.hooksecurefunc(_G.UIWidgetContainerMixin, "RegisterForWidgetSet", function(self, widgetSetID, widgetLayoutFunction)
-            if widgetSetID and IsTooltipWidgetContainer(self) then
-                local baseLayout = widgetLayoutFunction or _G.DefaultWidgetLayout
-                self.layoutFunc = function(container, sortedWidgets)
-                    baseLayout(container, sortedWidgets, true) -- skipContainerLayout = true
-                    _G.pcall(container.Layout, container)
-                end
-            end
-        end)
-    end
+    -- NOTE: The hooksecurefunc on UIWidgetContainerMixin.RegisterForWidgetSet
+    -- that previously overwrote self.layoutFunc for tooltip containers has been
+    -- removed.  That write happened in addon taint context (all hooksecurefunc
+    -- callbacks run as addon code), tainting the layoutFunc field.  When
+    -- UpdateWidgetLayout then called the tainted layoutFunc, DefaultWidgetLayout
+    -- ran in tainted context causing GetEffectiveScale()→GetScaledRect() to
+    -- return secret numbers in ResizeLayoutMixin:Layout().
+    --
+    -- The root fix is in SharedTooltipTemplates.lua: GameTooltip_AddWidgetSet
+    -- now calls the original Blizzard implementation via securecallfunction,
+    -- ensuring CreateFrame and RegisterForWidgetSet run in secure context.
+    -- Blizzard's own WidgetLayout (registered securely as layoutFunc) handles
+    -- the layout without taint, making this hook unnecessary.
 
     ----====#####################====----
     --  Blizzard_UIWidgetTemplateBase  --
