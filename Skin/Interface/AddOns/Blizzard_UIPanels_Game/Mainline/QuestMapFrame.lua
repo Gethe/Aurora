@@ -438,7 +438,11 @@ function private.FrameXML.QuestMapFrame()
     Skin.ScrollFrameTemplate(QuestsFrame.ScrollFrame)
     do
         local QuestScrollFrame = _G.QuestScrollFrame
-        Util.WrapPoolAcquire(QuestScrollFrame.titleFramePool, "QuestLogTitleTemplate")
+        -- titleFramePool intentionally not wrapped: Skin.QuestLogTitleTemplate is a no-op and
+        -- wrapping the pool taints the title buttons. Those tainted buttons are passed as the
+        -- owner to GameTooltip:SetOwner(), which then causes GetStringWidth() to return a
+        -- secret (forbidden) number and blows up the tooltip-width arithmetic in
+        -- QuestMapLogTitleButton_OnEnter (QuestMapFrame.lua:2123).
         Util.WrapPoolAcquire(QuestScrollFrame.objectiveFramePool, "QuestLogObjectiveTemplate")
         Util.WrapPoolAcquire(QuestScrollFrame.headerFramePool, "QuestLogHeaderTemplate")
         Util.WrapPoolAcquire(QuestScrollFrame.campaignHeaderFramePool, "CampaignHeaderTemplate")
