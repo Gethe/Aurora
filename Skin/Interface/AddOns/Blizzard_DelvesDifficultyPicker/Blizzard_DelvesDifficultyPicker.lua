@@ -11,7 +11,7 @@ function private.AddOns.Blizzard_DelvesDifficultyPicker()
     Skin.InsetFrameTemplate(DelvesDifficultyPickerFrame)
     Skin.DialogBorderTemplate(DelvesDifficultyPickerFrame.Border)
     Skin.UIPanelCloseButton(DelvesDifficultyPickerFrame.CloseButton)
-    Skin.WowStyle1DropdownTemplate(DelvesDifficultyPickerFrame.Dropdown)
+    Skin.DropdownButton(DelvesDifficultyPickerFrame.Dropdown)
     Skin.UIPanelButtonTemplate(DelvesDifficultyPickerFrame.EnterDelveButton)
 
     local rewardsFrame = DelvesDifficultyPickerFrame.DelveRewardsContainerFrame
