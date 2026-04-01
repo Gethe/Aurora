@@ -1,4 +1,11 @@
-﻿## [12.0.1.22] ##
+﻿## [12.0.1.23] ##
+### Fixed ###
+  * fix: call GameTooltip_AddWidgetSet via securecallfunction to prevent secret layoutIndex taint on delve tooltip hide
+  * fix: removed taint from titleFramePool
+  * fix: AdventureMapFrame nil error by hooking AdventureMapMixin:OnLoad for pool wrap
+
+
+## [12.0.1.22] ##
 ### Fixed ###
   * fix: race condition in VisitHouse
   * fix: protect against AuroraConfig being nil on embedded Aurora
@@ -302,6 +309,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.23]: https://github.com/Gethe/Aurora/compare/12.0.1.22...12.0.1.23
 [12.0.1.22]: https://github.com/Gethe/Aurora/compare/12.0.1.21...12.0.1.22
 [12.0.1.21]: https://github.com/Gethe/Aurora/compare/12.0.1.20...12.0.1.21
 [12.0.1.20]: https://github.com/Gethe/Aurora/compare/12.0.1.19...12.0.1.20
