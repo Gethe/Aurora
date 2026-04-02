@@ -1,4 +1,10 @@
-﻿## [12.0.1.23] ##
+﻿## [12.0.1.24] ##
+### Fixed ###
+  * fix: update DelvesDifficultyPicker to skin its dropdown with DropdownButton instead of the old WowStyle1DropdownTemplate
+  * fix: stop skinning pooled QuestMapFrame title rows to avoid tooltip-owner taint in the quest log
+
+
+## [12.0.1.23] ##
 ### Fixed ###
   * fix: call GameTooltip_AddWidgetSet via securecallfunction to prevent secret layoutIndex taint on delve tooltip hide
   * fix: removed taint from titleFramePool
@@ -309,6 +315,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.24]: https://github.com/Gethe/Aurora/compare/12.0.1.23...12.0.1.24
 [12.0.1.23]: https://github.com/Gethe/Aurora/compare/12.0.1.22...12.0.1.23
 [12.0.1.22]: https://github.com/Gethe/Aurora/compare/12.0.1.21...12.0.1.22
 [12.0.1.21]: https://github.com/Gethe/Aurora/compare/12.0.1.20...12.0.1.21
