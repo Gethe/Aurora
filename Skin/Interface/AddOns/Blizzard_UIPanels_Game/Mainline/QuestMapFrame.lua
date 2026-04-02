@@ -122,6 +122,13 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
             return false
         end
 
+        -- Quest title rows are pooled buttons with icons, but must stay fully
+        -- Blizzard-owned. Skinning them taints the tooltip owner used by
+        -- QuestMapLogTitleButton_OnEnter.
+        if frame.Checkbox and frame.Text and (frame.TaskIcon or frame.StorylineTexture or frame.TagTexture) then
+            return false
+        end
+
         local objectType = frame:GetObjectType()
         if objectType ~= "Button" and objectType ~= "CheckButton" then
             return false
