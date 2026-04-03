@@ -523,7 +523,12 @@ function private.AddOns.Blizzard_UIWidgets()
     -- modifications cause GetWidth()/GetHeight() on ItemName/InfoText to return
     -- secret numbers, breaking arithmetic at Blizzard_UIWidgetTemplateBase.lua:1694.
     if _G.UIWidgetBaseItemTemplateMixin and _G.UIWidgetBaseItemTemplateMixin.Setup then
+        local origUIWidgetBaseItemTemplateMixinSetup = _G.UIWidgetBaseItemTemplateMixin.Setup
         _G.UIWidgetBaseItemTemplateMixin.Setup = function(self, widgetContainer, itemInfo, widgetSizeSetting, tooltipLoc)
+            if IsTooltipWidgetContainer(widgetContainer) then
+                return _G.securecallfunction(origUIWidgetBaseItemTemplateMixinSetup, self, widgetContainer, itemInfo, widgetSizeSetting, tooltipLoc)
+            end
+
             if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
                 _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
             end
@@ -646,7 +651,12 @@ function private.AddOns.Blizzard_UIWidgets()
     -- geometry.  Also wraps UIWidgetBaseTemplateMixin.Setup in pcall and
     -- MarkDirtyLayout in pcall to prevent propagation.
     if _G.UIWidgetTemplateItemDisplayMixin and _G.UIWidgetTemplateItemDisplayMixin.Setup then
+        local origUIWidgetTemplateItemDisplayMixinSetup = _G.UIWidgetTemplateItemDisplayMixin.Setup
         _G.UIWidgetTemplateItemDisplayMixin.Setup = function(self, widgetInfo, widgetContainer)
+            if IsTooltipWidgetContainer(widgetContainer) then
+                return _G.securecallfunction(origUIWidgetTemplateItemDisplayMixinSetup, self, widgetInfo, widgetContainer)
+            end
+
             if self.continuableContainer then
                 self.continuableContainer:Cancel()
             end
@@ -714,7 +724,12 @@ function private.AddOns.Blizzard_UIWidgets()
     -- modified by Aurora cause GetWidth()/GetHeight() to return secret numbers,
     -- breaking arithmetic in the original Blizzard code.
     if _G.UIWidgetBaseCurrencyTemplateMixin and _G.UIWidgetBaseCurrencyTemplateMixin.Setup then
+        local origUIWidgetBaseCurrencyTemplateMixinSetup = _G.UIWidgetBaseCurrencyTemplateMixin.Setup
         _G.UIWidgetBaseCurrencyTemplateMixin.Setup = function(self, widgetContainer, currencyInfo, enabledState, tooltipEnabledState, hideIcon, customFont, overrideFontColor, tooltipLoc)
+            if IsTooltipWidgetContainer(widgetContainer) then
+                return _G.securecallfunction(origUIWidgetBaseCurrencyTemplateMixinSetup, self, widgetContainer, currencyInfo, enabledState, tooltipEnabledState, hideIcon, customFont, overrideFontColor, tooltipLoc)
+            end
+
             if _G.UIWidgetTemplateTooltipFrameMixin and _G.UIWidgetTemplateTooltipFrameMixin.Setup then
                 _G.UIWidgetTemplateTooltipFrameMixin.Setup(self, widgetContainer, tooltipLoc)
             end
@@ -777,7 +792,12 @@ function private.AddOns.Blizzard_UIWidgets()
     -- currency frame dimensions (set by the replaced Setup above) return secret
     -- numbers, breaking comparisons and arithmetic in the original Blizzard code.
     if _G.UIWidgetTemplateHorizontalCurrenciesMixin and _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup then
+        local origUIWidgetTemplateHorizontalCurrenciesMixinSetup = _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup
         _G.UIWidgetTemplateHorizontalCurrenciesMixin.Setup = function(self, widgetInfo, widgetContainer)
+            if IsTooltipWidgetContainer(widgetContainer) then
+                return _G.securecallfunction(origUIWidgetTemplateHorizontalCurrenciesMixinSetup, self, widgetInfo, widgetContainer)
+            end
+
             if _G.UIWidgetBaseTemplateMixin and _G.UIWidgetBaseTemplateMixin.Setup then
                 _G.UIWidgetBaseTemplateMixin.Setup(self, widgetInfo, widgetContainer)
             end
