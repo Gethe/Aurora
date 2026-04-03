@@ -429,6 +429,19 @@ function private.FrameXML.QuestMapFrame()
     -------------------
     _G.hooksecurefunc("QuestLogQuests_Update", Hook.QuestLogQuests_Update)
 
+    -- Wrap QuestMapLogTitleButton_OnEnter with securecallfunction to avoid
+    -- taint: Aurora's GameTooltip skinning marks the tooltip hierarchy as
+    -- addon-modified, causing GameTooltipTextLeft1:GetStringWidth() to
+    -- return a secret number.  max(231, <secret>) at QuestMapFrame.lua:2123
+    -- errors with "attempt to perform numeric conversion on a secret number
+    -- value (tainted by 'RealUI_Skins')".
+    if _G.QuestMapLogTitleButton_OnEnter then
+        local origQuestOnEnter = _G.QuestMapLogTitleButton_OnEnter
+        _G.QuestMapLogTitleButton_OnEnter = function(self)
+            return _G.securecallfunction(origQuestOnEnter, self)
+        end
+    end
+
     local QuestMapFrame = _G.QuestMapFrame
     if  QuestMapFrame.Background then
         QuestMapFrame.Background:Hide()
@@ -446,10 +459,9 @@ function private.FrameXML.QuestMapFrame()
     do
         local QuestScrollFrame = _G.QuestScrollFrame
         -- titleFramePool intentionally not wrapped: Skin.QuestLogTitleTemplate is a no-op and
-        -- wrapping the pool taints the title buttons. Those tainted buttons are passed as the
-        -- owner to GameTooltip:SetOwner(), which then causes GetStringWidth() to return a
-        -- secret (forbidden) number and blows up the tooltip-width arithmetic in
-        -- QuestMapLogTitleButton_OnEnter (QuestMapFrame.lua:2123).
+        -- wrapping the pool would add even more taint to the title buttons.
+        -- GetStringWidth() secret-number taint in QuestMapLogTitleButton_OnEnter is handled
+        -- above via securecallfunction wrapper.
         Util.WrapPoolAcquire(QuestScrollFrame.objectiveFramePool, "QuestLogObjectiveTemplate")
         Util.WrapPoolAcquire(QuestScrollFrame.headerFramePool, "QuestLogHeaderTemplate")
         Util.WrapPoolAcquire(QuestScrollFrame.campaignHeaderFramePool, "CampaignHeaderTemplate")
