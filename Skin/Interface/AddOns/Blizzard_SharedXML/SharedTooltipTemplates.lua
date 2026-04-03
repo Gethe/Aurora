@@ -83,14 +83,10 @@ function private.SharedXML.SharedTooltipTemplates()
     -- Replace GameTooltip_InsertFrame to avoid taint: Aurora's font
     -- modifications cause GetLineHeight() and GetHeight() to return secret
     -- numbers, breaking Round() arithmetic at SharedTooltipTemplates.lua:202.
+    -- securecallfunction does NOT help — secret values error on ANY
+    -- arithmetic regardless of context.  Use SafeNumber for all tooltips.
     if _G.GameTooltip_InsertFrame then
-        local origInsertFrame = _G.GameTooltip_InsertFrame
-
         _G.GameTooltip_InsertFrame = function(tooltipFrame, frame, verticalPadding)
-            if tooltipFrame and tooltipFrame.IsObjectType and tooltipFrame:IsObjectType("GameTooltip") then
-                return _G.securecallfunction(origInsertFrame, tooltipFrame, frame, verticalPadding)
-            end
-
             verticalPadding = verticalPadding or 0
 
             local textSpacing = tooltipFrame:GetCustomLineSpacing() or 2

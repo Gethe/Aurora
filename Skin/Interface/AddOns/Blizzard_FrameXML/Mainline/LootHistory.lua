@@ -1,125 +1,53 @@
--- luacheck: ignore
 local _, private = ...
-if true then return end
 
---[[ Lua Globals ]]
--- luacheck: globals
+-- luacheck: globals _G
 
---[[ Core ]]
-local Aurora = private.Aurora
-local Base = Aurora.Base
-local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Hook = private.Aurora.Hook
+
+local pendingItemRefresh = setmetatable({}, {__mode = "k"})
 
 do --[[ FrameXML\LootHistory.lua ]]
-    function Hook.LootHistoryFrame_UpdateItemFrame(self, frame)
-        local rollID, _, _, isDone, winnerIdx = _G.C_LootHistory.GetItem(frame.itemIdx)
-        local expanded = self.expandedRolls[rollID]
-
-        if not frame.styled then
-            frame.Divider:Hide()
-            frame.NameBorderLeft:Hide()
-            frame.NameBorderRight:Hide()
-            frame.NameBorderMid:Hide()
-            frame.IconBorder:Hide()
-
-            frame.WinnerRoll:SetTextColor(.9, .9, .9)
-            frame.bg = Base.CropIcon(frame.Icon, frame)
-
-            Skin.ExpandOrCollapse(frame.ToggleButton)
-            frame.styled = true
+    function Hook.LootHistoryElementMixin_Init(self, dropInfo)
+        if not dropInfo or not dropInfo.itemHyperlink then
+            pendingItemRefresh[self] = nil
+            return
         end
 
-        if isDone and not expanded and winnerIdx then
-            local name, class = _G.C_LootHistory.GetPlayerInfo(frame.itemIdx, winnerIdx)
-            if name then
-                local colour = _G.CUSTOM_CLASS_COLORS[class]
-                frame.WinnerName:SetVertexColor(colour.r, colour.g, colour.b)
+        local item = _G.Item:CreateFromItemLink(dropInfo.itemHyperlink)
+        if item:GetItemName() and item:GetItemIcon() then
+            pendingItemRefresh[self] = nil
+            return
+        end
+
+        if pendingItemRefresh[self] == dropInfo.itemHyperlink then
+            return
+        end
+
+        pendingItemRefresh[self] = dropInfo.itemHyperlink
+        item:ContinueOnItemLoad(function()
+            if pendingItemRefresh[self] ~= dropInfo.itemHyperlink then
+                return
             end
-        end
 
-        frame.bg:SetVertexColor(frame.IconBorder:GetVertexColor())
-    end
-    function Hook.LootHistoryFrame_UpdatePlayerFrame(self, playerFrame)
-        if not playerFrame.styled then
-            playerFrame.RollText:SetTextColor(.9, .9, .9)
-            playerFrame.WinMark:SetDesaturated(true)
+            pendingItemRefresh[self] = nil
 
-            playerFrame.styled = true
-        end
-
-        if playerFrame.playerIdx then
-            local name, class, _, _, isWinner = _G.C_LootHistory.GetPlayerInfo(playerFrame.itemIdx, playerFrame.playerIdx)
-
-            if name then
-                local colour = _G.CUSTOM_CLASS_COLORS[class]
-                playerFrame.PlayerName:SetTextColor(colour.r, colour.g, colour.b)
-
-                if isWinner then
-                    playerFrame.WinMark:SetVertexColor(colour.r, colour.g, colour.b)
-                end
+            if self.dropInfo and self.dropInfo.itemHyperlink == dropInfo.itemHyperlink then
+                self:Init(self.dropInfo)
             end
-        end
+        end)
     end
 end
 
---do --[[ FrameXML\LootHistory.xml ]]
---end
-
 function private.FrameXML.LootHistory()
-    _G.hooksecurefunc("LootHistoryFrame_UpdateItemFrame", Hook.LootHistoryFrame_UpdateItemFrame)
-    _G.hooksecurefunc("LootHistoryFrame_UpdatePlayerFrame", Hook.LootHistoryFrame_UpdatePlayerFrame)
-
-    local LootHistoryFrame = _G.LootHistoryFrame
-    Skin.TooltipBackdropTemplate(LootHistoryFrame)
-
-    LootHistoryFrame.LootIcon:Hide()
-    LootHistoryFrame.Label:ClearAllPoints()
-    LootHistoryFrame.Label:SetPoint("TOP", LootHistoryFrame, "TOP", 0, -8)
-    LootHistoryFrame.Divider:SetAlpha(0)
-
-    Skin.MinimizeButton(LootHistoryFrame.CloseButton)
-    do -- [[ Resize button ]]
-        LootHistoryFrame.ResizeButton:ClearNormalTexture()
-        LootHistoryFrame.ResizeButton:SetHeight(8)
-
-        local line1 = LootHistoryFrame.ResizeButton:CreateTexture()
-        line1:SetColorTexture(1, 1, 1)
-        line1:SetSize(30, 1)
-        line1:SetPoint("TOP")
-
-        local line2 = LootHistoryFrame.ResizeButton:CreateTexture()
-        line2:SetColorTexture(1, 1, 1)
-        line2:SetSize(30, 1)
-        line2:SetPoint("TOP", 0, -3)
-
-        LootHistoryFrame.ResizeButton:HookScript("OnEnter", function(dialog)
-            line1:SetVertexColor(Color.highlight:GetRGB())
-            line2:SetVertexColor(Color.highlight:GetRGB())
-        end)
-
-        LootHistoryFrame.ResizeButton:HookScript("OnLeave", function(dialog)
-            line1:SetVertexColor(1, 1, 1)
-            line2:SetVertexColor(1, 1, 1)
-        end)
-    end
-    Skin.UIPanelScrollFrameTemplate(LootHistoryFrame.ScrollFrame)
-
-    -- [[ Dropdown ]]
-    _G.LootHistoryDropDown.initialize = function(dialog)
-        local info = _G.UIDropDownMenu_CreateInfo()
-        info.isTitle = 1
-        info.text = _G.MASTER_LOOTER
-        info.fontObject = _G.GameFontNormalLeft
-        info.notCheckable = 1
-        _G.UIDropDownMenu_AddButton(info)
-
-        info = _G.UIDropDownMenu_CreateInfo()
-        info.notCheckable = 1
-        local name, class = _G.C_LootHistory.GetPlayerInfo(dialog.itemIdx, dialog.playerIdx)
-        local colorStr = _G.CUSTOM_CLASS_COLORS[class].colorStr
-        info.text = _G.MASTER_LOOTER_GIVE_TO:format(colorStr..name.."|r")
-        info.func = _G.LootHistoryDropDown_OnClick
-        _G.UIDropDownMenu_AddButton(info)
+    _G.hooksecurefunc(_G.LootHistoryElementMixin, "Init", Hook.LootHistoryElementMixin_Init)
+    local origLayout = _G.ResizeLayoutMixin.Layout
+    _G.LootHistoryRollTooltipLineMixin.Layout = function(self)
+        local ok = _G.pcall(origLayout, self)
+        if not ok then
+            self:SetSize(200, 14)
+        end
+        if self.MarkClean then
+            self:MarkClean()
+        end
     end
 end
