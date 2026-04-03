@@ -95,9 +95,24 @@ do --[[ SharedXML\NineSlice.lua ]]
             _G.print("GetNameforLayout", container.debug, userLayout, container.GetFrameLayoutType)
         end
 
+        if type(userLayout) == "string" then
+            return userLayout
+        end
+
+        if type(userLayout) == "table" then
+            for layoutName, layout in next, _G.NineSliceLayouts do
+                if layout == userLayout then
+                    return layoutName
+                end
+            end
+        end
+
         local layoutType = userLayout
         if container.GetFrameLayoutType then
-            layoutType = container:GetFrameLayoutType()
+            local ok, resolvedLayoutType = _G.pcall(container.GetFrameLayoutType, container)
+            if ok then
+                layoutType = resolvedLayoutType
+            end
         elseif container.backdropInfo then
             if container.backdropInfo.bgFile:find("DialogBox") then
                 return "Dialog"
