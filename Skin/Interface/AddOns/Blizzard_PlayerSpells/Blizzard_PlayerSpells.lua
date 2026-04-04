@@ -427,8 +427,18 @@ function private.AddOns.Blizzard_PlayerSpells()
             return
         end
 
+        local preset = GetConfigOption("heroTalentsAnchorPreset", "default")
+        local offsetX, offsetY = 50, -4
+        if preset == "left" then
+            offsetX, offsetY = 30, -4
+        elseif preset == "lower" then
+            offsetX, offsetY = 50, -28
+        elseif preset == "compact" then
+            offsetX, offsetY = 38, -18
+        end
+
         heroTalentsContainer:ClearAllPoints()
-        heroTalentsContainer:SetPoint("TOPLEFT", self, "TOPLEFT", 50, -4)
+        heroTalentsContainer:SetPoint("TOPLEFT", self, "TOPLEFT", offsetX, offsetY)
     end)
 
     -- Talent node buttons — hook the global mixin so every button (pooled or not) is covered

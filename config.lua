@@ -27,6 +27,7 @@ Config.defaults = {
     objectiveTracker = true,
     talentArtBackground = true,
     heroTalentsCustomAnchor = false,
+    heroTalentsAnchorPreset = "default",
 
     -- Visual customization
     buttonsHaveGradient = true,
@@ -82,6 +83,22 @@ Config.validationRules = {
     objectiveTracker = "boolean",
     talentArtBackground = "boolean",
     heroTalentsCustomAnchor = "boolean",
+
+    heroTalentsAnchorPreset = function(value)
+        if type(value) ~= "string" then
+            return false, "heroTalentsAnchorPreset must be a string"
+        end
+        local valid = {
+            default = true,
+            left = true,
+            lower = true,
+            compact = true,
+        }
+        if not valid[value] then
+            return false, "heroTalentsAnchorPreset must be 'default', 'left', 'lower', or 'compact'"
+        end
+        return true
+    end,
 
     -- Number settings with ranges
     alpha = {type = "number", min = 0, max = 1},

@@ -458,8 +458,41 @@ heroTalentsAnchorBox:SetScript("OnLeave", function(self)
     _G.GameTooltip:Hide()
 end)
 
+local heroTalentsAnchorPresets = {
+    { key = "default", label = "Balanced (50, -4)" },
+    { key = "left", label = "Shift Left (30, -4)" },
+    { key = "lower", label = "Lowered (50, -28)" },
+    { key = "compact", label = "Compact (38, -18)" },
+}
+
+local heroTalentsAnchorPresetLabel = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+heroTalentsAnchorPresetLabel:SetPoint("TOPLEFT", heroTalentsAnchorBox, "BOTTOMLEFT", 20, -8)
+heroTalentsAnchorPresetLabel:SetText("Hero talents anchor preset")
+
+local heroTalentsAnchorPresetDropdown = _G.CreateFrame("Frame", "AuroraHeroTalentsAnchorPresetDropdown", appearancePanel, "UIDropDownMenuTemplate")
+heroTalentsAnchorPresetDropdown:SetPoint("TOPLEFT", heroTalentsAnchorPresetLabel, "BOTTOMLEFT", -16, -4)
+_G.UIDropDownMenu_SetWidth(heroTalentsAnchorPresetDropdown, 210)
+
+_G.UIDropDownMenu_Initialize(heroTalentsAnchorPresetDropdown, function(self, level)
+    local currentPreset = (_G.AuroraConfig and _G.AuroraConfig.heroTalentsAnchorPreset) or "default"
+    for _, preset in ipairs(heroTalentsAnchorPresets) do
+        local info = _G.UIDropDownMenu_CreateInfo()
+        info.text = preset.label
+        info.value = preset.key
+        info.checked = (currentPreset == preset.key)
+        info.disabled = not (_G.AuroraConfig and _G.AuroraConfig.heroTalentsCustomAnchor)
+        info.func = function(buttonSelf)
+            if _G.AuroraConfig then
+                _G.AuroraConfig.heroTalentsAnchorPreset = buttonSelf.value
+            end
+            _G.UIDropDownMenu_SetSelectedValue(heroTalentsAnchorPresetDropdown, buttonSelf.value)
+        end
+        _G.UIDropDownMenu_AddButton(info, level)
+    end
+end)
+
 local alphaSlider = createSlider(appearancePanel, "alpha", "Backdrop opacity *")
-alphaSlider:SetPoint("TOPLEFT", heroTalentsAnchorBox, "BOTTOMLEFT", 0, -40)
+alphaSlider:SetPoint("TOPLEFT", heroTalentsAnchorPresetDropdown, "BOTTOMLEFT", 16, -25)
 alphaSlider.update = updateFrames
 alphaSlider:SetScript("OnEnter", function(self)
     _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -720,6 +753,20 @@ gui.refresh = function()
     -- Safely refresh with error handling
     local success, err = pcall(function()
         alphaSlider:SetValue(_G.AuroraConfig.alpha)
+
+        local currentHeroPreset = _G.AuroraConfig.heroTalentsAnchorPreset or "default"
+        _G.UIDropDownMenu_SetSelectedValue(heroTalentsAnchorPresetDropdown, currentHeroPreset)
+        _G.UIDropDownMenu_SetText(heroTalentsAnchorPresetDropdown, nil)
+        for _, preset in ipairs(heroTalentsAnchorPresets) do
+            if preset.key == currentHeroPreset then
+                _G.UIDropDownMenu_SetText(heroTalentsAnchorPresetDropdown, preset.label)
+                break
+            end
+        end
+
+        local presetEnabled = _G.AuroraConfig.heroTalentsCustomAnchor == true
+        heroTalentsAnchorPresetDropdown:SetAlpha(presetEnabled and 1 or 0.6)
+        heroTalentsAnchorPresetLabel:SetAlpha(presetEnabled and 1 or 0.6)
 
         for i = 1, #checkboxes do
             checkboxes[i]:SetChecked(_G.AuroraConfig[checkboxes[i].value] == true)
