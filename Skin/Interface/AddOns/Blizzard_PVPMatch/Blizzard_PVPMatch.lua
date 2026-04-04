@@ -62,6 +62,19 @@ function private.AddOns.Blizzard_PVPMatch()
     PVPMatchResults.CloseButton.Border:Hide()
     Util.WrapPoolAcquire(PVPMatchResults.itemPool, Skin.PVPMatchResultsLoot)
 
+    -- Skin the outer frame so the NineSlice hook handles SetupArtwork's
+    -- NineSliceUtil.ApplyLayoutByName (BFAMissionHorde/Alliance/GenericMetal)
+    -- Hide the groupfinder-background BEFORE creating backdrop textures,
+    -- otherwise GetRegions() may return an Aurora texture instead.
+    for _, region in next, {PVPMatchResults:GetRegions()} do
+        if region.GetAtlas and region:GetAtlas() == "groupfinder-background" then
+            region:Hide()
+            break
+        end
+    end
+    Skin.FrameTypeFrame(PVPMatchResults)
+    PVPMatchResults._auroraNineSlice = true
+
     local resultsContent = PVPMatchResults.content
     resultsContent.background:Hide()
     resultsContent.InsetBorderTopLeft:Hide()
@@ -91,14 +104,24 @@ function private.AddOns.Blizzard_PVPMatch()
     Skin.UIPanelButtonTemplate(PVPMatchResults.buttonContainer.requeueButton)
     Skin.UIPanelButtonTemplate(PVPMatchResults.buttonContainer.leaveButton)
 
-    PVPMatchResults:GetRegions():Hide() -- groupfinder-background
-
 
     ----====####################====----
     --       PVPMatchScoreboard       --
     ----====####################====----
     local PVPMatchScoreboard = _G.PVPMatchScoreboard
     Skin.UIPanelCloseButton(PVPMatchScoreboard.CloseButton)
+
+    -- Skin the outer frame so the NineSlice hook handles SetupArtwork's
+    -- NineSliceUtil.ApplyLayoutByName (BFAMissionHorde/Alliance/GenericMetal)
+    -- Hide the groupfinder-background BEFORE creating backdrop textures.
+    for _, region in next, {PVPMatchScoreboard:GetRegions()} do
+        if region.GetAtlas and region:GetAtlas() == "groupfinder-background" then
+            region:Hide()
+            break
+        end
+    end
+    Skin.FrameTypeFrame(PVPMatchScoreboard)
+    PVPMatchScoreboard._auroraNineSlice = true
 
     local scoreContent = PVPMatchScoreboard.Content
     scoreContent.Background:Hide()
@@ -124,6 +147,4 @@ function private.AddOns.Blizzard_PVPMatch()
         scoreTabContainer.TabGroup.Tab2,
         scoreTabContainer.TabGroup.Tab3,
     })
-
-    PVPMatchScoreboard:GetRegions():Hide() -- groupfinder-background
 end
