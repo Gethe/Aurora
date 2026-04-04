@@ -33,6 +33,8 @@ do --[[ FrameXML\MerchantFrame.xml ]]
         bg:SetPoint("BOTTOMRIGHT", 0, -4)
         Base.SetBackdrop(bg, Color.frame)
 
+        Frame.Name:SetParent(bg)
+        Frame.Name:SetDrawLayer("OVERLAY")
         Frame.Name:ClearAllPoints()
         Frame.Name:SetPoint("TOPLEFT", bg, 2, -1)
         Frame.Name:SetPoint("BOTTOMRIGHT", bg, 0, 14)
@@ -77,6 +79,8 @@ function private.FrameXML.MerchantFrame()
         bg:SetPoint("BOTTOMRIGHT", 0, -1)
         Base.SetBackdrop(bg, Color.frame)
 
+        _G.MerchantBuyBackItem.Name:SetParent(bg)
+        _G.MerchantBuyBackItem.Name:SetDrawLayer("OVERLAY")
         _G.MerchantBuyBackItem.Name:ClearAllPoints()
         _G.MerchantBuyBackItem.Name:SetPoint("TOPLEFT", bg, 2, -1)
         _G.MerchantBuyBackItem.Name:SetPoint("BOTTOMRIGHT", bg, 0, 14)
