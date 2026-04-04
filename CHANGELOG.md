@@ -1,4 +1,17 @@
-﻿## [12.0.1.24] ##
+﻿## [12.0.1.25] ##
+### Changed ###
+  * chg: continued work on PVPMatchResults skin
+
+### Fixed ###
+  * fix: replace securecallfunction wrapper with SafeNumber reimplementation for GameTooltip_AddWidgetSet to avoid secret-number taint
+  * fix: remove securecallfunction branches and sanitize orderIndex after Setup calls
+  * fix: wrap QuestMapLogTitleButton_OnEnter in securecallfunction to prevent GetStringWidth secret number taint
+  * fix: SafeNumber for all InsertFrame tooltip paths and LootHistory tooltip line layout
+  * fix: pass RGBA values to backdrop APIs instead of Aurora Color objects
+  * fix: Aurora NineSlice layout resolution for tooltip backdrop hooks
+
+
+## [12.0.1.24] ##
 ### Fixed ###
   * fix: update DelvesDifficultyPicker to skin its dropdown with DropdownButton instead of the old WowStyle1DropdownTemplate
   * fix: stop skinning pooled QuestMapFrame title rows to avoid tooltip-owner taint in the quest log
@@ -315,6 +328,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.25]: https://github.com/Gethe/Aurora/compare/12.0.1.24...12.0.1.25
 [12.0.1.24]: https://github.com/Gethe/Aurora/compare/12.0.1.23...12.0.1.24
 [12.0.1.23]: https://github.com/Gethe/Aurora/compare/12.0.1.22...12.0.1.23
 [12.0.1.22]: https://github.com/Gethe/Aurora/compare/12.0.1.21...12.0.1.22
