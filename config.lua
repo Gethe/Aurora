@@ -90,12 +90,14 @@ Config.validationRules = {
         end
         local valid = {
             default = true,
+            topcenter = true,
+            centercenter = true,
             left = true,
             lower = true,
             compact = true,
         }
         if not valid[value] then
-            return false, "heroTalentsAnchorPreset must be 'default', 'left', 'lower', or 'compact'"
+            return false, "heroTalentsAnchorPreset must be 'default', 'topcenter', 'centercenter', 'left', 'lower', or 'compact'"
         end
         return true
     end,

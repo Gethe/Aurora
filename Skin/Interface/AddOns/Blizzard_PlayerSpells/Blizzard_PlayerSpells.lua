@@ -429,7 +429,15 @@ function private.AddOns.Blizzard_PlayerSpells()
 
         local preset = GetConfigOption("heroTalentsAnchorPreset", "default")
         local offsetX, offsetY = 50, -4
-        if preset == "left" then
+        if preset == "topcenter" then
+            heroTalentsContainer:ClearAllPoints()
+            heroTalentsContainer:SetPoint("TOP", self, "TOP", 0, -4)
+            return
+        elseif preset == "centercenter" then
+            heroTalentsContainer:ClearAllPoints()
+            heroTalentsContainer:SetPoint("CENTER", self, "CENTER", 0, 0)
+            return
+        elseif preset == "left" then
             offsetX, offsetY = 30, -4
         elseif preset == "lower" then
             offsetX, offsetY = 50, -28

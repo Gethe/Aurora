@@ -460,6 +460,8 @@ end)
 
 local heroTalentsAnchorPresets = {
     { key = "default", label = "Balanced (50, -4)" },
+    { key = "topcenter", label = "Top Centered (0, -4)" },
+    { key = "centercenter", label = "Center Centered (0, 0)" },
     { key = "left", label = "Shift Left (30, -4)" },
     { key = "lower", label = "Lowered (50, -28)" },
     { key = "compact", label = "Compact (38, -18)" },
