@@ -26,6 +26,7 @@ Config.defaults = {
     characterSheet = true,
     objectiveTracker = true,
     talentArtBackground = true,
+    heroTalentsCustomAnchor = false,
 
     -- Visual customization
     buttonsHaveGradient = true,
@@ -80,6 +81,7 @@ Config.validationRules = {
     characterSheet = "boolean",
     objectiveTracker = "boolean",
     talentArtBackground = "boolean",
+    heroTalentsCustomAnchor = "boolean",
 
     -- Number settings with ranges
     alpha = {type = "number", min = 0, max = 1},

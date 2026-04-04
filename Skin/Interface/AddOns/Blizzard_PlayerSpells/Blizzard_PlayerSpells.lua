@@ -18,6 +18,14 @@ local function IsConfigEnabled(optionKey)
     return auroraConfig == nil or auroraConfig[optionKey] ~= false
 end
 
+local function GetConfigOption(optionKey, fallback)
+    local auroraConfig = _G.AuroraConfig or Config and Config.defaults
+    if auroraConfig and auroraConfig[optionKey] ~= nil then
+        return auroraConfig[optionKey]
+    end
+    return fallback
+end
+
 do  -- PlayerSpellsFrame.SpecFrame
     local RoleIcons = {
         TANK = "groupfinder-icon-role-micro-tank",
@@ -408,6 +416,20 @@ function private.AddOns.Blizzard_PlayerSpells()
         -- Run immediately in case the frame was already shown before we ran
         HideTalentsBackground(TalentsFrame)
     end
+
+    _G.hooksecurefunc(TalentsFrame, "UpdateSpecBackground", function(self)
+        if not GetConfigOption("heroTalentsCustomAnchor", false) then
+            return
+        end
+
+        local heroTalentsContainer = self.HeroTalentsContainer
+        if not heroTalentsContainer then
+            return
+        end
+
+        heroTalentsContainer:ClearAllPoints()
+        heroTalentsContainer:SetPoint("TOPLEFT", self, "TOPLEFT", 50, -4)
+    end)
 
     -- Talent node buttons — hook the global mixin so every button (pooled or not) is covered
     -- instantly when Blizzard updates its visual state, without needing to iterate the pool.
