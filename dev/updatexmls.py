@@ -15,7 +15,6 @@ aurora_addons = ['Blizzard_FrameXML', 'Blizzard_FrameXMLBase', 'Blizzard_SharedX
                  'Blizzard_GroupFinder', 'Blizzard_QuickJoin', 'Blizzard_ActionBar',
                  'Blizzard_MoneyFrame','Blizzard_UIPanelTemplates','Blizzard_GarrisonBase', 'Blizzard_ChatFrame',
                  'Blizzard_StaticPopup_Game', 'Blizzard_ActionBar', 'Blizzard_Menu','Blizzard_ChatFrameBase',
-                 'Blizzard_UIMenu'
                 ]
 
 isLive = False
@@ -48,6 +47,7 @@ xml_space = "\n"
 xml_footer = "</Ui>"
 dontupdate_toc_types = ['WowLabs']
 replace_family_with = "Mainline"
+processed_lines = {}  # Module-level dict tracking all referenced .lua paths
 
 def _app_intro():
     global version
@@ -171,7 +171,7 @@ def process_aurora_specials(table_data, aurora_specials):
 
 
 def read_toc_for_aurora_specials(toc_file, directory, xml_file_path):
-    processed_lines = {}  # Dictionary to store previously found lines
+    global processed_lines
     with open(toc_file, 'r') as file:
         content = file.read()
         lines = content.splitlines()
@@ -186,7 +186,7 @@ def read_toc_for_aurora_specials(toc_file, directory, xml_file_path):
                     write_xml_file(xml_file_path, toc_file_entry, os.path.exists(lua_file_path))       
 
 def read_toc_for_aurora_addons(toc_file, directory, xml_file_path):
-    processed_lines = {}  # Dictionary to store previously found lines
+    global processed_lines
     write_xml_file_line(xml_file_path, xml_info_addons % directory)    
     with open(toc_file, 'r') as file:
         content = file.read()
@@ -204,9 +204,8 @@ def read_toc_for_aurora_addons(toc_file, directory, xml_file_path):
 
 
 def process_aurora_addons(table_data, aurora_addons, aurora_specials):
-    global dontupdate_toc_types    
+    global dontupdate_toc_types, processed_lines
     created_tocs = {}
-    processed_lines = {}
     for entry in table_data:
         directory, toc_file, toc_type = entry
         if directory in aurora_specials:
@@ -264,25 +263,9 @@ def find_and_list_unusued_files():
                 rel_path = os.path.relpath(os.path.join(root, file), aurora_path)
                 all_lua_files.add(rel_path.replace("\\", "/"))
 
-    # Use processed_lines from process_aurora_addons for referenced .lua files
-    # If not available globally, collect here as fallback
+    # Use the module-level processed_lines populated during XML generation
     global processed_lines
-    processed_lua_files = set()
-    if 'processed_lines' in globals() and isinstance(processed_lines, dict):
-        processed_lua_files = set(k.replace("\\", "/") for k in processed_lines.keys())
-    else:
-        for root, dirs, files in os.walk(aurora_path):
-            for file in files:
-                if file.endswith('.xml'):
-                    xml_path = os.path.join(root, file)
-                    with open(xml_path, 'r', encoding='utf-8') as f:
-                        for line in f:
-                            if 'Script file="' in line:
-                                start = line.find('Script file="') + len('Script file="')
-                                end = line.find('"', start)
-                                lua_file = line[start:end]
-                                lua_file = lua_file.lstrip("./\\")
-                                processed_lua_files.add(lua_file.replace("\\", "/"))
+    processed_lua_files = set(k.replace("\\", "/") for k in processed_lines.keys())
 
     unused_files = all_lua_files - processed_lua_files
     if unused_files:
