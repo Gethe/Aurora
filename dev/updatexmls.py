@@ -64,6 +64,7 @@ def check_git_branch():
         dontupdate_toc_types.append('Wrath')
         dontupdate_toc_types.append('Vanilla')
         dontupdate_toc_types.append('Classic')
+        dontupdate_toc_types.append('Mists')
         isLive = True
     elif branch.name == 'ptr2':
         dontupdate_toc_types.append('TBC')
