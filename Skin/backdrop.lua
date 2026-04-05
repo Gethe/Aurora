@@ -530,7 +530,8 @@ function Base.SetBackdropColor(frame, color, alpha)
         private.debug("Base.SetBackdropColor", frame.debug)
     end
 
+    local a = alpha or color.a
     local backdropColor = Color.Lightness(color, -0.3)
-    frame:SetBackdropColor(backdropColor:GetRGBA())
-    frame:SetBackdropBorderColor(color:GetRGBA())
+    frame:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b, a)
+    frame:SetBackdropBorderColor(color.r, color.g, color.b, 1)
 end
