@@ -15,10 +15,7 @@ do --[[ FrameXML\ChatConfigFrame.lua ]]
         local checkBoxNameString = frame:GetName().."Checkbox"
         for index, value in ipairs(checkBoxTable) do
             local checkBoxName = checkBoxNameString..index
-            if not _G[checkBoxName]._auroraSkinned then
-                Skin[checkBoxTemplate](_G[checkBoxName])
-                _G[checkBoxName]._auroraSkinned = true
-            end
+            Util.SkinOnce(_G[checkBoxName], Skin[checkBoxTemplate])
         end
     end
     function Hook.ChatConfig_CreateTieredCheckboxes(frame, checkBoxTable, checkBoxTemplate, subCheckBoxTemplate, columns, spacing)

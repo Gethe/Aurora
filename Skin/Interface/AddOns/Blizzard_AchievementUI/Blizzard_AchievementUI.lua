@@ -151,26 +151,14 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
     do -- AchievementsObjectivesMixin hooks (expanded achievement criteria/objectives)
         Hook.AchievementsObjectivesMixin = {}
         function Hook.AchievementsObjectivesMixin:GetCriteria(index)
-            local criteria = self.criterias[index]
-            if criteria and not criteria._auroraSkinned then
-                Skin.AchievementCriteriaTemplate(criteria)
-                criteria._auroraSkinned = true
-            end
+            Util.SkinOnce(self.criterias[index], Skin.AchievementCriteriaTemplate)
         end
         function Hook.AchievementsObjectivesMixin:GetProgressBar(index)
-            local bar = self.progressBars[index]
-            if bar and not bar._auroraSkinned then
-                Skin.AchievementProgressBarTemplate(bar)
-                bar._auroraSkinned = true
-            end
+            Util.SkinOnce(self.progressBars[index], Skin.AchievementProgressBarTemplate)
         end
         function Hook.AchievementsObjectivesMixin:GetMiniAchievement(index)
             -- Note: Blizzard typo in the field name ("Achivements" not "Achievements")
-            local mini = self.miniAchivements[index]
-            if mini and not mini._auroraSkinned then
-                Skin.MiniAchievementTemplate(mini)
-                mini._auroraSkinned = true
-            end
+            Util.SkinOnce(self.miniAchivements[index], Skin.MiniAchievementTemplate)
         end
         function Hook.AchievementsObjectivesMixin:GetMeta(index)
             local meta = self.metas[index]
@@ -335,11 +323,7 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
 
     function Hook.AchievementCategoryTemplate(Frame)
         for _, child in next, { Frame.ScrollTarget:GetChildren() } do
-            local Button = child.Button
-            if Button and not Button._auroraSkinned then
-                    Skin.AchievementCategoryTemplate(Button)
-                    Button._auroraSkinned = true
-            end
+            Util.SkinOnce(child.Button, Skin.AchievementCategoryTemplate)
         end
     end
     function Skin.AchievementCategoryTemplate(Button)

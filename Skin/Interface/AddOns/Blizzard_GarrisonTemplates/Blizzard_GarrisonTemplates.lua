@@ -14,10 +14,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
     do --[[ Blizzard_GarrisonSharedTemplates ]]
         function Hook.GarrisonFollowerButton_SetCounterButton(button, followerID, index, info, lastUpdate, followerTypeID)
             local counter = button.Counters[index]
-            if not counter._auroraSkinned then
-                Skin.GarrisonMissionAbilityCounterTemplate(counter)
-                counter._auroraSkinned = true
-            end
+            Util.SkinOnce(counter, Skin.GarrisonMissionAbilityCounterTemplate)
 
             local scale = _G.GarrisonFollowerOptions[followerTypeID].followerListCounterScale
             if scale ~= 1 then
@@ -27,11 +24,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.lua ]]
             end
         end
         function Hook.GarrisonFollowerButton_AddAbility(self, index, ability, followerType)
-            local Ability = self.Abilities[index]
-            if not Ability._auroraSkinned then
-                Skin.GarrisonFollowerListButtonAbilityTemplate(Ability)
-                Ability._auroraSkinned = true
-            end
+            Util.SkinOnce(self.Abilities[index], Skin.GarrisonFollowerListButtonAbilityTemplate)
         end
     end
     do --[[ Blizzard_GarrisonMissionTemplates ]]

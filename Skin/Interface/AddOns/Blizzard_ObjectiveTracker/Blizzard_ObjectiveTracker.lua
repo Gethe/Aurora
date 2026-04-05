@@ -30,18 +30,10 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         end
     end
     function Hook.ObjectiveTrackerBlockMixin:AddTimerBar(duration, startTime)
-        local timerBar = self.lastRegion
-        if timerBar and not timerBar._auroraSkinned then
-            Skin.ObjectiveTrackerTimerBarTemplate(timerBar)
-            timerBar._auroraSkinned = true
-        end
+        Util.SkinOnce(self.lastRegion, Skin.ObjectiveTrackerTimerBarTemplate)
     end
     function Hook.ObjectiveTrackerBlockMixin:AddProgressBar(id, lineSpacing)
-        local progressBar = self.lastRegion
-        if progressBar and not progressBar._auroraSkinned then
-            Skin.ObjectiveTrackerProgressBarTemplate(progressBar)
-            progressBar._auroraSkinned = true
-        end
+        Util.SkinOnce(self.lastRegion, Skin.ObjectiveTrackerProgressBarTemplate)
     end
     function Hook.ObjectiveTrackerBlockMixin:AddRightEdgeFrame(settings, identifier, ...)
         local frame = self.rightEdgeFrame
@@ -94,10 +86,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         if t then t:SetAlpha(0) end
         if btn.Glow then btn.Glow:SetAlpha(0) end
         if btn.HighlightTexture then btn.HighlightTexture:SetAlpha(0) end
-        if not btn._auroraSkinned then
-            Base.CropIcon(btn.Display.Icon)
-            btn._auroraSkinned = true
-        end
+        Util.SkinOnce(btn, function(b) Base.CropIcon(b.Display.Icon) end)
     end
 end
 

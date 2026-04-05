@@ -8,6 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 do --[[ FrameXML\FloatingGarrisonFollowerTooltip.lua ]]
     function Hook.GarrisonFollowerAbilityTooltipTemplate_SetAbility(tooltipFrame, garrFollowerAbilityID, followerTypeID)
@@ -17,19 +18,11 @@ do --[[ FrameXML\FloatingGarrisonFollowerTooltip.lua ]]
     end
     function Hook.GarrisonFollowerTooltipTemplate_SetGarrisonFollower(tooltipFrame, data, xpWidth)
         for i = 1, #tooltipFrame.Abilities do
-            local Ability = tooltipFrame.Abilities[i]
-            if not Ability._auroraSkinned then
-                Skin.GarrisonFollowerAbilityTemplate(Ability)
-                Ability._auroraSkinned = true
-            end
+            Util.SkinOnce(tooltipFrame.Abilities[i], Skin.GarrisonFollowerAbilityTemplate)
         end
 
         for i = 1, #tooltipFrame.Traits do
-            local Trait = tooltipFrame.Traits[i]
-            if not Trait._auroraSkinned then
-                Skin.GarrisonFollowerAbilityTemplate(Trait)
-                Trait._auroraSkinned = true
-            end
+            Util.SkinOnce(tooltipFrame.Traits[i], Skin.GarrisonFollowerAbilityTemplate)
         end
     end
 end

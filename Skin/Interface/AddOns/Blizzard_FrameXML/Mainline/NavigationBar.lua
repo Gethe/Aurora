@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\NavigationBar.lua ]]
     function Hook.NavBar_Initialize(self, template, homeData, homeButton, overflowButton)
@@ -23,10 +23,7 @@ do --[[ FrameXML\NavigationBar.lua ]]
                 end
             else
                 if navButton.selected then
-                    if not navButton._auroraSkinned then
-                        Skin.NavButtonTemplate(navButton)
-                        navButton._auroraSkinned = true
-                    end
+                    Util.SkinOnce(navButton, Skin.NavButtonTemplate)
 
                     navButton:Enable()
                     navButton:LockHighlight()

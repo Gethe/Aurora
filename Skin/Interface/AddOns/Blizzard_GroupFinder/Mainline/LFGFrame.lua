@@ -60,10 +60,7 @@ do
         local _, role = _G.GetLFGProposalMember(button:GetID())
         Base.SetTexture(button.texture, "icon" .. role)
 
-        if not button._auroraSkinned then
-            Skin.LFGDungeonReadyStatusPlayerTemplate(button)
-            button._auroraSkinned = true
-        end
+        Util.SkinOnce(button, Skin.LFGDungeonReadyStatusPlayerTemplate)
     end
     function Hook.LFGRewardsFrame_SetItemButton(
         parentFrame,

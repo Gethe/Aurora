@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\AlertFrameSystems.lua ]]
     function Hook.DungeonCompletionAlertFrameReward_SetRewardMoney(frame, optionalMoney)
@@ -107,10 +107,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             end
 
             for i, button in next, ContainedAlertFrame.RewardFrames do
-                if not button._auroraSkinned then
-                    Skin.DungeonCompletionAlertFrameRewardTemplate(button)
-                    button._auroraSkinned = true
-                end
+                Util.SkinOnce(button, Skin.DungeonCompletionAlertFrameRewardTemplate)
             end
 
             if rewardData.subtypeID == _G.LFG_SUBTYPEID_HEROIC then
@@ -281,10 +278,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame._auroraTemplate = "ScenarioLegionInvasionAlertFrameTemplate"
         else
             for i, button in next, ContainedAlertFrame.RewardFrames do
-                if not button._auroraSkinned then
-                    Skin.InvasionAlertFrameRewardTemplate(button)
-                    button._auroraSkinned = true
-                end
+                Util.SkinOnce(button, Skin.InvasionAlertFrameRewardTemplate)
             end
 
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
@@ -332,10 +326,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             ContainedAlertFrame._auroraTemplate = "ScenarioAlertFrameTemplate"
         else
             for i, button in next, ContainedAlertFrame.RewardFrames do
-                if not button._auroraSkinned then
-                    Skin.DungeonCompletionAlertFrameRewardTemplate(button)
-                    button._auroraSkinned = true
-                end
+                Util.SkinOnce(button, Skin.DungeonCompletionAlertFrameRewardTemplate)
             end
 
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")

@@ -43,10 +43,7 @@ do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
     end
     function Hook.PetBattleUnitTooltip_UpdateForUnit(self)
         for i, frame in ipairs(self.Debuffs.frames) do
-            if not frame._auroraSkinned then
-                Skin.PetBattleUnitTooltipAuraTemplate(frame)
-                frame._auroraSkinned = true
-            end
+            Util.SkinOnce(frame, Skin.PetBattleUnitTooltipAuraTemplate)
         end
     end
     function Hook.PetBattleFrame_UpdateActionButtonLevel(self, actionButton)
@@ -65,10 +62,7 @@ do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
         if not self.petOwner or not self.petIndex then return end
 
         for i, frame in ipairs(self.frames) do
-            if not frame._auroraSkinned then
-                Skin.PetBattleAuraTemplate(frame)
-                frame._auroraSkinned = true
-            end
+            Util.SkinOnce(frame, Skin.PetBattleAuraTemplate)
         end
     end
 end

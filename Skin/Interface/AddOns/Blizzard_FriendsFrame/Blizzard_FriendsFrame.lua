@@ -188,10 +188,7 @@ function private.FrameXML.FriendsFrame()
 
     local FriendsTabHeader = _G.FriendsTabHeader
     for _, tab in next, {FriendsTabHeader.TabSystem:GetChildren()} do
-        if not tab._auroraSkinned then
-            Skin.FriendsTabTemplate(tab)
-            tab._auroraSkinned = true
-        end
+        Util.SkinOnce(tab, Skin.FriendsTabTemplate)
     end
 
     ----------------------

@@ -7,13 +7,11 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Util = Aurora.Util
 
 do --[[ FrameXML\Timer.lua ]]
     function Hook.StartTimer_SetGoTexture(timer)
-        if not timer._auroraSkinned then
-            Skin.StartTimerBar(timer)
-            timer._auroraSkinned = true
-        end
+        Util.SkinOnce(timer, Skin.StartTimerBar)
     end
 end
 

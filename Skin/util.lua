@@ -90,6 +90,24 @@ function Util.PositionRelative(point, anchor, relPoint, x, y, gap, direction, wi
 end
 
 
+--[[ Skinning Helpers ]]--
+
+--[[ Util.SkinOnce(_frame, skinFunc_)
+Guards a skinning function to run at most once per frame. If `frame`
+is nil or already skinned (`frame._auroraSkinned` is truthy), the call
+is a no-op.
+
+**Args:**
+* `frame`    - the widget to skin _(Frame|nil)_
+* `skinFunc` - the function to apply _(function)_
+--]]
+function Util.SkinOnce(frame, skinFunc)
+    if not frame or frame._auroraSkinned then return end
+    skinFunc(frame)
+    frame._auroraSkinned = true
+end
+
+
 --[[ Widget Data ]]--
 
 --[[ Util.GetName(_widget_)

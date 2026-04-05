@@ -14,10 +14,7 @@ do --[[ AddOns\Blizzard_GarrisonUI.lua ]]
     do --[[ Blizzard_OrderHallMissionUI ]]
         Hook.OrderHallMission = {}
         function Hook.GarrisonMissionButton_SetReward(frame, reward, currencyMultipliers)
-            if not frame._auroraSkinned then
-                Skin.GarrisonMissionListButtonRewardTemplate(frame)
-                frame._auroraSkinned = true
-            end
+            Util.SkinOnce(frame, Skin.GarrisonMissionListButtonRewardTemplate)
         end
     end
     do --[[ Blizzard_OrderHallMissionUI ]]

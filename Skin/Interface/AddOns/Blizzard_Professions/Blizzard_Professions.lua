@@ -45,10 +45,7 @@ do --[[ AddOns\Blizzard_Professions ]]
 
     Hook.ProfessionsReagentSlotButtonMixin = {}
     function Hook.ProfessionsReagentSlotButtonMixin:Init()
-        if not self._auroraSkinned then
-            Skin.ProfessionsButtonTemplate(self)
-            self._auroraSkinned = true
-        end
+        Util.SkinOnce(self, Skin.ProfessionsButtonTemplate)
     end
 
     Hook.ProfessionsButtonMixin = {}

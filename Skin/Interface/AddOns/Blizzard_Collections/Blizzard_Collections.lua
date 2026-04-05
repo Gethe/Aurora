@@ -55,10 +55,7 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
     do --[[ Blizzard_HeirloomCollection ]]
         Hook.HeirloomsMixin = {}
         function Hook.HeirloomsMixin:UpdateButton(button)
-            if not button._auroraSkinned then
-                Skin.HeirloomSpellButtonTemplate(button)
-                button._auroraSkinned = true
-            end
+            Util.SkinOnce(button, Skin.HeirloomSpellButtonTemplate)
 
             local _, _, _, _, upgradeLevel = _G.C_Heirloom.GetHeirloomInfo(button.itemID)
             if upgradeLevel == _G.C_Heirloom.GetHeirloomMaxUpgradeLevel(button.itemID) then

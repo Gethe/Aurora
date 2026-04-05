@@ -45,29 +45,20 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
 
             if parent.Bullets then
                 for _, bullet in next, parent.Bullets do
-                    if not bullet._auroraSkinned then
-                        Skin.EncounterOverviewBulletTemplate(bullet)
-                        bullet._auroraSkinned = true
-                    end
+                    Util.SkinOnce(bullet, Skin.EncounterOverviewBulletTemplate)
                 end
             end
         end
         function Hook.EncounterJournal_SetUpOverview(self, overviewSectionID, index)
             local infoHeader = self.overviews[index]
-            if not infoHeader._auroraSkinned then
-                Skin.EncounterInfoTemplate(infoHeader)
-                infoHeader._auroraSkinned = true
-            end
+            Util.SkinOnce(infoHeader, Skin.EncounterInfoTemplate)
             infoHeader.button._abilityIconBG:Hide()
         end
         function Hook.EncounterJournal_ToggleHeaders(self, doNotShift)
             local index = 1
             local infoHeader = _G["EncounterJournalInfoHeader"..index]
             while infoHeader do
-                if not infoHeader._auroraSkinned then
-                    Skin.EncounterInfoTemplate(infoHeader)
-                    infoHeader._auroraSkinned = true
-                end
+                Util.SkinOnce(infoHeader, Skin.EncounterInfoTemplate)
                 infoHeader.button._abilityIconBG:SetShown(infoHeader.button.abilityIcon:IsShown())
 
                 index = index + 1
@@ -333,10 +324,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
         end
         function  Hook.EJBossesScrollBoxScrollUpdate(frame)
             frame:ForEachFrame(function(child)
-                if not child._auroraSkinned then
-                    Skin.EncounterBossButtonTemplate(child)
-                    child._auroraSkinned = true
-                end
+                Util.SkinOnce(child, Skin.EncounterBossButtonTemplate)
             end)
         end
         function Skin.JourneyOverviewHighlightTemplate(Frame)
