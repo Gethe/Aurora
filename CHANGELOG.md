@@ -1,4 +1,23 @@
-﻿## [12.0.1.25] ##
+﻿## [12.0.1.26] ##
+### Added ###
+  * add: Hero Talents anchor preset dropdown to config with preset-based positioning
+  * add: optional HeroTalentsContainer custom re-anchor with default-off per-character behavior
+
+### Changed ###
+  * chg: additional tuning for heroTalentsAnchorPreset
+  * chg: updated AddOns_Mainline.xml with data from wow-ui-sources
+  * chg: ignore Mists TOC types when running on live branch
+  * chg: removed deprecated Blizzard_UIMenu code
+
+### Fixed ###
+  * fix: restore backdrop alpha transparency in Base.SetBackdropColor (#171)
+  * fix: re-parent item Name into bg frame to fix hidden text
+  * fix: move MainMenuBarBagButtons skin to standalone Blizzard_MainMenuBarBagButtons addon
+  * fix: move TabSystemTemplates.lua to Shared/TabSystem/ to match Blizzard restructure
+  * fix: unused file detection in updatexmls.py — scope bug, stale addon, remove XML fallback
+
+
+## [12.0.1.25] ##
 ### Changed ###
   * chg: continued work on PVPMatchResults skin
 
