@@ -16,8 +16,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
         function Hook.CommunitiesListEntryMixin:SetAddCommunity()
             Skin.CommunitiesListEntryTemplate(self)
             self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            self.CircleMask:Hide()
-            Base.CropIcon(self.Icon)
+            Base.CropCircularIcon(self.Icon)
         end
         function Hook.CommunitiesListEntryMixin:Init(elementData)
             local clubInfo = elementData.clubInfo
@@ -29,21 +28,18 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 else
                     self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
                 end
-                self.CircleMask:Hide()
-                Base.CropIcon(self.Icon)
+                Base.CropCircularIcon(self.Icon)
             end
         end
         function Hook.CommunitiesListEntryMixin:SetFindCommunity()
             Skin.CommunitiesListEntryTemplate(self)
             self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
-            self.CircleMask:Hide()
-            Base.CropIcon(self.Icon)
+            Base.CropCircularIcon(self.Icon)
         end
         function Hook.CommunitiesListEntryMixin:SetGuildFinder()
             Skin.CommunitiesListEntryTemplate(self)
             self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
-            self.CircleMask:Hide()
-            Base.CropIcon(self.Icon)
+            Base.CropCircularIcon(self.Icon)
         end
     end
     do --[[ CommunitiesMemberList ]]
@@ -370,8 +366,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.Background:Hide()
 
             Button.LogoBorder:Hide()
-            Base.CropIcon(Button.CommunityLogo, Button)
-            Button.CircleMask:Hide()
+            Base.CropCircularIcon(Button.CommunityLogo, Button)
 
             Button.HighlightBackground:SetAlpha(0)
             Base.SetHighlight(Button)

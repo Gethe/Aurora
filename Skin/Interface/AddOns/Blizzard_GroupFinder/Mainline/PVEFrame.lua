@@ -39,8 +39,7 @@ do --[[ FrameXML\PVEFrame.xml ]]
         Button.bg:Hide()
 
         Button.ring:Hide()
-        Button.CircleMask:Hide()
-        Base.CropIcon(Button.icon)
+        Base.CropCircularIcon(Button.icon)
     end
 end
 

@@ -94,6 +94,14 @@ function Base.CropIcon(texture, parent)
         return iconBorder
     end
 end
+function Base.CropCircularIcon(icon, parent)
+    icon:SetMask("")
+    local frame = parent or icon:GetParent()
+    if frame.CircleMask then
+        frame.CircleMask:Hide()
+    end
+    return Base.CropIcon(icon, parent)
+end
 
 local blizzTextures = {
     "Inset",

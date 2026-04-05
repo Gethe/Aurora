@@ -73,8 +73,7 @@ end
 do --[[ AddOns\Blizzard_PVPUI.xml ]]
     function Skin.SeasonRewardFrameTemplate(Frame)
         Frame.Ring:Hide()
-        Base.CropIcon(Frame.Icon, Frame)
-        Frame.CircleMask:Hide()
+        Base.CropCircularIcon(Frame.Icon, Frame)
     end
     function Skin.PVPSeasonChangesNoticeTemplate(Frame)
         Frame.BottomLeftCorner:Hide()
@@ -108,8 +107,7 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
     end
     function Skin.PVPRewardTemplate(Frame)
         Frame.Border:Hide()
-        Base.CropIcon(Frame.Icon, Frame)
-        Frame.CircleMask:Hide()
+        Base.CropCircularIcon(Frame.Icon, Frame)
     end
     Skin.PVPStandardRewardTemplate = Skin.PVPRewardTemplate
     Skin.PVPAchievementRewardTemplate = Skin.PVPRewardTemplate
@@ -275,9 +273,8 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.PVPHonorRewardTemplate(CasualPanel.HonorLevelDisplay.NextRewardLevel)
 
     local NextRewardLevel = CasualPanel.HonorLevelDisplay.NextRewardLevel
-    Base.CropIcon(NextRewardLevel.RewardIcon, NextRewardLevel)
+    Base.CropCircularIcon(NextRewardLevel.RewardIcon, NextRewardLevel)
     NextRewardLevel.IconCover:SetAllPoints(NextRewardLevel.RewardIcon)
-    NextRewardLevel.CircleMask:Hide()
     NextRewardLevel.RingBorder:Hide()
 
 

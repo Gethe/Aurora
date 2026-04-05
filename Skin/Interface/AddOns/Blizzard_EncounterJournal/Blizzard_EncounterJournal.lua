@@ -78,16 +78,14 @@ do --[[ AddOns\Blizzard_EncounterJournal.lua ]]
         function Hook.EJSuggestFrame_UpdateRewards(suggestion)
             local rewardData = suggestion.reward.data
             if rewardData then
-                suggestion.reward.icon:SetMask("")
-                Base.CropIcon(suggestion.reward.icon)
+                Base.CropCircularIcon(suggestion.reward.icon)
             end
         end
         function Hook.EJSuggestFrame_RefreshDisplay()
             local self = _G.EncounterJournal.suggestFrame
             for i = 1, _G.AJ_MAX_NUM_SUGGESTIONS do
                 local suggestion = self["Suggestion"..i]
-                suggestion.icon:SetMask("")
-                Base.CropIcon(suggestion.icon)
+                Base.CropCircularIcon(suggestion.icon)
 
                 --local data = self.suggestions[i]
                 --if data then
@@ -273,8 +271,7 @@ do --[[ AddOns\Blizzard_EncounterJournal.xml ]]
             Skin.UIPanelButtonTemplate(Frame.centerDisplay.button)
 
             Frame.reward:SetPoint("BOTTOMRIGHT", Frame.icon, 9, -9)
-            Frame.reward.icon:SetMask("")
-            Base.CropIcon(Frame.reward.icon, Frame.reward)
+            Base.CropCircularIcon(Frame.reward.icon, Frame.reward)
             Frame.reward.iconRing:SetAlpha(0)
             Frame.reward.iconRingHighlight:SetAlpha(0)
         end
@@ -547,8 +544,7 @@ function private.AddOns.Blizzard_EncounterJournal()
         bottom = 0,
     })
 
-    Suggestion1.icon:SetMask("")
-    Base.CropIcon(Suggestion1.icon, Suggestion1)
+    Base.CropCircularIcon(Suggestion1.icon, Suggestion1)
     Suggestion1.iconRing:SetAlpha(0)
 
     Suggestion1.centerDisplay.title.text:SetTextColor(Color.white:GetRGB())
@@ -556,8 +552,7 @@ function private.AddOns.Blizzard_EncounterJournal()
 
     Skin.UIPanelButtonTemplate(Suggestion1.button)
 
-    Suggestion1.reward.icon:SetMask("")
-    Base.CropIcon(Suggestion1.reward.icon, Suggestion1.reward)
+    Base.CropCircularIcon(Suggestion1.reward.icon, Suggestion1.reward)
     Suggestion1.reward.text:SetTextColor(Color.grayLight:GetRGB())
     Suggestion1.reward.iconRing:SetAlpha(0)
     Suggestion1.reward.iconRingHighlight:SetAlpha(0)
