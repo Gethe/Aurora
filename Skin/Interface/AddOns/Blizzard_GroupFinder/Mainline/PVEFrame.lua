@@ -34,7 +34,7 @@ do --[[ FrameXML\PVEFrame.xml ]]
         })
 
         local bg = Button:GetBackdropTexture("bg")
-        Button.bg:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+        Util.SetHighlightColor(Button.bg, Color.frame.a)
         Button.bg:SetAllPoints(bg)
         Button.bg:Hide()
 

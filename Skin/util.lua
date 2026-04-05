@@ -107,6 +107,10 @@ function Util.SkinOnce(frame, skinFunc)
     frame._auroraSkinned = true
 end
 
+function Util.SetHighlightColor(texture, alpha)
+    texture:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, alpha or 1)
+end
+
 
 --[[ Widget Data ]]--
 

@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_PVPUI.lua ]]
     Hook.NewPvpSeasonMixin = {}
@@ -130,7 +130,7 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         })
 
         local bg = Button:GetBackdropTexture("bg")
-        Button.Background:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+        Util.SetHighlightColor(Button.Background, Color.frame.a)
         Button.Background:SetAllPoints(bg)
         Button.Background:Hide()
 
@@ -149,7 +149,7 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Button:SetHighlightTexture("")
         Button:SetDisabledTexture("")
 
-        Button.SelectedTexture:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+        Util.SetHighlightColor(Button.SelectedTexture, Color.frame.a)
         Button.SelectedTexture:ClearAllPoints()
         Button.SelectedTexture:SetPoint("TOPLEFT")
         Button.SelectedTexture:SetPoint("BOTTOMRIGHT")
@@ -171,7 +171,7 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Button:SetHighlightTexture("")
         Button:SetDisabledTexture("")
 
-        Button.SelectedTexture:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+        Util.SetHighlightColor(Button.SelectedTexture, Color.frame.a)
         Button.SelectedTexture:ClearAllPoints()
         Button.SelectedTexture:SetPoint("TOPLEFT")
         Button.SelectedTexture:SetPoint("BOTTOMRIGHT")

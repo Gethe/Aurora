@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Skin = Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\WardrobeCustomSets.xml ]]
     function Skin.WardrobeCustomSetButtonButtonTemplate(Frame)
@@ -25,7 +25,7 @@ do --[[ FrameXML\WardrobeCustomSets.xml ]]
 
         local highlight = Frame.Highlight
         if highlight then
-            highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.2)
+            Util.SetHighlightColor(highlight, 0.2)
             highlight:ClearAllPoints()
             highlight:SetPoint("LEFT", parent, 1, 0)
             highlight:SetPoint("RIGHT", parent, -1, 0)

@@ -87,10 +87,10 @@ do --[[ SharedXML\FriendsFrame.xml ]]
         Button.HighlightTexture:SetAlpha(0)
     end
     function Skin.FriendsFrameGuildPlayerStatusButtonTemplate(Button)
-        Button:GetHighlightTexture():SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+        Util.SetHighlightColor(Button:GetHighlightTexture(), Color.frame.a)
     end
     function Skin.FriendsFrameGuildStatusButtonTemplate(Button)
-        Button:GetHighlightTexture():SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+        Util.SetHighlightColor(Button:GetHighlightTexture(), Color.frame.a)
     end
     function Skin.GuildFrameColumnHeaderTemplate(Button)
         local name = Button:GetName()

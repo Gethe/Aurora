@@ -27,7 +27,7 @@ do --[[ FrameXML\TalentFrameBase.lua ]]
                         local color = _G.ITEM_QUALITY_COLORS[_G.Enum.ItemQuality.Legendary]
                         button.knownSelection:SetColorTexture(color.r, color.g, color.b, 0.5)
                     elseif talentInfo.selected then
-                        button.knownSelection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.5)
+                        Util.SetHighlightColor(button.knownSelection, 0.5)
                     end
                 end
 

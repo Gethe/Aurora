@@ -15,7 +15,7 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
         Hook.CommunitiesListEntryMixin = {}
         function Hook.CommunitiesListEntryMixin:SetAddCommunity()
             Skin.CommunitiesListEntryTemplate(self)
-            self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+            Util.SetHighlightColor(self.Selection, Color.frame.a)
             Base.CropCircularIcon(self.Icon)
         end
         function Hook.CommunitiesListEntryMixin:Init(elementData)
@@ -26,14 +26,14 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
                 if isGuild then
                     self.Selection:SetColorTexture(Color.green.r, Color.green.g, Color.green.b, Color.frame.a)
                 else
-                    self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+                    Util.SetHighlightColor(self.Selection, Color.frame.a)
                 end
                 Base.CropCircularIcon(self.Icon)
             end
         end
         function Hook.CommunitiesListEntryMixin:SetFindCommunity()
             Skin.CommunitiesListEntryTemplate(self)
-            self.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+            Util.SetHighlightColor(self.Selection, Color.frame.a)
             Base.CropCircularIcon(self.Icon)
         end
         function Hook.CommunitiesListEntryMixin:SetGuildFinder()
@@ -101,7 +101,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
             Button.GuildTabardBackground:SetSize(60, 60)
 
-            Button.Selection:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+            Util.SetHighlightColor(Button.Selection, Color.frame.a)
 
             Button.CircleMask:Hide()
 
@@ -110,7 +110,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Button.GuildTabardBorder:SetAllPoints(Button.GuildTabardBackground)
 
             Button.IconRing:SetAlpha(0)
-            Button.NewCommunityFlash:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, Color.frame.a)
+            Util.SetHighlightColor(Button.NewCommunityFlash, Color.frame.a)
         end
 
         function Skin.CommunitiesListFrameTemplate(Frame)
@@ -414,7 +414,7 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Skin.UIMenuButtonStretchTemplate(Button.RevokeButton)
 
             local highlight = Button:GetHighlightTexture()
-            highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.3)
+            Util.SetHighlightColor(highlight, 0.3)
         end
         function Skin.CommunitiesTicketManagerScrollFrameTemplate(Frame)
             Frame.ArtOverlay.TopLeft:ClearAllPoints()

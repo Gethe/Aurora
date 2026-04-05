@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\LFGList.lua ]]
     local skinnedResults = 1
@@ -175,8 +175,7 @@ do --[[ FrameXML\LFGList.xml ]]
         Button:ClearPushedTexture()
 
         local highlight = Button:GetHighlightTexture()
-        highlight:SetColorTexture(Color.highlight:GetRGB())
-        highlight:SetAlpha(Color.frame.a)
+        Util.SetHighlightColor(highlight, Color.frame.a)
     end
     function Skin.LFGListApplicantMemberTemplate(Button)
         if private.isDev then

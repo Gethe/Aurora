@@ -55,7 +55,7 @@ do --[[ AddOns\Blizzard_Calendar.xml ]]
 
         Button:ClearNormalTexture()
         local highlight = Button:GetHighlightTexture()
-        highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.5)
+        Util.SetHighlightColor(highlight, 0.5)
         highlight:ClearAllPoints()
         highlight:SetPoint("TOPLEFT", 1, -1)
         highlight:SetPoint("BOTTOMRIGHT", -1, 1)
@@ -67,7 +67,7 @@ do --[[ AddOns\Blizzard_Calendar.xml ]]
         black:SetPoint("BOTTOMRIGHT", 2, 0)
 
         local highlight = Button:GetHighlightTexture()
-        highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.2)
+        Util.SetHighlightColor(highlight, 0.2)
         highlight:SetPoint("TOPLEFT", -3, 1)
         highlight:SetPoint("BOTTOMRIGHT", 3, -1)
     end
@@ -158,7 +158,7 @@ function private.AddOns.Blizzard_Calendar()
     _G.CalendarMonthBackground:Hide()
     _G.CalendarYearBackground:Hide()
 
-    _G.CalendarWeekdaySelectedTexture:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, 0.2)
+    Util.SetHighlightColor(_G.CalendarWeekdaySelectedTexture, 0.2)
     _G.CalendarWeekdaySelectedTexture:SetSize(91, 28)
 
     _G.CalendarTodayFrame:SetScript("OnUpdate", nil)

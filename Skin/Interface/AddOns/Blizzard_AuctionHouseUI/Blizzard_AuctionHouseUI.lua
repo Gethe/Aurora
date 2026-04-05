@@ -57,18 +57,15 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.lua ]]
     do --[[ Blizzard_AuctionHouseCategoriesList ]]
         function Hook.AuctionHouseFilterButton_SetUp(button, info)
             if info.type == "subSubCategory" then
-                button.SelectedTexture:SetColorTexture(Color.highlight:GetRGB())
-                button.SelectedTexture:SetAlpha(0.5)
+                Util.SetHighlightColor(button.SelectedTexture, 0.5)
 
-                button.HighlightTexture:SetColorTexture(Color.highlight:GetRGB())
-                button.HighlightTexture:SetAlpha(0.5)
+                Util.SetHighlightColor(button.HighlightTexture, 0.5)
             else
                 -- Blizzard sets NormalTexture to an atlas; hide it so Aurora styling takes effect
                 button.NormalTexture:SetAlpha(0)
                 button.HighlightTexture:SetAlpha(0)
 
-                button.SelectedTexture:SetColorTexture(Color.highlight:GetRGB())
-                button.SelectedTexture:SetAlpha(info.selected and 0.5 or 0)
+                Util.SetHighlightColor(button.SelectedTexture, (info.selected and 0.5 or 0))
             end
         end
     end
@@ -167,11 +164,9 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
     end
     do --[[ Blizzard_AuctionHouseItemList ]]
         function Skin.AuctionHouseItemListLineTemplate(Button)
-            Button.SelectedHighlight:SetColorTexture(Color.highlight:GetRGB())
-            Button.SelectedHighlight:SetAlpha(0.5)
+            Util.SetHighlightColor(Button.SelectedHighlight, 0.5)
 
-            Button.HighlightTexture:SetColorTexture(Color.highlight:GetRGB())
-            Button.HighlightTexture:SetAlpha(0.5)
+            Util.SetHighlightColor(Button.HighlightTexture, 0.5)
         end
         function Skin.AuctionHouseFavoritableLineTemplate(Button)
             Skin.AuctionHouseItemListLineTemplate(Button)
@@ -189,8 +184,8 @@ do --[[ AddOns\Blizzard_AuctionHouseUI.xml ]]
             Skin.FrameTypeButton(Button)
 
             Button.NormalTexture:Hide()
-            Button.HighlightTexture:SetColorTexture(Color.highlight:GetRGB())
-            Button.SelectedTexture:SetColorTexture(Color.highlight:GetRGB())
+            Util.SetHighlightColor(Button.HighlightTexture)
+            Util.SetHighlightColor(Button.SelectedTexture)
         end
         function Skin.AuctionHouseCategoriesListTemplate(Frame)
             Skin.NineSlicePanelTemplate(Frame.NineSlice)

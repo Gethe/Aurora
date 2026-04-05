@@ -7,7 +7,7 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Util = Aurora.Util
 
 do --[[ SharedXML\TemplatedList.lua ]]
     local function GetElementFrame(list)
@@ -41,8 +41,7 @@ end
 do --[[ SharedXML\TemplatedList.xml ]]
     function Skin.TemplatedListTemplate(Frame)
         local selectedHighlight = Frame:GetSelectedHighlight()
-        selectedHighlight:SetColorTexture(Color.highlight:GetRGB())
-        selectedHighlight:SetAlpha(0.2)
+        Util.SetHighlightColor(selectedHighlight, 0.2)
     end
 end
 

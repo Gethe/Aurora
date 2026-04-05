@@ -345,7 +345,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         check:ClearAllPoints()
         check:SetPoint("TOPLEFT", bg, 1, -1)
         check:SetPoint("BOTTOMRIGHT", bg, -1, 1)
-        check:SetColorTexture(Color.highlight:GetRGB())
+        Util.SetHighlightColor(check)
     end
     function Skin.UICheckButtonTemplate(CheckButton)
         Skin.FrameTypeCheckButton(CheckButton)

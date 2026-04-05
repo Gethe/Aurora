@@ -8,7 +8,7 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Base = Aurora.Base
 local Hook, Skin = Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
+local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ FrameXML\UIDropDownMenu.lua ]]
     do --[[ UIDropDownMenu.lua ]]
@@ -166,7 +166,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
             highlight:SetPoint("RIGHT", listFrame, -6, 0)
             highlight:SetPoint("TOP", 0, 0)
             highlight:SetPoint("BOTTOM", 0, 0)
-            highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
+            Util.SetHighlightColor(highlight, .2)
 
             local checkBox = _G.CreateFrame("Frame", nil, Button)
             checkBox:SetFrameLevel(Button:GetFrameLevel())

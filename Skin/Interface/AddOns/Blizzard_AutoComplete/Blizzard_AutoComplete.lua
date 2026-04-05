@@ -7,7 +7,7 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
-local Color = Aurora.Color
+local Util = Aurora.Util
 
 --do --[[ SharedXML\AutoComplete.lua ]]
 --end
@@ -20,7 +20,7 @@ do --[[ SharedXML\AutoComplete.xml ]]
         highlight:SetPoint("RIGHT", _G.AutoCompleteBox, -1, 0)
         highlight:SetPoint("TOP", 0, 0)
         highlight:SetPoint("BOTTOM", 0, 0)
-        highlight:SetColorTexture(Color.highlight.r, Color.highlight.g, Color.highlight.b, .2)
+        Util.SetHighlightColor(highlight, .2)
     end
 end
 
