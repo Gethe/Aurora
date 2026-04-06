@@ -86,7 +86,7 @@ do --[[ AddOns\Blizzard_ObjectiveTracker.lua ]]
         if t then t:SetAlpha(0) end
         if btn.Glow then btn.Glow:SetAlpha(0) end
         if btn.HighlightTexture then btn.HighlightTexture:SetAlpha(0) end
-        Util.SkinOnce(btn, function(b) Base.CropIcon(b.Display.Icon) end)
+        Util.SkinOnce(btn, function(button) Base.CropIcon(button.Display.Icon) end)
     end
 end
 
