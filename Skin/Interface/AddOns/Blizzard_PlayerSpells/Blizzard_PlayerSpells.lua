@@ -700,10 +700,8 @@ function private.AddOns.Blizzard_PlayerSpells()
             for _, frame in PagedSpellsFrame:EnumerateFrames() do
                 if frame.Button then
                     local button = frame.Button
-                    -- Re-skin if the backdrop is missing
-                    if not button:GetBackdrop() then
-                        button._auroraSkinned = nil
-                        frame._auroraSkinned = nil
+                    -- Re-skin if not yet skinned
+                    if not button._auroraSkinned then
                         Hook.SkinSpellBookItem(frame)
                     end
 
