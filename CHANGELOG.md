@@ -1,4 +1,17 @@
-﻿## [12.0.1.26] ##
+﻿## [12.0.1.27] ##
+### Added ###
+  * add: Util.SkinOnce helper and convert 30 guard patterns
+  * add: Base.CropCircularIcon to consolidate circular icon cropping
+  * add: Util.SetHighlightColor to consolidate highlight color texture calls
+
+### Changed ###
+  * ci: trim CHANGELOG.md to current version section for GitHub releases
+
+### Fixed ###
+  * fix: replace GetBackdrop call with _auroraSkinned check to prevent nil method error in combat
+
+
+## [12.0.1.26] ##
 ### Added ###
   * add: Hero Talents anchor preset dropdown to config with preset-based positioning
   * add: optional HeroTalentsContainer custom re-anchor with default-off per-character behavior
@@ -347,6 +360,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.26]: https://github.com/Gethe/Aurora/compare/12.0.1.25...12.0.1.26
 [12.0.1.25]: https://github.com/Gethe/Aurora/compare/12.0.1.24...12.0.1.25
 [12.0.1.24]: https://github.com/Gethe/Aurora/compare/12.0.1.23...12.0.1.24
 [12.0.1.23]: https://github.com/Gethe/Aurora/compare/12.0.1.22...12.0.1.23
