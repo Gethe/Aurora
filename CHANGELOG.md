@@ -1,4 +1,27 @@
-﻿## [12.0.1.27] ##
+﻿## [12.0.1.28] ##
+### Added ###
+  * add: skin for Blizzard_DamageMeter — EditMode child-visual-only with ScrollBox entry skinning
+  * add: skin for Blizzard_EncounterTimeline — EditMode child-visual-only with EventRegistry callback
+  * add: skin for Blizzard_EncounterWarnings — EditMode child-visual-only, no SetAttribute/GetStringWidth
+  * add: skin for Blizzard_CooldownViewer — EditMode child-visual-only with external weak table for taint-safe skinned state
+  * add: skin for Blizzard_BuffFrame — hooksecurefunc-only approach for taint-sensitive aura update paths
+  * add: skin for Blizzard_MatchmakingQueueDisplay — queue type buttons, ready/leave buttons
+  * add: skin for Blizzard_EndOfMatchUI — 3 pool wraps with PVPMatch color coordination
+  * add: skin for Blizzard_PersonalResourceDisplay — health/power/alternate StatusBars with Util.Mixin re-skin hooks
+  * add: skin for Blizzard_SpellDiminishUI — trayItemPool wrap via Util.Mixin
+  * add: skin for Blizzard_WorldLootObjectList — ScrollBox acquired frame callback
+  * add: skin for Blizzard_CombatLog — quick-filter buttons and filter bar backdrop
+  * add: skin for Blizzard_ScriptErrorsFrame — UIPanelDialogTemplate dialog with nav/action buttons
+  * add: skin for Blizzard_HelpPlate — hooksecurefunc on HelpPlate.Show for dynamic tiles
+  * add: skin for Blizzard_DelvesCompanionConfiguration — config slots, ability list, paging controls
+
+### Fixed ###
+  * fix: CooldownViewer taint — use external weak table instead of writing _auroraSkinned on item frames to avoid tainting secure cooldown/aura update paths
+  * fix: CooldownViewer EnumeratePools crash — categoryPool is a plain table, not a FramePoolCollection
+  * fix: CooldownViewer CharacterSpecificLayoutCheckButton — target inner .Button child instead of wrapper frame for Skin.FrameTypeCheckButton
+
+
+## [12.0.1.27] ##
 ### Added ###
   * add: Util.SkinOnce helper and convert 30 guard patterns
   * add: Base.CropCircularIcon to consolidate circular icon cropping
@@ -360,6 +383,8 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.28]: https://github.com/Gethe/Aurora/compare/12.0.1.27...12.0.1.28
+[12.0.1.27]: https://github.com/Gethe/Aurora/compare/12.0.1.26...12.0.1.27
 [12.0.1.26]: https://github.com/Gethe/Aurora/compare/12.0.1.25...12.0.1.26
 [12.0.1.25]: https://github.com/Gethe/Aurora/compare/12.0.1.24...12.0.1.25
 [12.0.1.24]: https://github.com/Gethe/Aurora/compare/12.0.1.23...12.0.1.24
