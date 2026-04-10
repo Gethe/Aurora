@@ -46,10 +46,9 @@ do --[[ AddOns\Blizzard_DamageMeter.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_DamageMeter.xml ]]
-    -- Entry templates are skinned dynamically via the SetupEntry hook
-    -- and the ScrollBox acquired frame callback.
-end
+--[[ AddOns\Blizzard_DamageMeter.xml ]]
+-- Entry templates are skinned dynamically via the SetupEntry hook
+-- and the ScrollBox acquired frame callback.
 
 function private.AddOns.Blizzard_DamageMeter()
     ------------------------------------------------

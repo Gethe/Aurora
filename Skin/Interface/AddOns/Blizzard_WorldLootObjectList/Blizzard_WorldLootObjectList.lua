@@ -29,10 +29,9 @@ do --[[ AddOns\Blizzard_WorldLootObjectList.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_WorldLootObjectList.xml ]]
-    -- List entry templates are skinned dynamically via the ScrollBox
-    -- acquired frame callback registered in the OnLoad hook.
-end
+--[[ AddOns\Blizzard_WorldLootObjectList.xml ]]
+-- List entry templates are skinned dynamically via the ScrollBox
+-- acquired frame callback registered in the OnLoad hook.
 
 function private.AddOns.Blizzard_WorldLootObjectList()
     ------------------------------------------------

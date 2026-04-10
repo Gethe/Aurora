@@ -35,9 +35,8 @@ do --[[ AddOns\Blizzard_SpellDiminishUI.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_SpellDiminishUI.xml ]]
-    -- Tray item templates are skinned dynamically via pool wrapping.
-end
+--[[ AddOns\Blizzard_SpellDiminishUI.xml ]]
+-- Tray item templates are skinned dynamically via pool wrapping.
 
 function private.AddOns.Blizzard_SpellDiminishUI()
     ------------------------------------------------

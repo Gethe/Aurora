@@ -9,17 +9,15 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ AddOns\Blizzard_ScriptErrorsFrame.lua ]]
-    -- ScriptErrorsFrameMixin is a dialog based on UIPanelDialogTemplate.
-    -- No dynamic element creation — all children are static XML frames.
-end
+--[[ AddOns\Blizzard_ScriptErrorsFrame.lua ]]
+-- ScriptErrorsFrameMixin is a dialog based on UIPanelDialogTemplate.
+-- No dynamic element creation — all children are static XML frames.
 
-do --[[ AddOns\Blizzard_ScriptErrorsFrame.xml ]]
-    -- ScriptErrorsFrame inherits UIPanelDialogTemplate with:
-    --   ScrollFrame (ScrollFrameTemplate + MinimalScrollBar), Text EditBox,
-    --   PreviousError/NextError nav buttons, Reload/Close action buttons,
-    --   Title, IndexLabel, DragArea.
-end
+--[[ AddOns\Blizzard_ScriptErrorsFrame.xml ]]
+-- ScriptErrorsFrame inherits UIPanelDialogTemplate with:
+--   ScrollFrame (ScrollFrameTemplate + MinimalScrollBar), Text EditBox,
+--   PreviousError/NextError nav buttons, Reload/Close action buttons,
+--   Title, IndexLabel, DragArea.
 
 function private.AddOns.Blizzard_ScriptErrorsFrame()
     local frame = _G.ScriptErrorsFrame

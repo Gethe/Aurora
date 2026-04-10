@@ -9,17 +9,15 @@ local Aurora = private.Aurora
 local Base, Skin = Aurora.Base, Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ AddOns\Blizzard_CombatLog.lua ]]
-    -- Quick-filter buttons are created dynamically in
-    -- Blizzard_CombatLog_Update_QuickButtons via CreateFrame.
-    -- We post-hook that function to skin any new buttons.
-end
+--[[ AddOns\Blizzard_CombatLog.lua ]]
+-- Quick-filter buttons are created dynamically in
+-- Blizzard_CombatLog_Update_QuickButtons via CreateFrame.
+-- We post-hook that function to skin any new buttons.
 
-do --[[ AddOns\Blizzard_CombatLog.xml ]]
-    -- CombatLogQuickButtonFrame_Custom is defined in XML with a
-    -- background texture and child buttons. Skinning is applied
-    -- in the addon registration function below.
-end
+--[[ AddOns\Blizzard_CombatLog.xml ]]
+-- CombatLogQuickButtonFrame_Custom is defined in XML with a
+-- background texture and child buttons. Skinning is applied
+-- in the addon registration function below.
 
 function private.AddOns.Blizzard_CombatLog()
     ------------------------------------------------

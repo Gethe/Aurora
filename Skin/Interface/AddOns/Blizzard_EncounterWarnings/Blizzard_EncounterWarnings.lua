@@ -70,10 +70,9 @@ do --[[ AddOns\Blizzard_EncounterWarnings.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_EncounterWarnings.xml ]]
-    -- Warning elements are static children defined in XML templates.
-    -- No Skin template functions needed.
-end
+--[[ AddOns\Blizzard_EncounterWarnings.xml ]]
+-- Warning elements are static children defined in XML templates.
+-- No Skin template functions needed.
 
 function private.AddOns.Blizzard_EncounterWarnings()
     ------------------------------------------------

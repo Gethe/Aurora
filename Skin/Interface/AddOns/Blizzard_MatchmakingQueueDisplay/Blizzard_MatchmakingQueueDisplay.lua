@@ -31,10 +31,9 @@ do --[[ AddOns\Blizzard_MatchmakingQueueDisplay.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_MatchmakingQueueDisplay.xml ]]
-    -- Queue type selection buttons and ready/leave buttons are skinned
-    -- dynamically via the UpdateButtons hook and the registration function.
-end
+--[[ AddOns\Blizzard_MatchmakingQueueDisplay.xml ]]
+-- Queue type selection buttons and ready/leave buttons are skinned
+-- dynamically via the UpdateButtons hook and the registration function.
 
 function private.AddOns.Blizzard_MatchmakingQueueDisplay()
     ------------------------------------------------

@@ -32,9 +32,8 @@ do --[[ AddOns\Blizzard_PersonalResourceDisplay.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_PersonalResourceDisplay.xml ]]
-    -- Static frame templates are skinned in the registration function below.
-end
+--[[ AddOns\Blizzard_PersonalResourceDisplay.xml ]]
+-- Static frame templates are skinned in the registration function below.
 
 function private.AddOns.Blizzard_PersonalResourceDisplay()
     ------------------------------------------------

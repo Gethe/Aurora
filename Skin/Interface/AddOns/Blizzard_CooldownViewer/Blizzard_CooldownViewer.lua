@@ -45,9 +45,8 @@ do --[[ AddOns\Blizzard_CooldownViewer.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_CooldownViewer.xml ]]
-    -- Item templates are skinned dynamically via the OnLoad hook.
-end
+--[[ AddOns\Blizzard_CooldownViewer.xml ]]
+-- Item templates are skinned dynamically via the OnLoad hook.
 
 function private.AddOns.Blizzard_CooldownViewer()
     ------------------------------------------------

@@ -30,16 +30,14 @@ local function SkinAuraButton(button)
     button._auroraSkinned = true
 end
 
-do --[[ AddOns\Blizzard_BuffFrame.lua ]]
-    -- No Hook table — we use hooksecurefunc exclusively for this
-    -- taint-sensitive addon. Never replace methods on BuffFrameMixin
-    -- or AuraFrameMixin.
-end
+--[[ AddOns\Blizzard_BuffFrame.lua ]]
+-- No Hook table — we use hooksecurefunc exclusively for this
+-- taint-sensitive addon. Never replace methods on BuffFrameMixin
+-- or AuraFrameMixin.
 
-do --[[ AddOns\Blizzard_BuffFrame.xml ]]
-    -- Aura button templates are skinned dynamically via hooksecurefunc
-    -- hooks on AuraFrame_OnLoad and UpdateAuraButtons.
-end
+--[[ AddOns\Blizzard_BuffFrame.xml ]]
+-- Aura button templates are skinned dynamically via hooksecurefunc
+-- hooks on AuraFrame_OnLoad and UpdateAuraButtons.
 
 function private.AddOns.Blizzard_BuffFrame()
     ------------------------------------------------

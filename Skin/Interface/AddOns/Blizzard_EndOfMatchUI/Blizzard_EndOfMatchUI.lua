@@ -24,9 +24,8 @@ do --[[ AddOns\Blizzard_EndOfMatchUI.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_EndOfMatchUI.xml ]]
-    -- Detail and button templates are skinned dynamically via pool wrapping.
-end
+--[[ AddOns\Blizzard_EndOfMatchUI.xml ]]
+-- Detail and button templates are skinned dynamically via pool wrapping.
 
 function private.AddOns.Blizzard_EndOfMatchUI()
     ------------------------------------------------

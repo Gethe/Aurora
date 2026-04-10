@@ -75,12 +75,11 @@ do --[[ AddOns\Blizzard_DelvesCompanionConfiguration.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_DelvesCompanionConfiguration.xml ]]
-    -- CompanionConfigSlotTemplate, CompanionConfigListTemplate,
-    -- CompanionConfigListButtonTemplate, and the main
-    -- DelvesCompanionConfigurationFrame are defined in XML.
-    -- Skinning is applied in the addon registration function below.
-end
+--[[ AddOns\Blizzard_DelvesCompanionConfiguration.xml ]]
+-- CompanionConfigSlotTemplate, CompanionConfigListTemplate,
+-- CompanionConfigListButtonTemplate, and the main
+-- DelvesCompanionConfigurationFrame are defined in XML.
+-- Skinning is applied in the addon registration function below.
 
 function private.AddOns.Blizzard_DelvesCompanionConfiguration()
     ------------------------------------------------

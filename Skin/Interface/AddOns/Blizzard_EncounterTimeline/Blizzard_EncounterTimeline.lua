@@ -48,16 +48,14 @@ local function SkinEventFrame(eventFrame)
     eventFrame._auroraSkinned = true
 end
 
-do --[[ AddOns\Blizzard_EncounterTimeline.lua ]]
-    -- No Hook table needed — we use EventRegistry:RegisterCallback
-    -- to intercept event frame acquisition, which is the canonical
-    -- lifecycle hook for this addon.
-end
+--[[ AddOns\Blizzard_EncounterTimeline.lua ]]
+-- No Hook table needed — we use EventRegistry:RegisterCallback
+-- to intercept event frame acquisition, which is the canonical
+-- lifecycle hook for this addon.
 
-do --[[ AddOns\Blizzard_EncounterTimeline.xml ]]
-    -- Event frame templates are skinned dynamically via the
-    -- OnEventFrameAcquired callback and Util.WrapPoolAcquire.
-end
+--[[ AddOns\Blizzard_EncounterTimeline.xml ]]
+-- Event frame templates are skinned dynamically via the
+-- OnEventFrameAcquired callback and Util.WrapPoolAcquire.
 
 -- Helper: wrap all pools in a view's FramePoolCollection
 local function WrapViewPools(view)

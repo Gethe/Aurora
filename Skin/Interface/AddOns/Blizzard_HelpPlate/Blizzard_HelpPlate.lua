@@ -22,17 +22,15 @@ local function SkinTile(tile)
     tile._auroraSkinned = true
 end
 
-do --[[ AddOns\Blizzard_HelpPlate.lua ]]
-    -- HelpPlate.Show creates tiles dynamically from a tilePool.
-    -- We post-hook HelpPlate.Show via hooksecurefunc to skin
-    -- each tile after it is acquired and configured.
-end
+--[[ AddOns\Blizzard_HelpPlate.lua ]]
+-- HelpPlate.Show creates tiles dynamically from a tilePool.
+-- We post-hook HelpPlate.Show via hooksecurefunc to skin
+-- each tile after it is acquired and configured.
 
-do --[[ AddOns\Blizzard_HelpPlate.xml ]]
-    -- HelpPlateTile, HelpPlateCanvas, and HelpPlateTooltip are
-    -- defined in XML. Skinning is applied in the addon registration
-    -- function below.
-end
+--[[ AddOns\Blizzard_HelpPlate.xml ]]
+-- HelpPlateTile, HelpPlateCanvas, and HelpPlateTooltip are
+-- defined in XML. Skinning is applied in the addon registration
+-- function below.
 
 function private.AddOns.Blizzard_HelpPlate()
     ------------------------------------------------
