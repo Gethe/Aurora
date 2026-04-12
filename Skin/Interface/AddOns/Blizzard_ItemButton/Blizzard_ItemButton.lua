@@ -299,16 +299,18 @@ do --[[ FrameXML\ItemButtonTemplate.xml ]]
         Button.Icon:SetPoint("TOPLEFT", bg, 1, -1)
         Button.Icon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
 
-        Button.NameFrame:SetAlpha(0)
-        Button.NameFrame:SetTexture("")
+        if Button.NameFrame then
+            Button.NameFrame:SetAlpha(0)
+            Button.NameFrame:SetTexture("")
 
-        local nameBG = _G.CreateFrame("Frame", nil, Button)
-        nameBG:SetFrameLevel(Button:GetFrameLevel())
-        nameBG:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, 0)
-        nameBG:SetPoint("RIGHT", -3, 0)
-        nameBG:SetPoint("BOTTOM", bg)
-        Base.SetBackdrop(nameBG, Color.frame)
-        Button._auroraNameBG = nameBG
+            local nameBG = _G.CreateFrame("Frame", nil, Button)
+            nameBG:SetFrameLevel(Button:GetFrameLevel())
+            nameBG:SetPoint("TOPLEFT", bg, "TOPRIGHT", 1, 0)
+            nameBG:SetPoint("RIGHT", -3, 0)
+            nameBG:SetPoint("BOTTOM", bg)
+            Base.SetBackdrop(nameBG, Color.frame)
+            Button._auroraNameBG = nameBG
+        end
     end
     function Skin.SmallItemButtonTemplate(Button)
         Base.SetBackdrop(Button, Color.black, Color.frame.a)
