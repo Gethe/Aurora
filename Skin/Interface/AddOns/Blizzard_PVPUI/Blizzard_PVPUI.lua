@@ -230,8 +230,30 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.PVPCasualStandardButtonTemplate(BonusFrame.BrawlButton2)
     BonusFrame.ShadowOverlay:Hide()
 
-    Skin.MagicButtonTemplate(HonorFrame.QueueButton)
-    HonorFrame.QueueButton:SetPoint("BOTTOM", 0, 5)
+    -- Taint-safe: Do NOT call Skin.MagicButtonTemplate here.
+    -- QueueButton's OnClick calls HonorFrame_Queue() → JoinBattlefield() (protected).
+    -- FrameTypeButton writes SetButtonColor + Base.SetBackdrop (CreateTexture) onto
+    -- the button, marking it addon-modified and intermittently tainting the call chain.
+    do
+        local btn = HonorFrame.QueueButton
+        if btn.Left then
+            btn.Left:SetAlpha(0)
+            btn.Left:Hide()
+            btn.Right:SetAlpha(0)
+            btn.Right:Hide()
+        end
+        if btn.Middle then
+            btn.Middle:SetAlpha(0)
+            btn.Middle:Hide()
+        end
+        if btn.LeftSeparator then
+            btn.LeftSeparator:Hide()
+        end
+        if btn.RightSeparator then
+            btn.RightSeparator:Hide()
+        end
+        btn:SetPoint("BOTTOM", 0, 5)
+    end
 
     -----------
     -- Rated --
@@ -254,8 +276,28 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.PVPRatedActivityButtonTemplate(ConquestFrame.RatedBG)
     ConquestFrame.ShadowOverlay:Hide()
 
-    Skin.MagicButtonTemplate(ConquestFrame.JoinButton)
-    ConquestFrame.JoinButton:SetPoint("BOTTOM", 0, 5)
+    -- Taint-safe: Do NOT call Skin.MagicButtonTemplate here.
+    -- JoinButton's OnClick calls ConquestFrameJoinButton_OnClick() → protected PvP calls.
+    do
+        local btn = ConquestFrame.JoinButton
+        if btn.Left then
+            btn.Left:SetAlpha(0)
+            btn.Left:Hide()
+            btn.Right:SetAlpha(0)
+            btn.Right:Hide()
+        end
+        if btn.Middle then
+            btn.Middle:SetAlpha(0)
+            btn.Middle:Hide()
+        end
+        if btn.LeftSeparator then
+            btn.LeftSeparator:Hide()
+        end
+        if btn.RightSeparator then
+            btn.RightSeparator:Hide()
+        end
+        btn:SetPoint("BOTTOM", 0, 5)
+    end
 
     Skin.GlowBoxTemplate(ConquestFrame.NoSeason)
     Skin.GlowBoxTemplate(ConquestFrame.Disabled)
@@ -297,7 +339,26 @@ function private.AddOns.Blizzard_PVPUI()
     Skin.LFGRoleButtonTemplate(TrainingGroundsFrame.RoleList.HealerIcon)
     Skin.LFGRoleButtonTemplate(TrainingGroundsFrame.RoleList.DPSIcon)
     TrainingGroundsFrame.BonusTrainingGroundList.ShadowOverlay:Hide()
-    Skin.MagicButtonTemplate(TrainingGroundsFrame.QueueButton)
+    -- Taint-safe: same pattern as HonorFrame/ConquestFrame queue buttons
+    do
+        local btn = TrainingGroundsFrame.QueueButton
+        if btn.Left then
+            btn.Left:SetAlpha(0)
+            btn.Left:Hide()
+            btn.Right:SetAlpha(0)
+            btn.Right:Hide()
+        end
+        if btn.Middle then
+            btn.Middle:SetAlpha(0)
+            btn.Middle:Hide()
+        end
+        if btn.LeftSeparator then
+            btn.LeftSeparator:Hide()
+        end
+        if btn.RightSeparator then
+            btn.RightSeparator:Hide()
+        end
+    end
 	for _, i in pairs({"RandomTrainingGroundButton"}) do
         local button = TrainingGroundsFrame.BonusTrainingGroundList[i]
         Skin.PVPCasualStandardButtonTemplate(button)
