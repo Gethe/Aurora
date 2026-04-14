@@ -1,4 +1,40 @@
-﻿## [12.0.1.28] ##
+﻿## [12.0.1.29] ##
+### Added ###
+  * add: skin for Blizzard_AlliedRacesUI — race info overlay and abilities
+  * add: skin for Blizzard_AutoCompletePopupList — chat autocomplete popup
+  * add: skin for Blizzard_ClassTrial — trial dialog and timer, no font mods
+  * add: skin for Blizzard_ClickBindingUI — click binding config dialog
+  * add: skin for Blizzard_ContentTracking — tracking checkmark guard
+  * add: skin for Blizzard_CovenantToasts — covenant choice and renown toasts
+  * add: skin for Blizzard_CustomizationUI — character customization frame
+  * add: skin for Blizzard_DelvesToast — delves completion toast
+  * add: skin for Blizzard_ExpansionTrial — expansion trial checkpoint dialog
+  * add: skin for Blizzard_GenericTraitUI — generic trait frame decorations
+  * add: skin for Blizzard_GuildRename — guild rename dialog
+  * add: skin for Blizzard_ItemBeltFrame — quick-use item belt bar
+  * add: skin for Blizzard_MajorFactions — renown and unlock toasts
+  * add: skin for Blizzard_NamePlates — health/cast bars, aura icons, hooksecurefunc only
+  * add: skin for Blizzard_ObliterumUI — Legion obliterum forge
+  * add: skin for Blizzard_PerksProgram — Trading Post product browser
+  * add: skin for Blizzard_PlunderstormPrematchUI — Plunderstorm lobby
+  * add: skin for Blizzard_ProfessionsCustomerOrders — crafting order panels
+  * add: skin for Blizzard_QuestTimer — timed quest countdown frame
+  * add: skin for Blizzard_QuickKeybind — keybind dialog, tooltip untouched
+  * add: skin for Blizzard_RemixArtifactUI — MoP Remix artifact talent frame
+  * add: skin for Blizzard_ReportFrame — player report dialog
+  * add: skin for Blizzard_RuneforgeUI — Shadowlands legendary crafting
+  * add: skin for Blizzard_SharedTalentUI — talent tree nodes and frame
+  * add: skin for Blizzard_StableUI — pet stable management panel
+
+### Changed ###
+  * update: register 25 AddOn skins in AddOns_Mainline.xml
+
+### Fixed ###
+  * fix: guard NameFrame nil in LargeItemButtonTemplate for PVP loot buttons
+  * fix: taint-safe PVP queue/join button skinning to prevent JoinBattlefield ADDON_ACTION_FORBIDDEN
+
+
+## [12.0.1.28] ##
 ### Added ###
   * add: skin for Blizzard_DamageMeter — EditMode child-visual-only with ScrollBox entry skinning
   * add: skin for Blizzard_EncounterTimeline — EditMode child-visual-only with EventRegistry callback
@@ -383,6 +419,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.29]: https://github.com/Gethe/Aurora/compare/12.0.1.28...12.0.1.29
 [12.0.1.28]: https://github.com/Gethe/Aurora/compare/12.0.1.27...12.0.1.28
 [12.0.1.27]: https://github.com/Gethe/Aurora/compare/12.0.1.26...12.0.1.27
 [12.0.1.26]: https://github.com/Gethe/Aurora/compare/12.0.1.25...12.0.1.26
