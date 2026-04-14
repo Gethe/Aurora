@@ -3,7 +3,6 @@ if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_MajorFactions.lua ]]
     -- Skin a faction button acquired from the ScrollBox element factory.

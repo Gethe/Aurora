@@ -54,10 +54,6 @@ do --[[ AddOns\Blizzard_ProfessionsCustomerOrders.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_ProfessionsCustomerOrders.xml ]]
-    -- No template-level skins needed; all skinning is done in the main function.
-end
-
 function private.AddOns.Blizzard_ProfessionsCustomerOrders()
     local Frame = _G.ProfessionsCustomerOrdersFrame
     if not Frame then return end

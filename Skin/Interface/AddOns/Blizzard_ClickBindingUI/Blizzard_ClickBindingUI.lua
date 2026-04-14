@@ -34,9 +34,6 @@ do --[[ AddOns\Blizzard_ClickBindingUI.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_ClickBindingUI.xml ]]
-end
-
 function private.AddOns.Blizzard_ClickBindingUI()
     local frame = _G.ClickBindingFrame
     if not frame then return end

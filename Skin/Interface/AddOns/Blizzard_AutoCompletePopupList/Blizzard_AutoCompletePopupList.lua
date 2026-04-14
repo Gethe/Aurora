@@ -29,16 +29,13 @@ do --[[ AddOns\Blizzard_AutoCompletePopupList.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_AutoCompletePopupList.xml ]]
-end
-
 function private.AddOns.Blizzard_AutoCompletePopupList()
     ------------------------------------
     -- Find all AutoCompletePopupList instances
     -- The template is virtual; instances are created by parent addons.
     -- We hook the mixin's OnLoad to catch any instance.
     ------------------------------------
-    hooksecurefunc(_G.AutoCompletePopupListMixin, "OnLoad", function(self)
+    _G.hooksecurefunc(_G.AutoCompletePopupListMixin, "OnLoad", function(self)
         if self._auroraSkinned then return end
 
         ------------------------------------

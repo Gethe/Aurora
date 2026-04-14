@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local _, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Util = Aurora.Util
 
 -- Strip RemixArtifactFrame-specific decorative textures.
@@ -62,9 +62,6 @@ do --[[ AddOns\Blizzard_RemixArtifactUI.lua ]]
         -- the artifact's textureKit. Re-strip after each refresh.
         StripRemixArtifactDecorations(self)
     end
-end
-
-do --[[ AddOns\Blizzard_RemixArtifactUI.xml ]]
 end
 
 function private.AddOns.Blizzard_RemixArtifactUI()

@@ -39,9 +39,6 @@ do --[[ AddOns\Blizzard_ReportFrame.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_ReportFrame.xml ]]
-end
-
 function private.AddOns.Blizzard_ReportFrame()
     local frame = _G.ReportFrame
     if not frame then return end

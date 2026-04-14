@@ -16,9 +16,6 @@ do --[[ AddOns\Blizzard_CovenantToasts.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_CovenantToasts.xml ]]
-end
-
 function private.AddOns.Blizzard_CovenantToasts()
     ------------------------------------------------
     -- CovenantChoiceToast
@@ -80,8 +77,8 @@ function private.AddOns.Blizzard_CovenantToasts()
         end
 
         -- Hook SetupRewardVisuals to re-crop the icon when it changes
-        if CovenantRenownToastMixin then
-            _G.hooksecurefunc(CovenantRenownToastMixin, "SetupRewardVisuals", Hook.CovenantRenownToastMixin.SetupRewardVisuals)
+        if _G.CovenantRenownToastMixin then
+            _G.hooksecurefunc(_G.CovenantRenownToastMixin, "SetupRewardVisuals", Hook.CovenantRenownToastMixin.SetupRewardVisuals)
         end
     end
 end

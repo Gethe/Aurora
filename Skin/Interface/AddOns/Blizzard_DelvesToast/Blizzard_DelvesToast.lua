@@ -6,12 +6,6 @@ local Base = Aurora.Base
 local Skin = Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ AddOns\Blizzard_DelvesToast.lua ]]
-end
-
-do --[[ AddOns\Blizzard_DelvesToast.xml ]]
-end
-
 function private.AddOns.Blizzard_DelvesToast()
     local frame = _G.DelvesToastFrame
     if not frame then return end

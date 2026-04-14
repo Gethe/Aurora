@@ -2,17 +2,12 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local Base, _, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 local Color = Aurora.Color
 
-do --[[ AddOns\Blizzard_ClassTrial.lua ]]
-    -- SAFETY: Do NOT modify font objects (ThanksText, ClassNameText, DialogText, TimerText)
-    -- SAFETY: Do NOT call GetTextWidth, SetFont, or SetFontObject on any ClassTrial text element
-    -- SAFETY: Do NOT call any method that reads secure font metrics
-end
-
-do --[[ AddOns\Blizzard_ClassTrial.xml ]]
-end
+-- SAFETY: Do NOT modify font objects (ThanksText, ClassNameText, DialogText, TimerText)
+-- SAFETY: Do NOT call GetTextWidth, SetFont, or SetFontObject on any ClassTrial text element
+-- SAFETY: Do NOT call any method that reads secure font metrics
 
 function private.AddOns.Blizzard_ClassTrial()
     ------------------------------------

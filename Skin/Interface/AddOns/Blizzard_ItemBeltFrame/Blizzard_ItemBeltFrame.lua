@@ -26,12 +26,6 @@ local function SkinBeltButton(button)
     end
 end
 
-do --[[ AddOns\Blizzard_ItemBeltFrame.lua ]]
-end
-
-do --[[ AddOns\Blizzard_ItemBeltFrame.xml ]]
-end
-
 function private.AddOns.Blizzard_ItemBeltFrame()
     local frame = _G.ItemBeltFrame
     if not frame then return end

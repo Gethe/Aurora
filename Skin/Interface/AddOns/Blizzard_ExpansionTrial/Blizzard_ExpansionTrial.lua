@@ -4,12 +4,6 @@ if private.shouldSkip() then return end
 local Aurora = private.Aurora
 local Skin = Aurora.Skin
 
-do --[[ AddOns\Blizzard_ExpansionTrial.lua ]]
-end
-
-do --[[ AddOns\Blizzard_ExpansionTrial.xml ]]
-end
-
 function private.AddOns.Blizzard_ExpansionTrial()
     ------------------------------------------------
     -- ExpansionTrialCheckPointDialog

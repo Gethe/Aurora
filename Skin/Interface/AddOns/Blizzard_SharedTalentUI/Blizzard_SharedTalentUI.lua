@@ -31,11 +31,6 @@ do --[[ AddOns\Blizzard_SharedTalentUI.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_SharedTalentUI.xml ]]
-    -- No template-level skins needed; all talent buttons are dynamically
-    -- created via pools and skinned through the mixin hooks above.
-end
-
 function private.AddOns.Blizzard_SharedTalentUI()
     ------------------------------------
     -- Hook TalentButtonBaseMixin (has OnLoad + UpdateVisualState)

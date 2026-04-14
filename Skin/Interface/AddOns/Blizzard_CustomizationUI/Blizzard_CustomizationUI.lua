@@ -3,7 +3,7 @@ if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
+local Util = Aurora.Util
 
 -- Skin a dynamically acquired option frame (dropdown, slider, or checkbox).
 local function SkinOptionFrame(frame)
@@ -42,11 +42,6 @@ do --[[ AddOns\Blizzard_CustomizationUI.lua ]]
             end
         end
     end
-end
-
-do --[[ AddOns\Blizzard_CustomizationUI.xml ]]
-    -- No template-level skins needed; all option frames are dynamically
-    -- created via pools and skinned through the mixin hooks above.
 end
 
 function private.AddOns.Blizzard_CustomizationUI()

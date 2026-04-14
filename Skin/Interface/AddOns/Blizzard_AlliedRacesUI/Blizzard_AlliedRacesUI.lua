@@ -3,7 +3,6 @@ if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_AlliedRacesUI.lua ]]
     -- Skin a racial ability entry from the ability pool.
@@ -23,9 +22,6 @@ do --[[ AddOns\Blizzard_AlliedRacesUI.lua ]]
             SkinAbilityButton(self.lastAbility)
         end
     end
-end
-
-do --[[ AddOns\Blizzard_AlliedRacesUI.xml ]]
 end
 
 function private.AddOns.Blizzard_AlliedRacesUI()

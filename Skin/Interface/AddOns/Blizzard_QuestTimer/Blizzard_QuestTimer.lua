@@ -5,12 +5,6 @@ local Aurora = private.Aurora
 local Base = Aurora.Base
 local Color = Aurora.Color
 
-do --[[ AddOns\Blizzard_QuestTimer.lua ]]
-end
-
-do --[[ AddOns\Blizzard_QuestTimer.xml ]]
-end
-
 function private.AddOns.Blizzard_QuestTimer()
     local frame = _G.QuestTimerFrame
     if not frame then return end

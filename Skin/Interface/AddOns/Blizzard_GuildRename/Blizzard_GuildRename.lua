@@ -2,14 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color = Aurora.Color
-
-do --[[ AddOns\Blizzard_GuildRename.lua ]]
-end
-
-do --[[ AddOns\Blizzard_GuildRename.xml ]]
-end
+local Base, _, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 function private.AddOns.Blizzard_GuildRename()
     local frame = _G.GuildRenameFrame

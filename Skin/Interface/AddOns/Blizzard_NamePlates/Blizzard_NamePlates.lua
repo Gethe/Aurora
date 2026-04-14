@@ -88,16 +88,11 @@ end
 -- Hooks — SAFETY: all hooks use hooksecurefunc exclusively
 --------------------------------------------------------------------------------
 
-do --[[ AddOns\Blizzard_NamePlates.lua ]]
-    -- We hook OnNamePlateAdded on the driver mixin to skin each nameplate as
-    -- it is assigned a unit. This fires for both normal and forbidden plates.
-    -- SAFETY: hooksecurefunc only — never replace the original function.
-    -- SAFETY: IsForbidden() check — skip forbidden nameplates silently.
-    -- SAFETY: No SetAttribute calls anywhere.
-end
-
-do --[[ AddOns\Blizzard_NamePlates.xml ]]
-end
+-- We hook OnNamePlateAdded on the driver mixin to skin each nameplate as
+-- it is assigned a unit. This fires for both normal and forbidden plates.
+-- SAFETY: hooksecurefunc only — never replace the original function.
+-- SAFETY: IsForbidden() check — skip forbidden nameplates silently.
+-- SAFETY: No SetAttribute calls anywhere.
 
 --------------------------------------------------------------------------------
 -- Registration

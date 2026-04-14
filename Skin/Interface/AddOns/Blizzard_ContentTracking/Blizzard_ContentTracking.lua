@@ -2,7 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
+local _, Hook = Aurora.Base, Aurora.Hook
 
 do --[[ AddOns\Blizzard_ContentTracking.lua ]]
     -- ContentTrackingElementMixin dynamically creates a ContentTrackingCheckmark
@@ -20,16 +20,13 @@ do --[[ AddOns\Blizzard_ContentTracking.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_ContentTracking.xml ]]
-end
-
 function private.AddOns.Blizzard_ContentTracking()
     -- ContentTrackingElementMixin is a virtual template mixed into other
     -- addon frames (e.g. EncounterJournal loot buttons). The mixin itself
     -- has no standalone top-level frame. Hook the mixin method so that any
     -- frame using ContentTrackingElementTemplate gets its dynamically
     -- created checkmark guarded with _auroraSkinned.
-    if ContentTrackingElementMixin and ContentTrackingElementMixin.SetTrackingCheckmarkShown then
-        _G.hooksecurefunc(ContentTrackingElementMixin, "SetTrackingCheckmarkShown", Hook.ContentTrackingElementMixin.SetTrackingCheckmarkShown)
+    if _G.ContentTrackingElementMixin and _G.ContentTrackingElementMixin.SetTrackingCheckmarkShown then
+        _G.hooksecurefunc(_G.ContentTrackingElementMixin, "SetTrackingCheckmarkShown", Hook.ContentTrackingElementMixin.SetTrackingCheckmarkShown)
     end
 end

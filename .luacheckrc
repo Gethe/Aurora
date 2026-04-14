@@ -20,6 +20,10 @@ files["Skin/Interface/AddOns/Blizzard_Professions/Blizzard_Professions.lua"] = {
     max_cyclomatic_complexity = false,
 }
 
+files["Skin/Interface/AddOns/Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrders.lua"] = {
+    max_cyclomatic_complexity = false,
+}
+
 files["Skin/Interface/AddOns/Blizzard_Transmog/Blizzard_Transmog.lua"] = {
     max_cyclomatic_complexity = false,
 }

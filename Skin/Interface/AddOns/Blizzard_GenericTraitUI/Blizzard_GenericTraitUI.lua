@@ -53,9 +53,6 @@ do --[[ AddOns\Blizzard_GenericTraitUI.lua ]]
     end
 end
 
-do --[[ AddOns\Blizzard_GenericTraitUI.xml ]]
-end
-
 function private.AddOns.Blizzard_GenericTraitUI()
     ------------------------------------
     -- Hook GenericTraitFrameMixin

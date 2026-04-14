@@ -2,13 +2,7 @@ local _, private = ...
 if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
-local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-
-do --[[ AddOns\Blizzard_ObliterumUI.lua ]]
-end
-
-do --[[ AddOns\Blizzard_ObliterumUI.xml ]]
-end
+local Base, _, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
 
 function private.AddOns.Blizzard_ObliterumUI()
     local frame = _G.ObliterumForgeFrame

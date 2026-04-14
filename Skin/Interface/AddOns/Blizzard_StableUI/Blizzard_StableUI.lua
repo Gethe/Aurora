@@ -3,7 +3,6 @@ if private.shouldSkip() then return end
 
 local Aurora = private.Aurora
 local Base, Hook, Skin = Aurora.Base, Aurora.Hook, Aurora.Skin
-local Color, Util = Aurora.Color, Aurora.Util
 
 do --[[ AddOns\Blizzard_StableUI.lua ]]
     -- Skin a stabled pet list entry from the ScrollBox element factory.
