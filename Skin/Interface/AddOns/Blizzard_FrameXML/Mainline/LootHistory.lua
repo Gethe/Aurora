@@ -2,7 +2,7 @@ local _, private = ...
 
 -- luacheck: globals _G
 
-local Hook = private.Aurora.Hook
+local Hook, Skin = private.Aurora.Hook, private.Aurora.Skin
 
 local pendingItemRefresh = setmetatable({}, {__mode = "k"})
 
@@ -38,8 +38,18 @@ do --[[ FrameXML\LootHistory.lua ]]
     end
 end
 
+do --[[ FrameXML\LootHistory.xml ]]
+    function Skin.LootHistoryElementTemplate(self)
+        -- Hide the Blizzard art background textures that obscure ItemName text
+        -- against Aurora's dark frame backdrop.
+        self.BackgroundArtFrame.NameFrame:Hide()
+        self.BackgroundArtFrame.BorderFrame:Hide()
+    end
+end
+
 function private.FrameXML.LootHistory()
     _G.hooksecurefunc(_G.LootHistoryElementMixin, "Init", Hook.LootHistoryElementMixin_Init)
+    _G.hooksecurefunc(_G.LootHistoryElementMixin, "OnLoad", Skin.LootHistoryElementTemplate)
     local origLayout = _G.ResizeLayoutMixin.Layout
     _G.LootHistoryRollTooltipLineMixin.Layout = function(self)
         local ok = _G.pcall(origLayout, self)
