@@ -1,4 +1,29 @@
-﻿## [12.0.1.29] ##
+﻿## [12.0.1.30] ##
+### Added ###
+  * add: skin for Blizzard_HouseEditor — 6-mode editor, deferred mode-frame skinning, hooksecurefunc-only, IsForbidden() guards
+  * add: skin for Blizzard_HouseList — house entry list with expand/collapse backdrop hooks
+  * add: skin for Blizzard_HousingBulletinBoard — roster list, column headers, invite dialog, pendingInvitesPool wrap
+  * add: skin for Blizzard_HousingCharter — charter creation, signaturePool wrap, request signature dialog
+  * add: skin for Blizzard_HousingCornerstone — tabbed panel with TabSystem skinning, confirmation dialogs
+  * add: skin for Blizzard_HousingCreateNeighborhood — charter and guild neighborhood creation dialogs
+  * add: skin for Blizzard_HousingHouseFinder — neighborhood button pools, map canvas border hiding
+  * add: skin for Blizzard_HousingHouseSettings — access dropdowns, checkboxes, abandon house dialog
+  * add: skin for Blizzard_HousingModelPreview — PortraitFrame with ModelScene left unskinned
+  * add: skin for Blizzard_HousingMarketCart — cart items/bundles, CropIcon on icons, FullUpdate re-skin hook
+  * add: skin for Blizzard_HousingPhotoSharing — photo preview and browser panels
+  * add: skin for Blizzard_GenericShoppingCart — base ShoppingCartVisualsFrameTemplate for all cart consumers
+  * add: skin for Blizzard_Subtitles — minimal backdrop with reduced alpha for readability
+
+### Changed ###
+  * update: register 13 AddOn skins in AddOns_Mainline.xml — Midnight housing feature complete
+
+### Fixed ###
+  * fix: use DefaultPanelTemplate instead of PortraitFrameTemplate for ButtonFrameTemplateNoPortrait frames (HousingCornerstone, HousingPhotoSharing browsers)
+  * fix: replace Util.HideNineSlice with direct region hiding for GenericShoppingCart Background NineSlice
+  * fix: replace AcquireTab hooksecurefunc with SetTab hook on TabSystemOwner for HouseEditor StoragePanel tabs
+
+
+## [12.0.1.29] ##
 ### Added ###
   * add: skin for Blizzard_AlliedRacesUI — race info overlay and abilities
   * add: skin for Blizzard_AutoCompletePopupList — chat autocomplete popup
@@ -419,6 +444,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.30]: https://github.com/Gethe/Aurora/compare/12.0.1.29...12.0.1.30
 [12.0.1.29]: https://github.com/Gethe/Aurora/compare/12.0.1.28...12.0.1.29
 [12.0.1.28]: https://github.com/Gethe/Aurora/compare/12.0.1.27...12.0.1.28
 [12.0.1.27]: https://github.com/Gethe/Aurora/compare/12.0.1.26...12.0.1.27
