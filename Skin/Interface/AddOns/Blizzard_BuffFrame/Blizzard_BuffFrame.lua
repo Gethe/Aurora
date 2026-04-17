@@ -72,12 +72,12 @@ function private.AddOns.Blizzard_BuffFrame()
     end)
 
     ------------------------------------------------
-    -- Skin ExternalDefensivesFrame container
+    -- Do not skin ExternalDefensivesFrame itself.
+    -- Blizzard keeps this container visible when the
+    -- feature is enabled, so a backdrop becomes a
+    -- permanently visible bar with no active auras.
     ------------------------------------------------
     local externalDefensives = _G.ExternalDefensivesFrame
-    if externalDefensives and not (externalDefensives.IsForbidden and externalDefensives:IsForbidden()) then
-        Base.SetBackdrop(externalDefensives)
-    end
 
     ------------------------------------------------
     -- Skin any already-created aura buttons on
