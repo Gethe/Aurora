@@ -114,23 +114,6 @@ function private.SharedXML.SharedTooltipTemplates()
         end
     end
 
-    -- Replace GameTooltip_AddWidgetSet to avoid taint: after calling
-    -- GameTooltip_InsertFrame, the original does arithmetic on
-    -- self.widgetContainer:GetHeight() which can return a secret number
-    -- when the tooltip hierarchy is tainted by Aurora's skinning.
-    -- (GameTooltip.lua:593 — "attempt to perform arithmetic on a secret
-    -- number value tainted by 'RealUI_Skins'")
-    --
-    -- securecallfunction wrapping does NOT work here because the call
-    -- chain goes through Aurora's replaced GameTooltip_InsertFrame, which
-    -- breaks the secure context.  Anchor operations done by InsertFrame
-    -- in addon context taint the widgetContainer geometry, causing
-    -- GetHeight()/GetNumPoints() to return secret numbers that poison
-    -- downstream arithmetic and comparisons (LayoutFrame.lua:491
-    -- LayoutIndexComparator, GameTooltip.lua:593).
-    --
-    -- Fix: replace entirely with SafeNumber-aware version that mirrors the
-    -- original Blizzard code but coerces secret values.
     if _G.GameTooltip_AddWidgetSet then
         local function TooltipWidgetLayout(widgetContainer, sortedWidgets)
             _G.DefaultWidgetLayout(widgetContainer, sortedWidgets)

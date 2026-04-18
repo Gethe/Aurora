@@ -1,4 +1,13 @@
-﻿## [12.0.1.30] ##
+﻿## [12.0.1.31] ##
+### Changed ###
+  * chg: make TextStatusBarText and TextStatusBarTextLarge use outlined fonts
+
+### Fixed ###
+  * fix: remove ExternalDefensivesFrame container backdrop to prevent an always-visible empty bar
+  * fix: hide LootHistory BackgroundArtFrame textures so item names remain visible
+
+
+## [12.0.1.30] ##
 ### Added ###
   * add: skin for Blizzard_HouseEditor — 6-mode editor, deferred mode-frame skinning, hooksecurefunc-only, IsForbidden() guards
   * add: skin for Blizzard_HouseList — house entry list with expand/collapse backdrop hooks
@@ -444,6 +453,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.1.31]: https://github.com/Gethe/Aurora/compare/12.0.1.30...12.0.1.31
 [12.0.1.30]: https://github.com/Gethe/Aurora/compare/12.0.1.29...12.0.1.30
 [12.0.1.29]: https://github.com/Gethe/Aurora/compare/12.0.1.28...12.0.1.29
 [12.0.1.28]: https://github.com/Gethe/Aurora/compare/12.0.1.27...12.0.1.28
