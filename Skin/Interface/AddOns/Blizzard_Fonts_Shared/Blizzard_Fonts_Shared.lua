@@ -92,6 +92,8 @@ function private.FrameXML.Fonts()
     ----====#####################====----
     Base.SetFont("SystemFont_Outline_Small",       NORMAL, 10, "OUTLINE")
     Base.SetFont("SystemFont_Outline",             NORMAL, 13, "OUTLINE")
+    Base.SetFont("TextStatusBarText",              NORMAL, 10, "OUTLINE")
+    Base.SetFont("TextStatusBarTextLarge",         NORMAL, 13, "OUTLINE")
     Base.SetFont("SystemFont_InverseShadow_Small", NORMAL, 10, nil, nil, gray, 1, -1)
     Base.SetFont("SystemFont_Huge1",               NORMAL, 20)
     Base.SetFont("SystemFont_Huge1_Outline",       NORMAL, 20, "OUTLINE")
