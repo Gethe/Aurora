@@ -1,4 +1,14 @@
-﻿## [12.0.1.31] ##
+﻿## [12.0.5.0] ##
+### Changed ###
+  * chg: bump ## Interface to 120005
+
+### Fixed ###
+  * fix: handle MovieFrame CloseDialog button nesting change — buttons moved into CloseDialog.Buttons HorizontalLayoutFrame wrapper
+  * fix: guard OpenMailFrameIcon removed in 12.0.5 MailFrame update — portrait now managed by ButtonFrameTemplate
+  * fix: guard CharacterBag0Slot-CharacterBag3Slot removed from Mainline XML — bags now dynamically created by BagsBarMixin
+
+
+## [12.0.1.31] ##
 ### Changed ###
   * chg: make TextStatusBarText and TextStatusBarTextLarge use outlined fonts
 
@@ -453,6 +463,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.5.0]: https://github.com/Gethe/Aurora/compare/12.0.1.31...12.0.5.0
 [12.0.1.31]: https://github.com/Gethe/Aurora/compare/12.0.1.30...12.0.1.31
 [12.0.1.30]: https://github.com/Gethe/Aurora/compare/12.0.1.29...12.0.1.30
 [12.0.1.29]: https://github.com/Gethe/Aurora/compare/12.0.1.28...12.0.1.29
