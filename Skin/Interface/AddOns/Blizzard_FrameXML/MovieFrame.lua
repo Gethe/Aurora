@@ -25,6 +25,14 @@ function private.FrameXML.MovieFrame()
     else
         Skin.DialogBorderTemplate(_G.MovieFrame.CloseDialog)
     end
-    Skin.CinematicDialogButtonTemplate(_G.MovieFrame.CloseDialog.ConfirmButton)
-    Skin.CinematicDialogButtonTemplate(_G.MovieFrame.CloseDialog.ResumeButton)
+    -- 12.0.5: buttons moved into a HorizontalLayoutFrame wrapper (CloseDialog.Buttons)
+    local buttons = _G.MovieFrame.CloseDialog.Buttons
+    local confirmBtn = buttons and buttons.ConfirmButton or _G.MovieFrame.CloseDialog.ConfirmButton
+    local resumeBtn = buttons and buttons.ResumeButton or _G.MovieFrame.CloseDialog.ResumeButton
+    if confirmBtn then
+        Skin.CinematicDialogButtonTemplate(confirmBtn)
+    end
+    if resumeBtn then
+        Skin.CinematicDialogButtonTemplate(resumeBtn)
+    end
 end
