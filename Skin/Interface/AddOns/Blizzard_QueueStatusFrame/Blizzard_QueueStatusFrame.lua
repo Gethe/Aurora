@@ -75,6 +75,10 @@ function private.FrameXML.QueueStatusFrame()
      _G.hooksecurefunc("QueueStatusEntry_SetFullDisplay", Hook.QueueStatusEntry_SetFullDisplay)
 
     local QueueStatusFrame = _G.QueueStatusFrame
-    Skin.TooltipBackdropTemplate(QueueStatusFrame)
+    -- NOTE: QueueStatusFrame already inherits TooltipBackdropTemplate in XML and has its OnLoad
+    -- handler applied by Blizzard. Calling Skin.TooltipBackdropTemplate() on the protected frame
+    -- marks it as addon-modified, which taints callback execution contexts created from that frame.
+    -- This causes AcceptBattlefieldPort() protected calls to fail with ADDON_ACTION_FORBIDDEN.
+    -- The queue entry children will still be skinned via WrapPoolAcquire below.
     Util.WrapPoolAcquire(QueueStatusFrame.statusEntriesPool, "QueueStatusEntryTemplate")
 end
