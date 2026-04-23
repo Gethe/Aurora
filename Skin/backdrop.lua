@@ -75,6 +75,28 @@ local function RecycleColor(color)
         colorPool[colorPoolSize] = color
     end
 end
+
+-- WoW 12.0 changed Texture:SetVertexColor to prefer a color object.
+-- Aurora's custom Color objects are not always accepted by the C API,
+-- so convert to Blizzard's CreateColor() object when available.
+local vertexColorCompat = _G.CreateColor and _G.CreateColor(1, 1, 1, 1)
+local function SetRegionVertexColor(region, color)
+    if not region or not color then
+        return
+    end
+
+    local r, g, b, a = color:GetRGBA()
+
+    if vertexColorCompat then
+        vertexColorCompat:SetRGBA(r, g, b, a)
+        local ok = _G.pcall(region.SetVertexColor, region, vertexColorCompat)
+        if ok then
+            return
+        end
+    end
+
+    _G.pcall(region.SetVertexColor, region, r, g, b, a)
+end
 -- Table pool for CopyBackdrop — avoids creating 3 tables (copy + insets + offsets)
 -- per Base.CreateBackdrop call. Frames that get re-skinned return their old
 -- backdropInfo to the pool via Base.CreateBackdrop.
@@ -388,7 +410,7 @@ local BackdropMixin do
 
         local center = Util.GetNineSlicePiece(self, "Center")
         if center then
-            center:SetVertexColor(self.backdropInfo.backdropColor:GetRGBA())
+            SetRegionVertexColor(center, self.backdropInfo.backdropColor)
         end
         --return _G.BackdropTemplateMixin.SetBackdropColor(self, self.backdropInfo.backdropColor:GetRGBA())
     end
@@ -405,7 +427,7 @@ local BackdropMixin do
             if pieceName ~= "Center" then
                 local region = Util.GetNineSlicePiece(self, pieceName)
                 if region then
-                    region:SetVertexColor(backdropBorderColor:GetRGBA());
+                    SetRegionVertexColor(region, backdropBorderColor)
                 end
             end
         end
