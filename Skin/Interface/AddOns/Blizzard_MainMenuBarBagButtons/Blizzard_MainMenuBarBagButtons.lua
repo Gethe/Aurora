@@ -21,6 +21,8 @@ end
 
 function private.FrameXML.MainMenuBarBagButtons()
     if private.disabled.mainmenubar then return end
+    -- 12.0.5: BagSlotButtonTemplate and CharacterBag*Slot frames removed from Mainline XML
+    if not _G.CharacterBag0Slot then return end
     -- Skin.FrameTypeItemButton(_G.MainMenuBarBackpackButton)
     -- Base.CropIcon(_G.MainMenuBarBackpackButton.SlotHighlightTexture)
     Skin.BagSlotButtonTemplate(_G.CharacterBag0Slot)
