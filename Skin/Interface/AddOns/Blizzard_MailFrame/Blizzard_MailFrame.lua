@@ -312,7 +312,10 @@ function private.FrameXML.MailFrame()
     _G.OpenMailFrame:SetPoint("TOPLEFT", _G.InboxFrame, "TOPRIGHT", 5, 0)
 
     if private.isRetail then
-        _G.OpenMailFrameIcon:Hide()
+        -- 12.0.5: OpenMailFrameIcon removed; portrait now managed by ButtonFrameTemplate
+        if _G.OpenMailFrameIcon then
+            _G.OpenMailFrameIcon:Hide()
+        end
         _G.OpenMailHorizontalBarLeft:Hide()
         select(9, _G.OpenMailFrame:GetRegions()):Hide() -- HorizontalBarRight
 
