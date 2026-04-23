@@ -16,7 +16,12 @@ end
 
 do --[[ FrameXML\CinematicFrame.xml ]]
     function Skin.CinematicDialogButtonTemplate(Button)
-        Skin.FrameTypeButton(Button)
+        -- 12.0.5: CinematicDialogButtonTemplate now inherits SharedButtonSmallTemplate (Mainline)
+        if private.isRetail then
+            Skin.SharedButtonSmallTemplate(Button)
+        else
+            Skin.FrameTypeButton(Button)
+        end
     end
 end
 
