@@ -57,18 +57,11 @@ function private.FrameXML.CharacterFrame()
     CharacterFrame.InsetRight:SetPoint("TOPLEFT", CharacterFrame.Inset, "TOPRIGHT", 1, -20)
 
     local CharacterStatsPane = _G.CharacterStatsPane
-    -- Hook.ObjectPoolMixin removed in 11.0.0 (private API).
-    -- Wrap the pool's Acquire method to skin frames when first created.
-    do
-        local poolAcquire = CharacterStatsPane.statsFramePool.Acquire
-        CharacterStatsPane.statsFramePool.Acquire = function(pool, ...)
-            local frame, isNew = poolAcquire(pool, ...)
-            if isNew then
-                Skin.CharacterStatFrameTemplate(frame)
-            end
-            return frame, isNew
+    _G.hooksecurefunc("PaperDollFrame_SetStat", function(statFrame)
+        if statFrame and statFrame.Background then
+            Skin.CharacterStatFrameTemplate(statFrame)
         end
-    end
+    end)
 
     local ClassBackground = CharacterStatsPane.ClassBackground
     local atlas = "talents-animations-class-"..private.charClass.token
