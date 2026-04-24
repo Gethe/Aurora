@@ -115,30 +115,16 @@ function private.SharedXML.SharedTooltipTemplates()
     end
 
     if _G.GameTooltip_AddWidgetSet then
-        local function TooltipWidgetLayout(widgetContainer, sortedWidgets)
-            _G.DefaultWidgetLayout(widgetContainer, sortedWidgets)
-            widgetContainer.shownWidgetCount = #sortedWidgets
-        end
+        local origAddWidgetSet = _G.GameTooltip_AddWidgetSet
 
+        -- Keep widget container creation and widget registration in Blizzard's
+        -- secure execution path so widget layoutIndex remains a normal number.
         _G.GameTooltip_AddWidgetSet = function(self, widgetSetID, verticalPadding)
-            if not widgetSetID then return end
-
-            if not self.widgetContainer then
-                self.widgetContainer = _G.CreateFrame("FRAME", nil, self, "UIWidgetContainerTemplate")
-                self.widgetContainer.verticalAnchorPoint = "TOPLEFT"
-                self.widgetContainer.verticalRelativePoint = "BOTTOMLEFT"
-                self.widgetContainer.showAndHideOnWidgetSetRegistration = false
-                self.widgetContainer.disableWidgetTooltips = true
-                self.widgetContainer:Hide()
+            if _G.securecallfunction then
+                return _G.securecallfunction(origAddWidgetSet, self, widgetSetID, verticalPadding)
             end
 
-            self.widgetContainer:RegisterForWidgetSet(widgetSetID, TooltipWidgetLayout)
-
-            if self.widgetContainer.shownWidgetCount > 0 then
-                local heightUsed = _G.GameTooltip_InsertFrame(self, self.widgetContainer, verticalPadding)
-                local widgetHeight = SafeNumber(self.widgetContainer:GetHeight(), 0) + SafeNumber(verticalPadding, 0)
-                return SafeNumber(heightUsed, 0) - widgetHeight
-            end
+            return origAddWidgetSet(self, widgetSetID, verticalPadding)
         end
     end
 
