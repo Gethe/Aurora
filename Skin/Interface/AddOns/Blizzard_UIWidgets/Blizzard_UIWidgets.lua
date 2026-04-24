@@ -87,6 +87,28 @@ local function IsTooltipWidgetContainer(container)
     return false
 end
 
+local function IsRestrictedWidgetContainer(container)
+    if not container then
+        return false
+    end
+
+    local okForbidden, isForbidden = _G.pcall(function()
+        return container.IsForbidden and container:IsForbidden()
+    end)
+    if okForbidden and isForbidden then
+        return true
+    end
+
+    local okProtected, isProtected = _G.pcall(function()
+        return container.IsProtected and container:IsProtected()
+    end)
+    if okProtected and isProtected then
+        return true
+    end
+
+    return false
+end
+
 local function DebugBelowMinimap(...)
     if not private.isDev and not FORCE_WIDGET_CHAT_DEBUG then
         return
@@ -142,6 +164,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         Hook.UIWidgetContainerMixin = {}
         function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
             if IsTooltipWidgetContainer(self) then return end
+            if IsRestrictedWidgetContainer(self) then return end
             local widgetFrame = self.widgetFrames[widgetID]
             if not widgetFrame then
                 -- if private.isDev then
@@ -178,6 +201,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         Hook.UIWidgetManagerMixin = {}
         function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
             if IsTooltipWidgetContainer(widgetContainer) then return end
+            if IsRestrictedWidgetContainer(widgetContainer) then return end
             local setWidgets = _G.C_UIWidgetManager.GetAllWidgetsBySetID(widgetContainer.widgetSetID)
             if IsBelowMinimapContainer(widgetContainer) then
                 DebugBelowMinimap("OnWidgetContainerRegistered", SafeDebugName(widgetContainer), "widgetSetID", widgetContainer.widgetSetID, "count", #setWidgets)
@@ -191,8 +215,6 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
 
                 Hook.UIWidgetContainerMixin.CreateWidget(widgetContainer, widgetID, widgetType, widgetTypeInfo, widgetVisInfo)
             end
-
-            Util.Mixin(widgetContainer, Hook.UIWidgetContainerMixin)
         end
     end
 
@@ -354,7 +376,15 @@ function private.AddOns.Blizzard_UIWidgets()
     ----====####################====----
     --    Blizzard_UIWidgetManager    --
     ----====####################====----
-    Util.Mixin(_G.UIWidgetManager, Hook.UIWidgetManagerMixin)
+    _G.hooksecurefunc(_G.UIWidgetManager, "OnWidgetContainerRegistered", function(_, widgetContainer)
+        Hook.UIWidgetManagerMixin.OnWidgetContainerRegistered(_G.UIWidgetManager, widgetContainer)
+    end)
+
+    if _G.UIWidgetContainerMixin and _G.UIWidgetContainerMixin.CreateWidget then
+        _G.hooksecurefunc(_G.UIWidgetContainerMixin, "CreateWidget", function(widgetContainer, widgetID, widgetType, widgetTypeInfo, widgetInfo)
+            Hook.UIWidgetContainerMixin.CreateWidget(widgetContainer, widgetID, widgetType, widgetTypeInfo, widgetInfo)
+        end)
+    end
 
     -- NOTE: The hooksecurefunc on UIWidgetContainerMixin.RegisterForWidgetSet
     -- that previously overwrote self.layoutFunc for tooltip containers has been
