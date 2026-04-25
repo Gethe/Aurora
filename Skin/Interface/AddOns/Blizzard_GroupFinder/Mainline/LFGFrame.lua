@@ -62,6 +62,16 @@ do
 
         Util.SkinOnce(button, Skin.LFGDungeonReadyStatusPlayerTemplate)
     end
+    function Hook.LFGDungeonReadyStatusGrouped_UpdateIcon(button, buttonRole)
+        Base.SetTexture(button.texture, "icon" .. buttonRole)
+
+        Util.SkinOnce(button, Skin.LFGDungeonReadyStatusPlayerTemplate)
+    end
+    function Hook.LFGDungeonReadyStatusRoleless_UpdateCount(readyButton)
+        Base.SetTexture(readyButton.texture, "iconGUIDE")
+
+        Util.SkinOnce(readyButton, Skin.LFGDungeonReadyStatusPlayerTemplate)
+    end
     function Hook.LFGRewardsFrame_SetItemButton(
         parentFrame,
         dungeonID,
@@ -198,6 +208,8 @@ function private.AddOns.LFGFrame()
     _G.hooksecurefunc("LFG_SetRoleIconIncentive", Hook.LFG_SetRoleIconIncentive)
     _G.hooksecurefunc("LFGDungeonReadyPopup_Update", Hook.LFGDungeonReadyPopup_Update)
     _G.hooksecurefunc("LFGDungeonReadyStatusIndividual_UpdateIcon", Hook.LFGDungeonReadyStatusIndividual_UpdateIcon)
+    _G.hooksecurefunc("LFGDungeonReadyStatusGrouped_UpdateIcon", Hook.LFGDungeonReadyStatusGrouped_UpdateIcon)
+    _G.hooksecurefunc("LFGDungeonReadyStatusRoleless_UpdateCount", Hook.LFGDungeonReadyStatusRoleless_UpdateCount)
     _G.hooksecurefunc("LFGRewardsFrame_SetItemButton", Hook.LFGRewardsFrame_SetItemButton)
     _G.hooksecurefunc("LFGCooldownCover_Update", Hook.LFGCooldownCover_Update)
 
@@ -205,7 +217,7 @@ function private.AddOns.LFGFrame()
     -- LFGDungeonReadyPopup --
     --------------------------
     Skin.DialogBorderTemplate(_G.LFGDungeonReadyStatus.Border)
-    Skin.MinimizeButton(_G.LFGDungeonReadyStatusCloseButton)
+    Skin.UIPanelHideButtonNoScripts(_G.LFGDungeonReadyStatusCloseButton)
 
     local LFGDungeonReadyDialog = _G.LFGDungeonReadyDialog
     LFGDungeonReadyDialog.background:ClearAllPoints()
