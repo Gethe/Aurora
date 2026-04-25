@@ -313,9 +313,9 @@ do  -- PlayerSpellsFrame.SpecFrame
                     for Button in SpecContentFrame.SpellButtonPool:EnumerateActive() do
                         Button.Ring:Hide()
                         Base.CropIcon(Button.Icon, Button)
-                        local texture, baseTexture = Button.spellID and _G.C_Spell.GetSpellTexture(Button.spellID)
-                        if texture or baseTexture then
-                            Button.Icon:SetTexture(baseTexture or texture)
+                        local texture = Button.spellID and _G.C_Spell.GetSpellTexture(Button.spellID)
+                        if texture then
+                            Button.Icon:SetTexture(texture)
                         end
                     end
                 end
