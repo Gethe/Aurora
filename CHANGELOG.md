@@ -1,4 +1,13 @@
-﻿## [12.0.5.2] ##
+﻿## [12.0.5.3] ##
+### Fixed ###
+  * fix: prefer base spell texture for PlayerSpells spec icons
+  * fix: prevent UIWidget container taint in restricted layout paths
+  * fix: wrap GameTooltip_AddWidgetSet in securecallfunction to avoid LayoutFrame secret-number taint
+  * fix: prevent PaperDoll stat taint from CharacterFrame skinning
+  * fix: use SharedButtonSmallTemplate for dialog buttons (12.0.5)
+
+
+## [12.0.5.2] ##
 ### Fixed ###
   * fix: avoid QueueStatusFrame taint by no longer skinning the protected tooltip backdrop directly; queue entries are still skinned via the entry pool
   * fix: protect backdrop vertex coloring on WoW 12.0.5 by converting Aurora Color objects to Blizzard color objects before SetVertexColor
@@ -476,6 +485,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.5.3]: https://github.com/Gethe/Aurora/compare/12.0.5.2...12.0.5.3
 [12.0.5.2]: https://github.com/Gethe/Aurora/compare/12.0.5.1...12.0.5.2
 [12.0.5.1]: https://github.com/Gethe/Aurora/compare/12.0.5.0...12.0.5.1
 [12.0.5.0]: https://github.com/Gethe/Aurora/compare/12.0.1.31...12.0.5.0
