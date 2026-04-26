@@ -868,9 +868,14 @@ function private.SetupGUI()
     -- fill 'old' table
     copyTable(_G.AuroraConfig, old)
 
-    Base.SetBackdrop(splash)
-    Skin.UIPanelButtonTemplate(splash.okayButton)
-    Skin.UIPanelCloseButton(splash.closeButton)
+    if not splash._auroraSkinned then
+        Base.SetBackdrop(splash)
+        local r, g, b = Aurora.Color.frame:GetRGB()
+        splash:SetBackdropColor(r, g, b, 0.9)
+        Skin.UIPanelButtonTemplate(splash.okayButton)
+        Skin.UIPanelCloseButton(splash.closeButton)
+        splash._auroraSkinned = true
+    end
 
     Skin.OptionsSliderTemplate(alphaSlider)
     for i = 1, #checkboxes do

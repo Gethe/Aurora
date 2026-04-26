@@ -88,11 +88,6 @@ function private.OnLoad()
         Color.button:SetRGB(.4, .4, .4)
     end
 
-    -- Show splash screen for first time users
-    if not AuroraConfig.acknowledgedSplashScreen then
-        _G.AuroraSplashScreen:Show()
-    end
-
     -- Store frame alpha from saved vars
     Util.SetFrameAlpha(AuroraConfig.alpha)
 
@@ -177,7 +172,26 @@ function private.OnLoad()
         private.FrameXML.LootFrame = private.nop
     end
 
+    local function SetupGUI()
+        if not private.SetupGUI then
+            return
+        end
+
+        local ok, err = pcall(private.SetupGUI)
+        if not ok then
+            Integration.HandleError("GUI", err, {phase = "setup", recoverable = true})
+        end
+    end
+
+    SetupGUI()
+
+    -- Keep backward compatibility for any callers that expect this addon skin hook.
     function private.AddOns.Aurora()
-        private.SetupGUI()
+        SetupGUI()
+    end
+
+    -- Show splash screen for first time users after GUI skinning has been applied.
+    if not AuroraConfig.acknowledgedSplashScreen and _G.AuroraSplashScreen then
+        _G.AuroraSplashScreen:Show()
     end
 end
