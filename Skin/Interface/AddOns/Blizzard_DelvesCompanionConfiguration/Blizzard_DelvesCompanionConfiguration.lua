@@ -88,24 +88,39 @@ function private.AddOns.Blizzard_DelvesCompanionConfiguration()
     Util.Mixin(_G.CompanionConfigSlotTemplateMixin, Hook.CompanionConfigSlotTemplateMixin)
 
     ------------------------------------------------
+    -- Tooltip taint guard
+    ------------------------------------------------
+    -- Mirror the QuestMap workaround: run the portrait tooltip path in
+    -- secure context so GameTooltip widget set sizing/layout does not receive
+    -- secret-number values in addon-tainted execution.
+    if _G.CompanionPortraitFrameMixin and _G.CompanionPortraitFrameMixin.OnEnter and _G.securecallfunction then
+        local origPortraitOnEnter = _G.CompanionPortraitFrameMixin.OnEnter
+        _G.CompanionPortraitFrameMixin.OnEnter = function(self)
+            return _G.securecallfunction(origPortraitOnEnter, self)
+        end
+    end
+
+    ------------------------------------------------
     -- Skin the main configuration frame
     ------------------------------------------------
     local frame = _G.DelvesCompanionConfigurationFrame
     if not frame then return end
 
-    Skin.FrameTypeFrame(frame)
-
     -- Strip the InsetFrameTemplate and DialogBorderTemplate decorative textures
     Base.StripBlizzardTextures(frame)
+
+    -- Apply Aurora styling after stripping Blizzard textures so backdrop regions
+    -- are not removed by StripBlizzardTextures.
+    Skin.FrameTypeFrame(frame)
 
     -- Strip the companion background atlas
     if frame.Background then
         frame.Background:SetAlpha(0)
     end
 
-    -- Strip the DialogBorder NineSlice
+    -- Skin the DialogBorder NineSlice instead of removing it.
     if frame.Border then
-        Base.StripBlizzardTextures(frame.Border)
+        Skin.DialogBorderTemplate(frame.Border)
     end
 
     ------------------------------------------------
@@ -119,7 +134,7 @@ function private.AddOns.Blizzard_DelvesCompanionConfiguration()
     -- Abilities button (UIPanelButtonTemplate)
     ------------------------------------------------
     if frame.CompanionConfigShowAbilitiesButton then
-        Skin.FrameTypeButton(frame.CompanionConfigShowAbilitiesButton)
+        Skin.UIPanelButtonTemplate(frame.CompanionConfigShowAbilitiesButton)
     end
 
     ------------------------------------------------
@@ -134,8 +149,8 @@ function private.AddOns.Blizzard_DelvesCompanionConfiguration()
     ------------------------------------------------
     local abilityList = _G.DelvesCompanionAbilityListFrame
     if abilityList then
-        Skin.FrameTypeFrame(abilityList)
         Base.StripBlizzardTextures(abilityList)
+        Skin.FrameTypeFrame(abilityList)
 
         -- Strip the ability list background atlas
         if abilityList.CompanionAbilityListBackground then
