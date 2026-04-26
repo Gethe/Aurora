@@ -1135,8 +1135,123 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
     end
 
     function Skin.IconSelectorPopupFrameTemplate(Frame)
-        Skin.SelectionFrameTemplate(Frame.BorderBox)
+        if Frame.BG then
+            Frame.BG:Hide()
+        end
+
+        local borderBox = Frame.BorderBox
+        Skin.SelectionFrameTemplate(borderBox)
+        do
+            local r, g, b = Color.frame:GetRGB()
+            borderBox:SetBackdropColor(r, g, b, 0.58)
+        end
+
+        local selectedIconArea = borderBox.SelectedIconArea
+        if selectedIconArea then
+            local selectedIconButton = selectedIconArea.SelectedIconButton
+            if selectedIconButton then
+                local slot = selectedIconButton:GetRegions()
+                if slot then
+                    slot:Hide()
+                end
+
+                Skin.FrameTypeButton(selectedIconButton)
+                selectedIconButton:SetBackdropOption("offsets", {
+                    left = 0,
+                    right = 0,
+                    top = 0,
+                    bottom = 0,
+                })
+                selectedIconButton:SetBackdropColor(1, 1, 1, 0.9)
+
+                local icon = selectedIconButton.Icon
+                if icon then
+                    Base.CropIcon(icon)
+                    icon:SetPoint("TOPLEFT", 1, -1)
+                    icon:SetPoint("BOTTOMRIGHT", -1, 1)
+                end
+
+                local highlight = selectedIconButton.Highlight
+                if highlight then
+                    Base.CropIcon(highlight)
+                end
+            end
+        end
+
+        local editBox = borderBox.IconSelectorEditBox
+        if editBox then
+            Skin.FrameTypeEditBox(editBox)
+            editBox:SetBackdropOption("offsets", {
+                left = -4,
+                right = 4,
+                top = 0,
+                bottom = 0,
+            })
+
+            if editBox.IconSelectorPopupNameLeft then
+                editBox.IconSelectorPopupNameLeft:Hide()
+            end
+            if editBox.IconSelectorPopupNameMiddle then
+                editBox.IconSelectorPopupNameMiddle:Hide()
+            end
+            if editBox.IconSelectorPopupNameRight then
+                editBox.IconSelectorPopupNameRight:Hide()
+            end
+        end
+
+        if borderBox.IconTypeDropdown then
+            Skin.DropdownButton(borderBox.IconTypeDropdown)
+        end
+
         Skin.ScrollBoxSelectorTemplate(Frame.IconSelector)
+        do
+            local scrollBox = Frame.IconSelector and Frame.IconSelector.ScrollBox
+            if scrollBox and scrollBox.GetBackdropTexture then
+                local scrollBG = scrollBox:GetBackdropTexture("bg")
+                if scrollBG then
+                    scrollBG:SetAlpha(0.45)
+                end
+            end
+        end
+
+        -- Icon selector buttons are created dynamically; skin each button when it is initialized.
+        Frame.IconSelector:SetSetupCallback(function(button, _selectionIndex, icon)
+            local hasBackdropBG = button.GetBackdropTexture and button:GetBackdropTexture("bg")
+            if not hasBackdropBG then
+                if Skin.SelectorButtonTemplate then
+                    Skin.SelectorButtonTemplate(button)
+                else
+                    local bg = button:GetRegions()
+                    Base.CreateBackdrop(button, {
+                        bgFile = [[Interface\PaperDoll\UI-Backpack-EmptySlot]],
+                        tile = false,
+                        offsets = {
+                            left = 1,
+                            right = 1,
+                            top = 1,
+                            bottom = 1,
+                        }
+                    }, {
+                        bg = bg
+                    })
+
+                    Base.CropIcon(bg)
+                    button:SetBackdropColor(1, 1, 1, 0.9)
+                    button:SetBackdropBorderColor(Color.frame, 1)
+
+                    local buttonIcon = button.Icon
+                    buttonIcon:SetAllPoints()
+                    buttonIcon:SetPoint("TOPLEFT", bg, 1, -1)
+                    buttonIcon:SetPoint("BOTTOMRIGHT", bg, -1, 1)
+                    Base.CropIcon(buttonIcon)
+                end
+            end
+
+            button:SetBackdropColor(1, 1, 1, 0.9)
+                button:SetBackdropBorderColor(Color.grayLight:GetRGB())
+
+            button:SetIconTexture(icon)
+        end)
     end
     function Skin.BottomPopupScrollBoxTemplate(Frame)
         Skin.FrameTypeFrame(Frame)

@@ -7,6 +7,7 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 local Util = Aurora.Util
 
 do --[[ AddOns\Blizzard_MacroUI.lua ]]
@@ -51,7 +52,31 @@ function private.AddOns.Blizzard_MacroUI()
     MacroFrame.SelectedMacroButton:SetPoint("TOPLEFT", MacroFrame.MacroSelector, "BOTTOMLEFT", 7, -15)
 
     Skin.ScrollBoxSelectorTemplate(MacroFrame.MacroSelector)
+    Skin.FrameTypeFrame(MacroFrame.MacroSelector)
     MacroFrame.MacroSelector:SetPoint("TOPLEFT", 10, -(private.FRAME_TITLE_HEIGHT + 29))
+    do
+        local selectorBG = MacroFrame.MacroSelector:GetBackdropTexture("bg")
+        if selectorBG then
+            selectorBG:SetAlpha(0.65)
+        end
+    end
+
+    do
+        local macroSelector = MacroFrame.MacroSelector
+        local initMacroButton = macroSelector.GetSetupCallback and macroSelector:GetSetupCallback()
+        if initMacroButton then
+            macroSelector:SetSetupCallback(function(button, selectionIndex, name, texture, body)
+                initMacroButton(button, selectionIndex, name, texture, body)
+
+                local hasBackdropBG = button.GetBackdropTexture and button:GetBackdropTexture("bg")
+                if not hasBackdropBG then
+                    Skin.MacroButtonTemplate(button)
+                end
+
+                button:SetBackdropColor(1, 1, 1, 0.9)
+            end)
+        end
+    end
     --MacroFrame.MacroSelector:SetSize(298, 140)
 
     Skin.UIPanelButtonTemplate(_G.MacroEditButton)
@@ -70,6 +95,15 @@ function private.AddOns.Blizzard_MacroUI()
     Skin.TooltipBackdropTemplate(_G.MacroFrameTextBackground)
     _G.MacroFrameTextBackground:SetPoint("TOPLEFT", _G.MacroFrameScrollFrame, -2, 2)
     _G.MacroFrameTextBackground:SetPoint("BOTTOMRIGHT", _G.MacroFrameScrollFrame, 20, -2)
+    do
+        local r, g, b = Color.frame:GetRGB()
+        _G.MacroFrameTextBackground:SetBackdropColor(r, g, b, 0.78)
+        _G.MacroFrameTextBackground:SetBackdropBorderColor(Color.grayLight:GetRGB())
+    end
+
+    _G.MacroFrameSelectedMacroName:SetTextColor(Color.yellow:GetRGB())
+    _G.MacroFrameEnterMacroText:SetTextColor(Color.grayLight:GetRGB())
+    _G.MacroFrameCharLimitText:SetTextColor(Color.grayLight:GetRGB())
 
     Skin.PanelTopTabButtonTemplate(_G.MacroFrameTab1)
     _G.MacroFrameTab1:SetPoint("TOPLEFT", 20, -20)
