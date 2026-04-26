@@ -1,4 +1,20 @@
-﻿## [12.0.5.3] ##
+﻿## [12.0.5.4] ##
+### Added ###
+  * add: skin for Blizzard_FrameXML TalkingHeadUI
+
+### Changed ###
+  * chg: update LFGDungeonReadyStatus skinning pass
+  * chg: refine icon skinning in MacroUI
+
+### Fixed ###
+  * fix: make DelvesCompanionConfigurationFrame skin non-transparent
+  * fix: add defensive guard for SendMailFrame.SendMailAttachments ([#174])
+  * fix: apply startup UI scale on login
+  * fix: make standalone mode reliably skin delayed Blizzard addon loads ([#175])
+  * fix: ensure setup popup waits for UI skinning to complete in standalone mode ([#175])
+
+
+## [12.0.5.3] ##
 ### Fixed ###
   * fix: prefer base spell texture for PlayerSpells spec icons
   * fix: prevent UIWidget container taint in restricted layout paths
@@ -485,6 +501,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.5.4]: https://github.com/Gethe/Aurora/compare/12.0.5.3...12.0.5.4
 [12.0.5.3]: https://github.com/Gethe/Aurora/compare/12.0.5.2...12.0.5.3
 [12.0.5.2]: https://github.com/Gethe/Aurora/compare/12.0.5.1...12.0.5.2
 [12.0.5.1]: https://github.com/Gethe/Aurora/compare/12.0.5.0...12.0.5.1
