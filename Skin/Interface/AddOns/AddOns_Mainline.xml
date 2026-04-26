@@ -274,7 +274,7 @@ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
     <Script file="Blizzard_FrameXML\SplashFrame.lua"/>
     <!--Script file="Blizzard_FrameXML\AzeriteEmpoweredItemDataSource.lua"/-->
     <!--Script file="Blizzard_FrameXML\QuestSession.lua"/-->
-    <!--Script file="Blizzard_FrameXML\TalkingHeadUI.lua"/-->
+    <Script file="Blizzard_FrameXML\TalkingHeadUI.lua"/>
     <!--Script file="Blizzard_FrameXML\MotionSickness.lua"/-->
     <!--Script file="Blizzard_FrameXML\ArchaeologyProgressBar.lua"/-->
     <!--Script file="Blizzard_FrameXML\Mainline\Localization.lua"/-->
