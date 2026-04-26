@@ -101,6 +101,100 @@ function private.OnLoad()
         end
     end)
 
+    local characterPanelSkinState = {
+        CharacterFrame = false,
+        PaperDollFrame = false,
+        ReputationFrame = false,
+        Blizzard_TokenUI = false,
+    }
+
+    local function MarkCharacterPanelSkinned(name)
+        characterPanelSkinState[name] = true
+    end
+
+    if type(private.FrameXML.CharacterFrame) == "function" then
+        _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()
+            MarkCharacterPanelSkinned("CharacterFrame")
+        end)
+    end
+    if type(private.FrameXML.PaperDollFrame) == "function" then
+        _G.hooksecurefunc(private.FrameXML, "PaperDollFrame", function()
+            MarkCharacterPanelSkinned("PaperDollFrame")
+        end)
+    end
+    if type(private.FrameXML.ReputationFrame) == "function" then
+        _G.hooksecurefunc(private.FrameXML, "ReputationFrame", function()
+            MarkCharacterPanelSkinned("ReputationFrame")
+        end)
+    end
+    if type(private.FrameXML.Blizzard_TokenUI) == "function" then
+        _G.hooksecurefunc(private.FrameXML, "Blizzard_TokenUI", function()
+            MarkCharacterPanelSkinned("Blizzard_TokenUI")
+        end)
+    end
+
+    local function SafeApplyCharacterPanelSkin(name)
+        if characterPanelSkinState[name] then
+            return
+        end
+
+        local fn = private.FrameXML[name]
+        if type(fn) ~= "function" then
+            return
+        end
+
+        local ok, err = pcall(fn)
+        if not ok then
+            Integration.HandleError("Skin", err, {phase = "deferred-"..name, recoverable = true})
+        end
+    end
+
+    local function ApplyCharacterPanelSkins()
+        if not AuroraConfig.characterSheet then
+            return
+        end
+
+        if _G.CharacterFrame then
+            SafeApplyCharacterPanelSkin("CharacterFrame")
+        end
+        if _G.PaperDollFrame then
+            SafeApplyCharacterPanelSkin("PaperDollFrame")
+        end
+        if _G.ReputationFrame then
+            SafeApplyCharacterPanelSkin("ReputationFrame")
+        end
+        if _G.TokenFrame then
+            SafeApplyCharacterPanelSkin("Blizzard_TokenUI")
+        end
+    end
+
+    local function QueueCharacterPanelSkinApply()
+        _G.C_Timer.After(0, ApplyCharacterPanelSkins)
+    end
+
+    local panelSkinEventFrame = _G.CreateFrame("Frame")
+    panelSkinEventFrame:RegisterEvent("ADDON_LOADED")
+    panelSkinEventFrame:SetScript("OnEvent", function(_, _, addonName)
+        if addonName == "Blizzard_UIPanels_Game" or addonName == "Blizzard_TokenUI" then
+            QueueCharacterPanelSkinApply()
+        end
+    end)
+
+    if _G.C_AddOns.IsAddOnLoaded("Blizzard_UIPanels_Game") then
+        QueueCharacterPanelSkinApply()
+    end
+    if _G.C_AddOns.IsAddOnLoaded("Blizzard_TokenUI") then
+        QueueCharacterPanelSkinApply()
+    end
+
+    if _G.ToggleCharacter then
+        _G.hooksecurefunc("ToggleCharacter", function(tabName)
+            if tabName == "PaperDollFrame" or tabName == "ReputationFrame" or tabName == "TokenFrame" then
+                QueueCharacterPanelSkinApply()
+            end
+        end)
+    end
+
     -- Skip CharacterFrame modifications if Chonky Character Sheet is loaded
     if AuroraConfig.characterSheet and not _G.C_AddOns.IsAddOnLoaded("ChonkyCharacterSheet") then
         _G.hooksecurefunc(private.FrameXML, "CharacterFrame", function()

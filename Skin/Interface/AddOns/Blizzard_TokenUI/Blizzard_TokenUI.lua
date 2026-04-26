@@ -82,6 +82,7 @@ function private.FrameXML.Blizzard_TokenUI()
     local TokenFrame = _G.TokenFrame
     Skin.WowScrollBoxList(TokenFrame.ScrollBox)
     _G.hooksecurefunc(TokenFrame.ScrollBox, 'Update', Hook.UpdateCurrencyScrollBox)
+    Hook.UpdateCurrencyScrollBox(TokenFrame.ScrollBox)
     TokenFrame.ScrollBox:SetPoint("TOPLEFT", _G.CharacterFrame.Inset, 4, -35)
     Skin.DropdownButton(TokenFrame.filterDropdown)
     TokenFrame.filterDropdown:ClearAllPoints()

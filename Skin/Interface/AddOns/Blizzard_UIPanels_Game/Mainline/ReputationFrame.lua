@@ -147,4 +147,26 @@ function private.FrameXML.ReputationFrame()
     Skin.UICheckButtonTemplate(ReputationDetailFrame.AtWarCheckbox)
     Skin.UICheckButtonTemplate(ReputationDetailFrame.WatchFactionCheckbox)
     Skin.UIPanelButtonTemplate(ReputationDetailFrame.ViewRenownButton)
+
+    if _G.ReputationFrame_OnShow then
+        _G.hooksecurefunc("ReputationFrame_OnShow", Hook.ReputationFrame_OnShow)
+    end
+    if _G.ReputationFrame_SetRowType then
+        _G.hooksecurefunc("ReputationFrame_SetRowType", Hook.ReputationFrame_SetRowType)
+    end
+    if _G.ReputationFrame_InitReputationRow then
+        _G.hooksecurefunc("ReputationFrame_InitReputationRow", Hook.ReputationFrame_InitReputationRow)
+    end
+    if _G.ReputationFrame_Update then
+        _G.hooksecurefunc("ReputationFrame_Update", Hook.ReputationFrame_Update)
+    end
+
+    local maxRows = _G.NUM_FACTIONS_DISPLAYED or 0
+    for i = 1, maxRows do
+        local factionRow = _G["ReputationBar"..i]
+        if factionRow and not factionRow._auroraSkinned then
+            Skin.ReputationBarTemplate(factionRow)
+            factionRow._auroraSkinned = true
+        end
+    end
 end
