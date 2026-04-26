@@ -1,4 +1,4 @@
-local _, private = ...
+﻿local _, private = ...
 if private.shouldSkip() then
     return
 end
@@ -18,6 +18,50 @@ local LFGRoleEnumToString = {
     [_G.Enum.LFGRole.Damage] = "DAMAGER",
     [_G.Constants.LFG_ROLEConstants.LFG_ROLE_NO_ROLE] = "GUIDE"
 }
+
+local DIALOG_BORDER_PIECES = {
+    "TopLeftCorner", "TopRightCorner", "BottomLeftCorner", "BottomRightCorner",
+    "TopEdge", "BottomEdge", "LeftEdge", "RightEdge",
+}
+
+local function WipeDialogBorderTextures(border)
+    for _, pieceName in next, DIALOG_BORDER_PIECES do
+        local piece = Util.GetNineSlicePiece(border, pieceName)
+        if piece then
+            piece:SetTexture("")
+        end
+    end
+end
+
+local LEGACY_BUTTON_TEXTURE_KEYS = {
+    "Left", "Right", "Middle",
+    "left", "right", "middle",
+    "LeftTexture", "RightTexture", "MiddleTexture",
+    "leftTexture", "rightTexture", "middleTexture",
+}
+
+local function HideLegacyButtonArt(button)
+    for _, key in next, LEGACY_BUTTON_TEXTURE_KEYS do
+        local texture = button[key]
+        if texture and texture.SetAlpha then
+            texture:SetAlpha(0)
+            texture:Hide()
+        end
+    end
+
+    for _, region in next, {button:GetRegions()} do
+        if region:GetObjectType() == "Texture" then
+            local name = region:GetName()
+            if name then
+                local lower = name:lower()
+                if lower:find("left", 1, true) or lower:find("middle", 1, true) or lower:find("right", 1, true) then
+                    region:SetAlpha(0)
+                    region:Hide()
+                end
+            end
+        end
+    end
+end
 
 do
     --[[ FrameXML\LFGFrame.lua ]]
@@ -45,6 +89,12 @@ do
         end
 
         if not hasResponded then
+            local readyDialogBG = _G.LFGDungeonReadyDialog and _G.LFGDungeonReadyDialog.background
+            if readyDialogBG then
+                readyDialogBG:SetDesaturated(true)
+                readyDialogBG:SetVertexColor(0.28, 0.28, 0.28, 0.4)
+            end
+
             if subtypeID == _G.LFG_SUBTYPEID_RAID then
                 _G.LFGDungeonReadyDialog.Border:SetBackdropBorderColor(Color.yellow, 1)
             else
@@ -216,20 +266,27 @@ function private.AddOns.LFGFrame()
     --------------------------
     -- LFGDungeonReadyPopup --
     --------------------------
-    Skin.DialogBorderTemplate(_G.LFGDungeonReadyStatus.Border)
+    local statusBorder = _G.LFGDungeonReadyStatus.Border
+    Skin.DialogBorderTemplate(statusBorder)
+    WipeDialogBorderTextures(statusBorder)
     Skin.UIPanelHideButtonNoScripts(_G.LFGDungeonReadyStatusCloseButton)
 
     local LFGDungeonReadyDialog = _G.LFGDungeonReadyDialog
     LFGDungeonReadyDialog.background:ClearAllPoints()
     LFGDungeonReadyDialog.background:SetPoint("TOPLEFT", 6, -6)
     LFGDungeonReadyDialog.background:SetPoint("BOTTOMRIGHT", -6, 64)
+    LFGDungeonReadyDialog.background:SetDesaturated(true)
+    LFGDungeonReadyDialog.background:SetVertexColor(0.28, 0.28, 0.28, 0.4)
 
     LFGDungeonReadyDialog.bottomArt:Hide()
 
     Skin.DialogBorderTranslucentTemplate(LFGDungeonReadyDialog.Border)
+    WipeDialogBorderTextures(LFGDungeonReadyDialog.Border)
     Skin.UIPanelHideButtonNoScripts(_G.LFGDungeonReadyDialogCloseButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.enterButton)
     Skin.UIPanelButtonTemplate(LFGDungeonReadyDialog.leaveButton)
+    HideLegacyButtonArt(LFGDungeonReadyDialog.enterButton)
+    HideLegacyButtonArt(LFGDungeonReadyDialog.leaveButton)
 
     _G.LFGDungeonReadyDialogRoleIcon:SetSize(64, 64)
     _G.LFGDungeonReadyDialogRoleIcon:ClearAllPoints()
@@ -245,6 +302,7 @@ function private.AddOns.LFGFrame()
     ------------------------
     local LFGReadyCheckPopup = _G.LFGReadyCheckPopup
     Skin.DialogBorderTemplate(LFGReadyCheckPopup.Border)
+    WipeDialogBorderTextures(LFGReadyCheckPopup.Border)
     Skin.UIPanelButtonTemplate(LFGReadyCheckPopup.YesButton)
     Skin.UIPanelButtonTemplate(LFGReadyCheckPopup.NoButton)
     Util.PositionRelative("BOTTOMLEFT", LFGReadyCheckPopup, "BOTTOMLEFT", 32, 15, 5, "Right", {
@@ -257,6 +315,7 @@ function private.AddOns.LFGFrame()
     --------------------
     local LFGInvitePopup = _G.LFGInvitePopup
     Skin.DialogBorderTemplate(LFGInvitePopup.Border)
+    WipeDialogBorderTextures(LFGInvitePopup.Border)
 
     LFGInvitePopup.RoleButtons[1]:SetPoint("TOPLEFT", 35, -35)
     for i = 1, #LFGInvitePopup.RoleButtons do
