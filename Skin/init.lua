@@ -234,6 +234,41 @@ ApplyGCMode("smooth")
 local eventFrame = _G.CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("UI_SCALE_CHANGED")
+
+local appliedAddOnSkins = {}
+
+local function IsAddOnFullyLoaded(addOnName)
+    local loadedOrLoading, loaded = _G.C_AddOns.IsAddOnLoaded(addOnName)
+    if loaded ~= nil then
+        return loaded
+    end
+    return loadedOrLoading
+end
+
+local function SafeApplyAddOnSkin(addOnName, addOnModule)
+    if appliedAddOnSkins[addOnName] then
+        return
+    end
+    if _G.type(addOnModule) ~= "function" then
+        return
+    end
+
+    local ok, err = _G.pcall(addOnModule)
+    if ok then
+        appliedAddOnSkins[addOnName] = true
+    else
+        private.debug("skin", "addOn module failed", addOnName, err)
+    end
+end
+
+local function ApplyLoadedAddOnSkins()
+    for addOnName, addOnModule in _G.next, private.AddOns do
+        if IsAddOnFullyLoaded(addOnName) then
+            SafeApplyAddOnSkin(addOnName, addOnModule)
+        end
+    end
+end
+
 eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
     if event == "UI_SCALE_CHANGED" then
         -- Defer to a new execution context so that SetCVar("uiScale") taint
@@ -284,22 +319,24 @@ eventFrame:SetScript("OnEvent", function(dialog, event, addonName)
 
             for i = 1, #private.fileOrder do
                 local file = private.fileOrder[i]
-                file.list[file.name]()
-            end
-
-            -- Skin prior loaded AddOns
-            for addon, func in _G.next, private.AddOns do
-                local isLoaded, isFinished = _G.C_AddOns.IsAddOnLoaded(addon)
-                if isLoaded and isFinished then
-                    func()
+                local ok, err = _G.pcall(file.list[file.name])
+                if not ok then
+                    private.debug("skin", "file module failed", file.name, err)
                 end
             end
 
+            -- Skin prior loaded AddOns and run short delayed catch-up passes to
+            -- recover from missed/reordered load signaling in the client.
+            ApplyLoadedAddOnSkins()
+            _G.C_Timer.After(0, ApplyLoadedAddOnSkins)
+            _G.C_Timer.After(2, ApplyLoadedAddOnSkins)
+            _G.C_Timer.After(8, ApplyLoadedAddOnSkins)
+
             private.isLoaded = true
         else
-            local addonModule = private.AddOns[addonName]
-            if addonModule then
-                addonModule()
+            local addOnModule = private.AddOns[addonName]
+            if addOnModule then
+                SafeApplyAddOnSkin(addonName, addOnModule)
             end
         end
 

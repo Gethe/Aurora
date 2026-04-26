@@ -108,8 +108,22 @@ function private.OnLoad()
         Blizzard_TokenUI = false,
     }
 
+    -- Only mark as skinned when the relevant global frame actually exists at
+    -- call time. The initial fileOrder loop may call these skin functions before
+    -- demand-loaded addons (Blizzard_UIPanels_Game, Blizzard_TokenUI) have
+    -- created their frames. Without this guard the deferred retry would see the
+    -- state already set to true and incorrectly skip the real skin pass.
+    local characterPanelFrameGlobals = {
+        CharacterFrame  = "CharacterFrame",
+        PaperDollFrame  = "PaperDollFrame",
+        ReputationFrame = "ReputationFrame",
+        Blizzard_TokenUI = "TokenFrame",
+    }
     local function MarkCharacterPanelSkinned(name)
-        characterPanelSkinState[name] = true
+        local globalName = characterPanelFrameGlobals[name]
+        if globalName and _G[globalName] then
+            characterPanelSkinState[name] = true
+        end
     end
 
     if type(private.FrameXML.CharacterFrame) == "function" then
