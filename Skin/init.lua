@@ -55,9 +55,6 @@ function private.UpdateUIScale()
         pixelScale = 768 / pysHeight
         local parentScale = floor(_G.UIParent:GetScale() * 100 + 0.5) / 100
         private.debug("scale", pixelScale, parentScale)
-        if parentScale == 1 then
-            return
-        end
         uiScaleChanging = true
         if parentScale ~= pixelScale then
             private.debug("Setting UIParent:SetScale to", pixelScale)
