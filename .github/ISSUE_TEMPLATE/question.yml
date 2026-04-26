@@ -21,9 +21,8 @@ body:
     description: Which WoW client are you running Aurora on?
     options:
       - Retail (Mainline)
-      - Classic Era
-      - Classic (Season of Discovery)
-      - Cataclysm Classic
+      - Beta
+      - PTR
   validations:
     required: true
 

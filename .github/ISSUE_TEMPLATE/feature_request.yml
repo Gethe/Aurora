@@ -20,10 +20,8 @@ body:
     multiple: true
     options:
       - Retail (Mainline)
-      - Classic Era
-      - Classic (Season of Discovery)
-      - Cataclysm Classic
-      - All clients
+      - Beta
+      - PTR
   validations:
     required: true
 
