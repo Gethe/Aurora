@@ -269,7 +269,10 @@ function private.FrameXML.MailFrame()
     Skin.SendMailInputBox(_G.SendMailSubjectEditBox)
 
     for i = 1, _G.ATTACHMENTS_MAX_SEND do
-        Skin.SendMailAttachment(_G.SendMailFrame.SendMailAttachments[i])
+        local attachment = _G.SendMailFrame.SendMailAttachments[i]
+        if attachment then
+            Skin.SendMailAttachment(attachment)
+        end
     end
 
     _G.SendMailMoneyButton:SetPoint("BOTTOMLEFT", 15, 38)
@@ -353,7 +356,10 @@ function private.FrameXML.MailFrame()
 
     Skin.FrameTypeItemButton(_G.OpenMailLetterButton)
     for i = 1, _G.ATTACHMENTS_MAX_RECEIVE do
-        Skin.OpenMailAttachment(_G.OpenMailFrame.OpenMailAttachments[i])
+        local attachment = _G.OpenMailFrame.OpenMailAttachments[i]
+        if attachment then
+            Skin.OpenMailAttachment(attachment)
+        end
     end
     Skin.FrameTypeItemButton(_G.OpenMailMoneyButton)
 
