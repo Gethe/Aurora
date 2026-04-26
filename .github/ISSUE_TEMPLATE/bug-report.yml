@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a report to help us improve
-title: "[Bug]"
+title: "[Bug] "
 labels: bug
 assignees: arnvid
 
@@ -12,24 +12,58 @@ body:
     options:
     - label: I have searched the existing issues
       required: true
-- type: input
+
+- type: dropdown
   attributes:
     label: Game Client
-    description: |
-      examples:
-        - Retail
-        - Wrath Classic
-        - Classic Era
+    description: Which WoW client are you running Aurora on?
+    options:
+      - Retail (Mainline)
+      - Classic Era
+      - Classic (Season of Discovery)
+      - Cataclysm Classic
+      - The War Within Beta / PTR
   validations:
     required: true
+
+- type: input
+  attributes:
+    label: WoW Interface Version
+    description: Found in-game under Help → About, or at the top of your addon's `.toc` file.
+    placeholder: "e.g. 110107"
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: Aurora Version
+    description: Found in the Aurora `.toc` file or on the CurseForge/GitHub release page.
+    placeholder: "e.g. 9.0.0"
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: Embedded in RealUI?
+    description: Are you using Aurora standalone, or as part of RealUI (via RealUI_Skins)?
+    placeholder: "Standalone / RealUI (and RealUI version if applicable)"
+  validations:
+    required: true
+
 - type: textarea
   attributes:
     label: Current Behavior
     description: A concise description of what you're experiencing.
+  validations:
+    required: true
+
 - type: textarea
   attributes:
     label: Expected Behavior
     description: A concise description of what you expected to happen.
+  validations:
+    required: true
+
 - type: textarea
   attributes:
     label: Steps To Reproduce
@@ -39,7 +73,28 @@ body:
       2. Click on '....'
       3. Scroll down to '....'
       4. See error
+  validations:
+    required: true
+
 - type: textarea
   attributes:
-    label: Additional context
-    description: Add any other context or attach screenshots
+    label: Error Output
+    description: |
+      If you received a Lua error, paste the full text here (use BugSack / !BugGrabber to capture it).
+    render: lua
+    placeholder: |
+      Message: Interface\AddOns\Aurora\...
+      ...
+
+- type: textarea
+  attributes:
+    label: Other Active Addons / Skins
+    description: List any other UI-modifying addons (ElvUI, Masque, etc.) that are active. This helps rule out conflicts.
+    placeholder: |
+      - Masque 10.2.0
+      - Bartender4 4.13.0
+
+- type: textarea
+  attributes:
+    label: Additional Context
+    description: Add any other context, screenshots, or video recordings here.
