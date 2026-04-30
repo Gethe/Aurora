@@ -67,6 +67,9 @@ function private.SharedXML.SharedTooltipTemplates()
 
     _G.hooksecurefunc("SharedTooltip_SetBackdropStyle", Hook.SharedTooltip_SetBackdropStyle)
 
+    local setTooltipMoneyPatched = false
+    local setTooltipMoneyPatchFrame
+
     -- Shared helper: coerce secret/tainted numbers to safe fallbacks so
     -- arithmetic in Blizzard code doesn't error on addon-tainted values.
     local function SafeNumber(value, fallback)
@@ -137,7 +140,14 @@ function private.SharedXML.SharedTooltipTemplates()
     -- WoWUIBugs #801 — acknowledged by Blizzard, tracked internally.
     -- Workaround: render tooltip money as an inline coin-textured string
     -- via GetCoinTextureString, bypassing MoneyFrame_Update entirely.
-    if _G.SetTooltipMoney then
+    local function InstallSetTooltipMoneyWorkaround()
+        if setTooltipMoneyPatched then
+            return true
+        end
+        if not _G.SetTooltipMoney then
+            return false
+        end
+
         local origClearMoney = _G.GameTooltip_ClearMoney
 
         _G.SetTooltipMoney = function(frame, money, type, prefixText, suffixText)
@@ -162,5 +172,23 @@ function private.SharedXML.SharedTooltipTemplates()
             end
             frame.hasMoney = 1
         end
+
+        setTooltipMoneyPatched = true
+        return true
+    end
+
+    if not InstallSetTooltipMoneyWorkaround() then
+        setTooltipMoneyPatchFrame = _G.CreateFrame("Frame")
+        setTooltipMoneyPatchFrame:RegisterEvent("ADDON_LOADED")
+        setTooltipMoneyPatchFrame:SetScript("OnEvent", function(self, _, addonName)
+            if addonName ~= "Blizzard_MoneyFrame" then
+                return
+            end
+
+            if InstallSetTooltipMoneyWorkaround() then
+                self:UnregisterAllEvents()
+                self:SetScript("OnEvent", nil)
+            end
+        end)
     end
 end
