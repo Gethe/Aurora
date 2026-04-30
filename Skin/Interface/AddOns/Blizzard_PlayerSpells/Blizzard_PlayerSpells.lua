@@ -463,7 +463,9 @@ function private.AddOns.Blizzard_PlayerSpells()
     Skin.UIPanelButtonTemplate(TalentsFrame.ApplyButton)
     Skin.UIPanelButtonTemplate(TalentsFrame.InspectCopyButton)
     Skin.SearchBoxTemplate(TalentsFrame.SearchBox)
-    Skin.DropdownButton(TalentsFrame.LoadSystem.Dropdown)
+    if TalentsFrame.LoadSystem and TalentsFrame.LoadSystem.Dropdown then
+        Skin.DropdownButton(TalentsFrame.LoadSystem.Dropdown)
+    end
 
     -- SpellBookFrame
     local SpellBookFrame = PlayerSpellsFrame.SpellBookFrame
@@ -632,7 +634,9 @@ function private.AddOns.Blizzard_PlayerSpells()
     if SpellBookFrame.HelpPlateButton then SpellBookFrame.HelpPlateButton:Hide() end
 
     Skin.SearchBoxTemplate(SpellBookFrame.SearchBox)
-    Skin.DropdownButton(SpellBookFrame.SettingsDropdown)
+    if SpellBookFrame.SettingsDropdown then
+        Skin.DropdownButton(SpellBookFrame.SettingsDropdown)
+    end
 
     for i = 1, 3 do
         local tab = select(i, SpellBookFrame.CategoryTabSystem:GetChildren())

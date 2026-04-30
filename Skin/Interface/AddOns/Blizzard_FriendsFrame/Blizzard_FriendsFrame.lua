@@ -181,10 +181,12 @@ function private.FrameXML.FriendsFrame()
     blizzIcon:SetTexture([[Interface\Glues\MainMenu\Glues-BlizzardLogo]])
 
     local FriendsFrameStatusDropdown = _G.FriendsFrameStatusDropdown
-    FriendsFrameStatusDropdown:ClearAllPoints()
-    Skin.DropdownButton(FriendsFrameStatusDropdown)
-    FriendsFrameStatusDropdown:SetPoint("TOPLEFT", 5, -27)
-    FriendsFrameStatusDropdown:SetWidth(50)
+    if FriendsFrameStatusDropdown then
+        FriendsFrameStatusDropdown:ClearAllPoints()
+        Skin.DropdownButton(FriendsFrameStatusDropdown)
+        FriendsFrameStatusDropdown:SetPoint("TOPLEFT", 5, -27)
+        FriendsFrameStatusDropdown:SetWidth(50)
+    end
 
     local FriendsTabHeader = _G.FriendsTabHeader
     for _, tab in next, {FriendsTabHeader.TabSystem:GetChildren()} do
@@ -197,7 +199,9 @@ function private.FrameXML.FriendsFrame()
     local FriendsListFrame = _G.FriendsListFrame
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameAddFriendButton)
     Skin.FriendsFrameButtonTemplate(_G.FriendsFrameSendMessageButton)
-    Skin.DropdownButton(FriendsListFrame.FilterDropdown)
+    if FriendsListFrame.FilterDropdown then
+        Skin.DropdownButton(FriendsListFrame.FilterDropdown)
+    end
     Skin.UIPanelButtonTemplate(FriendsListFrame.RIDWarning:GetChildren()) -- ContinueButton
     Skin.WowScrollBoxList(FriendsListFrame.ScrollBox)
     Skin.MinimalScrollBar(FriendsListFrame.ScrollBar)
