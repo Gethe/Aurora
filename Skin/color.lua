@@ -280,7 +280,7 @@ Color.Modes = {
     HDR = {
         tokens = {
             panelBg = Color.Create(0.00, 0.00, 0.00, 0.95), -- true black
-            button  = Color.Create(0.15, 0.16, 0.19, 1.0),  -- cooler, darker buttons
+            button  = Color.Create(0.30, 0.30, 0.34, 1.0),  -- brighter borders to stay visible against darker panels
             frame   = Color.Create(0, 0, 0, 0.7),            -- pure black, higher opacity for more solid panels
             border  = Color.Create(0.40, 0.40, 0.45, 1.0),  -- brighter edge
         },
