@@ -1,4 +1,26 @@
-﻿## [12.0.5.4] ##
+﻿## [12.0.5.5] ##
+### Added ###
+  * add: **Color Mode system** — switch between named palette presets that control the neutral UI palette (backgrounds, borders) and modulate the class color highlight. All switching is live, no reload required.
+    * **Normal** — default Aurora look, unchanged from previous versions
+    * **HDR** — deeper blacks, more opaque panels, brighter borders for high-contrast displays
+    * **Deuteranopia / Protanopia / Tritanopia** — accessibility modes that shift the class color highlight hue to compensate for color vision deficiencies
+  * add: `Color.border` token for UI element borders, used by the mode system
+  * add: `Color.SetMode`, `Color.GetActiveMode`, `Color.PreviewMode` API for programmatic mode switching
+  * add: color mode radio selector in the Appearance options panel
+  * add: HDR info note in options when HDR boost is inactive due to custom highlight override
+  * add: palette element tracking system — 500+ frames auto-refresh on mode switch with smart border preservation
+  * add: scrollable Appearance options panel to accommodate the new color mode selector
+
+### Changed ###
+  * chg: TalkingHeadUI background now uses `Color.panelBg` token instead of lightened `Color.frame` — darker on Normal, true black on HDR ([#177])
+  * chg: color consistency audit — replaced hardcoded color values across skin files with `Color.*` tokens; annotated intentionally static colors
+
+### Fixed ###
+  * fix(tooltip): make SetTooltipMoney workaround load-order safe ([#176])
+  * fix: guard nil dropdown skin calls in FriendsFrame and PlayerSpells
+
+
+## [12.0.5.4] ##
 ### Added ###
   * add: skin for Blizzard_FrameXML TalkingHeadUI
 
@@ -501,6 +523,7 @@
 
 ## Detailed Changes ##
 [Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[12.0.5.5]: https://github.com/Gethe/Aurora/compare/12.0.5.4...12.0.5.5
 [12.0.5.4]: https://github.com/Gethe/Aurora/compare/12.0.5.3...12.0.5.4
 [12.0.5.3]: https://github.com/Gethe/Aurora/compare/12.0.5.2...12.0.5.3
 [12.0.5.2]: https://github.com/Gethe/Aurora/compare/12.0.5.1...12.0.5.2
