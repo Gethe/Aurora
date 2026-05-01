@@ -363,7 +363,9 @@ function Color.SetMode(name)
 
     Color.ApplyPaletteToAll()                   -- re-apply neutral tokens to all tracked frames
     Color.RefreshHighlightColor()               -- recalculate boost + broadcast
-    private.Integration.DispatchEvent("CONFIG_CHANGED", "colorMode", name)
+    if private.Integration then
+        private.Integration.DispatchEvent("CONFIG_CHANGED", "colorMode", name)
+    end
 end
 
 --[[ Color.PreviewMode(_name_)
