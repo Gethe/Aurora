@@ -59,9 +59,9 @@ do --[[ AddOns\Blizzard_Collections.lua ]]
 
             local _, _, _, _, upgradeLevel = _G.C_Heirloom.GetHeirloomInfo(button.itemID)
             if upgradeLevel == _G.C_Heirloom.GetHeirloomMaxUpgradeLevel(button.itemID) then
-                button.levelBackground:SetColorTexture(1, 1, 1, .5)
+                button.levelBackground:SetColorTexture(1, 1, 1, .5) -- static: not a theme color
             else
-                button.levelBackground:SetColorTexture(0, 0, 0, .5)
+                button.levelBackground:SetColorTexture(0, 0, 0, .5) -- static: not a theme color
             end
         end
     end
@@ -291,7 +291,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
 
             local dragButton = Button.dragButton
             Base.CropIcon(dragButton.ActiveTexture)
-            dragButton.levelBG:SetColorTexture(0, 0, 0, 0.5)
+            dragButton.levelBG:SetColorTexture(0, 0, 0, 0.5) -- static: not a theme color
             dragButton.levelBG:SetPoint("TOPLEFT", dragButton, "BOTTOMLEFT", 1, 13)
             dragButton.levelBG:SetPoint("BOTTOMRIGHT", -1, 1)
             dragButton.level:SetPoint("CENTER", dragButton.levelBG)
@@ -317,7 +317,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             Button.iconBorder:SetAlpha(0)
             Button.qualityBorder:SetAlpha(0)
 
-            Button.levelBG:SetColorTexture(0, 0, 0, 0.5)
+            Button.levelBG:SetColorTexture(0, 0, 0, 0.5) -- static: not a theme color
             Button.levelBG:SetPoint("TOPLEFT", Button.icon, "BOTTOMLEFT", 0, 12)
             Button.levelBG:SetPoint("BOTTOMRIGHT", Button.icon)
             Button.level:SetPoint("CENTER", Button.levelBG)
@@ -375,7 +375,7 @@ do --[[ AddOns\Blizzard_Collections.xml ]]
             CheckButton.levelBackground:ClearAllPoints()
             CheckButton.levelBackground:SetPoint("TOPLEFT", CheckButton.iconTexture, "BOTTOMLEFT", 0, 12)
             CheckButton.levelBackground:SetPoint("BOTTOMRIGHT", CheckButton.iconTexture)
-            CheckButton.levelBackground:SetColorTexture(0, 0, 0, 0.5)
+            CheckButton.levelBackground:SetColorTexture(0, 0, 0, 0.5) -- static: not a theme color
             CheckButton.level:ClearAllPoints()
             CheckButton.level:SetPoint("CENTER", CheckButton.levelBackground)
         end
@@ -573,7 +573,7 @@ function private.AddOns.Blizzard_Collections()
     PetInfo._auroraIconBorder = Base.CropIcon(PetInfo.icon, PetInfo)
     PetInfo.qualityBorder:SetAlpha(0)
 
-    PetInfo.levelBG:SetColorTexture(0, 0, 0, 0.5)
+    PetInfo.levelBG:SetColorTexture(0, 0, 0, 0.5) -- static: not a theme color
     PetInfo.levelBG:SetPoint("TOPLEFT", PetInfo.icon, "BOTTOMLEFT", 0, 12)
     PetInfo.levelBG:SetPoint("BOTTOMRIGHT", PetInfo.icon)
 

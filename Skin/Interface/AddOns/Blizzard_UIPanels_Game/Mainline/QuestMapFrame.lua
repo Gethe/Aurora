@@ -29,7 +29,7 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
                     overlay:SetSize(66.33, 76.56)
 
                     overlay:SetBlendMode("BLEND")
-                    overlay:SetVertexColor(0, 0, 0)
+                    overlay:SetVertexColor(0, 0, 0) -- static: not a theme color
                     campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
                 end
             end
@@ -47,7 +47,7 @@ do --[[ FrameXML\QuestMapFrame.lua ]]
             overlay:SetSize(66.33, 76.56)
 
             overlay:SetBlendMode("BLEND")
-            overlay:SetVertexColor(0, 0, 0)
+            overlay:SetVertexColor(0, 0, 0) -- static: not a theme color
             callingHeader.HighlightBackground:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
         end
 
@@ -356,7 +356,7 @@ do --[[ FrameXML\QuestMapFrame.xml ]]
                 local checked = Button:CreateTexture(nil, "ARTWORK")
                 checked:SetPoint("TOPLEFT", icon, -1, 1)
                 checked:SetPoint("BOTTOMRIGHT", icon, 1, -1)
-                checked:SetColorTexture(1, 0.85, 0, 0.2)
+                checked:SetColorTexture(1, 0.85, 0, 0.2) -- static: not a theme color
                 checked:SetShown(CheckButton:GetChecked())
                 Button._auroraCheckedTex = checked
 

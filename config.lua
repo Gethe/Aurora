@@ -45,6 +45,9 @@ Config.defaults = {
 
     -- GC tuning mode: "smooth" (aggressive incremental), "default" (Lua defaults), "combat" (pause in combat)
     gcMode = "smooth",
+
+    -- Color mode preset: controls neutral palette and class color highlight boost
+    colorMode = "Normal",
 }
 
 -- Deprecated settings mapping for migration
@@ -62,6 +65,8 @@ Config.deprecatedSettings = {
         end
         return true
     end,
+    -- Guard for future colorMode key renames. If an old key is ever introduced,
+    -- add a migration entry here: oldColorModeKey = "colorMode"
 }
 
 -- Validation rules for configuration values
@@ -139,6 +144,17 @@ Config.validationRules = {
         local valid = { smooth = true, default = true, combat = true }
         if not valid[value] then
             return false, "gcMode must be 'smooth', 'default', or 'combat'"
+        end
+        return true
+    end,
+
+    colorMode = function(value)
+        if type(value) ~= "string" then
+            return false, "colorMode must be a string"
+        end
+        local valid = { Normal = true, HDR = true, Deuteranopia = true, Protanopia = true, Tritanopia = true }
+        if not valid[value] then
+            return false, "colorMode must be 'Normal', 'HDR', 'Deuteranopia', 'Protanopia', or 'Tritanopia'"
         end
         return true
     end,

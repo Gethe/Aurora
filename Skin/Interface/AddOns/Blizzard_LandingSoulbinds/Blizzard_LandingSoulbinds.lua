@@ -185,7 +185,7 @@ do --[[ AddOns\Blizzard_LandingSoulbinds.xml ]]
     do --[[ Blizzard_LandingSoulbindPanel ]]
         function Skin.LandingPageSoulbindPanelTemplate(Frame)
             local divider = Frame:GetRegions()
-            divider:SetColorTexture(1, 1, 1, 0.2)
+            divider:SetColorTexture(1, 1, 1, 0.2) -- static: not a theme color
             divider:SetSize(261, 1)
             divider:SetPoint("TOPLEFT", 50, 0)
             Skin.LandingPageRenownButtonTemplate(Frame.RenownButton)

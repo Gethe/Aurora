@@ -56,7 +56,7 @@ do
             if not button._auroraHighlight then
                 local highlight = button:CreateTexture(nil, "HIGHLIGHT")
                 highlight:SetAllPoints(button:GetBackdropTexture("bg"))
-                highlight:SetColorTexture(0, 0, 0, 0.3)
+                highlight:SetColorTexture(0, 0, 0, 0.3) -- static: not a theme color
                 button._auroraHighlight = highlight
             end
 

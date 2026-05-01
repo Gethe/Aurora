@@ -110,9 +110,8 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Skin.PortraitFrameFlatTemplate(Frame)
         bg = Frame.NineSlice:GetBackdropTexture("bg")
 
-        for i = 1, 36 do
-            _G.print("contents of Frame.Items["..i.."]:")
-            Skin.ContainerFrameItemButtonTemplate(Frame.Items[i])
+        for _, itemButton in ipairs(Frame.Items) do
+            Skin.ContainerFrameItemButtonTemplate(itemButton)
         end
 
         _G.hooksecurefunc(Frame.FilterIcon.Icon, "SetAtlas", Hook.ContainerFrameFilterIcon_SetAtlas)
@@ -124,11 +123,6 @@ do --[[ FrameXML\ContainerFrame.xml ]]
         Frame.FilterIcon.Icon:SetAllPoints()
 
         Base.CropIcon(Frame.FilterIcon.Icon, Frame.FilterIcon)
-
-        Frame.ClickableTitleFrame:ClearAllPoints()
-        Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bg)
-        Frame.ClickableTitleFrame:SetPoint("BOTTOMRIGHT", bg, "TOPRIGHT", 0, -private.FRAME_TITLE_HEIGHT)
-
 
         Frame.ClickableTitleFrame:ClearAllPoints()
         Frame.ClickableTitleFrame:SetPoint("TOPLEFT", bg)
@@ -147,11 +141,10 @@ do --[[ FrameXML\ContainerFrame.xml ]]
 end
 
 function private.FrameXML.ContainerFrame()
-    _G.print("Applying ContainerFrame skins")
     if private.disabled.bags then return end
     _G.hooksecurefunc("ContainerFrame_GenerateFrame", Hook.ContainerFrame_GenerateFrame)
 
-    Skin.ContainerFrameBackpackTemplate(_G.ContainerFrame)
+    Skin.ContainerFrameBackpackTemplate(_G.ContainerFrame1)
 
     if private.isRetail then
         Skin.BagSearchBoxTemplate(_G.BagItemSearchBox)
@@ -168,7 +161,7 @@ function private.FrameXML.ContainerFrame()
         local iconBorder = autoSort:CreateTexture(nil, "BACKGROUND")
         iconBorder:SetPoint("TOPLEFT", autoSort, -1, 1)
         iconBorder:SetPoint("BOTTOMRIGHT", autoSort, 1, -1)
-        iconBorder:SetColorTexture(0, 0, 0)
+        iconBorder:SetColorTexture(0, 0, 0) -- static: not a theme color
     else
         _G.hooksecurefunc("ContainerFrame_Update", Hook.ContainerFrame_Update)
     end

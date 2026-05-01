@@ -169,7 +169,7 @@ function private.FrameXML.QuestFrame()
     Skin.UIPanelButtonTemplate(_G.QuestFrameGreetingGoodbyeButton)
     _G.QuestFrameGreetingGoodbyeButton:SetPoint("BOTTOMRIGHT", -5, 5)
     Skin.QuestScrollFrameTemplate(_G.QuestGreetingScrollFrame)
-    _G.QuestGreetingFrameHorizontalBreak:SetColorTexture(1, 1, 1, .2)
+    _G.QuestGreetingFrameHorizontalBreak:SetColorTexture(1, 1, 1, .2) -- static: not a theme color
     _G.QuestGreetingFrameHorizontalBreak:SetSize(256, 1)
     -------------------
     -- QuestNPCModel --

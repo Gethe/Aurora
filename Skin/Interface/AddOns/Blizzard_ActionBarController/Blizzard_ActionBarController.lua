@@ -106,7 +106,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
                 SetTexture(button:GetNormalTexture(), bg, left, right - 0.04, top + 0.04, bottom)
 
                 button:SetPushedTexture(info.texture)
-                button:GetPushedTexture():SetVertexColor(0.5, 0.5, 0.5)
+                button:GetPushedTexture():SetVertexColor(0.5, 0.5, 0.5) -- static: not a theme color
                 SetTexture(button:GetPushedTexture(), bg, left + 0.04, right, top, bottom - 0.04)
 
                 button:SetDisabledTexture(info.texture)
@@ -284,7 +284,7 @@ do --[[ FrameXML\ActionBarController.xml ]]
                 CheckButton.chargeCooldown:SetPoint("BOTTOMRIGHT", CheckButton.icon, -2, 2)
             end
 
-            CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5)
+            CheckButton.Flash:SetColorTexture(1, 0, 0, 0.5) -- static: not a theme color
             CheckButton.NewActionTexture:SetAllPoints()
             CheckButton.NewActionTexture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
             CheckButton.SpellHighlightTexture:SetAllPoints()

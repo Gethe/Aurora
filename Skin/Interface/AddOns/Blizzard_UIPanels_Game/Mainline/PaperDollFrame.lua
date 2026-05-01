@@ -81,16 +81,16 @@ do --[[ FrameXML\PaperDollFrame.xml ]]
             Button.BgBottom:SetTexture("")
             Button.BgMiddle:SetTexture("")
 
-            Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
-            Button:GetHighlightTexture():SetColorTexture(0, 0, 1, 0.2)
+            Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3) -- static: not a theme color
+            Button:GetHighlightTexture():SetColorTexture(0, 0, 1, 0.2) -- static: not a theme color
         end
         function Skin.GearSetButtonTemplate(Button)
             Button.BgTop:SetTexture("")
             Button.BgBottom:SetTexture("")
             Button.BgMiddle:SetTexture("")
 
-            Button.HighlightBar:SetColorTexture(0, 0, 1, 0.3)
-            Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3)
+            Button.HighlightBar:SetColorTexture(0, 0, 1, 0.3) -- static: not a theme color
+            Button.SelectedBar:SetColorTexture(1, 1, 0, 0.3) -- static: not a theme color
 
             Base.CropIcon(Button.icon, Button)
         end

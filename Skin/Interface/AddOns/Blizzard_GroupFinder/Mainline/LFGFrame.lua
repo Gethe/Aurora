@@ -92,7 +92,7 @@ do
             local readyDialogBG = _G.LFGDungeonReadyDialog and _G.LFGDungeonReadyDialog.background
             if readyDialogBG then
                 readyDialogBG:SetDesaturated(true)
-                readyDialogBG:SetVertexColor(0.28, 0.28, 0.28, 0.4)
+                readyDialogBG:SetVertexColor(0.28, 0.28, 0.28, 0.4) -- static: not a theme color
             end
 
             if subtypeID == _G.LFG_SUBTYPEID_RAID then
@@ -276,7 +276,7 @@ function private.AddOns.LFGFrame()
     LFGDungeonReadyDialog.background:SetPoint("TOPLEFT", 6, -6)
     LFGDungeonReadyDialog.background:SetPoint("BOTTOMRIGHT", -6, 64)
     LFGDungeonReadyDialog.background:SetDesaturated(true)
-    LFGDungeonReadyDialog.background:SetVertexColor(0.28, 0.28, 0.28, 0.4)
+    LFGDungeonReadyDialog.background:SetVertexColor(0.28, 0.28, 0.28, 0.4) -- static: not a theme color
 
     LFGDungeonReadyDialog.bottomArt:Hide()
 

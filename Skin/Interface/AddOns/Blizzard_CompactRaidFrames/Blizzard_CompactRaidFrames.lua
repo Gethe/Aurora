@@ -33,7 +33,7 @@ do --[[ AddOns\Blizzard_CompactRaidFrames.xml ]]
         if Button.Text then
             local bg = Button:GetBackdropTexture("bg")
             Button.Text:SetPoint("CENTER", bg, 0, 0)
-            Button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3)
+            Button.selectedHighlight:SetColorTexture(1, 1, 0, 0.3) -- static: not a theme color
             Button.selectedHighlight:SetPoint("TOPLEFT", bg, 1, -1)
             Button.selectedHighlight:SetPoint("BOTTOMRIGHT", bg, -1, 1)
         end

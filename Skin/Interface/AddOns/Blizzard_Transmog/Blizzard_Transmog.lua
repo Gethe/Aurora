@@ -128,7 +128,7 @@ function private.AddOns.Blizzard_Transmog()
         -- Flat dark background for the character preview area
         if not CharacterPreview._auroraBackground then
             local bg = CharacterPreview:CreateTexture(nil, "BACKGROUND", nil, -8)
-            bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+            bg:SetColorTexture(Color.panelBg:GetRGBA())
             bg:SetAllPoints(CharacterPreview)
             CharacterPreview._auroraBackground = bg
         end

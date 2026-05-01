@@ -269,7 +269,7 @@ function private.FrameXML.UIPanelTemplates()
             _G.print("Arrow"..dirUpper.." not found")
         end
         Base.SetTexture(arrow, "arrow"..direction)
-        arrow:SetVertexColor(1, 1, 0)
+        arrow:SetVertexColor(1, 1, 0) -- static: not a theme color
 
         HelpPlateTooltip["ArrowGlow"..dirUpper]:SetAlpha(0)
     end

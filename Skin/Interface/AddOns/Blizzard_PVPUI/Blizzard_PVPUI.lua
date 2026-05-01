@@ -93,7 +93,7 @@ do --[[ AddOns\Blizzard_PVPUI.xml ]]
         Frame.BottomHide:Hide()
         Frame.BottomHide2:Hide()
 
-        Frame.Background:SetColorTexture(0, 0, 0, 0.75)
+        Frame.Background:SetColorTexture(Color.black.r, Color.black.g, Color.black.b, 0.75)
         Frame.Background:SetPoint("TOPLEFT")
         Frame.Background:SetPoint("BOTTOMRIGHT")
 

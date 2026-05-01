@@ -15,9 +15,12 @@ local function SkinTalkingHeadFrame(Frame)
     if textBackground then
         textBackground:SetAtlas(nil)
         textBackground:SetTexture("Interface\\Buttons\\WHITE8x8")
-        local r, g, b = Color.frame:GetRGB()
-        textBackground:SetVertexColor(r + (1 - r) * 0.14, g + (1 - g) * 0.14, b + (1 - b) * 0.14)
-        textBackground:SetAlpha(0.82)
+        local r, g, b = Color.panelBg:GetRGB()
+        textBackground:SetVertexColor(r, g, b)
+        textBackground:SetAlpha(0.92)
+
+        -- Register for palette refresh on mode switch
+        Color.RegisterPaletteTexture(textBackground, "panelBg", 0.92)
     end
 
     local portrait = Frame.PortraitFrame and Frame.PortraitFrame.Portrait

@@ -42,7 +42,7 @@ do --[[ FrameXML\BankFrame.xml ]]
             local iconBorder = Button:CreateTexture(nil, "BACKGROUND")
             iconBorder:SetPoint("TOPLEFT", Button, -1, 1)
             iconBorder:SetPoint("BOTTOMRIGHT", Button, 1, -1)
-            iconBorder:SetColorTexture(0, 0, 0)
+            iconBorder:SetColorTexture(0, 0, 0) -- static: not a theme color
         end
     end
 end
@@ -72,7 +72,7 @@ function private.FrameXML.BankFrame()
 
         do
             local bg = BankPanel:CreateTexture(nil, "BACKGROUND", nil, -8)
-            bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+            bg:SetColorTexture(Color.panelBg:GetRGBA())
             local anchor = BankPanel.NineSlice or BankPanel
             bg:SetPoint("TOPLEFT",     anchor, "TOPLEFT")
             bg:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT")

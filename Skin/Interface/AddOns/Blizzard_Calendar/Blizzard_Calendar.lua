@@ -108,7 +108,7 @@ do --[[ AddOns\Blizzard_Calendar.xml ]]
 
     -- Calendar Modal Dialog Templates
     function Skin.CalendarModalEventOverlayTemplate(Frame)
-        Frame:GetRegions():SetColorTexture(0.1, 0.1, 0.1, 0.7)
+        Frame:GetRegions():SetColorTexture(Color.panelBg.r, Color.panelBg.g, Color.panelBg.b, 0.7)
     end
 
     -- Calendar Class Templates

@@ -102,7 +102,7 @@ local function addSubCategory(parent, name)
     local line = parent:CreateTexture(nil, "ARTWORK")
     line:SetSize(450, 1)
     line:SetPoint("TOPLEFT", header, "BOTTOMLEFT", 0, -4)
-    line:SetColorTexture(1, 1, 1, .2)
+    line:SetColorTexture(1, 1, 1, .2) -- static: not a theme color
 
     return header
 end
@@ -174,6 +174,7 @@ local createColorSwatch do
         local button = _G.CreateFrame("Button", nil, parent)
         button:SetScript("OnClick", OnClick)
         button:SetSize(16, 16)
+        button._auroraPaletteOptOut = true  -- color is set to class/custom colors dynamically
         Base.SetBackdrop(button, frameColor, 1)
         button.value = value
 
@@ -287,7 +288,7 @@ Type |cffffffff/aurora help|r in chat for available commands.
 local line = gui:CreateTexture(nil, "ARTWORK")
 line:SetSize(600, 1)
 line:SetPoint("TOPLEFT", mainDesc, "BOTTOMLEFT", 0, -30)
-line:SetColorTexture(1, 1, 1, .2)
+line:SetColorTexture(1, 1, 1, .2) -- static: not a theme color
 
 local credits = gui:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 credits:SetText([[
@@ -419,19 +420,28 @@ local appearanceTitle = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFo
 appearanceTitle:SetPoint("TOP", 0, -26)
 appearanceTitle:SetText("Appearance")
 
-local appearanceDesc = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-appearanceDesc:SetPoint("TOPLEFT", 16, -60)
+-- Scroll frame to accommodate all appearance options
+local appearanceScroll = _G.CreateFrame("ScrollFrame", "AuroraAppearanceScroll", appearancePanel, "UIPanelScrollFrameTemplate")
+appearanceScroll:SetPoint("TOPLEFT", 0, -50)
+appearanceScroll:SetPoint("BOTTOMRIGHT", -26, 10)
+
+local appearanceChild = _G.CreateFrame("Frame", "AuroraAppearanceScrollChild", appearanceScroll)
+appearanceChild:SetWidth(600)
+appearanceScroll:SetScrollChild(appearanceChild)
+
+local appearanceDesc = appearanceChild:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+appearanceDesc:SetPoint("TOPLEFT", 16, 0)
 appearanceDesc:SetWidth(600)
 appearanceDesc:SetJustifyH("LEFT")
 appearanceDesc:SetText("Customize the visual appearance of Aurora's themed interface.")
 
-local fontBox = createToggleBox(appearancePanel, "fonts", "Replace default game fonts")
+local fontBox = createToggleBox(appearanceChild, "fonts", "Replace default game fonts")
 fontBox:SetPoint("TOPLEFT", appearanceDesc, "BOTTOMLEFT", 0, -20)
 
-local buttonsHaveGradientBox = createToggleBox(appearancePanel, "buttonsHaveGradient", "Gradient button style")
+local buttonsHaveGradientBox = createToggleBox(appearanceChild, "buttonsHaveGradient", "Gradient button style")
 buttonsHaveGradientBox:SetPoint("TOPLEFT", fontBox, "BOTTOMLEFT", 0, -15)
 
-local talentArtBgBox = createToggleBox(appearancePanel, "talentArtBackground", "Talent artistic background")
+local talentArtBgBox = createToggleBox(appearanceChild, "talentArtBackground", "Talent artistic background")
 talentArtBgBox:SetPoint("TOPLEFT", buttonsHaveGradientBox, "BOTTOMLEFT", 0, -15)
 talentArtBgBox:SetScript("OnEnter", function(self)
     _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -444,7 +454,7 @@ talentArtBgBox:SetScript("OnLeave", function(self)
     _G.GameTooltip:Hide()
 end)
 
-local heroTalentsAnchorBox = createToggleBox(appearancePanel, "heroTalentsCustomAnchor", "Hero talents custom position")
+local heroTalentsAnchorBox = createToggleBox(appearanceChild, "heroTalentsCustomAnchor", "Hero talents custom position")
 heroTalentsAnchorBox:SetPoint("TOPLEFT", talentArtBgBox, "BOTTOMLEFT", 0, -15)
 heroTalentsAnchorBox:SetScript("OnEnter", function(self)
     _G.GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -467,11 +477,11 @@ local heroTalentsAnchorPresets = {
     { key = "compact", label = "Compact (38, -18)" },
 }
 
-local heroTalentsAnchorPresetLabel = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+local heroTalentsAnchorPresetLabel = appearanceChild:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 heroTalentsAnchorPresetLabel:SetPoint("TOPLEFT", heroTalentsAnchorBox, "BOTTOMLEFT", 20, -8)
 heroTalentsAnchorPresetLabel:SetText("Hero talents anchor preset")
 
-local heroTalentsAnchorPresetDropdown = _G.CreateFrame("Frame", "AuroraHeroTalentsAnchorPresetDropdown", appearancePanel, "UIDropDownMenuTemplate")
+local heroTalentsAnchorPresetDropdown = _G.CreateFrame("Frame", "AuroraHeroTalentsAnchorPresetDropdown", appearanceChild, "UIDropDownMenuTemplate")
 heroTalentsAnchorPresetDropdown:SetPoint("TOPLEFT", heroTalentsAnchorPresetLabel, "BOTTOMLEFT", -16, -4)
 _G.UIDropDownMenu_SetWidth(heroTalentsAnchorPresetDropdown, 210)
 
@@ -493,7 +503,7 @@ _G.UIDropDownMenu_Initialize(heroTalentsAnchorPresetDropdown, function(self, lev
     end
 end)
 
-local alphaSlider = createSlider(appearancePanel, "alpha", "Backdrop opacity *")
+local alphaSlider = createSlider(appearanceChild, "alpha", "Backdrop opacity *")
 alphaSlider:SetPoint("TOPLEFT", heroTalentsAnchorPresetDropdown, "BOTTOMLEFT", 16, -25)
 alphaSlider.update = updateFrames
 alphaSlider:SetScript("OnEnter", function(self)
@@ -508,13 +518,75 @@ alphaSlider:SetScript("OnLeave", function(self)
     _G.GameTooltip:Hide()
 end)
 
-local colorHeader = addSubCategory(appearancePanel, "Colors")
+local colorHeader = addSubCategory(appearanceChild, "Colors")
 colorHeader:SetPoint("TOPLEFT", alphaSlider, "BOTTOMLEFT", 0, -50)
 
-local highlightBox = createToggleBox(appearancePanel, "customHighlight", "Custom highlight color")
-highlightBox:SetPoint("TOPLEFT", colorHeader, "BOTTOMLEFT", 10, -20)
+-- 7.1: Ordered mode-name list for deterministic radio button order
+local colorModeOrder = {"Normal", "HDR", "Deuteranopia", "Protanopia", "Tritanopia"}
 
-local highlightButton = createColorSwatch(appearancePanel, "customHighlight")
+-- 7.2: Color mode radio button group
+local Color = Aurora.Color
+local colorModeRadios = {}
+
+local function UpdateColorModeRadios()
+    local current = _G.AuroraConfig and _G.AuroraConfig.colorMode or "Normal"
+    for _, radio in ipairs(colorModeRadios) do
+        radio:SetChecked(radio.modeKey == current)
+    end
+end
+
+local function OnColorModeRadioClick(self)
+    Color.SetMode(self.modeKey)
+    UpdateColorModeRadios()
+end
+
+local lastModeAnchor = colorHeader
+for i, modeName in ipairs(colorModeOrder) do
+    local radio = _G.CreateFrame("CheckButton", "AuroraColorMode" .. i, appearanceChild, "UIRadioButtonTemplate")
+    radio:SetPoint("TOPLEFT", lastModeAnchor, "BOTTOMLEFT", i == 1 and 10 or 0, i == 1 and -15 or -8)
+    radio.modeKey = modeName
+    radio:SetScript("OnClick", OnColorModeRadioClick)
+
+    local label = radio:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+    label:SetPoint("LEFT", radio, "RIGHT", 5, 0)
+    label:SetText(modeName)
+
+    _G.tinsert(colorModeRadios, radio)
+    lastModeAnchor = radio
+end
+
+-- 7.3: Info note shown when colorMode == "HDR" and customHighlight.enabled == true
+local hdrInfoNote = appearanceChild:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+hdrInfoNote:SetPoint("TOPLEFT", lastModeAnchor, "BOTTOMLEFT", 22, -4)
+hdrInfoNote:SetWidth(500)
+hdrInfoNote:SetJustifyH("LEFT")
+hdrInfoNote:SetTextColor(1, 0.82, 0)
+hdrInfoNote:SetText("HDR class color boost is inactive while a custom highlight color is set.")
+hdrInfoNote:Hide()
+
+-- 7.4: Update info note visibility based on current config state
+local function UpdateHdrInfoNote()
+    local config = _G.AuroraConfig
+    if config and config.colorMode == "HDR"
+        and config.customHighlight and config.customHighlight.enabled then
+        hdrInfoNote:Show()
+    else
+        hdrInfoNote:Hide()
+    end
+end
+
+-- Wire into CONFIG_CHANGED via Integration event system
+Integration.RegisterEventHandler("CONFIG_CHANGED", "GUI_ColorMode", function(key, value)
+    if key == "colorMode" then
+        UpdateColorModeRadios()
+        UpdateHdrInfoNote()
+    end
+end)
+
+local highlightBox = createToggleBox(appearanceChild, "customHighlight", "Custom highlight color")
+highlightBox:SetPoint("TOPLEFT", lastModeAnchor, "BOTTOMLEFT", -10, -20)
+
+local highlightButton = createColorSwatch(appearanceChild, "customHighlight")
 highlightButton:SetPoint("LEFT", highlightBox, "RIGHT", 150, 0)
 
 highlightBox:SetScript("OnClick", function(dialog)
@@ -533,14 +605,15 @@ highlightBox:SetScript("OnClick", function(dialog)
         highlightButton:SetAlpha(.7)
     end
     private.updateHighlightColor()
+    UpdateHdrInfoNote()
 end)
 
-local classColorsHeader = addSubCategory(appearancePanel, "Class Colors")
+local classColorsHeader = addSubCategory(appearanceChild, "Class Colors")
 classColorsHeader:SetPoint("TOPLEFT", highlightBox, "BOTTOMLEFT", -10, -50)
 
 local classColors = {}
 for i, classToken in ipairs(_G.CLASS_SORT_ORDER) do
-    local classColor = createColorSwatch(appearancePanel, "customClassColors", classToken)
+    local classColor = createColorSwatch(appearanceChild, "customClassColors", classToken)
     classColor.class = classToken
     classColors[i] = classColor
 
@@ -553,7 +626,7 @@ for i, classToken in ipairs(_G.CLASS_SORT_ORDER) do
     end
 end
 
-local resetButton = createButton(appearancePanel, function()
+local resetButton = createButton(appearanceChild, function()
     private.classColorsReset(_G.CUSTOM_CLASS_COLORS, _G.RAID_CLASS_COLORS)
 end, _G.RESET)
 -- Position reset button below the last row of class colors
@@ -561,11 +634,14 @@ local lastRowStart = classColors[#classColors - (#classColors % 4)]
 resetButton:SetPoint("TOPLEFT", lastRowStart, "BOTTOMLEFT", 0, -15)
 resetButton:SetWidth(100)
 
-local appearanceNote = appearancePanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-appearanceNote:SetPoint("BOTTOMLEFT", 16, 10)
+local appearanceNote = appearanceChild:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+appearanceNote:SetPoint("TOPLEFT", resetButton, "BOTTOMLEFT", 0, -20)
 appearanceNote:SetWidth(600)
 appearanceNote:SetJustifyH("LEFT")
 appearanceNote:SetText("* Does not require a Reload UI.")
+
+-- Set scroll child height to fit all content
+appearanceChild:SetHeight(900)
 
 --[[ Privacy Panel ]]--
 local privacyTitle = privacyPanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -645,7 +721,7 @@ end
 local privacyLine = privacyPanel:CreateTexture(nil, "ARTWORK")
 privacyLine:SetSize(600, 1)
 privacyLine:SetPoint("TOPLEFT", compatStatus, "BOTTOMLEFT", 0, -30)
-privacyLine:SetColorTexture(1, 1, 1, .2)
+privacyLine:SetColorTexture(1, 1, 1, .2) -- static: not a theme color
 
 local privacyReloadButton = createButton(privacyPanel, _G.C_UI.Reload, _G.RELOADUI)
 privacyReloadButton:SetPoint("TOPLEFT", privacyLine, "BOTTOMLEFT", 0, -20)
@@ -788,6 +864,10 @@ gui.refresh = function()
             classColor:SetFormattedText("|c%s%s|r", color.colorStr, className)
             classColor:SetBackdropColor(color.r, color.g, color.b)
         end
+
+        -- Update color mode radios and HDR info note
+        UpdateColorModeRadios()
+        UpdateHdrInfoNote()
 
         -- Update compatibility status
         updateCompatibilityStatus()

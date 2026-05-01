@@ -18,8 +18,8 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
         IN_GUILD_VIEW = _G.AchievementFrame.Header.Title:GetText() == _G.GUILD_ACHIEVEMENTS_TITLE
 
         if IN_GUILD_VIEW then
-            _G.AchievementFrameGuildEmblemLeft:SetVertexColor(1, 1, 1, 0.25)
-            _G.AchievementFrameGuildEmblemRight:SetVertexColor(1, 1, 1, 0.25)
+            _G.AchievementFrameGuildEmblemLeft:SetVertexColor(1, 1, 1, 0.25) -- static: not a theme color
+            _G.AchievementFrameGuildEmblemRight:SetVertexColor(1, 1, 1, 0.25) -- static: not a theme color
         end
     end
     function Hook.AchievementButton_UpdatePlusMinusTexture(button)
@@ -90,7 +90,7 @@ do --[[ AddOns\Blizzard_AchievementUI.lua ]]
                     self.Background:Hide();
                 else
                     self.Background:Show();
-                    self.Background:SetColorTexture(1, 1, 1, 0.25);
+                    self.Background:SetColorTexture(1, 1, 1, 0.25); -- static: not a theme color
                 end
             end
         end
@@ -378,12 +378,12 @@ do --[[ AddOns\Blizzard_AchievementUI.xml ]]
         plusMinus.plus = plusMinus:CreateTexture(nil, "ARTWORK")
         plusMinus.plus:SetSize(1, 7)
         plusMinus.plus:SetPoint("CENTER")
-        plusMinus.plus:SetColorTexture(1, 1, 1)
+        plusMinus.plus:SetColorTexture(1, 1, 1) -- static: not a theme color
 
         plusMinus.minus = plusMinus:CreateTexture(nil, "ARTWORK")
         plusMinus.minus:SetSize(7, 1)
         plusMinus.minus:SetPoint("CENTER")
-        plusMinus.minus:SetColorTexture(1, 1, 1)
+        plusMinus.minus:SetColorTexture(1, 1, 1) -- static: not a theme color
         EventButton._auroraPlusMinus = plusMinus
 
         Base.SetBackdrop(EventButton.Highlight, Color.highlight, Color.frame.a)

@@ -23,12 +23,12 @@ do --[[ FrameXML\VehicleLeaveButton.xml ]]
 
         local pushedTex = Button:GetPushedTexture()
         if pushedTex then
-            pushedTex:SetVertexColor(0.7, 0.7, 0.7)
+            pushedTex:SetVertexColor(0.7, 0.7, 0.7) -- static: not a theme color
         end
 
         local disabledTex = Button:GetDisabledTexture()
         if disabledTex then
-            disabledTex:SetVertexColor(0.4, 0.4, 0.4, 0.75)
+            disabledTex:SetVertexColor(0.4, 0.4, 0.4, 0.75) -- static: not a theme color
         end
 
         -- Keep this protected button taint-safe by only restyling Blizzard's

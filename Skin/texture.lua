@@ -26,7 +26,7 @@ end)
 
 do -- arrows
     local function setup(frame, texture)
-        texture:SetColorTexture(1, 1, 1)
+        texture:SetColorTexture(1, 1, 1) -- static: not a theme color (white mask for vertex offset arrows)
 
         texture:SetVertexOffset(1, 0, 0)
         texture:SetVertexOffset(2, 0, 0)
@@ -254,7 +254,7 @@ do -- Icons
             texture:SetAlpha(0.75)
             texture:SetBlendMode("ADD")
 
-            texture._auroraBorder:SetColorTexture(0, 0, 0)
+            texture._auroraBorder:SetColorTexture(Color.border:GetRGB())
             texture._auroraBG:SetColorTexture(coords.color:GetRGB())
             texture._auroraMask:Show()
         end)
@@ -337,7 +337,7 @@ do -- Shapes
             return
         end
 
-        texture:SetColorTexture(1, 1, 1)
+        texture:SetColorTexture(1, 1, 1) -- static: not a theme color (white mask for vertex offset diamond shape)
         texture:SetVertexOffset(1, 0, -(height / 2))
         texture:SetVertexOffset(2, width / 2, 0)
         texture:SetVertexOffset(3, -(width / 2), 0)

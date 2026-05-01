@@ -28,14 +28,14 @@ do --[[ AddOns\Blizzard_TokenUI\Blizzard_TokenUI.xml ]]
         local minus = Button:CreateTexture(nil, "ARTWORK")
         minus:SetSize(7, 1)
         minus:SetPoint("LEFT", 8, 0)
-        minus:SetColorTexture(1, 1, 1)
+        minus:SetColorTexture(1, 1, 1) -- static: not a theme color
         minus:Hide()
         Button._auroraMinus = minus
 
         local plus = Button:CreateTexture(nil, "ARTWORK")
         plus:SetSize(1, 7)
         plus:SetPoint("LEFT", 11, 0)
-        plus:SetColorTexture(1, 1, 1)
+        plus:SetColorTexture(1, 1, 1) -- static: not a theme color
         plus:Hide()
         Button._auroraPlus = plus
         if not Button._auroraSkinned then

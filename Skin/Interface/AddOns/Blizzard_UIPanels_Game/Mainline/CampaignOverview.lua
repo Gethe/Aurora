@@ -25,7 +25,7 @@ do --[[ FrameXML\CampaignOverview.lua ]]
             overlay:SetSize(66.33, 76.56)
 
             overlay:SetBlendMode("BLEND")
-            overlay:SetVertexColor(0, 0, 0)
+            overlay:SetVertexColor(0, 0, 0) -- static: not a theme color
             campaignHeader.HighlightTexture:SetColorTexture(Color.white.r, Color.white.g, Color.white.b, Color.frame.a)
         end
     end

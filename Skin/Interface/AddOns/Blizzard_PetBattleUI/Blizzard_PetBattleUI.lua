@@ -33,7 +33,7 @@ do --[[ AddOns\Blizzard_PetBattleUI.lua ]]
 
         if self._auroraIconBG then
             if _G.C_PetBattles.GetHealth(petOwner, petIndex) == 0 then
-                self._auroraIconBG:SetColorTexture(1, 0, 0)
+                self._auroraIconBG:SetColorTexture(1, 0, 0) -- static: not a theme color
             else
                 local rarity = _G.C_PetBattles.GetBreedQuality(petOwner, petIndex)
                 local color = _G.ITEM_QUALITY_COLORS[rarity-1]
@@ -71,7 +71,7 @@ do --[[ AddOns\Blizzard_PetBattleUI.xml ]]
     function Skin.PetBattleAuraTemplate(Frame)
         Base.CropIcon(Frame.Icon)
         Frame.DebuffBorder:SetDrawLayer("BORDER")
-        Frame.DebuffBorder:SetColorTexture(1, 0, 0)
+        Frame.DebuffBorder:SetColorTexture(1, 0, 0) -- static: not a theme color
         Frame.DebuffBorder:ClearAllPoints()
         Frame.DebuffBorder:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
         Frame.DebuffBorder:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
@@ -80,7 +80,7 @@ do --[[ AddOns\Blizzard_PetBattleUI.xml ]]
     function Skin.PetBattleUnitTooltipAuraTemplate(Frame)
         Base.CropIcon(Frame.Icon)
         Frame.DebuffBorder:SetDrawLayer("BORDER")
-        Frame.DebuffBorder:SetColorTexture(1, 0, 0)
+        Frame.DebuffBorder:SetColorTexture(1, 0, 0) -- static: not a theme color
         Frame.DebuffBorder:ClearAllPoints()
         Frame.DebuffBorder:SetPoint("TOPLEFT", Frame.Icon, -1, 1)
         Frame.DebuffBorder:SetPoint("BOTTOMRIGHT", Frame.Icon, 1, -1)
@@ -215,7 +215,7 @@ function private.AddOns.Blizzard_PetBattleUI()
         healthBD:SetPoint("BOTTOMRIGHT", unit.HealthBarBG, -4, 4)
 
         Base.SetTexture(unit.ActualHealthBar, "gradientUp")
-        unit.ActualHealthBar:SetVertexColor(0, 1, 0)
+        unit.ActualHealthBar:SetVertexColor(0, 1, 0) -- static: not a theme color
 
         unit.HealthBarFrame:Hide()
 
@@ -263,7 +263,7 @@ function private.AddOns.Blizzard_PetBattleUI()
     end
 
     local TurnTimer = BottomFrame.TurnTimer
-    TurnTimer.TimerBG:SetColorTexture(0, 0, 0, 0.5)
+    TurnTimer.TimerBG:SetColorTexture(Color.black.r, Color.black.g, Color.black.b, 0.5)
     TurnTimer.TimerBG:SetPoint("TOPLEFT", TurnTimer.ArtFrame)
     TurnTimer.TimerBG:SetPoint("BOTTOMRIGHT", TurnTimer.ArtFrame)
     TurnTimer.ArtFrame:SetAlpha(0)
@@ -279,7 +279,7 @@ function private.AddOns.Blizzard_PetBattleUI()
     Base.CropIcon(BottomFrame.SwitchPetButton:GetCheckedTexture())
     BottomFrame.Delimiter:SetSize(1, 56)
     local delim = BottomFrame.Delimiter:GetRegions()
-    delim:SetColorTexture(1, 1, 1, 0.5)
+    delim:SetColorTexture(1, 1, 1, 0.5) -- static: not a theme color
     delim:SetSize(1, 56)
 
     BottomFrame.MicroButtonFrame:SetPoint("RIGHT", -20, 0)

@@ -84,6 +84,9 @@ function private.OnLoad()
     end)
     private.setColorCache(customClassColors)
 
+    -- Apply the saved color mode palette before skin registration
+    Color.SetMode(AuroraConfig.colorMode)
+
     if AuroraConfig.buttonsHaveGradient then
         Color.button:SetRGB(.4, .4, .4)
     end

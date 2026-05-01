@@ -97,7 +97,7 @@ do --[[ FrameXML\UIDropDownMenu.lua ]]
         end
         function Hook.UIDropDownMenu_SetIconImage(icon, texture, info)
             if texture:find("Divider") then
-                icon:SetColorTexture(1, 1, 1, .2)
+                icon:SetColorTexture(1, 1, 1, .2) -- static: not a theme color
                 icon:SetHeight(1)
             end
         end
@@ -151,7 +151,7 @@ do --[[ FrameXML\UIDropDownMenu.xml ]]
                 bg:SetAllPoints()
 
                 local texture = Button:GetNormalTexture()
-                texture:SetColorTexture(1, 1, 1)
+                texture:SetColorTexture(1, 1, 1) -- static: not a theme color
                 texture:SetPoint("TOPLEFT", bg, 1, -1)
                 texture:SetPoint("BOTTOMRIGHT", bg, -1, 1)
             end

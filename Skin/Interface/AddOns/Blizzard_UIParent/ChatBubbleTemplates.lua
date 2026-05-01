@@ -7,6 +7,7 @@ if private.shouldSkip() then return end
 --[[ Core ]]
 local Aurora = private.Aurora
 local Hook, Skin = Aurora.Hook, Aurora.Skin
+local Color = Aurora.Color
 
 local function GetSafeSenderName(sender)
     if _G.issecretvalue(sender) or _G.issecrettable(sender) then
@@ -102,7 +103,7 @@ do --[[ FrameXML\ChatBubbleTemplates.xml ]]
     function Skin.ChatBubbleTemplate(Frame)
         if not Frame._auroraBG then
             local bg = Frame:CreateTexture(nil, "BACKGROUND", nil, -1)
-            bg:SetColorTexture(0, 0, 0, 0.85)
+            bg:SetColorTexture(Color.black.r, Color.black.g, Color.black.b, 0.85)
             bg:SetPoint("TOPLEFT", 1, -1)
             bg:SetPoint("BOTTOMRIGHT", -1, 1)
             Frame._auroraBG = bg
@@ -111,7 +112,7 @@ do --[[ FrameXML\ChatBubbleTemplates.xml ]]
         Frame:SetScale(_G.UIParent:GetScale())
 
         local tail = Frame.Tail
-        tail:SetColorTexture(0, 0, 0)
+        tail:SetColorTexture(0, 0, 0) -- static: not a theme color
         tail:SetVertexOffset(1, 0, -5)
         tail:SetVertexOffset(2, 16, -5)
         tail:SetVertexOffset(3, 0, -5)

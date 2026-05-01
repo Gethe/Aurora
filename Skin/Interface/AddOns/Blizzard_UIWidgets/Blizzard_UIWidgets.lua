@@ -118,7 +118,7 @@ local function DebugBelowMinimap(...)
         private.debug("UIWidgetBelowMinimap", ...)
     end
     if FORCE_WIDGET_CHAT_DEBUG then
-        _G.pcall(_G.print, "|cff33ff99Aurora UIWidgetBelowMinimap|r", ...)
+        _G.pcall(_G.print, "|cff33ff99Aurora UIWidgetBelowMinimap|r", ...) -- static: not a theme color
     end
 end
 
@@ -131,7 +131,7 @@ local function DebugUIWidgets(...)
         private.debug(...)
     end
     if FORCE_WIDGET_CHAT_DEBUG then
-        _G.pcall(_G.print, "|cff33ff99Aurora UIWidgets|r", ...)
+        _G.pcall(_G.print, "|cff33ff99Aurora UIWidgets|r", ...) -- static: not a theme color
     end
 end
 

@@ -46,7 +46,7 @@ do --[[ FrameXML\CastingBarFrame.xml ]]
         StatusBar.Spark:SetAlpha(0)
 
         StatusBar.Flash:SetAllPoints(StatusBar)
-        StatusBar.Flash:SetColorTexture(1, 1, 1)
+        StatusBar.Flash:SetColorTexture(1, 1, 1) -- static: not a theme color
     end
     function Skin.SmallCastingBarFrameTemplate(StatusBar)
         TaintSafeSkinStatusBar(StatusBar)
@@ -58,7 +58,7 @@ do --[[ FrameXML\CastingBarFrame.xml ]]
         StatusBar.Spark:SetAlpha(0)
 
         StatusBar.Flash:SetAllPoints(StatusBar)
-        StatusBar.Flash:SetColorTexture(1, 1, 1)
+        StatusBar.Flash:SetColorTexture(1, 1, 1) -- static: not a theme color
     end
 end
 

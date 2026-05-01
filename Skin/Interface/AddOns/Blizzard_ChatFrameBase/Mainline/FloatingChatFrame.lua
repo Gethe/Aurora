@@ -122,7 +122,7 @@ do --[[ SharedXML\FloatingChatFrame.xml ]]
         local line = minimizeButton:CreateTexture(nil, "ARTWORK")
         line:SetPoint("TOPLEFT", bg, "BOTTOMLEFT", 3, 6)
         line:SetPoint("BOTTOMRIGHT", bg, -3, 3)
-        line:SetColorTexture(1, 1, 1)
+        line:SetColorTexture(1, 1, 1) -- static: not a theme color
 
         --[[
         local bottomButton = ScrollingMessageFrame.ScrollToBottomButton

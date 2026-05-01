@@ -29,7 +29,7 @@ do --[[ FrameXML\CharacterFrame.xml ]]
         bg:ClearAllPoints()
         bg:SetPoint("TOPLEFT")
         bg:SetPoint("BOTTOMRIGHT")
-        bg:SetColorTexture(1, 1, 1, 0.2)
+        bg:SetColorTexture(1, 1, 1, 0.2) -- static: not a theme color
     end
     function Skin.CharacterFrameTabTemplate(Button)
         Skin.PanelTabButtonTemplate(Button)

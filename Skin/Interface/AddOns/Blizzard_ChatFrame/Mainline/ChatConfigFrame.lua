@@ -158,7 +158,7 @@ function private.FrameXML.ChatConfigFrame()
     local divider = _G.ChatConfigFrame:CreateTexture()
     divider:SetPoint("TOPLEFT", _G.ChatConfigCategoryFrame, "TOPRIGHT")
     divider:SetPoint("BOTTOMRIGHT", _G.ChatConfigBackgroundFrame, "BOTTOMLEFT", 0, 60)
-    divider:SetColorTexture(1, 1, 1, .2)
+    divider:SetColorTexture(1, 1, 1, .2) -- static: not a theme color
 
     Skin.WideChatConfigBoxWithHeaderAndClassColorsTemplate(_G.ChatConfigChatSettingsLeft)
     Skin.WideChatConfigBoxWithHeaderAndClassColorsTemplate(_G.ChatConfigChannelSettingsLeft)

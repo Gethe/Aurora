@@ -53,13 +53,13 @@ do -- BlizzWTF: These are not templates, but they should be
 
             local bg = Button:GetBackdropTexture("bg")
             local minus = Button:CreateTexture(nil, "OVERLAY")
-            minus:SetColorTexture(1, 1, 1)
+            minus:SetColorTexture(1, 1, 1) -- static: not a theme color
             minus:SetSize(9, 1)
             minus:SetPoint("TOPLEFT", bg, 2, -6)
             Button._minus = minus
 
             local plus = Button:CreateTexture(nil, "OVERLAY")
-            plus:SetColorTexture(1, 1, 1)
+            plus:SetColorTexture(1, 1, 1) -- static: not a theme color
             plus:SetSize(1, 9)
             plus:SetPoint("TOPLEFT", bg, 6, -2)
             Button._plus = plus
@@ -167,7 +167,7 @@ do -- BlizzWTF: These are not templates, but they should be
 
             local bg = Button:GetBackdropTexture("bg")
             local hline = Button:CreateTexture()
-            hline:SetColorTexture(1, 1, 1)
+            hline:SetColorTexture(1, 1, 1) -- static: not a theme color
             hline:SetSize(11, 1)
             hline:SetPoint("BOTTOMLEFT", bg, 3, 3)
             Button._auroraTextures = {hline}
@@ -239,7 +239,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
         local bg = Button:GetBackdropTexture("bg")
         local hline = Button:CreateTexture()
-        hline:SetColorTexture(1, 1, 1)
+        hline:SetColorTexture(1, 1, 1) -- static: not a theme color
         hline:SetSize(11, 1)
         hline:SetPoint("BOTTOMLEFT", bg, 3, 3)
         Button._auroraTextures = {hline}
@@ -266,7 +266,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         local cross = {}
         for i = 1, 2 do
             local line = Button:CreateLine(nil, "ARTWORK")
-            line:SetColorTexture(1, 1, 1)
+            line:SetColorTexture(1, 1, 1) -- static: not a theme color
             line:SetThickness(1.2)
             line:Show()
             if i == 1 then
@@ -383,7 +383,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
             Base.SetTexture(Frame.Arrow, "arrow"..direction)
         end
         Frame.Arrow:SetAllPoints()
-        Frame.Arrow:SetVertexColor(1, 1, 0)
+        Frame.Arrow:SetVertexColor(1, 1, 0) -- static: not a theme color
         Frame.Glow:Hide()
     end
     function Skin.GlowBoxTemplate(Frame)
@@ -577,11 +577,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         btn:SetNormalTexture("Interface\\Buttons\\White8x8")
         btn:GetNormalTexture():SetVertexColor(Color.button:GetRGB())
         btn:SetPushedTexture("Interface\\Buttons\\White8x8")
-        btn:GetPushedTexture():SetVertexColor(0.15, 0.15, 0.15)
+        btn:GetPushedTexture():SetVertexColor(Color.border:GetRGB())
         btn:SetDisabledTexture("Interface\\Buttons\\White8x8")
-        btn:GetDisabledTexture():SetVertexColor(0.15, 0.15, 0.15, 0.5)
+        btn:GetDisabledTexture():SetVertexColor(Color.border.r, Color.border.g, Color.border.b, 0.5)
         btn:SetHighlightTexture("Interface\\Buttons\\White8x8", "ADD")
-        btn:GetHighlightTexture():SetVertexColor(1, 1, 1)
+        btn:GetHighlightTexture():SetVertexColor(1, 1, 1) -- static: not a theme color
         btn:GetHighlightTexture():SetAlpha(0.25)
         if text then
             btn:SetNormalFontObject("GameFontHighlightLarge")
@@ -675,11 +675,11 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
         Button:SetNormalTexture("Interface\\Buttons\\White8x8")
         Button:GetNormalTexture():SetVertexColor(Color.button:GetRGB())
         Button:SetPushedTexture("Interface\\Buttons\\White8x8")
-        Button:GetPushedTexture():SetVertexColor(0.15, 0.15, 0.15)
+        Button:GetPushedTexture():SetVertexColor(Color.border:GetRGB())
         Button:SetDisabledTexture("Interface\\Buttons\\White8x8")
-        Button:GetDisabledTexture():SetVertexColor(0.15, 0.15, 0.15, 0.5)
+        Button:GetDisabledTexture():SetVertexColor(Color.border.r, Color.border.g, Color.border.b, 0.5)
         Button:SetHighlightTexture("Interface\\Buttons\\White8x8", "ADD")
-        Button:GetHighlightTexture():SetVertexColor(1, 1, 1)
+        Button:GetHighlightTexture():SetVertexColor(1, 1, 1) -- static: not a theme color
         Button:GetHighlightTexture():SetAlpha(0.25)
         -- Separators
         if Button.LeftSeparator then Button.LeftSeparator:Hide() end
@@ -1056,17 +1056,17 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
             local bg = Button:GetBackdropTexture("bg")
             local line = Button:CreateLine()
-            line:SetColorTexture(1, 1, 1)
+            line:SetColorTexture(1, 1, 1) -- static: not a theme color
             line:SetThickness(1.2)
             line:SetStartPoint("TOPRIGHT", bg, -3, -3)
             line:SetEndPoint("BOTTOMLEFT", bg, 3, 3)
 
             local hline = Button:CreateTexture()
-            hline:SetColorTexture(1, 1, 1)
+            hline:SetColorTexture(1, 1, 1) -- static: not a theme color
             hline:SetSize(7, 1)
 
             local vline = Button:CreateTexture()
-            vline:SetColorTexture(1, 1, 1)
+            vline:SetColorTexture(1, 1, 1) -- static: not a theme color
             vline:SetSize(1, 7)
 
             if name == "MaximizeButton" then

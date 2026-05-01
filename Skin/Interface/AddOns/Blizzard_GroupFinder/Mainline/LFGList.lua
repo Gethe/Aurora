@@ -87,7 +87,7 @@ do --[[ FrameXML\LFGList.lua ]]
             icon:SetAlpha(0)
             icon:SetSize(8, 8)
             if  icon._auroraBorder ~= nil then
-                icon._auroraBorder:SetColorTexture(0, 0, 0)
+                icon._auroraBorder:SetColorTexture(0, 0, 0) -- static: not a theme color
                 icon._auroraBG:SetColorTexture(Color.button:GetRGB())
             end
         end

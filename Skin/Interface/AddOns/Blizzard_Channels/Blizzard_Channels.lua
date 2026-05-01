@@ -54,13 +54,13 @@ do --[[ AddOns\Blizzard_Channels.xml ]]
             local minus = Button:CreateTexture(nil, "OVERLAY")
             minus:SetPoint("TOPLEFT", Button.Collapsed, 0, -3)
             minus:SetPoint("BOTTOMRIGHT", Button.Collapsed, 0, 3)
-            minus:SetColorTexture(1, 1, 1)
+            minus:SetColorTexture(1, 1, 1) -- static: not a theme color
             Button.Collapsed.minus = minus
 
             local plus = Button:CreateTexture(nil, "OVERLAY")
             plus:SetPoint("TOPLEFT", Button.Collapsed, 3, 0)
             plus:SetPoint("BOTTOMRIGHT", Button.Collapsed, -3, 0)
-            plus:SetColorTexture(1, 1, 1)
+            plus:SetColorTexture(1, 1, 1) -- static: not a theme color
             Button.Collapsed.plus = plus
         end
         function Skin.ChannelButtonTemplate(Button)

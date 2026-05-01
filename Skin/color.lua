@@ -231,6 +231,7 @@ These colors are used extensively in the UI skins.
 * `Color.highlight` - defaults to the player's class color
 * `Color.button` - defaults to `Color.grayDark`
 * `Color.frame` - defaults to `Color.black`
+* `Color.border` - defaults to 0.15, 0.15, 0.15 — UI element borders
 --]]
 Color.red     = Color.Create("FFCC3333") -- CC3333
 Color.orange  = Color.Create(0.8, 0.5, 0.2) -- CC8033
@@ -256,6 +257,154 @@ Color.panelBg   = Color.Create(0.08, 0.08, 0.08, 1) -- 141414, panel/page backgr
 Color.highlight = Color.Create(0.243, 0.570, 1) -- HIGHLIGHT_LIGHT_BLUE
 Color.button    = Color.Create(Color.grayDark.r, Color.grayDark.g, Color.grayDark.b)
 Color.frame     = Color.Create(Color.black.r, Color.black.g, Color.black.b, 0.2)
+Color.border    = Color.Create(0.15, 0.15, 0.15, 1.0) -- 262626, UI element borders
+
+--[[ Color.Modes
+Named palette presets for the color mode system. Each entry defines:
+  - tokens: replacement values for the neutral Color.* palette tokens
+  - highlightBoost: optional descriptor applied transiently in Color.GetHighlightColor()
+
+Adding a new mode requires only a new table entry — no code changes elsewhere.
+--]]
+Color.Modes = {
+    Normal = {
+        tokens = {
+            panelBg = Color.Create(0.08, 0.08, 0.08, 1),
+            button  = Color.Create(0.25, 0.25, 0.25, 1),
+            frame   = Color.Create(0, 0, 0, 0.2),
+            border  = Color.Create(0.15, 0.15, 0.15, 1.0),
+        },
+        highlightBoost = nil, -- no boost; class color returned as-is
+    },
+
+    HDR = {
+        tokens = {
+            panelBg = Color.Create(0.00, 0.00, 0.00, 0.95), -- true black
+            button  = Color.Create(0.15, 0.16, 0.19, 1.0),  -- cooler, darker buttons
+            frame   = Color.Create(0, 0, 0, 0.7),            -- pure black, higher opacity for more solid panels
+            border  = Color.Create(0.40, 0.40, 0.45, 1.0),  -- brighter edge
+        },
+        highlightBoost = { saturationDelta = 0.15, lightnessDelta = 0.05 },
+    },
+
+    Deuteranopia = {
+        tokens = {
+            panelBg = Color.Create(0.08, 0.08, 0.08, 1),
+            button  = Color.Create(0.25, 0.25, 0.25, 1),
+            frame   = Color.Create(0, 0, 0, 0.2),
+            border  = Color.Create(0.15, 0.15, 0.17, 1.0),  -- slight blue tint aids red/green CVD
+        },
+        -- Shifts accent away from red/green confusion zone toward blue/yellow axis
+        highlightBoost = { hueDelta = 180, saturationDelta = 0.10, lightnessDelta = 0.10 },
+    },
+
+    Protanopia = {
+        tokens = {
+            panelBg = Color.Create(0.08, 0.08, 0.08, 1),
+            button  = Color.Create(0.26, 0.26, 0.26, 1),    -- slightly brighter for red-weak vision
+            frame   = Color.Create(0, 0, 0, 0.2),
+            border  = Color.Create(0.16, 0.16, 0.16, 1.0),  -- brighter border compensates for reduced red
+        },
+        -- Compensates for red-channel insensitivity; maximises blue/yellow luminance
+        highlightBoost = { hueDelta = 200, saturationDelta = 0.10, lightnessDelta = 0.15 },
+    },
+
+    Tritanopia = {
+        tokens = {
+            panelBg = Color.Create(0.08, 0.08, 0.08, 1),
+            button  = Color.Create(0.25, 0.25, 0.25, 1),
+            frame   = Color.Create(0, 0, 0, 0.2),
+            border  = Color.Create(0.16, 0.15, 0.14, 1.0),  -- warmer border aids blue/yellow CVD
+        },
+        -- Compensates for blue/yellow insensitivity; maximises red/green luminance
+        highlightBoost = { hueDelta = 90, saturationDelta = 0.05, lightnessDelta = 0.10 },
+    },
+}
+
+
+--[[ Color Mode Switching
+Active mode tracking and live palette switching API.
+--]]
+local activeMode = "Normal"
+
+--[[ Color.GetActiveMode()
+Returns the name of the currently active color mode.
+
+**Returns:**
+* `name` - the active mode name _(string)_
+--]]
+function Color.GetActiveMode()
+    return activeMode
+end
+
+--[[ Color.SetMode(_name_)
+Switch the active color mode. Applies the named mode's palette tokens
+to the live `Color.*` objects, updates `activeMode` and
+`AuroraConfig.colorMode`, broadcasts to all registered elements, and
+dispatches a CONFIG_CHANGED event.
+
+No-op if `name` is already the active mode or is not a valid mode name.
+
+**Args:**
+* `name` - a key in `Color.Modes` _(string)_
+--]]
+function Color.SetMode(name)
+    if name == activeMode then return end       -- no-op guard (Req 3.4)
+    local mode = Color.Modes[name]
+    if not mode then return end
+
+    -- Apply neutral palette tokens
+    for token, value in _G.pairs(mode.tokens) do
+        Color[token]:SetRGBA(value:GetRGBA())
+    end
+
+    activeMode = name
+    _G.AuroraConfig.colorMode = name
+
+    Color.ApplyPaletteToAll()                   -- re-apply neutral tokens to all tracked frames
+    Color.RefreshHighlightColor()               -- recalculate boost + broadcast
+    private.Integration.DispatchEvent("CONFIG_CHANGED", "colorMode", name)
+end
+
+--[[ Color.PreviewMode(_name_)
+Temporarily apply the named mode's palette tokens and highlight boost
+to all registered UI elements via `Color.PreviewHighlightColor`. Does
+**not** persist the change to `activeMode` or `AuroraConfig.colorMode`.
+
+Used by the RealUI display wizard preview frame to show how a mode
+looks before it is confirmed.
+
+**Args:**
+* `name` - a key in `Color.Modes` _(string)_
+--]]
+function Color.PreviewMode(name)
+    local mode = Color.Modes[name]
+    if not mode then return end
+
+    -- Temporarily apply palette tokens (does not update activeMode)
+    for token, value in _G.pairs(mode.tokens) do
+        Color[token]:SetRGBA(value:GetRGBA())
+    end
+
+    Color.ApplyPaletteToAll()                   -- refresh all tracked frames with new tokens
+
+    -- Resolve highlight boost into (r, g, b)
+    local r, g, b = Color.GetClassColor()
+    local boost = mode.highlightBoost
+    if boost then
+        colorSelect:SetColorRGB(r, g, b)
+        local h, s, v = colorSelect:GetColorHSV()
+        if boost.hueDelta then
+            h = (h + boost.hueDelta) % 360
+        end
+        s = Clamp(s + (boost.saturationDelta or 0), 0, 1)
+        v = Clamp(v + (boost.lightnessDelta or 0), 0, 1)
+        colorSelect:SetColorHSV(h, s, v)
+        r, g, b = colorSelect:GetColorRGB()
+    end
+
+    Color.PreviewHighlightColor(r, g, b)
+end
 
 
 private.FACTION_COLORS = {
@@ -311,7 +460,7 @@ function Color.GetClassColor(classToken)
     return 0.5, 0.5, 0.5
 end
 
--- Apply custom color override or use class color
+-- Apply custom color override or use class color with optional mode boost
 function Color.GetHighlightColor(config)
     config = config or _G.AuroraConfig
 
@@ -320,11 +469,26 @@ function Color.GetHighlightColor(config)
     end
 
     if config.customHighlight and config.customHighlight.enabled then
+        -- User override: return as-is, no boost (Req 4.3)
         local r, g, b = config.customHighlight.r, config.customHighlight.g, config.customHighlight.b
         return Color.SanitizeRGB(r, g, b)
     end
 
-    return Color.GetClassColor()
+    local r, g, b = Color.GetClassColor()
+    local boost = Color.Modes[activeMode] and Color.Modes[activeMode].highlightBoost
+    if boost then
+        -- Apply boost transiently; do not mutate stored class color (Req 4.4)
+        colorSelect:SetColorRGB(r, g, b)
+        local h, s, v = colorSelect:GetColorHSV()
+        if boost.hueDelta then
+            h = (h + boost.hueDelta) % 360
+        end
+        s = Clamp(s + (boost.saturationDelta or 0), 0, 1)
+        v = Clamp(v + (boost.lightnessDelta or 0), 0, 1)
+        colorSelect:SetColorHSV(h, s, v)
+        r, g, b = colorSelect:GetColorRGB()
+    end
+    return r, g, b
 end
 
 -- Set highlight color from configuration
@@ -332,6 +496,78 @@ function Color.UpdateHighlightColor(config)
     local r, g, b = Color.GetHighlightColor(config)
     Color.highlight:SetRGB(r, g, b)
     return r, g, b
+end
+
+--[[ Palette Element Tracking
+Frames that use neutral palette tokens (panelBg, button, frame, border) register
+here so Color.SetMode can re-apply their colors when the mode changes.
+--]]
+local paletteElements = {}
+local paletteTextures = {}
+
+function Color.RegisterPaletteElement(frame, colorToken, alpha)
+    if not frame then return end
+    if frame._auroraPaletteOptOut then return end
+    local key = frame
+    if type(frame) == "table" and frame.GetName then
+        key = frame:GetName() or frame
+    end
+    paletteElements[key] = {
+        frame = frame,
+        colorToken = colorToken,
+        alpha = alpha,
+    }
+end
+
+function Color.RegisterPaletteTexture(texture, colorToken, alpha)
+    if not texture then return end
+    paletteTextures[texture] = {
+        texture = texture,
+        colorToken = colorToken,
+        alpha = alpha,
+    }
+end
+
+function Color.ApplyPaletteToAll()
+    Color._applyingPalette = true
+    local count = 0
+    for key, data in _G.next, paletteElements do
+        local frame = data.frame
+        local color = Color[data.colorToken]
+        if frame and color then
+            count = count + 1
+            -- Use the higher of stored alpha and token alpha.
+            -- This lets HDR mode increase opacity beyond the user's slider setting.
+            local a = _G.math.max(data.alpha or 0, color.a or 0)
+            local backdropColor = Color.Lightness(color, -0.3)
+            local ok, err = _G.pcall(function()
+                frame:SetBackdropColor(backdropColor.r, backdropColor.g, backdropColor.b, a)
+                if frame._auroraPaletteBorderDefault then
+                    frame:SetBackdropBorderColor(color.r, color.g, color.b, 1)
+                end
+            end)
+            if not ok then
+                private.debug("Color", "Failed to update palette element", key, ":", err)
+            end
+        end
+    end
+    Color._applyingPalette = false
+    local texCount = 0
+    for tex, data in _G.next, paletteTextures do
+        local color = Color[data.colorToken]
+        if tex and color then
+            texCount = texCount + 1
+            local ok, err = _G.pcall(function()
+                tex:SetVertexColor(color.r, color.g, color.b)
+                if data.alpha then
+                    tex:SetAlpha(data.alpha)
+                end
+            end)
+            if not ok then
+                private.debug("Color", "Failed to update palette texture", tostring(tex), ":", err)
+            end
+        end
+    end
 end
 
 -- Highlight Color Application System

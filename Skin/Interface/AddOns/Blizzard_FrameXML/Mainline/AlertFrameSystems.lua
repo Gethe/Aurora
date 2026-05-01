@@ -129,7 +129,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
             local guildBG = ContainedAlertFrame:CreateTexture(nil, "BACKGROUND")
             guildBG:SetTexture([[Interface\LFGFrame\UI-LFG-SEPARATOR]])
             guildBG:SetTexCoord(0, 0.6640625, 0, 0.25)
-            guildBG:SetVertexColor(0, 0, 0)
+            guildBG:SetVertexColor(0, 0, 0) -- static: not a theme color
             guildBG:SetPoint("BOTTOM", bg, "TOP", 0, -1)
             guildBG:SetSize(170, 32)
             ContainedAlertFrame._auroraGuildBG = guildBG
@@ -233,7 +233,7 @@ do --[[ FrameXML\AlertFrameSystems.xml ]]
 
             local bg = ContainedAlertFrame:GetBackdropTexture("bg")
             local line = select(2, ContainedAlertFrame:GetRegions())
-            line:SetColorTexture(1, 1, 1, 0.5)
+            line:SetColorTexture(1, 1, 1, 0.5) -- static: not a theme color
             line:ClearAllPoints()
             line:SetPoint("TOPLEFT", ContainedAlertFrame.EmblemBackground, "TOPRIGHT", 10, -20)
             line:SetPoint("BOTTOMRIGHT", bg, -75, 20)

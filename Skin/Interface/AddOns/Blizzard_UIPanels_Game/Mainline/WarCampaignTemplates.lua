@@ -76,7 +76,7 @@ do --[[ FrameXML\WarCampaignTemplates.xml ]]
             Button.Background:SetAlpha(0)
         end
         if Button.Highlight then
-            Button.Highlight:SetColorTexture(1, 1, 1, Color.frame.a)
+            Button.Highlight:SetColorTexture(1, 1, 1, Color.frame.a) -- static: not a theme color
         end
 
         Util.Mixin(Button.CollapseButton, Hook.CampaignCollapseButtonMixin)

@@ -132,7 +132,7 @@ function private.AddOns.Blizzard_HousingDashboard()
 
     -- Dark flat background
     if HousingDashboardFrame.Bg then
-        HousingDashboardFrame.Bg:SetColorTexture(0.08, 0.08, 0.08, 1)
+        HousingDashboardFrame.Bg:SetColorTexture(Color.panelBg:GetRGBA())
         HousingDashboardFrame.Bg:SetAllPoints(HousingDashboardFrame.NineSlice)
         HousingDashboardFrame.Bg:Show()
     end

@@ -69,7 +69,7 @@ function private.AddOns.Blizzard_BlackMarketUI()
             local tex = bu:CreateTexture(nil, "BACKGROUND")
             tex:SetPoint("TOPLEFT")
             tex:SetPoint("BOTTOMRIGHT", 0, 5)
-            tex:SetColorTexture(0, 0, 0, .25)
+            tex:SetColorTexture(Color.black.r, Color.black.g, Color.black.b, .25)
 
             bu:SetHighlightTexture(C.media.backdrop)
             local hl = bu:GetHighlightTexture()

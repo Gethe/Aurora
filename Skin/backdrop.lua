@@ -544,6 +544,22 @@ function Base.SetBackdrop(frame, color, alpha)
     end
     Base.CreateBackdrop(frame, frame._backdropInfo or backdrop)
     Base.SetBackdropColor(frame, color, alpha)
+
+    -- Register for palette refresh: only pure frame backgrounds, not buttons/interactive elements.
+    if not frame._auroraPaletteOptOut and color == Color.frame then
+        Color.RegisterPaletteElement(frame, "frame", alpha)
+        frame._auroraPaletteBorderDefault = true
+
+        -- Track if border is later customized by external code
+        if not frame._auroraBorderHooked and frame.SetBackdropBorderColor then
+            _G.hooksecurefunc(frame, "SetBackdropBorderColor", function()
+                if not Color._applyingPalette then
+                    frame._auroraPaletteBorderDefault = false
+                end
+            end)
+            frame._auroraBorderHooked = true
+        end
+    end
 end
 function Base.SetBackdropColor(frame, color, alpha)
     if not color then color = Color.frame end

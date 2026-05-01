@@ -65,7 +65,7 @@ function private.AddOns.Blizzard_CovenantPreviewUI()
     InfoPanel.CovenantFeatureFrame.Label:SetTextColor(Color.grayLight:GetRGB())
 
     local divider = InfoPanel:CreateTexture(nil, "ARTWORK")
-    divider:SetColorTexture(1, 1, 1, 0.5)
+    divider:SetColorTexture(1, 1, 1, 0.5) -- static: not a theme color
     divider:SetHeight(1)
     divider:SetPoint("BOTTOMLEFT", InfoPanel.Description, "TOPLEFT", 30, 15)
     divider:SetPoint("BOTTOMRIGHT", InfoPanel.Description, "TOPRIGHT", -30, 15)
