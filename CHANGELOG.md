@@ -1,4 +1,14 @@
-﻿## [12.0.5.6] ##
+﻿## [12.0.5.7] ##
+### Changed ###
+  * chg: overhaul Blizzard_CooldownViewer skinning in preparation for RealUI_Auras, including robust mixin hooks, viewer child re-skinning on show, icon mask/overlay cleanup, and BuffBar visual restyling
+  * chg: use full `Skin.ButtonFrameTemplate` pass for CooldownViewerSettings to align with ButtonFrameTemplate visuals
+  * chg: refresh README documentation
+
+### Fixed ###
+  * fix: increase HDR mode button brightness to improve visibility against darker panel backgrounds
+
+
+## [12.0.5.6] ##
 ### Fixed ###
   * fix: guard `private.Integration` nil check in `Color.SetMode` to prevent errors when called before Integration is initialised
 
@@ -529,7 +539,8 @@
 
 
 ## Detailed Changes ##
-[Unreleased]: https://github.com/Gethe/Aurora/compare/main...develop
+[Unreleased]: https://github.com/Gethe/Aurora/compare/12.0.5.7...develop
+[12.0.5.7]: https://github.com/Gethe/Aurora/compare/12.0.5.6...12.0.5.7
 [12.0.5.6]: https://github.com/Gethe/Aurora/compare/12.0.5.5...12.0.5.6
 [12.0.5.5]: https://github.com/Gethe/Aurora/compare/12.0.5.4...12.0.5.5
 [12.0.5.4]: https://github.com/Gethe/Aurora/compare/12.0.5.3...12.0.5.4
