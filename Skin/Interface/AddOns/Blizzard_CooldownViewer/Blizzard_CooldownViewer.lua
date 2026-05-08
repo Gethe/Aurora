@@ -87,6 +87,14 @@ local function SkinItemFrame(frame)
         end
     end
 
+    -- ── Cooldown swipe ─────────────────────────────────────────────────────
+    -- The XML uses a circular swipe texture (UI-HUD-CoolDownManager-Icon-Swipe)
+    -- that no longer matches the square cropped icon. Replace with a plain
+    -- square swipe so the cooldown overlay covers the full icon area.
+    if frame.Cooldown then
+        frame.Cooldown:SetSwipeTexture(private.textures.plain)
+    end
+
     -- ── BuffBar status bar ─────────────────────────────────────────────────
     -- The BuffBar item has a StatusBar (frame.Bar) with an atlas-based fill
     -- (orange, UI-HUD-CoolDownManager-Bar), an atlas background (BarBG),
@@ -139,6 +147,15 @@ end
 local itemHook = {}
 function itemHook:OnLoad()
     SkinItemFrame(self)
+end
+
+-- Re-apply icon crop after CDM updates the spell texture.
+-- SetTexture() resets texcoords to 0,0,1,1 so we must re-crop each time.
+function itemHook:RefreshSpellTexture()
+    local iconTex = self:GetIconTexture()
+    if iconTex and iconTex.SetTexCoord then
+        pcall(iconTex.SetTexCoord, iconTex, .08, .92, .08, .92)
+    end
 end
 
 function private.AddOns.Blizzard_CooldownViewer()
