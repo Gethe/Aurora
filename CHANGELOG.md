@@ -1,4 +1,11 @@
-﻿## [12.0.5.7] ##
+﻿## [12.0.5.8] ##
+### Fixed ###
+  * fix: replace circular CDM cooldown swipe with plain square texture so the overlay covers the full cropped icon area
+  * fix: re-apply icon texcoord crop after CDM refreshes the spell texture (`SetTexture` resets coords to 0–1)
+  * fix: prevent C stack overflow in SpellBook spec-button border hooks by removing recursive `SetTexture(nil)` calls
+
+
+## [12.0.5.7] ##
 ### Changed ###
   * chg: overhaul Blizzard_CooldownViewer skinning in preparation for RealUI_Auras, including robust mixin hooks, viewer child re-skinning on show, icon mask/overlay cleanup, and BuffBar visual restyling
   * chg: use full `Skin.ButtonFrameTemplate` pass for CooldownViewerSettings to align with ButtonFrameTemplate visuals
