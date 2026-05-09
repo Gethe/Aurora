@@ -70,13 +70,9 @@ do  -- PlayerSpellsFrame.SpecFrame
             button.Border:Hide()
             -- Hook SetTexture to prevent it from being set
             _G.hooksecurefunc(button.Border, "SetTexture", function(self)
-                if self:GetTexture() then
-                    self:SetTexture(nil)
-                    self:SetAlpha(0)
-                end
+                self:SetAlpha(0)
             end)
             _G.hooksecurefunc(button.Border, "SetAtlas", function(self)
-                self:SetTexture(nil)
                 self:SetAlpha(0)
             end)
         end
