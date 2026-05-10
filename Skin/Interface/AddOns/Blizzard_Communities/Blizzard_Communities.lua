@@ -42,27 +42,6 @@ do --[[ AddOns\Blizzard_Communities.lua ]]
             Base.CropCircularIcon(self.Icon)
         end
     end
-    do --[[ CommunitiesMemberList ]]
-        Hook.CommunitiesMemberListEntryMixin = {}
-        function Hook.CommunitiesMemberListEntryMixin:UpdatePresence()
-            -- During combat, secureexecuterange taints the context and memberInfo
-            -- fields become secret numbers. The Blizzard original already handled
-            -- coloring, so skip the re-color in combat.
-            if _G.InCombatLockdown() then return end
-            local memberInfo = self:GetMemberInfo();
-            if memberInfo then
-                if memberInfo.presence ~= _G.Enum.ClubMemberPresence.Offline then
-                    if memberInfo.classID then
-                        local classInfo = _G.C_CreatureInfo.GetClassInfo(memberInfo.classID);
-                        local color = (classInfo and _G.CUSTOM_CLASS_COLORS[classInfo.classFile]) or _G.NORMAL_FONT_COLOR;
-                        self.NameFrame.Name:SetTextColor(color.r, color.g, color.b);
-                    else
-                        self.NameFrame.Name:SetTextColor(_G.BATTLENET_FONT_COLOR:GetRGB());
-                    end
-                end
-            end
-        end
-    end
     do --[[ CommunitiesSettings ]]
         Hook.CommunitiesSettingsDialogMixin = {}
         function Hook.CommunitiesSettingsDialogMixin:SetClubId(clubId)
@@ -131,9 +110,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 
     end
     do --[[ CommunitiesMemberList ]]
-        function Skin.CommunitiesMemberListEntryTemplate(Button)
-            Util.Mixin(Button, Hook.CommunitiesMemberListEntryMixin)
-        end
         function Skin.CommunitiesMemberListFrameTemplate(Frame)
             Skin.UICheckButtonTemplate(Frame.ShowOfflineButton)
             Skin.ColumnDisplayTemplate(Frame.ColumnDisplay)
@@ -143,10 +119,9 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
             Frame.ColumnDisplay.InsetBorderTop:Hide()
             Frame.ColumnDisplay.InsetBorderLeft:Hide()
 
-            -- NOTE: Do NOT skin anything that participates in the secure call chain.
-            -- Base.SetBackdrop on the ScrollBox marks it as addon-modified, causing
-            -- memberInfo.presence to become a secret number in UpdatePresence hooks
-            -- during secureexecuterange in combat.
+            -- NOTE: Do NOT skin the ScrollBox or its children — they participate in
+            -- the secureexecuterange call chain and skinning them marks frames as
+            -- addon-modified, causing memberInfo fields to become secret values.
             -- Skin.WowScrollBox(Frame.ScrollBox)
             -- Skin.MinimalScrollBar(Frame.ScrollBar)
             -- Skin.InsetFrameTemplate(Frame.InsetFrame)
@@ -658,11 +633,6 @@ do --[[ AddOns\Blizzard_Communities.xml ]]
 end
 
 function private.AddOns.Blizzard_Communities()
-    ----====#####################====----
-    --      CommunitiesMemberList      --
-    ----====#####################====----
-    Util.Mixin(_G.CommunitiesMemberListEntryMixin, Hook.CommunitiesMemberListEntryMixin)
-
     ----====#####################====----
     --  CommunitiesAvatarPickerDialog  --
     ----====#####################====----
