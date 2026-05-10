@@ -1,4 +1,4 @@
-## Interface: 120005
+## Interface: 120005, 120007
 ## X-Min-Interface: 120005
 ## Title: Aurora
 ## IconAtlas: callings-backhighlight-full
