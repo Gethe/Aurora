@@ -12,7 +12,7 @@ local Color, Util = Aurora.Color, Aurora.Util
 do --[[ Blizzard_SharedXML\Mainline\TabSystem\TabSystemTemplates.lua ]]
     function Skin.TabSystemButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
-        Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
+        Button:SetButtonColor(Color.button, Util.GetFrameAlpha(), false)
         Button:SetBackdropOption("offsets", {
             left = 0,
             right = 0,
