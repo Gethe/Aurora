@@ -193,13 +193,23 @@ do --[[ FrameXML\ActionBarController.xml ]]
                 Util.ReleaseBarTicks(dialog.StatusBar)
             end)
 
+            -- TAINT-SAFE: Skin.FrameTypeStatusBar + Base.SetBackdropColor both
+            -- call Base.SetBackdrop which writes _aurora* fields onto the StatusBar
+            -- Lua table and installs a runtime SetBackdropBorderColor hook that
+            -- writes frame._auroraPaletteBorderDefault = false.  The status bars
+            -- sit in the action-bar area alongside OverlayPlayerCastingBarFrame;
+            -- when that hook fires during a combat-event batch it taints execution
+            -- and propagates into CastingBarMixin:OnEvent, causing the forbidden-
+            -- table errors in StopFinishAnims / GetTypeInfo.
+            -- Use widget API calls only — no Lua table writes, no runtime hooks.
             local StatusBar = Frame.StatusBar
-            Skin.FrameTypeStatusBar(StatusBar)
-            Base.SetBackdropColor(StatusBar, Color.frame)
-
-            StatusBar.Background:Hide()
-            StatusBar.Underlay:Hide()
-            StatusBar.Overlay:Hide()
+            StatusBar:SetStatusBarTexture(private.textures.plain)
+            local tex = StatusBar:GetStatusBarTexture()
+            if tex then tex:SetDrawLayer("BORDER") end
+            if StatusBar.Background then StatusBar.Background:Hide() end
+            if StatusBar.Underlay   then StatusBar.Underlay:Hide()   end
+            if StatusBar.Overlay    then StatusBar.Overlay:Hide()    end
+            if StatusBar.Border     then StatusBar.Border:SetAlpha(0) end
         end
         function Skin.StatusTrackingBarContainerTemplate(Frame)
             Frame.BarFrameTexture:Hide()
