@@ -996,7 +996,7 @@ do --[[ SharedXML\SharedUIPanelTemplates.xml ]]
 
     function Skin.PanelTabButtonTemplate(Button)
         Skin.FrameTypeButton(Button)
-        Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
+        Button:SetButtonColor(Color.button, Util.GetFrameAlpha(), false)
         Button:SetBackdropOption("offsets", {
             left = 0,
             right = 0,
