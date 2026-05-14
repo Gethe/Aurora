@@ -165,7 +165,7 @@ do --[[ AddOns\Blizzard_GarrisonTemplates.xml ]]
     do --[[ Blizzard_GarrisonMissionTemplates ]]
         function Skin.GarrisonMissionFrameTabTemplate(Button)
             Skin.FrameTypeButton(Button)
-            Button:SetButtonColor(Color.frame, Util.GetFrameAlpha(), false)
+            Button:SetButtonColor(Color.button, Util.GetFrameAlpha(), false)
             Button:SetHeight(28)
 
             Button.LeftActive:SetAlpha(0)
