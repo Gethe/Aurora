@@ -120,13 +120,14 @@ function private.SharedXML.SharedTooltipTemplates()
     if _G.GameTooltip_AddWidgetSet then
         local origAddWidgetSet = _G.GameTooltip_AddWidgetSet
 
-        -- Keep widget container creation and widget registration in Blizzard's
-        -- secure execution path so widget layoutIndex remains a normal number.
+        -- Call origAddWidgetSet directly (no securecallfunction) so that
+        -- origAddWidgetSet's call to GameTooltip_InsertFrame resolves through
+        -- the addon-modified _G and picks up the SafeNumber replacement above.
+        -- securecallfunction causes origAddWidgetSet to run in a clean global
+        -- environment where the SafeNumber replacement is invisible, leaving
+        -- Blizzard's original GameTooltip_InsertFrame to hit secret-number
+        -- arithmetic at SharedTooltipTemplates.lua:202.
         _G.GameTooltip_AddWidgetSet = function(self, widgetSetID, verticalPadding)
-            if _G.securecallfunction then
-                return _G.securecallfunction(origAddWidgetSet, self, widgetSetID, verticalPadding)
-            end
-
             return origAddWidgetSet(self, widgetSetID, verticalPadding)
         end
     end
