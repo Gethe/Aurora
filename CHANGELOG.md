@@ -1,4 +1,16 @@
-﻿## [12.0.5.8] ##
+﻿## [12.0.5.9] ##
+### Changed ###
+  * chg: update TOC for WoW 12.0.7 (120007)
+
+### Fixed ###
+  * fix: remove `UpdatePresence` mixin to eliminate `CommunitiesMemberList` taint
+  * fix: remove `securecallfunction` wrapper from `GameTooltip_AddWidgetSet` to fix tooltip arithmetic taint ([#178])
+  * fix: make `Skin.StatusTrackingBarTemplate` taint-safe ([#178])
+  * fix: make `UIWidgetBaseStatusBarTemplate` taint-safe; guard `InitPartitions` bar width with `SafeNumber`
+  * fix: use `Color.button` for inactive panel tabs so borders remain visible
+
+
+## [12.0.5.8] ##
 ### Fixed ###
   * fix: replace circular CDM cooldown swipe with plain square texture so the overlay covers the full cropped icon area
   * fix: re-apply icon texcoord crop after CDM refreshes the spell texture (`SetTexture` resets coords to 0–1)
@@ -546,7 +558,9 @@
 
 
 ## Detailed Changes ##
-[Unreleased]: https://github.com/Gethe/Aurora/compare/12.0.5.7...develop
+[Unreleased]: https://github.com/Gethe/Aurora/compare/12.0.5.9...develop
+[12.0.5.9]: https://github.com/Gethe/Aurora/compare/12.0.5.8...12.0.5.9
+[12.0.5.8]: https://github.com/Gethe/Aurora/compare/12.0.5.7...12.0.5.8
 [12.0.5.7]: https://github.com/Gethe/Aurora/compare/12.0.5.6...12.0.5.7
 [12.0.5.6]: https://github.com/Gethe/Aurora/compare/12.0.5.5...12.0.5.6
 [12.0.5.5]: https://github.com/Gethe/Aurora/compare/12.0.5.4...12.0.5.5
