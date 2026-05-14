@@ -250,7 +250,18 @@ end
 do --[[ AddOns\Blizzard_UIWidgets.xml ]]
     do --[[ Blizzard_UIWidgetTemplateBase ]]
         function Skin.UIWidgetBaseStatusBarTemplate(StatusBar)
-            Skin.FrameTypeStatusBar(StatusBar)
+            -- TAINT-SAFE: Skin.FrameTypeStatusBar installs runtime hooks on
+            -- SetStatusBarColor/SetStatusBarTexture that write frame._aurora*
+            -- Lua table fields; Base.SetBackdrop also writes _auroraSkinned etc.
+            -- UIWidget status bar frames are pooled globally and can be recycled
+            -- from non-tooltip containers (BelowMinimap, TopCenter) into tooltip
+            -- widget containers.  Lua table writes and hook-triggered writes
+            -- persist after pool release, causing GetWidth() to return secret
+            -- numbers when the recycled frame is later laid out in a tainted
+            -- context.  Widget API calls only — no table writes, no runtime hooks.
+            StatusBar:SetStatusBarTexture(private.textures.plain)
+            local tex = StatusBar:GetStatusBarTexture()
+            if tex then tex:SetDrawLayer("BORDER") end
         end
         function Skin.UIWidgetBaseSpellTemplate(Frame)
             Base.CropIcon(Frame.Icon, Frame)
@@ -394,16 +405,36 @@ function private.AddOns.Blizzard_UIWidgets()
     -- ran in tainted context causing GetEffectiveScale()→GetScaledRect() to
     -- return secret numbers in ResizeLayoutMixin:Layout().
     --
-    -- The root fix is in SharedTooltipTemplates.lua: GameTooltip_AddWidgetSet
-    -- now calls the original Blizzard implementation via securecallfunction,
-    -- ensuring CreateFrame and RegisterForWidgetSet run in secure context.
-    -- Blizzard's own WidgetLayout (registered securely as layoutFunc) handles
-    -- the layout without taint, making this hook unnecessary.
+    -- NOTE: GameTooltip_AddWidgetSet (SharedTooltipTemplates.lua) is an
+    -- addon-owned function.  Calls to it from AreaPoiUtil / tooltip show paths
+    -- propagate execution taint into RegisterForWidgetSet → ProcessAllWidgets →
+    -- UIWidgetTemplateStatusBar:Setup, causing self.Bar:SetWidth() to taint the
+    -- bar's width property.  The InitPartitions replacement above guards the
+    -- resulting secret GetWidth() with SafeNumber.
 
     ----====#####################====----
     --  Blizzard_UIWidgetTemplateBase  --
     ----====#####################====----
-
+    if _G.UIWidgetBaseStatusBarTemplateMixin and _G.UIWidgetBaseStatusBarTemplateMixin.InitPartitions then
+        -- Replace InitPartitions to guard against secret-number arithmetic:
+        -- self.Bar:SetWidth() in UIWidgetTemplateStatusBarMixin:Setup runs inside
+        -- Aurora's tainted GameTooltip_AddWidgetSet wrapper, tainting the bar
+        -- frame's width so GetWidth() returns a secret number at line 1030.
+        -- SafeNumber falls back to DEFAULT_BAR_WIDTH (215) so partition ticks are
+        -- placed at approximate positions rather than throwing an error.
+        _G.UIWidgetBaseStatusBarTemplateMixin.InitPartitions = function(self, partitionValues, textureKit)
+            local barWidth = SafeNumber(self:GetWidth(), 215)
+            for _, partitionValue in _G.ipairs(partitionValues) do
+                partitionValue = _G.Clamp(partitionValue, self.barMin, self.barMax)
+                local partitionFrame = self.partitionPool:Acquire()
+                partitionFrame:Setup(partitionValue, textureKit)
+                local partitionPercent = _G.ClampedPercentageBetween(partitionValue, self.barMin, self.barMax)
+                local xOffset = barWidth * partitionPercent
+                partitionFrame:SetPoint("CENTER", self:GetStatusBarTexture(), "LEFT", xOffset, 0)
+                partitionFrame:Show()
+            end
+        end
+    end
 
     ----====################%%########====----
     -- Blizzard_UIWidgetTemplateIconAndText --
