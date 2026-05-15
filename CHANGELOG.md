@@ -1,4 +1,13 @@
-﻿## [12.0.5.9] ##
+﻿## [12.0.5.10] ##
+### Fixed ###
+  * fix: skip UIWidget skinning for nameplate `WidgetContainer` to prevent `GetScaledRect` taint in the secure `OnNamePlateAdded` call chain
+  * fix: use `Color.button` for inactive `TabSystemButton` tabs so borders remain visible
+  * fix: use `Color.button` for inactive Achievement tabs so borders remain visible
+  * fix: use `Color.button` for inactive Garrison mission tabs so borders remain visible
+  * fix: use `Color.button` for inactive Garrison landing page tabs so borders remain visible
+
+
+## [12.0.5.9] ##
 ### Changed ###
   * chg: update TOC for WoW 12.0.7 (120007)
 
@@ -558,7 +567,8 @@
 
 
 ## Detailed Changes ##
-[Unreleased]: https://github.com/Gethe/Aurora/compare/12.0.5.9...develop
+[Unreleased]: https://github.com/Gethe/Aurora/compare/12.0.5.10...develop
+[12.0.5.10]: https://github.com/Gethe/Aurora/compare/12.0.5.9...12.0.5.10
 [12.0.5.9]: https://github.com/Gethe/Aurora/compare/12.0.5.8...12.0.5.9
 [12.0.5.8]: https://github.com/Gethe/Aurora/compare/12.0.5.7...12.0.5.8
 [12.0.5.7]: https://github.com/Gethe/Aurora/compare/12.0.5.6...12.0.5.7
