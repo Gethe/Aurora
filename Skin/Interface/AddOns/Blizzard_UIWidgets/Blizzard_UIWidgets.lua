@@ -109,6 +109,23 @@ local function IsRestrictedWidgetContainer(container)
     return false
 end
 
+-- Blizzard_NamePlates.xml:241 declares the nameplate WidgetContainer as a plain
+-- <Frame> with no protected="true", so IsRestrictedWidgetContainer misses it.
+-- However the nameplate layout runs from [C] OnNamePlateAdded in a secure C
+-- context; writing _auroraSkinned to widget frames inside this container taints
+-- them, causing GetScaledRect to fail with "Can't measure restricted regions"
+-- when the secure path tries to measure those frames.
+-- Detect nameplate containers by their parent structure: the WidgetContainer's
+-- parent is always the NamePlateUnitFrameMixin button which has HealthBarsContainer.healthBar.
+local function IsNamePlateWidgetContainer(container)
+    local ok, parent = _G.pcall(container.GetParent, container)
+    if not ok or not parent then return false end
+    local ok2, result = _G.pcall(function()
+        return parent.HealthBarsContainer and parent.HealthBarsContainer.healthBar
+    end)
+    return ok2 and result and true or false
+end
+
 local function DebugBelowMinimap(...)
     if not private.isDev and not FORCE_WIDGET_CHAT_DEBUG then
         return
@@ -165,6 +182,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         function Hook.UIWidgetContainerMixin:CreateWidget(widgetID, widgetType, widgetTypeInfo, widgetInfo)
             if IsTooltipWidgetContainer(self) then return end
             if IsRestrictedWidgetContainer(self) then return end
+            if IsNamePlateWidgetContainer(self) then return end
             local widgetFrame = self.widgetFrames[widgetID]
             if not widgetFrame then
                 -- if private.isDev then
@@ -202,6 +220,7 @@ do --[[ AddOns\Blizzard_UIWidgets.lua ]]
         function Hook.UIWidgetManagerMixin:OnWidgetContainerRegistered(widgetContainer)
             if IsTooltipWidgetContainer(widgetContainer) then return end
             if IsRestrictedWidgetContainer(widgetContainer) then return end
+            if IsNamePlateWidgetContainer(widgetContainer) then return end
             local setWidgets = _G.C_UIWidgetManager.GetAllWidgetsBySetID(widgetContainer.widgetSetID)
             if IsBelowMinimapContainer(widgetContainer) then
                 DebugBelowMinimap("OnWidgetContainerRegistered", SafeDebugName(widgetContainer), "widgetSetID", widgetContainer.widgetSetID, "count", #setWidgets)
